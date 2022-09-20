@@ -1,0 +1,133 @@
+<div class="contents">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 mb-30">
+                <div class="card">
+                    <div class="card-header color-dark fw-500">
+                     Contract File Details
+                   
+                        <button type="button" class="btn btn-primary btn-default btn-squared " data-toggle="modal" data-target="#addCustomerContractFileId">Add Contract File
+                        </button>
+                        
+                    </div>
+                    <div class="card-body">
+                       
+                       
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                           
+                                        
+                                            <th>
+                                                <span class="userDatatable-title">File Name</span>
+                                            </th>
+                                            
+                                            <th>
+                                                <span class="userDatatable-title">Attachment File</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Action</span>
+                                            </th>
+                                         
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let list of listDisplay ; let i = index">
+                                            
+
+                                         
+                                            <td>
+                                                {{ list.master_file_name}}
+                                            </td>
+                                           
+                                            <td>
+                                                {{ list.upload_original_file_name}}
+                                            </td>
+                                            
+                                            <td>
+                                                <ul class="orderDatatable_actions">
+                                                <li>
+                                                    <a class="view" title="Delete" (click)="deleteFile(list.contract_master_file_id)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                        
+                                                    </a>
+
+                                                </li>
+                                                </ul>
+                                            </td>
+                                        
+                                           
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-----------------Modal Pop Up (BEGIN) for Add & Save in customer Contract------------------>
+<div class="modal fade" id="addCustomerContractFileId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content addcontractmastercss">
+        <div class="modal-header">
+            <h2 class="modal-title" id="addModalLongTitle">Contract Master File</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h2 style="text-align:center;color:rgb(97, 72, 9)">Add Contract File</h2>
+            <form>
+                <div class="row">
+ 
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="contractName" class="col-lg-12 col-form-label">Name</label>
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control"
+                                    id="contractName" />
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                  
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="contractfile" class="col-lg-12 col-form-label">Select File</label>
+                            <div class="col-lg-12">
+                                <input type="file" class="form-control" multiple="multiple"
+                                     id="contractfile" />
+                            </div>
+
+                        </div>
+                    </div>
+                                      
+                </div>
+            
+            </form>
+        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="send_file()" >
+                Save
+             </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                Close
+            </button>
+           
+        </div>
+    </div>
+</div>
+</div> 
+<!-----------------Modal Pop Up (END) for Add & Save in customer Contract--------------->
+

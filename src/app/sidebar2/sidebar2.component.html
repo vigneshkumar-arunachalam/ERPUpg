@@ -1,0 +1,53 @@
+
+
+<aside class="sidebar">
+    <div class="sidebar__menu-group">
+        <ul class="sidebar_nav">
+            <li class="menu-title">
+                <span>Main menu</span>
+            </li>
+            <li class="has-child" *ngFor="let item of overallmenulist; let i = index">
+                <a href="#" class="active" [ngClass]="{'active': item.isActive== true, 'non_active_class' : item.isActive== false }" routerLink="{{item.value}}"
+                routerLinkActive="active" 
+                [routerLinkActiveOptions]={exact:true}>
+
+                    <i [attr.data-feather]="item.icon" class="nav-icon" (click)="handleSelectedMenu(item.menuId)"></i>
+                    <span class="menu-text" (click)="change(item.value)">{{item.name}}</span>
+                    <span class="toggle-icon"></span>
+                </a>
+                
+                
+                    <ul *ngIf="item.children && item.children.length > 0">
+                        <li class="has-child" *ngFor="let innermenu of item.children">
+                            <a href="{{innermenu.value}}" class="">
+                                <i [attr.data-feather]="innermenu.icon" class="nav-icon" ></i>
+                                <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
+                                <span class="toggle-icon"></span>
+                                
+                            </a>
+
+                              
+                                    <ul *ngIf="innermenu.subchild && innermenu.subchild.length > 0" >
+                                        <li class="has-child" *ngFor="let innersubmenu of innermenu.subchild">
+                                            <a href="{{innersubmenu.value}}" class="">
+                                                <i [attr.data-feather]="innersubmenu.icon" class="nav-icon" ></i>
+                                                <span class="menu-text" (click)="change(innersubmenu.value)">{{innersubmenu.name}}</span>
+                                                <span class="toggle-icon"></span>
+                
+                                            </a>
+                                        </li>
+                                            
+                                    </ul>
+                                
+
+                        </li>
+                            
+                    </ul>
+              
+            
+            </li>
+          
+        </ul>
+    </div>
+</aside>
+

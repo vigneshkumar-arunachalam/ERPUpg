@@ -1,0 +1,433 @@
+<div class="contents">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 mb-30">
+                <div class="card">
+                    <div class="card-header color-dark fw-500">
+                        Contract Name Details
+                        <button type="button" class="btn btn-primary btn-default btn-squared " 
+                        data-toggle="modal"
+                        data-target="#addContractNameId"
+                        (click)="addContract()">New Customer Leads
+                        </button>
+                    </div>
+                    <div class="card-body">
+                       
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                           
+
+                                            <th>
+                                                <span class="userDatatable-title">Contract Name</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Desc</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Summary</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Classification</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let list of result ; let i = index">
+                                           
+
+
+                                            <td>
+                                               <span> {{ list.contract_name}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ list.contract_description}}</span>
+                                            </td>
+                                            <td>
+                                                <span>{{ list.contract_summary}}</span> 
+                                            </td>
+                                            <td>
+                                                <span>{{ list.classification_name}}</span> 
+                                            </td>
+
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                      <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                      
+                                                    
+                                                      <ul class="dropdown__list">
+                                                        
+                                                        
+                                                        <li class="dropdown__item">
+                                                            <a class="view" title="Delete Contract Name"
+                                                                (click)="deleteContractName(list.contract_id)">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-activity">
+                                                                    <path
+                                                                        d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z">
+                                                                    </path>
+                                                                    <line x1="18" y1="9" x2="12" y2="15"></line>
+                                                                    <line x1="12" y1="9" x2="18" y2="15"></line>
+                                                                </svg>
+    
+                                                            </a>
+    
+                                                        </li>
+                                                        <li class="dropdown__item">
+                                                            <a  class="view" title="Edit Contract Name"
+                                                            data-toggle="modal" data-target="#editContractNameId" 
+                                                                (click)="editContractName(list.contract_id)">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-activity">
+                                                                    <path
+                                                                        d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
+                                                                    </path>
+                                                                    <polyline points="13 2 13 9 20 9"></polyline>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li class="dropdown__item">
+                                                            <a  class="view" title="View Contract Name"
+                                                            data-toggle="modal" data-target="#viewContractNameId"
+                                                               (click)="viewContractName(list.contract_id)"  >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-activity">
+                                                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8">
+                                                                    </path>
+                                                                    <polyline points="16 6 12 2 8 6"></polyline>
+                                                                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                                                                </svg>
+    
+                                                            </a>
+                                                        </li>
+                                                        <!-- <li class="dropdown__item">
+                                                            <a  class="view" title="Invoice Attachment"
+                                                            data-toggle="modal" data-target="#invoiceAttachmentId"
+                                                              (click)="invoiceAttachment(list.customer_contract_id,list.customer_id)"  >
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" viewBox="0 0 24 24" fill="none"
+                                                                    stroke="currentColor" stroke-width="2"
+                                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                                    class="feather feather-activity">
+                                                                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8">
+                                                                    </path>
+                                                                    <polyline points="16 6 12 2 8 6"></polyline>
+                                                                    <line x1="12" y1="2" x2="12" y2="15"></line>
+                                                                </svg>
+    
+                                                            </a>
+                                                        </li> -->
+    
+                                                      </ul>
+                                                    </div>
+                          
+                                                  </div>
+                          
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-----------------Modal Pop Up (BEGIN) for Add Pop Up & Save in customer Contract Classification------------------>
+<div class="modal fade" id="addContractNameId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content addcontractmastercss">
+        <div class="modal-header">
+            <h2 class="modal-title" id="addModalLongTitle">Add New Customer Leads</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h2 style="text-align:center;color:rgb(97, 72, 9)">Add New Customer Leads</h2>
+            <form [formGroup]="addContractNameForm">
+                <div class="row">
+ 
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="contractName" class="col-lg-12 col-form-label">Name</label>
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" 
+                                formControlName="create_contract_name"
+                                    id="contractName" />
+                            </div>
+                            <div *ngIf="addContractNameForm.controls['create_contract_name'].invalid && (addContractNameForm.controls['create_contract_name'].dirty || addContractNameForm.controls['create_contract_name'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    Name is Required
+                                </div>
+                           
+                        </div>
+                    </div>
+                    
+                  
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="cr_descrip" class="col-lg-12 col-form-label">Description</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" 
+                                formControlName="create_contract_description_name" 
+                                id="cr_descrip" rows="3"></textarea>
+                            </div>
+                            <div *ngIf="addContractNameForm.controls['create_contract_description_name'].invalid && (addContractNameForm.controls['create_contract_description_name'].dirty || addContractNameForm.controls['create_contract_description_name'].touched)"
+                            class="alert alert-danger alertdangerCustomCSS">
+                            Description is Required
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="cr_summary" class="col-lg-12 col-form-label">Summary</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" 
+                                formControlName="create_contract_summary_name"
+                                 id="cr_summary" rows="3"></textarea>
+                            </div>
+                            <div *ngIf="addContractNameForm.controls['create_contract_summary_name'].invalid && (addContractNameForm.controls['create_contract_summary_name'].dirty || addContractNameForm.controls['create_contract_summary_name'].touched)"
+                            class="alert alert-danger alertdangerCustomCSS">
+                            Summary is Required
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                          <label for="classification_name " class="col-lg-12 col-form-label">Classification</label>
+                          <div class="col-lg-12">
+                            <select name="contractname " id="cont_name" class="form-control" formControlName="create_classification">
+                              <option [ngValue]="null" selected disabled>Select Classification</option>
+                              <option *ngFor="let contract of classificationList" 
+                              value="{{contract.contract_classification_id}}">
+                                {{contract.classification_name}}
+                              </option>
+                            </select>
+                          </div>
+                          <div *ngIf="addContractNameForm.controls['create_classification'].invalid && (addContractNameForm.controls['create_classification'].dirty || addContractNameForm.controls['create_classification'].touched)"
+                            class="alert alert-danger alertdangerCustomCSS">
+                            Classification is Required
+                        </div>
+
+                        </div>
+                      </div>
+                                      
+                </div>
+            
+            </form>
+        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="clearContractName()">
+                Close
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="saveContractName()">
+               Create
+            </button>
+        </div>
+    </div>
+</div>
+</div> 
+<!-----------------Modal Pop Up (END) for Add Pop Up & Save in customer Contract Classification------------------>
+
+
+<!-----------------Modal Pop Up (BEGIN) for Edit Pop Up & Update in customer Contract Classification------------------>
+<div class="modal fade" id="editContractNameId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content addcontractmastercss">
+        <div class="modal-header">
+            <h2 class="modal-title" id="addModalLongTitle">Update Contract Classification</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h2 style="text-align:center;color:rgb(97, 72, 9)">Update Contract Classification</h2>
+            <form [formGroup]="editContractNameForm">
+               <div class="row">
+ 
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="e_contractName" class="col-lg-12 col-form-label">Name</label>
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" 
+                                formControlName="e_create_contract_name"
+                                    id="e_contractName" />
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                  
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="e_cr_descrip" class="col-lg-12 col-form-label">Description</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" 
+                                formControlName="e_create_contract_description_name" 
+                                id="e_cr_descrip" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="e_cr_summary" class="col-lg-12 col-form-label">Summary</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" 
+                                formControlName="e_create_contract_summary_name"
+                                 id="e_cr_summary" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                     <div class="col-lg-12">
+                        <div class="form-group row">
+                          <label for="e_cont_name " class="col-lg-12 col-form-label">Classification</label>
+                          <div class="col-lg-12">
+                            <select name="e_contractname " id="e_cont_name" class="form-control" 
+                            formControlName="e_create_classification">
+                              <option [ngValue]="null" selected disabled>Select Classification</option>
+                              <option *ngFor="let econtract of classificationEditList" 
+                              value="{{econtract.contract_classification_id}}">
+                                {{econtract.classification_name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                                      
+                </div>
+            
+            
+            </form>
+        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="reset()" >
+                Close
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="updateContractName()" >
+               Update
+            </button>
+        </div>
+    </div>
+</div>
+</div> 
+<!-----------------Modal Pop Up (BEGIN) for Edit Pop Up & Update in customer Contract Classification------------------>
+
+<!-----------------Modal Pop Up (BEGIN) for View Pop Up in customer Contract Classification------------------>
+<div class="modal fade" id="viewContractNameId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content addcontractmastercss">
+        <div class="modal-header">
+            <h2 class="modal-title" id="addModalLongTitle">View Contract Classification</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h2 style="text-align:center;color:rgb(97, 72, 9)">View Contract Classification</h2>
+            <form [formGroup]="viewContractNameForm">
+               <div class="row">
+ 
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="v_contractName" class="col-lg-12 col-form-label">Name</label>
+                            <div class="col-lg-12">
+                                <input type="text" class="form-control" 
+                                formControlName="v_create_contract_name" [attr.readonly]= "isReadOnly"
+                                    id="v_contractName" />
+                            </div>
+                           
+                        </div>
+                    </div>
+                    
+                  
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="v_cr_descrip" class="col-lg-12 col-form-label">Description</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" 
+                                formControlName="v_create_contract_description_name"  [attr.readonly]= "isReadOnly"
+                                id="v_cr_descrip" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="form-group row">
+                            <label for="v_cr_summary" class="col-lg-12 col-form-label">Summary</label>
+                            <div class="col-lg-12">
+                                <textarea class="form-control" [attr.readonly]= "isReadOnly"
+                                formControlName="v_create_contract_summary_name"
+                                 id="v_cr_summary" rows="3"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                     <div class="col-lg-12">
+                        <div class="form-group row">
+                          <label for="v_cont_name " class="col-lg-12 col-form-label">Classification</label>
+                          <div class="col-lg-12">
+                            <select name="v_contractname " id="v_cont_name" class="form-control" 
+                            formControlName="v_create_classification" [attr.readonly]= "isReadOnly">
+                              <option [ngValue]="null" selected disabled>Select Classification</option>
+                              <option *ngFor="let vcontract of classificationEditList" 
+                              value="{{vcontract.contract_classification_id}}">
+                                {{vcontract.classification_name}}
+                              </option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                                      
+                </div>
+            
+            
+            </form>
+        
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="reset()" >
+                Close
+            </button>
+           
+        </div>
+    </div>
+</div>
+</div> 
+<!-----------------Modal Pop Up (BEGIN) for View Pop Up  in customer Contract Classification------------------>
+
+

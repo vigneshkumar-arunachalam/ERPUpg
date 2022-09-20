@@ -1,0 +1,244 @@
+<!-----------------Modal Pop Up (BEGIN) for Add Quotation New Pop Up  in Quotation New------------------>
+<div class="modal fade" id="AddQuotationPopUpFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
+                <form [formGroup]="addQuotationInvoice">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="cmp_name" class="form-control"
+                                   
+                                    (change)="dynamicChange($event)"
+                                        formControlName="companyName">
+                                        <option [ngValue]="null" selected disabled>Select Company Name</option>
+                                        <option *ngFor="let comp_name of billerList" 
+                                        value="{{comp_name.billerId}}">
+                                        {{comp_name.billerName}}
+                                    </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_no" class="col-lg-12 col-form-label">Quotation No</label>
+                                <div class="col-lg-12">
+                                    <input type="text " class="form-control" formControlName="quotationNumber"
+                                        id="quot_no" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="customer_status" class="col-lg-12 col-form-label">Select Footer</label>
+                                <div>
+                                    <input type="radio" id="edit_c4c1" formControlName="selectFooter" value="edit_c4c1"
+                                        (change)="handleChange($event)" />
+                                    <label for="edit_c4c1" class="col-lg-6 col-form-label">cal4care-1</label>
+                                </div>
+
+                                <div>
+
+                                    <input type="radio" id="edit_c4c2" formControlName="selectFooter" value="edit_c4c2"
+                                        (change)="handleChange($event)" />
+                                    <label for="edit_c4c2" class="col-lg-6 col-form-label">cal4care-2 </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_date" class="col-lg-12 col-form-label">Quotation Date*</label>
+                                <div class="col-lg-12">
+                                    <input type="datetime" class="form-control" formControlName="quotationDate"
+                                        id="quot_date" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="cust_dett" class="col-lg-12 col-form-label">Customer Details</label>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="cust_name" class="col-lg-12 col-form-label">Customer Name</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="customerName"
+                                        id="cust_name" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="addr" class="col-lg-12 col-form-label">Address</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="address" id="addr" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="attn" class="col-lg-12 col-form-label">Attention</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="attention" id="attn" />
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="sales_r" class="form-control"
+                                        formControlName="salesRep">
+                                        <option [ngValue]="null" selected disabled>Sales Rep</option>
+                                        <option *ngFor="let rep of SalesRepList" value="{{rep.userId}}">
+                                            {{rep.firstName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="select_resell" class="col-lg-12 col-form-label">Select Reseller</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="select_resell" class="form-control"
+                                  
+                               
+                                        formControlName="selectReseller" >
+                                        <option [ngValue]="null" selected disabled>Select Reseller</option>
+                                        <option *ngFor="let reseller of SalesResellerList"
+                                            value="{{reseller.customerId}}">
+                                            {{reseller.customerName}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="select_template" class="col-lg-12 col-form-label">Select Template</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="select_template" class="form-control"
+                                    (change)="templateContentDropdown($event)"
+                                        formControlName="selectTemplate">
+                                        <option [ngValue]="null" selected disabled>Select Template</option>
+                                        <option *ngFor="let template of SelectTemplateList"
+                                            value="{{template.quotation_template_id}}">
+                                            {{template.quotation_template_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="descriptionDetails" class="form-label">Main Content</label>
+                                <textarea class="form-control" formControlName="templateContent_Dropdown" style="height: 200px;" row="8"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="select_curen" class="col-lg-12 col-form-label">Select Currency</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="select_curen" class="form-control"
+                                        formControlName="selectCurrency">
+                                        <option [ngValue]="null" selected disabled>Select Currency</option>
+                                        <option *ngFor="let currency of CurrencyList" value="{{currency.currencyId}}">
+                                            {{currency.currency_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="select_logo" class="col-lg-12 col-form-label">Select Extra Logo</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="select_logo" class="form-control"
+                                        formControlName="extraLogo">
+                                        <option [ngValue]="null" selected disabled>Select Extra Logo</option>
+                                        <option *ngFor="let logo of ExtraLogoList" value="{{logo}}">
+                                            {{logo}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="pdf_template" class="col-lg-12 col-form-label">Select PDF Template</label>
+                                <div class="col-lg-12">
+                                    <select name="pdftemp" id="pdf_template" class="form-control"
+                                        formControlName="selectPDFTemplate">
+                                        <option [ngValue]="null" selected disabled>Select PDF Template</option>
+                                        <option *ngFor="let pdf of  PDFTemplateList" value="{{pdf}}">
+                                            {{pdf}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                       
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="term_con" class="col-lg-12 col-form-label">Quotation Terms and
+                                    Conditions</label>
+                                <div class="col-lg-12">
+                                    <select name="termcond" id="term_con" class="form-control"
+                                    (change)="TermsConditionsContentDropdown($event)"
+                                        formControlName="selectTermsConditions" >
+                                        <option [ngValue]="null" selected disabled>Quotation Terms and
+                                            Conditions</option>
+                                        <option *ngFor="let term of TermsConditionList"
+                                            value="{{term.terms_condition_id}}">
+                                            {{term.terms_condition_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <textarea class="form-control" row="12" style="height:200px ;" formControlName="termConditionContentChange"></textarea>
+
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="descriptionDetails" class="form-label">Description Details</label>
+                                <textarea class="form-control" style="height:200px ;"  row="4" formControlName="DescriptionText"></textarea>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Cancel
+                </button>
+               
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-----------------Modal Pop Up (END) for Add Quotation New Pop Up  in Quotation New------------------>
