@@ -273,7 +273,13 @@ export class CustomernewallComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: false
     };
+// if(localStorage.getItem('login_status')=='1'){
+//   localStorage.setItem('login_status','0');
+  
+//   window.location.reload();
+ 
 
+// }
     this.dropdownSettings_customerClassification = {
       singleSelection: false,
       idField: 'customerClassificationId',

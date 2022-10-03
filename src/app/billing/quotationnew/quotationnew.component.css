@@ -101,7 +101,16 @@
 
 tr:nth-child(even) {background: rgb(239, 241, 238)}
 tr:nth-child(odd) {background: #FFF}
-
+.addcontractmastercss{
+  font-weight: 500;
+}
+.alertdangerCustomCSS{
+  color: #ff4d4f;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+  margin: 10px 15px !important;
+  }
 
 
 

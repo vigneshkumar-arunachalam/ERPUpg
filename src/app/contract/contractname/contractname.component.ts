@@ -63,10 +63,10 @@ export class ContractnameComponent implements OnInit {
       if (response.status == true) {
 
       } else {
-        iziToast.warning({
-          message: "Please try again",
-          position: 'topRight'
-        });
+        // iziToast.warning({
+        //   message: "Please try again",
+        //   position: 'topRight'
+        // });
       }
     }),
       (error: any) => {

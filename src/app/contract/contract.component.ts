@@ -85,6 +85,9 @@ export class ContractComponent implements OnInit {
   emailToBizz: any;
   approveStatus: any;
   customerContractIDApproveStatus: any;
+  CustomerIDUpdate:any;
+  updateCustID:any;
+  customerIDJoin:any=[];
 
   formGroup = this.fb.group({
     features: this.fb.array([this.fb.control('', Validators.required)])
@@ -102,7 +105,10 @@ export class ContractComponent implements OnInit {
 
     // this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.FileURLDisplay);
 
-
+    if(localStorage.getItem('login_status')=='1'){
+      localStorage.setItem('login_status','0');
+      window.location.reload();
+    }
 
     this.contractRemarkForm = new FormGroup({
       'cust_name': new FormControl(null),
@@ -207,6 +213,7 @@ export class ContractComponent implements OnInit {
     return this.fb.group({
       e_company_Name: '',
       e_contractName: '',
+      e_contractID:'',
       e_customer_contract_id: '',
       e_classificationName: '',
       e_fromDate: '',
@@ -327,6 +334,7 @@ export class ContractComponent implements OnInit {
   }
   check() { }
   contractEditGroup() {
+    this.editContractGroupForm.reset();
     
     console.log(this.edit_array)
     if (this.edit_array == '') {
@@ -358,7 +366,17 @@ export class ContractComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.contacts_list=response.result.data.list_data;
-
+      this.updateCustID=response.edit_contract_details;
+      console.log("test update customer id",this.updateCustID)
+  
+      this.updateCustID.forEach((Element: any) => {
+        console.log(Element.customer_id);
+        this.customerIDJoin.push(Element.customer_id);
+        
+        console.log("this.customerIDJoin",  this.customerIDJoin);
+      });
+      console.log("variable check",this.customerIDJoin.join(",") )
+      
       //this.resultEditGroup = response.edit_contract_details
       console.log("op", response.edit_contract_details)
       console.log("op1", response.edit_contract_details[0].biller_id)
@@ -367,16 +385,18 @@ export class ContractComponent implements OnInit {
 
         const formArray = new FormArray([]);
         for (let index = 0; index < response.edit_contract_details.length; index++) {
-
+          this.CustomerIDUpdate=response.edit_contract_details[index].customer_id,
           formArray.push(this.fb.group({
             "e_company_Name": response.edit_contract_details[index].customerName,
             "e_contractName": response.edit_contract_details[index].contract_id,
+            "e_contractID":response.edit_contract_details[index].customer_id,
             "e_customer_contract_id": response.edit_contract_details[index].customer_contract_id,
             "e_classificationName": response.edit_contract_details[index].contract_classification_id,
             "e_fromDate": response.edit_contract_details[index].from_dt,
             "e_toDate": response.edit_contract_details[index].to_dt,
             "e_remarks": response.edit_contract_details[index].remark_desc,
             "e_billerName": response.edit_contract_details[index].biller_id,
+           
 
           })
           );
@@ -397,6 +417,7 @@ export class ContractComponent implements OnInit {
 
   }
   contractUpdate() {
+   
     $("#editCustomerContractId").modal("hide");
     console.log(this.editContractGroupForm.value)
     // console.log("group select id",this.edit_array)
@@ -409,6 +430,7 @@ export class ContractComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     update_req.action = "customer_contract_group_update";
     update_req.user_id = "2";
+    // update_req.e_company_Name=this.customerIDJoin;
     update_req.values = this.editContractGroupForm.value.edit_addresses;
     api_req.element_data = update_req;
 
@@ -417,7 +439,9 @@ export class ContractComponent implements OnInit {
 
       console.log("update response", response)
 
-      if (response != '') {
+      if (response.status== true) {
+        this.contractList(); 
+        this.editContractGroupForm.reset();
         iziToast.success({
           title: 'Success',
           message: 'Contract has been updated!',
@@ -969,7 +993,7 @@ export class ContractComponent implements OnInit {
     });
 
   }
-
+ 
   selectEventCustomer(item: any) {
     console.log(item)
     this.cust_id = item;
@@ -1268,7 +1292,7 @@ export class ContractComponent implements OnInit {
       this.emailBizzFileForm.patchValue({
 
         'bizz_email_to': response.email,
-        'bizz_Subject_Content': response.email,
+        // 'bizz_Subject_Content': response.email,
         'mailcontent': this.mailContent,
       });
 

@@ -1,12 +1,35 @@
 <!-- <app-header></app-header> -->
-<app-navbar></app-navbar>
+<!-- changed below for login after change -->
+<!-- <app-navbar></app-navbar>
 <app-sidebar2></app-sidebar2>
 
 <router-outlet></router-outlet>
-<!-- <editor [init]="{
-    base_url: '/tinymce',
-    suffix: '.min',
-    plugins: 'link',
-    statusbar : false
- }"></editor> -->
-<app-footer></app-footer>
+
+<app-footer></app-footer> -->
+
+
+<div class="loader"></div>
+<div class="main-body-content">
+
+    <div id="app">
+        <div class="main-wrapper main-wrapper-1 main_container" *ngIf="templateAuthView == false">
+            <app-navbar></app-navbar>
+            <app-sidebar2></app-sidebar2>
+            <app-footer></app-footer>
+            <div class="main-content" *ngIf="templateAuthView == false">
+                <section class="section">
+                    <router-outlet (activate)="onActivate($event)"></router-outlet>
+                </section>
+                <!-- //<app-setting-menu></app-setting-menu> -->
+
+            </div>
+            
+           
+        </div>
+
+        <div class="main-body-auth" *ngIf="templateAuthView == true">
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
+        </div>
+
+    </div>
+</div>

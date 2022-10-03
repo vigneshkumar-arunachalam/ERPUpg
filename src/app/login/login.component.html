@@ -1,0 +1,106 @@
+<!-- <div class="login-bg">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="container">
+                <div id="login-page" class="row">
+                    <div class="col-sm-12 col-md-6 col-lg-4 z-depth-4 card-panel border-radius-6 login-card bg-opacity-8"
+                        style="    flex: 0 0 50%;
+                  max-width: 35%;">
+                        <form class="login-form" [formGroup]="loginForm" (ngSubmit)="userLogin()">
+                            <div class="row">
+                                <div class="input-field col-lg-12">
+                                    <h2 class="ml-4">Sign in</h2>
+                                </div>
+                            </div>
+                            <div class="row margin">
+                                <div class="input-field col-lg-12">
+                                    <i class="material-icons prefix pt-2">person_outline</i>
+
+                                    <label for="username" class="center-align">Username</label>
+                                    <input id="user_name" type="user_name" class="form-control" name="user_name"
+                                        tabindex="1" formControlName="username" required autofocus>
+                                    <div class="error-message message-small"
+                                        *ngIf="!loginForm.get('username').valid && loginForm.get('username').touched"
+                                        class="invalid-feedback">
+                                        Please enter your email
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row margin">
+                                <div class="input-field col-lg-12">
+                                    <i class="material-icons prefix pt-2">lock_outline</i>
+
+                                    <label for="password">Password</label>
+                                    <input id="password" type="password" class="form-control" name="password"
+                                        tabindex="2" formControlName="password" required>
+                                    <div class="error-message message-small"
+                                        *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched"
+                                        class="invalid-feedback">
+                                        Please enter your password
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12 col-lg12 ml-2 mt-1">
+                                    <p>
+                                        <label>
+                                            <input type="checkbox" />
+                                            <span>Remember Me</span>
+                                        </label>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col-sm-12">
+
+                                    <button type="submit"
+                                        class="btn waves-effect waves-light border-round gradient-45deg-purple-deep-orange col s12"
+                                        tabindex="4">
+                                        Login
+                                    </button>
+
+                                </div>
+                            </div>
+                            <div class="row" style="display: flex;">
+                                <div class="input-field col-sm-6 col-md-6 col-lg-6">
+                                    <p class="margin medium-small"><a href="user-register.html">Register Now!</a></p>
+                                </div>
+                                <div class="input-field col-sm-6 col-md-6 col-lg-6">
+                                    <p class="margin right-align medium-small"><a
+                                            href="user-forgot-password.html">Forgot password ?</a></p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="body">
+    <div class="box">
+        <div class="form">
+            <form [formGroup]="loginForm">
+                <h2>Sign in</h2>
+                <div class="inputBox">
+                    <input type="text" required="required" formControlName="username">
+                    <span>Username</span>
+                    <i></i>
+                </div>
+                <div class="inputBox">
+                    <input type="password" required="required" formControlName="password">
+                    <span>Password</span>
+                    <i></i>
+                </div>
+                <div class="links">
+                    <!-- <a href="#">Forget Password</a>
+                    <a href="#">Sign up</a> -->
+                </div>
+                <input type="submit" value="Login" (click)="userLogin()">
+            </form>
+        </div>
+    </div>
+</div>

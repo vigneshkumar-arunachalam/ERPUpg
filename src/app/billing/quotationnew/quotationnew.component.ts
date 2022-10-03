@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
-import { FormControl,FormGroup } from '@angular/forms';
+import { FormControl,FormGroup,Validators } from '@angular/forms';
 declare var $:any;
 declare var iziToast:any;
 import Swal from 'sweetalert2'
@@ -24,7 +24,7 @@ export class QuotationnewComponent implements OnInit {
   
  
     this.addNewQuotationPopUpForm=new FormGroup({
-      'enquiryFrom_addPopUP': new FormControl(null),
+      'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
       'enquirySubject_addPopUP': new FormControl(null),
       'quotationValidity_addPopUP': new FormControl(null),
       'version_enqForm_addPopUP': new FormControl(null),
@@ -102,7 +102,7 @@ export class QuotationnewComponent implements OnInit {
          this.templateNameList=response.template_name_arr;
          console.log("hi",this.enquiryFromList)
          
-          $('#addNewQuotationFormId').modal('hide');
+          // $('#addNewQuotationFormId').modal('hide');
           //this.contactsList({});
   
         }

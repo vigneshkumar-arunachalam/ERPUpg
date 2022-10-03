@@ -46,6 +46,8 @@ import { AddquotationnewComponent } from './billing/quotationnew/addquotationnew
 import { CheckComponent } from './check/check.component';
 import { ContractliveComponent } from './contractlive/contractlive.component';
 import { LiveComponent } from './live/live.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 
 
 @NgModule({
@@ -78,6 +80,8 @@ import { LiveComponent } from './live/live.component';
      CheckComponent,
      ContractliveComponent,
      LiveComponent,
+     LoginComponent,
+     LogoutComponent,
     
   ],
   imports: [

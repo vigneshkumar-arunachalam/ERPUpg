@@ -25,10 +25,18 @@ import { QuotationnewComponent } from './billing/quotationnew/quotationnew.compo
 import { AddquotationnewComponent } from './billing/quotationnew/addquotationnew/addquotationnew.component';
 import { CheckComponent } from './check/check.component';
 import { ContractliveComponent } from './contractlive/contractlive.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   {
-    path: '', component: AddquotationnewComponent
+    path: '', component: LoginComponent
+  },
+  {
+    path: 'login', component: LoginComponent
+  },
+  {
+    path: 'logout', component: LogoutComponent
   },
   {
     path: 'contractlive', component: ContractliveComponent

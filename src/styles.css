@@ -4107,7 +4107,8 @@ ul {
 }
 
 .contents {
-    padding: 105px 15px 72px 295px;
+    /* padding: 105px 15px 72px 295px; */
+    padding: 40px 15px 72px 295px;
     -webkit-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
@@ -28812,4 +28813,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
    /* tiny editor-height in common */
 .tox.tox-tinymce{
     height: 350px!important;
+  }
+  .ng-autocomplete{width: 100%!important;display: block;padding: 0px 7px;}
+  ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+    padding: 0px 15px;
+    width: 100%;
+    display: block;
+  }
+  .autocomplete-container{
+    background-clip: padding-box;
+    border: 1px solid #f1f2f6;
+    border-radius: 5px;
+    height: auto;
+    box-shadow: none;
   }
