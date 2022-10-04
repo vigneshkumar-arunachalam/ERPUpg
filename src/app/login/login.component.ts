@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('access_token','test')
         localStorage.setItem('login_status','1')
         // this.router.navigate(['/customernewall']);- whatever we need as home
-        this.router.navigate(['/contract']);
+        this.router.navigate(['/']);
         Swal.close();
         iziToast.success({
           message: 'Logged In Sucessfully',

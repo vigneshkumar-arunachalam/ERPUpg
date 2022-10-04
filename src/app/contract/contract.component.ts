@@ -725,7 +725,7 @@ export class ContractComponent implements OnInit {
         else {
           $("#invoiceAttachmentId").modal("hide");
             iziToast.error({
-                message: "500 Error, Please try again",
+                message: "Data Not Found",
                 position: 'topRight'
             });
             // this.editInvoiceGroupForm.reset();

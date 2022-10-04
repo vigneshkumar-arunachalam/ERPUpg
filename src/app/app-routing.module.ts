@@ -30,7 +30,7 @@ import { LogoutComponent } from './logout/logout.component';
 
 const routes: Routes = [
   {
-    path: '', component: LoginComponent
+    path: '', component: ContractComponent
   },
   {
     path: 'login', component: LoginComponent

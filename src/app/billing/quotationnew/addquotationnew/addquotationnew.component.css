@@ -142,7 +142,7 @@ tr:nth-child(odd) {
 }
 
 #AddQuotationPopUpFormId .modal-dialog {
-  max-width: 67%;
+  max-width: 95%;
 }
 
 #AddQuotationPopUpFormId label {
@@ -238,3 +238,19 @@ tr:nth-child(odd) {
 .userDatatable-content, .userDatatable-inline-title h6{padding: 5px 10px;}
 .userDatatable-title{text-align: right;display: block;padding-right: 10px;}
 .add-contact-table-section tr{height: 50px; border: 1px solid #ddd;}
+
+label.col-form-label {
+  padding-right: 10px;
+}
+.col-form-label{width: 120px;}
+section.right_section{ padding: 20px;}
+
+.add-contact-table-section tr th{padding:0px 15px;}
+table.add-contact-table-section {
+  margin-bottom: 25px;
+}
+input.form-control {
+  padding: 4px 8px;
+}
+#AddQuotationPopUpFormId .modal-content.addcontractmastercss{overflow-y: scroll;
+  height: 500px;}

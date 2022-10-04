@@ -62,7 +62,9 @@ export class AddquotationnewComponent implements OnInit {
       'extraLogo': new FormControl(null),
       'selectPDFTemplate': new FormControl(null),
       'selectTermsConditions': new FormControl(null),
+      'termsCondition_DontShow': new FormControl(null),
       'DescriptionText': new FormControl(null),
+      'descriptionDetails_DontShow': new FormControl(null),
       'termConditionContentChange': new FormControl(null),
       'templateContent_Dropdown': new FormControl(null),
 
@@ -115,6 +117,18 @@ export class AddquotationnewComponent implements OnInit {
     this.checkbox_GrantTotalShow=e.target.checked
     console.log(this.checkbox_GrantTotalShow);
   }
+checkbox_termsCondition_DontShow: any;
+  termsCondition_DontShow_eventCheck(e:any){
+    this.checkbox_termsCondition_DontShow=e.target.checked;
+    console.log(this.checkbox_termsCondition_DontShow);
+  }
+
+checkbox_descriptionDetails_DontShow: any;
+  descriptionDetails_DontShow_eventCheck(e:any){
+    this.checkbox_descriptionDetails_DontShow=e.target.checked
+    console.log(this.checkbox_descriptionDetails_DontShow);
+  }
+
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
@@ -393,47 +407,103 @@ export class AddquotationnewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_saveEnquiry_req.action = "insert_quotation";
     api_saveEnquiry_req.user_id = "2";
-    
+  
+    api_saveEnquiry_req.billerId=this.addQuotationInvoice_section1.value.companyName;
     api_saveEnquiry_req.quotation_no=this.addQuotationInvoice_section1.value.quotationNumber;
-    api_saveEnquiry_req.quotation_date= this.addQuotationInvoice_section1.value.quotationDate;
-    api_saveEnquiry_req.quotation_date_time= "2";
-    api_saveEnquiry_req.quotation_biller_no= "2";
-   
-    api_saveEnquiry_req.customerName= this.addQuotationInvoice_section1.value.customerName;
+    api_saveEnquiry_req.pdf_footer_id=this.addQuotationInvoice_section1.value.selectFooter;
+    api_saveEnquiry_req.quotation_date=this.addQuotationInvoice_section1.value.quotationDate;
+ 
+    api_saveEnquiry_req.customer_id=this.addQuotationInvoice_section1.value.customerName;
     api_saveEnquiry_req.customerAddress1=this.addQuotationInvoice_section1.value.cust_address1;
-    api_saveEnquiry_req.customerAddress2= this.addQuotationInvoice_section1.value.cust_address2;
-    api_saveEnquiry_req.customerAddress3= this.addQuotationInvoice_section1.value.cust_address3;
-    api_saveEnquiry_req.kind_Attention= this.addQuotationInvoice_section1.value.attention;
-    api_saveEnquiry_req.quotation_template_id= "2";
-    api_saveEnquiry_req.main_content= "2";
-    api_saveEnquiry_req.terms_conditions= "2";
-    api_saveEnquiry_req.terms_condition_id= "2";
-    api_saveEnquiry_req.terms_conditions_show_state= "2";
+    api_saveEnquiry_req.customerAddress2=this.addQuotationInvoice_section1.value.cust_address2;
+    api_saveEnquiry_req.customerAddress3=this.addQuotationInvoice_section1.value.cust_address3;
+    // api_saveEnquiry_req.quotation_no=Address3;
+    api_saveEnquiry_req.kind_Attention=this.addQuotationInvoice_section1.value.attention;
+    api_saveEnquiry_req.billGeneratedBy=this.addQuotationInvoice_section1.value.salesRep;
+    api_saveEnquiry_req.reseller_id=this.addQuotationInvoice_section1.value.selectReseller;
+    api_saveEnquiry_req.quotation_template_id=this.addQuotationInvoice_section1.value.selectTemplate;
+     api_saveEnquiry_req.main_content=this.addQuotationInvoice_section1.value.templateContent_Dropdown;
+     api_saveEnquiry_req.selectCurrency=this.addQuotationInvoice_section1.value.currencyId;
+     api_saveEnquiry_req.extraLogo=this.addQuotationInvoice_section1.value.bills_logo_id;
+     api_saveEnquiry_req.selectPDFTemplate=this.addQuotationInvoice_section1.value.default_quotation_pdf_temp;
+     api_saveEnquiry_req.terms_condition_id=this.addQuotationInvoice_section1.value.selectTermsConditions;
+     api_saveEnquiry_req.terms_conditions_show_state=this.checkbox_termsCondition_DontShow;
+     api_saveEnquiry_req.terms_conditions=this.addQuotationInvoice_section1.value.termConditionContentChange;
+     api_saveEnquiry_req.description_details=this.addQuotationInvoice_section1.value.DescriptionText;
+     api_saveEnquiry_req.description_details_show_state=this.checkbox_descriptionDetails_DontShow;
+     api_saveEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
+  
+    // api_saveEnquiry_req.quotation_no=Product Details_formarray;
+    api_saveEnquiry_req.total_display_status=this.addQuotationInvoice_section3.value.section3_grant_total_show;
+    api_saveEnquiry_req.gross_total=this.addQuotationInvoice_section3.value.section3_gross_total;
+    // api_saveEnquiry_req.quotation_no=Discount;
+    // api_saveEnquiry_req.quotation_no=gst;
+    api_saveEnquiry_req.tax_id1=this.addQuotationInvoice_section3.value.section3_txtboxRow3;
+    api_saveEnquiry_req.tax_id2=this.addQuotationInvoice_section3.value.section3_txtbox1Row4;
+ 
+    // api_saveEnquiry_req.quotation_no=txt3;
+    api_saveEnquiry_req.grand_total=this.addQuotationInvoice_section3.value.section3_grand_total;
+    api_saveEnquiry_req.remarks=this.addQuotationInvoice_section3.value.section3_remarks;
+    api_saveEnquiry_req.additional_signature_id=this.addQuotationInvoice_section3.value.section3_signature_dropdown;
+    api_saveEnquiry_req.default_quotation_pdf_temp=this.addQuotationInvoice_section3.value.section3_templateName;
+
+ 
+
+
+
+
+
+
+
+
+
+
+    // api_saveEnquiry_req.quotation_no=this.addQuotationInvoice_section1.value.quotationNumber;
+    // api_saveEnquiry_req.quotation_date= this.addQuotationInvoice_section1.value.quotationDate;
+    // api_saveEnquiry_req.quotation_date_time= "2";
+    // api_saveEnquiry_req.quotation_biller_no= "2";
+   
+    // api_saveEnquiry_req.customerName= this.addQuotationInvoice_section1.value.customerName;
+    // api_saveEnquiry_req.customerAddress1=this.addQuotationInvoice_section1.value.cust_address1;
+    // api_saveEnquiry_req.customerAddress2= this.addQuotationInvoice_section1.value.cust_address2;
+    // api_saveEnquiry_req.customerAddress3= this.addQuotationInvoice_section1.value.cust_address3;
+    // api_saveEnquiry_req.kind_Attention= this.addQuotationInvoice_section1.value.attention;
+    // api_saveEnquiry_req.quotation_template_id= "2";
+    // api_saveEnquiry_req.main_content= "2";
+    // api_saveEnquiry_req.terms_conditions= "2";
+    // api_saveEnquiry_req.terms_condition_id= "2";
+    // api_saveEnquiry_req.terms_conditions_show_state= "2";
     
-    api_saveEnquiry_req.description_details= "2";
-    api_saveEnquiry_req.description_details_show_state= "2";
-    api_saveEnquiry_req.reseller_id= "2";
-    api_saveEnquiry_req.remarks= "2";
-    api_saveEnquiry_req.billGeneratedBy= "2";
+    // api_saveEnquiry_req.description_details= "2";
+    // api_saveEnquiry_req.description_details_show_state= "2";
+    // api_saveEnquiry_req.reseller_id= "2";
+    // api_saveEnquiry_req.remarks= "2";
+    // api_saveEnquiry_req.billGeneratedBy= "2";
 
-    api_saveEnquiry_req.currencyId= "2";
-    api_saveEnquiry_req.signatureId= "2";
-    api_saveEnquiry_req.bills_logo_id= "2";
-    api_saveEnquiry_req.pdf_footer_id= "2";
-    api_saveEnquiry_req.gross_total= "2";
-    api_saveEnquiry_req.par_dis_per= "2";
-    api_saveEnquiry_req.par_dis_amt= "2";
+    // api_saveEnquiry_req.currencyId= "2";
+    // api_saveEnquiry_req.signatureId= "2";
+    // api_saveEnquiry_req.bills_logo_id= "2";
+    // api_saveEnquiry_req.pdf_footer_id= "2";
+    // api_saveEnquiry_req.gross_total= "2";
+    // api_saveEnquiry_req.par_dis_per= "2";
+    // api_saveEnquiry_req.par_dis_amt= "2";
 
 
 
-    if (this.addQuotationInvoice_section2.value.addresses.length <= 1) {
-      api_saveEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
+    // if (this.addQuotationInvoice_section2.value.addresses.length <= 1) {
+    //   api_saveEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
 
-    } else {
-      api_saveEnquiry_req.values = this.addresses.value;
-    }
+    // } else {
+    //   api_saveEnquiry_req.values = this.addresses.value;
+    // }
     
     api_req.element_data =api_saveEnquiry_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      
+    
+       console.log("add quotation new save",response );
+       
+     });
 
   }
   searchCustomer_selectDropdownData(data: any) {
