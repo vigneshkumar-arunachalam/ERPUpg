@@ -20,9 +20,9 @@
                                         <tr class="userDatatable-header">
 
 
-                                            <!-- <th>
+                                            <th>
                                                 <span class="userDatatable-title">QuotID</span>
-                                            </th> -->
+                                            </th>
                                             <th>
                                                 <span class="userDatatable-title">QuotNo</span>
                                             </th>
@@ -60,9 +60,9 @@
                                         <tr *ngFor="let list of quotation_list ; let i = index">
 
 
-                                            <!-- <td>
-                                               <span> {{ list.quotationId}}</span>
-                                            </td> -->
+                                            <td>
+                                                <span> {{ list.quotationId}}</span>
+                                            </td>
                                             <td>
                                                 <span>{{ list.quotation_no}}</span>
                                             </td>
@@ -107,6 +107,29 @@
 
                                                         <ul class="dropdown__list">
                                                             <li class="dropdown__item">
+                                                                <a class="remove" title="Edit Quotation"
+                                                                    data-toggle="modal"
+                                                                    data-target="#editNewQuotationFormId"
+                                                                    (click)="editQuotationPopUP(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-activity">
+                                                                        <path
+                                                                            d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34">
+                                                                        </path>
+                                                                        <polygon
+                                                                            points="18 2 22 6 12 16 8 16 8 12 18 2">
+                                                                        </polygon>
+                                                                    </svg>
+
+                                                                </a>
+
+                                                            </li>
+
+
+                                                            <li class="dropdown__item">
                                                                 <a class="view" title="Delete Quotation"
                                                                     (click)="deleteQuotation(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
@@ -124,12 +147,12 @@
                                                                 </a>
 
                                                             </li>
-<!-- 
+
                                                             <li class="dropdown__item">
                                                                 <a class="remove" title="Invoice Attachment"
                                                                     data-toggle="modal"
-                                                                    data-target="#invoiceAttachmentId"
-                                                                    (click)="invoiceAttachment(list.customer_contract_id,list.customer_id)">
+                                                                    data-target="#quotationSharedPersonId"
+                                                                    (click)="quotationSharedPersonEdit(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="2"
@@ -143,7 +166,73 @@
                                                                     </svg>
 
                                                                 </a>
-                                                            </li> -->
+                                                            </li>
+
+                                                            <li class="dropdown__item">
+                                                                <a class="view" title="Quotation Approval"
+                                                                    data-toggle="modal"
+                                                                    data-target="#quotationApprovalId"
+                                                                    (click)="quotationApprovalEdit(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="currentColor" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-activity">
+                                                                        <circle cx="12" cy="5" r="3"></circle>
+                                                                        <line x1="12" y1="22" x2="12" y2="8"></line>
+                                                                        <path d="M5 12H2a10 10 0 0 0 20 0h-3"></path>
+                                                                    </svg>
+
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="view" title="Set Template Name"
+                                                                    data-toggle="modal"
+                                                                    data-target="#setTemplateNameId"
+                                                                    (click)="setTemplateName(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                    stroke-linejoin="round" class="feather feather-activity">
+                                                                    <path
+                                                                      d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3">
+                                                                    </path>
+                                                                  </svg>
+
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="view" title="Set Actual Cost"
+                                                                    data-toggle="modal"
+                                                                    data-target="#setActualCostId"
+                                                                    (click)="setActualCost(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                    stroke-linejoin="round" class="feather feather-activity">
+                                                                    <path
+                                                                      d="M22.08 9C19.81 1.41 16.54-.35 9 1.92S-.35 7.46 1.92 15 7.46 24.35 15 22.08 24.35 16.54 22.08 9z">
+                                                                    </path>
+                                                                    <line x1="12.57" y1="5.99" x2="16.15" y2="16.39"></line>
+                                                                    <line x1="7.85" y1="7.61" x2="11.43" y2="18.01"></line>
+                                                                    <line x1="16.39" y1="7.85" x2="5.99" y2="11.43"></line>
+                                                                    <line x1="18.01" y1="12.57" x2="7.61" y2="16.15"></line>
+                                                                  </svg>
+
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a href="#" class="remove" title="File Attachment" 
+                                                                data-toggle="modal"
+                                                                  data-target="#fileAttachmentFormId" 
+                                                                  (click)="fileAttachmentEdit(list.quotationId)">
+                                                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                                    stroke-linejoin="round" class="feather feather-activity">
+                                                                    <circle cx="12" cy="8" r="7"></circle>
+                                                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                                                                  </svg>
+                                                                </a>
+                                                              </li>
+
                                                         </ul>
                                                     </div>
 
@@ -176,19 +265,20 @@
             </div>
             <div class="modal-body">
                 <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
-                <form [formGroup]="addNewQuotationPopUpForm">
+                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm" (ngSubmit)="AddQuotationGo()">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
                                 <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
                                 <div class="col-lg-12">
-                                    <select name="enqFormValue" id="enq_From" class="form-control" formControlName="enquiryFrom_addPopUP">
+                                    <select name="enqFormValue" id="enq_From" class="form-control"
+                                        formControlName="enquiryFrom_addPopUP">
                                         <option [ngValue]="null" selected disabled>Select Enquiry From</option>
-                        
+
                                         <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
                                             {{term.enquiry_from_name}}
                                         </option>
-                        
+
                                     </select>
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
@@ -206,6 +296,10 @@
                                     <input type="text" class="form-control" formControlName="enquirySubject_addPopUP"
                                         id="enq_subject" />
                                 </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    Enquiry Subject is Required
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -220,6 +314,10 @@
                                         </option>
                                     </select>
                                 </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].dirty || addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    Quotation Validity is Required
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -229,6 +327,10 @@
                                     <input type="text" class="form-control" formControlName="version_enqForm_addPopUP"
                                         id="version" />
                                 </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].dirty || addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].touched)"
+                                class="alert alert-danger alertdangerCustomCSS">
+                                Version is Required
+                            </div>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -255,8 +357,10 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AddQuotationPopUpFormId"
-                    (click)="AddQuotationGo()">Go>></button>
+                <button type="submit" class="btn btn-primary" 
+                form="ngForm"  >Go>></button>
+
+               
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Cancel
                 </button>
@@ -266,3 +370,515 @@
     </div>
 </div>
 <!------------------------------ vignesh Add New Quotation Pop up ends------------------------------------------>
+
+
+
+<!-----------------Modal Pop Up (BEGIN) edit- Pop Up  in customer Contract Classification------------------>
+<div class="modal fade" id="editNewQuotationFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
+                <form [formGroup]="editNewQuotationPopUpForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="enq_From" class="form-control"
+                                        formControlName="e_enquiryFrom_addPopUP">
+                                        <option [ngValue]="null" selected disabled>Select Enquiry From</option>
+
+                                        <option *ngFor="let term of edit_enquiryFromList"
+                                            value="{{term.enquiry_from_id}}">
+                                            {{term.enquiry_from_name}}
+                                        </option>
+
+                                    </select>
+                                </div>
+                                <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS">
+                                    Enquiry From Details is Required
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="e_enquirySubject_addPopUP"
+                                        id="enq_subject" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity</label>
+                                <div class="col-lg-12">
+                                    <select name="quotValidity" id="quot_val" class="form-control"
+                                        formControlName="e_quotationValidity_addPopUP">
+                                        <option [ngValue]="null" selected disabled>Select Quotation Validity</option>
+                                        <option *ngFor="let validity of edit_quotationValidityList"
+                                            value="{{validity}}">
+                                            {{validity}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="version" class="col-lg-12 col-form-label">Version</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="e_version_enqForm_addPopUP"
+                                        id="version" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="temp_name" class="col-lg-12 col-form-label">Template Name</label>
+                                <div class="col-lg-12">
+                                    <select name="templateN" id="temp_name" class="form-control"
+                                        formControlName="e_templateName_addPopUP">
+                                        <option [ngValue]="null" selected disabled>Select Template Name</option>
+
+                                        <option *ngFor="let template of edit_templateNameList"
+                                            value="{{template.quotationId}}">
+                                            {{template.template_name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="EditQuotationGo()">Go>></button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------ vignesh edit-popup New Quotation Pop up ends------------------------------------------>
+
+
+
+
+<!----------Modal Pop Up (BEGIN)  for Quotation Shared Attachment in customer Contract------------------>
+<div class="modal fade" id="quotationSharedPersonId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Quotation Shared Person</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quotationSharedPersonForm">
+                    <table class="demoTable">
+
+                        <tr>
+                            <td><strong>Select Shared Person </strong>
+                            </td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr *ngFor="let quot of quotationSharedResult;let i =index">
+
+                                        <td>
+
+                                            <input type="checkbox" value="{{quot.chk_val}}"
+                                                checked="{{quot.chk_val == 'true' ? 'checked' : ''}}"
+                                                (change)="QuotationSharedCHK(quot.user_id,$event)">
+
+                                        </td>
+                                        <td>{{quot.firstName}}</td>
+                                    </tr>
+
+                                </table>
+
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="quotationSharedPersonUpdate()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for Quotation Approval in customer Contract------------------>
+<div class="modal fade" id="quotationApprovalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Quotation Approval</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="quotationApprovalForm">
+                    <h1>Are you sure you want to send to approval?</h1>
+                    <table class="demoTable">
+                        <tr>
+                            <td><strong>Approval Type </strong></td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input mdbRadio class="form-check-input" type="radio"
+                                                    name="radio_ApprovalBy" id="singleApproval" [checked]="true" (change)="handle_radioChange($event)"/>
+                                                <label class="form-check-label" for="singleApproval"> Single
+                                                    Approval</label>
+                                            </div>
+                                            <!-- Default checked radio -->
+                                            <div class="form-check">
+                                                <input mdbRadio class="form-check-input" type="radio"
+                                                    name="radio_ApprovalBy" id="doubleApproval" (change)="handle_radioChange($event)" />
+                                                <label class="form-check-label" for="doubleApproval"> Double Approval
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><strong>Approval By </strong>
+                            </td>
+                            <td>
+                                <table class="demoTable">
+                                    <tr>
+                                        <input type="checkbox" formControlName="cm_chk" [(ngModel)]="checked"
+                                            (change)="eventCheck_CM_QuotPermission($event)" />CM<br>
+                                        <input type="checkbox" formControlName="cd_chk" [(ngModel)]="checked"
+                                            (change)="eventCheck_CD_QuotPermission($event)" />CD
+                                    </tr>
+                                    <tr *ngFor="let display1 of quotationApprovalResult;let i =index">
+                                        <td>
+                                            <input type="radio" id="new_id2{{i}}"
+                                                formControlName="radio_approvalPermission" value="{{display1.userId}}"
+                                                (change)="handleChange($event)" />
+                                            <label for="new_id{{i}}"
+                                                class="col-lg-6 col-form-label">{{display1.firstName}}</label>
+                                        </td>
+                                        <!-- <td>{{display1.firstName}}</td> -->
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="quotationApprovalUpdate()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for Quotation Approval in customer Contract------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for set template name in customer Contract------------------>
+<div class="modal fade" id="setTemplateNameId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Template Name Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="setTemplateNameForm">
+
+                    
+                        <div class="form-group row">
+                          <label for="temp1" class="col-lg-6 col-form-label">Template Name</label>
+                          <div class="col-lg-6">
+                            <input type="text" class="form-control" formControlName="txt_templateName" id="temp1" />
+                          </div>
+                        </div>
+                   
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="templateNameUpdate()" >
+                    Save
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for set template name in customer Contract------------------>
+
+
+<!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
+<div class="modal fade" id="setActualCostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Actual Price Update
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="setActualCostForm">
+
+                    
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive ">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+
+                                        <!-- <th>
+                                            <span class="userDatatable-title">S.No</span>
+                                        </th> -->
+                                        <th>
+                                            <span class="userDatatable-title">Product Name</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Description</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Quantity</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Unit</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Price</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Net Total</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Act Price(%)</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Act Price</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Act Net Total</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Diff Amt</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let list of actualCost_ProductList ; let i = index">
+
+
+                                        <!-- <td>
+                                            <span> {{list.quotationId}}</span>
+                                        </td> -->
+                                        <td>
+                                            <span>{{list.productName}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{list.productDesc}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{list.qty}}</span>
+
+                                        </td>
+
+
+                                        <td>
+                                            <span> {{list.unit}}</span>
+                                        </td>
+                                        <td  *ngIf="list.productName=='Courier' || list.productName=='Other'">
+                                            <input type="text"  style="width: 50%;margin: 5px;" value="{{list.price}}"/>
+                                        </td>
+                                        <td  *ngIf="list.productName!='Courier' && list.productName!='Other'">
+                                            
+                                            <span >{{ list.price}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{list.actual_net_tot}}</span>
+                                        </td>
+
+                                        <td>
+                                            <input type="text"  style="width: 50%;margin: 5px;" value="{{list.actual_percentage}}"/>
+                                          
+                                        </td>
+
+                                        <td>
+                                            <input type="text"  style="width: 50%;margin: 5px;" value="{{list.actual_cost}}"/>
+                                           
+                                        </td>
+
+                                        <td>
+                                            <input type="text"  style="width: 50%;margin: 5px;" value="{{ list.actual_net_tot}}"/>
+
+                                        </td>
+                                        <td>
+                                            <input type="text"  style="width: 50%;margin: 5px;" value="{{ list.act_diff_amt}}"/>
+                                            
+                                        </td>
+                                    </tr>
+                                    <tr *ngFor="let list of actualCost_ProductList ; let i = index">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>list.actual_cost</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>list.actual_cost</td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                   
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary"  >
+                    Save
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
+
+<!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
+<div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle">
+          File Attachment</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="FileAttachmentForm">
+
+          <div class="modal-body contractFileAttachmentCSS">
+            <div>
+              <label for="contr" class="col-lg-12 col-form-label">
+                <strong>Attached Files</strong></label>
+            </div>
+
+            <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;" style="padding-left: 30px;">
+
+              {{display1.uploadFileName}}
+              <button type="button" class="btn btn-primary" aria-label="Close"
+                (click)="fileAttachmentDelete(display1.common_attachmentId)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <input class="checkbox" type="checkbox"
+              id="check-grp-{{i}}" checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
+              (change)="EditCHK(display1.common_attachmentId,$event)">
+            
+            </div>
+
+
+            <div>
+              <label for="contr1" class="col-lg-12 col-form-label">
+                <strong>Select New Attachment</strong></label>
+            </div>
+            <div style="padding-left: 30px;">
+              <div class="form-group">
+                <label for="file">File</label>
+               
+                <input formControlName="file" id="file" type="file" multiple class="form-control"
+                  (change)="onFileChange($event)">
+
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()" >
+          Save
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->

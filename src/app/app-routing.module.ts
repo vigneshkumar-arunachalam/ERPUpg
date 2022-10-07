@@ -27,10 +27,14 @@ import { CheckComponent } from './check/check.component';
 import { ContractliveComponent } from './contractlive/contractlive.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
+import { EditquotationnewComponent } from './billing/quotationnew/editquotationnew/editquotationnew.component';
 
 const routes: Routes = [
   {
     path: '', component: ContractComponent
+  },
+  {
+    path: 'editquotationnew', component: EditquotationnewComponent
   },
   {
     path: 'login', component: LoginComponent

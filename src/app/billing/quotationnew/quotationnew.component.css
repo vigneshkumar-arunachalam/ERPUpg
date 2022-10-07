@@ -112,6 +112,92 @@ tr:nth-child(odd) {background: #FFF}
   margin: 10px 15px !important;
   }
 
+  
+#AddQuotationPopUpFormId {
+  padding-right: 0px !important;
+}
+
+#AddQuotationPopUpFormId .modal-dialog {
+  max-width: 95%;
+}
+
+#AddQuotationPopUpFormId label {
+  font-weight: 500;
+
+  color: black;
+
+}
+#AddQuotationPopUpFormId tr th{
+  width: 200px;
+  margin: 0px 10px;
+}
+.alignFormArray{
+  display:flex;
+  /* margin-left: 2px !important; */
+}
+
+.yettocode {
+  padding-top: 10px;
+  align-items: center;
+  display: inline-flex;
+
+}
+
+.left_section {
+  border: 1px solid white;
+  width: 30%;
+
+}
+
+.right_section {
+  border: 1px solid #20c997;
+  width: 70%;
+}
+
+
+.overall {
+  display: flex;
+  width: 100%;
+}
+
+
+  table.add-contact-table-section {
+    width: 100%;
+}
+
+#AddQuotationPopUpFormId tr th{border-right: 1px solid #ddd;}
+.userDatatable-content .form-control{ width: 100%;}
+.userDatatable-content, .userDatatable-inline-title h6{padding: 5px 10px;}
+.userDatatable-title{text-align: right;display: block;padding-right: 10px;}
+.add-contact-table-section tr{height: 50px; border: 1px solid #ddd;}
+
+label.col-form-label {
+  padding-right: 10px;
+}
+.col-form-label{width: 120px;}
+section.right_section{ padding: 20px;}
+
+.add-contact-table-section tr th{padding:0px 15px;}
+table.add-contact-table-section {
+  margin-bottom: 25px;
+}
+input.form-control {
+  padding: 4px 8px;
+}
+
+#AddQuotationPopUpFormId .modal-content.addcontractmastercss{overflow-y: scroll;
+  height: 500px;}
+
+  #setActualCostId .modal-dialog {
+    max-width: 95%;
+  }
+  #setActualCostId tr th{border-right: 1px solid #ddd;}
+  .userDatatable-content .form-control{ width: 100%;}
+  .userDatatable-content, .userDatatable-inline-title h6{padding: 5px 10px;}
+  .userDatatable-title{text-align: right;display: block;padding-right: 10px;}
+  .add-contact-table-section tr{height: 50px; border: 1px solid #ddd;}
+  
+
 
 
 

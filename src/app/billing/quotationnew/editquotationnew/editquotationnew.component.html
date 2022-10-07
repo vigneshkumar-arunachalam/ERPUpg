@@ -1,0 +1,762 @@
+<div class="contents">
+    <h2 style="text-align:center;color:rgb(97, 72, 9)">Enter Invoice Details</h2>
+    <form [formGroup]="editQuotationInvoice_section1">
+        <div class="row">
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="cmp_name" class="form-control"
+                            (change)="templateContentDropdown($event)" (change)="dynamicChange($event)"
+                            formControlName="e_companyName">
+                            <option [ngValue]="null" selected disabled>Select Company Name</option>
+                            <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
+                                {{comp_name.billerName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="quot_no" class="col-lg-12 col-form-label">Quotation No</label>
+                    <div class="col-lg-12">
+                        <input type="text " class="form-control" formControlName="e_quotationNumber" id="quot_no" />
+                    </div>
+                </div>
+            </div>
+          
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="select_footer" class="col-lg-12 col-form-label">Select Footer</label>
+                    <div class="col-lg-12">
+                        <div class="form-check" *ngFor="let display of FooterDetails">
+                            <input class="form-check-input" type="radio" formControlName="e_selectFooter"
+                                id="{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
+                                (change)="handleChange($event)" />
+                            <label style="font-weight:400;font-size: 14px;color: #495057;" for="edit_c4c1">
+                                {{display.footer_name}}
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+           
+
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="quot_date" class="col-lg-12 col-form-label">Quotation Date*</label>
+                    <div class="col-lg-12">
+                        <input type="date" class="form-control" formControlName="e_quotationDate" id="quot_date" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="cust_dett" style="background-color: #cee9e6;" class="col-lg-12 col-form-label">Customer
+                        Details</label>
+
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <div class="ng-autocomplete">
+                        <label for="companyName" class="col-lg-12 col-form-label">Company Name*</label>
+                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
+                            formControlName="e_customerName" (selected)='searchCustomer_selectDropdownData($event)'
+                            (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateCustomer let-item>
+                            <a [innerHTML]="item.customerName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="addr1" class="col-lg-12 col-form-label">Address1</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="e_cust_address1" id="addr1" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="addr2" class="col-lg-12 col-form-label">Address2</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="e_cust_address2" id="addr2" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="addr3" class="col-lg-12 col-form-label">Address3</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="e_cust_address3" id="addr3" />
+                    </div>
+
+                </div>
+            </div>
+          
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="attn" class="col-lg-12 col-form-label">Attention</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="e_attention" id="attn" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="sales_r" class="form-control" formControlName="e_salesRep">
+                            <option [ngValue]="null" selected disabled>Sales Rep</option>
+                            <option *ngFor="let rep of SalesRepList" value="{{rep.userId}}">
+                                {{rep.firstName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="select_resell" class="col-lg-12 col-form-label">Select Reseller</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="select_resell" class="form-control"
+                            formControlName="e_selectReseller">
+                            <option [ngValue]="null" selected disabled>Select Reseller</option>
+                            <option *ngFor="let reseller of SalesResellerList" value="{{reseller.customerId}}">
+                                {{reseller.customerName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="select_template" class="col-lg-12 col-form-label">Select Template</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="select_template" class="form-control"
+                            (change)="templateContentDropdown($event)" formControlName="e_selectTemplate">
+                            <option [ngValue]="null" selected disabled>Select Template</option>
+                            <option *ngFor="let template of SelectTemplateList"
+                                value="{{template.quotation_template_id}}">
+                                {{template.quotation_template_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="descriptionDetails" class="form-label">Main Content</label>
+                    <textarea class="form-control" formControlName="e_templateContent_Dropdown" style="height: 200px;"
+                        row="8"></textarea>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="select_curen" class="col-lg-12 col-form-label">Select Currency</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="select_curen" class="form-control"
+                            formControlName="e_selectCurrency">
+                            <option [ngValue]="null" selected disabled>Select Currency</option>
+                            <option *ngFor="let currency of CurrencyList" value="{{currency.currencyId}}">
+                                {{currency.currency_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="select_logo" class="col-lg-12 col-form-label">Select Extra Logo</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="select_logo" class="form-control" formControlName="e_extraLogo">
+                            <option [ngValue]="null" selected disabled>Select Extra Logo</option>
+                            <option *ngFor="let logo of ExtraLogoList" value="{{logo}}">
+                                {{logo}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="pdf_template" class="col-lg-12 col-form-label">Select PDF Template</label>
+                    <div class="col-lg-12">
+                        <select name="pdftemp" id="pdf_template" class="form-control"
+                            formControlName="e_selectPDFTemplate">
+                            <option [ngValue]="null" selected disabled>Select PDF Template</option>
+                            <option *ngFor="let pdf of  PDFTemplateList" value="{{pdf.id}}">
+                                {{pdf.name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="term_con" class="col-lg-12 col-form-label">Quotation Terms and
+                        Conditions <span style="font-size:10px ;">(Don't Show)</span>
+                        <input type="checkbox" formControlName="e_termsCondition_DontShow"
+                            (change)="termsCondition_DontShow_eventCheck($event)" />
+                    </label>
+                    <div class="col-lg-12">
+                        <select name="termcond" id="term_con" class="form-control"
+                            (change)="TermsConditionsContentDropdown($event)" formControlName="e_selectTermsConditions">
+                            <option [ngValue]="null" selected disabled>Quotation Terms and
+                                Conditions</option>
+                            <option *ngFor="let term of TermsConditionList" value="{{term.terms_condition_id}}">
+                                {{term.terms_condition_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <textarea class="form-control" row="12" style="height:200px ;"
+                    formControlName="e_termConditionContentChange"></textarea>
+
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="descriptionDetails" class="form-label">Description Details
+                        <span style="font-size:10px ;">(Don't Show)</span>
+                        <input type="checkbox" formControlName="e_descriptionDetails_DontShow"
+                            (change)="descriptionDetails_DontShow_eventCheck($event)" />
+                    </label>
+
+                    <textarea class="form-control" style="height:200px ;" row="4"
+                        formControlName="e_DescriptionText"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+    <form [formGroup]="addQuotationInvoice_section2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="cust_dett" style="background-color: #cee9e6;"
+                        class="col-lg-12 col-form-label">Product Details</label>
+
+                </div>
+            </div>
+            <div class="col-12">
+
+                <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+
+                    <div [formGroupName]="i">
+                        <div class="row">
+                            <div class="col-12">
+                                <h3 style="text-align:center;color:rgb(141, 87, 129);font-weight: 500;">
+                                    Product Group {{i +
+                                    1}}</h3>&nbsp;&nbsp;
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="add-contact-table-section">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th> <span class="userDatatable-title">Product Name</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">Quantity</span></th>
+                                        <!-- <th>Product Name</th>
+                                                <th>Quantity</th> -->
+                                        <th><span class="userDatatable-title">Unit</span></th>
+                                        <th><span class="userDatatable-title">Selling Price</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">Total</span></th>
+                                        <th><span class="userDatatable-title">Net Price</span></th>
+                                        <th style="width:20px"><span class="userDatatable-title">Split</span></th>
+                                        <th style="width:20px"><span class="userDatatable-title">Gp.Total</span>
+                                        </th>
+                                        <th style="width:20px"><span class="userDatatable-title">Select Tax</span>
+                                        </th>
+
+                                        <th *ngIf="i>0" style="width:20px">
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="width:370px;display:block;">
+                                            <div class="userDatatable-content">
+                                                <div class="alignFormArray" style="display:block;">
+                                                    <input type="text" class="form-control"
+                                                        formControlName="pd_productName_txtbox1" />
+
+                                                    <textarea style="height: 42px;width: 100%;"
+                                                        class="form-control mt-2" row="4"
+                                                        formControlName="pd_productName_txtArea"></textarea>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control"
+                                                    formControlName="pd_quantity_txtbox1" />
+                                                    <input type="hidden" class="form-control"
+                                                    formControlName="pd_quotationChildId" />
+                                            </div>
+                                            
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" formControlName="pd_unit" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <div>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="pd_sellingPrice"
+                                                        (keyup)="keyPress($event, i)" />
+
+
+                                                    <button type="button"
+                                                        class="btn btn-info btn-default btn-squared  mt-2"
+                                                        data-toggle="modal" (click)="calculateDiscount(i)"
+                                                        data-target="#discountFormId" style="height: 30px;display: flex;
+                                                                width: 80px;float: right;">Discount
+                                                    </button>
+                                                    <!-- <button>Discount</button> -->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" 
+                                                formControlName="pd_Total"
+                                                    id="pd_Total_{{i}}" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" 
+                                                    formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="checkbox" formControlName="pd_split"
+                                                    (change)="productDetails_Split_eventCheck($event)" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="checkbox" formControlName="pd_GPTotal"
+                                                    (change)="productDetails_GPTotal_eventCheck($event)" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="checkbox" [ngModel]="test[i]" id="pd_selectTax_{{i}}"
+                                                    formControlName="pd_selectTax"
+                                                    (change)="productDetails_selectTax_eventCheck($event, i)" />
+
+
+                                            </div>
+                                        </td>
+                                        <td *ngIf="i>0">
+                                            <div class="userDatatable-content d-inline-block">
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    (click)=" removeAddress(i)">X</button>
+
+                                            </div>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </section>
+
+                <div class="text-right">
+                    <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                        (click)="clearAddress()">Crear Group </button>
+                    <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                        (click)="editAddress()">Add Group </button>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </form>
+    <br>
+    <br>
+    <form [formGroup]="addQuotationInvoice_section3">
+        <section class="overall">
+            <section class="left_section">
+                <!-- <div class="col-lg-12">
+                            <h1>hi</h1>
+                            <h1>hi</h1>
+                            <h1>hi</h1>
+                        </div> -->
+            </section>
+
+            <section class="right_section">
+
+
+                <div class="col-lg-12">
+
+
+                    <div class="row">
+
+
+                        <div class="col-lg-4">
+                            <div class="d-flex">
+                                <label class=" col-form-label">Grand Total Show</label>
+                                <input type="checkbox" formControlName="section3_grant_total_show"
+                                    (change)="eventCheckGrantTotalShows($event)" />
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-flex justify-content-center">
+                                <label class="col-form-label" style="margin-right:6px;">Gross
+                                    Total</label>
+                                <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
+                                    formControlName="section3_gross_total" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-4">
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-info mr-2 mt-2" data-toggle="modal"
+                                    data-target="#discountFormFinal"
+                                    style="padding: 0px;width:120px">Discount</button>
+
+                                <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
+                                    formControlName="section3_discount_txtbox" />
+                            </div>
+                        </div>
+
+                       
+                        <div class="col-lg-6">
+                            <div class="form-group ml-2 mt-2">
+
+
+                                <select name="billerID" id="billerID" class="form-control"
+                                    aria-label="Default select example" formControlName="section3_gst_dropdown"
+                                    (change)="getTaxCals()">
+                                    <option [ngValue]="null" selected disabled>Select Tax</option>
+
+
+                                    <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
+                                        {{tax.tax_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="text" formControlName="section3_taxAmt_txtbox" [(ngModel)]="finalTax"
+                                    class="form-control mt-2" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-center">
+                                <input type="text" class="form-control ml-2 mt-2"
+                                    formControlName="section3_shipping_amt_name_txtbox" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="text" (keyup)="extraFees()" formControlName="section3_shipping_amt_txtbox"
+                                    class="form-control mt-2" />
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group" style="display: flex;align-items: center;">
+                                <label class="col-lg-3 col-form-label">Grand Total</label>
+                                <input type="text" class="form-control ml-2 mt-2" [(ngModel)]="grandTotal"
+                                    formControlName="section3_grand_total" />
+
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <div class="d-flex justify-content-center" style="align-items: center;">
+                                    <label class="col-lg-3 col-form-label">Remarks</label>
+                                    <input type="text" class="form-control ml-2 mt-2"
+                                        formControlName="section3_remarks" />
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>
+                                    (Signature not available. Ask your administrator to upload your
+                                    signature if required)
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+
+                                <label>
+                                    Select Additional Signature
+                                </label>
+                                <select name="billerID" id="billerID" class="form-control"
+                                    aria-label="Default select example"
+                                    formControlName="section3_signature_dropdown">
+
+                                    <option [ngValue]="null" selected disabled>Select Signature
+                                    </option>
+                                    <option *ngFor="let sign of additionalSignatureList"
+                                        value="{{sign.additional_signature_id}}">
+                                        {{sign.additional_signature_name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Template Name</label>
+                                <input type="text" class="form-control mt-2"
+                                    formControlName="section3_templateName" />
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </section>
+        </section>
+    </form>
+    <div style="align-items:right ;">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateQuotationEnquiry()">
+            Save
+        </button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal"  (click)="goBack()">
+            Cancel
+        </button>
+    </div>
+</div>
+
+
+
+
+<!-----------------Modal Pop Up (BEGIN) discount------------------>
+<!-- <div class="modal fade" id="discountFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"> -->
+    <!-- <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                <form [formGroup]="DiscountForm">
+                    <div class="row">
+
+
+                       
+
+
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div> -->
+<!-- </div> -->
+----------------------------  discount Pop up ends----------------------------------------
+
+
+<!-----------------Modal Pop Up (BEGIN) discount------------------>
+<div class="modal fade" id="discountFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                <form [formGroup]="DiscountForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="discountTYpe" value="per">
+                                    <label for="per"> % Price</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePercentabeDiscont" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="discountTYpe" value="amt">
+                                    <label for="html">Direct Price Reduction</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePriceDiscont" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------  discount Pop up ends------------------------------------------>
+
+
+<!-----------------Modal Pop Up (Final) discount------------------>
+<div class="modal fade" id="discountFormFinal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                <form [formGroup]="DiscountForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="finaldiscountTYpe" value="per">
+                                    <label for="per"> % Price</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePerFinal" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="finaldiscountTYpe" value="amt">
+                                    <label for="html">Direct Price Reduction</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePriceFinal" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------  discount Pop up ends------------------------------------------>
