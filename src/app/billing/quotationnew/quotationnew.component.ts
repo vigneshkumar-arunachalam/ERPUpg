@@ -55,6 +55,7 @@ export class QuotationnewComponent implements OnInit {
   checkbox_value:any;
   groupSelectCommonId:any;
   commonAttachmentID:any;
+  checkboxAdding:any=[];
 
   constructor(public serverService: ServerService, private router: Router) { }
 
@@ -132,9 +133,20 @@ export class QuotationnewComponent implements OnInit {
     console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
+    for(let i=0;i<=this.getFileAttachmentResult.length;i++){
+      console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
+      // console.log(this.checkboxAdding)
+      if(this.getFileAttachmentResult[i].quotation_pdf_add=='1'){
+        this.checkboxAdding=this.getFileAttachmentResult[i].common_attachmentId;
+        // console.log(this.checkboxAdding)
+      }
+       
+    }
+    console.log(this.checkboxAdding)
     if (this.checkbox_value) {
-
+      this.checkboxAdding.push(data);
+      console.log(this.checkboxAdding)
       this.edit_array.push(data);
       // this.edit_array.join(',');
       console.log("Final Checkbox After checkbox selected list", this.edit_array);
@@ -608,9 +620,12 @@ const data = new FormData();
 for (var i = 0; i < this.myFiles.length; i++) { 
   data.append("cust_file[]", this.myFiles[i]);
 }
+for (var j = 0; j < this.edit_array.length; j++) { 
+  data.append("quotation_pdf_add[]", this.edit_array[j]);
+}
 data.append('user_id', "2" ); 
 data.append('quotationId',this.fileAttach_quotationID ); 
-data.append('quotation_pdf_add[]',""+this.edit_array+"" ); 
+// data.append('quotation_pdf_add[]',this.edit_array ); 
 data.append('action', "quotation_attachment_save");
 
 
@@ -627,6 +642,7 @@ data.append('action', "quotation_attachment_save");
               self.quotationList();
               console.log(result);
               $("#fileAttachmentFormId").modal("hide");
+              this.edit_array=[];
             }
           },
           error: function(err:any){
