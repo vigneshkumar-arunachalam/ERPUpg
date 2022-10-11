@@ -8,7 +8,9 @@
   
   /* .add-contact-table-section  table tr th span{color: black;} */
 
-
+  .userDatatable-title{
+    text-align: left !important;
+  }
   
 
   .dropdown {

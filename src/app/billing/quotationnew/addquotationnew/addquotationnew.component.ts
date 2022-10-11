@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -38,11 +39,13 @@ export class AddquotationnewComponent implements OnInit {
   grossTotal: any;
   itre = 0;
   finalDiscount = 0;
+  finalDiscountType: any;
   grandTotal = 0;
   finalTax = 0;
   extraCharge = 0;
   selectedTax = true;
   test: boolean[] = [];
+  addrNetPrices: boolean[] = [];
  
   //enquiry from details pop up
   FormID_enquiryFromDetails: any;
@@ -130,7 +133,6 @@ export class AddquotationnewComponent implements OnInit {
 
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      
     });
 
 
@@ -193,9 +195,7 @@ export class AddquotationnewComponent implements OnInit {
       
     });
   }
-  removeAddress(i: number) {
-    this.addresses.removeAt(i);
-  }
+ 
   createAddress(): FormGroup {
     return this.fb.group({
 
@@ -440,7 +440,7 @@ export class AddquotationnewComponent implements OnInit {
   }
   saveQuotationEnquiry() {
  console.log(this.addQuotationInvoice_section2.value)
-    alert(this.addQuotationInvoice_section1.value.selectCurrency)
+    // alert(this.addQuotationInvoice_section1.value.selectCurrency)
     console.log("this.addQuotationInvoice_section1.value.selectPDFTemplate", this.addQuotationInvoice_section1.value.selectPDFTemplate)
     let api_req: any = new Object();
     let api_saveEnquiry_req: any = new Object();
@@ -481,8 +481,7 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.description_details = this.addQuotationInvoice_section1.value.DescriptionText;
     api_saveEnquiry_req.description_details_show_state = this.checkbox_descriptionDetails_DontShow;
     
-    //section-2
-    api_saveEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
+    
    
     //section-3
 
@@ -507,6 +506,17 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.template_name = this.addQuotationInvoice_section3.value.section3_templateName;
 
     api_req.element_data = api_saveEnquiry_req;
+
+    //section-2
+    var addr = this.addQuotationInvoice_section2.value.addresses;
+    for(let i=0; i < addr.length; i++){
+        console.log(addr[i].pd_quantity_txtbox1)
+        addr[i].pd_netPrice=$('#pd_netPrice_' + i).val();
+        addr[i].pd_Total=$('#pd_Total_' + i).val();
+    }
+    api_saveEnquiry_req.values = addr;
+    console.log(api_req); 
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("add quotation new save", response);
@@ -701,6 +711,51 @@ export class AddquotationnewComponent implements OnInit {
     }
   }
 
+  removeAddress(i: number) {
+    this.addresses.removeAt(i);
+    var price = $('#pd_netPrice_' + i).val();
+    var gtotel = 0;
+    gtotel = gtotel - parseInt(price);
+    gtotel = Math.abs(gtotel); 
+    this.grossTotal = gtotel;
+    this.grandTotal = gtotel;  
+ 
+    console.log(this.grandTotal);
+    if (this.finalTax > 0) {
+      var tax = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
+      tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
+      if (this.grandTotal > 0) {
+        this.grandTotal = this.grandTotal - parseFloat(tax);
+      }
+      this.finalTax = parseFloat(tax);
+    }
+    console.log(this.grandTotal);
+    if (this.finalDiscount > 0) {
+      var t = JSON.parse(this.finalDiscountType);
+      var enablePercentabeDiscont = t['value']
+      var disType = t['disType']
+      var final_tot = this.grossTotal;
+      var price: any;
+      if (disType == 'per') {
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+      } else {
+        price = enablePercentabeDiscont;
+      }
+      price = Math.abs(price); 
+      if (this.grandTotal > 0) {
+        this.grandTotal = this.grandTotal - price;
+      }
+      this.finalDiscount = price
+
+    }
+    if (this.extraCharge > 0) {
+      this.grandTotal = this.grandTotal + this.extraCharge;
+    }
+  }
+
+
+
+
   calculateDiscount(val: any) {
     this.quotationPriceKey = val;
   }
@@ -710,11 +765,13 @@ export class AddquotationnewComponent implements OnInit {
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
     var price: any;
-
+    
     if (disType == 'per') {
       price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+      this.finalDiscountType = '{"disType":"per","value":"'+enablePercentabeDiscont+'" }'
     } else {
-      price = enablePriceDiscont
+      price = enablePriceDiscont;
+      this.finalDiscountType = '{"disType":"price","value":"'+enablePriceDiscont+'" }'
       console.log(price);
     }
     if (this.grandTotal > 0) {

@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 declare var $: any;
 declare var iziToast: any;
+declare var tinymce: any;
 import Swal from 'sweetalert2'
+
 @Component({
   selector: 'app-quotationnew',
   templateUrl: './quotationnew.component.html',
@@ -19,49 +21,83 @@ export class QuotationnewComponent implements OnInit {
   templateNameList: any;
   //edit modal
   editNewQuotationPopUpForm: FormGroup;
-  edit_enquiryFromList:any;
-  edit_quotationValidityList:any;
-  edit_templateNameList:any;
-  edit_quotationID:any;
+  edit_enquiryFromList: any;
+  edit_quotationValidityList: any;
+  edit_templateNameList: any;
+  edit_quotationID: any;
+  //search quotation
+  searchQuotationForm: FormGroup;
+  searchBillerNameList:any;
   // quotation_list:any=[];
   quotationValidityList: any = [];
   //quotation-shared
   quotationSharedPersonForm: FormGroup;
-  quotationSharedResult:any;
-  groupselectQuotationId:any;
-  checkbox_quotationShare_value:any;
+  quotationSharedResult: any;
+  groupselectQuotationId: any;
+  checkbox_quotationShare_value: any;
   quotationSharedCheckboxID_array: any = [];
-  sharePermissionQuotationId:any;
+  sharePermissionQuotationId: any;
   //quotation-approval
-  quotationApproval_ID:any;
+  quotationApproval_ID: any;
   quotationApprovalForm: FormGroup;
-  quotationApprovalResult:any;
+  quotationApprovalResult: any;
   checked = true;
-  Approval_Type_radiobox_Value:any;
+  Approval_Type_radiobox_Value: any;
   //set template name
-  setTemplateNameForm:FormGroup;
-  template_quotationID:any;
-  TemplateNameList:any;
+  setTemplateNameForm: FormGroup;
+  template_quotationID: any;
+  TemplateNameList: any;
   //set actual cost
-  setActualCostForm:FormGroup;
-  actualCost_quotationID:any;
-  actualCost_ProductList:any;
+  setActualCostForm: FormGroup;
+  actualCost_quotationID: any;
+  actualCost_ProductList: any;
   //file attachment
-  fileAttach_quotationID:any;
-  FileAttachmentForm:FormGroup;
-  getFileAttachmentResult:any;
-  myFiles:string [] = [];
+  fileAttach_quotationID: any;
+  FileAttachmentForm: FormGroup;
+  getFileAttachmentResult: any;
+  myFiles: string[] = [];
   edit_array: any = [];
-  checkbox_value:any;
-  groupSelectCommonId:any;
-  commonAttachmentID:any;
-  checkboxAdding:any=[];
+  checkbox_value: any;
+  groupSelectCommonId: any;
+  commonAttachmentID: any;
+  checkboxAdding: any = [];
+  //email
+  emailForm: FormGroup;
+  EmailQuotationID: any;
+  msg_id: any;
+  emailTo: any;
+  subjectValue: any;
+  Select_To_Type_radiobox_Value: any;
+  email_template: any;
+  email_fromList:any;
+  email_crmTemplateList:any;
+  email_cc_userList:any;
+  groupSelect_emailCCId:any;
+   edit_array_emailCC_Checkbox: any = [];
+   quotation_Emailtemplate_id:any;
+   messageContent:any;
+   mailContent:any;
+   FromEmailValue:any;
+    //approval
+  approval_Show_hide: boolean;
+  textarea_Show_hide: boolean;
+  textarea1_Show_hide: boolean;
+  approval_comments: any;
+  //quotation-comments
+  quotationCommentsForm: FormGroup;
+  //PI-Performa Inv
+  PIForm: FormGroup;
+  PIResult:any;
+  quotationID_PI:any;
+  CustomerName_Result:any;
+  ProductDescription_Result:any;
+ 
 
   constructor(public serverService: ServerService, private router: Router) { }
 
   ngOnInit(): void {
 
-
+this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4Care","Dcare Technologies Pte Ltd","DCARE Technologies India Pvt Ltd.","Cal4care Sdn.Bhd.","Cal4Care Japan Co., Ltd","1Msb IT Care Sdn. Bhd.","Cal4care Telecommunication Services (I) PVT LTD"]
     this.addNewQuotationPopUpForm = new FormGroup({
       'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
       'enquirySubject_addPopUP': new FormControl(null, [Validators.required]),
@@ -76,6 +112,11 @@ export class QuotationnewComponent implements OnInit {
       'e_version_enqForm_addPopUP': new FormControl(null),
       'e_templateName_addPopUP': new FormControl(null),
     });
+   
+    this.searchQuotationForm = new FormGroup({
+      'enquiryForm': new FormControl(null),
+
+    });
     this.EnquiryFrom = new FormGroup({
       'enquiryForm': new FormControl(null),
       'enquirySubject': new FormControl(null),
@@ -83,26 +124,43 @@ export class QuotationnewComponent implements OnInit {
       'version_enqForm': new FormControl(null),
       'templateName': new FormControl(null),
     });
-    this.quotationSharedPersonForm= new FormGroup({
+    this.quotationSharedPersonForm = new FormGroup({
       'enquiryForm': new FormControl(null),
-      
+
     });
-    this.quotationApprovalForm=new FormGroup({
+    this.quotationApprovalForm = new FormGroup({
       'cm_chk': new FormControl(null),
       'cd_chk': new FormControl(null),
       'radio_approvalPermission': new FormControl(null),
+      'approval_comments': new FormControl(null),
     });
-    this.setTemplateNameForm=new FormGroup({
+    this.setTemplateNameForm = new FormGroup({
       'txt_templateName': new FormControl(null),
-      
+
     });
-    this.setActualCostForm=new FormGroup({
+    this.setActualCostForm = new FormGroup({
       'txt_templateName': new FormControl(null),
-      
+
     });
-    this.FileAttachmentForm=new FormGroup({
+    this.FileAttachmentForm = new FormGroup({
       'file': new FormControl(null),
-      
+
+    });
+    this.emailForm = new FormGroup({
+      'Subject_Content': new FormControl(null, Validators.required),
+      'email_to': new FormControl(null, Validators.required),
+      'email_From': new FormControl(null, Validators.required),
+      'email_pdfType': new FormControl(null, Validators.required),
+      'email_template': new FormControl(null, Validators.required),
+
+    });
+    this.quotationCommentsForm = new FormGroup({
+      'quotation_Comments': new FormControl(null),
+
+    });
+    this.PIForm = new FormGroup({
+      'quotation_Comments': new FormControl(null),
+
     });
     this.quotationList()
   }
@@ -117,32 +175,65 @@ export class QuotationnewComponent implements OnInit {
     this.checkbox_CD_QuotPermission = event.target.checked;
     console.log(this.checkbox_CD_QuotPermission)
   }
+  checkbox_eventCheck_PDFType: any;
+  eventCheck_PDFType(event: any) {
+    this.checkbox_eventCheck_PDFType = event.target.checked;
+    console.log(this.checkbox_eventCheck_PDFType)
+  }
   handleChange(evt: any) {
     var xyz = evt.target.id;
     console.log(xyz, "target");
-  }
-  handle_radioChange(event: any){
-   this.Approval_Type_radiobox_Value = event.target.id;
-    console.log(this.Approval_Type_radiobox_Value);
-    if(this.Approval_Type_radiobox_Value='singleApproval'){
-      // this.quotationApprovalForm.get("ESA_shipto").disable();
+    if (xyz == "new_id20") {
+      console.log("xyz")
+      this.textarea_Show_hide = true;
+      this.textarea1_Show_hide = false;
+    }
+    else if (xyz == "new_id21") {
+      console.log(xyz);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
 
     }
+  }
+  handle_radioChange(event: any) {
+    this.Approval_Type_radiobox_Value = event.target.id;
+    console.log(this.Approval_Type_radiobox_Value);
+
+    if (this.Approval_Type_radiobox_Value == "singleApproval") {
+      this.approval_Show_hide = true;
+
+    }
+    else if (this.Approval_Type_radiobox_Value == "doubleApproval") {
+      console.log(this.Approval_Type_radiobox_Value);
+      this.approval_Show_hide = false;
+
+    }
+  }
+
+
+  handle_radioChange_email(event: any) {
+    this.Select_To_Type_radiobox_Value = event.target.id;
+    console.log(this.Select_To_Type_radiobox_Value);
+
+
+
+
   }
   EditCHK(data: any, event: any) {
     console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
     // console.log(this.checkbox_value)
-    for(let i=0;i<=this.getFileAttachmentResult.length;i++){
+    for (let i = 0; i <= this.getFileAttachmentResult.length; i++) {
       console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
       // console.log(this.checkboxAdding)
-      if(this.getFileAttachmentResult[i].quotation_pdf_add=='1'){
-        this.checkboxAdding=this.getFileAttachmentResult[i].common_attachmentId;
+      if (this.getFileAttachmentResult[i].quotation_pdf_add == '1') {
+        this.checkboxAdding = this.getFileAttachmentResult[i].common_attachmentId;
         // console.log(this.checkboxAdding)
       }
-       
+
     }
+
     console.log(this.checkboxAdding)
     if (this.checkbox_value) {
       this.checkboxAdding.push(data);
@@ -160,12 +251,36 @@ export class QuotationnewComponent implements OnInit {
 
     }
   }
-  onFileChange(event:any) {
-   
-    for (var i = 0; i < event.target.files.length; i++) { 
-        this.myFiles.push(event.target.files[i]);
+
+
+
+  EditCHK_emailCC(data: any, event: any) {
+    console.log("List - CheckBox ID", data);
+    this.groupSelect_emailCCId = data;
+    this.checkbox_value = event.target.checked;
+    console.log(this.checkbox_value)
+    if (this.checkbox_value) {
+
+      this.edit_array_emailCC_Checkbox.push(data);
+      this.edit_array_emailCC_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
-}
+    else {
+      const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_emailCC_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+
+    }
+  }
+
+  onFileChange(event: any) {
+
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
+  }
   quotationList() {
     console.log("Quotation List UI Display Data after OnInit ")
 
@@ -177,6 +292,8 @@ export class QuotationnewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
     api_quotationList.user_id = "2";
+    api_quotationList.off_set= "0";
+    api_quotationList.limit_val= "50";
     api_req.element_data = api_quotationList;
 
 
@@ -235,8 +352,8 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-  editQuotationPopUP(QuotationId: any){
-    this.edit_quotationID=QuotationId;
+  editQuotationPopUP(QuotationId: any) {
+    this.edit_quotationID = QuotationId;
     let api_req: any = new Object();
     let edit_popup_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -245,7 +362,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     edit_popup_req.action = "edit_enquiry_popup_quotation";
     edit_popup_req.user_id = "2";
-    edit_popup_req.quotation_id =this.edit_quotationID;
+    edit_popup_req.quotation_id = this.edit_quotationID;
     api_req.element_data = edit_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
@@ -256,16 +373,16 @@ export class QuotationnewComponent implements OnInit {
         this.edit_quotationValidityList = response.quot_validity;
         this.edit_templateNameList = response.template_name_arr;
         this.editNewQuotationPopUpForm.patchValue({
-       
+
           'e_enquiryFrom_addPopUP': response.quotation_arr_popup.enquiry_from_id,
           'e_enquirySubject_addPopUP': response.quotation_arr_popup.enquiry_product_description,
           'e_quotationValidity_addPopUP': response.quotation_arr_popup.quotation_valid_day,
           'e_version_enqForm_addPopUP': response.quotation_arr_popup.duplicate_version,
           // 'e_templateName_addPopUP': response.template_name_arr,
-          
-          
+
+
         });
-       
+
 
         // $('#addNewQuotationFormId').modal('hide');
         //this.contactsList({});
@@ -274,9 +391,9 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-  
+
   quotationSharedPersonEdit(QuotationId: any) {
-    this.sharePermissionQuotationId=QuotationId
+    this.sharePermissionQuotationId = QuotationId
     // this.quotationSharedResult=[];
     // this.invoiceResult=[];  //for refreshing we are emptying the variable
     // this.invoiceCheckboxID_array=[];
@@ -292,109 +409,109 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     quot_share_req.action = "quotation_shared_person";
- 
+
     quot_share_req.quotationId = this.sharePermissionQuotationId;
     quot_share_req.user_id = "2";
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status",response.status);     
-        if (response.status == true) {
-         
-          this.quotationSharedResult = response.user_list;
-          
-            // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
-           
-        }
-        else {
-          $("#quotationSharedPersonId").modal("hide");
-            iziToast.error({
-                message: "Data Not Found",
-                position: 'topRight'
-            });
-            // this.editInvoiceGroupForm.reset();
-            // this.contractList();
-        }
-    }), (error: any) => {
+      console.log("response status", response.status);
+      if (response.status == true) {
+
+        this.quotationSharedResult = response.user_list;
+
+        // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
+
+      }
+      else {
+        $("#quotationSharedPersonId").modal("hide");
         iziToast.error({
-            message: "Sorry, some server issue occur. Please contact admin",
-            position: 'topRight'
+          message: "Data Not Found",
+          position: 'topRight'
         });
-        console.log("final error", error);
-    }
-}
-quotationSharedPersonUpdate(){
-  // this.invoiceCheckboxID_array=[];
-  console.log("Quotation Shared checkbox array-on update click",this.quotationSharedCheckboxID_array)
-  let api_req: any = new Object();
-  let quot_share_update_req: any = new Object();
-  api_req.moduleType = "quotation";
-  api_req.api_url = "quotation/quotation_shared_user_update";
-  api_req.api_type = "web";
-  api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  quot_share_update_req.action = "quotation_shared_user_update";
-  quot_share_update_req.quotationId = this.sharePermissionQuotationId;
-  quot_share_update_req.user_id = "2";
-  quot_share_update_req.follower_user_id = this.quotationSharedCheckboxID_array.join(',');
-  api_req.element_data = quot_share_update_req;
-
-  this.serverService.sendServer(api_req).subscribe((response: any) => {
-    console.log("check invoice update", response)
-    if (response.status==true) {
-      this.quotationSharedResult = response.customer_invoice_details;
-      window.location.reload();
-      $("#quotationSharedPersonId").modal("hide");
-      console.log("Quotation Shared checkbox array-after update click",this.quotationSharedCheckboxID_array)
-      iziToast.success({
-        message: "Quotation Shared has been Updated",
-        position: 'topRight'
-    });
-
-    }
-    else{
-     
+        // this.editInvoiceGroupForm.reset();
+        // this.contractList();
+      }
+    }), (error: any) => {
       iziToast.error({
-        message: "Quotation Shared has not been Updated",
+        message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+  }
+  quotationSharedPersonUpdate() {
+    // this.invoiceCheckboxID_array=[];
+    console.log("Quotation Shared checkbox array-on update click", this.quotationSharedCheckboxID_array)
+    let api_req: any = new Object();
+    let quot_share_update_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quotation_shared_user_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quot_share_update_req.action = "quotation_shared_user_update";
+    quot_share_update_req.quotationId = this.sharePermissionQuotationId;
+    quot_share_update_req.user_id = "2";
+    quot_share_update_req.follower_user_id = this.quotationSharedCheckboxID_array.join(',');
+    api_req.element_data = quot_share_update_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("check invoice update", response)
+      if (response.status == true) {
+        this.quotationSharedResult = response.customer_invoice_details;
+        window.location.reload();
+        $("#quotationSharedPersonId").modal("hide");
+        console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
+        iziToast.success({
+          message: "Quotation Shared has been Updated",
+          position: 'topRight'
+        });
+
+      }
+      else {
+
+        iziToast.error({
+          message: "Quotation Shared has not been Updated",
+          position: 'topRight'
+        });
+      }
+
+
+      // this.contractList()
+
     });
-    }
-  
-   
-    // this.contractList()
 
-  });
-
-
-}
-
-QuotationSharedCHK(data: any, event: any) {
-  // this.invoiceCheckboxID_array=[];
-  console.log("Shared Quotation List - CheckBox ID", data);
-  this.groupselectQuotationId=data;
-
-  this.checkbox_quotationShare_value= event.target.checked;
- 
-  console.log(this.checkbox_quotationShare_value)
-
-  if (this.checkbox_quotationShare_value) {
-    
-
-    this.quotationSharedCheckboxID_array.push(data);
-    this.quotationSharedCheckboxID_array.join(',');
-    console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
-  }
-  else {
-    const index = this.quotationSharedCheckboxID_array.findIndex((el: any) => el === data)
-    if (index > -1) {
-      this.quotationSharedCheckboxID_array.splice(index, 1);
-    }
-    console.log("Final Shared Quotation Person Checkbox After Deselected selected list", this.quotationSharedCheckboxID_array)
 
   }
 
-}
-quotationApprovalEdit(id:any){
-  this.quotationApproval_ID=id;
-  let api_req: any = new Object();
+  QuotationSharedCHK(data: any, event: any) {
+    // this.invoiceCheckboxID_array=[];
+    console.log("Shared Quotation List - CheckBox ID", data);
+    this.groupselectQuotationId = data;
+
+    this.checkbox_quotationShare_value = event.target.checked;
+
+    console.log(this.checkbox_quotationShare_value)
+
+    if (this.checkbox_quotationShare_value) {
+
+
+      this.quotationSharedCheckboxID_array.push(data);
+      this.quotationSharedCheckboxID_array.join(',');
+      console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
+    }
+    else {
+      const index = this.quotationSharedCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.quotationSharedCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final Shared Quotation Person Checkbox After Deselected selected list", this.quotationSharedCheckboxID_array)
+
+    }
+
+  }
+  quotationApprovalEdit(id: any) {
+    this.quotationApproval_ID = id;
+    let api_req: any = new Object();
     let quot_approval_req: any = new Object();
     api_req.moduleType = "quotation";
     api_req.api_url = "quotation/quotation_permission_user";
@@ -406,35 +523,35 @@ quotationApprovalEdit(id:any){
     api_req.element_data = quot_approval_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status",response.status);     
-        if (response.status == true) {
-         
-          this.quotationApprovalResult = response.user_list;
-          
-            // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
-           
-        }
-        else {
-          $("#quotationApprovalId").modal("hide");
-            iziToast.error({
-                message: "Data Not Found",
-                position: 'topRight'
-            });
-            // this.editInvoiceGroupForm.reset();
-            // this.contractList();
-        }
-    }), (error: any) => {
+      console.log("response status", response.status);
+      if (response.status == true) {
+
+        this.quotationApprovalResult = response.user_list;
+
+        // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
+
+      }
+      else {
+        $("#quotationApprovalId").modal("hide");
         iziToast.error({
-            message: "Sorry, some server issue occur. Please contact admin",
-            position: 'topRight'
+          message: "Data Not Found",
+          position: 'topRight'
         });
-        console.log("final error", error);
+        // this.editInvoiceGroupForm.reset();
+        // this.contractList();
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
     }
 
-}
-quotationApprovalUpdate(){
+  }
+  quotationApprovalUpdate() {
 
-}
+  }
   deleteQuotation(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -477,9 +594,9 @@ quotationApprovalUpdate(){
 
 
   }
-  setTemplateName(quotationId:any){
+  setTemplateName(quotationId: any) {
 
-    this.template_quotationID=quotationId;
+    this.template_quotationID = quotationId;
     let api_req: any = new Object();
     let templateName_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -488,25 +605,25 @@ quotationApprovalUpdate(){
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     templateName_req.action = "get_template_name";
     templateName_req.user_id = "2";
-    templateName_req.quotationId =this.template_quotationID;
+    templateName_req.quotationId = this.template_quotationID;
     api_req.element_data = templateName_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
 
       console.log("set template name", response);
-      if (response.status=true) {
+      if (response.status = true) {
         this.TemplateNameList = response.template_name;
-       
+
         this.setTemplateNameForm.patchValue({
-                 'txt_templateName': response.template_name,  
+          'txt_templateName': response.template_name,
         });
       }
 
     });
 
   }
-  templateNameUpdate(){
-   
+  templateNameUpdate() {
+
     let api_req: any = new Object();
     let templateNameUpdate_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -515,22 +632,22 @@ quotationApprovalUpdate(){
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     templateNameUpdate_req.action = "temaplete_name_update";
     templateNameUpdate_req.user_id = "2";
-    templateNameUpdate_req.quotationId =this.template_quotationID;
-    templateNameUpdate_req.template_name =this.setTemplateNameForm.value.txt_templateName;
+    templateNameUpdate_req.quotationId = this.template_quotationID;
+    templateNameUpdate_req.template_name = this.setTemplateNameForm.value.txt_templateName;
     api_req.element_data = templateNameUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
 
       console.log("set template name update", response);
-      if (response!='') {
+      if (response != '') {
         $("#setTemplateNameId").modal("hide");
       }
       // $("#setTemplateNameId").modal("hide");
     });
 
   }
-  setActualCost(quotationId:any){
-    this.actualCost_quotationID=quotationId;
+  setActualCost(quotationId: any) {
+    this.actualCost_quotationID = quotationId;
     let api_req: any = new Object();
     let actualCost_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -545,10 +662,10 @@ quotationApprovalUpdate(){
       console.log(response);
 
       console.log("set actual cost response", response);
-      if (response.status=true) {
+      if (response.status = true) {
         this.actualCost_ProductList = response.product_details;
-       
-    
+
+
       }
 
     });
@@ -566,7 +683,7 @@ quotationApprovalUpdate(){
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     fileattach_req.action = "quotation_attachment_details";
-    fileattach_req.quotationId =  this.fileAttach_quotationID;
+    fileattach_req.quotationId = this.fileAttach_quotationID;
     fileattach_req.user_id = "2";
     api_req.element_data = fileattach_req;
 
@@ -575,7 +692,7 @@ quotationApprovalUpdate(){
       this.getFileAttachmentResult = response.attachment_list
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
-      if (response.status==true) { 
+      if (response.status == true) {
         this.FileAttachmentForm.patchValue({
           'file': response.attachment_list.uploadFileName,
         });
@@ -596,84 +713,420 @@ quotationApprovalUpdate(){
     fileattachDelete_req.action = "quotation_attachment_delete";
     fileattachDelete_req.common_attachmentId = this.commonAttachmentID;
     fileattachDelete_req.user_id = "2";
-    fileattachDelete_req.quotationId =  this.fileAttach_quotationID;
+    fileattachDelete_req.quotationId = this.fileAttach_quotationID;
     api_req.element_data = fileattachDelete_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-         
+
       if (response.status == true) {
         // this.myForm.reset();
-          alert("deleted")
-          $("#fileAttachmentFormId").modal("hide");
+        alert("deleted")
+        $("#fileAttachmentFormId").modal("hide");
       }
-      
+
 
     });
 
   }
   fileAttachmentUpdate() {
     this.FileAttachmentForm.reset();
-//  var data = new FormData();
+    //  var data = new FormData();
 
-const data = new FormData();
- 
-for (var i = 0; i < this.myFiles.length; i++) { 
-  data.append("cust_file[]", this.myFiles[i]);
-}
-for (var j = 0; j < this.edit_array.length; j++) { 
-  data.append("quotation_pdf_add[]", this.edit_array[j]);
-}
-data.append('user_id', "2" ); 
-data.append('quotationId',this.fileAttach_quotationID ); 
-// data.append('quotation_pdf_add[]',this.edit_array ); 
-data.append('action', "quotation_attachment_save");
+    const data = new FormData();
+
+    for (var i = 0; i < this.myFiles.length; i++) {
+      data.append("cust_file[]", this.myFiles[i]);
+    }
+    for (var j = 0; j < this.edit_array.length; j++) {
+      data.append("quotation_pdf_add[]", this.edit_array[j]);
+    }
+    data.append('user_id', "2");
+    data.append('quotationId', this.fileAttach_quotationID);
+    // data.append('quotation_pdf_add[]',this.edit_array ); 
+    data.append('action', "quotation_attachment_save");
 
 
-      var self = this;
-      $.ajax({
-          type: 'POST',
-          url: 'https://erp1.cal4care.com/api/quotation/quotation_attachment_save',
-          cache: false,
-          contentType: false,
-          processData: false,
-          data : data,
-          success: function(result:any){
-            if(result.status==true){
-              self.quotationList();
-              console.log(result);
-              $("#fileAttachmentFormId").modal("hide");
-              this.edit_array=[];
-            }
-          },
-          error: function(err:any){
-              console.log(err);
-          }
-        })
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/quotation/quotation_attachment_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          self.quotationList();
+          console.log(result);
+          $("#fileAttachmentFormId").modal("hide");
+          this.edit_array = [];
+        }
+      },
+      error: function (err: any) {
+        console.log(err);
+      }
+    })
 
   }
+  Email(QuotationID: any) {
+    this.emailForm.reset();
+    this.EmailQuotationID = QuotationID;
+
+
+    let api_req: any = new Object();
+    let emailPage_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/sendmail_popup_quot";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    emailPage_req.action = "sendmail_popup_quot";
+    emailPage_req.user_id = "2";
+    emailPage_req.quotation_id =  this.EmailQuotationID;
+    api_req.element_data = emailPage_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("emailpagecontent", response)
+      if (response!= true) {
+        // this.myForm.reset();
+        console.log("emailpagecontent", response)
+        // $("#fileAttachmentFormId").modal("hide");
+        this.email_fromList=response.email_from;
+        this.email_crmTemplateList=response.crm_template;
+        this.email_cc_userList=response.cc_user;
+        this.emailForm.patchValue({
+
+          'email_to': response.to_email,
   
 
-  AddQuotationGo() {
-var enq_formID = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
-var enq_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
-var enq_quotation_valid_day = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
-var enq_duplicate_version = this.addNewQuotationPopUpForm.value.version_enqForm_addPopUP;
+        });
+
+      }
 
 
-    this.router.navigate(['/addquotationnew'],{ queryParams: { formID: enq_formID,subject:enq_subject,validity:enq_quotation_valid_day,version:enq_duplicate_version}});
+    });
 
-    $('#addNewQuotationFormId').modal('hide');
   }
-  EditQuotationGo(){
-    var editQuotID= this.edit_quotationID;
+  templateContentEmailDropdown(event: any){
+    this.quotation_Emailtemplate_id = event.target.value;
+    console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+    let api_req: any = new Object();
+    let api_quotationTemplateDropdown_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/get_email_quotation_template";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
+    api_quotationTemplateDropdown_req.user_id = "2";
+    api_quotationTemplateDropdown_req.quotation_id =this.EmailQuotationID 
+    api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
+    api_req.element_data = api_quotationTemplateDropdown_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-template Dropdown response", response)
+      this.messageContent=response.crm_template_content
+      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      if (response!='') {
+        this.emailForm.patchValue({
+
+          'Subject_Content': response.crm_subject_name,
+
+          'tinyID':  this.mailContent,
+
+        });
+
+      }
+      else {
+        this.emailForm.patchValue({
+
+          'email_template': '',
+     
+        });
+      }
+
+
+    });
+  }
+  testdatas() {
+
+    this.FromEmailValue= $('#emailFrom').val();
+    this.emailTo = $('#emailto').val();
+    this.subjectValue = $('#subject').val();
+    this.msg_id = tinymce.get('tinyID').getContent();
+    console.log("msgid", this.msg_id)
+    console.log("email to", this.emailTo)
+    console.log("subject", this.subjectValue)
+    let api_req: any = new Object();
+    let api_email_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "sendemail/quotation_sendmail";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_email_req.action = "quotation_sendmail";
+    api_email_req.user_id = "2";
+    // api_email_req.customer_contract_id = this.EmailCustomerContractID;
+    api_email_req.from_email = this.FromEmailValue;
+    api_email_req.to_email = this.emailTo;
+    api_email_req.subject= this.subjectValue;
+    api_email_req.mail_message = this.msg_id;
+    api_email_req.quotation_id = this.EmailQuotationID;
+    api_req.element_data = api_email_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer email", response);
+
+      // this.searchResult = response.customer_names;
+      if (response != 'null' && response != null) {
+        $('#subject').val('');
+        $('#emailto').val('');
+        $("#TextEditorId").modal("hide");
+        tinymce.activeEditor.setContent("");
+        this.quotationList()
+        Swal.fire({
+          icon: 'error',
+          title: 'Email Not Sent',
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+      else {
+        $('#subject').val('');
+        $('#emailto').val('');
+        $("#TextEditorId").modal("hide");
+        tinymce.activeEditor.setContent("");
+
+        this.quotationList()
+        Swal.fire({
+          icon: 'success',
+          title: 'Email Notification Sent Successfully',
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      }
+
+      this.quotationList()
+    });
+  }
+  initTiny() {
+    var richTextArea_id = 'richTextAreacreated';
+    tinymce.init({
+      selector: '#richTextAreacreated',
+      height: 500,
+      plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
+      toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
+       alignleft aligncenter alignright alignjustify | \
+       bullist numlist outdent indent | autoresize',
+      paste_data_images: true,
+      images_upload_url: 'upload.php',
+      automatic_uploads: false,
+      default_link_target: "_blank",
+      extended_valid_elements: "a[href|target=_blank]",
+      link_assume_external_targets: true,
+      images_upload_handler: function (blobInfo: any, success: any, failure: any) {
+        var xhr: any, formData;
+
+        xhr = new XMLHttpRequest();
+        xhr.withCredentials = false;
+        xhr.open('POST', 'upload.php');
+
+        xhr.onload = function () {
+          var json;
+
+          if (xhr.status != 200) {
+            failure('HTTP Error: ' + xhr.status);
+            return;
+          }
+
+          json = JSON.parse(xhr.responseText);
+
+          if (!json || typeof json.file_path != 'string') {
+            failure('Invalid JSON: ' + xhr.responseText);
+            return;
+          }
+
+          success(json.file_path);
+        };
+
+        formData = new FormData();
+        formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+        xhr.send(formData);
+      },
+    });
+    if (tinymce.editors.length > 0) {
+      //  tinymce.execCommand('mceFocus', true, richTextArea_id );       
+      tinymce.execCommand('mceRemoveEditor', true, richTextArea_id);
+      tinymce.execCommand('mceAddEditor', true, richTextArea_id);
+    }
+  }
+
+  quotationCommentsEdit(quotationID: any) {
+    // this.comment_QuotationID = quotationID;
+    let api_req: any = new Object();
+    let transactionComment_req: any = new Object();
+    api_req.moduleType = "quotation";
+    // api_req.api_url = "customer/delete_file_attachment";
+    api_req.api_url = "quotation/transaction_enquiry_command";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    transactionComment_req.action = "transaction_enquiry_command";
+    transactionComment_req.user_id = "2";
+
+    transactionComment_req.transaction_id = quotationID;
+
+    api_req.element_data = transactionComment_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        // this.myForm.reset();
+        alert("deleted")
+        $("#fileAttachmentFormId").modal("hide");
+      }
+
+
+    });
+
+  }
+  PIEdit1(quotationId:any){
+
+  }
+  PIEdit( quotationId: any) {
+    this.PIResult=[];//for refreshing we are emptying the variable
+    // this.invoiceCheckboxID_array=[];
+    //for refreshing we are emptying the variable
+ this.quotationID_PI=quotationId;
+    let api_req: any = new Object();
+    let piEdit_req: any = new Object();
+    api_req.moduleType = "customer_contract";
+    api_req.api_url = "quotation/set_small_task";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    piEdit_req.action = "set_small_task";
+    piEdit_req.quotationId=this.quotationID_PI;
+    piEdit_req.userId = "2";
+    api_req.element_data = piEdit_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("response status",response.status);     
+        if (response.status == true) {
+         
+          this.PIResult = response.user_list;
+          this.CustomerName_Result=response.customer_name;
+          this.ProductDescription_Result=response.description;
+            // iziToast.success({
+            //     message: "Invoice attachment displayed successfully",
+            //     position: 'topRight'
+            // });
+            // this.editInvoiceGroupForm.reset();
+            
+            // this.contractList();
+        }
+        else {
+          $("#invoiceAttachmentId").modal("hide");
+            iziToast.error({
+                message: "Data Not Found",
+                position: 'topRight'
+            });
+            // this.editInvoiceGroupForm.reset();
+            // this.contractList();
+        }
+    }), (error: any) => {
+        iziToast.error({
+            message: "Sorry, some server issue occur. Please contact admin",
+            position: 'topRight'
+        });
+        console.log("final error", error);
+    }
+}
+quotationConvertPI(){
+   
+    let api_req: any = new Object();
+    let api_quotConvertPI_req: any = new Object();
+    api_req.moduleType = "quotation";
+   
+    api_req.api_url = "quotation/quotation_convert_to_proformainvoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotConvertPI_req.action = "quotation_convert_to_proformainvoice";
+    api_quotConvertPI_req.user_id = "2";
+    api_quotConvertPI_req.quotationId =  this.quotationID_PI;
+    api_req.element_data = api_quotConvertPI_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+console.log("response-quotation convert pi",response)
+      if (response.status == true) {
+       
+   
+       
+      }
+
+
+    });
+}
+pdf(quotationId: any){
+      var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id="+quotationId+"";
+      window.open(url,'_blank');
+      console.log("url",url)
+}
+keyPress(event: any, i: any) {
+
+//   var key = event.target.value;
+//   var bill_cnt = $('#quotationChildId_count').val();
+//   var actual_cost=0,
+// actual_cost_tot=0,
+// product_qty=0,
+// product_rate=0,
+// actual_net_tot=0,
+// actual_cost_net_tot=0,
+// actual_percentage=0;
+//   var product_net_amt=0,act_diff_amt =0,act_diff_amt_tot=0;
+//   for(i=1;i<bill_cnt;i++){
+//     if($('#invisiable_state_'+i).val()==0){
+//       actual_cost = $('#actual_cost_'+i).val();
+//       product_qty = $('#product_qty_'+i).val();
+//       product_rate = $('#product_rate_'+i).val();
+//       product_net_amt = $('#product_net_amt_'+i).val();
+//       actual_percentage = $('#actual_percentage_'+i).val();
+//       if(actual_percentage>0){    
+//         actual_cost = (parseFloat(product_rate)*parseFloat(actual_percentage)/100).toFixed(2);
+//         $('#actual_cost_'+i).val(actual_cost);                            
+//       }
+//         actual_net_tot = (parseFloat(product_qty)*parseFloat(actual_cost)).toFixed(2);;                        
+//         act_diff_amt = (parseFloat(product_net_amt)-parseFloat(actual_net_tot)).toFixed(2);;
+//         $('#act_diff_amt_'+i).val(act_diff_amt);
+//         $('#actual_net_tot_'+i).val(actual_net_tot);
+//         actual_cost_tot+=parseFloat(actual_cost);
+//         actual_cost_net_tot+=parseFloat(actual_net_tot);
+//         act_diff_amt_tot+=parseFloat(act_diff_amt);
+//     }else{
+//       act_diff_amt_tot = act_diff_amt_tot-$('#price_'+i).val();
+//       $('#act_diff_amt_'+i).val(-$('#price_'+i).val());
+//     }
+//           }
+ 
+
+  
+}
+  AddQuotationGo() {
     var enq_formID = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
     var enq_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
     var enq_quotation_valid_day = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     var enq_duplicate_version = this.addNewQuotationPopUpForm.value.version_enqForm_addPopUP;
-    this.router.navigate(['/editquotationnew'],{ queryParams: { e_quotID: editQuotID,formID: enq_formID,subject:enq_subject,validity:enq_quotation_valid_day,version:enq_duplicate_version}});
+
+
+    this.router.navigate(['/addquotationnew'], { queryParams: { formID: enq_formID, subject: enq_subject, validity: enq_quotation_valid_day, version: enq_duplicate_version } });
+
+    $('#addNewQuotationFormId').modal('hide');
+  }
+  EditQuotationGo() {
+    var editQuotID = this.edit_quotationID;
+    var enq_formID = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
+    var enq_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
+    var enq_quotation_valid_day = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
+    var enq_duplicate_version = this.addNewQuotationPopUpForm.value.version_enqForm_addPopUP;
+    this.router.navigate(['/editquotationnew'], { queryParams: { e_quotID: editQuotID, formID: enq_formID, subject: enq_subject, validity: enq_quotation_valid_day, version: enq_duplicate_version } });
     $('#editNewQuotationFormId').modal('hide');
 
-  
+
   }
 }
 

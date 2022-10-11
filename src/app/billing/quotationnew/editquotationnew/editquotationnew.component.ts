@@ -326,6 +326,7 @@ export class EditquotationnewComponent implements OnInit {
         this.CurrencyList = response.currency;
         this.TermsConditionList = response.quotation_terms;
         this.PDFTemplateList = response.default_quotation_temp;
+        this.ExtraLogoList=response.extra_bills;
         this.billerList = response.bill_details;
         this.additionalSignatureList = response.additional_signature_list;
         this.editQuotationInvoice_section1.patchValue({
@@ -475,7 +476,15 @@ export class EditquotationnewComponent implements OnInit {
     api_UpdateEnquiry_req.description_details_show_state = this.checkbox_descriptionDetails_DontShow;
     
     //section-2
-    api_UpdateEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
+    // api_UpdateEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
+
+    var addr = this.addQuotationInvoice_section2.value.addresses;
+    for(let i=0; i < addr.length; i++){
+        console.log(addr[i].pd_quantity_txtbox1)
+        addr[i].pd_netPrice=$('#pd_netPrice_' + i).val();
+        addr[i].pd_Total=$('#pd_Total_' + i).val();
+    }
+    api_UpdateEnquiry_req.values = addr;
    
     //section-3
 
