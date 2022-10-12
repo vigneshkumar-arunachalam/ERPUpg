@@ -518,10 +518,11 @@ export class EditquotationnewComponent implements OnInit {
           title: 'Saved',
           message: 'Quotation Saved Successfully !',
         });
-        // this.redirecttoQuotation();
+         this.redirecttoQuotation();
         this.editQuotationInvoice_section1.reset();
         this.addQuotationInvoice_section2.reset();
         this.addQuotationInvoice_section3.reset();
+
       }
       else {
        
@@ -540,7 +541,10 @@ export class EditquotationnewComponent implements OnInit {
     
 
   }
-
+ redirecttoQuotation(){
+    
+    this.router.navigate(['/quotationnew']);
+  }
   templateContentDropdown(event: any) {
     this.quotation_template_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_template_id);
@@ -884,7 +888,7 @@ export class EditquotationnewComponent implements OnInit {
     }
   }
   goBack(){
-    
+    this.router.navigate(['/quotationnew']);
   }
 
 }

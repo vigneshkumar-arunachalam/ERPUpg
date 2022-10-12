@@ -50,23 +50,23 @@
                               </div>
                             </div>
                           </div> -->
-                          <div class="col-lg-6">
-                            <div class="form-group row">
-                                <label for="select_footer" class="col-lg-12 col-form-label">Select Footer</label>
-                                <div class="col-lg-12">
-                                    <div class="form-check" *ngFor="let display of FooterDetails">
-                                        <input class="form-check-input" type="radio" formControlName="selectFooter"
-                                            id="{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
-                                            (change)="handleChange($event)" />
-                                        <label style="font-weight:400;font-size: 14px;color: #495057;" for="edit_c4c1">
-                                            {{display.footer_name}}
-                                        </label>
-                                    </div>
-            
-                                </div>
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label for="select_footer" class="col-lg-12 col-form-label">Select Footer</label>
+                        <div class="col-lg-12">
+                            <div class="form-check" *ngFor="let display of FooterDetails">
+                                <input class="form-check-input" type="radio" formControlName="selectFooter"
+                                    id="{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
+                                    (change)="handleChange($event)" />
+                                <label style="font-weight:400;font-size: 14px;color: #495057;" for="edit_c4c1">
+                                    {{display.footer_name}}
+                                </label>
                             </div>
+
                         </div>
-               
+                    </div>
+                </div>
+
 
                 <div class="col-lg-6">
                     <div class="form-group row">
@@ -139,7 +139,7 @@
 
                     </div>
                 </div>
-              
+
                 <div class="col-lg-6">
                     <div class="form-group row">
                         <label for="attn" class="col-lg-12 col-form-label">Attention</label>
@@ -353,7 +353,7 @@
                                             <td>
                                                 <div class="userDatatable-content">
                                                     <input type="text" class="form-control"
-                                                    (keyup)="keyPress($event, i)"
+                                                        (keyup)="keyPress($event, i)"
                                                         formControlName="pd_quantity_txtbox1" />
                                                 </div>
 
@@ -383,14 +383,13 @@
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" 
-                                                    formControlName="pd_Total"
+                                                    <input type="text" class="form-control" formControlName="pd_Total"
                                                         id="pd_Total_{{i}}" />
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" 
+                                                    <input type="text" class="form-control"
                                                         formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
                                                 </div>
                                             </td>
@@ -553,8 +552,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <input type="text" (keyup)="extraFees()" formControlName="section3_shipping_amt_txtbox"
-                                        class="form-control mt-2" />
+                                    <input type="text" (keyup)="extraFees()"
+                                        formControlName="section3_shipping_amt_txtbox" class="form-control mt-2" />
                                 </div>
                             </div>
 
@@ -632,14 +631,14 @@
                 </section>
             </section>
         </form>
-
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveQuotationEnquiry()">
-            Save
-        </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Cancel
-        </button>
-
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="saveQuotationEnquiry()">
+                Save
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="redirecttoQuotation()">
+                Cancel
+            </button>
+        </div>
 
 
 

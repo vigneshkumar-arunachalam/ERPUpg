@@ -200,9 +200,45 @@ input.form-control {
   .add-contact-table-section tr{height: 50px; border: 1px solid #ddd;}
   
 
-
-
-
+#searchQuotationFormId .modal-dialog {
+  max-width: 95%;
+  }
+  #searchQuotationFormId label {
+    font-weight: 500;
+  
+    color: black;
+  
+  }
+  .searchQuotationCSS  .modal-header .modal-title {
+    color:#ffff;
+  }
+  .searchQuotationCSS .modal-header  {
+  
+    background-color: rgb(29, 78, 97);
+  }
+  .searchQuotationCSS .modal-header h2 {
+  
+    color:#ffff;
+  }
+  .searchQuotationCSS .modal-body label{
+    color:#131212;
+  
+   }
+   .searchQuotationCSS  .modal-header .modal-title {
+    color:#ffff;
+  }
+  .searchQuotationCSS .modal-header  {
+  
+    background-color: rgb(29, 78, 97);
+  }
+  .searchQuotationCSS .modal-header h2 {
+  
+    color:#ffff;
+  }
+  .searchQuotationCSS .modal-body label{
+    color:#131212;
+  
+   }
 
 
 

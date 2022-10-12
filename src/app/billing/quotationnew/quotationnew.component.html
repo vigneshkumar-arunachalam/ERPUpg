@@ -7,11 +7,13 @@
                         Quotation
 
                         <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-                            (click)="addQuotationNew()" data-target="#addNewQuotationFormId">Add Quotation
+                            (click)="addQuotationNew()" data-target="#addNewQuotationFormId"><i class="fas fa-plus"></i>
                         </button>
-                        <button type="button" class="btn btn-secondary btn-default btn-squared" data-toggle="modal"
-                        (click)="addQuotationNew()" data-target="#searchQuotationFormId">Add Quotation
-                    </button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" (click)="addQuotationNew()"
+                            data-target="#searchQuotationFormId">
+                            <i class="fas fa-search"></i>
+                        </button>
                     </div>
                     <div class="card-body">
 
@@ -118,11 +120,11 @@
                                                 <span>{{ list.enquiry_product_description}}</span>
                                             </td> -->
                                             <td>
-                                                <span>{{ list.userName}}</span>
+                                                <span>{{ list.billGeneratedBy}}</span>
                                             </td>
 
                                             <td>
-                                                <span> {{ list.gross_total}}</span>
+                                                <span> {{ list.grand_total}}</span>
                                             </td>
 
                                             <td>
@@ -296,7 +298,7 @@
                                                                 <a class="remove" title="Quotation Comments"
                                                                     data-toggle="modal"
                                                                     data-target="#quotationCommentsId"
-                                                                    (click)="quotationCommentsEdit(list.quotationId)">
+                                                                    (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
                                                                         stroke="currentColor" stroke-width="2"
@@ -362,27 +364,27 @@
                         </div>
                         <nav class="atbd-page">
                             <!-- <ul class="atbd-pagination d-flex" *ngIf="paginationData.info == 'show'"> -->
-                                <li class="atbd-pagination__item">
-                                    <!-- <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" 
+                            <li class="atbd-pagination__item">
+                                <!-- <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'" href="javascript:void(0)" 
                                 (click)="paginationData.backtab=='show' ? 
                                 agentsList({'search_text':agent_search.value,'offset':paginationData.start}) : false">
                                 <i class="fas fa-angle-left"></i></a> -->
-                                    <!-- <a href="javascript:void(0)" class="atbd-pagination__link pagination-control"
+                                <!-- <a href="javascript:void(0)" class="atbd-pagination__link pagination-control"
                                         [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"><span
                                             (click)="paginationData.backtab=='show' ? 
-                                agentsList({'search_text':agent_search.value,'offset':paginationData.start}) : false"
+                                            quotationList({'search_text':agent_search.value,'offset':paginationData.start}) : false"
                                             class="la la-angle-left"></span></a> -->
 
-                                </li>
-                                <li class="atbd-pagination__item">
-                                    <div class="paging-option">
-                                        <select name="page-number" class="page-selection">
-                                            <option value="20">20/page</option>
-                                            <option value="40">40/page</option>
-                                            <option value="60">60/page</option>
-                                        </select>
-                                    </div>
-                                </li>
+                            </li>
+                            <li class="atbd-pagination__item">
+                                <div class="paging-option">
+                                    <select name="page-number" class="page-selection">
+                                        <option value="20">20/page</option>
+                                        <option value="40">40/page</option>
+                                        <option value="60">60/page</option>
+                                    </select>
+                                </div>
+                            </li>
                             <!-- </ul> -->
                         </nav>
 
@@ -624,12 +626,12 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
-<div class="modal fade" id="searchQuotationFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="searchQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
+        <div class="modal-content searchQuotationCSS">
             <div class="modal-header">
-                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Quotation Shared Person</h2>
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -637,20 +639,58 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="searchQuotationForm">
-                    <div class="form-group row">
-                        <label for="temp1" class="col-lg-6 col-form-label">Biller Name</label>
-                        <div class="col-lg-6">
-                            <input type="text" class="form-control" formControlName="txt_templateName" id="temp1" />
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="form-group">
+                                <label for="temp1" class="col-lg-12 ">Biller Name</label>
+                                <div class="col-lg-12" *ngFor="let biller of searchBillerResult;let i =index">
+                                    <input type="checkbox" value="{{biller.billerId}}"
+                                        (change)="QuotationSearchCHK(biller.billerId,$event)">
+                                    {{biller.billerName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4">
+                            <div class="form-group row">
+                                <div class="ng-autocomplete">
+                                    <label for="companyName" class="col-lg-12 ">Company Name*</label>
+                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                        formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                                        (inputChanged)='searchCustomerData($event)'
+                                        (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                        [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplateCustomer let-item>
+                                        <a [innerHTML]="item.customerName"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-4">
+
+                            <div class="form-group row">
+                                <label for="grp" class="col-lg-6 ">Group By Customer</label>
+                                <div class="col-lg-6">
+                                    <input type="checkbox" formControlName="groupby_customer" id="grp" (change)="eventCheckGroupByCustomer($event)" />
+                                </div>
+                            </div>
                         </div>
                     </div>
-
-
                 </form>
+
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="quotationSharedPersonUpdate()">
-                    Update
+                <button type="button" class="btn btn-primary">
+                    Search
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Close
@@ -1275,7 +1315,7 @@
                             <label for="quotationComments" style="color:rgb(29, 40, 99) ; font-weight:800;
                             font-size:medium;">Comments</label>
                             <label for="quotationComments1" style="color:rgb(17, 17, 17) ; font-weight:500;padding-left: 5px;
-                            font-size:medium;"> CD / CM for your approval</label>
+                            font-size:medium;"> {{response_CommentResult}}</label>
                             <textarea class="form-control" formControlName="quotation_Comments" id="quotationComments"
                                 rows="3"></textarea>
 
@@ -1286,7 +1326,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()">
+                <button type="button" class="btn btn-primary" (click)="quotationCommentsSave()">
                     Save
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -1324,7 +1364,7 @@
                             <td height="50"><strong>Product Description </strong></td>
                             <td height="50">{{this.ProductDescription_Result}} </td>
                         </tr>
-                     
+
 
                     </table>
 

@@ -520,7 +520,7 @@ export class AddquotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("add quotation new save", response);
-      if (response.status = true) {
+      if (response.status == true) {
 
         iziToast.success({
           title: 'Saved',
@@ -530,19 +530,23 @@ export class AddquotationnewComponent implements OnInit {
         this.addQuotationInvoice_section1.reset();
         this.addQuotationInvoice_section2.reset();
         this.addQuotationInvoice_section3.reset();
+
       }
       else {
-       
-        iziToast.error({
-          title: 'Not Saved',
-          message: 'Quotation not Saved !',
+      
+        iziToast.warning({
+          message: "Quotation Not Saved Successfully",
+          position: 'topRight'
         });
-        this.redirecttoQuotation();
-        
+      
       }
-
-
-    });
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
 
   }
 

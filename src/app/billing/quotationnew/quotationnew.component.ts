@@ -28,6 +28,11 @@ export class QuotationnewComponent implements OnInit {
   //search quotation
   searchQuotationForm: FormGroup;
   searchBillerNameList:any;
+  groupSelect_searchId:any;
+  quotationSearchCheckboxID_array: any = [];
+  searchBillerResult:any;
+  //auto complete search
+  searchResult:any;
   // quotation_list:any=[];
   quotationValidityList: any = [];
   //quotation-shared
@@ -85,16 +90,26 @@ export class QuotationnewComponent implements OnInit {
   approval_comments: any;
   //quotation-comments
   quotationCommentsForm: FormGroup;
+  comment_QuotationID:any;
+  comment_TransactionID:any;
+  response_CommentResult:any;
+
   //PI-Performa Inv
   PIForm: FormGroup;
   PIResult:any;
   quotationID_PI:any;
   CustomerName_Result:any;
   ProductDescription_Result:any;
+
+  //pagination
+  recordNotFound = false;
+  pageLimit = 10;
+  paginationData: any = { "info": "hide" };
+  offset_count = 0;
  
 
   constructor(public serverService: ServerService, private router: Router) { }
-
+  keywordCompanyName = 'customerName';
   ngOnInit(): void {
 
 this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4Care","Dcare Technologies Pte Ltd","DCARE Technologies India Pvt Ltd.","Cal4care Sdn.Bhd.","Cal4Care Japan Co., Ltd","1Msb IT Care Sdn. Bhd.","Cal4care Telecommunication Services (I) PVT LTD"]
@@ -114,7 +129,9 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
     });
    
     this.searchQuotationForm = new FormGroup({
-      'enquiryForm': new FormControl(null),
+      'search_text': new FormControl(null),
+      'groupby_customer': new FormControl(null),
+      'company_Name':new FormControl(null),
 
     });
     this.EnquiryFrom = new FormGroup({
@@ -162,7 +179,15 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
       'quotation_Comments': new FormControl(null),
 
     });
-    this.quotationList()
+    this.quotationList();
+    this.search_BillerList();
+  }
+  selectEventCustomer(item: any) {
+    console.log(item)
+    // do something with selected item
+  }
+  onFocusedCustomer(e: any) {
+    // do something when input is focused
   }
   checkbox_CM_QuotPermission: any;
   eventCheck_CM_QuotPermission(event: any) {
@@ -179,6 +204,11 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
   eventCheck_PDFType(event: any) {
     this.checkbox_eventCheck_PDFType = event.target.checked;
     console.log(this.checkbox_eventCheck_PDFType)
+  }
+  checkbox_eventCheck_GroupByCustomer: any;
+  eventCheckGroupByCustomer(event: any) {
+    this.checkbox_eventCheck_GroupByCustomer = event.target.checked;
+    console.log(this.checkbox_eventCheck_GroupByCustomer)
   }
   handleChange(evt: any) {
     var xyz = evt.target.id;
@@ -274,6 +304,27 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
 
     }
   }
+  QuotationSearchCHK(data: any, event: any)
+  {
+    console.log("List - CheckBox ID", data);
+    this.groupSelect_searchId = data;
+    this.checkbox_value = event.target.checked;
+    console.log(this.checkbox_value)
+    if (this.checkbox_value) {
+
+      this.quotationSearchCheckboxID_array.push(data);
+      this.quotationSearchCheckboxID_array.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
+    }
+    else {
+      const index = this.quotationSearchCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.quotationSearchCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
+
+    }
+  }
 
   onFileChange(event: any) {
 
@@ -281,7 +332,43 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
       this.myFiles.push(event.target.files[i]);
     }
   }
-  quotationList() {
+  search_BillerList(){
+    let api_req: any = new Object();
+    let api_SearchBiller_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/biller_dropdown";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_SearchBiller_req.action = "biller_dropdown";
+    api_SearchBiller_req.user_id = "2";
+    api_req.element_data = api_SearchBiller_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_status response", response);
+      this.searchBillerResult = response.biller_list;
+      if (response.status = true) {
+      }
+    });
+  }
+  searchCustomerData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/cal/customer_name_search";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "customer_name_search";
+    api_Search_req.user_id = "2";
+    api_Search_req.customerName = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_status response", response);
+      this.searchResult = response.customer_names;
+      if (response.status = true) {
+      }
+    });
+  }
+  quotationList1() {
     console.log("Quotation List UI Display Data after OnInit ")
 
     let api_req: any = new Object();
@@ -300,16 +387,9 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("qoutation list", response);
       if (response) {
-        this.quotation_list = response.customer_list;
+        this.quotation_list = response.quotation_details;
         console.log(this.quotation_list)
-        // Swal.fire("Have a nice day!");  
-        // Swal.fire({  
-        //   position: 'top-end',  
-        //   icon: 'success',  
-        //   title: 'Your work has been saved',  
-        //   showConfirmButton: false,  
-        //   timer: 1500  
-        // })
+       
       }
       else {
         Swal.fire({
@@ -322,6 +402,54 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
       }
     });
   }
+  quotationList() {
+    console.log("Quotation List UI Display Data after OnInit ")
+    // var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_quotationList: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quotation_list"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationList.action = "quotation_list";
+    api_quotationList.user_id = "2";
+    api_quotationList.off_set= "0";
+    api_quotationList.limit_val= "50";
+    // api_quotationList.search_text = list_data.search_text;
+    // api_quotationList.order_by_name = list_data.order_by_name;
+    // api_quotationList.order_by_type = list_data.order_by_type;
+    // api_quotationList.limit = list_data.limit;
+    // api_quotationList.offset = list_data.offset;
+    api_req.element_data = api_quotationList;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("qoutation list", response);
+      if (response) {
+        this.quotation_list = response.quotation_details;
+        console.log(this.quotation_list)
+       
+      }
+      else {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    });
+  }
+  // listDataInfo(list_data) {
+
+  //   list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
+  //   list_data.order_by_name = list_data.order_by_name == undefined ? "user.agent_name" : list_data.order_by_name;
+  //   list_data.order_by_type = list_data.order_by_type == undefined ? "asc" : list_data.order_by_type;
+  //   list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
+  //   list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
+  //   return list_data;
+  // }
   addQuotationNew() {
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
@@ -959,33 +1087,67 @@ this.searchBillerNameList=["Cal4Care Pte Ltd","Marshal System Consultancy","Cal4
     }
   }
 
-  quotationCommentsEdit(quotationID: any) {
-    // this.comment_QuotationID = quotationID;
+  quotationCommentsEdit(quotationID: any,transactionID:any) {
+    if(transactionID==null){
+      alert("transaction id is null, unable to save")
+    }
+    this.comment_QuotationID = quotationID;
+    this.comment_TransactionID = transactionID;
     let api_req: any = new Object();
     let transactionComment_req: any = new Object();
     api_req.moduleType = "quotation";
-    // api_req.api_url = "customer/delete_file_attachment";
     api_req.api_url = "quotation/transaction_enquiry_command";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     transactionComment_req.action = "transaction_enquiry_command";
     transactionComment_req.user_id = "2";
-
-    transactionComment_req.transaction_id = quotationID;
-
+    transactionComment_req.transaction_id = this.comment_TransactionID;
     api_req.element_data = transactionComment_req;
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        // this.myForm.reset();
-        alert("deleted")
-        $("#fileAttachmentFormId").modal("hide");
+       this.response_CommentResult=response.commands;
       }
 
 
     });
 
+  }
+  quotationCommentsSave(){
+    let api_req: any = new Object();
+    let transactionCommentSave_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/transaction_enquiry_command_save";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    transactionCommentSave_req.action = "transaction_enquiry_command_save";
+    transactionCommentSave_req.user_id = "2";
+
+    transactionCommentSave_req.transaction_id = this.comment_TransactionID;
+    transactionCommentSave_req.commands=this.quotationCommentsForm.value.quotation_Comments;
+    api_req.element_data = transactionCommentSave_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        $('#quotationCommentsId').modal('hide');
+        iziToast.success({
+          message: "Comment Added successfully",
+          position: 'topRight'
+        });
+
+        this.quotationCommentsForm.reset();
+        
+      }else {
+        iziToast.warning({
+          message: "Customer not updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    });
+
+
+    
   }
   PIEdit1(quotationId:any){
 
@@ -1106,6 +1268,9 @@ keyPress(event: any, i: any) {
 
   
 }
+
+
+
   AddQuotationGo() {
     var enq_formID = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
     var enq_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
