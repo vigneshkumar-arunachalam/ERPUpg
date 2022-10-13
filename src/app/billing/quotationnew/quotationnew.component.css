@@ -1,5 +1,6 @@
 .userDatatable table td {
-  padding: 4px 0px 0px !important;
+  /* padding: 4px 0px 0px !important; */
+  padding: 6px 14px!important;
 }
 
 .userDatatable table tr td span {
@@ -347,4 +348,18 @@ input.form-control {
 
 #TextEditorId label {
   font-weight: 500;
+}
+.card.quotation .card-header {
+  display: flex;
+}
+.userDatatable button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+#quotationSharedPersonId .modal-dialog {
+  max-width: 25%;
+}
+.quotationsharedCSS{
+  height: 200px;
+  overflow-y: scroll;
 }

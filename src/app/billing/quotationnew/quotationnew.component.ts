@@ -545,8 +545,7 @@ export class QuotationnewComponent implements OnInit {
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
     api_quotationList.billerID = this.quotationSearchCheckboxID_array;
-    api_quotationList.search_text_CustomerID = this.searchResult_CustomerID;
-    api_quotationList.search_text_CustomerName = this.searchResult_CustomerName;
+    api_quotationList.search_txt = this.searchResult_CustomerName;
     api_quotationList.groupByCheck = this.checkbox_eventCheck_GroupByCustomer;
 
     // api_quotationList.search_text = list_data.search_text;
@@ -1021,17 +1020,31 @@ export class QuotationnewComponent implements OnInit {
 
   }
   setActualCostSave() {
-    for (let k = 0; k <= this.actualCost_ProductList.length; k++) {
-      this.actualCost_ProductList[k].AP_productName = $('#AP_productName_' + k).val();
-      this.actualCost_ProductList[k].AP_productDescription = $('#AP_productDescription_' + k).val();
-      this.actualCost_ProductList[k].product_qty = $('#product_qty_' + k).val();
-      this.actualCost_ProductList[k].product_rate = $('#product_rate_' + k).val();
-      this.actualCost_ProductList[k].invisiable_state = $('#invisiable_state_' + k).val();
-      this.actualCost_ProductList[k].actual_percentage = $('#actual_percentage_' + k).val();
 
+    console.log(this.actualCost_ProductList);
+    for (let k = 0, i = 1; k < this.actualCost_ProductList.length; k++, i++) {
+      this.actualCost_ProductList[k].act_diff_amt = $('#act_diff_amt_' + i).val();
+      this.actualCost_ProductList[k].actual_cost = $('#actual_cost_' + i).val();
+      this.actualCost_ProductList[k].actual_net_tot = $('#actual_net_tot_' + i).val();
+      this.actualCost_ProductList[k].actual_percentage = $('#actual_percentage_' + i).val();
+      this.actualCost_ProductList[k].invisiable_state = $('#invisiable_state_' + i).val();
+      this.actualCost_ProductList[k].qty = $('#product_qty_' + i).val();
+
+      this.actualCost_ProductList[k].price = $('#product_rate_' + i).val();
+      this.actualCost_ProductList[k].productDesc = $('#AP_productDescription_' + i).val();
+      this.actualCost_ProductList[k].productName = $('#AP_productName_' + i).val();
+
+      this.actualCost_ProductList[k].quotationChildId = $('#quotationChildId_' + i).val();
+      if ($('#invisiable_state_' + i).val() == 0) {
+        this.actualCost_ProductList[k].totat_amt = $('#product_rate_' + i).val();
+      } else {
+        this.actualCost_ProductList[k].totat_amt = $('#price_' + i).val();
+      }
+
+      this.actualCost_ProductList[k].unit = $('#product_unit' + i).val();
 
     }
-    return false;
+    console.log(this.actualCost_ProductList);
     console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
     let api_req: any = new Object();
     let actualCostUpdate_req: any = new Object();
@@ -1042,22 +1055,21 @@ export class QuotationnewComponent implements OnInit {
     actualCostUpdate_req.action = "update_actualcost_quotation_value";
     actualCostUpdate_req.user_id = "2";
     actualCostUpdate_req.quotationId = this.actualCost_quotationID;
-    actualCostUpdate_req.values = this.setActualCost_FormGroup.value.addresses_actualCost;
-    var addr = this.setActualCost_FormGroup.value.addresses;
-    for (let i = 0; i < addr.length; i++) {
-      console.log(addr[i].pd_quantity_txtbox1)
-      addr[i].pd_netPrice = $('#pd_netPrice_' + i).val();
-      addr[i].pd_Total = $('#pd_Total_' + i).val();
-    }
-    actualCostUpdate_req.values = addr;
+    actualCostUpdate_req.values = this.actualCost_ProductList;
     api_req.element_data = actualCostUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
 
+
       console.log("set actual cost response", response);
-      if (response.status = true) {
-        this.actualCost_ProductList = response.product_details;
-        this.quotationChildId_count = this.actualCost_ProductList.length + 1;
+      if (response.status == true) {
+        iziToast.success({
+          message: " Quotation Deleted successfully",
+          position: 'topRight'
+        });
+       
+        $("#setActualCostId").modal("hide");
+
 
       }
 
