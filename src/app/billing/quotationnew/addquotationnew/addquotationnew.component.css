@@ -254,3 +254,7 @@ input.form-control {
 }
 #AddQuotationPopUpFormId .modal-content.addcontractmastercss{overflow-y: scroll;
   height: 500px;}
+  .contents label{
+    font-weight: 500;
+
+  }

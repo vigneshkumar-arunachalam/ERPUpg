@@ -1,0 +1,33 @@
+.contents label{
+    font-weight: 500;
+}
+.yettocode {
+    padding-top: 10px;
+    align-items: center;
+    display: inline-flex;
+  
+  }
+  
+  .left_section {
+    border: 1px solid white;
+    width: 30%;
+  
+  }
+  
+  .right_section {
+    border: 1px solid #20c997;
+    width: 70%;
+  }
+  
+  
+  .overall {
+    display: flex;
+    width: 100%;
+  }
+  .add-contact-table-section tr th{padding:0px 15px;}
+table.add-contact-table-section {
+  margin-bottom: 25px;
+}
+input.form-control {
+  padding: 4px 8px;
+}

@@ -15,8 +15,11 @@ export class AddquotationnewComponent implements OnInit {
   public addQuotationInvoice_section1: FormGroup;
   public addQuotationInvoice_section2: FormGroup;
   public addQuotationInvoice_section3: FormGroup;
+  public setActualCost_FormGroup: FormGroup;
+  
   public DiscountForm: FormGroup;
   public addresses: FormArray;
+
   SalesRepList: any;
   SalesResellerList: any;
   SelectTemplateList: any;
@@ -57,6 +60,7 @@ export class AddquotationnewComponent implements OnInit {
     this.addQuotationInvoice_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
+   
   }
 
   ngOnInit(): void {
@@ -134,6 +138,7 @@ export class AddquotationnewComponent implements OnInit {
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
+   
 
 
   }
@@ -184,6 +189,7 @@ export class AddquotationnewComponent implements OnInit {
   get addressControls() {
     return this.addQuotationInvoice_section2.get('addresses') as FormArray
   }
+ 
 
   addAddress(): void {
     this.addresses = this.addQuotationInvoice_section2.get('addresses') as FormArray;
@@ -195,6 +201,8 @@ export class AddquotationnewComponent implements OnInit {
       
     });
   }
+  
+
  
   createAddress(): FormGroup {
     return this.fb.group({
@@ -213,6 +221,9 @@ export class AddquotationnewComponent implements OnInit {
     });
 
   }
+  
+
+
 
   addQuotation() {
 
