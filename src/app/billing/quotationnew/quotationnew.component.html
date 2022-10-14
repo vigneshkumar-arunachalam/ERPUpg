@@ -26,18 +26,19 @@
                                         <tr class="userDatatable-header">
 
 
-                                            <th>
+                                            <!-- <th>
                                                 <span class="userDatatable-title">QuotID</span>
-                                            </th>
+                                            </th> -->
                                             <th>
                                                 <span class="userDatatable-title">QuotNo</span>
                                             </th>
                                             <th>
-                                                <span class="userDatatable-title">QuotDate</span>
-                                            </th>
-                                            <th>
                                                 <span class="userDatatable-title">Version</span>
                                             </th>
+                                            <th>
+                                                <span class="userDatatable-title">QuotDate</span>
+                                            </th>
+                                           
 
                                             <th>
                                                 <span class="userDatatable-title">Customer</span>
@@ -67,17 +68,11 @@
                                         [ngStyle]="{'background-color':list.approval_staus=='2'
                                          ? '#78EFB7' : 'white' }">
 
-                                            <td>
+                                            <!-- <td>
                                                 <span> {{ list.quotationId}}</span>
-                                            </td>
+                                            </td> -->
                                             <td>
                                                 <span>{{ list.quotation_no}}</span>
-                                            </td>
-                                            <td>
-                                                <span>{{ list.quotation_date}}</span>
-                                                <span><button type="button" class="buttonClass"
-                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
-                                                        list.billerCode}}</button></span>
                                             </td>
                                             <td [ngSwitch]="list.duplicate_version">
                                                 <!-- <input type="text" value="{{ list.duplicate_version}}"/>
@@ -112,6 +107,13 @@
 
 
                                             </td>
+                                            <td>
+                                                <span>{{ list.quotation_date}}</span>
+                                                <span><button type="button" class="buttonClass"
+                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                        list.billerCode}}</button></span>
+                                            </td>
+                                           
                                             <td>
                                                 <span> {{ list.customerName}}</span>
                                             </td>
@@ -481,7 +483,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity</label>
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
                                         formControlName="quotationValidity_addPopUP">
@@ -501,8 +503,8 @@
                             <div class="form-group row">
                                 <label for="version" class="col-lg-12 col-form-label">Version</label>
                                 <div class="col-lg-12">
-                                    <input type="text" class="form-control" formControlName="version_enqForm_addPopUP"
-                                        id="version" />
+                                    <input type="text" class="form-control" formControlName="version_enqForm_addPopUP" 
+                                    [(ngModel)]="quotationVersion"   id="version" />
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].dirty || addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
@@ -599,7 +601,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity</label>
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
                                         formControlName="e_quotationValidity_addPopUP">
@@ -662,7 +664,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content addcontractmastercss">
             <div class="modal-header">
-                <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
+                <h2 class="modal-title" id="addModalLongTitle">Duplicate Enquiry From Details</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -705,7 +707,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group row">
-                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity</label>
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
                                         formControlName="d_quotationValidity_addPopUP">
@@ -915,7 +917,7 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="quotationApprovalForm">
-                    <h1>Are you sure you want to send to approval?</h1>
+                    <h3>Are you sure you want to send to approval?</h3>
                     <table class="demoTable">
                         <tr>
                             <td><strong>Approval Type </strong></td>
@@ -1328,7 +1330,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="contractGenerateModalLongTitle">Contract-Email </h2>
+                <h2 class="modal-title" id="contractGenerateModalLongTitle">Quotation-Email </h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1337,43 +1339,32 @@
             <div class="modal-body">
                 <form [formGroup]="emailForm" (ngSubmit)="testdatas()">
 
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="emailFrom" class="col-lg-12 col-form-label">From</label>
-                            <div class="col-lg-12">
+                            <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+                            <div class="col-lg-10">
                                 <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
                                     <option [ngValue]="null" selected disabled>Select From</option>
                                     <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                                         {{ from.from_email }}
                                     </option>
                                 </select>
+                                <div class="alert alert-danger"
+                                *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                                Please
+                                enter To Address
+                                </div>
                             </div>
                         </div>
-                        <div class="alert alert-danger"
-                            *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
-                            Please
-                            enter To Address
-                        </div>
+                       
                     </div>
 
-                  
-                    <!-- <div class="col-md-8 col-12">
+                 
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="emailto" class="col-lg-12 col-form-label">From</label>
-                            <div class="col-md-8 col-12">
-                                <input type="email" id="emailFrom" class="form-control" formControlName="email_From">
-                            </div>
-                        </div>
-                        <div class="alert alert-danger"
-                            *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
-                            Please enter From Address
-                        </div>
-                    </div> -->
-                    <div class="col-md-8 col-12">
-                        <div class="form-group row">
-                            <label for="emailto" class="col-lg-12 ">Select To Type</label>
-                            <div class="col-md-8 col-12">
-                                <div class="form-check">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+                            <div class="col-md-9 col-9" style="display: flex;">
+                                <div class="form-check" style="margin-right: 10px;">
                                     <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
                                         id="company" [checked]="true" (change)="handle_radioChange_email($event)" />
                                     <label class="form-check-label" for="company"> Company
@@ -1390,43 +1381,49 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="emailto" class="col-lg-12 col-form-label">To</label>
-                            <div class="col-lg-12">
+                            <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+                            <div class="col-lg-10">
                                 <input type="email" id="emailto" class="form-control" formControlName="email_to">
+                                <div class="alert alert-danger"
+                                *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                                Please
+                                enter To Address
+                            </div>
                             </div>
                         </div>
-                        <div class="alert alert-danger"
-                            *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
-                            Please
-                            enter To Address</div>
+                    
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="emailto" class="col-lg-12 col-form-label">CC Group</label>
-                            <div class="col-lg-12" *ngFor="let i =index;let display1 of email_cc_userList;">
-                                <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
-                                    (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
+                           
+                                <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+                                <div class="email-cc-template">
+                                <div class="col-lg-10" *ngFor="let i =index;let display1 of email_cc_userList;">
+                                    <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                        (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="subject" class="col-lg-12 col-form-label">Subject</label>
-                            <div class="col-lg-12">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                            <div class="col-lg-10">
                                 <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                                class="alert alert-danger">
+                                Subject is Required
+                            </div>
                             </div>
                         </div>
-                        <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
-                            class="alert alert-danger">
-                            Subject is Required
-                        </div>
+                       
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="template" class="col-lg-12 col-form-label">Template</label>
-                            <div class="col-lg-12">
+                            <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                            <div class="col-lg-10">
                                 <select name="templat" id="template" class="form-control"
                                     formControlName="email_template" (change)="templateContentEmailDropdown($event)">
                                     <option [ngValue]="null" selected disabled>Select Template</option>
@@ -1444,36 +1441,35 @@
                         </div>
                     </div>
 
-                    <div class="col-md-8 col-12">
+                    <!-- <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="emailPDFType" class="col-lg-12 col-form-label">Select PDF Type</label>
-                            <div class="col-lg-12">
+                            <label for="emailPDFType" class="col-lg-2 col-form-label"><span>Select PDF Type</span> :</label>
+                            <div class="col-lg-10">
 
                                 <input type="checkbox" formControlName="email_pdfType" id="emailPDFType"
                                     (change)="eventCheck_PDFType($event)" checked />
 
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-8 col-12">
-                        <div class="form-group">
-                            <label for="subject" class="col-lg-12 col-form-label">Message</label>
-
-                        </div>
-                    </div>
-
-                    <editor id="tinyID" [init]="{
-                    base_url: '/tinymce', 
-                    suffix: '.min'
-                           
-                }"></editor>
-
-                    <div class="col-md-8 col-12">
+                    </div> -->
+                    <div class="col-md-12 col-12">
                         <div class="form-group row">
-                            <label for="Attachment" class="col-lg-12 col-form-label">Attachment</label>
-
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+                            <div class="col-lg-10">
+                                <editor id="tinyID" [init]="{
+                                base_url: '/tinymce', 
+                                suffix: '.min'
+                                    
+                            }"></editor>
+                            </div>
                         </div>
                     </div>
+                    <!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                        </div>
+                    </div> -->
 
                 </form>
             </div>

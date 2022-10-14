@@ -13,6 +13,8 @@ import Swal from 'sweetalert2'
   styleUrls: ['./quotationnew.component.css']
 })
 export class QuotationnewComponent implements OnInit {
+  //quotation version
+  quotationVersion = '1.0';
   //add modal
   quotation_list: any;
   addNewQuotationPopUpForm: FormGroup;
@@ -196,7 +198,7 @@ export class QuotationnewComponent implements OnInit {
       'Subject_Content': new FormControl(null, Validators.required),
       'email_to': new FormControl(null, Validators.required),
       'email_From': new FormControl(null, Validators.required),
-      'email_pdfType': new FormControl(null, Validators.required),
+      // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
 
     });
@@ -540,7 +542,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = "2";
+    api_quotationList.user_id = localStorage.getItem('user_id');
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -1493,15 +1495,27 @@ export class QuotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("response-quotation convert pi", response)
       if (response.status == true) {
-        iziToast.success({
-          message: "Mail Sent successfully",
+          iziToast.success({
+          message: "Quotation Shared has been Updated",
           position: 'topRight'
         });
         $('#PIId').modal('hide');
       }
-
-
-    });
+      else {
+        $('#PIId').modal('hide');
+        iziToast.warning({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+       
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
   }
   pdf(quotationId: any) {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";

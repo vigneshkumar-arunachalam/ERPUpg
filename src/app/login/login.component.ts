@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 })
 export class LoginComponent implements OnInit {
   loginForm: any = FormGroup;
+  userID:any;
+  loginDetails:any;
   constructor(private router: Router,
     private serverService: ServerService) { }
 
@@ -83,8 +85,13 @@ export class LoginComponent implements OnInit {
     
       console.log(response);
       if (response.status == 'true') {
+        this.loginDetails=response;
+        this.userID=response.userId;
+
         localStorage.setItem('access_token','test')
         localStorage.setItem('login_status','1')
+        localStorage.setItem('user_id',response.userId)
+        // console.log("user id display",response.userId)
         // this.router.navigate(['/customernewall']);- whatever we need as home
         this.router.navigate(['/']);
         Swal.close();

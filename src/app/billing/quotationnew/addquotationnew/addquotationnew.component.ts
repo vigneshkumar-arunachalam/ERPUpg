@@ -91,9 +91,8 @@ export class AddquotationnewComponent implements OnInit {
       'companyName': new FormControl(null),
       'quotationNumber': new FormControl(null),
       'selectFooter': new FormControl(null),
-      'quotationDate': new FormControl(null),
+      'quotationDate': new FormControl((new Date()).toISOString().substring(0,10)),
       'customerName': new FormControl(null),
-
       'cust_address1': new FormControl(null),
       'cust_address2': new FormControl(null),
       'cust_address3': new FormControl(null),
@@ -241,11 +240,8 @@ export class AddquotationnewComponent implements OnInit {
 
       console.log("add new quotation response", response);
       if (response != '') {
+        
 
-
-        //  this.enquiryFromList=response.enquiry_from;
-        //  this.quotationValidityList= response.quot_validity;
-        //  this.templateNameList=response.template_name_arr;
         this.SalesRepList = response.sales_rep;
         this.SalesResellerList = response.sales_reseller;
         this.SelectTemplateList = response.quotation_template;
@@ -257,13 +253,15 @@ export class AddquotationnewComponent implements OnInit {
         this.LogoList=response.extra_bills;
 
         console.log("add new quotation response-customer name", this.PDFTemplateList);
-        // $('#addNewQuotationFormId').modal('hide');
-        // iziToast.success({
-        //   message: "Quotation Added successfully",
-        //   position: 'topRight'
-        // });
-        //this.contactsList({});
-
+        this.billerID=response.defaults_biller_id;
+       
+        if(this.billerID!=''){
+          this.dynamicChange1();
+        }
+        this.addQuotationInvoice_section1.patchValue({
+          'companyName': response.defaults_biller_id,
+        });
+        
 
       }
       else {
@@ -287,6 +285,53 @@ export class AddquotationnewComponent implements OnInit {
 
 
 
+  }
+  dynamicChange1() {
+    console.log("billerID check", this.billerID);
+    this.TaxDropdown();
+    let api_req: any = new Object();
+    let api_dynamicDropdown_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/get_customercbo_quat_no";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_dynamicDropdown_req.action = "get_customercbo_quat_no";
+    api_dynamicDropdown_req.user_id = "2";
+    api_dynamicDropdown_req.billerId = this.billerID;
+    api_req.element_data = api_dynamicDropdown_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.FooterDetails = response.footer_details;
+      console.log("dynamic Dropdown change response", response)
+      console.log("dynamic term condition change response", response.quotation_terms_cond)
+      for (let index = 0; index < response.footer_details.length; index++) {
+        this.billerIDUpdate = response.footer_details[index].billerId;
+        if (response.status == true) {
+          this.addQuotationInvoice_section1.patchValue({
+            'quotationNumber': response.quotation_no,
+            'selectFooter': response.footer_details[index].pdf_footer_id,
+            'selectCurrency': response.currency_id,
+            'termConditionContentChange': response.quotation_terms_cond,
+            'DescriptionText': response.quotation_desp_det,
+          });
+
+
+        }
+        else {
+          this.addQuotationInvoice_section1.patchValue({
+            'quotationNumber': '',
+            'selectFooter': '',
+            'selectCurrency': '',
+            'termConditionContentChange': '',
+            'DescriptionText': '',
+
+          });
+        }
+      }
+
+
+    });
   }
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
@@ -377,6 +422,7 @@ export class AddquotationnewComponent implements OnInit {
     });
   }
   dynamicChange(event: any) {
+  
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
     this.TaxDropdown();
@@ -532,7 +578,7 @@ export class AddquotationnewComponent implements OnInit {
 
       console.log("add quotation new save", response);
       if (response.status == true) {
-
+       
         iziToast.success({
           title: 'Saved',
           message: 'Quotation Saved Successfully !',
@@ -586,10 +632,11 @@ export class AddquotationnewComponent implements OnInit {
 
           'cust_address1': response.customer_list[0].customerAddress1,
           'cust_address2': response.customer_list[0].customerAddress2,
+          'cust_address3': response.customer_list[0].customerAddress3,
           'cust_city': response.customer_list[0].city,
           'cust_state': response.customer_list[0].state,
           'cust_zipcode': response.customer_list[0].zipCode,
-          'attention': response.customer_list[0].companyName,
+          'attention': response.customer_list[0].kind_Attention,
         });
       }
       else {
@@ -598,6 +645,7 @@ export class AddquotationnewComponent implements OnInit {
 
           'cust_address1': '',
           'cust_address2': '',
+          'cust_address3': '',
           'cust_city': '',
           'cust_state': '',
           'cust_zipcode': '',
@@ -674,6 +722,7 @@ export class AddquotationnewComponent implements OnInit {
       this.grandTotal = this.grandTotal + this.extraCharge;
     }
     $('#discountFormId').modal('hide');
+    this.DiscountForm.reset();
 
   }
   clearAddress() {

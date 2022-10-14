@@ -89,8 +89,8 @@
                 <div class="col-lg-6">
                     <div class="form-group row">
                         <div class="ng-autocomplete">
-                            <label for="companyName" class="col-lg-12 ">Company
-                                Name*</label>
+                            <label for="companyName" class="col-lg-12 ">Customer
+                                Name</label>
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                 formControlName="customerName" (selected)='searchCustomer_selectDropdownData($event)'
                                 (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
@@ -526,7 +526,7 @@
 
 
                                         <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
-                                            {{tax.tax_name}}
+                                            {{tax.combine_val}}
                                         </option>
                                     </select>
                                 </div>

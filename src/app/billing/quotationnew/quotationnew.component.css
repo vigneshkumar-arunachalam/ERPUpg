@@ -363,3 +363,32 @@ input.form-control {
   height: 200px;
   overflow-y: scroll;
 }
+.checkbox {
+  margin-right: 10px;
+}
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* #TextEditorId span{width: 138px;    display: inline-block;} */
+label.col-lg-2.col-form-label{text-align: right;}
