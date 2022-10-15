@@ -31,3 +31,15 @@ table.add-contact-table-section {
 input.form-control {
   padding: 4px 8px;
 }
+
+.form-control{border:1px solid #e1e1e1;}
+.userDatatable-content{position: relative;top:-25px;}
+
+.userDatatable-content button.btn.btn-danger.btn-sm{
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}

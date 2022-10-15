@@ -13,14 +13,14 @@
   background: #fff;
 }
 .box {
-  position: relative;
+  /* position: relative; */
   width: 380px;
-  height: 420px;
-  background: #1c1c1c;
+  /* height: 420px; */
+  /* background: #1c1c1c; */
   border-radius: 8px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
-.box::before {
+/* .box::before {
   content: "";
   position: absolute;
   top: -50%;
@@ -50,9 +50,9 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */
 .form {
-  position: absolute;
+  /* position: absolute; */
   inset: 2px;
   border-radius: 8px;
   background: #2c3247;
@@ -77,12 +77,15 @@
   width: 100%;
   padding: 20px 10px 10px;
   background: transparent;
-  border: none;
+  border: 1px solid #ddd;
   outline: none;
-  color: #23242a;
+  color: #fff;
   font-size: 1em;
   letter-spacing: 0.1em;
   z-index: 10;
+  height: 45px;
+  border-radius: 4px;
+  margin: 10px 0px;
 }
 .inputBox span {
   position: absolute;
@@ -142,4 +145,13 @@ input[type="submit"] {
 }
 input[type="submit"]:active {
   opacity: 0.8;
+}
+.alertdangerCustomCSS{
+  color: #009688;
+  background-color: #e5f4fff2;
+  border-color: #ffe5e5;
+  letter-spacing: 0.1em;
+  align-items: center;
+  padding-left: 45px;
+  align-items: center;
 }

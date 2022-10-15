@@ -86,14 +86,21 @@
             <form [formGroup]="loginForm">
                 <h2>Sign in</h2>
                 <div class="inputBox">
-                    <input type="text" required="required" formControlName="username">
+                    <input type="text" formControlName="username">
                     <span>Username</span>
-                    <i></i>
+                    <!-- <i></i> -->
+                    <div *ngIf="loginForm.controls['username'].invalid && (loginForm.controls['username'].dirty || loginForm.controls['username'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS">
+                        Username is Required
+                    </div>
                 </div>
                 <div class="inputBox">
-                    <input type="password" required="required" formControlName="password">
+                    <input type="password" formControlName="password">
                     <span>Password</span>
-                    <i></i>
+                    <!-- <i></i> -->
+                    <div *ngIf="loginForm.controls['password'].invalid && (loginForm.controls['password'].dirty || loginForm.controls['password'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS"> Password is Required
+                    </div>
                 </div>
                 <div class="links">
                     <!-- <a href="#">Forget Password</a>

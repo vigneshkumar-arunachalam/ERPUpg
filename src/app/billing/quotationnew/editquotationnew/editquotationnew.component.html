@@ -30,12 +30,12 @@
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="select_footer" class="col-lg-12 col-form-label">Select Footer</label>
-                    <div class="col-lg-12">
-                        <div class="form-check" *ngFor="let display of FooterDetails">
+                    <div class="col-lg-12" style="display: flex;">
+                        <div class="form-check" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
                             <input class="form-check-input" type="radio" formControlName="e_selectFooter"
                                 id="{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
-                                (change)="handleChange($event)" />
-                            <label style="font-weight:400;font-size: 14px;color: #495057;" for="edit_c4c1">
+                                (change)="handleChange($event)" style="margin-top: revert;"/>
+                            <label style="font-weight:400;font-size: 14px;color: #495057; margin-bottom: 0;" for="edit_c4c1">
                                 {{display.footer_name}}
                             </label>
                         </div>
@@ -43,6 +43,7 @@
                     </div>
                 </div>
             </div>
+
            
 
 
@@ -310,7 +311,7 @@
                                 <tbody>
                                     <tr>
                                         <td style="width:370px;display:block;">
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="top:0">
                                                 <div class="alignFormArray" style="display:block;">
                                                     <input type="text" class="form-control"
                                                         formControlName="pd_productName_txtbox1" />
@@ -324,11 +325,11 @@
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control"
+                                                    (keyup)="keyPress($event, i)"
                                                     formControlName="pd_quantity_txtbox1" />
-                                                    <input type="hidden" class="form-control"
-                                                    formControlName="pd_quotationChildId" />
+                                                    
                                             </div>
-                                            
+
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
@@ -336,7 +337,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="top:-9px;">
                                                 <div>
                                                     <input type="text" class="form-control"
                                                         formControlName="pd_sellingPrice"
@@ -355,33 +356,32 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" 
-                                                formControlName="pd_Total"
+                                                <input type="text" class="form-control" formControlName="pd_Total"
                                                     id="pd_Total_{{i}}" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" 
+                                                <input type="text" class="form-control"
                                                     formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="top:-35px;">
                                                 <input type="checkbox" formControlName="pd_split"
                                                     (change)="productDetails_Split_eventCheck($event)" />
 
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="top:-35px;">
                                                 <input type="checkbox" formControlName="pd_GPTotal"
                                                     (change)="productDetails_GPTotal_eventCheck($event)" />
 
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="top:-35px;">
                                                 <input type="checkbox" [ngModel]="test[i]" id="pd_selectTax_{{i}}"
                                                     formControlName="pd_selectTax"
                                                     (change)="productDetails_selectTax_eventCheck($event, i)" />
