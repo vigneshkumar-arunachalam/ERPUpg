@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-
 import { ServerService } from '../services/server.service';
 import { Router } from '@angular/router';
+
 declare var iziToast: any;
 declare var $: any;
 import Swal from 'sweetalert2';
@@ -16,9 +15,10 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   loginForm: any = FormGroup;
   userID:any;
+  userName:any;
   loginDetails:any;
-  constructor(private router: Router,
-    private serverService: ServerService) { }
+  role:any= [];
+  constructor(private router: Router, private serverService: ServerService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -39,31 +39,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // userLogin() {
-  //   if (this.loginForm.valid) {
-  //     this.userLogins();
-  //   } else {
-  //     this.validateAllFields(this.loginForm);
-  //   }
-  // }
 
   userLogin() {
-    // let api_req: any = new Object();
-    // let api_ApproveStatusUpdate_req: any = new Object();
-    // api_req.moduleType = "customer";
-    // api_req.api_url = "customer_contract/customer_contract_approve_update";
-    // api_req.api_type = "web";
-    // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    // api_ApproveStatusUpdate_req.action = "customer_contract_approve_update";
-    // api_ApproveStatusUpdate_req.user_id = localStorage.getItem('user_id');
-    // api_ApproveStatusUpdate_req.customer_contract_id = this.customerContractIDApproveStatus;
-    // api_ApproveStatusUpdate_req.approve_status = this.checkbox_ApproveStatus;
-    // api_req.element_data = api_ApproveStatusUpdate_req;
-
-
     Swal.fire('Authenticating');
     Swal.showLoading();
-  
    
     let api_req: any = new Object();
     let loginFormapi_req: any = new Object();
@@ -87,13 +66,25 @@ export class LoginComponent implements OnInit {
       if (response.status == 'true') {
         this.loginDetails=response;
         this.userID=response.userId;
+        this.userName=response.firstName;
+        this.role=response.role;
+
 
         localStorage.setItem('access_token','test')
         localStorage.setItem('login_status','1')
         localStorage.setItem('user_id',response.userId)
-        // console.log("user id display",response.userId)
+        localStorage.setItem('user_name',response.firstName)
+        localStorage.setItem('role',response.role)
+        localStorage.setItem('profile_image',response.profile_image)
+
+        console.log("user id display",response.userId)
+        console.log("user id display", this.userID)
+        console.log("user name display", this.userName)
+        console.log("user permission_role", this.role)
         // this.router.navigate(['/customernewall']);- whatever we need as home
+        if(this.userID!=''){
         this.router.navigate(['/']);
+      }
         Swal.close();
         iziToast.success({
           message: 'Logged In Sucessfully',
@@ -115,5 +106,17 @@ export class LoginComponent implements OnInit {
    
 
 
+  }
+  AddQuotationGo() {
+   
+
+
+    // this.router.navigate(['/navbar'], { queryParams: { 
+    //  userid: this.userID, 
+    //   username: this.userName, 
+    //   role_permission: this.role, 
+    //    } });
+
+   
   }
 }

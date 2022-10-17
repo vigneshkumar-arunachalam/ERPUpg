@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray,Validators} from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -20,7 +20,9 @@ export class AddquotationnewComponent implements OnInit {
   public DiscountForm: FormGroup;
   public addresses: FormArray;
 
+  isReadOnly:boolean=true;
   SalesRepList: any;
+  salesRepDropDown_Textbox_Status:any;
   SalesResellerList: any;
   SelectTemplateList: any;
   LogoList:any;
@@ -90,12 +92,12 @@ export class AddquotationnewComponent implements OnInit {
     this.addQuotationInvoice_section1 = new FormGroup({
       'companyName': new FormControl(null),
       'quotationNumber': new FormControl(null),
-      'selectFooter': new FormControl(null),
+      'selectFooter': new FormControl(null, [Validators.required]),
       'quotationDate': new FormControl((new Date()).toISOString().substring(0,10)),
       'customerName': new FormControl(null),
       'cust_address1': new FormControl(null),
       'cust_address2': new FormControl(null),
-      'cust_address3': new FormControl(null),
+      'cust_ZipCode': new FormControl(null),
       'attention': new FormControl(null),
       'salesRep': new FormControl(null),
       'selectTemplate': new FormControl(null),
@@ -241,6 +243,7 @@ export class AddquotationnewComponent implements OnInit {
       console.log("add new quotation response", response);
       if (response != '') {
         
+this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
 
         this.SalesRepList = response.sales_rep;
         this.SalesResellerList = response.sales_reseller;
@@ -260,6 +263,7 @@ export class AddquotationnewComponent implements OnInit {
         }
         this.addQuotationInvoice_section1.patchValue({
           'companyName': response.defaults_biller_id,
+          'salesRep':localStorage.getItem('user_id'),
           
         });
         
@@ -489,6 +493,18 @@ export class AddquotationnewComponent implements OnInit {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
+        //console.log("default_tax_id", response.default_tax_id);
+        //alert(response.default_tax_id)
+        if(response.default_tax_id!='null'&&response.default_tax_id!=null){
+        $("#billerIDs").val(response.default_tax_id)
+        this.addQuotationInvoice_section3.patchValue({
+          'section3_gst_dropdown': response,
+         
+        });
+        this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+
+        // 
+      }
 
       }
 
@@ -497,7 +513,7 @@ export class AddquotationnewComponent implements OnInit {
     });
   }
   saveQuotationEnquiry() {
- console.log(this.addQuotationInvoice_section2.value)
+ console.log(this.addQuotationInvoice_section3.value.section3_gst_dropdown)
     // alert(this.addQuotationInvoice_section1.value.selectCurrency)
     console.log("this.addQuotationInvoice_section1.value.selectPDFTemplate", this.addQuotationInvoice_section1.value.selectPDFTemplate)
     let api_req: any = new Object();
@@ -521,8 +537,8 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.quotation_date = this.addQuotationInvoice_section1.value.quotationDate;
     api_saveEnquiry_req.customer_id = this.addQuotationInvoice_section1.value.customerName;
     api_saveEnquiry_req.customerAddress1 = this.addQuotationInvoice_section1.value.cust_address1;
-    api_saveEnquiry_req.customerAddress2 = this.addQuotationInvoice_section1.value.cust_address2;
-    api_saveEnquiry_req.customerAddress3 = this.addQuotationInvoice_section1.value.cust_address3;
+    api_saveEnquiry_req.customerAddress3 = this.addQuotationInvoice_section1.value.cust_address2;
+    api_saveEnquiry_req.zipCode  = this.addQuotationInvoice_section1.value.cust_ZipCode;
     // api_saveEnquiry_req.quotation_no=Address3;
     api_saveEnquiry_req.kind_Attention = this.addQuotationInvoice_section1.value.attention;
     api_saveEnquiry_req.billGeneratedBy = this.addQuotationInvoice_section1.value.salesRep;
@@ -632,8 +648,8 @@ export class AddquotationnewComponent implements OnInit {
 
 
           'cust_address1': response.customer_list[0].customerAddress1,
-          'cust_address2': response.customer_list[0].customerAddress2,
-          'cust_address3': response.customer_list[0].customerAddress3,
+          'cust_address2': response.customer_list[0].customerAddress3,
+          'cust_ZipCode': response.customer_list[0].zipCode,
           'cust_city': response.customer_list[0].city,
           'cust_state': response.customer_list[0].state,
           'cust_zipcode': response.customer_list[0].zipCode,
@@ -646,7 +662,7 @@ export class AddquotationnewComponent implements OnInit {
 
           'cust_address1': '',
           'cust_address2': '',
-          'cust_address3': '',
+          'cust_ZipCode': '',
           'cust_city': '',
           'cust_state': '',
           'cust_zipcode': '',

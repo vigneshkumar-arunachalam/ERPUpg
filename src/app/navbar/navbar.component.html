@@ -668,19 +668,19 @@
             <!-- ends: .nav-flag-select -->
             <li class="nav-author">
                 <div class="dropdown-custom">
-                    <a href="javascript:;" class="nav-item-toggle"><img src="assets/img/author-nav.jpg" alt="" class="rounded-circle"></a>
+                    <a href="javascript:;" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle"></a>
                     <div class="dropdown-wrapper">
                         <div class="nav-author__info">
                             <div class="author-img">
-                                <img src="assets/img/author-nav.jpg" alt="" class="rounded-circle">
+                                <img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle">
                             </div>
                             <div>
-                                <h6>Username</h6>
-                                <span>Designation</span>
+                                <h6>{{this.userName}}</h6>
+                                <!-- <span>Designation</span> -->
                             </div>
                         </div>
                         <div class="nav-author__options">
-                            <ul>
+                            <!-- <ul>
                                 <li>
                                     <a href="#">
                                         <span data-feather="user"></span> Profile</a>
@@ -692,9 +692,10 @@
                                
                              
                                
-                            </ul>
+                            </ul> -->
                             <a href="#" class="nav-author__signout" (click)="logout()">
-                                <span data-feather="log-out"></span> Sign Out</a>
+                                <!-- <span data-feather="log-out"></span> Sign Out</a> -->
+                                <span></span> Sign Out</a>
                         </div>
                     </div>
                     <!-- ends: .dropdown-wrapper -->

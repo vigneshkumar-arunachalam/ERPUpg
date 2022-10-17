@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray,Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -47,6 +47,8 @@ export class EditquotationnewComponent implements OnInit {
   extraCharge = 0;
   selectedTax = true;
   test: boolean[] = [];
+  isReadOnly:boolean=true;
+
   //auto-complete customer name
   autocomplete_CustomerID:any;
   autocomplete_CustomerName:any;
@@ -96,13 +98,13 @@ export class EditquotationnewComponent implements OnInit {
     this.editQuotationInvoice_section1 = new FormGroup({
       'e_companyName': new FormControl(null),
       'e_quotationNumber': new FormControl(null),
-      'e_selectFooter': new FormControl(null),
+      'e_selectFooter':  new FormControl(null, [Validators.required]),
       'e_quotationDate': new FormControl(null),
       'e_customerName': new FormControl(null),
 
       'e_cust_address1': new FormControl(null),
       'e_cust_address2': new FormControl(null),
-      'e_cust_address3': new FormControl(null),
+      'e_zipcode': new FormControl(null),
       'e_attention': new FormControl(null),
       'e_salesRep': new FormControl(null),
       'e_selectTemplate': new FormControl(null),
@@ -250,8 +252,8 @@ export class EditquotationnewComponent implements OnInit {
 
 
           'e_cust_address1': response.customer_list[0].customerAddress1,
-          'e_cust_address2': response.customer_list[0].customerAddress2,
-          'e_cust_address3': response.customer_list[0].customerAddress3,
+          'e_cust_address2': response.customer_list[0].customerAddress3,
+          'e_zipcode': response.customer_list[0].zipCode,
           'e_customerName': response.customer_list[0].customerName,
           'e_attention':response.customer_list[0].kind_Attention,
         });
@@ -337,8 +339,8 @@ export class EditquotationnewComponent implements OnInit {
           'e_quotationDate': response.quotation_details[0].quotation_date,
           'e_customerName': response.quotation_details[0].customerName,
           'e_cust_address1': response.quotation_details[0].customerAddress1,
-          'e_cust_address2': response.quotation_details[0].customerAddress2,
-          'e_cust_address3': response.quotation_details[0].customerAddress3,
+          'e_cust_address2': response.quotation_details[0].customerAddress3,
+          'e_zipcode': response.quotation_details[0].zipCode,
           'e_attention': response.quotation_details[0].kind_Attention,
           'e_salesRep': response.quotation_details[0].billGeneratedBy,
           'e_selectTemplate': response.quotation_details[0].quotation_template_id,
@@ -458,8 +460,8 @@ export class EditquotationnewComponent implements OnInit {
    
     // api_UpdateEnquiry_req.customer_id = this.editQuotationInvoice_section1.value.customer_id;
     api_UpdateEnquiry_req.customerAddress1 = this.editQuotationInvoice_section1.value.e_cust_address1;
-    api_UpdateEnquiry_req.customerAddress2 = this.editQuotationInvoice_section1.value.e_cust_address2;
-    api_UpdateEnquiry_req.customerAddress3 = this.editQuotationInvoice_section1.value.e_cust_address3;
+    api_UpdateEnquiry_req.customerAddress3 = this.editQuotationInvoice_section1.value.e_cust_address2;
+    api_UpdateEnquiry_req.zipCode   = this.editQuotationInvoice_section1.value.e_zipcode;
     api_UpdateEnquiry_req.kind_Attention = this.editQuotationInvoice_section1.value.e_attention;
     api_UpdateEnquiry_req.billGeneratedBy = this.editQuotationInvoice_section1.value.e_salesRep;
      api_UpdateEnquiry_req.reseller_id = this.editQuotationInvoice_section1.value.e_selectTemplate;

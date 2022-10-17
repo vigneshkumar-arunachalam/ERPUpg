@@ -1,5 +1,5 @@
 <div class="contents">
-    <h2 style="text-align:center;color:rgb(97, 72, 9)">Enter Invoice Details</h2>
+    <h2 style="text-align:center;color:rgb(97, 72, 9)">Enter Quotation Details</h2>
     <form [formGroup]="editQuotationInvoice_section1">
         <div class="row">
 
@@ -22,14 +22,15 @@
                 <div class="form-group row">
                     <label for="quot_no" class="col-lg-12 col-form-label">Quotation No</label>
                     <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="e_quotationNumber" id="quot_no" />
+                        <input type="text " class="form-control" 
+                        [attr.readonly]= "isReadOnly" formControlName="e_quotationNumber" id="quot_no" />
                     </div>
                 </div>
             </div>
           
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="select_footer" class="col-lg-12 col-form-label">Select Footer</label>
+                    <label for="select_footer" class="col-lg-12 col-form-label">Select Footer*</label>
                     <div class="col-lg-12" style="display: flex;">
                         <div class="form-check" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
                             <input class="form-check-input" type="radio" formControlName="e_selectFooter"
@@ -38,6 +39,11 @@
                             <label style="font-weight:400;font-size: 14px;color: #495057; margin-bottom: 0;" for="edit_c4c1">
                                 {{display.footer_name}}
                             </label>
+                        </div>
+                        <div class="alert alert-danger"
+                        *ngIf="editQuotationInvoice_section1.controls['e_selectFooter'].invalid && editQuotationInvoice_section1.controls['e_selectFooter'].touched">
+                        Please
+                        Select Footer
                         </div>
 
                     </div>
@@ -110,9 +116,9 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="addr3" class="col-lg-12 col-form-label">Address3</label>
+                    <label for="addr3" class="col-lg-12 col-form-label">Zip Code</label>
                     <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="e_cust_address3" id="addr3" />
+                        <input type="text" class="form-control" formControlName="e_zipcode" id="addr3" />
                     </div>
 
                 </div>
@@ -312,11 +318,11 @@
                                     <tr>
                                         <td style="width:370px;display:block;">
                                             <div class="userDatatable-content" style="top:0">
-                                                <div class="alignFormArray" style="display:block;">
+                                                <div class="alignFormArray" style="display:block;text-align: left;">
                                                     <input type="text" class="form-control"
                                                         formControlName="pd_productName_txtbox1" />
 
-                                                    <textarea style="height: 42px;width: 100%;"
+                                                    <textarea style="height: 42px;width: 100%;text-align: left;padding-left: 8px"
                                                         class="form-control mt-2" row="4"
                                                         formControlName="pd_productName_txtArea"></textarea>
                                                 </div>
@@ -324,7 +330,7 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control"
+                                                <input type="text" class="form-control" style="text-align: left;"
                                                     (keyup)="keyPress($event, i)"
                                                     formControlName="pd_quantity_txtbox1" />
                                                     
@@ -333,14 +339,14 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" formControlName="pd_unit" />
+                                                <input type="text" class="form-control" style="text-align: left;" formControlName="pd_unit" />
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content" style="top:-9px;">
+                                            <div class="userDatatable-content" style="top:-9px;text-align: right;">
                                                 <div>
                                                     <input type="text" class="form-control"
-                                                        formControlName="pd_sellingPrice"
+                                                        formControlName="pd_sellingPrice" style="text-align: right;"
                                                         (keyup)="keyPress($event, i)" />
 
 
@@ -356,13 +362,13 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" formControlName="pd_Total"
+                                                <input type="text" class="form-control" formControlName="pd_Total" style="text-align: right;"
                                                     id="pd_Total_{{i}}" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control"
+                                                <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
                                             </div>
                                         </td>

@@ -122,7 +122,7 @@ export class QuotationnewComponent implements OnInit {
 
   //pagination
   recordNotFound = false;
-  pageLimit = 10;
+  pageLimit = 30;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   //excel
