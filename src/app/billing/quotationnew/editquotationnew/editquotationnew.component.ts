@@ -52,6 +52,10 @@ export class EditquotationnewComponent implements OnInit {
   //auto-complete customer name
   autocomplete_CustomerID:any;
   autocomplete_CustomerName:any;
+  //auto-complete product details
+  searchResult_productName:any;
+  product_name_AutoComplete:any;
+
 
     //enquiry from details pop up
     FormID_enquiryFromDetails: any;
@@ -65,7 +69,7 @@ export class EditquotationnewComponent implements OnInit {
     });
 
   }
-
+  keywordpd_productName_autocomplete = 'partNo';
   ngOnInit(): void {
     // this.editQuotation();
     this.TaxDropdown();
@@ -145,6 +149,18 @@ export class EditquotationnewComponent implements OnInit {
       
     });
   }
+  selectEventProduct(item: any) {
+    
+    console.log("product item selected",item)
+    this.product_name_AutoComplete=item.partNo;
+    console.log("product item.partNo selected",item.partNo)
+    if(this.product_name_AutoComplete!=''){
+      this.productNameAutoFill()
+    }
+  }
+  onFocusedProduct(e: any) {
+    // do something when input is focused
+  }
 
   checkbox_termsCondition_DontShow: any;
   termsCondition_DontShow_eventCheck(e: any) {
@@ -204,6 +220,7 @@ export class EditquotationnewComponent implements OnInit {
     return this.fb.group({
 
       pd_productName_txtbox1: '',
+      pd_productName_autocomplete:'',
       pd_productName_txtArea: '',
       pd_quantity_txtbox1: '',
       pd_quotationChildId:'',
@@ -252,8 +269,8 @@ export class EditquotationnewComponent implements OnInit {
 
 
           'e_cust_address1': response.customer_list[0].customerAddress1,
-          'e_cust_address2': response.customer_list[0].customerAddress3,
-          'e_zipcode': response.customer_list[0].zipCode,
+          'e_cust_address2': response.customer_list[0].customerAddress2,
+          'e_cust_address3': response.customer_list[0].customerAddress3,
           'e_customerName': response.customer_list[0].customerName,
           'e_attention':response.customer_list[0].kind_Attention,
         });
@@ -297,6 +314,77 @@ export class EditquotationnewComponent implements OnInit {
     });
 
   }
+  searchProductName(data: any) {
+
+    let api_req: any = new Object();
+    let api_SearchProd_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/product_name_auto";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_SearchProd_req.action = "product_name_auto";
+    api_SearchProd_req.user_id = localStorage.getItem('user_id');
+  
+    api_SearchProd_req.part_no = data;
+    api_req.element_data = api_SearchProd_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_name response", response);
+      this.searchResult_productName = response.products_list;
+      console.log("response.partNo",response.products_list)
+      // console.log("response.partNo",response.partNo)
+
+      if (response.status !='') {
+
+      }
+
+    });
+
+  }
+  productNameAutoFill(){
+   
+   
+    let api_req: any = new Object();
+    let api_ProdAutoFill_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/product_name_auto_fill";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_ProdAutoFill_req.action = "product_name_auto_fill";
+    api_ProdAutoFill_req.user_id = localStorage.getItem('user_id');
+    api_ProdAutoFill_req.product_name = this.product_name_AutoComplete;
+    api_req.element_data = api_ProdAutoFill_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("response.length",response.length)
+      console.log("partNo by auto fill",response[0].partNo);
+        console.log("productName by auto fill",response[0].productName);
+        console.log("productDesc by auto fill",response[0].productDesc);
+        console.log("rate by auto fill",response[0].rate);
+     
+      for (let index = 0; index < response.length; index++) {
+       
+        if (response.status != '') {
+          this.addQuotationInvoice_section2.patchValue({
+            'pd_productName_autocomplete': response[index].partNo,
+            'pd_productName_txtbox1':response[index].productName,
+            'pd_productName_txtArea':response[index].productDesc,
+          });
+
+
+        }
+        else {
+          this.addQuotationInvoice_section2.patchValue({
+            'pd_productName_autocomplete': '',
+            'pd_productName_txtbox1': '',
+            'pd_productName_txtArea': '',
+           
+
+          });
+        }
+      }
+	  
+    });
+  }
 
   searchCustomerDataMouse(data: any) {
     console.log("search data afer mouse click", data)
@@ -339,8 +427,8 @@ export class EditquotationnewComponent implements OnInit {
           'e_quotationDate': response.quotation_details[0].quotation_date,
           'e_customerName': response.quotation_details[0].customerName,
           'e_cust_address1': response.quotation_details[0].customerAddress1,
-          'e_cust_address2': response.quotation_details[0].customerAddress3,
-          'e_zipcode': response.quotation_details[0].zipCode,
+          'e_cust_address2': response.quotation_details[0].customerAddress2,
+          'e_cust_address3': response.quotation_details[0].customerAddress3,
           'e_attention': response.quotation_details[0].kind_Attention,
           'e_salesRep': response.quotation_details[0].billGeneratedBy,
           'e_selectTemplate': response.quotation_details[0].quotation_template_id,
@@ -460,8 +548,8 @@ export class EditquotationnewComponent implements OnInit {
    
     // api_UpdateEnquiry_req.customer_id = this.editQuotationInvoice_section1.value.customer_id;
     api_UpdateEnquiry_req.customerAddress1 = this.editQuotationInvoice_section1.value.e_cust_address1;
-    api_UpdateEnquiry_req.customerAddress3 = this.editQuotationInvoice_section1.value.e_cust_address2;
-    api_UpdateEnquiry_req.zipCode   = this.editQuotationInvoice_section1.value.e_zipcode;
+    api_UpdateEnquiry_req.customerAddress2 = this.editQuotationInvoice_section1.value.e_cust_address2;
+    api_UpdateEnquiry_req.customerAddress3  = this.editQuotationInvoice_section1.value.e_cust_address3;
     api_UpdateEnquiry_req.kind_Attention = this.editQuotationInvoice_section1.value.e_attention;
     api_UpdateEnquiry_req.billGeneratedBy = this.editQuotationInvoice_section1.value.e_salesRep;
      api_UpdateEnquiry_req.reseller_id = this.editQuotationInvoice_section1.value.e_selectTemplate;
@@ -650,7 +738,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_selectFooter': response.footer_details[index].pdf_footer_id,
             'e_selectCurrency': response.currency_id,
             'e_termConditionContentChange': response.quotation_terms_cond,
-            'e_DescriptionText': response.quotation_desp_det,
+            // 'e_DescriptionText': response.quotation_desp_det,
           });
 
 
@@ -661,7 +749,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_selectFooter': '',
             'e_selectCurrency': '',
             'e_termConditionContentChange': '',
-            'e_DescriptionText': '',
+            // 'e_DescriptionText': '',
 
           });
         }
@@ -700,7 +788,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_selectFooter': response.footer_details[index].pdf_footer_id,
             'e_selectCurrency': response.currency_id,
             'e_termConditionContentChange': response.quotation_terms_cond,
-            'e_DescriptionText': response.quotation_desp_det,
+            // 'e_DescriptionText': response.quotation_desp_det,
           });
 
 
@@ -711,7 +799,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_selectFooter': '',
             'e_selectCurrency': '',
             'e_termConditionContentChange': '',
-            'e_DescriptionText': '',
+            // 'e_DescriptionText': '',
 
           });
         }

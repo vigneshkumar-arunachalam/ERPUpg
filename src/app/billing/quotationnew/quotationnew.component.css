@@ -392,3 +392,7 @@ input.form-control {
 
 /* #TextEditorId span{width: 138px;    display: inline-block;} */
 label.col-lg-2.col-form-label{text-align: right;}
+
+#quotationApprovalId tr:nth-child(even) {
+  background: rgb(254, 255, 254)
+}

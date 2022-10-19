@@ -54,6 +54,8 @@ export class QuotationnewComponent implements OnInit {
   checkbox_quotationShare_value: any;
   quotationSharedCheckboxID_array: any = [];
   sharePermissionQuotationId: any;
+ search_SharedPersonName:any;
+ values = '';
   //quotation-approval
   quotationApproval_ID: any;
   quotationApprovalForm: FormGroup;
@@ -61,6 +63,7 @@ export class QuotationnewComponent implements OnInit {
   checked = true;
   Approval_Type_radiobox_Value: any;
   quotationApprovedBy: any;
+  approvalUserID_Radio:any;
   //set template name
   setTemplateNameForm: FormGroup;
   template_quotationID: any;
@@ -122,7 +125,7 @@ export class QuotationnewComponent implements OnInit {
 
   //pagination
   recordNotFound = false;
-  pageLimit = 30;
+  pageLimit = 50;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   //excel
@@ -287,65 +290,81 @@ export class QuotationnewComponent implements OnInit {
     this.checkbox_eventCheck_GroupByCustomer = event.target.checked;
     console.log(this.checkbox_eventCheck_GroupByCustomer)
   }
-  handleChange(evt: any) {
+  onKey(event: any) { // without type info
+    this.values = event.target.value ;
+    console.log("this.values",this.values)
+  }
+  handleChange(evt: any,userId:any) {
+    
+    this.approvalUserID_Radio=userId;
     var xyz = evt.target.id;
-    this.quotationApprovedBy = evt.target.id;
+    this.quotationApprovedBy = this.approvalUserID_Radio;
     console.log(xyz, "target");
     if (xyz == "0") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = true;
       this.textarea1_Show_hide = false;
     }
     else if (xyz == "1") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "2") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "3") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "4") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "5") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "6") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "7") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "8") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "9") {
       console.log(xyz);
+      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
@@ -786,7 +805,48 @@ export class QuotationnewComponent implements OnInit {
 
 
   }
+  quotationSharedPersonNameSearch(event:any){
 
+  
+      this.values = event.target.value ;
+      console.log("this.values",this.values)
+  
+   
+    console.log("You entered: ", event.target.value);
+    this.search_SharedPersonName=event.target.value;
+
+    let api_req: any = new Object();
+    let quot_share_Search_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/user_name_search";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quot_share_Search_req.action = "user_name_search";
+ 
+    quot_share_Search_req.firstName= this.values;
+    api_req.element_data = quot_share_Search_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("search username ", response)
+      if (response.status == true) {
+
+        this.quotationSharedResult = response.user_list;
+
+      }
+      else {
+
+       
+      }
+
+
+ 
+
+    });
+
+
+
+
+  }
   QuotationSharedCHK(data: any, event: any) {
     // this.invoiceCheckboxID_array=[];
     console.log("Shared Quotation List - CheckBox ID", data);
@@ -869,6 +929,7 @@ export class QuotationnewComponent implements OnInit {
     quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
     quot_approvalUpdate_req.quotation_comments = this.quotationApprovalForm.value.comments_approvedBy;
     quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
+   
     quot_approvalUpdate_req.assigned_comments = this.quotationApprovalForm.value.approval_comments;
 
     api_req.element_data = quot_approvalUpdate_req;

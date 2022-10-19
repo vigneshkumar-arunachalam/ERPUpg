@@ -74,7 +74,7 @@
             <div class="col-lg-6">
                 <div class="form-group row">
                     <div class="ng-autocomplete">
-                        <label for="companyName" class="col-lg-12 col-form-label">Company Name*</label>
+                        <label for="companyName" class="col-lg-12 col-form-label">Customer Name</label>
                         <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                             formControlName="e_customerName" (selected)='searchCustomer_selectDropdownData($event)'
                             (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
@@ -93,37 +93,6 @@
                 </div>
             </div>
 
-
-
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="addr1" class="col-lg-12 col-form-label">Address1</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="e_cust_address1" id="addr1" />
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="addr2" class="col-lg-12 col-form-label">Address2</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="e_cust_address2" id="addr2" />
-                    </div>
-
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="addr3" class="col-lg-12 col-form-label">Zip Code</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="e_zipcode" id="addr3" />
-                    </div>
-
-                </div>
-            </div>
-          
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="attn" class="col-lg-12 col-form-label">Attention</label>
@@ -133,6 +102,18 @@
 
                 </div>
             </div>
+
+
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="addr1" class="col-lg-12 col-form-label">Address</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="e_cust_address1" id="addr1" />
+                    </div>
+
+                </div>
+            </div>
+            
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
@@ -148,16 +129,11 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="select_resell" class="col-lg-12 col-form-label">Select Reseller</label>
+                    <label for="addr2" class="col-lg-12 col-form-label">&nbsp;</label>
                     <div class="col-lg-12">
-                        <select name="enqFormValue" id="select_resell" class="form-control"
-                            formControlName="e_selectReseller">
-                            <option [ngValue]="null" selected disabled>Select Reseller</option>
-                            <option *ngFor="let reseller of SalesResellerList" value="{{reseller.customerId}}">
-                                {{reseller.customerName}}
-                            </option>
-                        </select>
+                        <input type="text" class="form-control" formControlName="e_cust_address2" id="addr2" />
                     </div>
+
                 </div>
             </div>
             <div class="col-lg-6">
@@ -175,6 +151,33 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="addr3" class="col-lg-12 col-form-label">&nbsp;</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="e_cust_address3" id="addr3" />
+                    </div>
+
+                </div>
+            </div>
+          
+           
+            
+            <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="select_resell" class="col-lg-12 col-form-label">Select Reseller</label>
+                    <div class="col-lg-12">
+                        <select name="enqFormValue" id="select_resell" class="form-control"
+                            formControlName="e_selectReseller">
+                            <option [ngValue]="null" selected disabled>Select Reseller</option>
+                            <option *ngFor="let reseller of SalesResellerList" value="{{reseller.customerId}}">
+                                {{reseller.customerName}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+          
 
             <div class="col-lg-6">
                 <div class="form-group">
@@ -319,6 +322,29 @@
                                         <td style="width:370px;display:block;">
                                             <div class="userDatatable-content" style="top:0">
                                                 <div class="alignFormArray" style="display:block;text-align: left;">
+                                                    
+                                        <div class="ng-autocomplete">
+                                            <label for="companyName" class="col-lg-12 "></label>
+                                            <ng-autocomplete 
+                                            [data]="searchResult_productName" 
+                                            [searchKeyword]="keywordpd_productName_autocomplete"
+                                            formControlName="pd_productName_autocomplete" 
+                                            (selected)='selectEventProduct($event)'
+                                             (inputChanged)='searchProductName($event)'
+                                                (inputFocused)='onFocusedProduct($event)' 
+                                                [itemTemplate]="itemTemplateCustomer"
+                                                [notFoundTemplate]="notFoundTemplate">
+                                            </ng-autocomplete>
+        
+                                            <ng-template #itemTemplateCustomer let-item>
+                                                <a [innerHTML]="item.partNo"></a>
+                                            </ng-template>
+        
+                                            <ng-template #notFoundTemplate let-notFound>
+                                                <div [innerHTML]="notFound"></div>
+                                            </ng-template>
+                                        </div>
+                                        
                                                     <input type="text" class="form-control"
                                                         formControlName="pd_productName_txtbox1" />
 
@@ -395,7 +421,7 @@
 
                                             </div>
                                         </td>
-                                        <td *ngIf="i>0">
+                                        <td *ngIf="i>=0">
                                             <div class="userDatatable-content d-inline-block">
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                     (click)=" removeAddress(i)">X</button>

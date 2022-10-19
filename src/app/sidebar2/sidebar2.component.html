@@ -17,8 +17,8 @@
                 </a>
                 
                 
-                    <ul *ngIf="item.children && item.children.length > 0">
-                        <li class="has-child" *ngFor="let innermenu of item.children">
+                    <ul *ngIf="item.childMain && item.childMain.length > 0">
+                        <li class="has-child" *ngFor="let innermenu of item.childMain">
                             <a href="{{innermenu.value}}" class="">
                                 <i [attr.data-feather]="innermenu.icon" class="nav-icon" ></i>
                                 <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
@@ -27,8 +27,8 @@
                             </a>
 
                               
-                                    <ul *ngIf="innermenu.subchild && innermenu.subchild.length > 0" >
-                                        <li class="has-child" *ngFor="let innersubmenu of innermenu.subchild">
+                                    <ul *ngIf="innermenu.subchildMain && innermenu.subchildMain.length > 0" >
+                                        <li class="has-child" *ngFor="let innersubmenu of innermenu.subchildMain">
                                             <a href="{{innersubmenu.value}}" class="">
                                                 <i [attr.data-feather]="innersubmenu.icon" class="nav-icon" ></i>
                                                 <span class="menu-text" (click)="change(innersubmenu.value)">{{innersubmenu.name}}</span>

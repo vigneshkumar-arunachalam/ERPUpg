@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray,Validators} from '@angul
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { JsonPipe } from '@angular/common';
 declare var $: any;
 declare var iziToast: any;
@@ -57,6 +58,9 @@ export class AddquotationnewComponent implements OnInit {
   subject_enquiryFromDetails: any;
   validity_enquiryFromDetails: any;
   version_enquiryFromDetails: any;
+  //auto search product
+  searchResult_productName:any;
+  product_name_AutoComplete:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router,private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -64,7 +68,8 @@ export class AddquotationnewComponent implements OnInit {
     });
    
   }
-
+  keywordCompanyName = 'customerName';
+  keywordpd_productName_autocomplete = 'partNo';
   ngOnInit(): void {
     this.route.queryParams
       .subscribe(params => {
@@ -88,7 +93,7 @@ export class AddquotationnewComponent implements OnInit {
 
     this.ExtraLogoList = ["IT Care", "Calncall", "DID Sg", "Callcloud", "Mrvoip"];
     this.addQuotation();
-    this.TaxDropdown();
+    // this.TaxDropdown();
     this.addQuotationInvoice_section1 = new FormGroup({
       'companyName': new FormControl(null),
       'quotationNumber': new FormControl(null),
@@ -97,7 +102,7 @@ export class AddquotationnewComponent implements OnInit {
       'customerName': new FormControl(null),
       'cust_address1': new FormControl(null),
       'cust_address2': new FormControl(null),
-      'cust_ZipCode': new FormControl(null),
+      'cust_address3': new FormControl(null),
       'attention': new FormControl(null),
       'salesRep': new FormControl(null),
       'selectTemplate': new FormControl(null),
@@ -143,19 +148,42 @@ export class AddquotationnewComponent implements OnInit {
 
 
   }
+  selectEventProduct(item: any, i: any) {
+    console.log("product item selected",item)
+    this.product_name_AutoComplete=item.partNo;
+    console.log("product item.partNo selected",item.partNo)
+    if(this.product_name_AutoComplete!=''){
+      this.productNameAutoFill(i)
+    }
+
+  }
+  onFocusedProduct(e: any) {
+    console.log("onFocusedProduct ",e)
+   
+
+    // do something when input is focused
+  }
 
   changeProductName_partNO(e: any) {
     console.log(e.target.value);
   }
+ 
+
   checkbox_productDetails_Split: any;
+  checkbox_productDetails_Split_Number: any;
   productDetails_Split_eventCheck(e: any) {
     this.checkbox_productDetails_Split = e.target.checked
     console.log(this.checkbox_productDetails_Split);
+    this.checkbox_productDetails_Split_Number=Number(this.checkbox_productDetails_Split);
+    console.log(" checkbox 1 or 0---:",this.checkbox_productDetails_Split_Number)
   }
   checkbox_productDetails_GPTotal: any;
+  checkbox_productDetails_GPTotal_Number: any;
   productDetails_GPTotal_eventCheck(e: any) {
     this.checkbox_productDetails_GPTotal = e.target.checked
     console.log(this.checkbox_productDetails_GPTotal);
+    this.checkbox_productDetails_GPTotal_Number=Number(this.checkbox_productDetails_GPTotal);
+    console.log(" checkbox 1 or 0---:",this.checkbox_productDetails_GPTotal_Number)
   }
   checkbox_productDetails_selectTax: any;
 
@@ -209,6 +237,7 @@ export class AddquotationnewComponent implements OnInit {
     return this.fb.group({
 
       pd_productName_txtbox1: '',
+      pd_productName_autocomplete:'',
       pd_productName_txtArea: '',
       pd_quantity_txtbox1: '',
       pd_unit: '',
@@ -266,6 +295,9 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
           'salesRep':localStorage.getItem('user_id'),
           
         });
+        this.addQuotationInvoice_section3.patchValue({
+          'section3_gst_dropdown': response.default_tax_id,
+        });
         
 
       }
@@ -318,7 +350,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
             'selectFooter': response.footer_details[index].pdf_footer_id,
             'selectCurrency': response.currency_id,
             'termConditionContentChange': response.quotation_terms_cond,
-            'DescriptionText': response.quotation_desp_det,
+            // 'DescriptionText': response.quotation_desp_det,
           });
 
 
@@ -329,7 +361,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
             'selectFooter': '',
             'selectCurrency': '',
             'termConditionContentChange': '',
-            'DescriptionText': '',
+            // 'DescriptionText': '',
 
           });
         }
@@ -430,7 +462,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
   
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
-    this.TaxDropdown();
+    // this.TaxDropdown();
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -455,7 +487,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
             'selectFooter': response.footer_details[index].pdf_footer_id,
             'selectCurrency': response.currency_id,
             'termConditionContentChange': response.quotation_terms_cond,
-            'DescriptionText': response.quotation_desp_det,
+            // 'DescriptionText': response.quotation_desp_det,
           });
 
 
@@ -466,7 +498,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
             'selectFooter': '',
             'selectCurrency': '',
             'termConditionContentChange': '',
-            'DescriptionText': '',
+            // 'DescriptionText': '',
 
           });
         }
@@ -495,16 +527,18 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
         this.TaxDropdownList = response.tax_list;
         //console.log("default_tax_id", response.default_tax_id);
         //alert(response.default_tax_id)
-        if(response.default_tax_id!='null'&&response.default_tax_id!=null){
-        $("#billerIDs").val(response.default_tax_id)
-        this.addQuotationInvoice_section3.patchValue({
-          'section3_gst_dropdown': response,
+        
+      //   if(response.default_tax_id!='null'&&response.default_tax_id!=null){
+      //   $("#billerIDs").val(response.default_tax_id)
+      //   this.addQuotationInvoice_section3.patchValue({
+      //     'section3_gst_dropdown': response,
          
-        });
-        this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+      //   });
 
-        // 
-      }
+      //   this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+
+        
+      // }
 
       }
 
@@ -537,8 +571,8 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
     api_saveEnquiry_req.quotation_date = this.addQuotationInvoice_section1.value.quotationDate;
     api_saveEnquiry_req.customer_id = this.addQuotationInvoice_section1.value.customerName;
     api_saveEnquiry_req.customerAddress1 = this.addQuotationInvoice_section1.value.cust_address1;
-    api_saveEnquiry_req.customerAddress3 = this.addQuotationInvoice_section1.value.cust_address2;
-    api_saveEnquiry_req.zipCode  = this.addQuotationInvoice_section1.value.cust_ZipCode;
+    api_saveEnquiry_req.customerAddress2 = this.addQuotationInvoice_section1.value.cust_address2;
+    api_saveEnquiry_req.customerAddress3 = this.addQuotationInvoice_section1.value.cust_address3;
     // api_saveEnquiry_req.quotation_no=Address3;
     api_saveEnquiry_req.kind_Attention = this.addQuotationInvoice_section1.value.attention;
     api_saveEnquiry_req.billGeneratedBy = this.addQuotationInvoice_section1.value.salesRep;
@@ -647,13 +681,14 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
         this.addQuotationInvoice_section1.patchValue({
 
 
-          'cust_address1': response.customer_list[0].customerAddress1,
-          'cust_address2': response.customer_list[0].customerAddress3,
-          'cust_ZipCode': response.customer_list[0].zipCode,
-          'cust_city': response.customer_list[0].city,
-          'cust_state': response.customer_list[0].state,
-          'cust_zipcode': response.customer_list[0].zipCode,
-          'attention': response.customer_list[0].kind_Attention,
+          'cust_address1': response.customer_list.customerAddress1,
+          'cust_address2': response.customer_list.customerAddress2,
+          'cust_address3': response.customer_list.customerAddress3,
+          'cust_city': response.customer_list.city,
+          'cust_state': response.customer_list.state,
+          'cust_zipcode': response.customer_list.zipCode,
+          'attention': response.customer_list.kind_Attention,
+
         });
       }
       else {
@@ -662,7 +697,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
 
           'cust_address1': '',
           'cust_address2': '',
-          'cust_ZipCode': '',
+          'cust_address3': '',
           'cust_city': '',
           'cust_state': '',
           'cust_zipcode': '',
@@ -700,7 +735,61 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
     console.log("search data afer mouse click", data)
   }
 
+  searchProductName(data: any) {
 
+    let api_req: any = new Object();
+    let api_SearchProd_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/product_name_auto";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_SearchProd_req.action = "product_name_auto";
+    api_SearchProd_req.user_id = localStorage.getItem('user_id');
+  
+    api_SearchProd_req.part_no = data;
+    api_req.element_data = api_SearchProd_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation/product_name_auto response", response);
+      this.searchResult_productName = response.products_list;
+      console.log("response.partNo",response.products_list)
+      // console.log("response.partNo",response.partNo)
+
+      if (response.status ==true) {
+        // this.productNameAutoFill();
+
+      }
+
+    });
+
+  }
+  productNameAutoFill(i: any){
+
+    let api_req: any = new Object();
+    let api_ProdAutoFill_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/product_name_auto_fill";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_ProdAutoFill_req.action = "product_name_auto_fill";
+    api_ProdAutoFill_req.user_id = localStorage.getItem('user_id');
+    api_ProdAutoFill_req.product_name = this.product_name_AutoComplete;
+    api_req.element_data = api_ProdAutoFill_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response",response)
+          console.log("response.length",response.length)
+          console.log("partNo by auto fill",response[0].partNo);
+          console.log("productName by auto fill",response[0].productName);
+          console.log("productDesc by auto fill",response[0].productDesc);
+          console.log("rate by auto fill",response[0].rate);
+           console.log("this.addressControls.length",this.addressControls.length)
+
+        $('#pd_productName_txtbox_'+i).val(response[0].productName)
+        $('#pd_productName_txtArea_'+i).val(response[0].productDesc)
+        $('#pd_SP_'+i).val(response[0].rate)
+	  
+    });
+  }
   saveDiscount() {
     var enablePercentabeDiscont = $('#enablePercentabeDiscont').val()
     var enablePriceDiscont = $('#enablePriceDiscont').val()
@@ -709,10 +798,15 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
     var price: any;
     if (disType == 'per') {
       price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+
+      
+      $('#sub_discount_' + this.quotationPriceKey).val(price);
+
       price = final_tot - price
       console.log(price);
     } else {
       price = final_tot - enablePriceDiscont;
+      $('#sub_discount_' + this.quotationPriceKey).val(enablePriceDiscont);
       console.log(price);
     }
     $('#pd_netPrice_' + this.quotationPriceKey).val(price)
@@ -795,9 +889,12 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
   removeAddress(i: number) {
     this.addresses.removeAt(i);
     var price = $('#pd_netPrice_' + i).val();
+    console.log(price);
     var gtotel = 0;
-    gtotel = gtotel - parseInt(price);
+    gtotel = this.grossTotal - parseInt(price);
     gtotel = Math.abs(gtotel); 
+
+   // console.log(gtotel); return false;
     this.grossTotal = gtotel;
     this.grandTotal = gtotel;  
  

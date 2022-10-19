@@ -1219,7 +1219,7 @@
         {
             "name": "Guru",
             "icon": "wind",
-            "IDs": [7011, 7012, 7013, 7014, 7015,2060],
+            "IDs": [7011, 7012, 7013, 7014, 7015],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -1260,7 +1260,7 @@
     "icon": "users",
     "isActive": false,
     "menuId":13,
-    "IDs": [],
+    "IDs": " ",
     "Type": "Main Menu",
     "children": [{
             "name": "Leave Request",

@@ -65,8 +65,8 @@
                                     </thead>
                                     <tbody>
 
-                                        <tr *ngFor="let list of quotation_list ; let i = index" [ngStyle]="{'background-color':list.approval_staus=='2'
-                                         ? '#78EFB7' : 'white' }">
+                                        <tr *ngFor="let list of quotation_list ; let i = index" 
+                                        [ngStyle]="{'background-color':(list.approval_staus=='2')? ('#78EFB7') : ((list.approval_staus=='1')? ('#ffe680') : ('Default'))}"                                         >
 
                                             <!-- <td>
                                                 <span> {{ list.quotationId}}</span>
@@ -177,7 +177,7 @@
                                                                 </a>
 
                                                             </li>
-                                                            <li class="dropdown__item">
+                                                            <li class="dropdown__item" *ngIf="(list.approval_staus=='0')">
                                                                 <a class="remove" title="Quotation Approval"
                                                                     data-toggle="modal"
                                                                     data-target="#quotationApprovalId"
@@ -677,10 +677,14 @@
                             <div class="form-group row">
                                 <div class="ng-autocomplete">
                                     <label for="companyName" class="col-lg-12 ">Search Text</label>
-                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                                        formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                                    <ng-autocomplete 
+                                    [data]="searchResult" 
+                                    [searchKeyword]="keywordCompanyName"
+                                        formControlName="company_Name" 
+                                        (selected)='selectEventCustomer($event)'
                                         (inputChanged)='searchCustomerData($event)'
-                                        (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                        (inputFocused)='onFocusedCustomer($event)' 
+                                        [itemTemplate]="itemTemplateCustomer"
                                         [notFoundTemplate]="notFoundTemplate">
                                     </ng-autocomplete>
 
@@ -739,6 +743,25 @@
             </div>
             <div class="modal-body quotationsharedCSS">
                 <form [formGroup]="quotationSharedPersonForm">
+                    <!-- <button type="button" 
+                    class="btn btn-primary" 
+                    (click)="quotationSharedPersonNameSearch()">
+                    <i class="fas fa-search" style="margin-right:0;"></i>
+                </button> -->
+
+                <!-- <div class="input-group">
+                    <div class="form-outline">
+                      <input type="search" id="1f" class="form-control" />
+                      <label class="form-label" for="1f">Search</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" 
+                    (keyup.enter)="quotationSharedPersonNameSearch($event)">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div> -->
+                  <input placeholder="Select Shared Person"   (keyup)="quotationSharedPersonNameSearch($event)">
+                  <p>{{values}}</p>
+
                     <table class="demoTable">
                         <th>Select Shared Person</th>
                         <tr>
@@ -800,13 +823,13 @@
             <div class="modal-body">
                 <form [formGroup]="quotationApprovalForm">
                     <h3>Are you sure you want to send to approval?</h3>
-                    <table class="demoTable">
+                    <table class="demoTable" style="height: 20;">
                         <tr>
-                            <td><strong>Approval Type </strong></td>
+                            <td style="vertical-align: text-top;"><strong>Approval Type </strong></td>
                             <td>
                                 <table class="demoTable">
-                                    <tr>
-                                        <td>
+                                    <tr >
+                                        <td >
                                             <div class="form-check">
                                                 <input mdbRadio class="form-check-input" type="radio"
                                                     name="radio_ApprovalBy" id="single"
@@ -814,10 +837,11 @@
                                                 <label class="form-check-label" for="single"> Single
                                                     Approval</label>
                                             </div>
+                                            <br>
                                             <!-- Default checked radio -->
                                             <div class="form-check">
                                                 <input mdbRadio class="form-check-input" type="radio"
-                                                    name="radio_ApprovalBy" id="double" [checked]="true"
+                                                    name="radio_ApprovalBy" id="double" 
                                                     (change)="handle_radioChange($event)" />
                                                 <label class="form-check-label" for="double"> Double Approval
                                                 </label>
@@ -827,18 +851,25 @@
                                 </table>
                             </td>
                         </tr>
-
-                        <tr>
+<br>
+<br>
+                        <tr >
                             <td><strong>Approval By </strong>
                             </td>
                             <td>
                                 <table class="demoTable">
-                                    <tr>
-                                        <input type="checkbox" formControlName="cm_chk" [(ngModel)]="checked"
-                                            (change)="eventCheck_CM_QuotPermission($event)" />CM<br>
-                                        <input type="checkbox" formControlName="cd_chk" [(ngModel)]="checked"
-                                            (change)="eventCheck_CD_QuotPermission($event)" />CD
+                                    <tr style="display: inline-flex ">
+                                        <td>
+                                            <div><input type="checkbox" formControlName="cm_chk" [(ngModel)]="checked"
+                                                (change)="eventCheck_CM_QuotPermission($event)" />CM</div>
+                                            <div> <input type="checkbox" formControlName="cd_chk" [(ngModel)]="checked"
+                                                (change)="eventCheck_CD_QuotPermission($event)" />CD</div>
+                                            <br>
+                                           
+                                        </td>
+                                        
                                     </tr>
+                                    <br>
                                     <div>
                                         <div>
                                             <tr *ngFor="let display1 of quotationApprovalResult;let i =index">
@@ -846,7 +877,7 @@
                                                     <input type="radio" id="{{i}}"
                                                         [attr.disabled]="approval_Show_hide ? '' : null"
                                                         formControlName="radio_approvalPermission"
-                                                        value="{{display1.userId}}" (change)="handleChange($event)" />
+                                                        value="{{display1.userId}}" (change)="handleChange($event,display1.userId)" />
                                                     <label for="{{i}}"
                                                         class="col-lg-6 col-form-label">{{display1.firstName}}</label>
 
