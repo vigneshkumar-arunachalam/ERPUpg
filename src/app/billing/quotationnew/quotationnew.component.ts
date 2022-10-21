@@ -130,6 +130,17 @@ export class QuotationnewComponent implements OnInit {
   offset_count = 0;
   //excel
   ExcelReportResult:any;
+  //permission
+  quotationPermissionList:any;
+  quotationPermission_Edit:any;
+  quotationPermission_ActualPrice:any;
+  quotationPermission_Add:any;
+  quotationPermission_Delete:any;
+  quotationPermission_List:any;
+  quotationPermission_Mail:any;
+  quotationPermission_Search:any;
+  quotationPermission_View:any;
+  quotationPermission_Share:any;
 
 
   constructor(public serverService: ServerService, private router: Router, private fb: FormBuilder) {
@@ -570,12 +581,6 @@ export class QuotationnewComponent implements OnInit {
     api_quotationList.billerID = this.quotationSearchCheckboxID_array;
     api_quotationList.search_txt = this.searchResult_CustomerName;
     api_quotationList.groupByCheck = this.checkbox_eventCheck_GroupByCustomer;
-
-    // api_quotationList.search_text = list_data.search_text;
-    // api_quotationList.order_by_name = list_data.order_by_name;
-    // api_quotationList.order_by_type = list_data.order_by_type;
-    // api_quotationList.limit = list_data.limit;
-    // api_quotationList.offset = list_data.offset;
     api_req.element_data = api_quotationList;
 
 
@@ -583,6 +588,17 @@ export class QuotationnewComponent implements OnInit {
       console.log("qoutation list", response);
       if (response) {
         this.quotation_list = response.quotation_details;
+        this.quotationPermission_Edit=response.quotation_permission_arr.edit;
+        this.quotationPermission_Edit= response.quotation_permission_arr.edit
+        this.quotationPermission_ActualPrice= response.quotation_permission_arr.actual_price
+        this.quotationPermission_Add= response.quotation_permission_arr.add
+        this.quotationPermission_Delete=response.quotation_permission_arr.delete
+        this.quotationPermission_List=response.quotation_permission_arr.list
+        this.quotationPermission_Mail=response.quotation_permission_arr.mail
+        this.quotationPermission_Search=response.quotation_permission_arr.search
+        this.quotationPermission_View=response.quotation_permission_arr.view
+        this.quotationPermission_Share=response.quotation_permission_arr.share
+        
         console.log(response)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
@@ -781,7 +797,8 @@ export class QuotationnewComponent implements OnInit {
       console.log("check invoice update", response)
       if (response.status == true) {
         this.quotationSharedResult = response.customer_invoice_details;
-        window.location.reload();
+        this.quotationList({});
+        // window.location.reload();
         $("#quotationSharedPersonId").modal("hide");
         console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
         iziToast.success({

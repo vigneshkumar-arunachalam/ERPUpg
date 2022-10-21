@@ -44,7 +44,9 @@
             "scripts": [
              "src/assets/js/plugins.min.js",
              "src/assets/js/iziToast.min.js",
-             "node_modules/tinymce/tinymce.min.js"
+    
+             "node_modules/tinymce/tinymce.min.js",
+             "src/assets/js/sorting.js"
             ]
           },
           "configurations": {

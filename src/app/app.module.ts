@@ -8,7 +8,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips'; 
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -90,7 +90,7 @@ import { EditquotationnewComponent } from './billing/quotationnew/editquotationn
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,MatChipsModule,EditorModule,
+    AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,
     HttpClientModule,MatIconModule, NgMultiSelectDropDownModule.forRoot(),
     BrowserAnimationsModule,MatFormFieldModule,MatAutocompleteModule,MatInputModule,MatSliderModule,
     AutocompleteLibModule,PdfViewerModule

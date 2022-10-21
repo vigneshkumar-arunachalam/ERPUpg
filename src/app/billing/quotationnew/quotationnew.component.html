@@ -6,7 +6,8 @@
                     <div class="card-header color-dark fw-500">
                         <h3 style="margin-bottom: 0;">Quotation</h3>
                         <div class="quotation-btn-section">
-                            <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+                            <button type="button" *ngIf="(this.quotationPermission_Add=='1')"
+                                class="btn btn-primary btn-default btn-squared" data-toggle="modal"
                                 (click)="addQuotationNew()" data-target="#addNewQuotationFormId"
                                 style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
                             </button>
@@ -65,44 +66,86 @@
                                     </thead>
                                     <tbody>
 
-                                        <tr *ngFor="let list of quotation_list ; let i = index" 
-                                        [ngStyle]="{'background-color':(list.approval_staus=='2')? ('#78EFB7') : ((list.approval_staus=='1')? ('#ffe680') : ('Default'))}"                                         >
+                                        <tr *ngFor="let list of quotation_list ; let i = index ;"
+                                            [ngStyle]="{'background-color':(list.approval_staus=='2')? ('#78EFB7') : ((list.approval_staus=='1')? ('#ffffb3') : ('Default'))}">
 
                                             <!-- <td>
                                                 <span> {{ list.quotationId}}</span>
                                             </td> -->
                                             <td>
-                                               {{ list.quotation_no}}
+                                                {{ list.quotation_no}}
                                             </td>
-                                            <td [ngSwitch]="list.duplicate_version">
-                                                <!-- <input type="text" value="{{ list.duplicate_version}}"/>
-                                                <span></span> -->
-                                                <span *ngSwitchCase="'1.0'"><button type="button"
-                                                        [ngStyle]="{'backgroundColor': 'white'}">{{
+                                            <td [ngSwitch]="list.duplicate_version" style="display:flex ;">
+
+                                                <span *ngSwitchCase="'1.0'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:white; width: 28px;height: 22px;    
+                                                border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <input type="text" *ngIf="(list.edit_status=='1')"
+                                                        style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" [ngStyle]="{'backgroundColor': 'white'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.1'"><button type="button"
-                                                        [ngStyle]="{'backgroundColor': '#f8c45e'}">{{
+                                                <span *ngSwitchCase="'1.1'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#ACC8E5; width: 28px;height: 22px;    
+                                                border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <input type="text" *ngIf="(list.edit_status=='1')"
+                                                        style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+
+                                                    <button type="button" [ngStyle]="{'backgroundColor': '#ACC8E5'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.2'"><button type="button"
-                                                        [ngStyle]="{'backgroundColor': '#feae13'}">{{
+                                                <span *ngSwitchCase="'1.2'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#D697B4; width: 28px;height: 22px;    
+                                                border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <input type="text" *ngIf="(list.edit_status=='1')"
+                                                        style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" [ngStyle]="{'backgroundColor': '#D697B4'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.3'"><button type="button"
-                                                        [ngStyle]="{'backgroundColor': '#63f5e6'}">{{
+                                                <span *ngSwitchCase="'1.3'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#F1D08C; width: 28px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                        <input type="text" *ngIf="(list.edit_status=='1')"
+                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button"
+                                                        [ngStyle]="{'backgroundColor': '#F1D08C'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.4'"><button type="button"
+                                                <span *ngSwitchCase="'1.4'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#11e9d2; width: 28px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                        <input type="text" *ngIf="(list.edit_status=='1')"
+                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button"
                                                         [ngStyle]="{'backgroundColor': '#11e9d2'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.5'"><button type="button"
-                                                        [ngStyle]="{'backgroundColor': '#b7fc98'}">{{
+                                                <span *ngSwitchCase="'1.5'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#f1f17c; width: 28px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                        <input type="text" *ngIf="(list.edit_status=='1')"
+                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button"
+                                                        [ngStyle]="{'backgroundColor': '#f1f17c'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.6'"><button type="button"
+                                                <span *ngSwitchCase="'1.6'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#79e649; width: 28px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                        <input type="text" *ngIf="(list.edit_status=='1')"
+                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button"
                                                         [ngStyle]="{'backgroundColor': '#79e649'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchCase="'1.7'"><button type="button"
-                                                        [ngStyle]="{'backgroundColor': '#46da05'}">{{
+                                                <span *ngSwitchCase="'1.7'">
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#669999; width: 28px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                        <input type="text" *ngIf="(list.edit_status=='1')"
+                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button"
+                                                        [ngStyle]="{'backgroundColor': '#669999'}">{{
                                                         list.duplicate_version}}</button></span>
-                                                <span *ngSwitchDefault><button type="button"
-                                                        [ngStyle]="{'backgroundColor': 'SeaGreen'}">{{
+                                                <span *ngSwitchDefault>
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#84F0F0; width: 28px;height: 22px;    
+                                                    border: 1px solid #ddd;border-radius: 5px; ">
+                                                        <input type="text" *ngIf="(list.edit_status=='1')"
+                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button"
+                                                        [ngStyle]="{'backgroundColor': '#84F0F0'}">{{
                                                         list.duplicate_version}}</button></span>
 
 
@@ -115,15 +158,15 @@
                                             </td>
 
                                             <td>
-                                                 {{ list.customerName}}
+                                                {{ list.customerName}}
                                             </td>
                                             <td>
-                                               {{ list.enquiry_product_description}}
-                                            <!-- <td>
+                                                {{ list.enquiry_product_description}}
+                                                <!-- <td>
                                                 <span>{{ list.enquiry_product_description}}</span>
                                             </td> -->
                                             <td>
-                                               {{ list.billGeneratedBy}}
+                                                {{ list.billGeneratedBy}}
                                             </td>
 
                                             <td>
@@ -141,23 +184,47 @@
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
 
-
                                                         <ul class="dropdown__list">
-                                                            <li class="dropdown__item">
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_Edit=='1')">
                                                                 <a class="remove" title="Edit Quotation"
                                                                     data-toggle="modal"
                                                                     data-target="#editNewQuotationFormId"
                                                                     (click)="editQuotationPopUP(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-edit">
+                                                                        <path
+                                                                            d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                                                        </path>
+                                                                        <path
+                                                                            d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
+                                                                        </path>
+                                                                    </svg>
 
                                                                 </a>
 
                                                             </li>
-                                                            <li class="dropdown__item">
+
+
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_Edit=='1')">
                                                                 <a class="view" title="Duplicate" data-toggle="modal"
                                                                     data-target="#duplicateQuotationFormId"
                                                                     (click)="duplicateQuotationPopUP(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-copy">
+                                                                        <rect x="9" y="9" width="13" height="13" rx="2"
+                                                                            ry="2"></rect>
+                                                                        <path
+                                                                            d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1">
+                                                                        </path>
+                                                                    </svg>
                                                                 </a>
 
                                                             </li>
@@ -165,47 +232,145 @@
                                                                 <a class="remove" title="PDF" data-toggle="modal"
                                                                     data-target="#pdfFormId"
                                                                     (click)="pdf(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> 
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-file">
+                                                                        <path
+                                                                            d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
+                                                                        </path>
+                                                                        <polyline points="13 2 13 9 20 9"></polyline>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
-                                                            <li class="dropdown__item">
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_Mail=='1')">
                                                                 <a class="view" title="Email"
                                                                     (click)="Email(list.quotationId)"
                                                                     data-toggle="modal" data-target="#TextEditorId">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-at-sign">
+                                                                        <circle cx="12" cy="12" r="4"></circle>
+                                                                        <path
+                                                                            d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94">
+                                                                        </path>
+                                                                    </svg>
 
                                                                 </a>
 
                                                             </li>
-                                                            <li class="dropdown__item" *ngIf="(list.approval_staus=='0')">
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(list.approval_staus=='1')">
                                                                 <a class="remove" title="Quotation Approval"
+                                                                    *ngIf="(list.approval_staus=='0')"
                                                                     data-toggle="modal"
                                                                     data-target="#quotationApprovalId"
                                                                     (click)="quotationApprovalEdit(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-check-circle">
+                                                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
+                                                                        </path>
+                                                                        <polyline points="22 4 12 14.01 9 11.01">
+                                                                        </polyline>
+                                                                    </svg>
 
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(list.approval_staus=='1')">
+                                                                <a class="remove" title="Quotation Approval"
+                                                                    *ngIf="(list.approval_staus=='1')"
+                                                                    data-toggle="modal"
+                                                                    data-target="#quotationApprovalId"
+                                                                    (click)="quotationApprovalEdit(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="red" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-check-circle">
+                                                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
+                                                                        </path>
+                                                                        <polyline points="22 4 12 14.01 9 11.01">
+                                                                        </polyline>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="view" title="Proforma Invoice"
                                                                     data-toggle="modal" data-target="#PIId"
                                                                     (click)="PIEdit(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-percent"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-percent">
+                                                                        <line x1="19" y1="5" x2="5" y2="19"></line>
+                                                                        <circle cx="6.5" cy="6.5" r="2.5"></circle>
+                                                                        <circle cx="17.5" cy="17.5" r="2.5"></circle>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
-                                                            <li class="dropdown__item">
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_ActualPrice=='1')">
                                                                 <a class="remove" title="Set Actual Cost"
-                                                                    data-toggle="modal" data-target="#setActualCostId"
+                                                                    *ngIf="(list.actual_state=='1')" data-toggle="modal"
+                                                                    data-target="#setActualCostId"
                                                                     (click)="setActualCost(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
 
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="red" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-dollar-sign">
+                                                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                                                        <path
+                                                                            d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6">
+                                                                        </path>
+                                                                    </svg>
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_ActualPrice=='1')">
+                                                                <a class="remove" title="Set Actual Cost"
+                                                                    *ngIf="(list.actual_state=='0')" data-toggle="modal"
+                                                                    data-target="#setActualCostId"
+                                                                    (click)="setActualCost(list.quotationId)">
+
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-dollar-sign">
+                                                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                                                        <path
+                                                                            d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6">
+                                                                        </path>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
 
-                                                            <li class="dropdown__item">
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_Delete=='1')">
                                                                 <a class="view" title="Delete Quotation"
                                                                     (click)="deleteQuotation(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-delete"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-delete">
+                                                                        <path
+                                                                            d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z">
+                                                                        </path>
+                                                                        <line x1="18" y1="9" x2="12" y2="15"></line>
+                                                                        <line x1="12" y1="9" x2="18" y2="15"></line>
+                                                                    </svg>
 
                                                                 </a>
 
@@ -215,26 +380,73 @@
                                                                     data-toggle="modal"
                                                                     data-target="#fileAttachmentFormId"
                                                                     (click)="fileAttachmentEdit(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-paperclip"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-paperclip">
+                                                                        <path
+                                                                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48">
+                                                                        </path>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
 
-                                                            <li class="dropdown__item">
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_Share=='1')">
                                                                 <a class="view" title="Share Permission"
                                                                     data-toggle="modal"
+                                                                    *ngIf="(list.share_access_state=='0')"
                                                                     data-target="#quotationSharedPersonId"
                                                                     (click)="quotationSharedPersonEdit(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-share">
+                                                                        <path
+                                                                            d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8">
+                                                                        </path>
+                                                                        <polyline points="16 6 12 2 8 6"></polyline>
+                                                                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                                                                    </svg>
 
                                                                 </a>
                                                             </li>
-
+                                                            <li class="dropdown__item"
+                                                                *ngIf="(this.quotationPermission_Share=='1')">
+                                                                <a class="view" title="Share Permission"
+                                                                    data-toggle="modal"
+                                                                    *ngIf="(list.share_access_state=='1')"
+                                                                    data-target="#quotationSharedPersonId"
+                                                                    (click)="quotationSharedPersonEdit(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="red" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-share">
+                                                                        <path
+                                                                            d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8">
+                                                                        </path>
+                                                                        <polyline points="16 6 12 2 8 6"></polyline>
+                                                                        <line x1="12" y1="2" x2="12" y2="15"></line>
+                                                                    </svg>
+                                                                </a>
+                                                            </li>
 
                                                             <li class="dropdown__item">
                                                                 <a class="remove" title="Set Template Name"
                                                                     data-toggle="modal" data-target="#setTemplateNameId"
                                                                     (click)="setTemplateName(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-type"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-type">
+                                                                        <polyline points="4 7 4 4 20 4 20 7"></polyline>
+                                                                        <line x1="9" y1="20" x2="15" y2="20"></line>
+                                                                        <line x1="12" y1="4" x2="12" y2="20"></line>
+                                                                    </svg>
 
                                                                 </a>
                                                             </li>
@@ -246,13 +458,32 @@
                                                                     data-toggle="modal"
                                                                     data-target="#quotationCommentsId"
                                                                     (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-book-open">
+                                                                        <path
+                                                                            d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z">
+                                                                        </path>
+                                                                        <path
+                                                                            d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z">
+                                                                        </path>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="remove" title="Excel Export"
                                                                     (click)="quotationExcelExport(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-send"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                        height="24" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="2"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-send">
+                                                                        <line x1="22" y1="2" x2="11" y2="13"></line>
+                                                                        <polygon points="22 2 15 22 11 13 2 9 22 2">
+                                                                        </polygon>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
 
@@ -677,14 +908,10 @@
                             <div class="form-group row">
                                 <div class="ng-autocomplete">
                                     <label for="companyName" class="col-lg-12 ">Search Text</label>
-                                    <ng-autocomplete 
-                                    [data]="searchResult" 
-                                    [searchKeyword]="keywordCompanyName"
-                                        formControlName="company_Name" 
-                                        (selected)='selectEventCustomer($event)'
+                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                        formControlName="company_Name" (selected)='selectEventCustomer($event)'
                                         (inputChanged)='searchCustomerData($event)'
-                                        (inputFocused)='onFocusedCustomer($event)' 
-                                        [itemTemplate]="itemTemplateCustomer"
+                                        (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
                                         [notFoundTemplate]="notFoundTemplate">
                                     </ng-autocomplete>
 
@@ -749,7 +976,7 @@
                     <i class="fas fa-search" style="margin-right:0;"></i>
                 </button> -->
 
-                <!-- <div class="input-group">
+                    <!-- <div class="input-group">
                     <div class="form-outline">
                       <input type="search" id="1f" class="form-control" />
                       <label class="form-label" for="1f">Search</label>
@@ -759,8 +986,8 @@
                       <i class="fas fa-search"></i>
                     </button>
                   </div> -->
-                  <input placeholder="Select Shared Person"   (keyup)="quotationSharedPersonNameSearch($event)">
-                  <p>{{values}}</p>
+                    <input placeholder="Select Shared Person" (keyup)="quotationSharedPersonNameSearch($event)">
+                    <p>{{values}}</p>
 
                     <table class="demoTable">
                         <th>Select Shared Person</th>
@@ -828,8 +1055,8 @@
                             <td style="vertical-align: text-top;"><strong>Approval Type </strong></td>
                             <td>
                                 <table class="demoTable">
-                                    <tr >
-                                        <td >
+                                    <tr>
+                                        <td>
                                             <div class="form-check">
                                                 <input mdbRadio class="form-check-input" type="radio"
                                                     name="radio_ApprovalBy" id="single"
@@ -841,7 +1068,7 @@
                                             <!-- Default checked radio -->
                                             <div class="form-check">
                                                 <input mdbRadio class="form-check-input" type="radio"
-                                                    name="radio_ApprovalBy" id="double" 
+                                                    name="radio_ApprovalBy" id="double"
                                                     (change)="handle_radioChange($event)" />
                                                 <label class="form-check-label" for="double"> Double Approval
                                                 </label>
@@ -851,9 +1078,9 @@
                                 </table>
                             </td>
                         </tr>
-<br>
-<br>
-                        <tr >
+                        <br>
+                        <br>
+                        <tr>
                             <td><strong>Approval By </strong>
                             </td>
                             <td>
@@ -861,13 +1088,13 @@
                                     <tr style="display: inline-flex ">
                                         <td>
                                             <div><input type="checkbox" formControlName="cm_chk" [(ngModel)]="checked"
-                                                (change)="eventCheck_CM_QuotPermission($event)" />CM</div>
+                                                    (change)="eventCheck_CM_QuotPermission($event)" />CM</div>
                                             <div> <input type="checkbox" formControlName="cd_chk" [(ngModel)]="checked"
-                                                (change)="eventCheck_CD_QuotPermission($event)" />CD</div>
+                                                    (change)="eventCheck_CD_QuotPermission($event)" />CD</div>
                                             <br>
-                                           
+
                                         </td>
-                                        
+
                                     </tr>
                                     <br>
                                     <div>
@@ -877,7 +1104,8 @@
                                                     <input type="radio" id="{{i}}"
                                                         [attr.disabled]="approval_Show_hide ? '' : null"
                                                         formControlName="radio_approvalPermission"
-                                                        value="{{display1.userId}}" (change)="handleChange($event,display1.userId)" />
+                                                        value="{{display1.userId}}"
+                                                        (change)="handleChange($event,display1.userId)" />
                                                     <label for="{{i}}"
                                                         class="col-lg-6 col-form-label">{{display1.firstName}}</label>
 

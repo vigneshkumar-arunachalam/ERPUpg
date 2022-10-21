@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { JsonPipe } from '@angular/common';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -61,6 +62,9 @@ export class AddquotationnewComponent implements OnInit {
   //auto search product
   searchResult_productName:any;
   product_name_AutoComplete:any;
+  //radio button dynamic change
+  currencyOld_RadioValue:any;
+  currencyNew_RadioValue:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router,private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -148,6 +152,7 @@ export class AddquotationnewComponent implements OnInit {
 
 
   }
+  
   selectEventProduct(item: any, i: any) {
     console.log("product item selected",item)
     this.product_name_AutoComplete=item.partNo;
@@ -167,7 +172,11 @@ export class AddquotationnewComponent implements OnInit {
   changeProductName_partNO(e: any) {
     console.log(e.target.value);
   }
- 
+  onDrop(event: CdkDragDrop<string[]>){
+    console.log("event drag drop",event)
+    moveItemInArray( this.addressControls.controls, event.previousIndex, event.currentIndex);
+
+  }
 
   checkbox_productDetails_Split: any;
   checkbox_productDetails_Split_Number: any;
@@ -203,6 +212,13 @@ export class AddquotationnewComponent implements OnInit {
   descriptionDetails_DontShow_eventCheck(e: any) {
     this.checkbox_descriptionDetails_DontShow = e.target.checked
     console.log(this.checkbox_descriptionDetails_DontShow);
+  }
+  radioCurrencyChange(event:any) {
+  
+    this.currencyNew_RadioValue=event.target.value;
+    console.log("this.currencyNew_RadioValue",this.currencyNew_RadioValue)
+    this.currencyQuotationTermChange();
+   
   }
 
   keywordCustomerName = 'customerName';
@@ -340,6 +356,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.FooterDetails = response.footer_details;
+      this.currencyOld_RadioValue=response.currency_id;
       console.log("dynamic Dropdown change response", response)
       console.log("dynamic term condition change response", response.quotation_terms_cond)
       for (let index = 0; index < response.footer_details.length; index++) {
@@ -478,6 +495,7 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.FooterDetails = response.footer_details;
       console.log("dynamic Dropdown change response", response)
+      this.currencyOld_RadioValue=response.currency_id;
       console.log("dynamic term condition change response", response.quotation_terms_cond)
       for (let index = 0; index < response.footer_details.length; index++) {
         this.billerIDUpdate = response.footer_details[index].billerId;
@@ -545,6 +563,47 @@ this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
 
 
     });
+  }
+  currencyQuotationTermChange(){
+   
+    let api_req: any = new Object();
+    let api_currencyQuotationTermChange: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/currency_change";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_currencyQuotationTermChange.action = "currency_change";
+    
+    api_currencyQuotationTermChange.terms_conditions = "1. Prices quoted are in SGD, unless stated otherwise.2. A delivery fee of S$30 is chargeable for onsite delivery.3.Cancellation fee of S$50 or 20% applies, whichever is higher.4. 100% Payment in advance.5. Quote validity: 30 days upon issue6. Lead time:";
+    api_currencyQuotationTermChange.oldcurrencyId = this.currencyOld_RadioValue;
+    api_currencyQuotationTermChange.newcurrencyId = this.currencyNew_RadioValue;
+    api_req.element_data = api_currencyQuotationTermChange;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation/currency_change", response)
+
+      if (response.status == true) {
+        this.addQuotationInvoice_section1.patchValue({
+
+          'termConditionContentChange': response.terms,
+
+
+        });
+
+      }
+      else {
+        this.addQuotationInvoice_section1.patchValue({
+
+          'termConditionContentChange': '',
+
+
+        });
+      }
+
+
+    });
+
   }
   saveQuotationEnquiry() {
  console.log(this.addQuotationInvoice_section3.value.section3_gst_dropdown)

@@ -3,6 +3,9 @@ import { FormGroup, FormControl, FormBuilder, FormArray,Validators } from '@angu
 import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+
 
 declare var $: any;
 declare var iziToast: any;
@@ -149,6 +152,12 @@ export class EditquotationnewComponent implements OnInit {
       
     });
   }
+  onDrop(event: CdkDragDrop<string[]>){
+    console.log("event drag drop",event)
+    moveItemInArray( this.addressControls.controls, event.previousIndex, event.currentIndex);
+
+  }
+
   selectEventProduct(item: any) {
     
     console.log("product item selected",item)
@@ -462,9 +471,10 @@ export class EditquotationnewComponent implements OnInit {
             "pd_sellingPrice": response.quotation_child_det[index].price,
             "pd_Total": response.quotation_child_det[index].total_bf_amt,
             "pd_netPrice": response.quotation_child_det[index].actual_net_tot,
-            "pd_split": response.quotation_child_det[index].header_split,
-            "pd_GPTotal": response.quotation_child_det[index].group_total_display_status,
-            "pd_selectTax": response.quotation_child_det[index].tax_state,
+            "pd_split": response.quotation_child_det[index].header_split==1?true:false,
+            "pd_GPTotal": response.quotation_child_det[index].group_total_display_status==1?true:false,
+            "pd_selectTax": response.quotation_child_det[index].tax_state==1?true:false,
+           
 
           })
           );

@@ -219,9 +219,9 @@
                             Currency</label>
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="select_curen" class="form-control"
-                                formControlName="selectCurrency">
+                            (change)="radioCurrencyChange($event)" formControlName="selectCurrency">
                                 <option [ngValue]="null" selected disabled>Select Currency</option>
-                                <option *ngFor="let currency of CurrencyList" value="{{currency.currencyId}}">
+                                <option *ngFor="let currency of CurrencyList" value="{{currency.currencyId}}" >
                                     {{currency.currency_name}}
                                 </option>
                             </select>
@@ -308,7 +308,7 @@
 
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12" cdkDropList (cdkDropListDropped)="onDrop($event)">
 
                     <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
 
@@ -346,8 +346,10 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
+                                    <tbody >
+                                       
+                                            
+                                        <tr cdkDrag cdkDragLockAxis="y">
                                             <td style="width:370px;display:block;">
                                                 <div class="userDatatable-content" style="top:0">
                                                     <div class="alignFormArray" style="display:block;text-align: left;">
@@ -375,7 +377,7 @@
                                             </ng-template>
                                         </div>
 
-                                                        <input type="text" class="form-control"
+                                                        <input type="text" class="form-control mt-2"
                                                             formControlName="pd_productName_txtbox1" id="pd_productName_txtbox_{{i}}"/>
 
                                                         <textarea style="height: 42px;width: 100%;text-align: left;padding-left: 8px"
