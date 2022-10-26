@@ -24,6 +24,7 @@ export class EditquotationnewComponent implements OnInit {
   public addresses: FormArray;
   editQuotationID: any;
   SalesRepList: any;
+  salesRepDropDown_Textbox_Status:any;
   SalesResellerList: any;
   SelectTemplateList: any;
   CurrencyList: any;

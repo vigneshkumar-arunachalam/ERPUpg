@@ -93,7 +93,7 @@
 
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <div class="ng-autocomplete">
+                        <div class="ng-autocomplete name">
                             <label for="companyName" class="col-lg-12 ">Customer Name</label>
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                 formControlName="customerName" (selected)='searchCustomer_selectDropdownData($event)'
@@ -388,8 +388,8 @@
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: left;"
-                                                        (keyup)="keyPress($event, i)"
+                                                    <input type="text" required class="form-control" style="text-align: left;"
+                                                        (keyup)="keyPress($event, i)"  
                                                         formControlName="pd_quantity_txtbox1" />
                                                         
                                                 </div>
@@ -397,7 +397,7 @@
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: left;" formControlName="pd_unit" />
+                                                    <input type="text"  required class="form-control" style="text-align: left;" formControlName="pd_unit" />
                                                 </div>
                                             </td>
                                             <td>
