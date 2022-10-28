@@ -44,9 +44,9 @@ input.form-control {
   border-radius: 50%;
 }
 
-.ng-autocomplete ::ng-deep{
+/* .ng-autocomplete ::ng-deep{
   padding: 0px;
-}
+} */
 
   .ng-autocomplete 
   ::ng-deep .autocomplete-container .input-container input {
@@ -83,4 +83,6 @@ input.form-control {
   .ng-autocomplete 
   ::ng-deep .autocomplete-container  .input-container {
     border-width: 0px;
+  }.add-contact-table-section .ng-autocomplete{
+    padding: 0px 0px;
   }
