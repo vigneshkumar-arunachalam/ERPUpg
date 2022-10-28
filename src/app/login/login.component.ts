@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ServerService } from '../services/server.service';
 import { Router } from '@angular/router';
-
+import { BnNgIdleService } from 'bn-ng-idle';
 declare var iziToast: any;
 declare var $: any;
 import Swal from 'sweetalert2';
@@ -18,13 +18,19 @@ export class LoginComponent implements OnInit {
   userName:any;
   loginDetails:any;
   role:any= [];
-  constructor(private router: Router, private serverService: ServerService) { }
+  constructor(private router: Router, private serverService: ServerService,private bnIdle: BnNgIdleService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       // 'company_name' : new FormControl(null,Validators.required)
+    });
+
+    this.bnIdle.startWatching(300).subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        console.log('session expired');
+      }
     });
   }
 

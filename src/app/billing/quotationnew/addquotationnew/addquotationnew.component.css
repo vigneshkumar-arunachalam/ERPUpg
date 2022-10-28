@@ -310,9 +310,9 @@ input.form-control {
 ::ng-deep .autocomplete-container */
 
 
-.ng-autocomplete ::ng-deep{
+/* .ng-autocomplete ::ng-deep{
   padding: 0px;
-}
+} */
 
   .ng-autocomplete 
   ::ng-deep .autocomplete-container .input-container input {

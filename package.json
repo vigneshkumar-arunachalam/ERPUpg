@@ -23,6 +23,7 @@
     "@tinymce/tinymce-angular": "^5.0.1",
     "@types/feather-icons": "^4.7.0",
     "angular-ng-autocomplete": "^2.0.9",
+    "bn-ng-idle": "^2.0.4",
     "bootstrap": "^5.1.3",
     "feather-icons": "^4.29.0",
     "jquery": "^3.6.0",

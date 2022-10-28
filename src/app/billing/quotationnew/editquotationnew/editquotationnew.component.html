@@ -276,13 +276,13 @@
                 <div class="form-group row">
                     <label for="cust_dett" style="background-color: #cee9e6;"
                         class="col-lg-12 col-form-label">Product Details</label>
-
+    
                 </div>
             </div>
             <div class="col-12" cdkDropList (cdkDropListDropped)="onDrop($event)">
-
+    
                 <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
-
+    
                     <div [formGroupName]="i">
                         <div class="row">
                             <div class="col-12">
@@ -290,7 +290,7 @@
                                     Product Group {{i +
                                     1}}</h3>&nbsp;&nbsp; -->
                             </div>
-
+    
                         </div>
                         <div class="table-responsive">
                             <table class="add-contact-table-section">
@@ -311,7 +311,7 @@
                                         </th>
                                         <th style="width:20px"><span class="userDatatable-title">Select Tax</span>
                                         </th>
-
+    
                                         <th *ngIf="i>0" style="width:20px">
                                             <span class="userDatatable-title">Action</span>
                                         </th>
@@ -326,10 +326,12 @@
                                         <div class="ng-autocomplete">
                                             <label for="companyName" class="col-lg-12 "></label>
                                             <ng-autocomplete 
+                                              id="productName_autoCompl_{{i+1}}"
                                             [data]="searchResult_productName" 
                                             [searchKeyword]="keywordpd_productName_autocomplete"
                                             formControlName="pd_productName_autocomplete" 
-                                            (selected)='selectEventProduct($event)'
+                                          
+                                           (selected)='selectEventProduct($event, i)'
                                              (inputChanged)='searchProductName($event)'
                                                 (inputFocused)='onFocusedProduct($event)' 
                                                 [itemTemplate]="itemTemplateCustomer"
@@ -346,22 +348,21 @@
                                         </div>
                                         
                                                     <input type="text" class="form-control mt-2"
-                                                        formControlName="pd_productName_txtbox1" />
-
+                                                        formControlName="pd_productName_txtbox1" id="pd_productName_txtbox_{{i}}" />
+    
                                                     <textarea style="height: 42px;width: 100%;text-align: left;padding-left: 8px"
                                                         class="form-control mt-2" row="4"
-                                                        formControlName="pd_productName_txtArea"></textarea>
+                                                        formControlName="pd_productName_txtArea" id="pd_productName_txtArea_{{i}}"></textarea>
                                                 </div>
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: left;"
-                                                    (keyup)="keyPress($event, i)"
-                                                    formControlName="pd_quantity_txtbox1" />
+                                                                                               formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}" (change)="totalCalculate()" (blur)="totalCalculate()" (keyup)="totalCalculate()" />
                                                     
                                             </div>
-
+    
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
@@ -371,11 +372,11 @@
                                         <td>
                                             <div class="userDatatable-content" style="top:-9px;text-align: right;">
                                                 <div>
-                                                    <input type="text" class="form-control"
-                                                        formControlName="pd_sellingPrice" style="text-align: right;"
-                                                        (keyup)="keyPress($event, i)" />
-
-
+                                                   <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_sellingPrice"
+                                                        id="pd_SP_{{i}}"  (change)="totalCalculate()" (blur)="totalCalculate()" (keyup)="totalCalculate()" />
+    
+    
                                                     <button type="button"
                                                         class="btn btn-info btn-default btn-squared  mt-2"
                                                         data-toggle="modal" (click)="calculateDiscount(i)"
@@ -388,10 +389,14 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" formControlName="pd_Total" style="text-align: right;"
-                                                    id="pd_Total_{{i}}" />
+                                                <input type="text" class="form-control" formControlName="pd_Total" 
+                                                    style="text-align: right;" id="pd_Total_{{i}}" />
                                             </div>
-                                        </td>
+                            <input type="text" class="form-control" style="text-align: right;" formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                            <input type="hidden" class="form-control" style="text-align: right;" formControlName="sub_dis_type"  id="sub_discount_type_{{i}}" />
+                                            <input type="hidden" class="form-control" style="text-align: right;" formControlName="sub_dis_val"  id="sub_discount_val_{{i}}" />                                   
+                                             </td>
+    
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
@@ -401,54 +406,54 @@
                                         <td>
                                             <div class="userDatatable-content" style="top:-35px;">
                                                 <input type="checkbox" formControlName="pd_split"
-                                                    (change)="productDetails_Split_eventCheck($event)" />
-
+                                                  (change)="totalCalculate();"/>
+    
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" style="top:-35px;">
                                                 <input type="checkbox" formControlName="pd_GPTotal"
-                                                    (change)="productDetails_GPTotal_eventCheck($event)" />
-
+                                               (change)="totalCalculate();"  />
+    
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" style="top:-35px;">
                                                 <input type="checkbox" [ngModel]="test[i]" id="pd_selectTax_{{i}}"
                                                     formControlName="pd_selectTax"
-                                                    (change)="productDetails_selectTax_eventCheck($event, i)" />
-
-
+                                                  (change)="totalCalculate();" />
+    
+    
                                             </div>
                                         </td>
-                                        <td *ngIf="i>=0">
+                                        <td *ngIf="i>0">
                                             <div class="userDatatable-content d-inline-block">
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                     (click)=" removeAddress(i)">X</button>
-
+    
                                             </div>
                                     </tr>
                                 </tbody>
-
+    
                             </table>
                         </div>
-
-
-
+    
+    
+    
                     </div>
                 </section>
-
+    
                 <div class="text-right">
                     <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
                         (click)="clearAddress()">Crear Group </button> -->
                     <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
                         (click)="editAddress()">Add Product </button>
-
+    
                 </div>
-
+    
             </div>
-
-
+    
+    
         </div>
     </form>
     <br>
@@ -462,16 +467,16 @@
                             <h1>hi</h1>
                         </div> -->
             </section>
-
+    
             <section class="right_section">
-
-
+    
+    
                 <div class="col-lg-12">
-
-
+    
+    
                     <div class="row">
-
-
+    
+    
                         <div class="col-lg-4">
                             <div class="d-flex">
                                 <label class=" col-form-label">Grand Total Show</label>
@@ -480,119 +485,128 @@
                             </div>
                         </div>
                         <div class="col-lg-8">
-                            <div class="d-flex justify-content-center">
-                                <label class="col-form-label" style="margin-right:6px;">Gross
-                                    Total</label>
-                                <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                    formControlName="section3_gross_total" />
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-4">
-                        </div>
-                        <div class="col-lg-8">
-                            <div class="d-flex justify-content-center">
-                                <button class="btn btn-info mr-2 mt-2" data-toggle="modal"
-                                    data-target="#discountFormFinal"
-                                    style="padding: 0px;width:120px">Discount</button>
-
-                                <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
-                                    formControlName="section3_discount_txtbox" />
-                            </div>
-                        </div>
-
+    
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-lg-3">
+                                            <label class="col-form-label" style="width: 100%;text-align: right;">Gross
+                                            Total</label>
+                                        </div>
+                                        <div class="col-lg-9">
+                                            <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
+                                            formControlName="section3_gross_total" />
+                                        </div>
+                                    </div>
+                                </div>
+    
+    
+                        <div class="col-lg-6">
+                                    <button class="btn btn-info mr-2 mt-2" data-toggle="modal"
+                                            data-target="#discountFormFinal" (click)="calFinalDiscount()"
+                                            style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount</button>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="d-flex justify-content-center">
+                                        
+    
+                                        <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
+                                            formControlName="section3_discount_txtbox" />
+    <input type="hidden" class="form-control" style="text-align: right;" formControlName="final_dis_type"  id="final_discount_type" />
+                                            <input type="hidden" class="form-control" style="text-align: right;" formControlName="final_dis_val"  id="final_discount_val" />
+                                    </div>
+                                </div>
+    
                        
                         <div class="col-lg-6">
                             <div class="form-group ml-2 mt-2">
-
-
+    
+    
                                 <select name="billerID" id="billerID" class="form-control"
                                     aria-label="Default select example" formControlName="section3_gst_dropdown"
                                     (change)="getTaxCals()">
-                                    <option [ngValue]="null" selected disabled>Select Tax</option>
-
-
+                                    <option value="null" selected disabled>Select Tax</option>
+    
+    
                                     <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
                                         {{tax.combine_val}}      
                                     </option>
                                 </select>
+        <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id"  [(ngModel)]="tax_per_mod" />
                             </div>
                         </div>
-
-
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="text" formControlName="section3_taxAmt_txtbox" [(ngModel)]="finalTax"
-                                    class="form-control mt-2" />
-
-                            </div>
-                        </div>
-
-
+    
+    
+    
+                      <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input type="text" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"  [(ngModel)]="finalTax"
+                                            class="form-control mt-2" />
+    
+                                    </div>
+                                </div>
+    
+    
+    
                         <div class="col-lg-6">
                             <div class="d-flex justify-content-center">
                                 <input type="text" class="form-control ml-2 mt-2"
                                     formControlName="section3_shipping_amt_name_txtbox" />
-
+    
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="text" (keyup)="extraFees()" formControlName="section3_shipping_amt_txtbox"
-                                    class="form-control mt-2" />
-                            </div>
-                        </div>
-
-
-
-                        <div class="col-lg-12">
-                            <div class="form-group" style="display: flex;align-items: center;">
-                                <label class="col-lg-3 col-form-label">Grand Total</label>
-                                <input type="text" class="form-control ml-2 mt-2" [(ngModel)]="grandTotal"
-                                    formControlName="section3_grand_total" />
-
-                            </div>
-                        </div>
-
-
-
-
+                                    <div class="form-group">
+                                        <input type="text" (keyup)="extraFees()"
+                                            formControlName="section3_shipping_amt_txtbox" class="form-control mt-2" />
+                                    </div>
+                                </div>
+    
+    
+    
+                       <div class="col-lg-12">
+                                    <div class="form-group" style="display: flex;align-items: center;">
+                                        <label class="col-lg-3 col-form-label">Grand Total</label>
+                                        <input type="text" class="form-control ml-2 mt-2" [(ngModel)]="grandTotal"
+                                            formControlName="section3_grand_total" (change)="totalCalculate();" />
+    
+                                    </div>
+                                </div>
+    
+    
+    
+    
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <div class="d-flex justify-content-center" style="align-items: center;">
                                     <label class="col-lg-3 col-form-label">Remarks</label>
                                     <input type="text" class="form-control ml-2 mt-2"
                                         formControlName="section3_remarks" />
-
+    
                                 </div>
                             </div>
                         </div>
-
-
-
+    
+    
+    
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>
                                     (Signature not available. Ask your administrator to upload your
                                     signature if required)
                                 </label>
-
+    
                             </div>
                         </div>
-
+    
                         <div class="col-lg-12">
                             <div class="form-group">
-
+    
                                 <label>
                                     Select Additional Signature
                                 </label>
                                 <select name="billerID" id="billerID" class="form-control"
                                     aria-label="Default select example"
                                     formControlName="section3_signature_dropdown">
-
+    
                                     <option [ngValue]="null" selected disabled>Select Signature
                                     </option>
                                     <option *ngFor="let sign of additionalSignatureList"
@@ -602,19 +616,19 @@
                                 </select>
                             </div>
                         </div>
-
-
-
+    
+    
+    
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Template Name</label>
                                 <input type="text" class="form-control mt-2"
                                     formControlName="section3_templateName" />
-
+    
                             </div>
                         </div>
-
-
+    
+    
                     </div>
                 </div>
             </section>

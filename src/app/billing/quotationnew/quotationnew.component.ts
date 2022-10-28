@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { BnNgIdleService } from 'bn-ng-idle';
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -143,13 +144,20 @@ export class QuotationnewComponent implements OnInit {
   quotationPermission_Share:any;
 
 
-  constructor(public serverService: ServerService, private router: Router, private fb: FormBuilder) {
+  constructor(public serverService: ServerService, private router: Router, private fb: FormBuilder,private bnIdle: BnNgIdleService) {
     this.setActualCost_FormGroup = this.fb.group({
       addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
+    
+    this.bnIdle.startWatching(120).subscribe((isTimedOut: boolean) => {
+      if (isTimedOut) {
+        console.log('session expired');
+      }
+    });
+
 
     this.searchBillerNameList = ["Cal4Care Pte Ltd", "Marshal System Consultancy", "Cal4Care", "Dcare Technologies Pte Ltd", "DCARE Technologies India Pvt Ltd.", "Cal4care Sdn.Bhd.", "Cal4Care Japan Co., Ltd", "1Msb IT Care Sdn. Bhd.", "Cal4care Telecommunication Services (I) PVT LTD"]
     this.addNewQuotationPopUpForm = new FormGroup({
@@ -798,7 +806,7 @@ export class QuotationnewComponent implements OnInit {
       if (response.status == true) {
         this.quotationSharedResult = response.customer_invoice_details;
         this.quotationList({});
-        // window.location.reload();
+        window.location.reload();
         $("#quotationSharedPersonId").modal("hide");
         console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
         iziToast.success({
@@ -1619,7 +1627,7 @@ export class QuotationnewComponent implements OnInit {
       this.ExcelReportResult=response.web_excel_path;
       window.open(this.ExcelReportResult,'_blank')
       console.log("response-quotation convert pi", response)
-      if (response.status == true) {
+      if (response.status !='') {
           iziToast.success({
           message: "Excel file has been downloaded",
           position: 'topRight'

@@ -1655,9 +1655,9 @@
                     <div class="modal-body contractFileAttachmentCSS">
                         <div class="form-group">
                             <label for="quotationComments" style="color:rgb(29, 40, 99) ; font-weight:800;
-                            font-size:medium;">Comments</label>
+                            font-size:medium;">Comments</label><br>
                             <label for="quotationComments1" style="color:rgb(17, 17, 17) ; font-weight:500;padding-left: 5px;
-                            font-size:medium;"> {{response_CommentResult}}</label>
+                            font-size:medium;" [innerHtml]="response_CommentResult"></label>
                             <textarea class="form-control" formControlName="quotation_Comments" id="quotationComments"
                                 rows="3"></textarea>
 

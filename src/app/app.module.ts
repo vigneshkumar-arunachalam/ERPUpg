@@ -9,7 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-
+import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -95,7 +95,7 @@ import { EditquotationnewComponent } from './billing/quotationnew/editquotationn
     BrowserAnimationsModule,MatFormFieldModule,MatAutocompleteModule,MatInputModule,MatSliderModule,
     AutocompleteLibModule,PdfViewerModule
   ],
-  providers: [    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+  providers: [   [BnNgIdleService], { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
 ],
   bootstrap: [AppComponent]
 })
