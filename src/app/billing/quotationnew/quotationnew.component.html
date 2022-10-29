@@ -158,10 +158,10 @@
                                             </td>
 
                                             <td>
-                                                {{ list.customerName}}
+                                                <span>{{ list.customerName}}</span>
                                             </td>
                                             <td>
-                                                {{ list.enquiry_product_description}}
+                                                <span>{{ list.enquiry_product_description}}</span> 
                                                 <!-- <td>
                                                 <span>{{ list.enquiry_product_description}}</span>
                                             </td> -->
@@ -1304,7 +1304,9 @@
                                         <td *ngIf="list.productName!='Courier' && list.productName!='Other'">
                                             <input type="hidden" id="invisiable_state_{{i}}"
                                                 value="{{list.invisiable_state}}">
-                                            <span>{{ list.price}}</span>
+                                            <span>{{ list.price}}</span> 
+                                            
+                                            <!-- <span>{{ list.totat_amt}}</span> just modified for net total  -->
                                             <input type="hidden" id="product_rate_{{i}}" value="{{list.price}}">
                                         </td>
 

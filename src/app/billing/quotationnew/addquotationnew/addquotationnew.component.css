@@ -330,6 +330,7 @@ input.form-control {
     border: 1px solid #f1f2f6;
     border-radius: 5px;
     box-shadow: 0 0;
+    color: #495057;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     
 }
@@ -345,7 +346,8 @@ input.form-control {
 
   .ng-autocomplete 
   ::ng-deep .autocomplete-container  .input-container input{
-      color: rgb(17, 17, 17);
+    color: #495057;
+      
   }
   .ng-autocomplete 
   ::ng-deep .autocomplete-container  .input-container {
@@ -367,9 +369,10 @@ input.form-control {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #f1f2f6;
+
   border-radius: 5px;
-  box-shadow: 0 0;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  /* box-shadow: 0 0;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
   
 }
 .abc
@@ -382,4 +385,17 @@ input.form-control {
 }
 .add-contact-table-section .ng-autocomplete{
   padding: 0px 0px;
+}
+.ng-autocomplete 
+::ng-deep .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+  padding: 0px 5px;
+  border: 1px solid #f1f2f6;
+  width: 100%;
+  display: block;
+}
+.buttoncssDiscount{
+  width: -webkit-fill-available;
+}
+.userDatatable-title{
+  text-align: left !important;
 }

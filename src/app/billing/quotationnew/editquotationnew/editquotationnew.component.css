@@ -86,3 +86,9 @@ input.form-control {
   }.add-contact-table-section .ng-autocomplete{
     padding: 0px 0px;
   }
+  .buttoncssDiscount{
+    width: -webkit-fill-available;
+  }
+  .userDatatable-title{
+    text-align: left !important;
+  }
