@@ -283,7 +283,7 @@
                         </div>
                     </div>
                     <textarea class="form-control" row="12" style="height:200px ;"
-                        formControlName="termConditionContentChange"></textarea>
+                        formControlName="termConditionContentChange" [innerHtml]="CurrencyChangeFieldValue"></textarea>
 
                 </div>
                 <div class="col-lg-6">
@@ -397,8 +397,8 @@
                                                 <div class="userDatatable-content">
                                                     <input type="text" class="form-control" style="text-align: right;"
                                                         formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                        (change)="totalCalculate()" (blur)="totalCalculate()"
-                                                        (keyup)="totalCalculate()" />
+														     (change)="totalCalculate();saveDiscount()" (blur)="totalCalculate();saveDiscount()"
+															 (keyup)="totalCalculate();saveDiscount()" />
 
                                                 </div>
 
@@ -414,10 +414,7 @@
                                                   
                                                         <input type="text" class="form-control"
                                                             style="text-align: right;" formControlName="pd_sellingPrice"
-                                                            id="pd_SP_{{i}}" (change)="totalCalculate();saveDiscount()"
-                                                            (blur)="totalCalculate();saveDiscount()"
-                                                            (keyup)="totalCalculate();saveDiscount()" />
-
+                                                            id="pd_SP_{{i}}" onfocus="assignRowVal(i)" (change)="totalCalculate();saveDiscount()" (blur)="totalCalculate();saveDiscount()" (keyup)="totalCalculate();saveDiscount()" />
 
                                                         <button type="button"
                                                             class="btn btn-primary btn-default btn-squared  mt-4 buttoncssDiscount"
@@ -556,9 +553,9 @@
                                     <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
                                         formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
                                     <input type="hidden" class="form-control" style="text-align: right;"
-                                        formControlName="final_dis_type" id="final_discount_type" />
-                                    <input type="hidden" class="form-control" style="text-align: right;"
-                                        formControlName="final_dis_val" id="final_discount_val" />
+									formControlName="final_dis_type" id="final_discount_type" [(ngModel)]="finalDiscountType"/>
+									<input type="hidden" class="form-control" style="text-align: right;"
+                                        formControlName="final_dis_val" id="final_discount_val" [(ngModel)]="finalDiscountVal"/>
                                 </div>
                             </div>
 

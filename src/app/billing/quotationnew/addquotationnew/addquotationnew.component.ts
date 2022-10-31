@@ -39,14 +39,18 @@ export class AddquotationnewComponent implements OnInit {
   FooterDetails: any;
   searchResult: any;
   billerIDUpdate: any;
+  sub_dis_type: any;
+  sub_dis_val: any;
   customerName_Data: any;
   additionalSignatureList: any;
   TaxDropdownList: any;
   quotationPriceKey: any;
+  row_cnt_mod: any;
   grossTotal: any;
   itre = 0;
   finalDiscount: any;
   finalDiscountType: any;
+  finalDiscountVal: any;
   // net_amt = $('#pd_netPrice_' + a).val();
   grandTotal: any;
   finalTax: any;
@@ -72,8 +76,10 @@ export class AddquotationnewComponent implements OnInit {
   //radio button dynamic change
   currencyOld_RadioValue: any;
   currencyNew_RadioValue: any;
+  dynamicTermsConditions_Currency:any;
   tax_amt_tot: number;
   grs_amt: number;
+  CurrencyChangeFieldValue: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -135,6 +141,8 @@ export class AddquotationnewComponent implements OnInit {
       'section3_grant_total_show': new FormControl(null),
       'section3_gross_total': new FormControl(null),
       'section3_discount_txtbox': new FormControl(null),
+      'final_dis_type': new FormControl(null),
+      'final_dis_val': new FormControl(null),
       'section3_gst_dropdown': new FormControl(null),
       'section3_taxAmt_txtbox': new FormControl(null),
       'section3_tax_per_hd': new FormControl(null),
@@ -309,6 +317,7 @@ export class AddquotationnewComponent implements OnInit {
       this.FooterDetails = response.footer_details;
       console.log("dynamic Dropdown change response", response)
       this.currencyOld_RadioValue = response.currency_id;
+      this.dynamicTermsConditions_Currency=response.quotation_terms_cond;
       console.log("dynamic term condition change response", response.quotation_terms_cond)
       for (let index = 0; index < response.footer_details.length; index++) {
         this.billerIDUpdate = response.footer_details[index].billerId;
@@ -356,6 +365,7 @@ export class AddquotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.FooterDetails = response.footer_details;
       this.currencyOld_RadioValue = response.currency_id;
+      this.dynamicTermsConditions_Currency=response.quotation_terms_cond;
       console.log("dynamic Dropdown change response", response)
       console.log("dynamic term condition change response", response.quotation_terms_cond)
       for (let index = 0; index < response.footer_details.length; index++) {
@@ -426,6 +436,13 @@ export class AddquotationnewComponent implements OnInit {
           'salesRep': localStorage.getItem('user_id'),
 
         });
+
+        if (response.sales_rep_status.dropdown_status == 0) {
+          this.addQuotationInvoice_section1.patchValue({
+            'salesRep': response.sales_rep.name,
+          });
+
+        }
         this.tax_per_mod = response.percent_val;
         // alert(response.percent_val);
         this.addQuotationInvoice_section3.patchValue({
@@ -582,7 +599,7 @@ export class AddquotationnewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_currencyQuotationTermChange.action = "currency_change";
 
-    api_currencyQuotationTermChange.terms_conditions = "1. Prices quoted are in SGD, unless stated otherwise.2. A delivery fee of S$30 is chargeable for onsite delivery.3.Cancellation fee of S$50 or 20% applies, whichever is higher.4. 100% Payment in advance.5. Quote validity: 30 days upon issue6. Lead time:";
+    api_currencyQuotationTermChange.terms_conditions = this.dynamicTermsConditions_Currency;
     api_currencyQuotationTermChange.oldcurrencyId = this.currencyOld_RadioValue;
     api_currencyQuotationTermChange.newcurrencyId = this.currencyNew_RadioValue;
     api_req.element_data = api_currencyQuotationTermChange;
@@ -590,12 +607,11 @@ export class AddquotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation/currency_change", response)
-
+      this.CurrencyChangeFieldValue = response.terms
       if (response.status == true) {
         this.addQuotationInvoice_section1.patchValue({
 
           'termConditionContentChange': response.terms,
-
 
         });
 
@@ -604,12 +620,8 @@ export class AddquotationnewComponent implements OnInit {
         this.addQuotationInvoice_section1.patchValue({
 
           'termConditionContentChange': '',
-
-
         });
       }
-
-
     });
 
   }
@@ -665,8 +677,11 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.gross_total = this.addQuotationInvoice_section3.value.section3_gross_total;
     //row-2
     api_saveEnquiry_req.discount_amt_tot = this.addQuotationInvoice_section3.value.section3_discount_txtbox;
+    api_saveEnquiry_req.final_dis_type = this.addQuotationInvoice_section3.value.final_dis_type;
+    api_saveEnquiry_req.final_dis_val = this.addQuotationInvoice_section3.value.final_dis_val;
     //row-3
     api_saveEnquiry_req.taxId = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
+    api_saveEnquiry_req.taxPer = this.addQuotationInvoice_section3.value.section3_tax_per_hd;
     api_saveEnquiry_req.taxAmt = this.addQuotationInvoice_section3.value.section3_taxAmt_txtbox;
     //row-4
     api_saveEnquiry_req.shipping_amt_name = this.addQuotationInvoice_section3.value.section3_shipping_amt_name_txtbox;
@@ -879,7 +894,11 @@ export class AddquotationnewComponent implements OnInit {
     var grs_amt = 0;
     var sub_total_amt = 0;
 
-    var total_amt = 0;
+    let discount_type: any;
+    var total_amt: any;
+    var dis_amt_val: any;
+
+    var total_amt: any;
     var addr = this.addQuotationInvoice_section2.value.addresses;
     var list_cnt = addr.length;
     //  alert(list_cnt);
@@ -891,12 +910,46 @@ export class AddquotationnewComponent implements OnInit {
     // alert(tax_per);
     for (let a = 0; a < list_cnt; a++) {
 
-      var total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
+      total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
       $('#pd_Total_' + a).val(total_amt);
-      sub_total_amt = total_amt - $('#sub_discount_' + a).val();
-      $('#pd_netPrice_' + a).val(sub_total_amt);
+
+
+      discount_type = $('#sub_discount_type_' + a).val();
+      console.log('discount_type' + discount_type);
+      if (discount_type == 'per') {
+        this.sub_dis_val = $('#sub_discount_val_' + a).val();
+        console.log('discount_type1111' + this.sub_dis_val);
+        dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
+        console.log('dis_amt_val' + dis_amt_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
+        $('#pd_netPrice_' + a).val(sub_total_amt);
+        $('#sub_discount_' + a).val(dis_amt_val);
+      } else if (discount_type == 'amt') {
+        // console.log('discount_type222'+discount_type);
+
+        this.sub_dis_val = $('#sub_discount_val_' + a).val();
+        // console.log('sub_discount_valppp'+this.sub_dis_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
+        $('#pd_netPrice_' + a).val(sub_total_amt);
+      } else {
+        $('#pd_netPrice_' + a).val(total_amt);
+        sub_total_amt = total_amt;
+      }
+
+      if ($('#pd_selectTax_' + a).prop('checked') == true) {
+        this.net_amt = $('#pd_netPrice_' + a).val();
+
+        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
+        tax_amt_tot += tax_amt;
+
+      }
+
+
+      // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
+      // $('#pd_netPrice_' + a).val(sub_total_amt);
       //  alert('total_amt'+total_amt);
       grs_amt += sub_total_amt;
+
 
       if ($('#pd_selectTax_' + a).prop('checked') == true) {
         this.net_amt = $('#pd_netPrice_' + a).val();
@@ -926,6 +979,7 @@ export class AddquotationnewComponent implements OnInit {
   keyPress(event: any, i: any) {
 
     this.quotationPriceKey = i;
+    this.row_cnt_mod = i;
     var key = event.target.value;
     var addr = this.addQuotationInvoice_section2.value.addresses;
 
@@ -1033,6 +1087,7 @@ export class AddquotationnewComponent implements OnInit {
   }
   calculateDiscount(val: any) {
     this.quotationPriceKey = val;
+    this.row_cnt_mod = val;
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
@@ -1068,6 +1123,7 @@ export class AddquotationnewComponent implements OnInit {
     var price: any;
     // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
     $('#final_discount_type').val(disType);
+    this.finalDiscountType = disType;
 
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
@@ -1076,10 +1132,12 @@ export class AddquotationnewComponent implements OnInit {
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
         $('#final_discount').val(price);
         $('#final_discount_val').val(enablePercentabeDiscont);
+        this.finalDiscountVal = enablePercentabeDiscont;
         //     price = final_tot - price;
       } else {
         $('#final_discount').val('');
         $('#final_discount_val').val('');
+        this.finalDiscountVal = '';
         //   console.log('222'+final_tot);
         price = 0;
 
@@ -1092,6 +1150,7 @@ export class AddquotationnewComponent implements OnInit {
       price = enablePriceDiscont;
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
       console.log('999' + price);
     }
 
@@ -1178,47 +1237,7 @@ export class AddquotationnewComponent implements OnInit {
     var list_cnt = addr.length;
 
     this.totalCalculate();
-    // var price = $('#pd_netPrice_' + i).val();
-    //  console.log(price);
-    //  var gtotel = 0;
-    //  gtotel = this.grossTotal - parseInt(price);
-    // gtotel = Math.abs(gtotel); 
 
-    // console.log(gtotel); return false;
-    //  this.grossTotal = gtotel;
-    //  this.grandTotal = gtotel;  
-
-    //  console.log(this.grandTotal);
-    // if (this.finalTax > 0) {
-    //    var tax = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
-    //   tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
-    //  if (this.grandTotal > 0) {
-    //     this.grandTotal = this.grandTotal - parseFloat(tax);
-    //   }
-    //   this.finalTax = parseFloat(tax);
-    //  }
-    //  console.log(this.grandTotal);
-    // if (this.finalDiscount > 0) {
-    //   var t = JSON.parse(this.finalDiscountType);
-    //   var enablePercentabeDiscont = t['value']
-    //    var disType = t['disType']
-    //    var final_tot = this.grossTotal;
-    //   var price: any;
-    //  if (disType == 'per') {
-    //     price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
-    // } else {
-    //        price = enablePercentabeDiscont;
-    //  }
-    //     price = Math.abs(price); 
-    //  if (this.grandTotal > 0) {
-    //    this.grandTotal = this.grandTotal - price;
-    // }
-    // this.finalDiscount = price
-
-    //   }
-    // if (this.extraCharge > 0) {
-    // this.grandTotal = this.grandTotal + this.extraCharge;
-    // }
   }
 
 

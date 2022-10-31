@@ -11,6 +11,7 @@
   align-items: center;
   min-height: 100vh;
   background: #fff;
+  
 }
 .box {
   /* position: relative; */
@@ -43,14 +44,15 @@
   animation: animate 6s linear infinite;
   animation-delay: -3s;
 }
-@keyframes animate {
+ */
+ @keyframes animate {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
-} */
+}
 .form {
   /* position: absolute; */
   inset: 2px;
