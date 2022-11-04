@@ -75,78 +75,78 @@
                                             <td>
                                                 {{ list.quotation_no}}
                                             </td>
-                                            <td [ngSwitch]="list.duplicate_version" style="display:flex ;">
+                                            <td [ngSwitch]="list.duplicate_version">
 
                                                 <span *ngSwitchCase="'1.0'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:white; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:white; width: 34px;height: 22px;    
                                                 border: 1px solid #ddd;border-radius: 5px; ">
                                                     <input type="text" *ngIf="(list.edit_status=='1')"
-                                                        style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button" [ngStyle]="{'backgroundColor': 'white'}">{{
+                                                        style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" [ngStyle]="{'backgroundColor': 'white'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.1'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#ACC8E5; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#ACC8E5; width:34px;height: 22px;    
                                                 border: 1px solid #ddd;border-radius: 5px; ">
                                                     <input type="text" *ngIf="(list.edit_status=='1')"
-                                                        style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                        style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
 
-                                                    <button type="button" [ngStyle]="{'backgroundColor': '#ACC8E5'}">{{
+                                                    <button type="button" class="mt-1"  [ngStyle]="{'backgroundColor': '#ACC8E5'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.2'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#D697B4; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#D697B4; width: 34px;height: 22px;    
                                                 border: 1px solid #ddd;border-radius: 5px; ">
                                                     <input type="text" *ngIf="(list.edit_status=='1')"
-                                                        style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button" [ngStyle]="{'backgroundColor': '#D697B4'}">{{
+                                                        style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1"  [ngStyle]="{'backgroundColor': '#D697B4'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.3'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#F1D08C; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#F1D08C; width: 34px;height: 22px;    
                                                     border: 1px solid #ddd;border-radius: 5px; ">
                                                         <input type="text" *ngIf="(list.edit_status=='1')"
-                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button"
+                                                            style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" 
                                                         [ngStyle]="{'backgroundColor': '#F1D08C'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.4'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#11e9d2; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#11e9d2; width: 34px;height: 22px;    
                                                     border: 1px solid #ddd;border-radius: 5px; ">
                                                         <input type="text" *ngIf="(list.edit_status=='1')"
-                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button"
+                                                            style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" 
                                                         [ngStyle]="{'backgroundColor': '#11e9d2'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.5'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#f1f17c; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#f1f17c; width: 34px;height: 22px;    
                                                     border: 1px solid #ddd;border-radius: 5px; ">
                                                         <input type="text" *ngIf="(list.edit_status=='1')"
-                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button"
+                                                            style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" 
                                                         [ngStyle]="{'backgroundColor': '#f1f17c'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.6'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#79e649; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#79e649; width: 34px;height: 22px;    
                                                     border: 1px solid #ddd;border-radius: 5px; ">
                                                         <input type="text" *ngIf="(list.edit_status=='1')"
-                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button"
+                                                            style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" 
                                                         [ngStyle]="{'backgroundColor': '#79e649'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchCase="'1.7'">
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#669999; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#669999; width: 34px;height: 22px;    
                                                     border: 1px solid #ddd;border-radius: 5px; ">
                                                         <input type="text" *ngIf="(list.edit_status=='1')"
-                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button"
+                                                            style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" 
                                                         [ngStyle]="{'backgroundColor': '#669999'}">{{
                                                         list.duplicate_version}}</button></span>
                                                 <span *ngSwitchDefault>
-                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#84F0F0; width: 28px;height: 22px;    
+                                                    <input type="text" *ngIf="(list.edit_status=='0')" style="background-color:#84F0F0; width: 34px;height: 22px;    
                                                     border: 1px solid #ddd;border-radius: 5px; ">
                                                         <input type="text" *ngIf="(list.edit_status=='1')"
-                                                            style="background-color:red ;width: 28px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
-                                                    <button type="button"
-                                                        [ngStyle]="{'backgroundColor': '#84F0F0'}">{{
-                                                        list.duplicate_version}}</button></span>
+                                                            style="background-color:red ;width: 34px;height: 22px; border: 1px solid #ddd;border-radius: 5px; ">
+                                                    <button type="button" class="mt-1" 
+                                                        [ngStyle]="{'backgroundColor': '#84F0F0'}">
+                                                        {{list.duplicate_version}}</button></span>
 
 
                                             </td>
@@ -304,7 +304,7 @@
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="view" title="Proforma Invoice"
-                                                                    data-toggle="modal" data-target="#PIId"
+                                                                *ngIf="(list.approval_staus=='0')" data-toggle="modal" data-target="#PIId"
                                                                     (click)="PIEdit(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="24"
                                                                         height="24" viewBox="0 0 24 24" fill="none"
@@ -557,7 +557,7 @@
             </div>
             <div class="modal-body">
                 <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
-                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm" (ngSubmit)="AddQuotationGo()">
+                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm" >
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
@@ -650,10 +650,10 @@
             <div class="modal-footer">
 
                 <button type="submit" class="btn btn-primary" form="ngForm"
-                    [disabled]="!addNewQuotationPopUpForm.valid">Go>></button>
+                    (click)="AddQuotationGo()">Go>></button>
 
 
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>
 
@@ -761,7 +761,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="EditQuotationGo()">Go>></button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>
 
@@ -867,7 +867,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="DuplicateQuotationGo()">Go>></button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal"> 
                     Cancel
                 </button>
 
@@ -894,17 +894,17 @@
             <div class="modal-body">
                 <form [formGroup]="searchQuotationForm">
                     <div class="row">
-                        <div class="col-lg-4">
+                        <div class="col-lg-4 searchScrollCss">
                             <div class="form-group">
                                 <label for="temp1" class="col-lg-12 ">Biller Name</label>
-                                <div class="col-lg-12" *ngFor="let biller of searchBillerResult;let i =index">
+                                <div class="col-lg-12 " *ngFor="let biller of searchBillerResult;let i =index">
                                     <input type="checkbox" value="{{biller.billerId}}"
                                         (change)="QuotationSearchCHK(biller.billerId,$event)">
                                     {{biller.billerName}}
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6">
                             <div class="form-group row">
                                 <div class="ng-autocomplete">
                                     <label for="companyName" class="col-lg-12 ">Search Text</label>
@@ -928,10 +928,10 @@
                         </div>
 
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-2">
 
                             <div class="form-group row">
-                                <label for="grp" class="col-lg-6 ">Group By Customer</label>
+                                <label for="grp" class="col-lg-12 ">Group By Customer</label>
                                 <div class="col-lg-6">
                                     <input type="checkbox" formControlName="groupby_customer" id="grp"
                                         (change)="eventCheckGroupByCustomer($event)" />
@@ -947,7 +947,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationList({})">
                     Search
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
             </div>
@@ -1024,7 +1024,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationSharedPersonUpdate()">
                     Update
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
             </div>
@@ -1144,7 +1144,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationApprovalUpdate()">
                     Update
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
             </div>
@@ -1185,7 +1185,7 @@
                 <button type="button" class="btn btn-primary" (click)="templateNameUpdate()">
                     Save
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
             </div>
@@ -1312,8 +1312,9 @@
 
                                         <td>
 
-                                            <span>{{list.actual_net_tot}}</span>
-                                            <input type="hidden" id="product_net_amt_{{i}}" value="{{list.price}}"
+                                            <span>{{list.totat_amt}}</span>
+                                            <input type="hidden" id="product_net_amt_{{i}}" value="{{list.totat_amt}}"
+                                           
                                                 (keyup)="get_actual_total()" />
                                         </td>
 
@@ -1393,7 +1394,7 @@
                 <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
                     Save
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
             </div>
@@ -1462,7 +1463,7 @@
                 <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()">
                     Save
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
 
@@ -1551,7 +1552,7 @@
                             <div class="email-cc-template">
                                 <div class="col-lg-10" *ngFor="let i =index;let display1 of email_cc_userList;">
                                     <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
-                                        (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
+                                    formControlName="email_cc" (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.firstName}}
                                 </div>
                             </div>
                         </div>
@@ -1627,7 +1628,7 @@
                     Mail
 
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
 
@@ -1654,8 +1655,8 @@
             <div class="modal-body">
                 <form [formGroup]="quotationCommentsForm">
 
-                    <div class="modal-body contractFileAttachmentCSS">
-                        <div class="form-group">
+                    <div class="modal-body contractFileAttachmentCSS" >
+                        <div class="form-group" *ngIf="comment_TransactionID !=null">
                             <label for="quotationComments" style="color:rgb(29, 40, 99) ; font-weight:800;
                             font-size:medium;">Comments</label><br>
                             <label for="quotationComments1" style="color:rgb(17, 17, 17) ; font-weight:500;padding-left: 5px;
@@ -1673,7 +1674,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationCommentsSave()">
                     Save
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
 
@@ -1719,7 +1720,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationConvertPI()">
                     Update
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
             </div>

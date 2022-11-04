@@ -40,11 +40,16 @@ export class EditquotationnewComponent implements OnInit {
   ExtraLogoList: any;
   sub_dis_type:any;
   sub_dis_val:any;
+  selected_pdf_footer:any;
+  descriptionDetails_DontShow:boolean=true;
+  grantTotalShow:boolean=true;
+  radioSelectFooterChecked:boolean=false;
   searchResult: any;
   customerName_Data: any;
   billerList: any;
   testVariable: any;
   quotationPriceKey: any;
+  row_cnt_mod: any;
   grossTotal: any;
   itre = 0;
 
@@ -84,6 +89,12 @@ dynamicTermsConditions_Currency:any;
   version_enquiryFromDetails: any;
   tax_amt_tot: number;
   grs_amt: number;
+  //quotation add signature for edit
+quotationAddSignature_state:any;
+quotationAddSignature_filename:any;
+quotationAddSignatureCHKShowState:any;
+selectAdditionalSign:boolean=true;
+selectAdditionalSignUnchecked:boolean=false;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -124,8 +135,9 @@ dynamicTermsConditions_Currency:any;
     this.editQuotationInvoice_section1 = new FormGroup({
       'e_companyName': new FormControl(null),
       'e_quotationNumber': new FormControl(null),
-      'e_selectFooter': new FormControl(null, [Validators.required]),
+      'e_selectFooter': new FormControl(null),
       'e_quotationDate': new FormControl(null),
+      'e_customer_id': new FormControl(null),
       'e_customerName': new FormControl(null),
 
       'e_cust_address1': new FormControl(null),
@@ -162,6 +174,7 @@ dynamicTermsConditions_Currency:any;
       'section3_remarks': new FormControl(null),
       'section3_signature_dropdown': new FormControl(null),
       'section3_templateName': new FormControl(null),
+      'section3_select_additional_signature': new FormControl(null),
 
 
     });
@@ -206,6 +219,21 @@ dynamicTermsConditions_Currency:any;
     this.checkbox_GrantTotalShow = e.target.checked
     console.log(this.checkbox_GrantTotalShow);
   }
+  checkbox_selectAdditionalSignature:any;
+  eventCheckSelectAdditionalSignature(e:any){
+    if(this.quotationAddSignature_state==1){
+      if(e.target.checked==true){
+        $('#signature_img_id').css("display","block");
+      }else{
+        $('#signature_img_id').css("display","none");
+      }
+    }else{
+      $('#signature_message_id').css("display","block");
+    }
+    this.checkbox_selectAdditionalSignature = e.target.checked
+    console.log(this.checkbox_selectAdditionalSignature );
+  }
+
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
@@ -214,8 +242,10 @@ dynamicTermsConditions_Currency:any;
 
   }
   handleChange(evt: any) {
+    this.selectFooter("any");
     var radioSelectFooter = evt.target.value;
-
+    this.radioSelectFooterChecked=evt.target.checked;
+    console.log("evt.target.checked global variable",this.radioSelectFooterChecked)
     console.log("radio button value", radioSelectFooter);
   }
 
@@ -303,9 +333,7 @@ dynamicTermsConditions_Currency:any;
 			     api_dynamicDropdown_req.billerId = this.billerID;
 			         api_req.element_data = api_dynamicDropdown_req;
 				   this.serverService.sendServer(api_req).subscribe((response: any) => {
-				   this.FooterDetails = response.footer_details;
-           this.currencyOld_RadioValue = response.currency_id;
-           this.dynamicTermsConditions_Currency=response.quotation_terms_cond;
+		//		   this.FooterDetails = response.footer_details;
 				   console.log("dynamic Dropdown change response", response)
 				   
 				   console.log("dynamic term condition change response", response.quotation_terms_cond)
@@ -315,7 +343,7 @@ dynamicTermsConditions_Currency:any;
         if (response.status == true) {
           this.editQuotationInvoice_section1.patchValue({
             'e_quotationNumber': response.quotation_no,
-            'e_selectFooter': response.footer_details[index].pdf_footer_id,
+   //         'e_selectFooter': response.footer_details[index].pdf_footer_id,
             'e_selectCurrency': response.currency_id,
             'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
@@ -326,7 +354,7 @@ dynamicTermsConditions_Currency:any;
         else {
           this.editQuotationInvoice_section1.patchValue({
             'e_quotationNumber': '',
-            'e_selectFooter': '',
+     //       'e_selectFooter': '',
             'e_selectCurrency': '',
             'e_termConditionContentChange': '',
             // 'e_DescriptionText': '',
@@ -358,7 +386,7 @@ dynamicTermsConditions_Currency:any;
       this.FooterDetails = response.footer_details;
       console.log("dynamic Dropdown change response", response)
       console.log("dynamic term condition change response", response.quotation_terms_cond)
-      this.FooterDetails = response.footer_details;
+     // this.FooterDetails = response.footer_details;
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency=response.quotation_terms_cond;
       for (let index = 0; index < response.footer_details.length; index++) {
@@ -366,7 +394,7 @@ dynamicTermsConditions_Currency:any;
         if (response.status == true) {
           this.editQuotationInvoice_section1.patchValue({
             'e_quotationNumber': response.quotation_no,
-            'e_selectFooter': response.footer_details[index].pdf_footer_id,
+            'e_selectFooter': this.selected_pdf_footer,
             'e_selectCurrency': response.currency_id,
             'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
@@ -377,7 +405,7 @@ dynamicTermsConditions_Currency:any;
         else {
           this.editQuotationInvoice_section1.patchValue({
             'e_quotationNumber': '',
-            'e_selectFooter': '',
+      //      'e_selectFooter': '',
             'e_selectCurrency': '',
             'e_termConditionContentChange': '',
             // 'e_DescriptionText': '',
@@ -385,14 +413,21 @@ dynamicTermsConditions_Currency:any;
           });
         }
       }
-
+    
+    setTimeout(() => {
+      this.selectFooter(this.selected_pdf_footer);
+    }, 1000)
 
     });
   }
-
+  selectFooter(selval:any){
+     $('#footer_'+selval).prop('checked', true);
+  }
   editQuotation() {
+    
     // window.location.reload();
     console.log("quotation id check for edit", this.editQuotationID)
+   
     let api_req: any = new Object();
     let edit_Quotation_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -423,8 +458,9 @@ dynamicTermsConditions_Currency:any;
 
           'e_companyName': response.quotation_details[0].billerId,
           'e_quotationNumber': response.quotation_details[0].quotation_no,
-          'e_selectFooter': response.quotation_details[0].pdf_footer_id,
+   //       'e_selectFooter': response.quotation_details[0].pdf_footer_id,
           'e_quotationDate': response.quotation_details[0].quotation_date,
+          'e_customer_id': response.quotation_details[0].customer_id,
           'e_customerName': response.quotation_details[0].customerName,
           'e_cust_address1': response.quotation_details[0].customerAddress1,
           'e_cust_address2': response.quotation_details[0].customerAddress2,
@@ -446,7 +482,11 @@ dynamicTermsConditions_Currency:any;
 
 
         });
-        console.log("edit quotation section1", this.editQuotationInvoice_section1.value);
+        
+        //$('#test_'+response.quotation_details[0].pdf_footer_id).prop('checked', true);
+       this.selected_pdf_footer = response.quotation_details[0].pdf_footer_id;
+        
+       // console.log("testing123456", response.quotation_details[0].pdf_footer_id);
 
         const formArray = new FormArray([]);
         for (let index = 0; index < response.quotation_child_det.length; index++) {
@@ -532,9 +572,10 @@ dynamicTermsConditions_Currency:any;
 
 
         });
-        
+        this.quotationAddSignatureEdit();
         //this.tax_per_mod = response.quotation_details[0].tax_id1;
 
+        // $('#test_2').prop('checked', true);
       }
       else {
 
@@ -591,6 +632,46 @@ dynamicTermsConditions_Currency:any;
 
 
     });
+  }
+  quotationAddSignatureEdit(){
+    let api_req: any = new Object();
+    let api_quotationAddSignatureEdit_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quotation_add_signature_edit";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationAddSignatureEdit_req.action = "quotation_add_signature_edit";
+    api_quotationAddSignatureEdit_req.user_id = localStorage.getItem('user_id');
+    api_quotationAddSignatureEdit_req.billerId = this.billerID ;
+    api_quotationAddSignatureEdit_req.quotationId= this.editQuotationID ;
+    api_req.element_data = api_quotationAddSignatureEdit_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-quotation_add_signature response", response)
+
+      if (response.status == true) {
+      
+        this.quotationAddSignature_state=response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        this.quotationAddSignature_filename=response.signature_filename;
+        this.quotationAddSignatureCHKShowState=response.quot_signature_show_state;
+
+        this.addQuotationInvoice_section3.patchValue({
+          //section-3
+
+          //row-9
+     //     'section3_select_additional_signature': response.quot_signature_show_state,
+
+        });
+      }
+      else {
+       
+      }
+
+
+    });
+
+
   }
   TermsConditionsContentDropdown(event: any) {
     this.terms_condition_id = event.target.value;
@@ -693,6 +774,7 @@ dynamicTermsConditions_Currency:any;
 
   }
   updateQuotationEnquiry() {
+    
     let api_req: any = new Object();
     let api_UpdateEnquiry_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -711,8 +793,9 @@ dynamicTermsConditions_Currency:any;
     api_UpdateEnquiry_req.billerId = this.editQuotationInvoice_section1.value.e_companyName;
     api_UpdateEnquiry_req.quotation_no = this.editQuotationInvoice_section1.value.e_quotationNumber;
     api_UpdateEnquiry_req.pdf_footer_id = this.editQuotationInvoice_section1.value.e_selectFooter;
+   // api_UpdateEnquiry_req.pdf_footer_id = $('input:radio[name=selectFooter_name]:checked').val();
     api_UpdateEnquiry_req.quotation_date = this.editQuotationInvoice_section1.value.e_quotationDate;
-    api_UpdateEnquiry_req.customer_id = this.autocomplete_CustomerID;
+    api_UpdateEnquiry_req.customer_id = this.editQuotationInvoice_section1.value.e_customer_id;
     api_UpdateEnquiry_req.customerName = this.editQuotationInvoice_section1.value.e_customerName;
 
     // api_UpdateEnquiry_req.customer_id = this.editQuotationInvoice_section1.value.customer_id;
@@ -739,8 +822,15 @@ dynamicTermsConditions_Currency:any;
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
       console.log(addr[i].pd_quantity_txtbox1)
+      addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
+      addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
+      addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
+      addr[i].pd_sellingPrice = $('#pd_SP_' + i).val();
       addr[i].pd_netPrice = $('#pd_netPrice_' + i).val();
       addr[i].pd_Total = $('#pd_Total_' + i).val();
+      addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
+      addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
+      addr[i].sub_discount = $('#sub_discount_' + i).val();
     }
     api_UpdateEnquiry_req.values = addr;
 
@@ -751,8 +841,11 @@ dynamicTermsConditions_Currency:any;
     api_UpdateEnquiry_req.gross_total = this.addQuotationInvoice_section3.value.section3_gross_total;
     //row-2
     api_UpdateEnquiry_req.discount_amt_tot = this.addQuotationInvoice_section3.value.section3_discount_txtbox;
+    api_UpdateEnquiry_req.final_dis_type = this.addQuotationInvoice_section3.value.final_dis_type;
+    api_UpdateEnquiry_req.final_dis_val = this.addQuotationInvoice_section3.value.final_dis_val;    
     //row-3
     api_UpdateEnquiry_req.taxId = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
+    api_UpdateEnquiry_req.taxPer = this.addQuotationInvoice_section3.value.section3_tax_per_hd;
     api_UpdateEnquiry_req.taxAmt = this.addQuotationInvoice_section3.value.section3_taxAmt_txtbox;
     //row-4
     api_UpdateEnquiry_req.shipping_amt_name = this.addQuotationInvoice_section3.value.section3_shipping_amt_name_txtbox;
@@ -765,6 +858,10 @@ dynamicTermsConditions_Currency:any;
     api_UpdateEnquiry_req.additional_signature_id = this.addQuotationInvoice_section3.value.section3_signature_dropdown;
     //row-8
     api_UpdateEnquiry_req.template_name = this.addQuotationInvoice_section3.value.section3_templateName;
+
+    //row-9
+    api_UpdateEnquiry_req.quot_signature_show_state = this.checkbox_selectAdditionalSignature;
+
 
     api_req.element_data = api_UpdateEnquiry_req;
 
@@ -834,21 +931,28 @@ dynamicTermsConditions_Currency:any;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-
+    //  console.log('response'+response);
       if (response.status == true) {
         // this.autocomplete_CustomerID = response.customer_list[0].customerId;
        //  this.autocomplete_CustomerName = response.customer_list[0].customerName;
+       //console.log('response.customer_list'+ response.customer_list);
         this.editQuotationInvoice_section1.patchValue({
+          'e_customer_id': response.customer_list.customerId,
+          'e_customerName': response.customer_list.customerName,
+          'e_cust_address1': response.customer_list.customerAddress1,
+          'e_cust_address2': response.customer_list.customerAddress2,
+          'e_cust_address3': response.customer_list.customerAddress3,
+          'e_attention': response.customer_list.kind_Attention,
 
-
-          'e_cust_address1': response.customer_list[0].customerAddress1,
-          'e_cust_address2': response.customer_list[0].customerAddress2,
-          'e_cust_address3': response.customer_list[0].customerAddress3,
-          'e_customerName': response.customer_list[0].customerName,
-          'e_attention': response.customer_list[0].kind_Attention,
+        //   'e_customer_id': response.customer_list[0].customerId,
+        // //  'e_cust_address1': response.customer_list[0].customerAddress1,
+        //   'e_cust_address2': response.customer_list[0].customerAddress2,
+        //   'e_cust_address3': response.customer_list[0].customerAddress3,
+        //   'e_customerName': response.customer_list[0].customerName,
+        //   'e_attention': response.customer_list[0].kind_Attention,
         });
 
-
+      //  alert('test');
       }
       else {
         this.editQuotationInvoice_section1.patchValue({
@@ -1092,17 +1196,17 @@ console.log("response", response)
   saveDiscount() {
     var enablePercentabeDiscont = $('#enablePercentabeDiscont').val()
     var enablePriceDiscont = $('#enablePriceDiscont').val()
-   // var disType = $('input:radio[name=discountTYpe]:checked').val();
-   var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
-   console.log('quotationPriceKey'+this.quotationPriceKey);
-   console.log('disType'+disType);
+    var disType = $('input:radio[name=discountTYpe]:checked').val();
+   //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
+   //console.log('quotationPriceKey'+this.quotationPriceKey);
+   //console.log('disType'+disType);
     var final_tot = $('#pd_Total_' + this.quotationPriceKey).val();
-$('#sub_discount_type_' + this.quotationPriceKey).val(disType);
+    $('#sub_discount_type_' + this.quotationPriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePercentabeDiscont != '') {
-        //   console.log('3333'+final_tot);
+           console.log('3333'+final_tot);
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
 
 
@@ -1112,7 +1216,7 @@ $('#sub_discount_type_' + this.quotationPriceKey).val(disType);
       } else {
         $('#sub_discount_' + this.quotationPriceKey).val('');
         $('#sub_discount_val_' + this.quotationPriceKey).val('');
-        //   console.log('222'+final_tot);
+           console.log('222'+final_tot);
         price = final_tot;
 
       }
@@ -1156,6 +1260,7 @@ this.DiscountForm.reset();
   }
   calculateDiscount(val: any) {
     this.quotationPriceKey = val;
+    this.row_cnt_mod = val;
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;

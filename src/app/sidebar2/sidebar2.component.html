@@ -4,7 +4,7 @@
     <div class="sidebar__menu-group">
         <ul class="sidebar_nav">
             <li class="menu-title">
-                <span>Main menus</span>
+                <span style="color:#007cbc ;">Main menus</span>
             </li>
             <li class="has-child" *ngFor="let item of overallmenulist; let i = index">
                 <a href="#" class="active" [ngClass]="{'active': item.isActive== true, 'non_active_class' : item.isActive== false }" routerLink="{{item.value}}"

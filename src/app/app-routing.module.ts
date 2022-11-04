@@ -31,7 +31,7 @@ import { EditquotationnewComponent } from './billing/quotationnew/editquotationn
 
 const routes: Routes = [
   {
-    path: '', component: ContractComponent
+    path: '', component: QuotationnewComponent
   },
   {
     path: 'editquotationnew', component: EditquotationnewComponent

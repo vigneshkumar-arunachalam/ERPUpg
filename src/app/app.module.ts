@@ -49,6 +49,7 @@ import { LiveComponent } from './live/live.component';
 import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { EditquotationnewComponent } from './billing/quotationnew/editquotationnew/editquotationnew.component';
+import { ProformaInvoiceComponent } from './billing/proforma-invoice/proforma-invoice.component';
 
 
 @NgModule({
@@ -84,6 +85,7 @@ import { EditquotationnewComponent } from './billing/quotationnew/editquotationn
      LoginComponent,
      LogoutComponent,
      EditquotationnewComponent,
+     ProformaInvoiceComponent,
     
   ],
   imports: [

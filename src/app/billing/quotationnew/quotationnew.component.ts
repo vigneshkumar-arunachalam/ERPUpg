@@ -224,6 +224,7 @@ export class QuotationnewComponent implements OnInit {
       'email_From': new FormControl(null, Validators.required),
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
+      'email_cc': new FormControl(null, Validators.required),
 
     });
     this.quotationCommentsForm = new FormGroup({
@@ -631,6 +632,7 @@ export class QuotationnewComponent implements OnInit {
     return list_data;
   }
   addQuotationNew() {
+    // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1361,6 +1363,7 @@ export class QuotationnewComponent implements OnInit {
     // api_email_req.customer_contract_id = this.EmailCustomerContractID;
     api_email_req.from_email = this.FromEmailValue;
     api_email_req.to_email = this.emailTo;
+    api_email_req.cc_email= this.edit_array_emailCC_Checkbox;
     api_email_req.subject = this.subjectValue;
     api_email_req.mail_message = this.msg_id;
     api_email_req.quotation_id = this.EmailQuotationID;
@@ -1455,32 +1458,40 @@ export class QuotationnewComponent implements OnInit {
   }
 
   quotationCommentsEdit(quotationID: any, transactionID: any) {
-    if (transactionID == null) {
-      alert("transaction id is null, unable to save")
+    console.log("transactionid",transactionID)
+    if (transactionID !=null) {
+   
+      this.comment_QuotationID = quotationID;
+      this.comment_TransactionID = transactionID;
+      let api_req: any = new Object();
+      let transactionComment_req: any = new Object();
+      api_req.moduleType = "quotation";
+      api_req.api_url = "quotation/transaction_enquiry_command";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      transactionComment_req.action = "transaction_enquiry_command";
+      transactionComment_req.user_id = localStorage.getItem('user_id');
+      transactionComment_req.transaction_id = this.comment_TransactionID;
+      api_req.element_data = transactionComment_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+  
+        if (response.status == true) {
+          this.response_CommentResult = response.commands;
+        }
+  
+  
+      });
+    }  else{
+      iziToast.warning({
+        message: "Transaction ID is empty. Unable to save Comments. Please try again",
+        position: 'topRight'
+      });
     }
-    this.comment_QuotationID = quotationID;
-    this.comment_TransactionID = transactionID;
-    let api_req: any = new Object();
-    let transactionComment_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/transaction_enquiry_command";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    transactionComment_req.action = "transaction_enquiry_command";
-    transactionComment_req.user_id = localStorage.getItem('user_id');
-    transactionComment_req.transaction_id = this.comment_TransactionID;
-    api_req.element_data = transactionComment_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      if (response.status == true) {
-        this.response_CommentResult = response.commands;
-      }
-
-
-    });
+    
 
   }
   quotationCommentsSave() {
+   
     let api_req: any = new Object();
     let transactionCommentSave_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1512,6 +1523,7 @@ export class QuotationnewComponent implements OnInit {
         });
       }
     });
+
 
 
 
@@ -1694,8 +1706,35 @@ export class QuotationnewComponent implements OnInit {
 
 
   AddQuotationGo() {
+    if(this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP===null){
+     
+      iziToast.warning({
+        message: "Choose Enquiry From",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     var enq_formID = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
+    if(this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP===null){
+     
+      iziToast.warning({
+        message: "Choose Enquiry Subject",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     var enq_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
+    if(this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP===null){
+     
+      iziToast.warning({
+        message: "Choose Quotation Validity",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     var enq_quotation_valid_day = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     var enq_duplicate_version = this.addNewQuotationPopUpForm.value.version_enqForm_addPopUP;
 
@@ -1784,6 +1823,9 @@ export class QuotationnewComponent implements OnInit {
         console.log(actual_percentage);
         console.log(product_qty);
         console.log(product_net_amt);
+        if(actual_cost==''){
+          actual_cost=0;
+        }
         // break
         if (actual_percentage > 0) {
           actual_cost = (parseFloat(product_rate) * parseFloat(actual_percentage) / 100).toFixed(2);

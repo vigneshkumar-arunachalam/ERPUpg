@@ -12,7 +12,7 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="cmp_name" class="form-control"
                                 (change)="templateContentDropdown($event)" (change)="dynamicChange($event)"
-                                formControlName="companyName">
+                                (change)="quotationAddSignature()" formControlName="companyName">
                                 <option [ngValue]="null" selected disabled>Select Company Name</option>
                                 <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
                                     {{comp_name.billerName}}
@@ -55,14 +55,16 @@
                     <div class="form-group row">
                         <label for="select_footer" class="col-lg-12 col-form-label">Select Footer*</label>
                         <div class="col-lg-12" style="display: flex;">
-                            <div class="form-check" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
+                            <div class="form-check" *ngFor="let display of FooterDetails"
+                                style="margin-right: 20px;color: #495057;">
                                 <input class="form-check-input" type="radio" formControlName="selectFooter"
                                     id="{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
                                     (change)="handleChange($event)" style="margin-top: revert;" />
-                                <label style="font-weight:400;font-size: 14px;color: #495057; margin-bottom: 0;"
+                                {{display.footer_name}}
+                                <!-- <label style="font-weight:400;font-size: 14px;color: #495057; margin-bottom: 0;"
                                     for="edit_c4c1">
-                                    {{display.footer_name}}
-                                </label>
+                                    
+                                </label> -->
                             </div>
                             <div class="alert alert-danger"
                                 *ngIf="addQuotationInvoice_section1.controls['selectFooter'].invalid && addQuotationInvoice_section1.controls['selectFooter'].touched">
@@ -85,7 +87,7 @@
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="cust_dett"
-                            style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
+                            style="color: black!important;background-color: #EFF0F3;font-size: larger;text-align: center;"
                             class="col-lg-12 col-form-label">Customer Details</label>
 
                     </div>
@@ -95,7 +97,7 @@
 
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label for="companyName" class="col-lg-12 col-form-label">Customer Name</label>
+                        <label for="customerName" class="col-lg-12 col-form-label">Customer Name*</label>
                         <div class="ng-autocomplete">
 
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
@@ -111,6 +113,10 @@
                             <ng-template #notFoundTemplate let-notFound>
                                 <div [innerHTML]="notFound"></div>
                             </ng-template>
+                            <div *ngIf="addQuotationInvoice_section1.controls['customerName'].invalid && (addQuotationInvoice_section1.controls['customerName'].dirty || addQuotationInvoice_section1.controls['customerName'].touched)"
+                                class=" mt-2 ml-2 mr-2 alert alert-danger">
+                                Customer Name is Required
+                            </div>
                         </div>
 
                     </div>
@@ -148,7 +154,9 @@
                             </select>
                         </div>
                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==0)">
-                            <input type="text" class="form-control" formControlName="salesRep" id="saleStatus" />
+                            <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" />
+                            <input type="hidden" class="form-control" formControlName="salesRep"
+                                id="saleStatus_hd_id" />
 
                         </div>
                     </div>
@@ -266,7 +274,7 @@
                 <div class="col-lg-6  mb-4">
                     <div class="form-group row">
                         <label for="term_con" class="col-lg-12 col-form-label">Quotation Terms and
-                            Conditions <span style="font-size:10px ;">(Don't Show)</span>
+                            Conditions* <span style="font-size:10px ;">(Don't Show)</span>
                             <input type="checkbox" formControlName="termsCondition_DontShow"
                                 (change)="termsCondition_DontShow_eventCheck($event)" />
                         </label>
@@ -280,7 +288,12 @@
                                     {{term.terms_condition_name}}
                                 </option>
                             </select>
+                            <div *ngIf="addQuotationInvoice_section1.controls['selectTermsConditions'].invalid && (addQuotationInvoice_section1.controls['selectTermsConditions'].dirty || addQuotationInvoice_section1.controls['selectTermsConditions'].touched)"
+                                class="mt-2 alert alert-danger ">
+                                Quotation Terms and Conditions Required
+                            </div>
                         </div>
+
                     </div>
                     <textarea class="form-control" row="12" style="height:200px ;"
                         formControlName="termConditionContentChange" [innerHtml]="CurrencyChangeFieldValue"></textarea>
@@ -291,6 +304,7 @@
                         <label for="descriptionDetails" class="form-label">Description Details
                             <span style="font-size:10px ;">(Don't Show)</span>
                             <input type="checkbox" formControlName="descriptionDetails_DontShow"
+                                [(ngModel)]="descriptionDetails_DontShow"
                                 (change)="descriptionDetails_DontShow_eventCheck($event)" />
                         </label>
 
@@ -308,8 +322,7 @@
                     <div class="form-group row">
 
 
-                            <h2
-                            style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
+                        <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
                             class="col-lg-12 col-form-label">Product Details</h2>
                     </div>
                 </div>
@@ -379,6 +392,7 @@
                                                             <ng-template #notFoundTemplate let-notFound>
                                                                 <div [innerHTML]="notFound"></div>
                                                             </ng-template>
+                                                            <p id="error_{{i}}"></p>
                                                         </div>
 
                                                         <input type="text" class="form-control mt-2 mb-2"
@@ -397,8 +411,9 @@
                                                 <div class="userDatatable-content">
                                                     <input type="text" class="form-control" style="text-align: right;"
                                                         formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-														     (change)="totalCalculate();saveDiscount()" (blur)="totalCalculate();saveDiscount()"
-															 (keyup)="totalCalculate();saveDiscount()" />
+                                                        (change)="totalCalculate();saveDiscount()"
+                                                        (blur)="totalCalculate();saveDiscount()"
+                                                        (keyup)="totalCalculate();saveDiscount()" />
 
                                                 </div>
 
@@ -410,32 +425,36 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="userDatatable-content" >
-                                                  
-                                                        <input type="text" class="form-control"
-                                                            style="text-align: right;" formControlName="pd_sellingPrice"
-                                                            id="pd_SP_{{i}}" onfocus="assignRowVal(i)" (change)="totalCalculate();saveDiscount()" (blur)="totalCalculate();saveDiscount()" (keyup)="totalCalculate();saveDiscount()" />
+                                                <div class="userDatatable-content">
 
-                                                        <button type="button"
-                                                            class="btn btn-primary btn-default btn-squared  mt-4 buttoncssDiscount"
-                                                            data-toggle="modal" (click)="calculateDiscount(i)"
-                                                            data-target="#discountFormId">Discount(-)
-                                                        </button>
-                                                        <!-- <button>Discount</button> -->
-                                                    
+                                                    <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
+                                                        onfocus="assignRowVal(i)"
+                                                        (change)="totalCalculate();saveDiscount()"
+                                                        (blur)="totalCalculate();saveDiscount()"
+                                                        (keyup)="totalCalculate();saveDiscount()" />
+
+                                                    <button type="button"
+                                                        class="btn btn-primary btn-default btn-squared  mt-4 buttoncssDiscount"
+                                                        data-toggle="modal" (click)="calculateDiscount(i)"
+                                                        data-target="#discountFormId">Discount(-)
+                                                    </button>
+                                                    <!-- <button>Discount</button> -->
+
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
                                                     <input type="text" class="form-control" formControlName="pd_Total"
                                                         style="text-align: right;" id="pd_Total_{{i}}" />
-                                                
-                                                <input type="text" class="form-control mt-4" style="text-align: right;"
-                                                    formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
-                                                <input type="hidden" class="form-control" style="text-align: right;"
-                                                    formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
-                                                <input type="hidden" class="form-control" style="text-align: right;"
-                                                    formControlName="sub_dis_val" id="sub_discount_val_{{i}}" />
+
+                                                    <input type="text" class="form-control mt-4"
+                                                        style="text-align: right;" formControlName="sub_dis_amt"
+                                                        id="sub_discount_{{i}}" />
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_val" id="sub_discount_val_{{i}}" />
                                                 </div>
                                             </td>
                                             <td>
@@ -487,8 +506,8 @@
 
                         <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
                             (click)="addAddress()">Add Product </button> -->
-                        <button type="button" class="btn btn-dark btn-default btn-squared" (click)="addAddress()"
-                            style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;">  Add Product</i>
+                        <button type="button" class="btn btn-dark btn-default btn-squared mt-4" (click)="addAddress()"
+                            style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>
                         </button>
                     </div>
 
@@ -522,7 +541,7 @@
                                 <div class="d-flex">
                                     <label class=" col-form-label">Grand Total Show</label>
                                     <input type="checkbox" formControlName="section3_grant_total_show"
-                                        (change)="eventCheckGrantTotalShows($event)" />
+                                        [(ngModel)]="grantTotalShow" (change)="eventCheckGrantTotalShows($event)" />
                                 </div>
                             </div>
                             <div class="col-lg-8">
@@ -544,7 +563,8 @@
                             <div class="col-lg-6">
                                 <button class="btn btn-primary mr-2 mt-2" data-toggle="modal"
                                     data-target="#discountFormFinal" (click)="calFinalDiscount()"
-                                    style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount (-)</button>
+                                    style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
+                                    (-)</button>
                             </div>
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-center">
@@ -553,9 +573,11 @@
                                     <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
                                         formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
                                     <input type="hidden" class="form-control" style="text-align: right;"
-									formControlName="final_dis_type" id="final_discount_type" [(ngModel)]="finalDiscountType"/>
-									<input type="hidden" class="form-control" style="text-align: right;"
-                                        formControlName="final_dis_val" id="final_discount_val" [(ngModel)]="finalDiscountVal"/>
+                                        formControlName="final_dis_type" id="final_discount_type"
+                                        [(ngModel)]="finalDiscountType" />
+                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                        formControlName="final_dis_val" id="final_discount_val"
+                                        [(ngModel)]="finalDiscountVal" />
                                 </div>
                             </div>
 
@@ -609,7 +631,7 @@
 
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-center">
-                                    <input type="text" class="form-control ml-2 mt-2" placeholder="Other Charges"
+                                    <input type="text" class="form-control ml-2 mt-2" 
                                         formControlName="section3_shipping_amt_name_txtbox" />
 
                                 </div>
@@ -679,11 +701,37 @@
 
 
                             <div class="col-lg-12">
-                                <div class="form-group">
+                                <div class="form-group" *ngIf="quotationAddSignature_state==0">
                                     <label style="font-style: italic;color:#009688">
                                         (Signature not available. Ask your administrator to upload your
                                         signature if required)
                                     </label>
+
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="form-group row " *ngIf="(quotationAddSignature_state==1)">
+                                    <div class="col-lg-6">
+                                        <label>
+                                            Add to Signature
+                                            {{checkbox_selectAdditionalSignature}}
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="checkbox" [(ngModel)]="selectAdditionalSign"
+                                            formControlName="section3_select_additional_signature"
+                                            (change)="eventCheckSelectAdditionalSignature($event)" /><br>
+                                        <div *ngIf="this.checkbox_selectAdditionalSignature==true">
+                                            <img src="{{this.quotationAddSignature_filename}}"
+                                                alt="No image to display " height="80px" width="100px">
+                                        </div>
+
+                                    </div>
+
+
+
 
                                 </div>
                             </div>

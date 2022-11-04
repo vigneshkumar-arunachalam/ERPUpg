@@ -36,7 +36,13 @@ export class AddquotationnewComponent implements OnInit {
   quotation_template_id: any;
   terms_condition_id: any;
   billerID: any;
+  grantTotalShow: boolean = true;
+  descriptionDetails_DontShow:boolean=true;
+  selectAdditionalSign:boolean=true;
   FooterDetails: any;
+  radioSelectFooterChecked: boolean = false;
+  checkbox_descriptionDetails_DontShow:boolean=true;
+  checkbox_termsCondition_DontShow:boolean=false;
   searchResult: any;
   billerIDUpdate: any;
   sub_dis_type: any;
@@ -80,6 +86,9 @@ export class AddquotationnewComponent implements OnInit {
   tax_amt_tot: number;
   grs_amt: number;
   CurrencyChangeFieldValue: any;
+  //  quotationAddSignature
+quotationAddSignature_state:any;
+quotationAddSignature_filename:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -118,18 +127,19 @@ export class AddquotationnewComponent implements OnInit {
       'quotationNumber': new FormControl(null),
       'selectFooter': new FormControl(null, [Validators.required]),
       'quotationDate': new FormControl((new Date()).toISOString().substring(0, 10)),
-      'customerName': new FormControl(null),
+      'customerName': new FormControl(null, [Validators.required]),
       'cust_address1': new FormControl(null),
       'cust_address2': new FormControl(null),
       'cust_address3': new FormControl(null),
       'attention': new FormControl(null),
       'salesRep': new FormControl(null),
+      'salesRep_id': new FormControl(null),
       'selectTemplate': new FormControl(null),
       'selectReseller': new FormControl(null),
       'selectCurrency': new FormControl(null),
       'extraLogo': new FormControl(null),
       'selectPDFTemplate': new FormControl(null),
-      'selectTermsConditions': new FormControl(null),
+      'selectTermsConditions':new FormControl(null, [Validators.required]),
       'termsCondition_DontShow': new FormControl(null),
       'DescriptionText': new FormControl(null),
       'descriptionDetails_DontShow': new FormControl(null),
@@ -152,6 +162,7 @@ export class AddquotationnewComponent implements OnInit {
       'section3_remarks': new FormControl(null),
       'section3_signature_dropdown': new FormControl(null),
       'section3_templateName': new FormControl(null),
+      'section3_select_additional_signature': new FormControl(null),
 
 
     });
@@ -220,16 +231,21 @@ export class AddquotationnewComponent implements OnInit {
     this.checkbox_GrantTotalShow = e.target.checked
     console.log(this.checkbox_GrantTotalShow);
   }
-  checkbox_termsCondition_DontShow: any;
+  
   termsCondition_DontShow_eventCheck(e: any) {
     this.checkbox_termsCondition_DontShow = e.target.checked;
     console.log(this.checkbox_termsCondition_DontShow);
   }
 
-  checkbox_descriptionDetails_DontShow: any;
+
   descriptionDetails_DontShow_eventCheck(e: any) {
     this.checkbox_descriptionDetails_DontShow = e.target.checked
     console.log(this.checkbox_descriptionDetails_DontShow);
+  }
+  checkbox_selectAdditionalSignature:any;
+  eventCheckSelectAdditionalSignature(e:any){
+    this.checkbox_selectAdditionalSignature = e.target.checked
+    console.log(this.checkbox_selectAdditionalSignature );
   }
   radioCurrencyChange(event: any) {
 
@@ -240,6 +256,12 @@ export class AddquotationnewComponent implements OnInit {
   }
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
+    this.radioSelectFooterChecked=evt.target.checked;
+    console.log("event only",evt)
+    console.log("evt.target",evt.target)
+    console.log("evt.target.checked",evt.target.checked)
+    console.log("evt.target.checked global variable",this.radioSelectFooterChecked)
+    console.log(" evt.target.value radioSelectFooter",evt.target.value)
 
     console.log("radio button value", radioSelectFooter);
   }
@@ -397,7 +419,7 @@ export class AddquotationnewComponent implements OnInit {
     });
   }
   addQuotation() {
-
+   
     let api_req: any = new Object();
     let add_newQuotationNextPage_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -439,7 +461,8 @@ export class AddquotationnewComponent implements OnInit {
 
         if (response.sales_rep_status.dropdown_status == 0) {
           this.addQuotationInvoice_section1.patchValue({
-            'salesRep': response.sales_rep.name,
+            'salesRep_id': response.sales_rep.name,
+            'salesRep': response.sales_rep.userid,
           });
 
         }
@@ -448,7 +471,7 @@ export class AddquotationnewComponent implements OnInit {
         this.addQuotationInvoice_section3.patchValue({
           'section3_gst_dropdown': response.default_tax_id,
         });
-
+        this.quotationAddSignature();
 
       }
       else {
@@ -475,6 +498,7 @@ export class AddquotationnewComponent implements OnInit {
   }
 
   templateContentDropdown(event: any) {
+   
     this.quotation_template_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_template_id);
     let api_req: any = new Object();
@@ -510,6 +534,36 @@ export class AddquotationnewComponent implements OnInit {
 
 
     });
+  }
+  quotationAddSignature(){
+    let api_req: any = new Object();
+    let api_quotationAddSignature_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quotation_add_signature";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationAddSignature_req.action = "quotation_add_signature";
+    api_quotationAddSignature_req.user_id = localStorage.getItem('user_id');
+    api_quotationAddSignature_req.billerId = this.billerID ;
+    api_req.element_data = api_quotationAddSignature_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-quotation_add_signature response", response)
+
+      if (response.status == true) {
+      
+        this.quotationAddSignature_state=response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        this.quotationAddSignature_filename=response.signature_filename;
+      }
+      else {
+       
+      }
+
+
+    });
+
+
   }
   TermsConditionsContentDropdown(event: any) {
     this.terms_condition_id = event.target.value;
@@ -626,7 +680,13 @@ export class AddquotationnewComponent implements OnInit {
 
   }
   saveQuotationEnquiry() {
+    
+    console.log("this.checkbox_termsCondition_DontShow",this.checkbox_termsCondition_DontShow);
+    console.log("this.checkbox_descriptionDetails_DontShow",this.checkbox_descriptionDetails_DontShow);
+    if(  this.radioSelectFooterChecked==true){
+  
     console.log(this.addQuotationInvoice_section3.value.section3_gst_dropdown)
+    console.log("this.addQuotationInvoice_section1.value.customerName",this.addQuotationInvoice_section1.value.customerName)
     // alert(this.addQuotationInvoice_section1.value.selectCurrency)
     console.log("this.addQuotationInvoice_section1.value.selectPDFTemplate", this.addQuotationInvoice_section1.value.selectPDFTemplate)
     let api_req: any = new Object();
@@ -648,6 +708,15 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.quotation_no = this.addQuotationInvoice_section1.value.quotationNumber;
     api_saveEnquiry_req.pdf_footer_id = this.addQuotationInvoice_section1.value.selectFooter;
     api_saveEnquiry_req.quotation_date = this.addQuotationInvoice_section1.value.quotationDate;
+    if(this.addQuotationInvoice_section1.value.customerName===null){
+     
+      iziToast.warning({
+        message: "Fill Customer Name",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_saveEnquiry_req.customer_id = this.addQuotationInvoice_section1.value.customerName;
     api_saveEnquiry_req.customerAddress1 = this.addQuotationInvoice_section1.value.cust_address1;
     api_saveEnquiry_req.customerAddress2 = this.addQuotationInvoice_section1.value.cust_address2;
@@ -662,6 +731,15 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.bills_logo_id = this.addQuotationInvoice_section1.value.extraLogo;
 
     api_saveEnquiry_req.default_quotation_pdf_temp = this.addQuotationInvoice_section1.value.selectPDFTemplate;
+    if(this.addQuotationInvoice_section1.value.selectTermsConditions===null){
+     
+      iziToast.warning({
+        message: "Choose Terms and Conditions",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_saveEnquiry_req.terms_condition_id = this.addQuotationInvoice_section1.value.selectTermsConditions;
     api_saveEnquiry_req.terms_conditions_show_state = this.checkbox_termsCondition_DontShow;
     api_saveEnquiry_req.terms_conditions = this.addQuotationInvoice_section1.value.termConditionContentChange;
@@ -694,12 +772,27 @@ export class AddquotationnewComponent implements OnInit {
     api_saveEnquiry_req.additional_signature_id = this.addQuotationInvoice_section3.value.section3_signature_dropdown;
     //row-8
     api_saveEnquiry_req.template_name = this.addQuotationInvoice_section3.value.section3_templateName;
+    //row-9-signature
+    
+    api_saveEnquiry_req.signatureId = this.addQuotationInvoice_section3.value.section3_select_additional_signature;
 
     api_req.element_data = api_saveEnquiry_req;
 
     //section-2
     var addr = this.addQuotationInvoice_section2.value.addresses;
+   
+
     for (let i = 0; i < addr.length; i++) {
+
+      if($('#pd_productName_txtbox_' + i).val()==''){
+        iziToast.warning({
+          message: "Select Minimum 1 Product Details",
+          position: 'topRight'
+        });
+        return false;
+        
+      }
+     
       console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -710,7 +803,10 @@ export class AddquotationnewComponent implements OnInit {
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
+     
     }
+
+    
     api_saveEnquiry_req.values = addr;
     console.log(api_req);
 
@@ -745,6 +841,15 @@ export class AddquotationnewComponent implements OnInit {
       console.log("final error", error);
     }
   }
+  else{
+    
+    iziToast.warning({
+    message: "Select Footer",
+    position: 'topRight'
+  });
+
+  }
+}
 
   searchCustomer_selectDropdownData(data: any) {
 

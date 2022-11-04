@@ -1,3 +1,7 @@
+.btn.btn-primary[disabled] {
+  background-color: #0c08e6f5;
+}
+
 .userDatatable table td {
   /* padding: 4px 0px 0px !important; */
   padding: 6px 14px!important;
@@ -6,7 +10,7 @@
 .userDatatable table tr td span {
   display: block;
   white-space: nowrap;
-  width: 120px;
+  /* width: 120px; */
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -290,7 +294,8 @@ input.form-control {
 
 
 #searchQuotationFormId .modal-dialog {
-  max-width: 95%;
+  max-width: 55%;
+  
 }
 
 #searchQuotationFormId label {
@@ -336,6 +341,12 @@ input.form-control {
 .searchQuotationCSS .modal-body label {
   color: #131212;
 
+}
+.searchScrollCss{
+  overflow: scroll;
+  height: 100px;
+  overflow-y: scroll;
+  
 }
 
 .buttonClass {
@@ -395,4 +406,51 @@ label.col-lg-2.col-form-label{text-align: right;}
 
 #quotationApprovalId tr:nth-child(even) {
   background: rgb(254, 255, 254)
+}
+/* .userDatatable .table-responsive .table thead, .userDatatable  .table-responsive .table tbody {
+  display: block;
+} */
+.userDatatable .table-responsive .table thead tr th:first-child,
+.userDatatable  .table-responsive .table tbody tr td:first-child
+{
+  width: 15%;
+}
+.userDatatable table td,
+.userDatatable table tr td span{white-space: normal!important;}
+.userDatatable .table-responsive .table thead tr th:nth-child(2),
+.userDatatable  .table-responsive .table tbody tr td:nth-child(2)
+{
+  width: 10%;
+}
+.userDatatable .table-responsive .table thead tr th:nth-child(3),
+.userDatatable  .table-responsive .table tbody tr td:nth-child(3)
+{
+  width: 15%;
+}
+.userDatatable .table-responsive .table thead tr th:nth-child(4),
+.userDatatable  .table-responsive .table tbody tr td:nth-child(4),
+.userDatatable .table-responsive .table thead tr th:nth-child(5),
+.userDatatable  .table-responsive .table tbody tr td:nth-child(5)
+{
+  width: 15%;
+}
+.userDatatable .table-responsive .table thead tr th:nth-child(6),
+.userDatatable  .table-responsive .table tbody tr td:nth-child(6)
+{
+  width: 10%;
+}
+.userDatatable .table-responsive .table thead tr th:nth-child(7),
+.userDatatable  .table-responsive .table tbody tr td:nth-child(7)
+{
+  width: 10%;
+}
+.userDatatable .table-responsive .table thead tr th:last-child,
+.userDatatable  .table-responsive .table tbody tr td:last-child
+{
+  width: 10%;
+}
+.userDatatable  .table-responsive .table tbody tr td:nth-child(5) span{
+  white-space: nowrap!important;
+  width: 120px;
+
 }

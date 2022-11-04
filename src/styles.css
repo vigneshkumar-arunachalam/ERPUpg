@@ -6361,7 +6361,10 @@ ul {
         }
 
             .sidebar__menu-group ul.sidebar_nav li > a .nav-icon {
-                color: #363535;
+                /* color: #363535; */
+                /* i have changed */
+                /* color: #e23636; */
+                color: #007cbc;
                 display: inline-block;
                 margin-right: 20px;
                 width: 20px;
@@ -28826,4 +28829,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 5px;
     height: auto;
     box-shadow: none;
+  }
+  .sidebar.collapsed ul.sidebar_nav ul .menu-text {display: block;    padding-left: 15px;
+  }
+  .sidebar.collapsed .sidebar__menu-group .has-child ul ul{
+    position: relative;
+    right: 0;
   }
