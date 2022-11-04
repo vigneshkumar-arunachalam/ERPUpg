@@ -421,7 +421,7 @@
                                             <td>
                                                 <div class="userDatatable-content">
                                                     <input type="text" class="form-control" style="text-align: left;"
-                                                        formControlName="pd_unit" />
+                                                        formControlName="pd_unit" id="pd_unit_{{i}}" />
                                                 </div>
                                             </td>
                                             <td>
@@ -437,7 +437,7 @@
                                                     <button type="button"
                                                         class="btn btn-primary btn-default btn-squared  mt-4 buttoncssDiscount"
                                                         data-toggle="modal" (click)="calculateDiscount(i)"
-                                                        data-target="#discountFormId">Discount(-)
+                                                        data-target="#discountFormId" id="discount_btn_{{i}}" >Discount(-) 
                                                     </button>
                                                     <!-- <button>Discount</button> -->
 
@@ -465,8 +465,8 @@
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content" style="top:-35px;">
-                                                    <input type="checkbox" formControlName="pd_split"
-                                                        (change)="totalCalculate();" />
+                                                    <input type="checkbox" formControlName="pd_split" id="pd_split_{{i}}"
+                                                        (change)="totalCalculate();set_display_none(i);" />
 
                                                 </div>
                                             </td>

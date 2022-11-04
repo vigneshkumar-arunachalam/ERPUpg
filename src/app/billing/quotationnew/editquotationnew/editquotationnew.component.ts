@@ -44,6 +44,8 @@ export class EditquotationnewComponent implements OnInit {
   descriptionDetails_DontShow:boolean=true;
   grantTotalShow:boolean=true;
   radioSelectFooterChecked:boolean=false;
+  checkbox_descriptionDetails_DontShow:boolean=true;
+  checkbox_termsCondition_DontShow:boolean=false;
   searchResult: any;
   customerName_Data: any;
   billerList: any;
@@ -193,12 +195,12 @@ selectAdditionalSignUnchecked:boolean=false;
     moveItemInArray(this.addressControls.controls, event.previousIndex, event.currentIndex);
 
   }
-  checkbox_termsCondition_DontShow: any;
+  
   termsCondition_DontShow_eventCheck(e: any) {
     this.checkbox_termsCondition_DontShow = e.target.checked;
     console.log(this.checkbox_termsCondition_DontShow);
   }
-  checkbox_descriptionDetails_DontShow: any;
+
   descriptionDetails_DontShow_eventCheck(e: any) {
     this.checkbox_descriptionDetails_DontShow = e.target.checked
     console.log(this.checkbox_descriptionDetails_DontShow);
@@ -804,8 +806,8 @@ selectAdditionalSignUnchecked:boolean=false;
     api_UpdateEnquiry_req.customerAddress3 = this.editQuotationInvoice_section1.value.e_cust_address3;
     api_UpdateEnquiry_req.kind_Attention = this.editQuotationInvoice_section1.value.e_attention;
     api_UpdateEnquiry_req.billGeneratedBy = this.editQuotationInvoice_section1.value.e_salesRep;
-    api_UpdateEnquiry_req.reseller_id = this.editQuotationInvoice_section1.value.e_selectTemplate;
-    api_UpdateEnquiry_req.quotation_template_id = this.editQuotationInvoice_section1.value.e_selectReseller;
+    api_UpdateEnquiry_req.quotation_template_id = this.editQuotationInvoice_section1.value.e_selectTemplate;
+    api_UpdateEnquiry_req.reseller_id = this.editQuotationInvoice_section1.value.e_selectReseller;
     api_UpdateEnquiry_req.main_content = this.editQuotationInvoice_section1.value.e_templateContent_Dropdown;
     api_UpdateEnquiry_req.currencyId = this.editQuotationInvoice_section1.value.e_selectCurrency;
     api_UpdateEnquiry_req.bills_logo_id = this.editQuotationInvoice_section1.value.e_extraLogo;
@@ -1120,13 +1122,7 @@ console.log("response", response)
       //  alert('total_amt'+total_amt);
       grs_amt += sub_total_amt;
 
-      if ($('#pd_selectTax_' + a).prop('checked') == true) {
-        this.net_amt = $('#pd_netPrice_' + a).val();
-
-        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-        tax_amt_tot += tax_amt;
-
-      }
+    
       //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
       //   alert(grs_amt);
     }

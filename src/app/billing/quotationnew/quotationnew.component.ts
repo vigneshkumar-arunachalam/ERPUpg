@@ -966,7 +966,7 @@ export class QuotationnewComponent implements OnInit {
       if (response.status == true) {
 
         iziToast.success({
-          message: "Quotation Shared has been Updated",
+          message: "Quotation Approval has been Updated",
           position: 'topRight'
         });
         $("#quotationApprovalId").modal("hide");
@@ -1156,7 +1156,7 @@ export class QuotationnewComponent implements OnInit {
       console.log("set actual cost response", response);
       if (response.status == true) {
         iziToast.success({
-          message: " Quotation Deleted successfully",
+          message: "  successfull",
           position: 'topRight'
         });
        
