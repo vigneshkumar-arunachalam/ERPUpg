@@ -50,6 +50,7 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { EditquotationnewComponent } from './billing/quotationnew/editquotationnew/editquotationnew.component';
 import { ProformaInvoiceComponent } from './billing/proforma-invoice/proforma-invoice.component';
+import { AddPIComponent } from './billing/proforma-invoice/add-pi/add-pi.component';
 
 
 @NgModule({
@@ -86,6 +87,7 @@ import { ProformaInvoiceComponent } from './billing/proforma-invoice/proforma-in
      LogoutComponent,
      EditquotationnewComponent,
      ProformaInvoiceComponent,
+     AddPIComponent,
     
   ],
   imports: [

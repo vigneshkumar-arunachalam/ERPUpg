@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit {
     console.log("navigation menu, username",this.userName)
     console.log("navigation menu, userid",this.userId)
     console.log("navigation menu, role_permission",this.role_Permission)
+    console.log("navigation menu,  this.user_ProfileImage", this.user_ProfileImage)
    
   }
  

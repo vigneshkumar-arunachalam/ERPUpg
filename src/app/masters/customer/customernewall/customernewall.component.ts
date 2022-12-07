@@ -828,8 +828,8 @@ export class CustomernewallComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("get response", response);
-      console.log("Cust status response", response[0].cust_status);
-      this.nx32TrueFalsePermission = response[0].nx32_state;
+      // console.log("Cust status response", response[0].cust_status);
+      // this.nx32TrueFalsePermission = response[0].nx32_state;
       if (response != '') {
         this.customer_list = response;
         console.log(this.customer_list)

@@ -204,7 +204,7 @@
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/proforma-invoice"
+            "value": "/ProformaInvoice"
         },
         {
             "name": "DID Invoice",

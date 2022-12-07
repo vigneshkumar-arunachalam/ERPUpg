@@ -21,13 +21,14 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private serverService: ServerService,private bnIdle: BnNgIdleService) { }
 
   ngOnInit(): void {
+    localStorage.clear();//added by vignesh
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       // 'company_name' : new FormControl(null,Validators.required)
     });
 
-    this.bnIdle.startWatching(300).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         console.log('session expired');
       }
