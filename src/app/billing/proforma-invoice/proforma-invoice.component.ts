@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
+import { Router } from '@angular/router';
 declare var $: any
 
 import Swal from 'sweetalert2'
@@ -22,7 +23,7 @@ export class ProformaInvoiceComponent implements OnInit {
   paginationData: any = { "info": "hide" };
   offset_count = 0;
 
-  constructor(private serverService: ServerService) { }
+  constructor(private serverService: ServerService,private router: Router) { }
 
   ngOnInit(): void {
     this.PIList({});
@@ -37,7 +38,7 @@ export class ProformaInvoiceComponent implements OnInit {
     // api_req.api_url = "web";
     // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     // api_list.action = "proforma/proforma_invoice_list";
-    // api_list.user_id = localStorage.getItem("user_id");
+    // api_list.user_id = sessionStorage.getItem("user_id");
     // api_list.off_set = 0;
     // api_list.limit_val = 50;
     // api_list.current_page = "";
@@ -52,7 +53,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = localStorage.getItem("user_id");
+    api_quotationList.user_id = sessionStorage.getItem("user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -133,6 +134,9 @@ export class ProformaInvoiceComponent implements OnInit {
       console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
+  }
+  addPIGo(){
+    this.router.navigate(['/AddPI'])
   }
 
 }

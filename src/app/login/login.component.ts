@@ -21,14 +21,14 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router, private serverService: ServerService,private bnIdle: BnNgIdleService) { }
 
   ngOnInit(): void {
-    localStorage.clear();//added by vignesh
+  
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       // 'company_name' : new FormControl(null,Validators.required)
     });
 
-    this.bnIdle.startWatching(60).subscribe((isTimedOut: boolean) => {
+    this.bnIdle.startWatching(300).subscribe((isTimedOut: boolean) => {
       if (isTimedOut) {
         console.log('session expired');
       }
@@ -77,12 +77,12 @@ export class LoginComponent implements OnInit {
         this.role=response.role;
 
 
-        localStorage.setItem('access_token','test')
-        localStorage.setItem('login_status','1')
-        localStorage.setItem('user_id',response.userId)
-        localStorage.setItem('user_name',response.firstName)
-        localStorage.setItem('role',response.role)
-        localStorage.setItem('profile_image',response.profile_image)
+        sessionStorage.setItem('access_token','test')
+        sessionStorage.setItem('login_status','1')
+        sessionStorage.setItem('user_id',response.userId)
+        sessionStorage.setItem('user_name',response.firstName)
+        sessionStorage.setItem('role',response.role)
+        sessionStorage.setItem('profile_image',response.profile_image)
 
         console.log("user id display",response.userId)
         console.log("user id display", this.userID)
