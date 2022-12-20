@@ -5,7 +5,7 @@
 
             <div class="col-lg-12">
                 <div class="form-group row">
-                    <div class="form-check form-check-inline"  *ngFor="let radio of initial_Radio;let i=index">
+                    <div class="form-check form-check-inline ml-3"  *ngFor="let radio of initial_Radio;let i=index">
                         <input class="form-check-input" type="radio" name="initial" id="initial{{i}}"
                             formControlName="initial" value="{{radio.id}}"  (change)="handleChange_initial(radio.id,$event)">
                         <label class="form-check-label" for="initial{{i}}">{{radio.name}}</label>
@@ -18,11 +18,12 @@
                 <div class="form-group row">
                     <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
                     <div class="col-lg-12">
-                        <select name="enqFormValue" id="cmp_name" class="form-control" formControlName="companyName">
+                        <select name="enqFormValue" id="cmp_name" class="form-control" 
+                        formControlName="companyName" (change)="getCustomerInvoiceDetails($event)">
                             <option [ngValue]="null" selected disabled>Select Company Name</option>
-                            <!-- <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
+                            <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                 {{comp_name.billerName}}
-                            </option> -->
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -39,6 +40,29 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group row">
+                    <label for="billto" class="col-lg-12 col-form-label">Bill To*</label>
+                    <div class="col-lg-12">
+                        <input type="text " class="form-control" formControlName="BillTo"
+                            [attr.readonly]="isReadOnly" id="billto" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row" *ngFor="let dis of dynamicChangeText">
+                    <label for="regg" class="col-lg-12 col-form-label">{{dis.name}}</label>
+                    <div class="col-lg-12">
+                        <input type="text " class="form-control" formControlName="Reg" [attr.readonly]="isReadOnly"
+                            id="regg" />{{dis.id}}
+                    </div>
+                    <!-- <label for="regg" class="col-lg-12 col-form-label">{{dis.name}}</label>
+                    <div class="col-lg-12">
+                        <input type="text " class="form-control" formControlName="Reg" [attr.readonly]="isReadOnly"
+                            id="regg" />
+                    </div>  -->
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group row">
                     <label for="add" class="col-lg-12 col-form-label">Address</label>
                     <div class="col-lg-12">
                         <input type="text " class="form-control mt-2" formControlName="address_1" />
@@ -47,17 +71,15 @@
                     </div>
                 </div>
             </div>
+           
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="regg" class="col-lg-12 col-form-label">Reg #</label>
+                    <label for="po" class="col-lg-12 col-form-label">PO.No</label>
                     <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="Reg" [attr.readonly]="isReadOnly"
-                            id="regg" />
+                        <input type="text " class="form-control" formControlName="PoNo" [attr.readonly]="isReadOnly"
+                            id="po" />
+                          
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
                     <label for="po" class="col-lg-12 col-form-label">PO.No</label>
                     <div class="col-lg-12">
                         <input type="text " class="form-control" formControlName="PoNo" [attr.readonly]="isReadOnly"
@@ -78,7 +100,7 @@
                 <div class="form-group row">
                     <label for="datee" class="col-lg-12 col-form-label">Date *</label>
                     <div class="col-lg-12">
-                        <input type="date" class="form-control" formControlName="Date" [attr.readonly]="isReadOnly"
+                        <input type="date" class="form-control" formControlName="Date" 
                             id="datee" />
                     </div>
                 </div>
@@ -107,7 +129,7 @@
                 <div class="form-group row">
                     <label for="podatee" class="col-lg-12 col-form-label">PO.Date</label>
                     <div class="col-lg-12">
-                        <input type="date" class="form-control" formControlName="PoDate" [attr.readonly]="isReadOnly"
+                        <input type="date" class="form-control" formControlName="PoDate" 
                             id="podatee" />
                     </div>
                 </div>
@@ -118,9 +140,9 @@
                     <div class="col-lg-12">
                         <select id="sales_rep" class="form-control" formControlName="salesRep">
                             <option [ngValue]="null" selected disabled>Select Sales Rep</option>
-                            <!-- <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
-                                {{comp_name.billerName}}
-                            </option> -->
+                            <option *ngFor="let sales of salesRepList" value="{{sales.userId}}">
+                                {{sales.firstName}}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -130,10 +152,10 @@
                     <label for="Ship_By" class="col-lg-12 col-form-label">Ship By</label>
                     <div class="col-lg-12">
                         <select id="Ship_By" class="form-control" formControlName="ShipBy">
-                            <option [ngValue]="null" selected disabled>Select Ship By</option>
-                            <!-- <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
-                                {{comp_name.billerName}}
-                            </option> -->
+                            <option [ngValue]="null" selected disabled>Default Ship By</option>
+                            <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                {{ship.ship_name}}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -143,7 +165,7 @@
                 <div class="form-group row">
                     <label for="Ship_Date" class="col-lg-12 col-form-label">Ship Date</label>
                     <div class="col-lg-12">
-                        <input type="date" class="form-control" formControlName="ShipDate" [attr.readonly]="isReadOnly"
+                        <input type="date" class="form-control" formControlName="ShipDate" 
                             id="Ship_Date" />
                     </div>
                 </div>
@@ -181,9 +203,9 @@
                     <div class="col-lg-12">
                         <select id="curren" class="form-control" formControlName="Currency">
                             <option [ngValue]="null" selected disabled>Select Currency</option>
-                            <!-- <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
-                                {{comp_name.billerName}}
-                            </option> -->
+                            <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
+                                {{comp_name.currency_name}}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -204,9 +226,9 @@
                     <div class="col-lg-12">
                         <select id="Payment" class="form-control" formControlName="PaymentVia">
                             <option [ngValue]="null" selected disabled>Select Currency</option>
-                            <!-- <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
-                                {{comp_name.billerName}}
-                            </option> -->
+                            <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
+                                {{payment.paymentvia_name}}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -281,6 +303,178 @@
                   
                 </div>
             </div>
+
+        </div>
+    </form>
+    <form [formGroup]="addPI_section2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+
+                    <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
+                        class="col-lg-12 col-form-label">Product Details</h2>
+                </div>
+            </div>
+            <div class="col-12">
+
+                <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+
+                    <div [formGroupName]="i">
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- <h3 style="text-align:center;color:rgb(141, 87, 129);font-weight: 500;">
+                                    Product Group {{i +
+                                    1}}</h3>&nbsp;&nbsp; -->
+                            </div>
+
+                        </div>
+                        <div class="table-responsive">
+                            <table class="add-contact-table-section">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th> <span class="userDatatable-title">
+                                            Next Page</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">Product Name</span></th>
+                                       
+                                     
+                                        <th><span class="userDatatable-title">Description</span></th>
+                                        <th><span class="userDatatable-title">Quantity</span></th>
+                                        <th><span class="userDatatable-title">Unit</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">	Price</span></th>
+                                        <th><span class="userDatatable-title">	Total</span></th>
+                                        <th><span class="userDatatable-title">Net Total</span></th>
+                                        <th><span class="userDatatable-title">Out Call</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">	C Mon</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">	Select Tax</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content lalign">
+                                              <input type="checkbox"  formControlName="pd_nextPage_checkbox">
+                                            
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                              
+                                                
+
+                                                <input type="text" class="form-control mt-2 mb-2"
+                                                formControlName="pd_productName_txtbox1"
+                                                id="pd_productName_txtbox_{{i}}" />
+  
+                                           
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <textarea
+                                                style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                class="form-control mt-2 mb-2" row="2"
+                                                formControlName="pd_productName_txtArea"
+                                                id="pd_productName_txtArea_{{i}}"></textarea>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" style="text-align: right;"
+                                                formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+
+                                                <input type="text" class="form-control" style="text-align: left;"
+                                                        formControlName="pd_unit" id="pd_unit_{{i}}" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
+                                                       />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" formControlName="pd_Total"
+                                                style="text-align: right;" id="pd_Total_{{i}}" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content" >
+                                                <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content" >
+                                                <input type="checkbox" style="text-align: right;"
+                                                formControlName="pd_OutCall" >
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                
+                                                <input type="checkbox" style="text-align: right;"
+                                                formControlName="pd_CMon" >
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                
+                                                <input type="checkbox" style="text-align: right;"
+                                                formControlName="pd_selectTax" >
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="removeAddress(i)"   >X</button>
+
+                                            </div>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+
+                    </div>
+                </section>
+
+                <div class="text-right">
+
+                    <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                        (click)="addAddress()">Add Product </button> -->
+                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                        style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>
+                    </button>
+                </div>
+
+            </div>
+
 
         </div>
     </form>
@@ -407,14 +601,14 @@
                         <div class="col-lg-6">
                             <div class="d-flex justify-content-center">
                                 <input type="text" class="form-control ml-2 mt-2" placeholder="Banking Charge"
-                                    formControlName="section3_shipping_amt_name_txtbox" />
+                                    formControlName="section3_bankingCharge_amt_name_txtbox" />
 
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="text" 
-                                    formControlName="section3_shipping_amt_txtbox" id="shipping_amt_id"
+                                    formControlName="section3_bankingCharge_amt_txtbox" id="bankingCharge_amt_id"
                                     class="form-control mt-2" />
                             </div>
                         </div>
@@ -472,7 +666,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="checkbox" class="form-control" formControlName="section3_termCondition" />
+                                    <input type="checkbox"  formControlName="section3_termCondition" />
                                 </div>
 
 
@@ -487,7 +681,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="checkbox" class="form-control" formControlName="section3_receivedAuthorizedSignature" />
+                                    <input type="checkbox"  formControlName="section3_receivedAuthorizedSignature" />
                                 </div>
 
 
@@ -502,16 +696,16 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="checkbox" class="form-control" formControlName="section3_logo" />
+                                    <input type="checkbox"  formControlName="section3_logo" />
                                 </div>
 
 
                             </div>
                         </div>
-                        <div class="col-lg-12 mb-2">
-                            <button class="btn btn-success">Back</button>
-                            <button class="btn btn-danger">Submit</button>
-                            <button class="btn btn-dark">Submit & Send Email</button>
+                        <div class="buttonAlign" >
+                            <button type="button" class="btn btn-success ">Back</button>
+                            <button type="button"  class="btn btn-danger ">Submit</button>
+                            <button type="button"  class="btn btn-dark ">Submit & Send Email</button>
                         </div>
 
 
@@ -522,7 +716,8 @@
             </section>
         </section>
     </form>
-
+  
+   
 
 
 

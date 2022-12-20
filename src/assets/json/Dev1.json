@@ -132,7 +132,7 @@
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/transaction-approval"
+            "value": "/TransactionApproval"
         }, {
             "name": "Delivery Challan",
             "icon": "layers",

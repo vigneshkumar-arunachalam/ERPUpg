@@ -273,8 +273,8 @@ export class CustomernewallComponent implements OnInit {
       itemsShowLimit: 3,
       allowSearchFilter: false
     };
-// if(sessionStorage.getItem('login_status')=='1'){
-//   sessionStorage.setItem('login_status','0');
+// if(localStorage.getItem('login_status')=='1'){
+//   localStorage.setItem('login_status','0');
   
 //   window.location.reload();
  
@@ -823,7 +823,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     get_req.action = "get_det";
-    get_req.user_id = sessionStorage.getItem('user_id');
+    get_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = get_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -846,7 +846,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "customer_name_search";
-    api_Search_req.user_id = sessionStorage.getItem('user_id');
+    api_Search_req.user_id = localStorage.getItem('user_id');
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -865,7 +865,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_reqs_addCustomer.action = "add_customer";
-    api_reqs_addCustomer.user_id = sessionStorage.getItem('user_id');
+    api_reqs_addCustomer.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_reqs_addCustomer;
     console.log("json data format", api_reqs_addCustomer)
 
@@ -891,7 +891,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     view_customer_req.action = "view_customer_details";
     view_customer_req.customerId = id;
-    view_customer_req.user_id = sessionStorage.getItem('user_id');
+    view_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = view_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -946,7 +946,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     add_customer_req.action = "customer_save";
-    add_customer_req.user_id = sessionStorage.getItem('user_id');
+    add_customer_req.user_id = localStorage.getItem('user_id');
 
     add_customer_req.customerName = this.addCustomer.value.company_Name;
     add_customer_req.cus_banking_charge = this.addCustomer.value.banking_charge;
@@ -1028,7 +1028,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     edit_customer_req.action = "customer_edit";
-    edit_customer_req.user_id = sessionStorage.getItem('user_id');
+    edit_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = edit_customer_req;
 
 
@@ -1132,7 +1132,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     update_customer_req.action = "customer_update";
-    update_customer_req.user_id = sessionStorage.getItem('user_id');
+    update_customer_req.user_id = localStorage.getItem('user_id');
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = Update_billerNameCheckListDisplay;
     update_customer_req.company_name = this.editCustomerForm.value.edit_defaultBillerName;
@@ -1230,7 +1230,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialEdit_customer_req.action = "special_edit";
-    specialEdit_customer_req.user_id = sessionStorage.getItem('user_id');
+    specialEdit_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = specialEdit_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1289,7 +1289,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialUpdate_customer_req.action = "special_update";
-    specialUpdate_customer_req.user_id = sessionStorage.getItem('user_id');
+    specialUpdate_customer_req.user_id = localStorage.getItem('user_id');
     specialUpdate_customer_req.email = this.specialEditCustomerForm.value.spedit_Email;
     specialUpdate_customer_req.finance_email = this.specialEditCustomerForm.value.spedit_FinanceEmail;
     specialUpdate_customer_req.terms_condition = this.specialEditCustomerForm.value.termconditionDD;
@@ -1339,7 +1339,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     delete_customer_req.action = "customer_delete";
-    delete_customer_req.user_id = sessionStorage.getItem('user_id');
+    delete_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = delete_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1380,7 +1380,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     fileattach_req.action = "get_file_attachment_details";
     fileattach_req.customerId = "" + ID + "";
-    fileattach_req.user_id = sessionStorage.getItem('user_id');
+    fileattach_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1417,7 +1417,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     fileattachDelete_req.action = "customer_file_attachment_delete";
     fileattachDelete_req.credit_attach_id = "" + credit_attament_id + "";
-    fileattachDelete_req.user_id = sessionStorage.getItem('user_id');
+    fileattachDelete_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = fileattachDelete_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1478,7 +1478,7 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mconnectList.action = "mconnect_address_details";
     api_mconnectList.customer_id=id;
-    api_mconnectList.user_id = sessionStorage.getItem('user_id');
+    api_mconnectList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mconnectList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -1554,7 +1554,7 @@ this.mconnectCustomerForm.reset();
     // api_req.api_type = "web";
     // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     // api_mconnectAdd.action = "mconnect_address_save";
-    // api_mconnectAdd.user_id = sessionStorage.getItem('user_id');
+    // api_mconnectAdd.user_id = localStorage.getItem('user_id');
     // api_mconnectAdd.partner_email_mconnect = this.mconnectCustomerForm.value.a_mconnectPartnerEmail;
     // api_mconnectAdd.partner_phone_no_mconnect = this.mconnectCustomerForm.value.a_mconnectPartnerPhoneNum;
     // api_mconnectAdd.mconnect_address_show = this.mconnectCustomerForm.value.a_mconnectAddressShow;
@@ -1615,7 +1615,7 @@ this.mconnectCustomerForm.reset();
     // api_req.api_type = "web";
     // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     // api_mrvoipAdd.action = "mrvoip_address_save";
-    // api_mrvoipAdd.user_id = sessionStorage.getItem('user_id');
+    // api_mrvoipAdd.user_id = localStorage.getItem('user_id');
     // api_mrvoipAdd.customerId = id;
 
     // api_mrvoipAdd.partner_email_mrvoip = this.mrvoipCustomerForm.value.a_MrvoipPartnerEmail;
@@ -1661,7 +1661,7 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mrvoipList.action = "mrvoip_address_details";
     api_mrvoipList.customer_id=id;
-    api_mrvoipList.user_id = sessionStorage.getItem('user_id');
+    api_mrvoipList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mrvoipList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1703,7 +1703,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_req.action = "call4tel_address_details";
-    api_call4telList.user_id = sessionStorage.getItem('user_id');
+    api_call4telList.user_id = localStorage.getItem('user_id');
 
     api_req.element_data = api_call4telList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1743,7 +1743,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_call4telAdd.action = "call4tel_address_save";
-    api_call4telAdd.user_id = sessionStorage.getItem('user_id');
+    api_call4telAdd.user_id = localStorage.getItem('user_id');
 
     api_call4telAdd.partner_email_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerEmail;
     api_call4telAdd.partner_phone_no_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerPhoneNum;
@@ -1785,7 +1785,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_req.action = "invoice_share_edit";
-    api_req.user_id = sessionStorage.getItem('user_id');
+    api_req.user_id = localStorage.getItem('user_id');
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("invoice share response", response);
@@ -1816,7 +1816,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     invoiceShare_update_req.action = "invoice_share_update";
-    invoiceShare_update_req.user_id = sessionStorage.getItem('user_id');
+    invoiceShare_update_req.user_id = localStorage.getItem('user_id');
     invoiceShare_update_req.firstName_salary = this.invoiceSharedCustomerForm.value.invShared_checklist;
     api_req.element_data = invoiceShare_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1850,7 +1850,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_req.action = "customer_share";
-    api_req.user_id = sessionStorage.getItem('user_id');
+    api_req.user_id = localStorage.getItem('user_id');
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("customer share permission response", response);
@@ -1880,7 +1880,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     shareCustomerPermission_update_req.action = "customer_share_update";
-    shareCustomerPermission_update_req.user_id = sessionStorage.getItem('user_id');
+    shareCustomerPermission_update_req.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_update_req.access_userid = this.ShareCustomerPermissionForm.value.shareCustomerPermission_checklist;
     api_req.element_data = shareCustomerPermission_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1909,7 +1909,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_customerStatus_req.action = "customer_status_update";
-    api_customerStatus_req.user_id = sessionStorage.getItem('user_id');
+    api_customerStatus_req.user_id = localStorage.getItem('user_id');
     api_customerStatus_req.cust_status = status;
     api_req.element_data = api_customerStatus_req;
 
@@ -1935,7 +1935,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_empStatus_req.action = "emp_status_update";
-    api_empStatus_req.user_id = sessionStorage.getItem('user_id');
+    api_empStatus_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_empStatus_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1957,7 +1957,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_resellerStatus_req.action = "reseller_status_update";
-    api_resellerStatus_req.user_id = sessionStorage.getItem('user_id');
+    api_resellerStatus_req.user_id = localStorage.getItem('user_id');
 
     api_req.element_data = api_resellerStatus_req;
 
@@ -1986,7 +1986,7 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_nx32Permission_req.action = "get_customer_nx32_permission";
     api_nx32Permission_req.customerId = id;
-    api_nx32Permission_req.user_id = sessionStorage.getItem('user_id');
+    api_nx32Permission_req.user_id = localStorage.getItem('user_id');
 
     api_req.element_data = api_nx32Permission_req;
 
@@ -2019,7 +2019,7 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_nx32PermissionUpdate_req.action = "customer_nx32_update";
     api_nx32PermissionUpdate_req.customerId = this.NX32SharePermissionParameter;
-    api_nx32PermissionUpdate_req.user_id = sessionStorage.getItem('user_id');
+    api_nx32PermissionUpdate_req.user_id = localStorage.getItem('user_id');
     api_nx32PermissionUpdate_req.nx32_perm = this.checkbox_NX32Permission;
 
     api_req.element_data = api_nx32PermissionUpdate_req;
@@ -2049,7 +2049,7 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_billCodeEdit_req.action = "get_billcode_details";
     api_billCodeEdit_req.customer_id = id;
-    api_billCodeEdit_req.user_id = sessionStorage.getItem('user_id');
+    api_billCodeEdit_req.user_id = localStorage.getItem('user_id');
 
     api_req.element_data = api_billCodeEdit_req;
 
@@ -2127,7 +2127,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     updateBillCode_req.action = "billcode_details_update";
-    updateBillCode_req.user_id = sessionStorage.getItem('user_id');
+    updateBillCode_req.user_id = localStorage.getItem('user_id');
     updateBillCode_req.customer_bill_code = this.edit_a;
     updateBillCode_req.primary_bill_code = this.edit_b;
     // updateBillCode_req.values2 = this.billCodeEditForm1.value.edit_addresses;
@@ -2191,7 +2191,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mail_req.action = "customer_email_template";
-    api_mail_req.user_id = sessionStorage.getItem('user_id');
+    api_mail_req.user_id = localStorage.getItem('user_id');
     api_mail_req.customer_id =  this.landscapeEmail_Customer_ID;
     api_req.element_data = api_mail_req;
   
@@ -2229,7 +2229,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mailContentDropdown_req.action = "get_customer_authendication_details";
-    api_mailContentDropdown_req.user_id = sessionStorage.getItem('user_id');
+    api_mailContentDropdown_req.user_id = localStorage.getItem('user_id');
     api_mailContentDropdown_req.customer_id =  this.landscapeEmail_Customer_ID;
     api_mailContentDropdown_req.template_id =  this.CRMTemplateID;
     api_req.element_data = api_mailContentDropdown_req;
@@ -2267,7 +2267,7 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "customer_landscape_mail";
-    api_email_req.user_id = sessionStorage.getItem('user_id');
+    api_email_req.user_id = localStorage.getItem('user_id');
     // api_email_req.customer_contract_id = this.EmailCustomerContractID;
     api_email_req.emailFrom = this.emailTo;
     api_email_req.emailTo = this.emailTo;

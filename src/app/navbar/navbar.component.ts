@@ -13,10 +13,10 @@ export class NavbarComponent implements OnInit {
   constructor(private router:Router) { }
 
   ngOnInit(): void {
-    this.userName=sessionStorage.getItem('user_name');
-    this.userId=sessionStorage.getItem('user_id');
-    this.role_Permission=sessionStorage.getItem('role');
-    this.user_ProfileImage=sessionStorage.getItem('profile_image');
+    this.userName=localStorage.getItem('user_name');
+    this.userId=localStorage.getItem('user_id');
+    this.role_Permission=localStorage.getItem('role');
+    this.user_ProfileImage=localStorage.getItem('profile_image');
 
     console.log("navigation menu, username",this.userName)
     console.log("navigation menu, userid",this.userId)
@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
   }
  
   logout(){
-    sessionStorage.clear();
+    localStorage.clear();
     this.router.navigate(['/login']);
 
       

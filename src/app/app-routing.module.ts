@@ -30,15 +30,21 @@ import { LogoutComponent } from './logout/logout.component';
 import { EditquotationnewComponent } from './billing/quotationnew/editquotationnew/editquotationnew.component';
 import { ProformaInvoiceComponent } from './billing/proforma-invoice/proforma-invoice.component';
 import { AddPIComponent } from './billing/proforma-invoice/add-pi/add-pi.component';
-
-
+import { EditPIComponent } from './billing/proforma-invoice/edit-pi/edit-pi.component';
+import { TransactionApprovalComponent } from './billing/transaction-approval/transaction-approval.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },
   {
+    path: 'TransactionApproval', component: TransactionApprovalComponent
+  },
+  {
     path: 'AddPI', component: AddPIComponent
+  },
+  {
+    path: 'EditPI', component: EditPIComponent
   },
   
   {
@@ -135,7 +141,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,{ useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

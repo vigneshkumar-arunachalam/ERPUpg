@@ -51,7 +51,9 @@ import { LogoutComponent } from './logout/logout.component';
 import { EditquotationnewComponent } from './billing/quotationnew/editquotationnew/editquotationnew.component';
 import { ProformaInvoiceComponent } from './billing/proforma-invoice/proforma-invoice.component';
 import { AddPIComponent } from './billing/proforma-invoice/add-pi/add-pi.component';
-
+import { EditPIComponent } from './billing/proforma-invoice/edit-pi/edit-pi.component';
+import { TransactionApprovalComponent } from './billing/transaction-approval/transaction-approval.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -88,11 +90,13 @@ import { AddPIComponent } from './billing/proforma-invoice/add-pi/add-pi.compone
      EditquotationnewComponent,
      ProformaInvoiceComponent,
      AddPIComponent,
+     EditPIComponent,
+     TransactionApprovalComponent,
     
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    FormsModule,MatTabsModule,
     ReactiveFormsModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,
     HttpClientModule,MatIconModule, NgMultiSelectDropDownModule.forRoot(),

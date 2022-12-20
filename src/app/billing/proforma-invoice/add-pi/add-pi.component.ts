@@ -1,43 +1,74 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { ServerService } from 'src/app/services/server.service';
 
 @Component({
   selector: 'app-add-pi',
   templateUrl: './add-pi.component.html',
-  styleUrls: ['./add-pi.component.css']
+  styleUrls: ['./add-pi.component.css'],
+  
 })
 export class AddPIComponent implements OnInit {
-  addPI_section1: FormGroup;
-  addPI_section3: FormGroup;
+  public addPI_section1: FormGroup;
+  public addPI_section2: FormGroup;
+  public addPI_section3: FormGroup;
+  public addresses: FormArray;
   isReadOnly: boolean = false;
+
+  //load add 
+  companyNameList:any;
+  currencyNameList:any;
+  ShipByList:any;
+  salesRepList:any;
+  paymentviaList:any;
+  billerID:any;
   //radio
   radio_Select: any;
-  exportState_Radio:any;
-  initial_Radio:any;
+  exportState_Radio: any;
+  initial_Radio: any;
   //checkbox
-  mile_check_value:any;
-  dynamicCheckboxwithKey:any;
-  SelectExtraLogoCheckboxwithKey:any;
-   //checkbox group select-mile
-   groupSelectCommonId_MileDiscount:any;
-   checkbox_value_MileDiscount:any;
-   edit_array_MileDiscount:any=[];
- 
+  mile_check_value: any;
+  dynamicCheckboxwithKey: any;
+  SelectExtraLogoCheckboxwithKey: any;
+  //checkbox group select-mile
+  groupSelectCommonId_MileDiscount: any;
+  checkbox_value_MileDiscount: any;
+  edit_array_MileDiscount: any = [];
+
   //checkbox group select-logo
-  groupSelectCommonId_ExtraLogo:any;
-  checkbox_value_ExtraLogo:any;
-  edit_array_ExtraLogo:any=[];
+  groupSelectCommonId_ExtraLogo: any;
+  checkbox_value_ExtraLogo: any;
+  edit_array_ExtraLogo: any = [];
 
+  // tax_amt_tot=0;  
 
-  constructor() { }
+  test: boolean[] = [];
+  itre = 0;
+//others
+dynamicChangeText:any;
+
+ 
+  
+  constructor(private serverService: ServerService, private fb: FormBuilder) {
+ 
+    this.addPI_section2 = this.fb.group({
+      addresses: this.fb.array([this.createAddress()])
+    });
+  }
 
   ngOnInit(): void {
+    
+    this.loadADD();
+    this.addressControls.controls.forEach((elt, index) => {
+      this.test[index] = true;
+    });
+
     this.dynamicCheckboxwithKey = [
 
       { name: 'Discount', selected: false, id: 1 },
       { name: 'Mile Stone', selected: false, id: 2 },
       { name: ' M S Display ', selected: false, id: 3 },
-      
+
     ];
     this.SelectExtraLogoCheckboxwithKey = [
 
@@ -46,27 +77,35 @@ export class AddPIComponent implements OnInit {
       { name: ' DID Sg  ', selected: false, id: 3 },
       { name: ' Callcloud  ', selected: false, id: 4 },
       { name: ' Mrvoip  ', selected: false, id: 5 },
-      
+
     ];
-    this.initial_Radio=[
+    this.initial_Radio = [
       { name: 'Proforma ', selected: false, id: 1 },
       { name: 'Quotation', selected: false, id: 2 },
-      
 
-  ];
-    this.exportState_Radio=[
+
+    ];
+    this.exportState_Radio = [
       { name: 'Local', selected: false, id: 1 },
       { name: 'Export', selected: false, id: 2 },
       { name: 'Zero Valid', selected: false, id: 3 },
 
-  ];
+    ];
+
+    this.dynamicChangeText = [
+      { name: 'Reg #',  id: "1074305-H"},
+      { name: 'SST #',  id: "J31-1808-31016512 81100" },
+    
+
+    ];
     this.addPI_section1 = new FormGroup({
       'initial': new FormControl(),
       'companyName': new FormControl(),
       'invoiceNo': new FormControl(),
+      'BillTo': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
-      'Date': new FormControl(),
+      'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'address_1': new FormControl(),
       'address_2': new FormControl(),
       'address_3': new FormControl(),
@@ -76,10 +115,10 @@ export class AddPIComponent implements OnInit {
       'ShipTo_2': new FormControl(),
       'ShipTo_3': new FormControl(),
       'ShipTo_4': new FormControl(),
-      'PoDate': new FormControl(),
+      'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'ShipBy': new FormControl(),
-      'ShipDate': new FormControl(),
+      'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'Attn_2': new FormControl(),
       'terms': new FormControl(),
       'Ref': new FormControl(),
@@ -95,41 +134,84 @@ export class AddPIComponent implements OnInit {
     });
 
     this.addPI_section3 = new FormGroup({
-      'section3_grant_total_show': new FormControl(null),
+
+
+
       'section3_gross_total': new FormControl(null),
       'section3_discount_txtbox': new FormControl(null),
       'final_dis_type': new FormControl(null),
       'final_dis_val': new FormControl(null),
       'section3_gst_dropdown': new FormControl(null),
-      'section3_taxAmt_txtbox': new FormControl(null),
       'section3_tax_per_hd': new FormControl(null),
+      'section3_taxAmt_txtbox': new FormControl(null),
       'section3_shipping_amt_name_txtbox': new FormControl(null),
       'section3_shipping_amt_txtbox': new FormControl(null),
+      'section3_bankingCharge_amt_name_txtbox': new FormControl(null),
+      'section3_bankingCharge_amt_txtbox': new FormControl(null),
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
-      'section3_signature_dropdown': new FormControl(null),
-      'section3_templateName': new FormControl(null),
-      'section3_select_additional_signature': new FormControl(null),
+      'section3_termCondition': new FormControl(null),
+      'section3_receivedAuthorizedSignature': new FormControl(null),
+      'section3_logo': new FormControl(null),
+
+    });
+
+
+  }
+  get addressControls() {
+    return this.addPI_section2.get('addresses') as FormArray
+  }
+
+
+  addAddress(): void {
+    this.addresses = this.addPI_section2.get('addresses') as FormArray;
+    this.addresses.push(this.createAddress());
+
+    this.itre = this.itre + 1;
+    this.addressControls.controls.forEach((elt, index) => {
+      this.test[index] = true;
+
+    });
+  }
+
+  createAddress(): FormGroup {
+    return this.fb.group({
+      pd_nextPage_checkbox: '',
+      pd_productName_txtbox1: '',
+      pd_productName_txtArea: '',
+      pd_quantity_txtbox1: '',
+      pd_unit: '',
+      pd_sellingPrice: '',
+      pd_Total: '',
+      pd_netPrice: '',
+      pd_OutCall: '',
+      pd_CMon: '',
+      pd_selectTax: '',
 
 
     });
 
   }
-  handleChange_initial(id:any,evt: any) {
+  removeAddress(i: number) {
+    this.addresses.removeAt(i);
+
+
+  }
+  handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
-    var abc=id;
+    var abc = id;
     console.log("radio button value", radioSelectInitial);
     console.log("radio button id value", abc);
   }
-  handleChange(id:any,evt: any) {
+  handleChange(id: any, evt: any) {
     var radioSelectFooter = evt.target.value;
-    var xyz=id;
+    var xyz = id;
     console.log("radio button value", radioSelectFooter);
     console.log("radio button id value", xyz);
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value );
+    console.log(this.mile_check_value);
   }
   EditCHK_MileDiscount(data: any, event: any) {
     console.log("List - CheckBox ID", data);
@@ -170,6 +252,119 @@ export class AddPIComponent implements OnInit {
       console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
 
     }
+  }
+  loadADD() {
+    let api_req: any = new Object();
+    let addAPI: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "proforma/add_proforma_invoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addAPI.action = "add_proforma_invoice";
+    addAPI.user_id = localStorage.getItem('user_id');
+    api_req.element_data = addAPI;
+    this.serverService.sendServer(api_req).subscribe((response:any)=> {
+      this.companyNameList=response.biller_details;
+      this.currencyNameList=response.currency_list;
+      this.ShipByList=response.ship_by;
+      this.salesRepList=response.sales_rep;
+      this.paymentviaList=response.paymentvia;
+      console.log("response-load-pi",response)
+    });
+  }
+  save(){
+    let api_req: any = new Object();
+    let api_savePI_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/insert_quotation";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_savePI_req.action = "insert_quotation";
+    api_savePI_req.user_id = localStorage.getItem('user_id');
+
+    api_savePI_req.company = this.addPI_section1.value.company;
+    api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
+    api_savePI_req.customer_name = this.addPI_section1.value.BillTo;
+    api_savePI_req.tinNo = this.addPI_section1.value.Reg;
+    api_savePI_req.b_address1 = this.addPI_section1.value.address_1;
+    api_savePI_req.b_address2 = this.addPI_section1.value.address_2;
+    api_savePI_req.b_address3 = this.addPI_section1.value.address_3;
+    api_savePI_req.cstNo = this.addPI_section1.value.GST;
+    api_savePI_req.billDate = this.addPI_section1.value.Date;
+    api_savePI_req.b_attn = this.addPI_section1.value.Attn_1;
+    api_savePI_req.po_no = this.addPI_section1.value.PoNo;
+    api_savePI_req.po_date = this.addPI_section1.value.PoDate;
+    api_savePI_req.sales_rep = this.addPI_section1.value.salesRep;
+    api_savePI_req.ship_by = this.addPI_section1.value.ShipBy;
+    api_savePI_req.ship_date = this.addPI_section1.value.ShipDate;
+    api_savePI_req.s_attn = this.addPI_section1.value.Attn_2;
+    api_savePI_req.ref = this.addPI_section1.value.Ref;
+    api_savePI_req.terms = this.addPI_section1.value.terms;
+    api_savePI_req.currency = this.addPI_section1.value.Currency;
+    api_savePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
+    api_savePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
+    api_savePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
+    api_savePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
+
+    api_savePI_req.grossTotal = this.addPI_section1.value.section3_gross_total;
+    api_savePI_req.discountAmount = this.addPI_section1.value.final_dis_val;
+    api_savePI_req.taxId = this.addPI_section1.value.section3_gst_dropdown;
+    api_savePI_req.taxAmt = this.addPI_section1.value.section3_taxAmt_txtbox;
+    api_savePI_req.shippingAmt = this.addPI_section1.value.section3_shipping_amt_name_txtbox;
+    api_savePI_req.addAmt = this.addPI_section1.value.section3_bankingCharge_amt_txtbox;
+    api_savePI_req.netTotal = this.addPI_section1.value.section3_grand_total;
+    api_savePI_req.remarks = this.addPI_section1.value.section3_remarks;
+    api_savePI_req.terms_cond_chk = this.addPI_section1.value.section3_termCondition;
+    api_savePI_req.received_signature = this.addPI_section1.value.section3_receivedAuthorizedSignature;
+    api_savePI_req.logo = this.addPI_section1.value.section3_logo;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+
+      }
+      else {
+       
+      }
+
+    });
+
+  }
+  getCustomerInvoiceDetails(event: any){
+    this.billerID = event.target.value;
+    console.log("billerID check", this.billerID);
+
+    let api_req: any = new Object();
+    let api_getInvoiceDetails_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/get_customer_inv_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getInvoiceDetails_req.action = "get_customer_inv_details";
+    api_getInvoiceDetails_req.user_id = localStorage.getItem('user_id');
+    api_getInvoiceDetails_req.billerId = this.billerID;
+    api_req.element_data = api_getInvoiceDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.addPI_section1.patchValue({
+          'invoiceNo': response.invoice_no,
+          'Currency': response.currency_id,
+        
+         
+        });
+
+
+      }
+      else {
+       
+      }
+
+    });
+
   }
 
 }

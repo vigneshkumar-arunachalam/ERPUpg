@@ -19,7 +19,7 @@ export class ProformaInvoiceComponent implements OnInit {
   user_list: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 50;
+  pageLimit = 10;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
 
@@ -31,19 +31,6 @@ export class ProformaInvoiceComponent implements OnInit {
 
   PIList(data: any) {
 
-
-    // let api_req: any = new Object();
-    // let api_list: any = new Object();
-    // api_req.moduleType = "quotation";
-    // api_req.api_url = "web";
-    // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    // api_list.action = "proforma/proforma_invoice_list";
-    // api_list.user_id = sessionStorage.getItem("user_id");
-    // api_list.off_set = 0;
-    // api_list.limit_val = 50;
-    // api_list.current_page = "";
-    // api_req.element_data = api_list;
-
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -53,7 +40,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = sessionStorage.getItem("user_id");
+    api_quotationList.user_id = localStorage.getItem("user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -88,6 +75,7 @@ export class ProformaInvoiceComponent implements OnInit {
       }
     });
   }
+ 
   listDataInfo(list_data: any) {
     console.log(list_data)
     // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
@@ -137,6 +125,14 @@ export class ProformaInvoiceComponent implements OnInit {
   }
   addPIGo(){
     this.router.navigate(['/AddPI'])
+  }
+  editPIGo(id:any){
+    var editbillID = id;
+    this.router.navigate(['/EditPI'])
+
+    this.router.navigate(['/EditPI'], { queryParams: { 
+      e_editBillID: editbillID, 
+      } });
   }
 
 }

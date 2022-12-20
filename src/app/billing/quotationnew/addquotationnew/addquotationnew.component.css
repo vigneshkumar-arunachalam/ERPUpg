@@ -131,9 +131,10 @@ i.fa.fa-bars {
 }
 
 tr:nth-child(even) {
-  background: rgb(239, 241, 238)
+  /* background: rgb(239, 241, 238) */
+  background-color: #fff;
 }
-
+table.add-contact-table-section{background-color: #fff;}
 tr:nth-child(odd) {
   background: #FFF
 }
@@ -257,10 +258,10 @@ input.form-control {
   height: 500px;}
   .contents label{
     font-weight: 500;
-
+    
   }
   .form-control{border:1px solid #e1e1e1;}
-  .userDatatable-content{position: relative;top:-25px;}
+  /* .userDatatable-content{position: relative;top:-25px;} */
 
   .userDatatable-content button.btn.btn-danger.btn-sm{
     height: 35px;
@@ -269,6 +270,12 @@ input.form-control {
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+  }
+  /* .add-contact-table-section tr td {
+    vertical-align: top;
+  } */
+  .add-contact-table-section tr td:nth-child(2){
+    width: 100px;
   }
  
   /* .sortTableCSS responsive-table {
@@ -429,3 +436,13 @@ select{
   /* padding: 0 !important; */
   padding-left: 4px !important;
 }
+
+.add-contact-table-section .ng-autocomplete .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+ padding: 0;
+ border: none;
+}
+
+.add-contact-table-section  .autocomplete-container .input-container input:focus{
+  border-color:   #3d0096!important;
+ }
+
