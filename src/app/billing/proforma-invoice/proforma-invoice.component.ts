@@ -59,8 +59,6 @@ export class ProformaInvoiceComponent implements OnInit {
       console.log("PI list", response);
       if (response) {
         this.PI_list = response.proforma_details;
-
-
         console.log("proforma_details list", this.PI_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }

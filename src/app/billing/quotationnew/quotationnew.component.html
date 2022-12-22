@@ -909,10 +909,11 @@
                                 <table class="demoTable">
                                     <tr>
                                         <td>
+                                           
                                             <div class="form-check">
                                                 <input mdbRadio class="form-check-input" type="radio"
-                                                    name="radio_ApprovalBy" id="single"
-                                                    (change)="handle_radioChange($event)" />
+                                                    name="radio_ApprovalBy" id="single" checked
+                                                    (change)="handle_radioChange($event)"  />
                                                 <label class="form-check-label" for="single"> Single
                                                     Approval</label>
                                             </div>
@@ -920,11 +921,13 @@
                                             <!-- Default checked radio -->
                                             <div class="form-check">
                                                 <input mdbRadio class="form-check-input" type="radio"
-                                                    name="radio_ApprovalBy" id="double"
+                                                    name="radio_ApprovalBy" id="double" 
                                                     (change)="handle_radioChange($event)" />
                                                 <label class="form-check-label" for="double"> Double Approval
                                                 </label>
                                             </div>
+                                           
+                                          
                                         </td>
                                     </tr>
                                 </table>

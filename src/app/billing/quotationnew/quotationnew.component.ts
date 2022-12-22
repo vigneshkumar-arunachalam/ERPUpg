@@ -107,7 +107,7 @@ export class QuotationnewComponent implements OnInit {
   mailContent: any;
   FromEmailValue: any;
   //approval
-  approval_Show_hide: boolean;
+  approval_Show_hide: boolean= true;
   textarea_Show_hide: boolean;
   textarea1_Show_hide: boolean;
   approval_comments: any;
@@ -158,7 +158,7 @@ export class QuotationnewComponent implements OnInit {
     //   }
     // });
 
-
+    // this.handle_radioChange('single');
     this.searchBillerNameList = ["Cal4Care Pte Ltd", "Marshal System Consultancy", "Cal4Care", "Dcare Technologies Pte Ltd", "DCARE Technologies India Pvt Ltd.", "Cal4care Sdn.Bhd.", "Cal4Care Japan Co., Ltd", "1Msb IT Care Sdn. Bhd.", "Cal4care Telecommunication Services (I) PVT LTD"]
     this.addNewQuotationPopUpForm = new FormGroup({
       'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
