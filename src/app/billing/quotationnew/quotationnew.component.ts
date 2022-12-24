@@ -28,6 +28,8 @@ export class QuotationnewComponent implements OnInit {
   edit_quotationValidityList: any;
   edit_templateNameList: any;
   edit_quotationID: any;
+  //button flag
+  clicked = false;
   // duplicate modal
   duplicateQuotationPopUpForm: FormGroup;
   duplicate_quotationID: any;
@@ -62,7 +64,7 @@ export class QuotationnewComponent implements OnInit {
   quotationApprovalForm: FormGroup;
   quotationApprovalResult: any;
   checked = true;
-  Approval_Type_radiobox_Value: any;
+  Approval_Type_radiobox_Value: any='single';
   quotationApprovedBy: any;
   approvalUserID_Radio:any;
   //set template name
@@ -106,6 +108,7 @@ export class QuotationnewComponent implements OnInit {
   messageContent: any;
   mailContent: any;
   FromEmailValue: any;
+
   //approval
   approval_Show_hide: boolean= true;
   textarea_Show_hide: boolean;
@@ -912,6 +915,7 @@ export class QuotationnewComponent implements OnInit {
     quot_approval_req.action = "quotation_permission_user";
     quot_approval_req.quotationId = this.quotationApproval_ID;
     quot_approval_req.user_id = localStorage.getItem('user_id');
+    
     api_req.element_data = quot_approval_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1197,6 +1201,18 @@ export class QuotationnewComponent implements OnInit {
     });
 
 
+  }
+  fileAttachmentClear(){
+    this.FileAttachmentForm.reset();
+  }
+  quotationCommentsClear(){
+    this.quotationCommentsForm.reset();
+  }
+  quotationEmailClear(){
+    this.emailForm.reset();
+    this.msg_id = '';
+    this.quotationList({});
+    tinymce.activeEditor.setContent("");
   }
   fileAttachmentDelete(common_attachmentId: any) {
     this.commonAttachmentID = common_attachmentId;

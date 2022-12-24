@@ -7,12 +7,14 @@
                         <h3 style="margin-bottom: 0;">Quotation</h3>
                         <div class="quotation-btn-section">
                             <button type="button" *ngIf="(this.quotationPermission_Add=='1')"
+                            title="Add New Quotation"
                                 class="btn btn-primary btn-default btn-squared" data-toggle="modal"
                                 (click)="addQuotationNew()" data-target="#addNewQuotationFormId"
                                 style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
                             </button>
 
                             <button type="button" class="btn btn-primary" data-toggle="modal"
+                            title="Search"
                                 (click)="addQuotationNew()" data-target="#searchQuotationFormId">
                                 <i class="fas fa-search" style="margin-right:0;"></i>
                             </button>
@@ -996,7 +998,8 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="quotationApprovalUpdate()">
+                <button type="button" class="btn btn-primary" 
+                 (click)="quotationApprovalUpdate()">
                     Update
                 </button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1318,7 +1321,7 @@
                 <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()">
                     Save
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="fileAttachmentClear()">
                     Close
                 </button>
 
@@ -1483,7 +1486,7 @@
                     Mail
 
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="quotationEmailClear()">
                     Close
                 </button>
 
@@ -1529,7 +1532,7 @@
                 <button type="button" class="btn btn-primary" (click)="quotationCommentsSave()">
                     Save
                 </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="quotationCommentsClear()">
                     Close
                 </button>
 

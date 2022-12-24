@@ -3,23 +3,12 @@
     <form [formGroup]="addPI_section1">
         <div class="row">
 
-            <div class="col-lg-12">
-                <div class="form-group row">
-                    <div class="form-check form-check-inline ml-3"  *ngFor="let radio of initial_Radio;let i=index">
-                        <input class="form-check-input" type="radio" name="initial" id="initial{{i}}"
-                            formControlName="initial" value="{{radio.id}}"  (change)="handleChange_initial(radio.id,$event)">
-                        <label class="form-check-label" for="initial{{i}}">{{radio.name}}</label>
-                    </div>
-                   
-                </div>
-            </div>
-
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
                     <div class="col-lg-12">
                         <select name="enqFormValue" id="cmp_name" class="form-control" 
-                        formControlName="companyName" (change)="getCustomerInvoiceDetails($event)">
+                        formControlName="companyName" (change)="getProformaBillerDetails($event);getCustomerInvoiceDetails($event)">
                             <option [ngValue]="null" selected disabled>Select Company Name</option>
                             <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                 {{comp_name.billerName}}
@@ -38,27 +27,53 @@
                     </div>
                 </div>
             </div>
+        
+
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="billto" class="col-lg-12 col-form-label">Bill To*</label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="BillTo"
-                            [attr.readonly]="isReadOnly" id="billto" />
+                    <label for="customerName" class="col-lg-12 col-form-label">Bill To*</label>
+                    <div class="ng-autocomplete">
+
+                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
+                            formControlName="BillTo" 
+                            (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateCustomer let-item>
+                            <a [innerHTML]="item.customerName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+                        <!-- <div *ngIf="addQuotationInvoice_section1.controls['customerName'].invalid && (addQuotationInvoice_section1.controls['customerName'].dirty || addQuotationInvoice_section1.controls['customerName'].touched)"
+                            class=" mt-2 ml-2 mr-2 alert alert-danger">
+                            Customer Name is Required
+                        </div> -->
                     </div>
+
                 </div>
             </div>
+           
             <div class="col-lg-6">
-                <div class="form-group row" *ngFor="let dis of dynamicChangeText">
-                    <label for="regg" class="col-lg-12 col-form-label">{{dis.name}}</label>
+                <div class="form-group row" >
+                    <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_tinName}}</label>
                     <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="Reg" [attr.readonly]="isReadOnly"
-                            id="regg" />{{dis.id}}
-                    </div>
-                    <!-- <label for="regg" class="col-lg-12 col-form-label">{{dis.name}}</label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="Reg" [attr.readonly]="isReadOnly"
+                        <input type="text " class="form-control" formControlName="tin" [attr.readonly]="isReadOnly"
                             id="regg" />
-                    </div>  -->
+                    </div>
+                 
+                    
+                </div>
+                <div class="form-group row" >
+                  
+                    <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_cstName}}</label>
+                    <div class="col-lg-12">
+                        <input type="text " class="form-control" formControlName="cst" [attr.readonly]="isReadOnly"
+                            id="regg" />
+                    </div> 
+                    
                 </div>
             </div>
             <div class="col-lg-6">
@@ -76,28 +91,10 @@
                 <div class="form-group row">
                     <label for="po" class="col-lg-12 col-form-label">PO.No</label>
                     <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="PoNo" [attr.readonly]="isReadOnly"
+                        <input type="text " class="form-control" formControlName="PoNo" 
                             id="po" />
                           
                     </div>
-                    <label for="po" class="col-lg-12 col-form-label">PO.No</label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="PoNo" [attr.readonly]="isReadOnly"
-                            id="po" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="gstt" class="col-lg-12 col-form-label">GST #</label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="GST" [attr.readonly]="isReadOnly"
-                            id="gstt" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
                     <label for="datee" class="col-lg-12 col-form-label">Date *</label>
                     <div class="col-lg-12">
                         <input type="date" class="form-control" formControlName="Date" 
@@ -105,12 +102,31 @@
                     </div>
                 </div>
             </div>
+            <!-- <div class="col-lg-6">
+                <div class="form-group row">
+                    <label for="gstt" class="col-lg-12 col-form-label">GST #</label>
+                    <div class="col-lg-12">
+                        <input type="text " class="form-control" formControlName="GST" [attr.readonly]="isReadOnly"
+                            id="gstt" />
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div class="col-lg-6">
+                <div class="form-group row">
+                  
+                </div>
+            </div> -->
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="attn1" class="col-lg-12 col-form-label">Attn</label>
                     <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="Attn_1" [attr.readonly]="isReadOnly"
+                        <input type="text" class="form-control" formControlName="Attn_1" 
                             id="attn1" />
+                    </div>
+                    <label for="podatee" class="col-lg-12 col-form-label">PO.Date</label>
+                    <div class="col-lg-12">
+                        <input type="date" class="form-control" formControlName="PoDate" 
+                            id="podatee" />
                     </div>
                 </div>
             </div>
@@ -125,15 +141,11 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="podatee" class="col-lg-12 col-form-label">PO.Date</label>
-                    <div class="col-lg-12">
-                        <input type="date" class="form-control" formControlName="PoDate" 
-                            id="podatee" />
-                    </div>
+                 
                 </div>
-            </div>
+            </div> -->
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="sales_rep" class="col-lg-12 col-form-label">Sales Rep</label>
@@ -174,7 +186,7 @@
                 <div class="form-group row">
                     <label for="attn2" class="col-lg-12 col-form-label">Attn</label>
                     <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="Attn_2" [attr.readonly]="isReadOnly"
+                        <input type="text" class="form-control" formControlName="Attn_2" 
                             id="attn2" />
                     </div>
                 </div>
@@ -184,7 +196,7 @@
                 <div class="form-group row">
                     <label for="term" class="col-lg-12 col-form-label">Terms</label>
                     <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="terms" [attr.readonly]="isReadOnly"
+                        <input type="text" class="form-control" formControlName="terms" 
                             id="term" />
                     </div>
                 </div>
@@ -201,7 +213,7 @@
                 <div class="form-group row">
                     <label for="curren" class="col-lg-12 col-form-label">Currency</label>
                     <div class="col-lg-12">
-                        <select id="curren" class="form-control" formControlName="Currency">
+                        <select id="curren" class="form-control" formControlName="Currency" (change)="getCurrencyValues($event)">
                             <option [ngValue]="null" selected disabled>Select Currency</option>
                             <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
                                 {{comp_name.currency_name}}
@@ -215,6 +227,7 @@
                     <label for="ccr" class="col-lg-12 col-form-label">Currency Conversion Rate</label>
                     <div class="col-lg-12">
                         <input type="text" class="form-control" formControlName="CurrencyConversionRate"
+                        [(ngModel)]="CurrencyConversionRateDefault" 
                             [attr.readonly]="isReadOnly" id="ccr" />
                     </div>
                 </div>
@@ -225,7 +238,7 @@
                     <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
                     <div class="col-lg-12">
                         <select id="Payment" class="form-control" formControlName="PaymentVia">
-                            <option [ngValue]="null" selected disabled>Select Currency</option>
+                            <option [ngValue]="null" selected disabled>Select Payment Via</option>
                             <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
                                 {{payment.paymentvia_name}}
                             </option>
@@ -238,7 +251,7 @@
                 <div class="form-group row">
                     <div class="form-check form-check-inline"  *ngFor="let radio1 of exportState_Radio;let i=index">
                         <input class="form-check-input" type="radio" name="export_state" id="export_state{{i}}"
-                            formControlName="export_state" value="{{radio1.id}}"  (change)="handleChange(radio1.id,$event)">
+                          formControlName="export_state" value="{{radio1.id}}"  (change)="handleChange(radio1.id,$event)">
                         <label class="form-check-label" for="export_state{{i}}">{{radio1.name}}</label>
                     </div>
                    
@@ -648,15 +661,7 @@
 
 
 
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label style="font-style: italic;color:#009688">
-                                    (Signature not available. Ask your administrator to upload your
-                                    signature if required)
-                                </label>
 
-                            </div>
-                        </div>
 
                         <div class="col-lg-12">
                             <div class="form-group row">
@@ -666,7 +671,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="checkbox"  formControlName="section3_termCondition" />
+                                    <input type="checkbox"  [(ngModel)]="chkTermsandcondition" formControlName="section3_termCondition" (change)="chkTermsandconditionEvent($event)"/>
                                 </div>
 
 
@@ -681,9 +686,19 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="checkbox"  formControlName="section3_receivedAuthorizedSignature" />
+                                    <input type="checkbox"   [(ngModel)]="chkReceivedAuthorizedSignature" formControlName="section3_receivedAuthorizedSignature" 
+                                    (change)="chkReceivedAuthorizedSignatureEvent($event)"/>
                                 </div>
 
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label style="font-style: italic;color:#009688">
+                                    (Signature not available. Ask your administrator to upload your
+                                    signature if required)
+                                </label>
 
                             </div>
                         </div>
@@ -696,7 +711,7 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="checkbox"  formControlName="section3_logo" />
+                                    <input type="checkbox"  [(ngModel)]="chklogoAddressSignature" formControlName="section3_logo" (change)="chklogoAddressSignatureEvent($event)"/>
                                 </div>
 
 

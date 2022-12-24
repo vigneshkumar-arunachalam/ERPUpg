@@ -6,8 +6,18 @@
                     <div class="card-header color-dark fw-500">
                      Contract File Details
                    
-                        <button type="button" class="btn btn-primary btn-default btn-squared " data-toggle="modal" data-target="#addCustomerContractFileId">Add Contract File
-                        </button>
+                        <!-- <button type="button" class="btn btn-primary btn-default btn-squared " title="Add Contract File" data-toggle="modal" data-target="#addCustomerContractFileId">Add Contract File
+                        </button> -->
+                        <div class="quotation-btn-section">
+                            <button type="button" 
+                            title="Add Contract File"
+                                class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+                                 data-target="#addCustomerContractFileId"
+                                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
+                            </button>
+
+                           
+                        </div>
                         
                     </div>
                     <div class="card-body">
@@ -52,8 +62,7 @@
                                                 <ul class="orderDatatable_actions">
                                                 <li>
                                                     <a class="view" title="Delete" (click)="deleteFile(list.contract_master_file_id)">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path><line x1="18" y1="9" x2="12" y2="15"></line><line x1="12" y1="9" x2="18" y2="15"></line></svg>
-                                                        
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>                                                        
                                                     </a>
 
                                                 </li>
@@ -121,7 +130,7 @@ aria-hidden="true">
             <button type="button" class="btn btn-primary" (click)="send_file()" >
                 Save
              </button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            <button type="button" class="btn btn-dark" (click)="clear_file()" data-dismiss="modal">
                 Close
             </button>
            

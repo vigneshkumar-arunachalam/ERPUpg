@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
-
+declare var $: any;
+declare var iziToast: any;
 @Component({
   selector: 'app-add-pi',
   templateUrl: './add-pi.component.html',
@@ -26,6 +27,9 @@ export class AddPIComponent implements OnInit {
   radio_Select: any;
   exportState_Radio: any;
   initial_Radio: any;
+  //auto complete
+  searchResult:any;
+
   //checkbox
   mile_check_value: any;
   dynamicCheckboxwithKey: any;
@@ -46,18 +50,29 @@ export class AddPIComponent implements OnInit {
   itre = 0;
 //others
 dynamicChangeText:any;
+CurrencyConversionRateDefault:any=1;
+getCurrencyCode:any;
+//getProformaBillerDetails
+getProformaBillerDetails_BillerID:any;
+getProformaBillerDetails_tinName:any;
+getProformaBillerDetails_tinNo:any;
+getProformaBillerDetails_cstName:any;
+getProformaBillerDetails_cstNo:any;
+//section-3 checkbox
+chkTermsandcondition:boolean=false;
+chkReceivedAuthorizedSignature:boolean=true;
+chklogoAddressSignature:boolean=true;
 
- 
-  
+
   constructor(private serverService: ServerService, private fb: FormBuilder) {
  
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
   }
-
+ keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    
+    console.log("this.chkTermsandcondition",this.chkTermsandcondition)
     this.loadADD();
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
@@ -86,7 +101,7 @@ dynamicChangeText:any;
 
     ];
     this.exportState_Radio = [
-      { name: 'Local', selected: false, id: 1 },
+      { name: 'Local', selected: true, id: 1 },
       { name: 'Export', selected: false, id: 2 },
       { name: 'Zero Valid', selected: false, id: 3 },
 
@@ -103,6 +118,8 @@ dynamicChangeText:any;
       'companyName': new FormControl(),
       'invoiceNo': new FormControl(),
       'BillTo': new FormControl(),
+      'tin': new FormControl(),
+      'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
       'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
@@ -253,6 +270,28 @@ dynamicChangeText:any;
 
     }
   }
+  chkTermsandconditionEvent(event: any) {
+    this.chkTermsandcondition = event.target.checked;
+    console.log(this.chkTermsandcondition)
+  }
+  chkReceivedAuthorizedSignatureEvent(event: any){
+    this.chkReceivedAuthorizedSignature = event.target.checked;
+    console.log(this.chkReceivedAuthorizedSignature)
+  }
+  chklogoAddressSignatureEvent(event: any){
+    this.chklogoAddressSignature = event.target.checked;
+    console.log(this.chklogoAddressSignature)
+  }
+
+  keywordCustomerName = 'customerName';
+
+  selectEventCustomer(item: any) {
+    console.log(item)
+    // do something with selected item
+  }
+  onFocusedCustomer(e: any) {
+    // do something when input is focused
+  }
   loadADD() {
     let api_req: any = new Object();
     let addAPI: any = new Object();
@@ -271,6 +310,30 @@ dynamicChangeText:any;
       this.paymentviaList=response.paymentvia;
       console.log("response-load-pi",response)
     });
+  }
+  searchCustomerData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quot_customer_name";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "quot_customer_name";
+    api_Search_req.user_id = localStorage.getItem('user_id');
+    api_Search_req.billerId = this.addPI_section1.value.companyName;
+    api_Search_req.key_word = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_name response", response);
+      this.searchResult = response.customer_list;
+
+      if (response.status = true) {
+
+      }
+
+    });
+
   }
   save(){
     let api_req: any = new Object();
@@ -352,7 +415,7 @@ dynamicChangeText:any;
       if (response.status == true) {
         this.addPI_section1.patchValue({
           'invoiceNo': response.invoice_no,
-          'Currency': response.currency_id,
+          // 'Currency': response.currency_id,
         
          
         });
@@ -365,6 +428,90 @@ dynamicChangeText:any;
 
     });
 
+  }
+
+  getProformaBillerDetails(event: any) {
+    this.getProformaBillerDetails_BillerID = event.target.value;
+    let api_req: any = new Object();
+    let add_BillerDetails_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/get_proforma_biller_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    add_BillerDetails_req.action = "get_proforma_biller_details";
+    add_BillerDetails_req.billerId = this.getProformaBillerDetails_BillerID;
+    api_req.element_data = add_BillerDetails_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log(response);
+
+     
+      if (response != '') {
+        this.getProformaBillerDetails_tinName=response.biller_details[0].tinName;
+        this.getProformaBillerDetails_tinNo=response.biller_details[0].tinNo;
+        this.getProformaBillerDetails_cstName=response.biller_details[0].cstName;
+        this.getProformaBillerDetails_cstNo=response.biller_details[0].cstNo;
+        this.addPI_section1.patchValue({
+          'tin': response.biller_details[0].tinNo,
+          'cst': response.biller_details[0].cstNo,
+          'Currency': response.def_currency_id,
+          'PaymentVia': response.def_paymentvia_id,
+
+        });
+
+      }
+      else {
+
+        iziToast.warning({
+          message: "GetProformaBillerDetails API error. Please try again",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log(error);
+      }
+
+
+
+
+  }
+  getCurrencyValues(event:any){
+   console.log("event.target;",event.target) ;
+    this.getCurrencyCode = event.target.value;
+    console.log("billerID check", this.billerID);
+
+    let api_req: any = new Object();
+    let api_getInvoiceDetails_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/get_currency_values";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getInvoiceDetails_req.action = "get_currency_values";
+    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_BillerID;
+    api_getInvoiceDetails_req.currency_code =   this.getCurrencyCode;
+    api_req.element_data = api_getInvoiceDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response!='') {
+        this.addPI_section1.patchValue({
+          'CurrencyConversionRate': response.currency_live_val,
+
+        });
+
+      }
+      else {
+       
+      }
+
+    });
   }
 
 }

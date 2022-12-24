@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import Swal from 'sweetalert2';
 
 
 declare var $: any;
@@ -46,6 +47,7 @@ export class EditquotationnewComponent implements OnInit {
   radioSelectFooterChecked:boolean=false;
   checkbox_descriptionDetails_DontShow:boolean=true;
   checkbox_termsCondition_DontShow:boolean=false;
+  sign_state:any;
   searchResult: any;
   customerName_Data: any;
   billerList: any;
@@ -331,7 +333,7 @@ selectAdditionalSignUnchecked:boolean=false;
 	     api_req.api_type = "web";
 	         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
 		     api_dynamicDropdown_req.action = "get_customercbo_quat_no";
-		         api_dynamicDropdown_req.user_id = localStorage.getItem('user_id');
+		         api_dynamicDropdown_req.user_id = this.editQuotationInvoice_section1.value.e_salesRep;
 			     api_dynamicDropdown_req.billerId = this.billerID;
 			         api_req.element_data = api_dynamicDropdown_req;
 				   this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -446,7 +448,7 @@ selectAdditionalSignUnchecked:boolean=false;
       console.log("edit quotation response", response);
       if (response != '') {
         // this.dynamicChange_edit(response.quotation_details[0].billerId);
-        console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
+      //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
         this.SalesRepList = response.sales_rep;
         this.SalesResellerList = response.sales_reseller;
         this.SelectTemplateList = response.quotation_template;
@@ -532,6 +534,12 @@ selectAdditionalSignUnchecked:boolean=false;
       this.finalDiscountType = '';
       this.finalDiscountVal='';
       this.finalDiscount='';
+      console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
+     
+      if(response.quotation_details[0].signature_filename!=''){
+        this.sign_state=1;
+      }
+      this.quotationAddSignature_filename=response.quotation_details[0].signature_filename;
 
       if(response.quotation_details[0].par_dis_per!=''){
         this.finalDiscountType = 'per';
@@ -574,7 +582,7 @@ selectAdditionalSignUnchecked:boolean=false;
 
 
         });
-        this.quotationAddSignatureEdit();
+        this.quotationAddSignatureEdit(this.sign_state);
         //this.tax_per_mod = response.quotation_details[0].tax_id1;
 
         // $('#test_2').prop('checked', true);
@@ -635,7 +643,8 @@ selectAdditionalSignUnchecked:boolean=false;
 
     });
   }
-  quotationAddSignatureEdit(){
+  quotationAddSignatureEdit(sign_val:any){
+    //alert('sign_state'+sign_state);
     let api_req: any = new Object();
     let api_quotationAddSignatureEdit_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -643,8 +652,10 @@ selectAdditionalSignUnchecked:boolean=false;
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationAddSignatureEdit_req.action = "quotation_add_signature_edit";
-    api_quotationAddSignatureEdit_req.user_id = localStorage.getItem('user_id');
-    api_quotationAddSignatureEdit_req.billerId = this.billerID ;
+    //api_quotationAddSignatureEdit_req.user_id = localStorage.getItem('user_id');
+    api_quotationAddSignatureEdit_req.user_id = this.editQuotationInvoice_section1.value.e_salesRep;
+   // api_quotationAddSignatureEdit_req.billerId = this.billerID ;
+    api_quotationAddSignatureEdit_req.billerId = this.editQuotationInvoice_section1.value.e_companyName;
     api_quotationAddSignatureEdit_req.quotationId= this.editQuotationID ;
     api_req.element_data = api_quotationAddSignatureEdit_req;
 
@@ -655,7 +666,11 @@ selectAdditionalSignUnchecked:boolean=false;
       
         this.quotationAddSignature_state=response.signature_state;
         this.checkbox_selectAdditionalSignature = true
-        this.quotationAddSignature_filename=response.signature_filename;
+        if(sign_val==0){
+          console.log('response.signature_filename'+response.signature_filename);
+          this.quotationAddSignature_filename=response.signature_filename;
+        }
+       
         this.quotationAddSignatureCHKShowState=response.quot_signature_show_state;
 
         this.addQuotationInvoice_section3.patchValue({
@@ -1108,7 +1123,7 @@ console.log("response", response)
         sub_total_amt=total_amt;
       }
 
-      if ($('#pd_selectTax_' + a).prop('checked') == true) {
+      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod!=null)  {
         this.net_amt = $('#pd_netPrice_' + a).val();
 
         tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
@@ -1400,13 +1415,58 @@ this.DiscountForm.reset();
     this.extraCharge = parseFloat(fee);
     this.totalCalculate();
   }
-removeAddress(i: number) {
-    this.addresses.removeAt(i);
-var addr = this.addQuotationInvoice_section2.value.addresses;
-    var list_cnt = addr.length;
+  set_display_none(cnt:any){
+    if($('#pd_split_'+cnt).prop('checked')==true) {
+      $('#pd_productName_txtArea_'+cnt).fadeOut(1000);
+      $('#pd_qty_'+cnt).fadeOut(1000);
+      $('#pd_unit_'+cnt).fadeOut(1000);
+      $('#pd_SP_'+cnt).fadeOut(1000);
+      $('#discount_btn_'+cnt).fadeOut(1000);
+      $('#pd_Total_'+cnt).fadeOut(1000);
+      $('#sub_discount_'+cnt).fadeOut(1000);
+      $('#pd_netPrice_'+cnt).fadeOut(1000);
+    }else{
+      $('#pd_productName_txtArea_'+cnt).fadeIn(1000);
+      $('#pd_qty_'+cnt).fadeIn(1000);
+      $('#pd_unit_'+cnt).fadeIn(1000);
+      $('#pd_SP_'+cnt).fadeIn(1000);
+      $('#discount_btn_'+cnt).fadeIn(1000);
+      $('#pd_Total_'+cnt).fadeIn(1000);
+      $('#sub_discount_'+cnt).fadeIn(1000);
+      $('#pd_netPrice_'+cnt).fadeIn(1000);
+    }
+}
 
-    this.totalCalculate();
-  }
+removeAddress(i: number) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.value) {
+      this.addresses.removeAt(i);
+      var addr = this.addQuotationInvoice_section2.value.addresses;
+      var list_cnt = addr.length;
+      this.totalCalculate();
+     
+     
+    }
+  })
+
+
+}
+
+// removeAddress(i: number) {
+//     this.addresses.removeAt(i);
+// var addr = this.addQuotationInvoice_section2.value.addresses;
+//     var list_cnt = addr.length;
+
+//     this.totalCalculate();
+//   }
   // productDetails_selectTax_eventCheck(e: any, i: any) {
     // this.checkbox_productDetails_selectTax = e.target.checked
     // console.log(this.checkbox_productDetails_selectTax);

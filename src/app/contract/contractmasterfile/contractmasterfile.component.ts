@@ -87,6 +87,9 @@ export class ContractmasterfileComponent implements OnInit {
     });
 
   }
+  clear_file(){
+  $('#contractfile').val('');
+  }
  deleteFile(id:any){
   var id=id;
   let api_req: any = new Object();

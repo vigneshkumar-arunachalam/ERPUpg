@@ -353,6 +353,9 @@ quotationAddSignature_filename:any;
             // 'DescriptionText': response.quotation_desp_det,
           });
 
+          this.currencyNew_RadioValue = response.currency_id;         
+          //this.currencyQuotationTermChange();
+
 
         }
         else {
@@ -1052,7 +1055,7 @@ quotationAddSignature_filename:any;
         sub_total_amt = total_amt;
       }
 
-      if ($('#pd_selectTax_' + a).prop('checked') == true) {
+      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod!=null)  {
         this.net_amt = $('#pd_netPrice_' + a).val();
 
         tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
