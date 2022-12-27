@@ -447,7 +447,7 @@ selectAdditionalSignUnchecked:boolean=false;
 
       console.log("edit quotation response", response);
       if (response != '') {
-        // this.dynamicChange_edit(response.quotation_details[0].billerId);
+        this.dynamicChange_edit(response.quotation_details[0].billerId);
       //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
         this.SalesRepList = response.sales_rep;
         this.SalesResellerList = response.sales_reseller;

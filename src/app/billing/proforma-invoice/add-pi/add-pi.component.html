@@ -35,7 +35,9 @@
                     <div class="ng-autocomplete">
 
                         <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
-                            formControlName="BillTo" (inputChanged)='searchCustomerData($event)'
+                            formControlName="BillTo"
+                            (selected)='searchCustomer_selectDropdownData($event)'
+                             (inputChanged)='searchCustomerData($event)'
                             (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
                             [notFoundTemplate]="notFoundTemplate">
                         </ng-autocomplete>
@@ -282,18 +284,18 @@
                         <label class="form-check-label" for="inlineCheckbox{{i}}">{{display.name}} </label>
                       </div> -->
                       <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox"  checked
+                        <input class="form-check-input" type="radio"  checked name="select"
                         id="inlineCheckbox2" value="mile Discount" (change)="mile($event)">
                         <label class="form-check-label" for="inlineCheckbox2"> mile Discount</label>
                       </div>
                        <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" 
+                        <input class="form-check-input" type="radio" name="select"
                         id="inlineCheckbox2" value="Mile Stone" (change)="mile($event)">
                         <label class="form-check-label" for="inlineCheckbox2"> Mile Stone</label>
                       </div>
                       <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                        value="M S Display" (change)="mile($event)">
+                        value="M S Display" (change)="handleChange_MSDisplay($event)">
                         <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
                       </div> 
                 </div>
@@ -772,7 +774,7 @@
                         </div>
                         <div class="buttonAlign">
                             <button type="button" class="btn btn-success ">Back</button>
-                            <button type="button" class="btn btn-danger ">Submit</button>
+                            <button type="button" class="btn btn-danger" (click)=" save()">Submit</button>
                             <button type="button" class="btn btn-dark ">Submit & Send Email</button>
                         </div>
 

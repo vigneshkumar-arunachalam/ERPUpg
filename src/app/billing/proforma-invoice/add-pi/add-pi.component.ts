@@ -52,6 +52,8 @@ export class AddPIComponent implements OnInit {
   dynamicChangeText: any;
   CurrencyConversionRateDefault: any = 1;
   getCurrencyCode: any;
+  //autocomplete
+  customerName_Data :any;
   //getProformaBillerDetails
   getProformaBillerDetails_BillerID: any;
   getProformaBillerDetails_tinName: any;
@@ -66,6 +68,7 @@ export class AddPIComponent implements OnInit {
 export_state_Local: boolean = true;
 export_state_Export:any;
 export_state_ZeroValid: boolean = true;
+MSDisplay_Value: boolean = true;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
@@ -256,6 +259,10 @@ export_state_ZeroValid: boolean = true;
     this.mile_check_value = e.target.value;
     console.log(this.mile_check_value);
   }
+  handleChange_MSDisplay(event:any){
+this.MSDisplay_Value=event.target.value;
+console.log(this.MSDisplay_Value);
+  }
   // EditCHK_MileDiscount(data: any, event: any) {
   //   console.log("List - CheckBox ID", data);
   //   this.groupSelectCommonId_MileDiscount = data;
@@ -312,6 +319,7 @@ export_state_ZeroValid: boolean = true;
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
+
     console.log(item)
     // do something with selected item
   }
@@ -372,19 +380,54 @@ export_state_ZeroValid: boolean = true;
     });
 
   }
+  searchCustomer_selectDropdownData(data: any) {
+
+    console.log("search data in dropdown", data)
+    console.log("search data-customer Id", data.customerId)
+    this.customerName_Data = data.customerId;
+    let api_req: any = new Object();
+    let api_SearchCUST_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quot_customer_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_SearchCUST_req.action = "quot_customer_details";
+    api_SearchCUST_req.user_id = localStorage.getItem('user_id');
+    api_SearchCUST_req.customerId = this.customerName_Data
+    api_req.element_data = api_SearchCUST_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      if (response.status == true) {
+
+        this.addPI_section1.patchValue({
+
+
+        
+        });
+      }
+      else {
+        this.addPI_section1.patchValue({
+
+
+        });
+      }
+
+    });
+  }
   save() {
     let api_req: any = new Object();
     let api_savePI_req: any = new Object();
     api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/insert_quotation";
+    api_req.api_url = "quotation/insert_proforma";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_savePI_req.action = "insert_quotation";
+    api_savePI_req.action = "insert_proforma";
     api_savePI_req.user_id = localStorage.getItem('user_id');
 
     api_savePI_req.company = this.addPI_section1.value.company;
     api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
-    api_savePI_req.customer_name = this.addPI_section1.value.BillTo;
+    api_savePI_req.customer_name = this.customerName_Data;
     api_savePI_req.tinNo = this.addPI_section1.value.Reg;
     api_savePI_req.b_address1 = this.addPI_section1.value.address_1;
     api_savePI_req.b_address2 = this.addPI_section1.value.address_2;
@@ -417,7 +460,7 @@ export_state_ZeroValid: boolean = true;
     api_savePI_req.terms_cond_chk = this.addPI_section1.value.section3_termCondition;
     api_savePI_req.received_signature = this.addPI_section1.value.section3_receivedAuthorizedSignature;
     api_savePI_req.logo = this.addPI_section1.value.section3_logo;
-
+    api_req.element_data = api_savePI_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 

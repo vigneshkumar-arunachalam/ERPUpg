@@ -33,7 +33,7 @@ input.form-control {
 }
 
 
-.userDatatable-content{position: relative;top:-25px;}
+/* .userDatatable-content{position: relative;top:-25px;} */
 
 .userDatatable-content button.btn.btn-danger.btn-sm{
   height: 35px;

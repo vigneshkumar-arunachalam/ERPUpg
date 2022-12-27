@@ -6,16 +6,27 @@
                     <div class="card-header color-dark fw-500">
                         Contract Details
 
-                        <button type="button" class="btn btn-primary btn-default btn-squared " data-toggle="modal"
-                            data-target="#addCustomerContractId" (click)="addContractOpen()">Add Contract
-                        </button>
-                        <button type="button" class="btn btn-success btn-default btn-squared " (click)="contractEditGroup()">Edit Group Contract
-                        </button>
-                        <button type="button" class="btn btn-secondary btn-default btn-squared " data-toggle="modal"
-                            data-target="#deleteCustomerContractId" (click)="contractDeleteGroup()">Delete Group
-                            Contract
-                        </button>
+                        <!-- <div class="quotation-btn-section">
+                           
+                        </div>    -->
+                        <div class="quotation-btn-section">
+                            <button type="button" title="Add New Customer Contract"
+                                class="btn btn-primary btn-default btn-squared " data-toggle="modal"
+                                data-target="#addCustomerContractId" (click)="addContractOpen()"><i class="fas fa-plus"
+                                    style="margin-right: 10px;"></i>
+                            </button>
+                            <button type="button" title="Edit Customer Contract"
+                                class="ml-2 btn btn-primary btn-default btn-squared " (click)="contractEditGroup()"
+                                style="margin-right: 10px;">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" title="Delete  Contract"
+                                class="btn btn-primary btn-default btn-squared " data-toggle="modal"
+                                data-target="#deleteCustomerContractId" (click)="contractDeleteGroup()"><i
+                                    class="fas fa-window-close" style="margin-right: 10px;"></i>
 
+                            </button>
+                        </div>
 
                     </div>
                     <div class="card-body">
@@ -111,7 +122,16 @@
                                                             <li class="dropdown__item">
                                                                 <a class="view" title="Delete Contract"
                                                                     (click)="deleteContract(list.customer_contract_id)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-x-square">
+                                                                        <rect x="3" y="3" width="18" height="18" rx="2"
+                                                                            ry="2"></rect>
+                                                                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                                                                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                                                                    </svg>
 
                                                                 </a>
 
@@ -121,7 +141,16 @@
                                                                     data-toggle="modal"
                                                                     data-target="#fileAttachmentCustomerContractId"
                                                                     (click)="contractfileAttachment(list.customer_contract_id,list.customer_id)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-file">
+                                                                        <path
+                                                                            d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
+                                                                        </path>
+                                                                        <polyline points="13 2 13 9 20 9"></polyline>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
@@ -129,7 +158,17 @@
                                                                     data-toggle="modal"
                                                                     data-target="#invoiceAttachmentId"
                                                                     (click)="invoiceAttachment(list.customer_contract_id,list.customer_id)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-upload"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-upload">
+                                                                        <path
+                                                                            d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4">
+                                                                        </path>
+                                                                        <polyline points="17 8 12 3 7 8"></polyline>
+                                                                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                                                                    </svg>
 
                                                                 </a>
                                                             </li>
@@ -137,7 +176,15 @@
                                                                 <a class="remove" title="Contract Remarks"
                                                                     data-toggle="modal" data-target="#contractRemarksId"
                                                                     (click)="contractRemarksEdit(list.customer_contract_id)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-twitch"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-twitch">
+                                                                        <path
+                                                                            d="M21 2H3v16h5v4l4-4h5l4-4V2zm-10 9V7m5 4V7">
+                                                                        </path>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
@@ -145,8 +192,18 @@
                                                                     data-toggle="modal"
                                                                     data-target="#fileContractGenerateId"
                                                                     (click)="fileContractGenerateRowID(list.customer_contract_id)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder-plus"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
-                                                                 </a>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-folder-plus">
+                                                                        <path
+                                                                            d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z">
+                                                                        </path>
+                                                                        <line x1="12" y1="11" x2="12" y2="17"></line>
+                                                                        <line x1="9" y1="14" x2="15" y2="14"></line>
+                                                                    </svg>
+                                                                </a>
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="remove" title="File Temporary"
@@ -154,14 +211,33 @@
                                                                     data-target="#fileContractTemporaryId"
                                                                     (click)="dropdownGenerateTemporaryMasterFile(list.customer_contract_id)">
 
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-minus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-file-minus">
+                                                                        <path
+                                                                            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z">
+                                                                        </path>
+                                                                        <polyline points="14 2 14 8 20 8"></polyline>
+                                                                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                                                                    </svg>
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="view" title="Email"
                                                                     (click)="Email(list.customer_contract_id)"
                                                                     data-toggle="modal" data-target="#TextEditorId">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-at-sign">
+                                                                        <circle cx="12" cy="12" r="4"></circle>
+                                                                        <path
+                                                                            d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94">
+                                                                        </path>
+                                                                    </svg>
 
                                                                 </a>
 
@@ -169,8 +245,19 @@
                                                             <li class="dropdown__item">
                                                                 <a class="remove" title="Bizz File"
                                                                     (click)="bizzFileContractEdit(list.customer_contract_id)"
-                                                                    data-toggle="modal" data-target="#BizzFileTextEditorId">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                                                                    data-toggle="modal"
+                                                                    data-target="#BizzFileTextEditorId">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-database">
+                                                                        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+                                                                        <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3">
+                                                                        </path>
+                                                                        <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5">
+                                                                        </path>
+                                                                    </svg>
                                                                 </a>
 
                                                             </li>
@@ -179,7 +266,15 @@
                                                                 <a class="view" title="Customer Contract Approve Status"
                                                                     (click)="customerContractApproveStatus(list.customer_contract_id)"
                                                                     data-toggle="modal" data-target="#ApproveStatusId">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-plus-circle">
+                                                                        <circle cx="12" cy="12" r="10"></circle>
+                                                                        <line x1="12" y1="8" x2="12" y2="16"></line>
+                                                                        <line x1="8" y1="12" x2="16" y2="12"></line>
+                                                                    </svg>
                                                                 </a>
 
                                                             </li>
@@ -251,7 +346,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <h3 style="text-align:left;color:rgb(141, 87, 129);font-weight: 500;">
-                                                Contract  {{i +
+                                                Contract {{i +
                                                 1}}</h3>&nbsp;&nbsp;
                                         </div>
 
@@ -302,7 +397,7 @@
                                                             <select name="contractNameID" id="contractNameID"
                                                                 class="form-control" aria-label="Default select example"
                                                                 formControlName="contractName">
-                                                                
+
                                                                 <option value="0">Select Contract</option>
 
                                                                 <option *ngFor="let display of contractDetails"
@@ -314,7 +409,7 @@
                                                     </td>
                                                 </tr>
 
-                                               
+
 
                                                 <tr>
                                                     <th>
@@ -467,7 +562,7 @@
                                 <div [formGroupName]="i">
                                     <div class="row">
                                         <div class="col-12">
-                                            <h3 style="text-align:left;color:rgb(141, 87, 129)"> Contract  {{i +
+                                            <h3 style="text-align:left;color:rgb(141, 87, 129)"> Contract {{i +
                                                 1}}</h3>&nbsp;&nbsp;
                                         </div>
 
@@ -491,7 +586,6 @@
                                                                 formControlName="e_company_Name"
                                                                 (selected)='selectEventCustomer($event)'
                                                                 (inputChanged)='searchCustomerData($event)'
-                                                              
                                                                 (inputFocused)='onFocusedCustomer($event)'
                                                                 [itemTemplate]="itemTemplateCustomer"
                                                                 [notFoundTemplate]="notFoundTemplate">
@@ -509,7 +603,7 @@
 
                                                     </td>
                                                 </tr>
-                                                 
+
                                                 <tr>
                                                     <th>
                                                         <span class="userDatatable-title">Contract Name</span>
@@ -526,7 +620,7 @@
                                                                     {{display.contract_name}}
                                                                 </option>
                                                             </select>
-                                                            <input type="hidden"  formControlName="e_contractID">
+                                                            <input type="hidden" formControlName="e_contractID">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -623,7 +717,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                
+
                 <button type="button" class="btn btn-primary" (click)="contractUpdate()">
                     Update
                 </button>
@@ -659,8 +753,9 @@
                     <div *ngFor="let i =index;let display1 of  secondResult;" style="padding-left: 30px;">
 
                         {{display1.uploaded_file_name}}
-                        <button type="button" (click)="contractAttachmentDelete(display1.contract_attachment_file_id)" class="btn btn-link"><span class="bi bi-trash"></span></button>
-                    <!-- <button >Delete</button> -->
+                        <button type="button" (click)="contractAttachmentDelete(display1.contract_attachment_file_id)"
+                            class="btn btn-link"><span class="bi bi-trash"></span></button>
+                        <!-- <button >Delete</button> -->
                     </div>
                     <br>
                     <label style="padding-left: 30px;font-weight:500;padding-top:10px;">Provision Attachment</label>
@@ -819,19 +914,19 @@ aria-hidden="true">
                     <div class="customer_remarks_data">
                         <div *ngFor="let item of add_address;let i = index">
                             <div>
-                                <div> 
+                                <div>
                                     <label for="remark_desc" class="headingLabel"> Name : </label>
                                     <span class="ml-2 remarkcss">{{item.firstName}}</span><br>
-                                    <label for="remark_dt" class="headingLabel"> Remark {{i+1}}  Date :</label>
+                                    <label for="remark_dt" class="headingLabel"> Remark {{i+1}} Date :</label>
                                     <span class="ml-2 remarkcss">{{item.remark_dt}}</span><br>
                                     <label for="remark_dt" class="headingLabel"> Remark {{i+1}} Description :</label>
                                     <span class="ml-2 remarkcss">{{item.remark_desc}}</span>
                                     <br>
                                     <br>
                                 </div>
-                        
+
                                 <div>
-                        
+
                                 </div>
                             </div>
                         </div>
@@ -988,8 +1083,8 @@ aria-hidden="true">
                     <!-- <a href="mailto:{{email}}">Contact via E-mail</a> -->
                     <div class="col-md-8 col-12">
                         <div class="form-group">
-                            
-                        <!-- <input formControlName="primaryEmail" email >
+
+                            <!-- <input formControlName="primaryEmail" email >
                         <input formControlName="primaryEmail" email="true" >  -->
                             <label for="emailto" class="col-lg-12 col-form-label">To</label>
                             <input type="email" id="emailto" class="form-control" formControlName="email_to">
@@ -998,9 +1093,11 @@ aria-hidden="true">
                             class="alert alert-danger">
                             Email 'To' is Required
                         </div> -->
-                        <div class="alert alert-danger" *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">Please
+                        <div class="alert alert-danger"
+                            *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                            Please
                             enter To Address</div>
-                          
+
 
                     </div>
                     <div class="col-md-8 col-12">
@@ -1033,8 +1130,8 @@ aria-hidden="true">
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" [disabled]="!emailForm.valid" 
-                (click)="testdatas()">Send Mail
+                <button type="button" class="btn btn-primary" [disabled]="!emailForm.valid" (click)="testdatas()">Send
+                    Mail
 
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -1065,24 +1162,27 @@ aria-hidden="true">
             </div>
             <div class="modal-body">
                 <form [formGroup]="emailBizzFileForm">
-                   
+
                     <div class="col-md-8 col-12">
                         <div class="form-group">
-                            
-                       
+
+
                             <label for="emailto" class="col-lg-12 col-form-label">To</label>
                             <input type="email" id="emailto_bizz" class="form-control" formControlName="bizz_email_to">
-                        </div>  
-                      
-                        <div class="alert alert-danger alertdangerCustomCSS" *ngIf="emailBizzFileForm.controls['bizz_email_to'].invalid && emailBizzFileForm.controls['bizz_email_to'].touched">Please
+                        </div>
+
+                        <div class="alert alert-danger alertdangerCustomCSS"
+                            *ngIf="emailBizzFileForm.controls['bizz_email_to'].invalid && emailBizzFileForm.controls['bizz_email_to'].touched">
+                            Please
                             enter To Address</div>
-                          
+
 
                     </div>
                     <div class="col-md-8 col-12">
                         <div class="form-group">
                             <label for="subject" class="col-lg-12 col-form-label">Subject</label>
-                            <input type="text" id="subject_bizz" class="form-control" formControlName="bizz_Subject_Content">
+                            <input type="text" id="subject_bizz" class="form-control"
+                                formControlName="bizz_Subject_Content">
                         </div>
                         <div *ngIf="emailBizzFileForm.controls['bizz_Subject_Content'].invalid && (emailBizzFileForm.controls['bizz_Subject_Content'].dirty || emailBizzFileForm.controls['bizz_Subject_Content'].touched)"
                             class="alert alert-danger alertdangerCustomCSS">
@@ -1092,24 +1192,23 @@ aria-hidden="true">
                     <div class="col-md-8 col-12">
                         <div class="form-group">
                             <label for="subject" class="col-lg-12 col-form-label">Description</label>
-                           
+
                         </div>
                     </div>
-                   
-                    <editor id="tinyBizzFileID"
-                    formControlName='bizzFileMailContent'
-                     [init]="{
+
+                    <editor id="tinyBizzFileID" formControlName='bizzFileMailContent' [init]="{
                     base_url: '/tinymce', 
                     suffix: '.min'
                            
                 }"></editor>
 
-                 
+
 
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" [disabled]="!emailBizzFileForm.valid" (click)="bizzFileContractEmail()">Send Mail
+                <button type="button" class="btn btn-primary" [disabled]="!emailBizzFileForm.valid"
+                    (click)="bizzFileContractEmail()">Send Mail
 
                 </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -1125,12 +1224,13 @@ aria-hidden="true">
 <!----------Modal Pop Up (END)  for Bizz File Text Editor in customer Contract------>
 
 <!----------Modal Pop Up (BEGIN)  for customer contract Approve Status in customer Contract------>
-<div class="modal fade" id="ApproveStatusId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="ApproveStatusId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content ">
             <div class="modal-header">
-                <h2 style="color: rgb(15, 20, 88);" class="modal-title" id="ApproveStatusModalLongTitle">Customer Contract Approve Status</h2>
+                <h2 style="color: rgb(15, 20, 88);" class="modal-title" id="ApproveStatusModalLongTitle">Customer
+                    Contract Approve Status</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1140,23 +1240,23 @@ aria-hidden="true">
                 <form [formGroup]="approveStatusForm">
                     <div class="col-lg-12">
                         <div class="form-group row">
-                          <label class="col-lg-12 col-form-label">Approve Status
-                            <input type="checkbox"  formControlName="cust_contract_status_approve" (change)="eventCheckApproveStatus($event)" />
+                            <label class="col-lg-12 col-form-label">Approve Status
+                                <input type="checkbox" formControlName="cust_contract_status_approve"
+                                    (change)="eventCheckApproveStatus($event)" />
 
-                          </label>
+                            </label>
                         </div>
-                      </div>
-              
+                    </div>
+
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" 
-                (click)="customerContractApproveStatusUpdate()">Update
-            </button>
+                <button type="button" class="btn btn-primary" (click)="customerContractApproveStatusUpdate()">Update
+                </button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
                     Close
                 </button>
-              
+
             </div>
         </div>
     </div>
