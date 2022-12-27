@@ -7,7 +7,7 @@ declare var iziToast: any;
   selector: 'app-add-pi',
   templateUrl: './add-pi.component.html',
   styleUrls: ['./add-pi.component.css'],
-  
+
 })
 export class AddPIComponent implements OnInit {
   public addPI_section1: FormGroup;
@@ -17,18 +17,18 @@ export class AddPIComponent implements OnInit {
   isReadOnly: boolean = false;
 
   //load add 
-  companyNameList:any;
-  currencyNameList:any;
-  ShipByList:any;
-  salesRepList:any;
-  paymentviaList:any;
-  billerID:any;
+  companyNameList: any;
+  currencyNameList: any;
+  ShipByList: any;
+  salesRepList: any;
+  paymentviaList: any;
+  billerID: any;
   //radio
   radio_Select: any;
   exportState_Radio: any;
   initial_Radio: any;
   //auto complete
-  searchResult:any;
+  searchResult: any;
 
   //checkbox
   mile_check_value: any;
@@ -48,31 +48,35 @@ export class AddPIComponent implements OnInit {
 
   test: boolean[] = [];
   itre = 0;
-//others
-dynamicChangeText:any;
-CurrencyConversionRateDefault:any=1;
-getCurrencyCode:any;
-//getProformaBillerDetails
-getProformaBillerDetails_BillerID:any;
-getProformaBillerDetails_tinName:any;
-getProformaBillerDetails_tinNo:any;
-getProformaBillerDetails_cstName:any;
-getProformaBillerDetails_cstNo:any;
-//section-3 checkbox
-chkTermsandcondition:boolean=false;
-chkReceivedAuthorizedSignature:boolean=true;
-chklogoAddressSignature:boolean=true;
+  //others
+  dynamicChangeText: any;
+  CurrencyConversionRateDefault: any = 1;
+  getCurrencyCode: any;
+  //getProformaBillerDetails
+  getProformaBillerDetails_BillerID: any;
+  getProformaBillerDetails_tinName: any;
+  getProformaBillerDetails_tinNo: any;
+  getProformaBillerDetails_cstName: any;
+  getProformaBillerDetails_cstNo: any;
+  //section-3 checkbox
+  chkTermsandcondition: boolean = false;
+  chkReceivedAuthorizedSignature: boolean = true;
+  chklogoAddressSignature: boolean = true;
+//export state-check box
+export_state_Local: boolean = true;
+export_state_Export:any;
+export_state_ZeroValid: boolean = true;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
- 
+
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
   }
- keywordCompanyName = 'customerName';
+  keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    console.log("this.chkTermsandcondition",this.chkTermsandcondition)
+    console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
@@ -108,9 +112,9 @@ chklogoAddressSignature:boolean=true;
     ];
 
     this.dynamicChangeText = [
-      { name: 'Reg #',  id: "1074305-H"},
-      { name: 'SST #',  id: "J31-1808-31016512 81100" },
-    
+      { name: 'Reg #', id: "1074305-H" },
+      { name: 'SST #', id: "J31-1808-31016512 81100" },
+
 
     ];
     this.addPI_section1 = new FormGroup({
@@ -143,6 +147,7 @@ chklogoAddressSignature:boolean=true;
       'CurrencyConversionRate': new FormControl(),
       'PaymentVia': new FormControl(),
       'export_state': new FormControl(),
+      'export_state1': new FormControl(),
       'mile_Discount': new FormControl(),
       'mile_MileStone': new FormControl(),
       'mile_MSDisplay': new FormControl(),
@@ -214,71 +219,92 @@ chklogoAddressSignature:boolean=true;
 
 
   }
+  handleChangeLocal(event:any){
+    this.export_state_Local = event.target.value;
+    console.log( this.export_state_Local);
+
+  }
+  handleChangeExport(event:any){
+    this.export_state_Export = event.target.value;
+    console.log(this.export_state_Export);
+
+  }
+  handleChangeZeroValid(event:any){
+    this.export_state_ZeroValid = event.target.value;
+    console.log(this.export_state_ZeroValid );
+
+  }
   handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
     var abc = id;
     console.log("radio button value", radioSelectInitial);
     console.log("radio button id value", abc);
   }
-  handleChange(id: any, evt: any) {
+  handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
-    var xyz = id;
+    // var xyz = id;
     console.log("radio button value", radioSelectFooter);
-    console.log("radio button id value", xyz);
+    // console.log("radio button id value", xyz);
+  }
+  handleChangeExtraLogo(event:any){
+    var Extralogo = event.target.value;
+    // var xyz = id;
+    console.log("radio button value", Extralogo);
+
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
     console.log(this.mile_check_value);
   }
-  EditCHK_MileDiscount(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
-    this.groupSelectCommonId_MileDiscount = data;
-    this.checkbox_value_MileDiscount = event.target.checked;
-    console.log(this.checkbox_value_MileDiscount)
-    if (this.checkbox_value_MileDiscount) {
+  // EditCHK_MileDiscount(data: any, event: any) {
+  //   console.log("List - CheckBox ID", data);
+  //   this.groupSelectCommonId_MileDiscount = data;
+  //   this.checkbox_value_MileDiscount = event.target.checked;
+  //   console.log(this.checkbox_value_MileDiscount)
+  //   if (this.checkbox_value_MileDiscount) {
 
-      this.edit_array_MileDiscount.push(data);
-      this.edit_array_MileDiscount.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
-    }
-    else {
-      const index = this.edit_array_MileDiscount.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array_MileDiscount.splice(index, 1);
-      }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
+  //     this.edit_array_MileDiscount.push(data);
+  //     this.edit_array_MileDiscount.join(',');
+  //     console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
+  //   }
+  //   else {
+  //     const index = this.edit_array_MileDiscount.findIndex((el: any) => el === data)
+  //     if (index > -1) {
+  //       this.edit_array_MileDiscount.splice(index, 1);
+  //     }
+  //     console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
 
-    }
-  }
-  EditCHK_ExtraLogo(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
-    this.groupSelectCommonId_ExtraLogo = data;
-    this.checkbox_value_ExtraLogo = event.target.checked;
-    console.log(this.checkbox_value_ExtraLogo)
-    if (this.checkbox_value_ExtraLogo) {
+  //   }
+  // }
+  // EditCHK_ExtraLogo(data: any, event: any) {
+  //   console.log("List - CheckBox ID", data);
+  //   this.groupSelectCommonId_ExtraLogo = data;
+  //   this.checkbox_value_ExtraLogo = event.target.checked;
+  //   console.log(this.checkbox_value_ExtraLogo)
+  //   if (this.checkbox_value_ExtraLogo) {
 
-      this.edit_array_ExtraLogo.push(data);
-      this.edit_array_ExtraLogo.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
-    }
-    else {
-      const index = this.edit_array_ExtraLogo.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array_ExtraLogo.splice(index, 1);
-      }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
+  //     this.edit_array_ExtraLogo.push(data);
+  //     this.edit_array_ExtraLogo.join(',');
+  //     console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
+  //   }
+  //   else {
+  //     const index = this.edit_array_ExtraLogo.findIndex((el: any) => el === data)
+  //     if (index > -1) {
+  //       this.edit_array_ExtraLogo.splice(index, 1);
+  //     }
+  //     console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
 
-    }
-  }
+  //   }
+  // }
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
     console.log(this.chkTermsandcondition)
   }
-  chkReceivedAuthorizedSignatureEvent(event: any){
+  chkReceivedAuthorizedSignatureEvent(event: any) {
     this.chkReceivedAuthorizedSignature = event.target.checked;
     console.log(this.chkReceivedAuthorizedSignature)
   }
-  chklogoAddressSignatureEvent(event: any){
+  chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
     console.log(this.chklogoAddressSignature)
   }
@@ -292,6 +318,17 @@ chklogoAddressSignature:boolean=true;
   onFocusedCustomer(e: any) {
     // do something when input is focused
   }
+  // gj(j: any) {
+  //   for (var i = 0; i >= this.exportState_Radio.length; i++) {
+
+  //     if (this.exportState_Radio[i].selected == true && this.exportState_Radio[i].id == j) {
+  //       $("#export_state" + j).val(this.exportState_Radio[i].id);
+  //       // return true;
+
+  //     }
+  //   }
+
+  // }
   loadADD() {
     let api_req: any = new Object();
     let addAPI: any = new Object();
@@ -302,13 +339,13 @@ chklogoAddressSignature:boolean=true;
     addAPI.action = "add_proforma_invoice";
     addAPI.user_id = localStorage.getItem('user_id');
     api_req.element_data = addAPI;
-    this.serverService.sendServer(api_req).subscribe((response:any)=> {
-      this.companyNameList=response.biller_details;
-      this.currencyNameList=response.currency_list;
-      this.ShipByList=response.ship_by;
-      this.salesRepList=response.sales_rep;
-      this.paymentviaList=response.paymentvia;
-      console.log("response-load-pi",response)
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.companyNameList = response.biller_details;
+      this.currencyNameList = response.currency_list;
+      this.ShipByList = response.ship_by;
+      this.salesRepList = response.sales_rep;
+      this.paymentviaList = response.paymentvia;
+      console.log("response-load-pi", response)
     });
   }
   searchCustomerData(data: any) {
@@ -335,7 +372,7 @@ chklogoAddressSignature:boolean=true;
     });
 
   }
-  save(){
+  save() {
     let api_req: any = new Object();
     let api_savePI_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -388,13 +425,13 @@ chklogoAddressSignature:boolean=true;
 
       }
       else {
-       
+
       }
 
     });
 
   }
-  getCustomerInvoiceDetails(event: any){
+  getCustomerInvoiceDetails(event: any) {
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
 
@@ -416,14 +453,14 @@ chklogoAddressSignature:boolean=true;
         this.addPI_section1.patchValue({
           'invoiceNo': response.invoice_no,
           // 'Currency': response.currency_id,
-        
-         
+
+
         });
 
 
       }
       else {
-       
+
       }
 
     });
@@ -444,12 +481,12 @@ chklogoAddressSignature:boolean=true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
 
-     
+
       if (response != '') {
-        this.getProformaBillerDetails_tinName=response.biller_details[0].tinName;
-        this.getProformaBillerDetails_tinNo=response.biller_details[0].tinNo;
-        this.getProformaBillerDetails_cstName=response.biller_details[0].cstName;
-        this.getProformaBillerDetails_cstNo=response.biller_details[0].cstNo;
+        this.getProformaBillerDetails_tinName = response.biller_details[0].tinName;
+        this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
+        this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
+        this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
         this.addPI_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
@@ -481,8 +518,8 @@ chklogoAddressSignature:boolean=true;
 
 
   }
-  getCurrencyValues(event:any){
-   console.log("event.target;",event.target) ;
+  getCurrencyValues(event: any) {
+    console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
     console.log("billerID check", this.billerID);
 
@@ -494,13 +531,13 @@ chklogoAddressSignature:boolean=true;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
     api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_BillerID;
-    api_getInvoiceDetails_req.currency_code =   this.getCurrencyCode;
+    api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      if (response!='') {
+      if (response != '') {
         this.addPI_section1.patchValue({
           'CurrencyConversionRate': response.currency_live_val,
 
@@ -508,7 +545,7 @@ chklogoAddressSignature:boolean=true;
 
       }
       else {
-       
+
       }
 
     });
