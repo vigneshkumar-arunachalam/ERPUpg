@@ -87,7 +87,7 @@ input.form-control {
   ::ng-deep .autocomplete-container  .input-container {
     border-width: 0px;
   }.add-contact-table-section .ng-autocomplete{
-    padding: 0px 0px;
+    padding: 0px 0px !important;
   }
   .buttoncssDiscount{
     width: -webkit-fill-available;

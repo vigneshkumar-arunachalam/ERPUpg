@@ -1,4 +1,4 @@
-<div class="contents">
+<div class="contents-section">
     <h2 style="text-align:center;color:black;background-color: #EFF0F3;">Enter Quotation Details</h2>
 
     <form [formGroup]="editQuotationInvoice_section1">
@@ -32,7 +32,7 @@
 
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="select_footer" class="col-lg-12 col-form-label">Select Footer*</label>
+                    <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span style="color: red;font-size:larger;"> *</span></label>
                     <div class="col-lg-12" style="display: flex;">
                         <div class="form-check" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
                             <input class="form-check-input" type="radio" 
@@ -60,7 +60,7 @@
 
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="quot_date" class="col-lg-12 col-form-label">Quotation Date*</label>
+                    <label for="quot_date" class="col-lg-12 col-form-label">Quotation Date<span style="color: red;font-size:larger;"> *</span></label>
                     <div class="col-lg-12">
                         <input type="date" class="form-control" formControlName="e_quotationDate" id="quot_date" />
                     </div>
@@ -79,7 +79,7 @@
 
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="companyName" class="col-lg-12 col-form-label">Customer Name</label>
+                    <label for="companyName" class="col-lg-12 col-form-label">Customer Name<span style="color: red;font-size:larger;"> *</span></label>
                     <div class="ng-autocomplete">
 
                         <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
@@ -145,7 +145,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="select_template" class="col-lg-12 col-form-label">Select Template</label>
+                    <label for="select_template" class="col-lg-12 col-form-label">Select Template<span style="color: red;font-size:larger;"> *</span></label>
                     <div class="col-lg-12">
                         <select name="enqFormValue" id="select_template" class="form-control"
                             (change)="templateContentDropdown($event)" formControlName="e_selectTemplate">
@@ -226,7 +226,7 @@
             </div>
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="pdf_template" class="col-lg-12 col-form-label">Select PDF Template</label>
+                    <label for="pdf_template" class="col-lg-12 col-form-label">Select PDF Template<span style="color: red;font-size:larger;"> *</span></label>
                     <div class="col-lg-12">
                         <select name="pdftemp" id="pdf_template" class="form-control"
                             formControlName="e_selectPDFTemplate">
@@ -405,21 +405,21 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="userDatatable-content" style="top:-35px;">
+                                        <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                             <input type="checkbox" formControlName="pd_split" id="pd_split_{{i}}"
                                                 (change)="totalCalculate();set_display_none(i);" />
 
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content" style="top:-35px;">
+                                            <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                                 <input type="checkbox" formControlName="pd_GPTotal"
                                                     (change)="totalCalculate();" />
 
                                         </div>
                                     </td>
                                     <td>
-                                        <div class="userDatatable-content" style="top:-35px;">
+                                        <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                             <input type="checkbox" [ngModel]="test[i]" id="pd_selectTax_{{i}}"
                                                 formControlName="pd_selectTax" (change)="totalCalculate();" />
 

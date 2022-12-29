@@ -18,7 +18,9 @@
             <app-footer></app-footer>
             <div class="main-content" *ngIf="templateAuthView == false">
                 <section class="section">
-                    <router-outlet (activate)="onActivate($event)"></router-outlet>
+                    <div class="contents">
+                        <router-outlet (activate)="onActivate($event)"></router-outlet>
+                    </div>
                 </section>
                 <!-- //<app-setting-menu></app-setting-menu> -->
 
