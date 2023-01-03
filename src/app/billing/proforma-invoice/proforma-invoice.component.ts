@@ -12,6 +12,7 @@ import Swal from 'sweetalert2'
 export class ProformaInvoiceComponent implements OnInit {
   //list
   PI_list: any;
+  biller_list:any;
   //list-checkbox all
   checkbox_value: any;
   edit_array: any = [];
@@ -19,7 +20,7 @@ export class ProformaInvoiceComponent implements OnInit {
   user_list: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 10;
+  pageLimit = 1000;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
 
@@ -59,7 +60,10 @@ export class ProformaInvoiceComponent implements OnInit {
       console.log("PI list", response);
       if (response) {
         this.PI_list = response.proforma_details;
+        this.biller_list=response.biller_details.billerId;
+
         console.log("proforma_details list", this.PI_list)
+        console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
       else {

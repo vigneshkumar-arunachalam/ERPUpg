@@ -22,6 +22,7 @@
     background: #fff;
     border: 1px solid;
     text-align: center;
+    cursor: pointer;
   }
   .dropdown__item {
     list-style-type: none;

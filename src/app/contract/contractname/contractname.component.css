@@ -20,6 +20,7 @@
     padding: 10px;
     min-width: 100%;
     background: #fff;
+    cursor: pointer;
     border: 1px solid;
     text-align: center;
   }

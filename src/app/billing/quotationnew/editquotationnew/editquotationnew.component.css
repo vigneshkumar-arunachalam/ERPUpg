@@ -94,21 +94,52 @@ input.form-control {
   }
   .userDatatable-title{
     text-align: left !important;
+    color:
+    #009688
+    !important;
   }
 
-  .form-control{border:1px solid #beeaca;}
-  .form-control:focus {
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input{
+    background: transparent;
+  }
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input:focus {
+    outline: none;
+    border: 2px solid transparent!important;
+    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+  }
+  .form-control{
+    border: 1px solid #e1e1e1;
+    background: transparent;}
+  /* .form-control:focus {
     color: #495057;
     background-color: #fff;
     border-color: #3D0096!important;
-    /* border-color: #009688!important; */
     outline: 0;
     box-shadow: 0 0, 0 5px 20px #5f63f21a;
-    /* padding: 0.375rem 1.2rem; */
     padding-left: 4px !important;
+  } */
+  .form-control:focus{
+    outline: none;
+    border: 2px solid transparent;
+    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+  }
+  
+  /* @keyframes for the gradient animation */
+  @keyframes bg-hue {
+    100% {
+      filter: hue-rotate(360deg);
+    }
   }
   label {
-    font-weight: 500;
+    font-weight: 600;
     /* color: black; */
     color: #009688!important;
   
@@ -117,3 +148,13 @@ input.form-control {
     /* padding: 0 !important; */
     padding-left: 4px !important;
   }
+  .cdk-drop-list{
+    cursor:move !important;
+   }
+   .discountCSS1{
+    color: #ff5722!important;
+   }
+   .discountCSS2{
+    color: #b8123b!important;
+   }
+  

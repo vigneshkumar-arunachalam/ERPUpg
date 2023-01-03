@@ -27,6 +27,7 @@ export class AddquotationnewComponent implements OnInit {
   salesRepDropDown_Textbox_Status: any;
   SalesResellerList: any;
   SelectTemplateList: any;
+  isReadonly:boolean=true;
   LogoList: any;
   CurrencyList: any;
   TermsConditionList: any;
@@ -731,6 +732,16 @@ quotationAddSignature_filename:any;
       return false;
 
     }
+    if(this.addQuotationInvoice_section1.value.quotationDate===null){
+     
+      iziToast.warning({
+        message: "Select Date",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
     api_saveEnquiry_req.customer_id = this.addQuotationInvoice_section1.value.customerName;
     api_saveEnquiry_req.customerAddress1 = this.addQuotationInvoice_section1.value.cust_address1;
     api_saveEnquiry_req.customerAddress2 = this.addQuotationInvoice_section1.value.cust_address2;
@@ -740,11 +751,29 @@ quotationAddSignature_filename:any;
     api_saveEnquiry_req.billGeneratedBy = this.addQuotationInvoice_section1.value.salesRep;
     api_saveEnquiry_req.reseller_id = this.addQuotationInvoice_section1.value.selectReseller;
     api_saveEnquiry_req.quotation_template_id = this.addQuotationInvoice_section1.value.selectTemplate;
+    if(this.addQuotationInvoice_section1.value.selectTemplate===null){
+     
+      iziToast.warning({
+        message: "Select Template",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_saveEnquiry_req.main_content = this.addQuotationInvoice_section1.value.templateContent_Dropdown;
     api_saveEnquiry_req.currencyId = this.addQuotationInvoice_section1.value.selectCurrency;
     api_saveEnquiry_req.bills_logo_id = this.addQuotationInvoice_section1.value.extraLogo;
 
     api_saveEnquiry_req.default_quotation_pdf_temp = this.addQuotationInvoice_section1.value.selectPDFTemplate;
+    if(this.addQuotationInvoice_section1.value.selectPDFTemplate===null){
+     
+      iziToast.warning({
+        message: "Choose PDF Template",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     if(this.addQuotationInvoice_section1.value.selectTermsConditions===null){
      
       iziToast.warning({

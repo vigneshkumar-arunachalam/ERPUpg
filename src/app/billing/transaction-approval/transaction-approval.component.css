@@ -80,6 +80,7 @@ p {
     padding: 10px;
     min-width: 100%;
     background: #fff;
+    cursor: pointer;
     border: 1px solid;
     text-align: center;
   }
@@ -149,7 +150,7 @@ p {
     padding: 0;
     font-size: 16px;
     width: 30px;
-    cursor: pointer;
+    cursor: pointer!important;
     display: flex;
     align-items: center;
     justify-content: center;

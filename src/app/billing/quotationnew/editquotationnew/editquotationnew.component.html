@@ -124,7 +124,7 @@
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==1)">
                         <select name="enqFormValue" id="sales_r" class="form-control" formControlName="e_salesRep" (change)="quotationAddSignatureEdit(0)">
                             <option [ngValue]="null" selected disabled>Sales Rep</option>
                             <option *ngFor="let rep of SalesRepList" value="{{rep.userId}}">
@@ -132,8 +132,18 @@
                             </option>
                         </select>
                     </div>
+                    <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==0)">
+                        <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" [attr.readonly]="isReadOnly"  />
+                        <input type="hidden" class="form-control" formControlName="e_salesRep"
+                            id="saleStatus_hd_id" />
+    
+                    </div>
                 </div>
             </div>
+
+
+           
+
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="addr2" class="col-lg-12 col-form-label">&nbsp;</label>
@@ -242,7 +252,7 @@
             <div class="col-lg-6 mb-4">
                 <div class="form-group row">
                     <label for="term_con" class="col-lg-12 col-form-label">Quotation Terms and
-                        Conditions <span style="font-size:10px ;">(Don't Show)</span>
+                        Conditions<span style="color: red;font-size:larger;"> *</span> <span style="font-size:10px ;">(Don't Show)</span>
                         <input type="checkbox" formControlName="e_termsCondition_DontShow"
                             (change)="termsCondition_DontShow_eventCheck($event)" />
                     </label>
@@ -303,6 +313,10 @@
                             <table class="add-contact-table-section">
                                 <thead>
                                     <tr class="userDatatable-header">
+                                        <th> <span class="userDatatable-title">To New Pge</span>
+                                        </th>
+                                        <th> <span class="userDatatable-title">S.No</span>
+                                        </th>
                                         <th> <span class="userDatatable-title">Product Name</span>
                                         </th>
                                         <th><span class="userDatatable-title">Quantity</span></th>
@@ -324,8 +338,19 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr cdkDrag cdkDragLockAxis="y">
+                                <tbody cdkDrag cdkDragLockAxis="y">
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="checkbox"  style="text-align: center;width: 75px;"
+                                                    formControlName="to_next_page" id="to_next_page_{{i}}" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                             <span style="text-align: center;display: block;"> {{i+1}}</span>  
+                                            </div>
+                                        </td>
                                         <td style="width:370px;display:block;">
                                             <div class="userDatatable-content" style="top:0">
                                                 <div class="alignFormArray" style="display:block;text-align: left;">
@@ -420,7 +445,7 @@
                                     </td>
                                     <td>
                                         <div class="userDatatable-content" style="top:-35px;text-align: center;">
-                                            <input type="checkbox" [ngModel]="test[i]" id="pd_selectTax_{{i}}"
+                                            <input type="checkbox"  id="pd_selectTax_{{i}}"
                                                 formControlName="pd_selectTax" (change)="totalCalculate();" />
 
 
@@ -434,6 +459,8 @@
                                         </div>
                                 </tr>
                                 <tr>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="userDatatable-content">
                                             <input type="text" class="form-control"
@@ -466,6 +493,8 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td></td>
+                                    <td></td>
                                     <td>
                                         <div class="userDatatable-content">
                                             <textarea
@@ -526,7 +555,7 @@
                         <div class="col-lg-4">
                             <div class="d-flex">
                                 <label class=" col-form-label">Grand Total Show</label>
-                                <input type="checkbox" formControlName="section3_grant_total_show"
+                                <input type="checkbox" class="ml-2" formControlName="section3_grant_total_show"
                                     [(ngModel)]="grantTotalShow" (change)="eventCheckGrantTotalShows($event)" />
                             </div>
                         </div>
@@ -816,7 +845,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="discountTYpe" id="discountTYpe_per" value="per">
-                                    <label for="per"> % Price</label><br>
+                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePercentabeDiscont" />
@@ -826,7 +855,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt">
-                                    <label for="html">Direct Price Reduction</label><br>
+                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePriceDiscont" />
@@ -843,8 +872,8 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
 
             </div>
@@ -876,7 +905,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="finaldiscountTYpe" id="finaldiscountType_per" value="per">
-                                    <label for="per"> % Price</label><br>
+                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePerFinal" />
@@ -886,7 +915,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="finaldiscountTYpe" id="finaldiscountTyp_amt" value="amt">
-                                    <label for="html">Direct Price Reduction</label><br>
+                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePriceFinal" />
@@ -903,8 +932,8 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
 
             </div>

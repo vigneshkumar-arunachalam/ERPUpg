@@ -54,6 +54,7 @@ import { AddPIComponent } from './billing/proforma-invoice/add-pi/add-pi.compone
 import { EditPIComponent } from './billing/proforma-invoice/edit-pi/edit-pi.component';
 import { TransactionApprovalComponent } from './billing/transaction-approval/transaction-approval.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FormarrayComponent } from './formarray/formarray.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { MatTabsModule } from '@angular/material/tabs';
      AddPIComponent,
      EditPIComponent,
      TransactionApprovalComponent,
+     FormarrayComponent,
     
   ],
   imports: [

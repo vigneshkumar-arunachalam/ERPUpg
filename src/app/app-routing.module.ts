@@ -32,10 +32,14 @@ import { ProformaInvoiceComponent } from './billing/proforma-invoice/proforma-in
 import { AddPIComponent } from './billing/proforma-invoice/add-pi/add-pi.component';
 import { EditPIComponent } from './billing/proforma-invoice/edit-pi/edit-pi.component';
 import { TransactionApprovalComponent } from './billing/transaction-approval/transaction-approval.component';
+import { FormarrayComponent } from './formarray/formarray.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'Formarray', component: FormarrayComponent
   },
   {
     path: 'TransactionApproval', component: TransactionApprovalComponent

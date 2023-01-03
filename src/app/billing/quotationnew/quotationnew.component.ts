@@ -36,7 +36,7 @@ export class QuotationnewComponent implements OnInit {
   duplicate_enquiryFromList: any;
   duplicate_quotationValidityList: any;
   duplicate_templateNameList: any;
-
+  isReadonly:boolean=true;
 
   //search quotation
   searchQuotationForm: FormGroup;
@@ -47,6 +47,7 @@ export class QuotationnewComponent implements OnInit {
   //auto complete search
   searchResult: any;
   searchResult_CustomerID: any;
+  quotationId_new: any;
   searchResult_CustomerName: any;
   // quotation_list:any=[];
   quotationValidityList: any = [];
@@ -57,16 +58,16 @@ export class QuotationnewComponent implements OnInit {
   checkbox_quotationShare_value: any;
   quotationSharedCheckboxID_array: any = [];
   sharePermissionQuotationId: any;
- search_SharedPersonName:any;
- values = '';
+  search_SharedPersonName: any;
+  values = '';
   //quotation-approval
   quotationApproval_ID: any;
   quotationApprovalForm: FormGroup;
   quotationApprovalResult: any;
   checked = true;
-  Approval_Type_radiobox_Value: any='single';
+  Approval_Type_radiobox_Value: any = 'single';
   quotationApprovedBy: any;
-  approvalUserID_Radio:any;
+  approvalUserID_Radio: any;
   //set template name
   setTemplateNameForm: FormGroup;
   template_quotationID: any;
@@ -110,7 +111,7 @@ export class QuotationnewComponent implements OnInit {
   FromEmailValue: any;
 
   //approval
-  approval_Show_hide: boolean= true;
+  approval_Show_hide: boolean = true;
   textarea_Show_hide: boolean;
   textarea1_Show_hide: boolean;
   approval_comments: any;
@@ -133,28 +134,28 @@ export class QuotationnewComponent implements OnInit {
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   //excel
-  ExcelReportResult:any;
+  ExcelReportResult: any;
   //permission
-  quotationPermissionList:any;
-  quotationPermission_Edit:any;
-  quotationPermission_ActualPrice:any;
-  quotationPermission_Add:any;
-  quotationPermission_Delete:any;
-  quotationPermission_List:any;
-  quotationPermission_Mail:any;
-  quotationPermission_Search:any;
-  quotationPermission_View:any;
-  quotationPermission_Share:any;
+  quotationPermissionList: any;
+  quotationPermission_Edit: any;
+  quotationPermission_ActualPrice: any;
+  quotationPermission_Add: any;
+  quotationPermission_Delete: any;
+  quotationPermission_List: any;
+  quotationPermission_Mail: any;
+  quotationPermission_Search: any;
+  quotationPermission_View: any;
+  quotationPermission_Share: any;
 
 
-  constructor(public serverService: ServerService, private router: Router, private fb: FormBuilder,private bnIdle: BnNgIdleService) {
+  constructor(public serverService: ServerService, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService) {
     this.setActualCost_FormGroup = this.fb.group({
       addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    
+
     // this.bnIdle.startWatching(120).subscribe((isTimedOut: boolean) => {
     //   if (isTimedOut) {
     //     console.log('session expired');
@@ -314,80 +315,80 @@ export class QuotationnewComponent implements OnInit {
     console.log(this.checkbox_eventCheck_GroupByCustomer)
   }
   onKey(event: any) { // without type info
-    this.values = event.target.value ;
-    console.log("this.values",this.values)
+    this.values = event.target.value;
+    console.log("this.values", this.values)
   }
-  handleChange(evt: any,userId:any) {
-    
-    this.approvalUserID_Radio=userId;
+  handleChange(evt: any, userId: any) {
+
+    this.approvalUserID_Radio = userId;
     var xyz = evt.target.id;
     this.quotationApprovedBy = this.approvalUserID_Radio;
     console.log(xyz, "target");
     if (xyz == "0") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = true;
       this.textarea1_Show_hide = false;
     }
     else if (xyz == "1") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "2") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "3") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "4") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "5") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "6") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "7") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "8") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "9") {
       console.log(xyz);
-      console.log("this.quotationApprovedBy",this.quotationApprovedBy);
+      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
@@ -600,17 +601,17 @@ export class QuotationnewComponent implements OnInit {
       console.log("qoutation list", response);
       if (response) {
         this.quotation_list = response.quotation_details;
-        this.quotationPermission_Edit=response.quotation_permission_arr.edit;
-        this.quotationPermission_Edit= response.quotation_permission_arr.edit
-        this.quotationPermission_ActualPrice= response.quotation_permission_arr.actual_price
-        this.quotationPermission_Add= response.quotation_permission_arr.add
-        this.quotationPermission_Delete=response.quotation_permission_arr.delete
-        this.quotationPermission_List=response.quotation_permission_arr.list
-        this.quotationPermission_Mail=response.quotation_permission_arr.mail
-        this.quotationPermission_Search=response.quotation_permission_arr.search
-        this.quotationPermission_View=response.quotation_permission_arr.view
-        this.quotationPermission_Share=response.quotation_permission_arr.share
-        
+        this.quotationPermission_Edit = response.quotation_permission_arr.edit;
+        this.quotationPermission_Edit = response.quotation_permission_arr.edit
+        this.quotationPermission_ActualPrice = response.quotation_permission_arr.actual_price
+        this.quotationPermission_Add = response.quotation_permission_arr.add
+        this.quotationPermission_Delete = response.quotation_permission_arr.delete
+        this.quotationPermission_List = response.quotation_permission_arr.list
+        this.quotationPermission_Mail = response.quotation_permission_arr.mail
+        this.quotationPermission_Search = response.quotation_permission_arr.search
+        this.quotationPermission_View = response.quotation_permission_arr.view
+        this.quotationPermission_Share = response.quotation_permission_arr.share
+
         console.log(response)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
@@ -835,15 +836,15 @@ export class QuotationnewComponent implements OnInit {
 
 
   }
-  quotationSharedPersonNameSearch(event:any){
+  quotationSharedPersonNameSearch(event: any) {
 
-  
-      this.values = event.target.value ;
-      console.log("this.values",this.values)
-  
-   
+
+    this.values = event.target.value;
+    console.log("this.values", this.values)
+
+
     console.log("You entered: ", event.target.value);
-    this.search_SharedPersonName=event.target.value;
+    this.search_SharedPersonName = event.target.value;
 
     let api_req: any = new Object();
     let quot_share_Search_req: any = new Object();
@@ -852,8 +853,8 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     quot_share_Search_req.action = "user_name_search";
- 
-    quot_share_Search_req.firstName= this.values;
+
+    quot_share_Search_req.firstName = this.values;
     api_req.element_data = quot_share_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -865,11 +866,11 @@ export class QuotationnewComponent implements OnInit {
       }
       else {
 
-       
+
       }
 
 
- 
+
 
     });
 
@@ -915,7 +916,7 @@ export class QuotationnewComponent implements OnInit {
     quot_approval_req.action = "quotation_permission_user";
     quot_approval_req.quotationId = this.quotationApproval_ID;
     quot_approval_req.user_id = localStorage.getItem('user_id');
-    
+
     api_req.element_data = quot_approval_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -947,7 +948,9 @@ export class QuotationnewComponent implements OnInit {
   }
   quotationApprovalUpdate() {
 
-
+    if (this.quotationApprovedBy == undefined || this.quotationApprovedBy == 'undefined' || this.quotationApprovedBy == '') {
+      this.quotationApprovedBy = '';
+    }
     let api_req: any = new Object();
     let quot_approvalUpdate_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -960,7 +963,16 @@ export class QuotationnewComponent implements OnInit {
     quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
     quot_approvalUpdate_req.quotation_comments = this.quotationApprovalForm.value.comments_approvedBy;
     quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
-   
+    console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+    if (this.Approval_Type_radiobox_Value=="double" && this.quotationApprovedBy == '') {
+
+      iziToast.warning({
+        message: "Select Approval By for Double Approval",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     quot_approvalUpdate_req.assigned_comments = this.quotationApprovalForm.value.approval_comments;
 
     api_req.element_data = quot_approvalUpdate_req;
@@ -995,6 +1007,11 @@ export class QuotationnewComponent implements OnInit {
 
 
   }
+  quotationApprovalClear() {
+
+    this.quotationApprovalForm.reset();
+    window.location.reload()
+  }
   deleteQuotation(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -1023,7 +1040,7 @@ export class QuotationnewComponent implements OnInit {
             this.quotationList({})
             // $("#fileAttachmentCustomerContractId").modal("hide");
             iziToast.success({
-              message: " Quotation Deleted successfully",
+              message: " Quotation Deleted Successfully",
               position: 'topRight'
             });
             this.quotationList({})
@@ -1160,10 +1177,10 @@ export class QuotationnewComponent implements OnInit {
       console.log("set actual cost response", response);
       if (response.status == true) {
         iziToast.success({
-          message: "  successfull",
+          message: "Success",
           position: 'topRight'
         });
-       
+
         $("#setActualCostId").modal("hide");
 
 
@@ -1202,13 +1219,13 @@ export class QuotationnewComponent implements OnInit {
 
 
   }
-  fileAttachmentClear(){
+  fileAttachmentClear() {
     this.FileAttachmentForm.reset();
   }
-  quotationCommentsClear(){
+  quotationCommentsClear() {
     this.quotationCommentsForm.reset();
   }
-  quotationEmailClear(){
+  quotationEmailClear() {
     this.emailForm.reset();
     this.msg_id = '';
     this.quotationList({});
@@ -1379,7 +1396,7 @@ export class QuotationnewComponent implements OnInit {
     // api_email_req.customer_contract_id = this.EmailCustomerContractID;
     api_email_req.from_email = this.FromEmailValue;
     api_email_req.to_email = this.emailTo;
-    api_email_req.cc_email= this.edit_array_emailCC_Checkbox;
+    api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.subject = this.subjectValue;
     api_email_req.mail_message = this.msg_id;
     api_email_req.quotation_id = this.EmailQuotationID;
@@ -1474,9 +1491,9 @@ export class QuotationnewComponent implements OnInit {
   }
 
   quotationCommentsEdit(quotationID: any, transactionID: any) {
-    console.log("transactionid",transactionID)
-    if (transactionID !=null) {
-   
+    console.log("transactionid", transactionID)
+    if (transactionID != null) {
+
       this.comment_QuotationID = quotationID;
       this.comment_TransactionID = transactionID;
       let api_req: any = new Object();
@@ -1490,24 +1507,24 @@ export class QuotationnewComponent implements OnInit {
       transactionComment_req.transaction_id = this.comment_TransactionID;
       api_req.element_data = transactionComment_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
-  
+
         if (response.status == true) {
           this.response_CommentResult = response.commands;
         }
-  
-  
+
+
       });
-    }  else{
+    } else {
       iziToast.warning({
-        message: "Transaction ID is empty. Unable to save Comments. Please try again",
+        message: "Transaction ID is empty. Unable to save Comments. Please try with Transaction ID",
         position: 'topRight'
       });
     }
-    
+
 
   }
   quotationCommentsSave() {
-   
+
     let api_req: any = new Object();
     let transactionCommentSave_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1534,7 +1551,7 @@ export class QuotationnewComponent implements OnInit {
 
       } else {
         iziToast.warning({
-          message: "Customer not updated. Please try again",
+          message: "Comment Failed. Please try again",
           position: 'topRight'
         });
       }
@@ -1611,8 +1628,8 @@ export class QuotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("response-quotation convert pi", response)
       if (response.status == true) {
-          iziToast.success({
-          message: "Quotation Shared has been Updated",
+        iziToast.success({
+          message: "Success",
           position: 'topRight'
         });
         $('#PIId').modal('hide');
@@ -1623,7 +1640,7 @@ export class QuotationnewComponent implements OnInit {
           message: "Data Not Found",
           position: 'topRight'
         });
-       
+
       }
     }), (error: any) => {
       iziToast.error({
@@ -1638,7 +1655,7 @@ export class QuotationnewComponent implements OnInit {
     window.open(url, '_blank');
     console.log("url", url)
   }
-  quotationExcelExport(quotationId:any){
+  quotationExcelExport(quotationId: any) {
     let api_req: any = new Object();
     let api_quotExcel_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1652,23 +1669,23 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = api_quotExcel_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.ExcelReportResult=response.web_excel_path;
-      window.open(this.ExcelReportResult,'_blank')
+      this.ExcelReportResult = response.web_excel_path;
+      window.open(this.ExcelReportResult, '_blank')
       console.log("response-quotation convert pi", response)
-      if (response.status !='') {
-          iziToast.success({
+      if (response.status != '') {
+        iziToast.success({
           message: "Excel file has been downloaded",
           position: 'topRight'
         });
-       
+
       }
       else {
-    
+
         iziToast.warning({
           message: "Data Not Found",
           position: 'topRight'
         });
-       
+
       }
     }), (error: any) => {
       iziToast.error({
@@ -1722,8 +1739,8 @@ export class QuotationnewComponent implements OnInit {
 
 
   AddQuotationGo() {
-    if(this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP===null){
-     
+    if (this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP === null) {
+
       iziToast.warning({
         message: "Choose Enquiry From",
         position: 'topRight'
@@ -1732,8 +1749,8 @@ export class QuotationnewComponent implements OnInit {
 
     }
     var enq_formID = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
-    if(this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP===null){
-     
+    if (this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP === null) {
+
       iziToast.warning({
         message: "Choose Enquiry Subject",
         position: 'topRight'
@@ -1742,8 +1759,8 @@ export class QuotationnewComponent implements OnInit {
 
     }
     var enq_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
-    if(this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP===null){
-     
+    if (this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP === null) {
+
       iziToast.warning({
         message: "Choose Quotation Validity",
         position: 'topRight'
@@ -1760,24 +1777,28 @@ export class QuotationnewComponent implements OnInit {
     $('#addNewQuotationFormId').modal('hide');
   }
   EditQuotationGo() {
-    console.log("e_formID",this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP)
-    console.log("e_subject",this.editNewQuotationPopUpForm.value.e_enquirySubject_addPopUP)
-    console.log("e_valid",this.editNewQuotationPopUpForm.value.e_quotationValidity_addPopUP)
-    console.log("e_version",this.editNewQuotationPopUpForm.value.e_version_enqForm_addPopUP)
+    console.log("e_formID", this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP)
+    console.log("e_subject", this.editNewQuotationPopUpForm.value.e_enquirySubject_addPopUP)
+    console.log("e_valid", this.editNewQuotationPopUpForm.value.e_quotationValidity_addPopUP)
+    console.log("e_version", this.editNewQuotationPopUpForm.value.e_version_enqForm_addPopUP)
     var editQuotID = this.edit_quotationID;
     var enq_formID = this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP;
     var enq_subject = this.editNewQuotationPopUpForm.value.e_enquirySubject_addPopUP;
     var enq_quotation_valid_day = this.editNewQuotationPopUpForm.value.e_quotationValidity_addPopUP;
     var enq_duplicate_version = this.editNewQuotationPopUpForm.value.e_version_enqForm_addPopUP;
 
-    this.router.navigate(['/editquotationnew'], { queryParams: { e_quotID: editQuotID, 
-      e_formID: enq_formID, 
-      e_subject: enq_subject, 
-      e_validity: enq_quotation_valid_day, 
-      e_version: enq_duplicate_version } });
+    this.router.navigate(['/editquotationnew'], {
+      queryParams: {
+        e_quotID: editQuotID,
+        e_formID: enq_formID,
+        e_subject: enq_subject,
+        e_validity: enq_quotation_valid_day,
+        e_version: enq_duplicate_version
+      }
+    });
     $('#editNewQuotationFormId').modal('hide');
 
-   
+
   }
 
   DuplicateQuotationGo() {
@@ -1800,20 +1821,22 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = api_dup_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response-quotation convert pi", response)
-      if (response.status == true) {
+      console.log("response-quotation convert pi", response);
+      // console.log("quotationId_new", response.quotationId_new)
+      //  this.quotationId_new = response.quotationId_new;
+      var editQuotID = response.quotationId_new;
 
-      }
-
+      var enq_formID = this.duplicateQuotationPopUpForm.value.d_enquiryFrom_addPopUP;
+      var enq_subject = this.duplicateQuotationPopUpForm.value.d_enquirySubject_addPopUP;
+      var enq_quotation_valid_day = this.duplicateQuotationPopUpForm.value.d_quotationValidity_addPopUP;
+      var enq_duplicate_version = this.duplicateQuotationPopUpForm.value.d_version_enqForm_addPopUP;
+      this.router.navigate(['/editquotationnew'], { queryParams: { e_quotID: editQuotID, e_formID: enq_formID, e_subject: enq_subject, e_validity: enq_quotation_valid_day, e_version: enq_duplicate_version } });
+      $('#duplicateQuotationFormId').modal('hide');
 
     });
-    var editQuotID = this.duplicate_quotationID;
-    var enq_formID = this.duplicateQuotationPopUpForm.value.d_enquiryFrom_addPopUP;
-    var enq_subject = this.duplicateQuotationPopUpForm.value.d_enquirySubject_addPopUP;
-    var enq_quotation_valid_day = this.duplicateQuotationPopUpForm.value.d_quotationValidity_addPopUP;
-    var enq_duplicate_version = this.duplicateQuotationPopUpForm.value.d_version_enqForm_addPopUP;
-    this.router.navigate(['/editquotationnew'], { queryParams: { e_quotID: editQuotID, formID: enq_formID, subject: enq_subject, validity: enq_quotation_valid_day, version: enq_duplicate_version } });
-    $('#duplicateQuotationFormId').modal('hide');
+    // console.log("editQuotID", editQuotID);
+
+
 
   }
 
@@ -1839,8 +1862,8 @@ export class QuotationnewComponent implements OnInit {
         console.log(actual_percentage);
         console.log(product_qty);
         console.log(product_net_amt);
-        if(actual_cost==''){
-          actual_cost=0;
+        if (actual_cost == '') {
+          actual_cost = 0;
         }
         // break
         if (actual_percentage > 0) {

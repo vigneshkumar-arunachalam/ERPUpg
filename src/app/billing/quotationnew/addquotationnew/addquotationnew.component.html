@@ -154,7 +154,7 @@
                             </select>
                         </div>
                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==0)">
-                            <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" />
+                            <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" [attr.readonly]="isReadOnly"  />
                             <input type="hidden" class="form-control" formControlName="salesRep"
                                 id="saleStatus_hd_id" />
 
@@ -274,7 +274,7 @@
                 <div class="col-lg-6  mb-4">
                     <div class="form-group row">
                         <label for="term_con" class="col-lg-12 col-form-label">Quotation Terms and
-                            Conditions* <span style="font-size:10px ;">(Don't Show)</span>
+                            Conditions<span style="color: red;font-size:larger;"> *</span> <span style="font-size:10px ;">(Don't Show)</span>
                             <input type="checkbox" formControlName="termsCondition_DontShow"
                                 (change)="termsCondition_DontShow_eventCheck($event)" />
                         </label>
@@ -364,10 +364,10 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody cdkDrag cdkDragLockAxis="y">
 
 
-                                        <tr cdkDrag cdkDragLockAxis="y">
+                                        <tr >
                                             <td style="width:370px;display:block;">
                                                 <div class="userDatatable-content" style="top:0">
                                                     <div class="alignFormArray" style="display:block;text-align: left;">
@@ -844,7 +844,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="discountTYpe" id="discountTYpe_per" value="per">
-                                    <label for="per"> % Price</label><br>
+                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePercentabeDiscont" />
@@ -854,7 +854,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt">
-                                    <label for="html">Direct Price Reduction</label><br>
+                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePriceDiscont" />
@@ -871,8 +871,8 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
 
             </div>
@@ -904,7 +904,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="finaldiscountTYpe" id="finaldiscountTYpe_per" value="per">
-                                    <label for="per"> % Price</label><br>
+                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePerFinal" />
@@ -914,7 +914,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="finaldiscountTYpe" id="finaldiscountTYpe_amt" value="amt">
-                                    <label for="html">Direct Price Reduction</label><br>
+                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" id="enablePriceFinal" />
@@ -931,8 +931,8 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
 
             </div>

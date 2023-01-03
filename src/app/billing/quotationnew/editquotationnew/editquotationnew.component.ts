@@ -99,6 +99,10 @@ quotationAddSignature_filename:any;
 quotationAddSignatureCHKShowState:any;
 selectAdditionalSign:boolean=true;
 selectAdditionalSignUnchecked:boolean=false;
+//check box in form array
+groupSelectCommonId: any;
+checkbox_value: any;
+edit_array: any = [];
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -134,6 +138,7 @@ selectAdditionalSignUnchecked:boolean=false;
         console.log(this.version_enquiryFromDetails);
         this.testVariable = this.editQuotationID;
         this.editQuotation();
+        this.totalCalculate();
       }
       );
     this.editQuotationInvoice_section1 = new FormGroup({
@@ -150,6 +155,8 @@ selectAdditionalSignUnchecked:boolean=false;
       'e_zipcode': new FormControl(null),
       'e_attention': new FormControl(null),
       'e_salesRep': new FormControl(null),
+      'salesRep_id': new FormControl(null),
+
       'e_selectTemplate': new FormControl(null),
       'e_selectReseller': new FormControl(null),
       'e_selectCurrency': new FormControl(null),
@@ -195,6 +202,7 @@ selectAdditionalSignUnchecked:boolean=false;
   onDrop(event: CdkDragDrop<string[]>) {
     console.log("event drag drop", event)
     moveItemInArray(this.addressControls.controls, event.previousIndex, event.currentIndex);
+    console.log(this.addressControls.controls, event.previousIndex, event.currentIndex)
 
   }
   
@@ -292,15 +300,17 @@ selectAdditionalSignUnchecked:boolean=false;
     this.addresses.push(this.EditAddress_FormControl());
 
     this.itre = this.itre + 1;
+    console.log(this.addresses)
+    console.log(this.itre)
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-
+      console.log(this.test[index])
     });
   }
   
   EditAddress_FormControl(): FormGroup {
     return this.fb.group({
-
+      
       pd_productName_txtbox1: '',
       pd_productName_autocomplete: '',
       pd_productName_txtArea: '',
@@ -313,6 +323,7 @@ selectAdditionalSignUnchecked:boolean=false;
       pd_split: '',
       pd_GPTotal: '',
       pd_selectTax: '',
+      to_next_page: '',
       sub_dis_type: '',
       sub_dis_val: '',
       sub_dis_amt: '',
@@ -321,6 +332,8 @@ selectAdditionalSignUnchecked:boolean=false;
     });
 
   }
+
+
 
   dynamicChange(event: any) {
     this.billerID = event.target.value;
@@ -448,6 +461,7 @@ selectAdditionalSignUnchecked:boolean=false;
       console.log("edit quotation response", response);
       if (response != '') {
         this.dynamicChange_edit(response.quotation_details[0].billerId);
+        this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
       //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
         this.SalesRepList = response.sales_rep;
         this.SalesResellerList = response.sales_reseller;
@@ -458,6 +472,17 @@ selectAdditionalSignUnchecked:boolean=false;
         this.ExtraLogoList = response.extra_bills;
         this.billerList = response.bill_details;
         this.additionalSignatureList = response.additional_signature_list;
+
+        if (response.sales_rep_status.dropdown_status == 0) {
+          console.log("response.sales_rep.name", response.sales_rep.name);
+
+          this.editQuotationInvoice_section1.patchValue({
+            'salesRep_id': response.sales_rep.name,
+            'e_salesRep': response.sales_rep.userid,
+          });
+
+        }
+
         this.editQuotationInvoice_section1.patchValue({
 
           'e_companyName': response.quotation_details[0].billerId,
@@ -503,9 +528,7 @@ selectAdditionalSignUnchecked:boolean=false;
             this.sub_dis_type='amt';
             this.sub_dis_val=response.quotation_child_det[index].dis_amt;
           }
-
           formArray.push(this.fb.group({
-
 
             "pd_productName_txtbox1": response.quotation_child_det[index].productName,
             "pd_productName_txtArea": response.quotation_child_det[index].productDesc,
@@ -521,14 +544,19 @@ selectAdditionalSignUnchecked:boolean=false;
             "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
             "pd_GPTotal": response.quotation_child_det[index].group_total_display_status == 1 ? true : false,
             "pd_selectTax": response.quotation_child_det[index].tax_state == 1 ? true : false,
+            "to_next_page": response.quotation_child_det[index].to_next_page == 1 ? true : false,
 
 
           })
+          
           );
-
+        
 
         }
+        console.log(formArray)
         this.addQuotationInvoice_section2.setControl('addresses', formArray);
+        // this.addresses.push(this.addQuotationInvoice_section2);
+        console.log(this.addresses)
       //  console.log('response.quotation_details[0].grand_total'+response.quotation_details[0].grand_total);
 
       this.finalDiscountType = '';
@@ -584,7 +612,10 @@ selectAdditionalSignUnchecked:boolean=false;
         });
         this.quotationAddSignatureEdit(this.sign_state);
         //this.tax_per_mod = response.quotation_details[0].tax_id1;
-
+        this.editAddress();
+        console.log(response.quotation_child_det.length);
+        this.removeAddresstest(response.quotation_child_det.length);
+        
         // $('#test_2').prop('checked', true);
       }
       else {
@@ -1438,6 +1469,8 @@ this.DiscountForm.reset();
 }
 
 removeAddress(i: number) {
+  console.log(i)
+  console.log(this.addresses)
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -1458,6 +1491,15 @@ removeAddress(i: number) {
   })
 
 
+}
+removeAddresstest(i: number) {
+  console.log(i)
+  console.log(this.addresses)
+      this.addresses.removeAt(i);
+      var addr = this.addQuotationInvoice_section2.value.addresses;
+      var list_cnt = addr.length;
+      this.totalCalculate();
+    
 }
 
 // removeAddress(i: number) {
@@ -1490,6 +1532,7 @@ removeAddress(i: number) {
 
   goBack() {
     this.router.navigate(['/quotationnew']);
+    
   }
 
 }
