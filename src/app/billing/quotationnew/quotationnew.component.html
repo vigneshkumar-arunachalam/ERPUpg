@@ -585,7 +585,7 @@
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
-                                    Enquiry From Details is Required
+                                    * Required *
                                 </div>
                             </div>
                         </div>
@@ -600,7 +600,7 @@
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
-                                    Enquiry Subject is Required
+                                 * Required *
                                 </div>
                             </div>
                         </div>
@@ -618,7 +618,7 @@
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].dirty || addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
-                                    Quotation Validity is Required
+                                    * Required *
                                 </div>
                             </div>
                         </div>
@@ -631,7 +631,7 @@
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].dirty || addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
-                                    Version is Required
+                                    * Required *
                                 </div>
                             </div>
                         </div>
@@ -706,7 +706,7 @@
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
-                                    Enquiry From Details is Required
+                                    * Required *
                                 </div>
                             </div>
                         </div>
@@ -812,7 +812,7 @@
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">
-                                    Enquiry From Details is Required
+                                    * Required *
                                 </div>
                             </div>
                         </div>
@@ -1512,7 +1512,7 @@
                                         {{ from.from_email }}
                                     </option>
                                 </select>
-                                <div class="alert alert-danger"
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
                                     *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
                                     Please
                                     enter To Address
@@ -1530,6 +1530,7 @@
                                 <div class="form-check" style="margin-right: 10px;">
                                     <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy"
                                         id="company" [checked]="true" (change)="handle_radioChange_email($event)" />
+                                       
                                     <label class="form-check-label" for="company"> Company
                                     </label>
                                 </div>
@@ -1549,7 +1550,7 @@
                             <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
                             <div class="col-lg-10">
                                 <input type="email" id="emailto" class="form-control" formControlName="email_to">
-                                <div class="alert alert-danger"
+                                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
                                     *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
                                     Please
                                     enter To Address
@@ -1577,7 +1578,7 @@
                             <div class="col-lg-10">
                                 <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
                                 <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
-                                    class="alert alert-danger">
+                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
                                     Subject is Required
                                 </div>
                             </div>
@@ -1596,11 +1597,14 @@
                                         {{template.crm_template_name}}
                                     </option>
                                 </select>
-                                <div *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
-                                    class="alert alert-danger">
-                                    Template is Required
-                                </div>
+                                <br>
+
+                                <div  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                                class="alert alert-danger alertdangerCustomCSS1 ">
+                                Template is Required
                             </div>
+                            </div>
+                        
 
                         </div>
                     </div>
@@ -1747,62 +1751,3 @@
 
 
 
-<form id="app-cover">
-    <div id="select-box">
-      <input type="checkbox" id="options-view-button">
-      <div id="select-button" class="brd">
-        <div id="selected-value">
-          <span>Select a platform</span>
-        </div>
-        <div id="chevrons">
-          <i class="fas fa-chevron-up"></i>
-          <i class="fas fa-chevron-down"></i>
-        </div>
-      </div>
-      <div id="options">
-        <div class="option">
-          <input class="s-c top" type="radio" name="platform" value="codepen">
-          <input class="s-c bottom" type="radio" name="platform" value="codepen">
-          <i class="fab fa-codepen"></i>
-          <span class="label">CodePen</span>
-          <span class="opt-val">CodePen</span>
-        </div>
-        <div class="option">
-          <input class="s-c top" type="radio" name="platform" value="dribbble">
-          <input class="s-c bottom" type="radio" name="platform" value="dribbble">
-          <i class="fab fa-dribbble"></i>
-          <span class="label">Dribbble</span>
-          <span class="opt-val">Dribbble</span>
-        </div>
-        <div class="option">
-          <input class="s-c top" type="radio" name="platform" value="behance">
-          <input class="s-c bottom" type="radio" name="platform" value="behance">
-          <i class="fab fa-behance"></i>
-          <span class="label">Behance</span>
-          <span class="opt-val">Behance</span>
-        </div>
-        <div class="option">
-          <input class="s-c top" type="radio" name="platform" value="hackerrank">
-          <input class="s-c bottom" type="radio" name="platform" value="hackerrank">
-          <i class="fab fa-hackerrank"></i>
-          <span class="label">HackerRank</span>
-          <span class="opt-val">HackerRank</span>
-        </div>
-        <div class="option">
-          <input class="s-c top" type="radio" name="platform" value="stackoverflow">
-          <input class="s-c bottom" type="radio" name="platform" value="stackoverflow">
-          <i class="fab fa-stack-overflow"></i>
-          <span class="label">StackOverflow</span>
-          <span class="opt-val">StackOverflow</span>
-        </div>
-        <div class="option">
-          <input class="s-c top" type="radio" name="platform" value="freecodecamp">
-          <input class="s-c bottom" type="radio" name="platform" value="freecodecamp">
-          <i class="fab fa-free-code-camp"></i>
-          <span class="label">FreeCodeCamp</span>
-          <span class="opt-val">FreeCodeCamp</span>
-        </div>
-        <div id="option-bg"></div>
-      </div>
-    </div>
-  </form>
