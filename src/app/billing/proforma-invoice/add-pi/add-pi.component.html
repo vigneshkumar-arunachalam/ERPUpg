@@ -8,7 +8,7 @@
                     <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
                     <div class="col-lg-12">
                         <select name="enqFormValue" id="cmp_name" class="form-control" formControlName="companyName"
-                            (change)="getProformaBillerDetails($event);getCustomerInvoiceDetails($event)">
+                            (change)="getProformaBillerDetails($event);getCustomerInvoiceDetails($event);TaxDropdown()">
                             <option [ngValue]="null" selected disabled>Select Company Name</option>
                             <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                 {{comp_name.billerName}}
@@ -102,20 +102,7 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="gstt" class="col-lg-12 col-form-label">GST #</label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="GST" [attr.readonly]="isReadOnly"
-                            id="gstt" />
-                    </div>
-                </div>
-            </div> -->
-            <!-- <div class="col-lg-6">
-                <div class="form-group row">
-                  
-                </div>
-            </div> -->
+         
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="attn1" class="col-lg-12 col-form-label">Attn</label>
@@ -128,35 +115,40 @@
                     </div>
                 </div>
             </div>
+          
+
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="ship" class="col-lg-12 col-form-label">Ship To</label>
                     <div class="col-lg-12">
-                        <input type="text" class="form-control mt-2" formControlName="ShipTo_1" />
-                        <input type="text" class="form-control mt-2" formControlName="ShipTo_2" />
-                        <input type="text" class="form-control mt-2" formControlName="ShipTo_3" />
-                        <input type="text" class="form-control mt-2" formControlName="ShipTo_4" />
+                        <input type="text" class="form-control mt-2" formControlName="ship_to" />
+                        <input type="text" class="form-control mt-2" formControlName="ship_address_1" />
+                        <input type="text" class="form-control mt-2" formControlName="ship_address_2" />
+                        <input type="text" class="form-control mt-2" formControlName="ship_address_3" />
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-lg-6">
-                <div class="form-group row">
-                 
-                </div>
-            </div> -->
+
+        
             <div class="col-lg-6">
                 <div class="form-group row">
-                    <label for="sales_rep" class="col-lg-12 col-form-label">Sales Rep</label>
-                    <div class="col-lg-12">
-                        <select id="sales_rep" class="form-control" formControlName="salesRep">
-                            <option [ngValue]="null" selected disabled>Select Sales Rep</option>
-                            <option *ngFor="let sales of salesRepList" value="{{sales.userId}}">
-                                {{sales.firstName}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
+                         <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
+                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==1)">
+                             <select name="enqFormValue" id="sales_r" class="form-control" formControlName="salesRep">
+                                 <option [ngValue]="null" selected disabled>Sales Rep</option>
+                                 <option *ngFor="let rep of SalesRepList" value="{{rep.userId}}">
+                                     {{rep.firstName}}
+                                 </option>
+                             </select>
+                         </div>
+                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==0)">
+                             <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" />
+                             <input type="hidden" class="form-control" formControlName="salesRep"
+                                 id="saleStatus_hd_id" />
+ 
+                         </div>
+                     </div>
+             </div>
             <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="Ship_By" class="col-lg-12 col-form-label">Ship By</label>
@@ -203,6 +195,7 @@
                     <textarea class="form-control" formControlName="Ref" style="height: 70px;" row="2"></textarea>
                 </div>
             </div>
+            
 
             <div class="col-lg-6">
                 <div class="form-group row">
@@ -242,16 +235,7 @@
                 </div>
             </div>
 
-            <!-- <div class="col-lg-6">
-                <div class="form-group row">
-                    <div class="form-check form-check-inline"  *ngFor="let radio1 of exportState_Radio;let i=index">
-                        <input class="form-check-input" type="radio" name="export_state" id="export_state{{i}}" checked="{{radio1.id == '1' ? 'checked' : ''}}"
-                          formControlName="export_state" value="{{radio1.id}}"  (change)="handleChange(radio1.id,$event)">
-                        <label class="form-check-label" for="export_state{{i}}">{{radio1.name}}</label>
-                    </div>
-                   
-                </div>
-            </div> -->
+          
 
            
             <div class="form-check form-check-inline">
@@ -411,7 +395,7 @@
                                         <th><span class="userDatatable-title">Product Name</span></th>
 
 
-                                        <th><span class="userDatatable-title">Description</span></th>
+                                        <!-- <th><span class="userDatatable-title">Description</span></th> -->
                                         <th><span class="userDatatable-title">Quantity</span></th>
                                         <th><span class="userDatatable-title">Unit</span>
                                         </th>
@@ -452,39 +436,31 @@
                                             </div>
 
                                         </td>
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                <textarea
-                                                    style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
-                                                    class="form-control mt-2 mb-2" row="2"
-                                                    formControlName="pd_productName_txtArea"
-                                                    id="pd_productName_txtArea_{{i}}"></textarea>
-                                            </div>
-                                        </td>
+                                        
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}" />
+                                                    formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"  (change)="totalCalculate();" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
 
                                                 <input type="text" class="form-control" style="text-align: left;"
-                                                    formControlName="pd_unit" id="pd_unit_{{i}}" />
+                                                    formControlName="pd_unit" id="pd_unit_{{i}}"  (change)="totalCalculate();" />
 
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_sellingPrice" id="pd_SP_{{i}}" />
+                                                    formControlName="pd_sellingPrice" id="pd_SP_{{i}}"  (change)="totalCalculate();" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" formControlName="pd_Total"
-                                                    style="text-align: right;" id="pd_Total_{{i}}" />
+                                                    style="text-align: right;" id="pd_Total_{{i}}"  (change)="totalCalculate();" />
                                             </div>
                                         </td>
                                         <td>
@@ -523,6 +499,29 @@
                                                     (click)="removeAddress(i)">X</button>
 
                                             </div>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div class="userDatatable-content">
+                                                <textarea
+                                                    style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                    class="form-control mt-2 mb-2" row="2"
+                                                    formControlName="pd_productName_txtArea"
+                                                    id="pd_productName_txtArea_{{i}}"></textarea>
+                                            </div>
+                                        </td>
+                                        <td colspan="3">
+                                        </td>
+                                        <td colspan="3">
+                                            <div class="userDatatable-content">
+                                                <button type="button"
+                                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                                data-toggle="modal" (click)="calculateDiscount(i)"
+                                                data-target="#discountFormId" id="discount_btn_{{i}}" >Discount(-) 
+                                                </button>
+                                                <!-- <button>Discount</button> -->
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
 
@@ -603,23 +602,7 @@
                             </div>
                         </div>
 
-                        <!-- <div class="d-flex">
-                                    <div class="col-lg-12">
-                                        <div class="d-flex ml-2 mt-2 justify-content-center">
-                                            <select name="billerID" id="billerID" class="form-control"
-                                                aria-label="Default select example"
-                                                formControlName="section3_gst_dropdown">
-                                                <option [ngValue]="null" selected disabled>Select Tax</option>
-
-
-                                                <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
-                                                    {{tax.tax_name}}
-                                                </option>
-                                            </select>
-                                            <input type="text" formControlName="section3_txtboxRow3" class="form-control ml-2 mt-2" />
-                                        </div>
-                                    </div>
-                                </div> -->
+                       
                         <div class="col-lg-6">
                             <div class="form-group ml-2 mt-2">
 
@@ -630,9 +613,9 @@
 
 
 
-                                    <!-- <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
+                                    <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
                                         {{tax.combine_val}}
-                                    </option> -->
+                                    </option>
                                 </select>
                                 <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id" />
                             </div>
@@ -787,11 +770,64 @@
         </section>
     </form>
 
-
-
-
-
-
-
-
 </div>
+
+
+<!-----------------Modal Pop Up (BEGIN) discount------------------>
+<div class="modal fade" id="discountFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                <form [formGroup]="DiscountForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="discountTYpe" id="discountTYpe_per" value="per">
+                                    <label for="per"> % Price</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePercentabeDiscont" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt">
+                                    <label for="html">Direct Price Reduction</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePriceDiscont" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+----------------------------  discount Pop up ends----------------------------------------
