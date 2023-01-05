@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 // import { QuotationnewComponent } from '../quotationnew/quotationnew.component';
 declare var $: any;
 declare var iziToast: any;
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-transaction-approval',
   templateUrl: './transaction-approval.component.html',
@@ -401,64 +402,155 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       }
     });
   }
+  // transactionApprovalQuotationApproved(id: any) {
+  //   let api_req: any = new Object();
+  //   let transAproveQuotAprove_req: any = new Object();
+  //   api_req.moduleType = "transaction_approval";
+  //   api_req.api_url = "transaction_approval/quotation_approved";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   transAproveQuotAprove_req.action = "quotation_approved";
+  //   transAproveQuotAprove_req.user_id = localStorage.getItem('user_id');
+  //   transAproveQuotAprove_req.transaction_approval_id = id;
+  //   api_req.element_data = transAproveQuotAprove_req;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     if (response.status == true) {
+  //       this.getTransactionApprovalList({});
+  //       iziToast.success({
+  //         message: "Success",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //     else {
+  //       iziToast.warning({
+  //         message: "Not Ok",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //   });
+
+  // }
   transactionApprovalQuotationApproved(id: any) {
-    let api_req: any = new Object();
-    let transAproveQuotAprove_req: any = new Object();
-    api_req.moduleType = "transaction_approval";
-    api_req.api_url = "transaction_approval/quotation_approved";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    transAproveQuotAprove_req.action = "quotation_approved";
-    transAproveQuotAprove_req.user_id = localStorage.getItem('user_id');
-    transAproveQuotAprove_req.transaction_approval_id = id;
-    api_req.element_data = transAproveQuotAprove_req;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Approve it!'
+    }).then((result:any) => {
+      if (result.value) {
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
+        let api_req: any = new Object();
+        let transAproveQuotAprove_req: any = new Object();
+        api_req.moduleType = "transaction_approval";
+        api_req.api_url = "transaction_approval/quotation_approved";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        transAproveQuotAprove_req.action = "quotation_approved";
+        transAproveQuotAprove_req.user_id = localStorage.getItem('user_id');
+        transAproveQuotAprove_req.transaction_approval_id = id;
+        api_req.element_data = transAproveQuotAprove_req;
 
-      if (response.status == true) {
-        this.getTransactionApprovalList({});
-        iziToast.success({
-          message: "Success",
-          position: 'topRight'
-        });
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.getTransactionApprovalList({});
+            iziToast.success({
+              message: "Success",
+              position: 'topRight'
+            });
+          }   else {
+            iziToast.warning({
+              message: "Not Ok",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
-      else {
-        iziToast.warning({
-          message: "Not Ok",
-          position: 'topRight'
-        });
-      }
-    });
+    })
+
 
   }
+  // transactionApprovalReject(id: any) {
+  //   let api_req: any = new Object();
+  //   let transAproveQuotReject_req: any = new Object();
+  //   api_req.moduleType = "transaction_approval";
+  //   api_req.api_url = "transaction_approval/quotation_rejected";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   transAproveQuotReject_req.action = "quotation_rejected";
+  //   transAproveQuotReject_req.user_id = localStorage.getItem('user_id');
+  //   transAproveQuotReject_req.transaction_approval_id = id;
+  //   api_req.element_data = transAproveQuotReject_req;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     if (response.status == true) {
+  //       this.getTransactionApprovalList({});
+  //       iziToast.success({
+  //         message: "Rejected Success",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //     else {
+  //       iziToast.warning({
+  //         message: "Rejected Failed",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //   });
+  // }
+
   transactionApprovalReject(id: any) {
-    let api_req: any = new Object();
-    let transAproveQuotReject_req: any = new Object();
-    api_req.moduleType = "transaction_approval";
-    api_req.api_url = "transaction_approval/quotation_rejected";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    transAproveQuotReject_req.action = "quotation_rejected";
-    transAproveQuotReject_req.user_id = localStorage.getItem('user_id');
-    transAproveQuotReject_req.transaction_approval_id = id;
-    api_req.element_data = transAproveQuotReject_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      if (response.status == true) {
-        this.getTransactionApprovalList({});
-        iziToast.success({
-          message: "Rejected Success",
-          position: 'topRight'
-        });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result: any) => {
+      if (result.value) {
+  
+        let api_req: any = new Object();
+        let transAproveQuotReject_req: any = new Object();
+        api_req.moduleType = "transaction_approval";
+        api_req.api_url = "transaction_approval/quotation_rejected";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        transAproveQuotReject_req.action = "quotation_rejected";
+        transAproveQuotReject_req.user_id = localStorage.getItem('user_id');
+        transAproveQuotReject_req.transaction_approval_id = id;
+        api_req.element_data = transAproveQuotReject_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.getTransactionApprovalList({});
+            iziToast.success({
+              message: "Rejected Success",
+              position: 'topRight'
+            });
+          } else {
+            iziToast.warning({
+              message: "Rejected Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
-      else {
-        iziToast.warning({
-          message: "Rejected Failed",
-          position: 'topRight'
-        });
-      }
-    });
+    })
+  
+  
   }
   transactionApprovalPDF(Id: any) {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + Id + "";

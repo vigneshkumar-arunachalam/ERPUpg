@@ -389,7 +389,7 @@ console.log(this.MSDisplay_Value);
 
              // alert('Test--00'+response.defaults_biller_id);
            //   this.companyNameVal = response.defaults_biller_id;
-              this.getProformaBillerDetails();
+              this.getProformaBillerDetails({});
               this.TaxDropdown();
             // this.getCustomerInvoiceDetails(response.defaults_biller_id);
         }
@@ -822,6 +822,9 @@ console.log(this.MSDisplay_Value);
       }
 
     });
+  }
+  totalCalculate(){
+
   }
 
 }

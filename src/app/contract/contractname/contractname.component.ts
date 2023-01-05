@@ -32,10 +32,10 @@ export class ContractnameComponent implements OnInit {
       'create_classification': new FormControl(null, [Validators.required]),
     });
     this.editContractNameForm = new FormGroup({
-      'e_create_contract_name': new FormControl(null),
-      'e_create_contract_description_name': new FormControl(null),
-      'e_create_contract_summary_name': new FormControl(null),
-      'e_create_classification': new FormControl(null),
+      'e_create_contract_name':new FormControl(null, [Validators.required]),
+      'e_create_contract_description_name': new FormControl(null, [Validators.required]),
+      'e_create_contract_summary_name': new FormControl(null, [Validators.required]),
+      'e_create_classification': new FormControl(null, [Validators.required]),
     });
     this.viewContractNameForm = new FormGroup({
       'v_create_contract_name': new FormControl(null),
@@ -115,9 +115,45 @@ export class ContractnameComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     contractNameSave_req.action = "contract_details_save";
     contractNameSave_req.contract_name = this.addContractNameForm.value.create_contract_name;
+    if (this.addContractNameForm.value.create_contract_name==null ) {
+
+      iziToast.warning({
+        message: "Select Contract Name",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     contractNameSave_req.contract_description = this.addContractNameForm.value.create_contract_description_name;
+    if (this.addContractNameForm.value.create_contract_description_name==null ) {
+
+      iziToast.warning({
+        message: "Select Contract Description",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     contractNameSave_req.contract_summary = this.addContractNameForm.value.create_contract_summary_name;
+    if (this.addContractNameForm.value.create_contract_summary_name==null ) {
+
+      iziToast.warning({
+        message: "Select Contract Summary",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     contractNameSave_req.contract_classification_id = this.addContractNameForm.value.create_classification;
+    if (this.addContractNameForm.value.create_classification==null ) {
+
+      iziToast.warning({
+        message: "Select Contract Classification",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     contractNameSave_req.user_id = 2;
     api_req.element_data = contractNameSave_req;
 

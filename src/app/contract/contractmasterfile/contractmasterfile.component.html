@@ -95,15 +95,19 @@ aria-hidden="true">
         </div>
         <div class="modal-body">
             <h2 style="text-align:center;color:rgb(97, 72, 9)">Add Contract File</h2>
-            <form>
+            <form [formGroup]="addContractmasterForm">
                 <div class="row">
  
                     <div class="col-lg-12">
                         <div class="form-group row">
                             <label for="contractName" class="col-lg-12 col-form-label">Name</label>
                             <div class="col-lg-12">
-                                <input type="text" class="form-control"
+                                <input type="text" class="form-control" formControlName="name"
                                     id="contractName" />
+                                    <div class="alert alert-danger alertdangerCustomCSS1 mt-2"
+                                    *ngIf="addContractmasterForm.controls['name'].invalid && addContractmasterForm.controls['name'].touched">
+                                    Please
+                                    enter Name</div>
                             </div>
                            
                         </div>
@@ -114,8 +118,12 @@ aria-hidden="true">
                         <div class="form-group row">
                             <label for="contractfile" class="col-lg-12 col-form-label">Select File</label>
                             <div class="col-lg-12">
-                                <input type="file" class="form-control" multiple="multiple"
+                                <input type="file" class="form-control" multiple="multiple" formControlName="file"
                                      id="contractfile" />
+                                     <div class="alert alert-danger alertdangerCustomCSS1 mt-2"
+                                     *ngIf="addContractmasterForm.controls['file'].invalid && addContractmasterForm.controls['file'].touched">
+                                     Please
+                                     select File</div>
                             </div>
 
                         </div>
@@ -131,7 +139,7 @@ aria-hidden="true">
                 Save
              </button>
             <button type="button" class="btn btn-dark" (click)="clear_file()" data-dismiss="modal">
-                Close
+                Cancel
             </button>
            
         </div>

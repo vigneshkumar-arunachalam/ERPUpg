@@ -532,8 +532,8 @@
                 <button type="button" class="btn btn-primary" (click)="contractSave()">
                     Save
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
             </div>
         </div>
@@ -649,7 +649,7 @@
                                                         <span class="userDatatable-title">From Date</span>
                                                     </th>
                                                     <td>
-                                                        <div class="userDatatable-content d-inline-block">
+                                                        <div class="userDatatable-content ">
                                                             <input type="date" class="form-control"
                                                                 formControlName="e_fromDate" />
                                                         </div>
@@ -660,7 +660,7 @@
                                                         <span class="userDatatable-title">To Date</span>
                                                     </th>
                                                     <td>
-                                                        <div class="userDatatable-content d-inline-block">
+                                                        <div class="userDatatable-content ">
                                                             <input type="date" class="form-control"
                                                                 formControlName="e_toDate" />
                                                         </div>
@@ -671,7 +671,7 @@
                                                         <span class="userDatatable-title">Remarks</span>
                                                     </th>
                                                     <td>
-                                                        <div class="userDatatable-content d-inline-block">
+                                                        <div class="userDatatable-content">
                                                             <input type="text" class="form-control"
                                                                 formControlName="e_remarks" />
                                                         </div>
@@ -721,8 +721,8 @@
                 <button type="button" class="btn btn-primary" (click)="contractUpdate()">
                     Update
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
             </div>
         </div>
@@ -749,16 +749,16 @@
                         <label for="contr" class="col-lg-12 col-form-label">
                             <strong>Select Vs Provision Attachment</strong></label>
                     </div>
-                    <label style="padding-left: 30px;font-weight:500;">Contract Attachment</label>
+                    <label style="padding-left: 30px;font-weight:500;color: rgb(194, 19, 135)!important;">Contract Attachment</label>
                     <div *ngFor="let i =index;let display1 of  secondResult;" style="padding-left: 30px;">
 
                         {{display1.uploaded_file_name}}
                         <button type="button" (click)="contractAttachmentDelete(display1.contract_attachment_file_id)"
                             class="btn btn-link"><span class="bi bi-trash"></span></button>
-                        <!-- <button >Delete</button> -->
+                 
                     </div>
-                    <br>
-                    <label style="padding-left: 30px;font-weight:500;padding-top:10px;">Provision Attachment</label>
+                 
+                    <label style="padding-left: 30px;font-weight:500;padding-top:10px;color: rgb(194, 19, 135)!important">Provision Attachment</label>
                     <div *ngFor="let display of firstResult;let i =index;" style="padding-left: 30px;">
 
                         <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
@@ -781,8 +781,8 @@
                 <button type="button" class="btn btn-primary" (click)="contractFileUpdate()">
                     Save
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
             </div>
 
@@ -839,8 +839,8 @@
                 <button type="button" class="btn btn-primary" (click)="invoiceUpdate()">
                     Update
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
             </div>
         </div>
@@ -944,7 +944,7 @@ aria-hidden="true">
                         </div> -->
                         <div>
                             <div class="form-group">
-                                <label for="remark_desc" style="color:rgb(29, 40, 99) ; font-weight:800;
+                                <label for="remark_desc" style="color:rgb(218, 68, 8)!important ; font-weight:800;
                                 font-size:medium;">Add New Remark</label>
                                 <textarea class="form-control" formControlName="cust_remark" id="remark_desc"
                                     rows="3"></textarea>
@@ -958,7 +958,7 @@ aria-hidden="true">
                             <button type="button" class="btn btn-primary" (click)="contractRemarksUpdate()">
                                 Save
                             </button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">
                                 Close
                             </button>
                         </div>
@@ -1020,7 +1020,7 @@ aria-hidden="true">
                 <button type="button" class="btn btn-success" (click)="dropdowncontractfileGenerate()">Generate
                     Contract
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
 
@@ -1051,8 +1051,8 @@ aria-hidden="true">
                 <!-- <iframe src="{{this.FileURLDisplay}}"></iframe> -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
                 <!-- <button type="button" class="btn btn-secondary" 
             (click)="dropdownGenerateTemporary()">Generate
@@ -1081,7 +1081,7 @@ aria-hidden="true">
             <div class="modal-body">
                 <form [formGroup]="emailForm" (ngSubmit)="testdatas()">
                     <!-- <a href="mailto:{{email}}">Contact via E-mail</a> -->
-                    <div class="col-md-8 col-12">
+                    <div>
                         <div class="form-group">
 
                             <!-- <input formControlName="primaryEmail" email >
@@ -1093,24 +1093,24 @@ aria-hidden="true">
                             class="alert alert-danger">
                             Email 'To' is Required
                         </div> -->
-                        <div class="alert alert-danger"
+                        <div class="alert alert-danger alertdangerCustomCSS1 "
                             *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
                             Please
                             enter To Address</div>
 
 
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div >
                         <div class="form-group">
                             <label for="subject" class="col-lg-12 col-form-label">Subject</label>
                             <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
                         </div>
                         <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
-                            class="alert alert-danger">
+                            class="alert alert-danger alertdangerCustomCSS1 ">
                             Name is Required
                         </div>
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div >
                         <div class="form-group">
                             <label for="subject" class="col-lg-12 col-form-label">Description</label>
                             <!-- <textarea class="richTextArea"></textarea> -->
@@ -1134,7 +1134,7 @@ aria-hidden="true">
                     Mail
 
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Close
                 </button>
 
@@ -1163,7 +1163,7 @@ aria-hidden="true">
             <div class="modal-body">
                 <form [formGroup]="emailBizzFileForm">
 
-                    <div class="col-md-8 col-12">
+                    <div>
                         <div class="form-group">
 
 
@@ -1171,25 +1171,25 @@ aria-hidden="true">
                             <input type="email" id="emailto_bizz" class="form-control" formControlName="bizz_email_to">
                         </div>
 
-                        <div class="alert alert-danger alertdangerCustomCSS"
+                        <div class="alert alert-danger alertdangerCustomCSS1"
                             *ngIf="emailBizzFileForm.controls['bizz_email_to'].invalid && emailBizzFileForm.controls['bizz_email_to'].touched">
                             Please
                             enter To Address</div>
 
 
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div>
                         <div class="form-group">
                             <label for="subject" class="col-lg-12 col-form-label">Subject</label>
                             <input type="text" id="subject_bizz" class="form-control"
                                 formControlName="bizz_Subject_Content">
                         </div>
                         <div *ngIf="emailBizzFileForm.controls['bizz_Subject_Content'].invalid && (emailBizzFileForm.controls['bizz_Subject_Content'].dirty || emailBizzFileForm.controls['bizz_Subject_Content'].touched)"
-                            class="alert alert-danger alertdangerCustomCSS">
+                            class="alert alert-danger alertdangerCustomCSS1">
                             Subject is Required
                         </div>
                     </div>
-                    <div class="col-md-8 col-12">
+                    <div>
                         <div class="form-group">
                             <label for="subject" class="col-lg-12 col-form-label">Description</label>
 
@@ -1211,8 +1211,8 @@ aria-hidden="true">
                     (click)="bizzFileContractEmail()">Send Mail
 
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
 
             </div>
@@ -1253,8 +1253,8 @@ aria-hidden="true">
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" (click)="customerContractApproveStatusUpdate()">Update
                 </button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    Close
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
                 </button>
 
             </div>

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { FormGroup, FormControl,Validators } from '@angular/forms';
 import Swal from 'sweetalert2'
+declare var $: any;
+declare var iziToast: any;
 
 declare var $ :any;
 @Component({
@@ -11,12 +13,18 @@ declare var $ :any;
 })
 export class ContractmasterfileComponent implements OnInit {
   listDisplay:any;
-
+  public addContractmasterForm: FormGroup;
   constructor(private serverService: ServerService) { }
 
   ngOnInit(): void 
   {
     this.contractMasterFileList() 
+    
+    this.addContractmasterForm = new FormGroup({
+      'name': new FormControl(null, Validators.required),
+      'file': new FormControl(null, Validators.required),
+    
+    });
   }
   send_file()
   {
@@ -90,56 +98,98 @@ export class ContractmasterfileComponent implements OnInit {
   clear_file(){
   $('#contractfile').val('');
   }
- deleteFile(id:any){
-  var id=id;
-  let api_req: any = new Object();
- let delete_file_req: any = new Object();
-  api_req.moduleType = "customer_contract";
-  api_req.api_url = "customer_contract/contract_master_file_delete";
-  api_req.api_type = "web";
-  api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  delete_file_req.action = "contract_master_file_delete";
-  delete_file_req.contract_master_file_id=id;
-  delete_file_req.user_id = localStorage.getItem('user_id');
-  api_req.element_data = delete_file_req;
-  this.serverService.sendServer(api_req).subscribe((response: any) => {
-    console.log(response)
+//  deleteFile(id:any){
+//   var id=id;
+//   let api_req: any = new Object();
+//  let delete_file_req: any = new Object();
+//   api_req.moduleType = "customer_contract";
+//   api_req.api_url = "customer_contract/contract_master_file_delete";
+//   api_req.api_type = "web";
+//   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+//   delete_file_req.action = "contract_master_file_delete";
+//   delete_file_req.contract_master_file_id=id;
+//   delete_file_req.user_id = localStorage.getItem('user_id');
+//   api_req.element_data = delete_file_req;
+//   this.serverService.sendServer(api_req).subscribe((response: any) => {
+//     console.log(response)
 
-  //  alert("Deleted Sucessfully")
-    if(response.status==true){
-     this. contractMasterFileList()
+//   //  alert("Deleted Sucessfully")
+//     if(response.status==true){
+//      this. contractMasterFileList()
       
-      Swal.fire({  
-        title: 'Are you sure want to remove?',  
-        icon: 'warning',  
-        showCancelButton: true,  
-        confirmButtonText: 'Yes',  
-        cancelButtonText: 'No'  
-      }).then((response:any) => {  
-        if (response.value) {  
-          Swal.fire(  
-            'Deleted!' 
+//       Swal.fire({  
+//         title: 'Are you sure want to remove?',  
+//         icon: 'warning',  
+//         showCancelButton: true,  
+//         confirmButtonText: 'Yes',  
+//         cancelButtonText: 'No'  
+//       }).then((response:any) => {  
+//         if (response.value) {  
+//           Swal.fire(  
+//             'Deleted!' 
              
-          )  
-        } else if (response.dismiss === Swal.DismissReason.cancel) {  
-          Swal.fire(  
-            'Cancelled' 
+//           )  
+//         } else if (response.dismiss === Swal.DismissReason.cancel) {  
+//           Swal.fire(  
+//             'Cancelled' 
            
-          )  
-        }  
-      })  
+//           )  
+//         }  
+//       })  
     
 
-    //  Swal.fire({
-    //   title: 'Error!',
-    //   text: 'Do you want to continue',
-    //   icon: 'error',
-    //   confirmButtonText: 'Cool'
-    // })
-     }
-  
-  });
 
- }
+//      }
+  
+//   });
+
+//  }
+
+ deleteFile(id: any) {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, Approve it!'
+  }).then((result:any) => {
+    if (result.value) {
+
+      
+      let api_req: any = new Object();
+     let delete_file_req: any = new Object();
+      api_req.moduleType = "customer_contract";
+      api_req.api_url = "customer_contract/contract_master_file_delete";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      delete_file_req.action = "contract_master_file_delete";
+      delete_file_req.contract_master_file_id=id;
+      delete_file_req.user_id = localStorage.getItem('user_id');
+      api_req.element_data = delete_file_req;
+
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        if (response.status == true) {
+          this. contractMasterFileList()
+          iziToast.success({
+            message: "Deleted Successfully",
+            position: 'topRight'
+          });
+        }   else {
+          iziToast.warning({
+            message: "Not Deleted",
+            position: 'topRight'
+          });
+        }
+      }),
+        (error: any) => {
+          console.log(error);
+        };
+    }
+  })
+
+
+}
 
 }
