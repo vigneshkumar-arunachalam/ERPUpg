@@ -1,8 +1,8 @@
 <!-----------------Modal Pop Up (BEGIN) for Add Quotation New Pop Up  in Quotation New------------------>
-<div class="contents-section"  style="cursor:pointer;">
+<div class="contents-section" style="cursor:pointer;">
     <div class="container-fluid">
 
-        <h2 style="text-align:center;color:black;background-color: #EFF0F3;">Enter Quotation Details</h2>
+        <h2 style="text-align:center;color:black;background-color: #fafafa;">Enter Quotation Details</h2>
         <form [formGroup]="addQuotationInvoice_section1">
             <div class="row">
 
@@ -12,7 +12,8 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="cmp_name" class="form-control"
                                 (change)="templateContentDropdown($event)" (change)="dynamicChange($event)"
-                                (change)="quotationAddSignature()" (change)="TaxDropdown()" formControlName="companyName">
+                                (change)="quotationAddSignature()" (change)="TaxDropdown()"
+                                formControlName="companyName">
                                 <option [ngValue]="null" selected disabled>Select Company Name</option>
                                 <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
                                     {{comp_name.billerName}}
@@ -30,30 +31,11 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="col-lg-6">
-                            <div class="form-group row">
-                              <label for="select_footer" class="col-lg-12 col-form-label">Select Footer</label>
-                              <div class="col-lg-12">
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" formControlName="selectFooter" id="cal4care-1"
-                                    value="cal4care-1" (change)="handleChange($event)" [attr.checked]="true"/>
-                                  <label class="form-check-label" for="cal4care-1">
-                                    cal4care-1
-                                  </label>
-                                </div>
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" formControlName="selectFooter" id="cal4care-2"
-                                    value="cal4care-2" (change)="handleChange($event)" />
-                                  <label class="form-check-label" for="cal4care-2">
-                                    cal4care-2
-                                  </label>
-                                </div>
-                              </div>
-                            </div>
-                          </div> -->
+           
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span style="color: red;font-size:larger;"> *</span></label>
+                        <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12" style="display: flex;">
                             <div class="form-check" *ngFor="let display of FooterDetails"
                                 style="margin-right: 20px;color: #495057;">
@@ -61,12 +43,9 @@
                                     id="{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
                                     (change)="handleChange($event)" style="margin-top: revert;" />
                                 {{display.footer_name}}
-                                <!-- <label style="font-weight:400;font-size: 14px;color: #495057; margin-bottom: 0;"
-                                    for="edit_c4c1">
-                                    
-                                </label> -->
+                              
                             </div>
-                            <div class="alert alert-danger"
+                            <div class="alert alert-danger alertdangerCustomCSS1"
                                 *ngIf="addQuotationInvoice_section1.controls['selectFooter'].invalid && addQuotationInvoice_section1.controls['selectFooter'].touched">
                                 Please
                                 Select Footer
@@ -78,7 +57,8 @@
 
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label for="quot_date" class="col-lg-12 col-form-label">Quotation Date<span style="color: red;font-size:larger;"> *</span></label>
+                        <label for="quot_date" class="col-lg-12 col-form-label">Quotation Date<span
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12">
                             <input type="date" class="form-control" formControlName="quotationDate" id="quot_date" />
                         </div>
@@ -86,9 +66,9 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group row">
-                        <label for="cust_dett"
-                            style="color: black!important;background-color: #EFF0F3;font-size: larger;text-align: center;"
-                            class="col-lg-12 col-form-label">Customer Details</label>
+                      
+                            <h2 style="color: black;background-color: #fafafa;font-size: larger;text-align: center;"
+                            class="col-lg-12 col-form-label">Customer Details</h2>
 
                     </div>
                 </div>
@@ -97,7 +77,8 @@
 
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label for="customerName" class="col-lg-12 col-form-label">Customer Name<span style="color: red;font-size:larger;"> *</span></label>
+                        <label for="customerName" class="col-lg-12 col-form-label">Customer Name<span
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="ng-autocomplete">
 
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
@@ -114,7 +95,7 @@
                                 <div [innerHTML]="notFound"></div>
                             </ng-template>
                             <div *ngIf="addQuotationInvoice_section1.controls['customerName'].invalid && (addQuotationInvoice_section1.controls['customerName'].dirty || addQuotationInvoice_section1.controls['customerName'].touched)"
-                                class=" mt-2 ml-2 mr-2 alert alert-danger">
+                                class=" mt-2 ml-2 mr-2 alert alert-danger alertdangerCustomCSS1">
                                 Customer Name is Required
                             </div>
                         </div>
@@ -154,7 +135,8 @@
                             </select>
                         </div>
                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==0)">
-                            <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" [attr.readonly]="isReadOnly"  />
+                            <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus"
+                                [attr.readonly]="isReadOnly" />
                             <input type="hidden" class="form-control" formControlName="salesRep"
                                 id="saleStatus_hd_id" />
 
@@ -170,12 +152,17 @@
 
                     </div>
                 </div>
+
+
+  
+
+
                 <div class="col-lg-6">
                     <div class="form-group row">
                         <label for="select_template" class="col-lg-12 col-form-label">Select
                             Template<span style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12">
-                            <select name="enqFormValue" id="select_template" class="form-control"
+                            <select name="enqFormValue1" id="select_template" class="form-control"
                                 (change)="templateContentDropdown($event)" formControlName="selectTemplate">
                                 <option [ngValue]="null" selected disabled>Select Template</option>
                                 <option *ngFor="let template of SelectTemplateList"
@@ -183,6 +170,10 @@
                                     {{template.quotation_template_name}}
                                 </option>
                             </select>
+                            <div *ngIf="addQuotationInvoice_section1.controls['selectTemplate'].invalid && (addQuotationInvoice_section1.controls['selectTemplate'].dirty || addQuotationInvoice_section1.controls['selectTemplate'].touched)"
+                                class="mt-2 alert alert-danger alertdangerCustomCSS1">
+                                Template Required
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -258,7 +249,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label for="pdf_template" class="col-lg-12 col-form-label">Select PDF Template<span style="color: red;font-size:larger;"> *</span></label>
+                        <label for="pdf_template" class="col-lg-12 col-form-label">Select PDF Template<span
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12">
                             <select name="pdftemp" id="pdf_template" class="form-control"
                                 formControlName="selectPDFTemplate">
@@ -267,6 +259,10 @@
                                     {{pdf.name}}
                                 </option>
                             </select>
+                            <div *ngIf="addQuotationInvoice_section1.controls['selectPDFTemplate'].invalid && (addQuotationInvoice_section1.controls['selectPDFTemplate'].dirty || addQuotationInvoice_section1.controls['selectPDFTemplate'].touched)"
+                            class="mt-2 alert alert-danger alertdangerCustomCSS1">
+                            PDF Template Required
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -274,7 +270,8 @@
                 <div class="col-lg-6  mb-4">
                     <div class="form-group row">
                         <label for="term_con" class="col-lg-12 col-form-label">Quotation Terms and
-                            Conditions<span style="color: red;font-size:larger;"> *</span> <span style="font-size:10px ;">(Don't Show)</span>
+                            Conditions<span style="color: red;font-size:larger;"> *</span> <span
+                                style="font-size:10px ;">(Don't Show)</span>
                             <input type="checkbox" formControlName="termsCondition_DontShow"
                                 (change)="termsCondition_DontShow_eventCheck($event)" />
                         </label>
@@ -289,7 +286,7 @@
                                 </option>
                             </select>
                             <div *ngIf="addQuotationInvoice_section1.controls['selectTermsConditions'].invalid && (addQuotationInvoice_section1.controls['selectTermsConditions'].dirty || addQuotationInvoice_section1.controls['selectTermsConditions'].touched)"
-                                class="mt-2 alert alert-danger ">
+                                class="mt-2 alert alert-danger alertdangerCustomCSS1">
                                 Quotation Terms and Conditions Required
                             </div>
                         </div>
@@ -322,7 +319,7 @@
                     <div class="form-group row">
 
 
-                        <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
+                        <h2 style="color: black;background-color: #fafafa;font-size: larger;text-align: center;"
                             class="col-lg-12 col-form-label">Product Details</h2>
                     </div>
                 </div>
@@ -367,7 +364,7 @@
                                     <tbody cdkDrag cdkDragLockAxis="y">
 
 
-                                        <tr >
+                                        <tr>
                                             <td style="width:370px;display:block;">
                                                 <div class="userDatatable-content" style="top:0">
                                                     <div class="alignFormArray" style="display:block;text-align: left;">
@@ -395,15 +392,16 @@
                                                             <p id="error_{{i}}"></p>
                                                         </div>
 
-                                                 
 
-                                                       
+
+
                                                     </div>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: right;width: auto;"
+                                                    <input type="text" class="form-control"
+                                                        style="text-align: right;width: auto;"
                                                         formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
                                                         (change)="totalCalculate();saveDiscount()"
                                                         (blur)="totalCalculate();saveDiscount()"
@@ -414,21 +412,23 @@
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: left;width: auto;"
-                                                        formControlName="pd_unit" id="pd_unit_{{i}}" />
+                                                    <input type="text" class="form-control"
+                                                        style="text-align: left;width: auto;" formControlName="pd_unit"
+                                                        id="pd_unit_{{i}}" />
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
 
-                                                    <input type="text" class="form-control" style="text-align: right;width: 200px;"
+                                                    <input type="text" class="form-control"
+                                                        style="text-align: right;width: 200px;"
                                                         formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
                                                         onfocus="assignRowVal(i)"
                                                         (change)="totalCalculate();saveDiscount()"
                                                         (blur)="totalCalculate();saveDiscount()"
                                                         (keyup)="totalCalculate();saveDiscount()" />
 
-                                                   
+
 
                                                 </div>
                                             </td>
@@ -437,31 +437,36 @@
                                                     <input type="text" class="form-control" formControlName="pd_Total"
                                                         style="text-align: right;width: 200px;" id="pd_Total_{{i}}" />
 
-                                                    
+
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: right;width: 200px;"
+                                                    <input type="text" class="form-control"
+                                                        style="text-align: right;width: 200px;"
                                                         formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="userDatatable-content" style="top:-35px;text-align: center;">
-                                                    <input type="checkbox" formControlName="pd_split" id="pd_split_{{i}}"
+                                                <div class="userDatatable-content"
+                                                    style="top:-35px;text-align: center;">
+                                                    <input type="checkbox" formControlName="pd_split"
+                                                        id="pd_split_{{i}}"
                                                         (change)="totalCalculate();set_display_none(i);" />
 
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="userDatatable-content" style="top:-35px;text-align: center;">
+                                                <div class="userDatatable-content"
+                                                    style="top:-35px;text-align: center;">
                                                     <input type="checkbox" formControlName="pd_GPTotal"
                                                         (change)="totalCalculate();" />
 
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="userDatatable-content" style="top:-35px; text-align: center;">
+                                                <div class="userDatatable-content"
+                                                    style="top:-35px; text-align: center;">
                                                     <input type="checkbox" [ngModel]="test[i]" id="pd_selectTax_{{i}}"
                                                         formControlName="pd_selectTax" (change)="totalCalculate();" />
 
@@ -479,8 +484,8 @@
                                             <td>
                                                 <div class="userDatatable-content">
                                                     <input type="text" class="form-control"
-                                                    formControlName="pd_productName_txtbox1"
-                                                    id="pd_productName_txtbox_{{i}}" />
+                                                        formControlName="pd_productName_txtbox1"
+                                                        id="pd_productName_txtbox_{{i}}" />
                                                 </div>
                                             </td>
                                             <td></td>
@@ -488,21 +493,21 @@
                                             <td>
                                                 <div class="userDatatable-content">
                                                     <button type="button"
-                                                    class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                                    data-toggle="modal" (click)="calculateDiscount(i)"
-                                                    data-target="#discountFormId" id="discount_btn_{{i}}" >Discount(-) 
+                                                        class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                                        data-toggle="modal" (click)="calculateDiscount(i)"
+                                                        data-target="#discountFormId"
+                                                        id="discount_btn_{{i}}">Discount(-)
                                                     </button>
                                                     <!-- <button>Discount</button> -->
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="userDatatable-content">
-                                                <input type="text" class="form-control"
-                                                        style="text-align: right;" formControlName="sub_dis_amt"
-                                                        id="sub_discount_{{i}}" />
-                                                <input type="hidden" class="form-control" style="text-align: right;"
-                                                    formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
-                                                <input type="hidden" class="form-control" style="text-align: right;"
+                                                    <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
                                                         formControlName="sub_dis_val" id="sub_discount_val_{{i}}" />
                                                 </div>
                                             </td>
@@ -511,10 +516,10 @@
                                             <td>
                                                 <div class="userDatatable-content">
                                                     <textarea
-                                                    style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
-                                                    class="form-control mt-2 mb-2" row="4"
-                                                    formControlName="pd_productName_txtArea"
-                                                    id="pd_productName_txtArea_{{i}}"></textarea>
+                                                        style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                        class="form-control mt-2 mb-2" row="4"
+                                                        formControlName="pd_productName_txtArea"
+                                                        id="pd_productName_txtArea_{{i}}"></textarea>
                                                 </div>
                                             </td>
                                         </tr>
@@ -631,7 +636,7 @@
                                     <select name="billerID" id="billerIDs" class="form-control"
                                         aria-label="Default select example" formControlName="section3_gst_dropdown"
                                         (change)="getTaxCals()">
-                                        <option [ngValue]="null" selected >Select Tax</option>
+                                        <option [ngValue]="null" selected>Select Tax</option>
                                         <!-- <option value="null" selected disabled>Select Tax</option> -->
 
 
@@ -657,7 +662,7 @@
 
                             <div class="col-lg-6">
                                 <div class="d-flex justify-content-center">
-                                    <input type="text" class="form-control ml-2 mt-2" 
+                                    <input type="text" class="form-control ml-2 mt-2"
                                         formControlName="section3_shipping_amt_name_txtbox" />
 
                                 </div>

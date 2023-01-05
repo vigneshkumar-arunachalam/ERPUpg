@@ -20,8 +20,8 @@
   
   
               <div class="userDatatable global-shadow border-0 bg-white w-100">
-                <div class="table-responsive">
-                  <table class="table mb-0 table-borderless" *ngFor="let abc of biller_list; let j = index">
+                <div class="table-responsive" >
+                  <table class="table mb-0 table-borderless">
                     <thead>
                       <tr class="userDatatable-header">
                         <th>
@@ -37,7 +37,7 @@
                         <th>
                           <span class="userDatatable-title">Invoice No</span>
                         </th>
-  
+                      
                         <th>
                           <span class="userDatatable-title">Customer</span>
                         </th>
@@ -63,8 +63,14 @@
                         </th>
                       </tr>
                     </thead>
-                    <!-- <tbody *ngIf="(this.biller_list=='3')" *ngFor="let list of PI_list; let i = index" [ngSwitch]="list.billStatus">
-                      <tr   *ngSwitchCase="'1'" style="background-color:#ffb8b8;">
+                    <tbody *ngFor="let list of PI_list; let i = index">
+                    <tr *ngIf="(list.biller_color_state=='1')">
+                      <td  class="PIlistlabel" colspan="10" [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'4px!important'}">{{list.billerCode}}</td>
+                    </tr>
+                      <tr *ngIf="(list.billerId)"  
+                      [ngStyle]="{'background-color':(list.billStatus=='1')? ('#ffb8b8') : ((list.billStatus=='2')? ('#fffeb3') : ('#d0ffc3'))}"
+                     >
+                   
                         <td>
                             <div class="d-flex">
                               <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -90,7 +96,7 @@
                         </button>
                         </span>
                         </td>
-  
+                    
                         <td>
                           <span>{{ list.customerName}}</span>
                         </td>
@@ -103,8 +109,7 @@
                           <span>{{ list.netPayment }}</span>
                         </td>
                         <td>
-                          <span>{{ list.billGeneratedBy
-                          }}</span>
+                          <span>{{ list.billGeneratedBy}}</span>
                         </td>
                         <td>
                           <span> {{ list.export_type }}</span>
@@ -115,6 +120,7 @@
                         </td>
   
                         <td>
+                          
   
                           <div class="page">
   
@@ -160,203 +166,22 @@
                           </div> 
   
                         </td>
-                      </tr>
-                      <tr   *ngSwitchCase="'2'" style="background-color:#fffeb3;">
-                        <td>
-                            <div class="d-flex">
-                              <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                <div class="checkbox-group-wrapper">
-                                  <div class="checkbox-group d-flex">
-                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                      <input class="checkbox" type="checkbox" id="check-grp1-{{i}}"
-                                        (change)="EditCHK(list.userId,$event)">
-                                      <label for="check-grp1-{{i}}"></label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-    
-                            </div>
-                          </td>
-                        <td>
-                          {{ list.invoice_no}}
-
-                          <span><button type="button" class="buttonClass"
-                            [ngStyle]="{backgroundColor: list.colorCodes}">{{
-                            list.billerCode}}
-                        </button>
-                        </span>
-                        </td>
-  
-                        <td>
-                          <span>{{ list.customerName}}</span>
-                        </td>
+                        <br>
                        
-                   
-                        <td>
-                          <span>{{ list.billDate}}</span>
-                        </td>
-                        <td>
-                          <span>{{ list.netPayment }}</span>
-                        </td>
-                        <td>
-                          <span>{{ list.billGeneratedBy
-                          }}</span>
-                        </td>
-                        <td>
-                          <span> {{ list.export_type }}</span>
-                        </td>
-                        <td>
-                          <span>{{ list.currency_name}}({{list.conversion_rate_val
-                          }})</span>
-                        </td>
-  
-                        <td>
-  
-                          <div class="page">
-  
-                            <div class="dropdown">
-                              <button class="btn1"><i class="fa fa-bars"></i></button>
-  
-  
-                              <ul class="dropdown__list">
-                                <li class="dropdown__item">
-                                  <a href="#" class="remove" title="View"  >
-  
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                                  </a>
-                                </li>
-                                <li class="dropdown__item">
-                                  <a href="#" class="view" title="Delete" >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
-                                  </a>
-                                </li>
-                                <li class="dropdown__item">
-                                  <a  class="remove" title="Edit" (click)="editPIGo(list.billId)" >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                  </a>
-                                </li>
-                                <li class="dropdown__item">
-                                  <a href="#" class="view" title="Special Edit" 
-                                    >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                  </a>
-                                </li>
-
-
-                                <li class="dropdown__item">
-                                  <a href="#" class="remove" title="Quick Email"  >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-                                  </a>
-                                </li>
-  
-  
-                              </ul>
-                            </div>
-  
-                          </div> 
-  
-                        </td>
                       </tr>
-                      <tr   *ngSwitchCase="'3'" style="background-color:#d0ffc3;">
-                        <td>
-                            <div class="d-flex">
-                              <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                <div class="checkbox-group-wrapper">
-                                  <div class="checkbox-group d-flex">
-                                    <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                      <input class="checkbox" type="checkbox" id="check-grp1-{{i}}"
-                                        (change)="EditCHK(list.userId,$event)">
-                                      <label for="check-grp1-{{i}}"></label>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-    
-                            </div>
-                          </td>
-                        <td>
-                          {{ list.invoice_no}}
-
-                          <span><button type="button" class="buttonClass"
-                            [ngStyle]="{backgroundColor: list.colorCodes}">{{
-                            list.billerCode}}
-                        </button>
-                        </span>
-                        </td>
-  
-                        <td>
-                          <span>{{ list.customerName}}</span>
-                        </td>
-                       
-                   
-                        <td>
-                          <span>{{ list.billDate}}</span>
-                        </td>
-                        <td>
-                          <span>{{ list.netPayment }}</span>
-                        </td>
-                        <td>
-                          <span>{{ list.billGeneratedBy
-                          }}</span>
-                        </td>
-                        <td>
-                          <span> {{ list.export_type }}</span>
-                        </td>
-                        <td>
-                          <span>{{ list.currency_name}}({{list.conversion_rate_val
-                          }})</span>
-                        </td>
-  
-                        <td>
-  
-                          <div class="page">
-  
-                            <div class="dropdown">
-                              <button class="btn1"><i class="fa fa-bars"></i></button>
-  
-  
-                              <ul class="dropdown__list">
-                                <li class="dropdown__item">
-                                  <a href="#" class="remove" title="View"  >
-  
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-activity"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-                                  </a>
-                                </li>
-                                <li class="dropdown__item">
-                                  <a href="#" class="view" title="Delete" >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-square"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
-                                  </a>
-                                </li>
-                                <li class="dropdown__item">
-                                  <a  class="remove" title="Edit" (click)="editPIGo(list.billId)" >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
-                                  </a>
-                                </li>
-                                <li class="dropdown__item">
-                                  <a href="#" class="view" title="Special Edit" 
-                                    >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                                  </a>
-                                </li>
-
-
-                                <li class="dropdown__item">
-                                  <a href="#" class="remove" title="Quick Email"  >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
-                                  </a>
-                                </li>
-  
-  
-                              </ul>
-                            </div>
-  
-                          </div> 
-  
-                        </td>
-                      </tr>
-                    </tbody> -->
+                 
+                    
+                    </tbody>
                   </table>
+
+
+
+                  
+
+
+
+
+                
                 </div>
               </div>
               <br>

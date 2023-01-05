@@ -13,6 +13,7 @@ export class ProformaInvoiceComponent implements OnInit {
   //list
   PI_list: any;
   biller_list:any;
+  biller_temp:any;
   //list-checkbox all
   checkbox_value: any;
   edit_array: any = [];
@@ -20,7 +21,7 @@ export class ProformaInvoiceComponent implements OnInit {
   user_list: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 1000;
+  pageLimit = 50;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
 
@@ -60,7 +61,8 @@ export class ProformaInvoiceComponent implements OnInit {
       console.log("PI list", response);
       if (response) {
         this.PI_list = response.proforma_details;
-        this.biller_list=response.biller_details.billerId;
+        
+        this.biller_list=response.biller_details;
 
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)

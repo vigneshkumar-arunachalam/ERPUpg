@@ -144,10 +144,10 @@ edit_array: any = [];
     this.editQuotationInvoice_section1 = new FormGroup({
       'e_companyName': new FormControl(null),
       'e_quotationNumber': new FormControl(null),
-      'e_selectFooter': new FormControl(null),
+      'e_selectFooter':new FormControl(null, [Validators.required]),
       'e_quotationDate': new FormControl(null),
       'e_customer_id': new FormControl(null),
-      'e_customerName': new FormControl(null),
+      'e_customerName': new FormControl(null, [Validators.required]),
 
       'e_cust_address1': new FormControl(null),
       'e_cust_address2': new FormControl(null),
@@ -157,12 +157,12 @@ edit_array: any = [];
       'e_salesRep': new FormControl(null),
       'salesRep_id': new FormControl(null),
 
-      'e_selectTemplate': new FormControl(null),
+      'e_selectTemplate':  new FormControl(null, [Validators.required]),
       'e_selectReseller': new FormControl(null),
       'e_selectCurrency': new FormControl(null),
       'e_extraLogo': new FormControl(null),
-      'e_selectPDFTemplate': new FormControl(null),
-      'e_selectTermsConditions': new FormControl(null),
+      'e_selectPDFTemplate':  new FormControl(null, [Validators.required]),
+      'e_selectTermsConditions': new FormControl(null, [Validators.required]),
       'e_termsCondition_DontShow': new FormControl(null),
       'e_DescriptionText': new FormControl(null),
       'e_descriptionDetails_DontShow': new FormControl(null),

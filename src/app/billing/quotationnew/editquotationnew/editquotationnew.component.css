@@ -157,4 +157,24 @@ input.form-control {
    .discountCSS2{
     color: #b8123b!important;
    }
+
+
+   .contents-section{
+    background-color: #fafafa!important;
+  }
+  
+  
+  .alertdangerCustomCSS1 {
+  
+    color: white!important;
+    background-color: #ffe5e5;
+    border-color: #ffe5e5;
+  
+    outline: none;
+    border: 2px solid transparent;
+    background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+  }
   

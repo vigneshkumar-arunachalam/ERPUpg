@@ -106,3 +106,55 @@ i.fa.fa-bars {
 
 tr:nth-child(even) {background: rgb(239, 241, 238)}
 tr:nth-child(odd) {background: #FFF}
+
+
+
+.ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input{
+   background: transparent;
+ }
+ .ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input:focus {
+   outline: none;
+   border: 2px solid transparent!important;
+   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+   background-origin: border-box;
+   background-clip: padding-box, border-box;
+   animation: bg-hue 2s linear infinite;
+ }
+
+ .form-control{
+  border: 1px solid #e1e1e1;
+  background: transparent;}
+ .form-control:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+/* @keyframes for the gradient animation */
+@keyframes bg-hue {
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+
+label {
+    font-weight: 600;
+    color: #009688!important;
+}
+input.form-control {
+  padding: 4px 8px !important;
+}
+select{
+  /* padding: 0 !important; */
+  padding-left: 4px !important;
+}
+/* td .PIlistlabel{
+  padding-left: 15px!important;
+ 
+} */
