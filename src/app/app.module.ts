@@ -55,7 +55,7 @@ import { EditPIComponent } from './billing/proforma-invoice/edit-pi/edit-pi.comp
 import { TransactionApprovalComponent } from './billing/transaction-approval/transaction-approval.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormarrayComponent } from './formarray/formarray.component';
-
+import { QRCodeModule } from 'angular2-qrcode';
 @NgModule({
   declarations: [
     AppComponent,
@@ -99,7 +99,7 @@ import { FormarrayComponent } from './formarray/formarray.component';
   imports: [
     BrowserModule,
     FormsModule,MatTabsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,
     HttpClientModule,MatIconModule, NgMultiSelectDropDownModule.forRoot(),
     BrowserAnimationsModule,MatFormFieldModule,MatAutocompleteModule,MatInputModule,MatSliderModule,

@@ -107,21 +107,33 @@ p {
     top: 0;
     right: 31px;
   }
-  .view:hover {
+  .hover1:hover {
    
-      background: rgba(255, 77, 79, 0.1);
+      background: rgba(255, 77, 79, 0.5);
       -webkit-border-radius: 50%;
       border-radius: 50%;
   }
-  .remove:hover {
+  .hover2:hover {
    
-    background: rgba(118, 177, 103, 0.1);
+    background: rgba(118, 177, 103, 0.5);
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
-  .close:hover {
+  .hover3:hover {
    
-  background: rgba(195, 101, 233, 0.1);
+  background: rgba(5, 58, 71, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover4:hover {
+   
+  background: rgba(91, 114, 7, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover5:hover {
+   
+  background: rgba(12, 1, 39, 0.973);
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }

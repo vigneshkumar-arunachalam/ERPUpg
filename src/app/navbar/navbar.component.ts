@@ -18,10 +18,10 @@ export class NavbarComponent implements OnInit {
     this.role_Permission=localStorage.getItem('role');
     this.user_ProfileImage=localStorage.getItem('profile_image');
 
-    console.log("navigation menu, username",this.userName)
-    console.log("navigation menu, userid",this.userId)
-    console.log("navigation menu, role_permission",this.role_Permission)
-    console.log("navigation menu,  this.user_ProfileImage", this.user_ProfileImage)
+    // console.log("navigation menu, username",this.userName)
+    // console.log("navigation menu, userid",this.userId)
+    // console.log("navigation menu, role_permission",this.role_Permission)
+    // console.log("navigation menu,  this.user_ProfileImage", this.user_ProfileImage)
    
   }
  

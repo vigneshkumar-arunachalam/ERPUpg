@@ -459,7 +459,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           if (response.status == true) {
             this.getTransactionApprovalList({});
             iziToast.success({
-              message: "Success",
+              message: "Approval Success",
               position: 'topRight'
             });
           }   else {
@@ -534,7 +534,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           if (response.status == true) {
             this.getTransactionApprovalList({});
             iziToast.success({
-              message: "Rejected Success",
+              message: "Approval Rejected ",
               position: 'topRight'
             });
           } else {

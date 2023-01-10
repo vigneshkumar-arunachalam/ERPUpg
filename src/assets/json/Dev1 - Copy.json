@@ -50,7 +50,7 @@
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/alertcheck"
+            "value": "/Formarray"
         },
         {
             "name": "Purchase Entry",
@@ -132,7 +132,7 @@
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/transaction-approval"
+            "value": "/TransactionApproval"
         }, {
             "name": "Delivery Challan",
             "icon": "layers",
@@ -198,13 +198,13 @@
             "isVisible": true,
             "value": "/billing-invoice"
         }, {
-            "name": "Performa Invoice",
+            "name": "Proforma Invoice",
             "icon": "save",
             "IDs": [3101, 3102, 3103, 3104, 3105],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/proforma-invoice"
+            "value": "/ProformaInvoice"
         },
         {
             "name": "DID Invoice",
@@ -1219,7 +1219,7 @@
         {
             "name": "Guru",
             "icon": "wind",
-            "IDs": [7011, 7012, 7013, 7014, 7015],
+            "IDs": [7011, 7012, 7013, 7014, 7015,2060],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -1260,7 +1260,7 @@
     "icon": "users",
     "isActive": false,
     "menuId":13,
-    "IDs": " ",
+    "IDs": [],
     "Type": "Main Menu",
     "children": [{
             "name": "Leave Request",

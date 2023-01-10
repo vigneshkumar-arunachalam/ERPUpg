@@ -114,175 +114,88 @@
                                 <a href="#" class="remove" title="View" data-toggle="modal"
                                   data-target="#viewCustomerFormId" (click)="viewCustomer(list.customerId)">
 
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="16" x2="12" y2="12"></line>
-                                    <line x1="12" y1="8" x2="12" y2="8"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Delete" (click)="deleteCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
-                                    <line x1="18" y1="9" x2="12" y2="15"></line>
-                                    <line x1="12" y1="9" x2="18" y2="15"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Edit" data-toggle="modal"
                                   data-target="#editCustomerFormId" (click)="editCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-                                    <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Special Edit" data-toggle="modal"
                                   data-target="#specialEditCustomerFormId"
                                   (click)="specialEditCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <polygon points="16 3 21 8 8 21 3 21 3 16 16 3"></polygon>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="MConnect" data-toggle="modal"
                                   data-target="#mconnectPartnerDetailsFormId"
                                   (click)="mconnect_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path
-                                      d="M22.08 9C19.81 1.41 16.54-.35 9 1.92S-.35 7.46 1.92 15 7.46 24.35 15 22.08 24.35 16.54 22.08 9z">
-                                    </path>
-                                    <line x1="12.57" y1="5.99" x2="16.15" y2="16.39"></line>
-                                    <line x1="7.85" y1="7.61" x2="11.43" y2="18.01"></line>
-                                    <line x1="16.39" y1="7.85" x2="5.99" y2="11.43"></line>
-                                    <line x1="18.01" y1="12.57" x2="7.61" y2="16.15"></line>
-                                  </svg> </a>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                                </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="MrVoip" data-toggle="modal"
                                   data-target="#MrvoipPartnerDetailsFormId"
                                   (click)="mrvoip_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <line x1="4.93" y1="4.93" x2="9.17" y2="9.17"></line>
-                                    <line x1="14.83" y1="14.83" x2="19.07" y2="19.07"></line>
-                                    <line x1="14.83" y1="9.17" x2="19.07" y2="4.93"></line>
-                                    <line x1="14.83" y1="9.17" x2="18.36" y2="5.64"></line>
-                                    <line x1="4.93" y1="19.07" x2="9.17" y2="14.83"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chrome"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="C4T Partner Details" data-toggle="modal"
                                   data-target="#call4tellPartnerDetailsFormId"
                                   (click)="call4tel_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <polyline points="5 9 2 12 5 15"></polyline>
-                                    <polyline points="9 5 12 2 15 5"></polyline>
-                                    <polyline points="15 19 12 22 9 19"></polyline>
-                                    <polyline points="19 9 22 12 19 15"></polyline>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <line x1="12" y1="2" x2="12" y2="22"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Invoice Share" data-toggle="modal"
                                   data-target="#invoiceSharedCustomerFormId"
                                   (click)="invoiceShare_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <polyline points="23 4 23 10 17 10"></polyline>
-                                    <polyline points="1 20 1 14 7 14"></polyline>
-                                    <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15">
-                                    </path>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Share Customer Permission" data-toggle="modal"
                                   data-target="#SharedCustomerPermissionFormId"
                                   (click)="shareCustomerPermission_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M19 16.9A5 5 0 0 0 18 7h-1.26a8 8 0 1 0-11.62 9"></path>
-                                    <polyline points="13 11 9 17 15 17 11 23"></polyline>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Customer Status" data-toggle="modal"
                                   (click)="customer_status(list.customerId,list.cust_status)"
                                   *ngIf="list.cust_status =='P'">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Customer Status" data-toggle="modal"
                                   (click)="customer_status(list.customerId,list.cust_status)"
                                   *ngIf="list.cust_status == 'N'">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==true">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path
-                                      d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3">
-                                    </path>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
 
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path
-                                      d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17">
-                                    </path>
-                                  </svg>
-
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                                 </a>
                               </li>
 
@@ -290,29 +203,13 @@
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Reseller Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                                    <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path>
-                                    <path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path>
-                                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                                  </svg>
-
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Reseler Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==true">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
 
                                 </a>
                               </li>
@@ -322,13 +219,7 @@
                                 <a href="#" class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
                                   (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <polyline points="17 11 19 13 23 9"></polyline>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
 
                                 </a>
                               </li>
@@ -336,50 +227,25 @@
                                 <a href="#" class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
                                   (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="18" y1="8" x2="23" y2="13"></line>
-                                    <line x1="23" y1="8" x2="18" y2="13"></line>
-                                  </svg>
-
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <circle cx="12" cy="8" r="7"></circle>
-                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Bill Code" data-toggle="modal"
                                   data-target="#billCodeFormId" (click)="billCodeAttachmentEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
-                                    <path
-                                      d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z">
-                                    </path>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Quick Email" data-toggle="modal"
                                   data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-activity">
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <path d="M16 12v1a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
-                                  </svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                 </a>
                               </li>
 
@@ -600,24 +466,25 @@
 <!-------------------------- ------Modal-View Customer ends-------------------------------------- -->
 
 
-<!-- Modal-Add New Customer-begins -->
+<!--------------------------- -------------------------  Modal-Add New Customer-begins-------------------------  -->
+
 
 <div class="modal fade" id="addCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+    aria-hidden="true">
 
-  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcustomernewallcss">
-      <div class="modal-header">
+        <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLongTitle">Add Customer Details</h1>
-
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true" (click)="clearcustomer()">&times;</span>
         </button>
+
       </div>
       <div class="modal-body">
         <form [formGroup]="addCustomer" (ngSubmit)="addCustomerown()">
-          <div class="row">
-            <div class="col-lg-6">
+          <div >
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="companyCode " class="col-lg-12 col-form-label">Company Code*</label>
                 <div class="col-lg-12">
@@ -627,7 +494,7 @@
               </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <div class="ng-autocomplete">
                   <label for="companyName" class="col-lg-12 col-form-label">Company Name*</label>
@@ -645,16 +512,18 @@
                   <ng-template #notFoundTemplate let-notFound>
                     <div [innerHTML]="notFound"></div>
                   </ng-template>
+                 
                 </div>
                 <div
-                  *ngIf="addCustomer.controls['company_Name'].invalid && (addCustomer.controls['company_Name'].dirty || addCustomer.controls['company_Name'].touched)"
-                  class="alert alert-danger alertdangerddcustomernewallcss">
-                  Company Name is Required
-                </div>
+                *ngIf="addCustomer.controls['company_Name'].invalid && (addCustomer.controls['company_Name'].dirty || addCustomer.controls['company_Name'].touched)"
+                class="alert alert-danger alertdangerCustomCSS mt-2">
+                Company Name is Required
+              </div>
+               
               </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name</label>
                 <div class="col-lg-12">
@@ -670,7 +539,7 @@
             </div>
 
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="defaultBillerName" class="col-lg-12 col-form-label">
                   Biller Name</label>
@@ -686,7 +555,7 @@
 
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="customerClassificationn" class="col-lg-12 col-form-label">
                   Customer Classification*</label>
@@ -696,12 +565,13 @@
                     formControlName="customerClassification_vignesh" (onSelect)="onItemSelectCC($event)"
                     (onSelectAll)="onSelectAllCC($event)">
                   </ng-multiselect-dropdown>
-                </div>
-                <div
+                  <div
                   *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && (addCustomer.controls['customerClassification_vignesh'].dirty || addCustomer.controls['customerClassification_vignesh'].touched)"
-                  class="alert alert-danger alertdangerddcustomernewallcss">
+                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
                   Customer Classification is Required
                 </div>
+                </div>
+              
               </div>
             </div>
 
@@ -713,21 +583,22 @@
                 <label for="contactPerson" class="col-lg-12 col-form-label">Billing Address*</label>
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person*</label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="billingAddress_contactPerson"
                     id="contactPerson" />
+                    <div
+                    *ngIf="addCustomer.controls['billingAddress_contactPerson'].invalid && (addCustomer.controls['billingAddress_contactPerson'].dirty || addCustomer.controls['billingAddress_contactPerson'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                    Contact Person is Required
+                  </div>
                 </div>
-                <div
-                  *ngIf="addCustomer.controls['billingAddress_contactPerson'].invalid && (addCustomer.controls['billingAddress_contactPerson'].dirty || addCustomer.controls['billingAddress_contactPerson'].touched)"
-                  class="alert alert-danger alertdangerddcustomernewallcss">
-                  Contact Person is Required
-                </div>
+             
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="address1" class="col-lg-12 col-form-label">Address-1</label>
                 <div class="col-lg-12">
@@ -799,7 +670,7 @@
                       addCustomer.controls['ESA_cntPerson'].invalid &&
                       (addCustomer.controls['ESA_cntPerson'].dirty ||
                         addCustomer.controls['ESA_cntPerson'].touched)
-                    " class="alert alert-danger alertdangerddcustomernewallcss">
+                    " class="alert alert-danger alertdangerCustomCSS1 mt-2">
                   Contact Person is Required
                 </div>
               </div>
@@ -920,11 +791,11 @@
               </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="Email" class="col-lg-12 col-form-label">
                   Email</label>
-                <mat-form-field class="example-chip-list" appearance="outline">
+                <mat-form-field class="example-chip-list ml-2" appearance="outline">
                   <mat-label>Email</mat-label>
                   <mat-chip-list #chipListEmail aria-label="Email selection">
                     <mat-chip *ngFor="let emailDisplay of emailList" (removed)="removeEmail(emailDisplay)">
@@ -944,11 +815,11 @@
 
               </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
               <div class="form-group row">
                 <label for="finEmail" class="col-lg-12 col-form-label">
                   Finance Email</label>
-                <mat-form-field class="example-chip-list" appearance="outline">
+                <mat-form-field class="example-chip-list ml-2" appearance="outline">
                   <mat-label>Finance Email</mat-label>
                   <mat-chip-list #chipListFinance aria-label="Finance Email selection">
                     <mat-chip *ngFor="let financeemailDisplay of financeemailList"
@@ -1185,8 +1056,8 @@
         <button type="button" class="btn btn-primary" (click)="addCustomerown()">
           Save
         </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
         </button>
 
       </div>
@@ -1717,9 +1588,9 @@
 
       <div class="modal-footer">
 
-        <button type="button " class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
         <button type="button " class="btn btn-primary" (click)="update(this.editId)">Update Customer</button>
-
+        <button type="button " class="btn btn-dark" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
@@ -1862,11 +1733,12 @@
 
       <div class="modal-footer">
 
-        <button type="button " class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
+       
         <button type="button " class="btn btn-primary" (click)="specialUpdate(this.specialEditId)">Update
           Customer</button>
+          <button type="button " class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
       </div>
     </div>
   </div>
@@ -1951,7 +1823,7 @@
 
         <button type="button" class="btn btn-primary"
           (click)="mconnect_address_add(this.mconnectParameter)">Save</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
       </div>
@@ -2040,7 +1912,7 @@
       <div class="modal-footer">
 
         <button type="button" class="btn btn-primary" (click)=" mrvoip_address_add(this.mrvoipParameter)">Save</button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">
           Cancel
         </button>
       </div>
@@ -2126,12 +1998,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Cancel
-        </button>
+       
         <button type="button" class="btn btn-primary"
           (click)="call4tel_address_add(this.Call4telParameter)">Save</button>
-
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
       </div>
     </div>
@@ -2166,12 +2038,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Cancel
-        </button>
+      
         <button type="button" class="btn btn-primary"
           (click)="invoiceShare_update(this.invoiceSharedParameter)">Save</button>
-
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
       </div>
     </div>
   </div>
@@ -2208,12 +2080,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Cancel
-        </button>
+      
         <button type="button" class="btn btn-primary"
           (click)="shareCustomerPermission_update(this.shareCustomerPermissionParameter)">Save</button>
-
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
       </div>
     </div>
   </div>
@@ -2251,12 +2123,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Cancel
-        </button>
+        
         <button type="button" class="btn btn-primary"
           (click)="customer_NX32PermissionUpdate(this.NX32SharePermissionParameter)">Save</button>
-
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
       </div>
     </div>
   </div>
@@ -2318,8 +2190,8 @@
         <button type="button" class="btn btn-primary" (click)="fileAttachmentUpdate()">
           Save
         </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
         </button>
 
       </div>
@@ -2513,8 +2385,8 @@
         <button type="button" class="btn btn-primary" (click)="billCodeAttachmentUpdate()">
           Update
         </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
         </button>
 
       </div>
@@ -2627,7 +2499,7 @@
       <div class="modal-footer">
 
         <button type="button" class="btn btn-primary" (click)="sendLandscapeMail()">Send</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
 

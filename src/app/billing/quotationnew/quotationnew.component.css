@@ -11,6 +11,7 @@
   display: block;
   white-space: nowrap;
   /* width: 120px; */
+  width: auto;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -82,17 +83,99 @@
 }
 
 .view:hover {
-  background: rgba(224, 71, 166, 0.1);
+  background: rgba(71, 2, 45, 0.3);
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
 
 .remove:hover {
 
-  background: rgba(10, 41, 2, 0.1);
+  background: rgba(17, 71, 3, 0.3);
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
+
+.hover1:hover {
+   
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover2:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover3:hover {
+
+background: rgba(255, 228, 196, 0.9);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover4:hover {
+
+  background: rgba(243, 215, 247, 0.549);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover5:hover {
+
+background: rgba(12, 1, 39, 0.773);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover6:hover {
+  background: rgba(234, 238, 33, 0.5);
+ 
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover7:hover {
+
+/* background: rgba(121, 141, 117, 0.5); */
+background: rgba(54, 174, 204, 0.219);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover8:hover {
+
+
+background: rgb(247, 36, 36,0.75);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover9:hover {
+
+  background: rgba(20, 175, 66, 0.549);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover10:hover {
+
+background: rgb(245, 152, 31,0.6);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover11:hover {
+  background: rgba(95, 158, 160, 0.5);
+ 
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover12:hover {
+
+background: rgba(184, 167, 15, 0.9);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover13:hover {
+
+  background: rgba(14, 21, 26, 0.736);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
 
 .dropdown a {
   font-size: 14px;

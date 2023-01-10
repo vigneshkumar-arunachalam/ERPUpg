@@ -4,6 +4,9 @@ import { Child, Subchild, menulist1 } from './billing.model';
 import * as feather from 'feather-icons';
 import { Router } from '@angular/router';
 
+
+
+
 @Component({
   selector: 'app-sidebar2',
   templateUrl: './sidebar2.component.html',
@@ -21,7 +24,7 @@ export class Sidebar2Component implements OnInit {
   ngOnInit(): void {
     this.loadScript('../../assets/js/script.js');
     feather.replace();
-    console.log("menu list details", this.overallmenulist);
+    // console.log("menu list details", this.overallmenulist);
     this.roles = localStorage.getItem("role");
     this.loadMenus()
 
@@ -43,7 +46,7 @@ export class Sidebar2Component implements OnInit {
     body.appendChild(script);
   }
   change(id:any){
-      console.log(id);
+      // console.log(id);
       this.router.navigate([id]);
   }
 
@@ -82,8 +85,8 @@ for(let i=0; i<mainMenus.length; i++){
         for(let k=0; k < childMenus.length; k++){
           let subids = childMenus[k].IDs.filter((x: any) => this.roles.indexOf(x) !== -1); 
           if(subids.length > 0){ 
-            console.log(subids);
-            console.log(childMenus[k]); 
+            // console.log(subids);
+            // console.log(childMenus[k]); 
             subChildMenu.push(childMenus[k]);
           }
           mainMenus[i].children[j]['subchildMain'] = subChildMenu
@@ -113,7 +116,7 @@ mainMenus2(){
       }
     }
   }
-  console.log(mainMenus);
+  // console.log(mainMenus);
 }
 
 }

@@ -103,6 +103,7 @@ selectAdditionalSignUnchecked:boolean=false;
 groupSelectCommonId: any;
 checkbox_value: any;
 edit_array: any = [];
+datavalue:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
     this.addQuotationInvoice_section2 = this.fb.group({
@@ -528,6 +529,8 @@ edit_array: any = [];
             this.sub_dis_type='amt';
             this.sub_dis_val=response.quotation_child_det[index].dis_amt;
           }
+           // alert('ttt'+response.quotation_child_det[index].header_split);
+        
           formArray.push(this.fb.group({
 
             "pd_productName_txtbox1": response.quotation_child_det[index].productName,
@@ -541,18 +544,21 @@ edit_array: any = [];
             "sub_dis_amt": response.quotation_child_det[index].dis_amt,
             "sub_dis_type": this.sub_dis_type,
             "sub_dis_val":  this.sub_dis_val,
-            "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
+        //    "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
             "pd_GPTotal": response.quotation_child_det[index].group_total_display_status == 1 ? true : false,
             "pd_selectTax": response.quotation_child_det[index].tax_state == 1 ? true : false,
             "to_next_page": response.quotation_child_det[index].to_next_page == 1 ? true : false,
 
 
           })
-          
-          );
-        
 
+          
+          
+          );   
+
+          
         }
+
         console.log(formArray)
         this.addQuotationInvoice_section2.setControl('addresses', formArray);
         // this.addresses.push(this.addQuotationInvoice_section2);
@@ -616,7 +622,29 @@ edit_array: any = [];
         console.log(response.quotation_child_det.length);
         this.removeAddresstest(response.quotation_child_det.length);
         
-        // $('#test_2').prop('checked', true);
+        
+
+          for (let index = 0; index < response.quotation_child_det.length; index++) {
+      
+             if(response.quotation_child_det[index].header_split == 1){
+
+              $('#pd_split_'+[index]).prop('checked',false);
+              setTimeout(()=>{
+                $('#pd_split_'+[index]).click();
+              },1000);
+
+          
+              }          
+           }
+        
+
+
+      //         setTimeout(()=>{
+      //   // this.set_display_none(1);
+      //  // $('#pd_split_'+2).prop('checked',false);
+      //   $('#pd_split_'+index).click();
+      // },1000)
+
       }
       else {
 
@@ -635,6 +663,15 @@ edit_array: any = [];
         });
         console.log(error);
       }
+      //pn
+      // setTimeout(()=>{
+      //   // this.set_display_none(1);
+      //   $('#pd_split_'+2).prop('checked',false);
+      //   $('#pd_split_'+2).click();
+      // },1000)
+
+       
+      
 
   }
   templateContentDropdown(event: any) {
@@ -870,6 +907,7 @@ edit_array: any = [];
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
       console.log(addr[i].pd_quantity_txtbox1)
+      addr[i].pd_quotationChildId = $('#pd_quotationChildId_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
@@ -879,6 +917,7 @@ edit_array: any = [];
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
+      addr[i].pd_split = $('#pd_split_'+i).prop('checked');
     }
     api_UpdateEnquiry_req.values = addr;
 
@@ -1447,6 +1486,7 @@ this.DiscountForm.reset();
     this.totalCalculate();
   }
   set_display_none(cnt:any){
+    //PN
     if($('#pd_split_'+cnt).prop('checked')==true) {
       $('#pd_productName_txtArea_'+cnt).fadeOut(1000);
       $('#pd_qty_'+cnt).fadeOut(1000);
@@ -1456,6 +1496,16 @@ this.DiscountForm.reset();
       $('#pd_Total_'+cnt).fadeOut(1000);
       $('#sub_discount_'+cnt).fadeOut(1000);
       $('#pd_netPrice_'+cnt).fadeOut(1000);
+
+      $('#pd_productName_txtArea_'+cnt).val('');
+      $('#pd_qty_'+cnt).val('');
+      $('#pd_unit_'+cnt).val('');
+      $('#pd_SP_'+cnt).val('');
+      $('#discount_btn_'+cnt).val('');
+      $('#pd_Total_'+cnt).val('');
+      $('#sub_discount_'+cnt).val('');
+      $('#pd_netPrice_'+cnt).val('');
+
     }else{
       $('#pd_productName_txtArea_'+cnt).fadeIn(1000);
       $('#pd_qty_'+cnt).fadeIn(1000);
@@ -1471,6 +1521,10 @@ this.DiscountForm.reset();
 removeAddress(i: number) {
   console.log(i)
   console.log(this.addresses)
+  
+  var quotationChildId = $('#pd_quotationChildId_' + i).val();
+  //console.log('quotationChildId'+quotationChildId);
+
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -1485,6 +1539,27 @@ removeAddress(i: number) {
       var addr = this.addQuotationInvoice_section2.value.addresses;
       var list_cnt = addr.length;
       this.totalCalculate();
+
+
+      let api_req: any = new Object();
+    let api_ProdAutoFill_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/delete_quotation_child";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_ProdAutoFill_req.action = "delete_quotation_child";
+    api_ProdAutoFill_req.user_id = localStorage.getItem('user_id');
+    api_ProdAutoFill_req.quotationChildId = quotationChildId;
+    api_req.element_data = api_ProdAutoFill_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+console.log("response", response)
+
+
+    });
+
+
+
      
      
     }

@@ -8,7 +8,7 @@
                         <div class="quotation-btn-section">
                             <button type="button" *ngIf="(this.quotationPermission_Add=='1')" title="Add New Quotation"
                                 class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-                                (click)="addQuotationNew()" data-target="#addNewQuotationFormId"
+                                (click)="addQuotationNew()" 
                                 style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
                             </button>
 
@@ -190,7 +190,7 @@
                                                         <ul class="dropdown__list">
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_Edit=='1')">
-                                                                <a class="remove" title="Edit Quotation"
+                                                                <a class="hover1" title="Edit Quotation"
                                                                     data-toggle="modal"
                                                                     data-target="#editNewQuotationFormId"
                                                                     (click)="editQuotationPopUP(list.quotationId)">
@@ -214,7 +214,7 @@
 
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_Edit=='1')">
-                                                                <a class="view" title="Duplicate" data-toggle="modal"
+                                                                <a class="hover2" title="Duplicate" data-toggle="modal"
                                                                     data-target="#duplicateQuotationFormId"
                                                                     (click)="duplicateQuotationPopUP(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
@@ -232,7 +232,7 @@
 
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="remove" title="PDF" data-toggle="modal"
+                                                                <a class="hover1" title="PDF" data-toggle="modal"
                                                                     data-target="#pdfFormId"
                                                                     (click)="pdf(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
@@ -249,7 +249,7 @@
                                                             </li>
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_Mail=='1')">
-                                                                <a class="view" title="Email"
+                                                                <a class="hover2" title="Email"
                                                                     (click)="Email(list.quotationId)"
                                                                     data-toggle="modal" data-target="#TextEditorId">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
@@ -268,7 +268,7 @@
                                                             </li>
                                                             <li class="dropdown__item"
                                                                 *ngIf="(list.approval_staus=='0')">
-                                                                <a class="remove" title="Quotation Approval"
+                                                                <a class="hover1" title="Quotation Approval"
                                                                     *ngIf="(list.approval_staus=='0')"
                                                                     data-toggle="modal"
                                                                     data-target="#quotationApprovalId"
@@ -288,7 +288,7 @@
                                                             </li>
                                                             <li class="dropdown__item"
                                                                 *ngIf="(list.approval_staus=='1')">
-                                                                <a class="remove" title="Quotation Approval"
+                                                                <a class="hover2" title="Quotation Approval"
                                                                     *ngIf="(list.approval_staus=='1')"
                                                                     data-toggle="modal"
                                                                     data-target="#quotationApprovalId"
@@ -306,7 +306,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="view" title="Proforma Invoice"
+                                                                <a class="hover1" title="Proforma Invoice"
                                                                     *ngIf="(list.pi_convert_status!='0')"
                                                                     data-toggle="modal" data-target="#PIId"
                                                                     (click)="PIEdit(list.quotationId)">
@@ -323,7 +323,7 @@
                                                             </li>
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_ActualPrice=='1')">
-                                                                <a class="remove" title="Set Actual Cost"
+                                                                <a class="hover2" title="Set Actual Cost"
                                                                     *ngIf="(list.actual_state=='1')" data-toggle="modal"
                                                                     data-target="#setActualCostId"
                                                                     (click)="setActualCost(list.quotationId)">
@@ -342,7 +342,7 @@
                                                             </li>
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_ActualPrice=='1')">
-                                                                <a class="remove" title="Set Actual Cost"
+                                                                <a class="hover1" title="Set Actual Cost"
                                                                     *ngIf="(list.actual_state=='0')" data-toggle="modal"
                                                                     data-target="#setActualCostId"
                                                                     (click)="setActualCost(list.quotationId)">
@@ -362,7 +362,7 @@
 
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_Delete=='1')">
-                                                                <a class="view" title="Delete Quotation"
+                                                                <a class="hover2" title="Delete Quotation"
                                                                     (click)="deleteQuotation(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
                                                                         height="100" viewBox="0 0 24 24" fill="none"
@@ -379,7 +379,7 @@
 
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="remove" title="File Attachment"
+                                                                <a class="hover1" title="File Attachment"
                                                                     data-toggle="modal"
                                                                     data-target="#fileAttachmentFormId"
                                                                     (click)="fileAttachmentEdit(list.quotationId)">
@@ -397,7 +397,7 @@
 
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_Share=='1')">
-                                                                <a class="view" title="Share Permission"
+                                                                <a class="hover2" title="Share Permission"
                                                                     data-toggle="modal"
                                                                     *ngIf="(list.share_access_state=='0')"
                                                                     data-target="#quotationSharedPersonId"
@@ -418,7 +418,7 @@
                                                             </li>
                                                             <li class="dropdown__item"
                                                                 *ngIf="(this.quotationPermission_Share=='1')">
-                                                                <a class="view" title="Share Permission"
+                                                                <a class="hover1" title="Share Permission"
                                                                     data-toggle="modal"
                                                                     *ngIf="(list.share_access_state=='1')"
                                                                     data-target="#quotationSharedPersonId"
@@ -438,7 +438,7 @@
                                                             </li>
 
                                                             <li class="dropdown__item">
-                                                                <a class="remove" title="Set Template Name"
+                                                                <a class="hover2" title="Set Template Name"
                                                                     data-toggle="modal" data-target="#setTemplateNameId"
                                                                     (click)="setTemplateName(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
@@ -464,7 +464,7 @@
 
 
                                                             <li class="dropdown__item">
-                                                                <a class="view" title="Quotation Comments"
+                                                                <a class="hover1" title="Quotation Comments"
                                                                     data-toggle="modal"
                                                                     data-target="#quotationCommentsId"
                                                                     (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id)">
@@ -483,7 +483,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="remove" title="Excel Export"
+                                                                <a class="hover2" title="Excel Export"
                                                                     (click)="quotationExcelExport(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
                                                                         height="100" viewBox="0 0 24 24" fill="none"
@@ -510,6 +510,7 @@
                                 </table>
                             </div>
                         </div>
+                        <br>
                         <nav class="atbd-page">
                             <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
 
@@ -562,7 +563,7 @@
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true"  (click)="clearAddQuotationGo()" >&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -575,7 +576,7 @@
                                 <div class="col-lg-12">
                                     <select name="enqFormValue" id="enq_From" class="form-control"
                                         formControlName="enquiryFrom_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Enquiry From</option>
+                                        <option [ngValue]="null" selected>Select Enquiry From</option>
 
                                         <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
                                             {{term.enquiry_from_name}}
@@ -610,7 +611,7 @@
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
                                         formControlName="quotationValidity_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Quotation Validity</option>
+                                        <option [ngValue]="null" selected >Select Quotation Validity</option>
                                         <option *ngFor="let validity of quotationValidityList" value="{{validity}}">
                                             {{validity}}
                                         </option>
@@ -659,10 +660,12 @@
             </div>
             <div class="modal-footer">
 
-                <button type="submit" class="btn btn-primary" form="ngForm" (click)="AddQuotationGo()">Go>></button>
+                <button type="submit" class="btn btn-primary" form="ngForm" 
+                (click)="AddQuotationGo()">Go>></button>
 
 
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                <button type="button" class="btn btn-dark" 
+                (click)="clearAddQuotationGo()" data-dismiss="modal">
                     Cancel
                 </button>
 

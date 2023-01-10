@@ -6,7 +6,8 @@ import { BnNgIdleService } from 'bn-ng-idle';
 declare var iziToast: any;
 declare var $: any;
 import Swal from 'sweetalert2';
-
+import { v4 as uuidv4 } from 'uuid';
+import { interval, Subscription } from 'rxjs';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,7 +20,34 @@ export class LoginComponent implements OnInit {
   loginDetails:any;
   role:any= [];
   otpstatus = false;
-  constructor(private router: Router, private serverService: ServerService,private bnIdle: BnNgIdleService) { }
+
+  expired = false;
+  count: number = 1;
+  subscription: Subscription;
+  public qrdata: string;
+  public level: string;
+  public width: number;
+  datas: any;
+  typess: any;
+  websocket: any;
+  getdatas: any;
+
+  constructor(private router: Router, private serverService: ServerService,private bnIdle: BnNgIdleService) {
+    this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4067');
+    var s = this;
+    this.websocket.onopen = function (event:any) {
+      console.log('socket connected');
+    };
+    this.websocket.onmessage = function (event:any) {
+      s.getdatas = JSON.parse(event.data);
+      s.userLogin();
+    };
+
+    this.websocket.onerror = function (event:any) {
+      console.log('error');
+      console.log(event.message);
+    };
+   }
 
   ngOnInit(): void {
   
@@ -30,12 +58,52 @@ export class LoginComponent implements OnInit {
       // otp: new FormControl(null, Validators.required),
       
     });
-
+    this.subscribes('');
     // this.bnIdle.startWatching(300).subscribe((isTimedOut: boolean) => {
     //   if (isTimedOut) {
     //     console.log('session expired');
     //   }
     // });
+  }
+  subscribes(val:any) {
+    this.expired = false;
+    if (val != '') this.count = 1;
+    this.qrcodes();
+    const source = interval(30000);
+    this.subscription = source.subscribe((val) => this.qrcodes());
+  }
+  unsubscribe() {
+    this.subscription.unsubscribe();
+  }
+  qrcodes() {
+    this.count = ++this.count;
+    console.log(this.count);
+    if (this.count < 5) {
+      this.level = 'M';
+      this.width = 256;
+      this.datas = uuidv4();
+      this.typess = btoa('erp');
+      console.log(this.typess);
+      // const data = [
+      //   {
+      //     type: this.typess,
+      //     address: this.datas,
+      //   },
+      // ];
+     
+      const data = [
+        {
+          userId: this.typess,
+          unique_id_en: this.datas,
+        },
+      ];
+
+      this.qrdata = JSON.stringify(data);
+      console.log(this.qrdata);
+    } else {
+      this.expired = true;
+      this.unsubscribe();
+    }
   }
 
   validateAllFields(formGroup: FormGroup) {

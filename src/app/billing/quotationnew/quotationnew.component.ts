@@ -635,7 +635,26 @@ export class QuotationnewComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
+  clearAddQuotationGo(){
+    this.addNewQuotationPopUpForm.reset();
+    this.addNewQuotationPopUpForm.patchValue({
+
+      'version_enqForm_addPopUP':'1.0',
+
+    });
+   
+
+  }
   addQuotationNew() {
+    // $("#enq_From").val('');
+    // $("#enq_subject").val('');
+    // setTimeout(() => {
+    //   $("#quot_val").val('');
+    // $("#temp_name").val('');
+    // }, 2000);
+    
+
+    $("#addNewQuotationFormId").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
@@ -982,11 +1001,11 @@ export class QuotationnewComponent implements OnInit {
       if (response.status == true) {
 
         iziToast.success({
-          message: "Quotation Approval has been Updated",
+          message: "Quotation Sent for Approval",
           position: 'topRight'
         });
         $("#quotationApprovalId").modal("hide");
-
+        this.quotationList({})
 
       }
       else {

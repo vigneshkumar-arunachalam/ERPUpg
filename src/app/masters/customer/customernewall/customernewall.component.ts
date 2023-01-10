@@ -927,7 +927,18 @@ export class CustomernewallComponent implements OnInit {
     });
 
   }
+  clearcustomer(){
+    // this.addCustomer.reset();
+    // this.addCustomer.patchValue({
+
+    //   'company_Code':'D6387',
+
+    // });
+    window.location.reload();
+ 
+  }
   addCustomerown() {
+
 
     // finance email field condition
     console.log(this.financeemailList);

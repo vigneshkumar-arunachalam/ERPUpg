@@ -49,7 +49,8 @@ export class AppComponent {
 
   ngOnInit(): void {
     //60 = 1 minute
-    this.bnIdle.startWatching(900).subscribe((res) => {
+    //3600= 1 hour
+    this.bnIdle.startWatching(3600).subscribe((res) => {
       if (res) {
         console.log('session expired after 900 seconds');
         this.router.navigateByUrl('/logout');

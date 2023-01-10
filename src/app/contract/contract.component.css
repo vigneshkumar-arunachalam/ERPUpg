@@ -119,6 +119,88 @@
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
+
+
+.hover1:hover {
+   
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover2:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover3:hover {
+
+background: rgba(5, 58, 71, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover4:hover {
+
+background: rgba(91, 114, 7, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover5:hover {
+
+background: rgba(12, 1, 39, 0.973);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover6:hover {
+   
+  background: rgba(228, 231, 14, 0.973);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover7:hover {
+
+background: rgb(34, 46, 32);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover8:hover {
+
+background: rgba(23, 198, 241, 0.973);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover9:hover {
+
+background: rgba(212, 157, 219, 0.849);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover10:hover {
+
+background: rgba(36, 22, 153, 0.555);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover11:hover {
+   
+  background: rgba(219, 136, 138, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover12:hover {
+
+background: rgba(151, 179, 144, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover13:hover {
+
+background: rgba(59, 79, 83, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
+
   
   .dropdown a {
     font-size: 14px;

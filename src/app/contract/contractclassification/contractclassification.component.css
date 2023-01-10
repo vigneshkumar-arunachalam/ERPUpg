@@ -175,6 +175,31 @@ tr:nth-child(even) {background: rgb(239, 241, 238)}
 tr:nth-child(odd) {background: #FFF}
 .view:hover{background-color: rgb(164, 173, 214);}
 
+.hover1:hover {
+   
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover2:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover3:hover {
+  background: rgba(91, 114, 7, 0.5);
+
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+.hover4:hover {
+  background: rgba(5, 58, 71, 0.5);
+
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
 .modal-content label{
   font-weight:500;
   color: black;

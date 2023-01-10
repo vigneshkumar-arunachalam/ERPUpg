@@ -1392,6 +1392,17 @@ quotationAddSignature_filename:any;
         $('#pd_Total_'+cnt).fadeOut(1000);
         $('#sub_discount_'+cnt).fadeOut(1000);
         $('#pd_netPrice_'+cnt).fadeOut(1000);
+
+        $('#pd_productName_txtArea_'+cnt).val('');
+        $('#pd_qty_'+cnt).val('');
+        $('#pd_unit_'+cnt).val('');
+        $('#pd_SP_'+cnt).val('');
+        $('#discount_btn_'+cnt).val('');
+        $('#pd_Total_'+cnt).val('');
+        $('#sub_discount_'+cnt).val('');
+        $('#pd_netPrice_'+cnt).val('');
+
+
       }else{
         $('#pd_productName_txtArea_'+cnt).fadeIn(1000);
         $('#pd_qty_'+cnt).fadeIn(1000);
