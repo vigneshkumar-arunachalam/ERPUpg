@@ -6,7 +6,7 @@
           <div class="card-header color-dark fw-500">
             Customer Details
             <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-              data-target="#addCustomerFormId">
+              data-target="#addCustomerFormId" (click)="pageLoad()">
               Add Customer
             </button>
 
@@ -483,10 +483,11 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="addCustomer" (ngSubmit)="addCustomerown()">
-          <div >
-            <div class="col-lg-12">
+          <h3 style="font-size:large;text-align: center;">Enter Customer Details</h3>
+          <div class="row">
+            <div class="col-lg-6">
               <div class="form-group row">
-                <label for="companyCode " class="col-lg-12 col-form-label">Company Code*</label>
+                <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField"> *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" [(ngModel)]="companyCodeAddCustomer" [readonly]="isReadOnly"
                     formControlName="company_Code" id="companyCode" />
@@ -494,10 +495,10 @@
               </div>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <div class="ng-autocomplete">
-                  <label for="companyName" class="col-lg-12 col-form-label">Company Name*</label>
+                  <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField"> *</span></label>
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     formControlName="company_Name" (selected)='selectEventCustomer($event)'
                     (inputChanged)='searchCustomerData($event)' 
@@ -523,7 +524,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name</label>
                 <div class="col-lg-12">
@@ -539,7 +540,7 @@
             </div>
 
 
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <label for="defaultBillerName" class="col-lg-12 col-form-label">
                   Biller Name</label>
@@ -555,37 +556,49 @@
 
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <label for="customerClassificationn" class="col-lg-12 col-form-label">
-                  Customer Classification*</label>
+                  Customer Classification<span class="mandatoryField"> *</span></label>
                 <div class="col-lg-12 custom-selected-box">
                   <ng-multiselect-dropdown [placeholder]="'Select  Customer Classification'"
                     [settings]="dropdownSettings_customerClassification" [data]="dropdownList_customerClassification"
                     formControlName="customerClassification_vignesh" (onSelect)="onItemSelectCC($event)"
                     (onSelectAll)="onSelectAllCC($event)">
                   </ng-multiselect-dropdown>
-                  <div
-                  *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && (addCustomer.controls['customerClassification_vignesh'].dirty || addCustomer.controls['customerClassification_vignesh'].touched)"
-                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                  Customer Classification is Required
+             
                 </div>
-                </div>
+                <div
+                *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && (addCustomer.controls['customerClassification_vignesh'].dirty || addCustomer.controls['customerClassification_vignesh'].touched)"
+                class="alert alert-danger alertdangerCustomCSS mt-2">
+                Company Name is Required
+              </div>
+              <!-- <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+              *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && addCustomer.controls['customerClassification_vignesh'].touched">
+              Please
+              enter To Address
+          </div> -->
               
               </div>
             </div>
 
 
+            <div class="col-lg-6">
+    
+           </div>
 
-
-            <div class="col-lg-12">
-              <div class="form-group row">
-                <label for="contactPerson" class="col-lg-12 col-form-label">Billing Address*</label>
-              </div>
+            <div class="col-lg-6">
+             
+                <label style="color: rgb(233, 13, 24)!important;">Billing Address*</label>
+         
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-6">
+    
+            </div>
+
+            <div class="col-lg-6">
               <div class="form-group row">
-                <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person*</label>
+                <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField"> *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="billingAddress_contactPerson"
                     id="contactPerson" />
@@ -598,7 +611,7 @@
              
               </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <label for="address1" class="col-lg-12 col-form-label">Address-1</label>
                 <div class="col-lg-12">
@@ -651,28 +664,38 @@
                 </div>
               </div>
             </div>
+            <div class="col-lg-6">
+              
+            </div>
 
-            <div class="col-lg-12">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Edit Shipping Address
-                  <input type="checkbox" formControlName="edit_ship_address" id="edit_ship_address"
-                    (change)="eventCheck($event)" checked />
+            <div class="col-lg-6">
+              <div class="form-group row" style="display: flex;align-items: center;">
+                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
+                  <!-- <input type="checkbox" formControlName="edit_ship_address" id="edit_ship_address"
+                    (change)="eventCheck($event)" checked  style="margin-left: 30px;"/> -->
+
+                    <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;" formControlName="edit_ship_address"
+                    (change)="eventCheck($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
+              
+            </div>
+            <div class="col-lg-6">
               <div class="form-group row">
-                <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person*</label>
+                <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField"> *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="ESA_cntPerson" id="cntPerson " />
-                </div>
-                <div *ngIf="
+                  <div *ngIf="
                       addCustomer.controls['ESA_cntPerson'].invalid &&
                       (addCustomer.controls['ESA_cntPerson'].dirty ||
                         addCustomer.controls['ESA_cntPerson'].touched)
                     " class="alert alert-danger alertdangerCustomCSS1 mt-2">
                   Contact Person is Required
                 </div>
+                </div>
+              
               </div>
             </div>
 
@@ -749,11 +772,11 @@
             </div>
 
 
-            <div class="col-lg-12">
-              <div class="form-group row">
+            <div class="col-lg-6">
+              <div class="form-group row"  style="display: flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Premium Status
                   <input type="checkbox" formControlName="ESA_premiumStatus"
-                    (change)="eventCheckPremiumStatus($event)" />
+                    (change)="eventCheckPremiumStatus($event)" style="margin-left: 30px;"/>
                 </label>
               </div>
             </div>
@@ -791,7 +814,7 @@
               </div>
             </div>
 
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <label for="Email" class="col-lg-12 col-form-label">
                   Email</label>
@@ -815,7 +838,7 @@
 
               </div>
             </div>
-            <div class="col-lg-12">
+            <div class="col-lg-6">
               <div class="form-group row">
                 <label for="finEmail" class="col-lg-12 col-form-label">
                   Finance Email</label>
@@ -947,34 +970,34 @@
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Stripe recurring payment
 
-                  <input type="checkbox" formControlName="stripe_recurr_payment" (change)="eventCheckSRP($event)" />
+                  <input type="checkbox" formControlName="stripe_recurr_payment" style="margin-left:30px;" (change)="eventCheckSRP($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">3CX System Discount
 
-                  <input type="checkbox" formControlName="c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
+                  <input type="checkbox" formControlName="c3cx_system_discount" style="margin-left:30px;" (change)="eventCheck3CXSD($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Select Shopping GST
-
-                  <input type="checkbox" formControlName="shopping_gst" (change)="eventCheckshoppingGST($event)" />
+              <div class="form-group row" style="display:flex;align-items: center;">
+                <label class="col-lg-12 col-form-label" >Select Shopping GST
+ 
+                  <input type="checkbox" formControlName="shopping_gst" style="margin-left:30px;" (change)="eventCheckshoppingGST($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Send invoice to customer
 
-                  <input type="checkbox" [(ngModel)]="checked" formControlName="send_invoice"
+                  <input type="checkbox" [(ngModel)]="checked" style="margin-left:30px;" formControlName="send_invoice"
                     (change)="eventCheckIncoice($event)" />
                 </label>
               </div>
@@ -998,43 +1021,66 @@
             </div>
 
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Reseller Status
 
-                  <input type="checkbox" formControlName="reseller_status" (change)="eventCheckRS($event)" />
+                  <input type="checkbox" formControlName="reseller_status" style="margin-left:30px;" (change)="eventCheckRS($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Voip switch credit
 
-                  <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit"
-                    (change)="eventCheckVSC($event)" />
+                  <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit" title="Disabled"
+                    (change)="eventCheckVSC($event)" style="margin-left:30px;"/>
                 </label>
               </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="customer_status" class="col-lg-12 col-form-label">Customer Status</label>
                 <div class="col-lg-12">
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" formControlName="addCustomerStatus" id="new_id"
-                      value="new_id" (change)="handleChange($event)" />
-                    <label class="form-check-label" for="new_id">
+                    <input class="form-check-input" type="radio" [checked]="true"  formControlName="addCustomerStatus" id="new"
+                      value="new" (change)="handleChange($event)" />
+                    <label class="form-check-label" for="new">
                       New
                     </label>
                   </div>
                   <div class="form-check">
-                    <input class="form-check-input" type="radio" formControlName="addCustomerStatus" id="permanent_id"
-                      value="permanent_id" (change)="handleChange($event)" />
-                    <label class="form-check-label" for="permanent_id">
+                    <input class="form-check-input" type="radio" formControlName="addCustomerStatus" id="permanent"
+                      value="permanent" (change)="handleChange($event)" />
+                    <label class="form-check-label" for="permanent">
                       Permanent
                     </label>
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
+
+            <div  class="col-lg-6">
+              <div class="form-group row" style="display: flex;align-items: center;">
+                  <label for="customerstatus" class="col-lg-4 col-form-label">Customer Status</label>
+                  <div  style="display: flex;align-items: center;">
+                      <div class="form-check" style="margin-right:30px;">
+                          <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" 
+                              id="New" [checked]="true" (change)="CustomerStatus_RadioEvent($event)" />
+                             
+                          <label class="form-check-label" for="New"> New
+                          </label>
+                      </div>
+        
+                      <div class="form-check" style="margin-right:30px;">
+                          <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" 
+                              id="Permanent" (change)="CustomerStatus_RadioEvent($event)" />
+                          <label class="form-check-label" for="Permanent">Permanent
+                          </label>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="payment_way" class="col-lg-12 col-form-label">Default Payment Via</label>
@@ -1207,9 +1253,9 @@
 
 
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Edit Shipping Address
-                  <input type="checkbox" formControlName="e_edit_ship_address" (change)="edit_eventCheck($event)" />
+                  <input type="checkbox" formControlName="e_edit_ship_address" style="margin-left:30px;" (change)="edit_eventCheck($event)" />
                 </label>
               </div>
             </div>
@@ -1296,10 +1342,10 @@
             </div>
 
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Premium Status
                   <input type="checkbox" formControlName="e_ESA_premiumStatus"
-                    (change)="eventCheckPremiumStatus($event)" />
+                    (change)="eventCheckPremiumStatus($event)" style="margin-left:30px;"/>
                 </label>
               </div>
             </div>
@@ -1513,7 +1559,7 @@
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
+              <div class="form-group row">  
                 <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label>
                 <div *ngFor="let display1 of radio;let k=index">
                   <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"

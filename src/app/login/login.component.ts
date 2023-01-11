@@ -31,22 +31,34 @@ export class LoginComponent implements OnInit {
   typess: any;
   websocket: any;
   getdatas: any;
+  
 
   constructor(private router: Router, private serverService: ServerService,private bnIdle: BnNgIdleService) {
-    this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4067');
+    this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
     var s = this;
     this.websocket.onopen = function (event:any) {
       console.log('socket connected');
     };
     this.websocket.onmessage = function (event:any) {
       s.getdatas = JSON.parse(event.data);
-      s.userLogin();
+      console.log('socket detail'+localStorage.getItem('user_id'));
+      if(s.getdatas['0'].userId){
+        if(localStorage.getItem('user_id')==null){
+          s.qrLogin();
+        }      
+        this.websocket.onclose;
+      }
+     
     };
 
     this.websocket.onerror = function (event:any) {
       console.log('error');
       console.log(event.message);
     };
+    this.websocket.onclose = function(event:any){
+			console.log('close');
+		}; 
+
    }
 
   ngOnInit(): void {
@@ -75,31 +87,79 @@ export class LoginComponent implements OnInit {
   unsubscribe() {
     this.subscription.unsubscribe();
   }
+  qrLogin(){
+
+   // console.log('Test fun');
+
+    let api_req: any = new Object();
+    let addAPI: any = new Object();
+    api_req.moduleType = "login";
+    api_req.api_url = "login_qrcode";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addAPI.action = "login_qrcode";
+    addAPI.userId_encode = this.getdatas['0'].userId;
+    //   "c4c_erp "  base64_encode  values
+    addAPI.code_val = 'YzRjX2VycA==';
+    api_req.element_data = addAPI;
+  
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      this.loginDetails=response;
+      this.userID=response.userId;
+      this.userName=response.firstName;
+      this.role=response.role;
+      
+
+
+      localStorage.setItem('access_token','test')
+      localStorage.setItem('login_status','1')
+      localStorage.setItem('user_id',response.userId)
+      localStorage.setItem('user_name',response.firstName)
+      localStorage.setItem('role',response.role)
+      localStorage.setItem('profile_image',response.profile_image)
+
+      if(this.userID!=''){
+          this.router.navigate(['/']);
+      }
+    
+      // Swal.close();
+      // iziToast.success({
+      //   message: 'Logged In Successfully',
+      //   position: 'topRight',
+      // });
+      
+    });
+
+
+
+  }
   qrcodes() {
     this.count = ++this.count;
-    console.log(this.count);
+   // console.log(this.count);
     if (this.count < 5) {
       this.level = 'M';
       this.width = 256;
       this.datas = uuidv4();
       this.typess = btoa('erp');
-      console.log(this.typess);
-      // const data = [
-      //   {
-      //     type: this.typess,
-      //     address: this.datas,
-      //   },
-      // ];
-     
+   //   console.log(this.typess);
       const data = [
         {
-          userId: this.typess,
-          unique_id_en: this.datas,
+          type: this.typess,
+          address: this.datas,
         },
       ];
+     
+      // const data = [
+      //   {
+      //     userId: this.typess,
+      //     unique_id_en: this.datas,
+      //   },
+      // ];
 
       this.qrdata = JSON.stringify(data);
-      console.log(this.qrdata);
+    //  console.log(this.qrdata);
     } else {
       this.expired = true;
       this.unsubscribe();

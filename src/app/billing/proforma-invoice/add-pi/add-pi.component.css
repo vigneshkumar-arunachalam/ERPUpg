@@ -105,4 +105,13 @@ select{
   animation: bg-hue 2s linear infinite;
 }
 
+.cdk-drop-list{
+  cursor:move !important;
+ }
+ .discountCSS1{
+  color: #ff5722!important;
+ }
+ .discountCSS2{
+  color: #b8123b!important;
+ }
 

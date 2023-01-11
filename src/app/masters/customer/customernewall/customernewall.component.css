@@ -36,7 +36,7 @@
   color:#ffff;
 }
 #addCustomerFormId .modal-dialog{
-    max-width: 40%;
+    max-width: 80%;
 }
 
 #addCustomerFormId .td .th{
@@ -408,10 +408,11 @@ transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
    background: transparent;
  }
  .ng-autocomplete 
- ::ng-deep .autocomplete-container .input-container input:focus {
+ ::ng-deep .autocomplete-container .input-container input:focus,
+ ::ng-deep .multiselect-dropdown .dropdown-btn:focus  {
    outline: none;
    border: 2px solid transparent!important;
-   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201))!important;
    background-origin: border-box;
    background-clip: padding-box, border-box;
    animation: bg-hue 2s linear infinite;
@@ -478,4 +479,27 @@ label {
 ::ng-deep  .mat-form-field-infix {
  
   width: 480px !important;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  border: 1px solid #e1e1e1!important;
+  background: transparent;
+  height: 42px;
+  display: flex!important;
+  align-items: center;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item{
+  max-width: 100%!important;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f3d2f0 !important;
+    opacity: 0.6;
+    color: black!important;
+}
+
+.mandatoryField{
+  color: red;
 }

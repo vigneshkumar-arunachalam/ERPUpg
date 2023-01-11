@@ -28,6 +28,7 @@ export class CustomernewallComponent implements OnInit {
   nx32permissionStatus: any;
   //add & list
   companyCodeAddCustomer = 'D6387';
+  CompanyName:any;
   addCustomer: any;
   allData: any;
   displayDynamicData: any;
@@ -54,7 +55,9 @@ export class CustomernewallComponent implements OnInit {
   errMsg = true;
   emailErrMsg = true;
   checked: boolean = true;
-  isDisabled: boolean;
+  isDisabled: boolean=true;
+  customerStatus_radiobox_Value: any = 'New';
+  checkbox_EditShippingAddress:boolean=true;
  
   //edit
   editCustomerForm: FormGroup;
@@ -243,6 +246,7 @@ export class CustomernewallComponent implements OnInit {
     this.customerslist();
     this.getDynamicList();
     this.initTiny();
+
     this.radio = [{ "name": "New", "values": "N" }, { "name": "Permanent", "values": "P" }];
     this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
     this.displayDynamicData = JSON.parse(this.allData);
@@ -389,6 +393,7 @@ export class CustomernewallComponent implements OnInit {
       'dcipcountryform': new FormControl(null),
       'addCustomerStatus': new FormControl(null),
       'billername_vignesh': new FormControl(null),
+      'update': new FormControl(null),
       'customerClassification_vignesh': new FormControl(null, [Validators.required]),
       'permissionFCAdd': new FormControl(null),
       'permission_vignesh': new FormControl(null),
@@ -606,7 +611,8 @@ export class CustomernewallComponent implements OnInit {
     console.log(PAnameAll);
   }
 
-  checkbox_EditShippingAddress: any;
+
+  // checkbox_EditShippingAddress: any;
   eventCheck(event: any) {
     this.checkbox_EditShippingAddress = event.target.checked;
     console.log(this.eventCheck)
@@ -778,16 +784,22 @@ export class CustomernewallComponent implements OnInit {
     console.log(this.checkbox_NX32Permission)
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+    console.log(item.customerId)
+    console.log(item.customerName)
+    this.CompanyName=item.customerName;
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
     // do something when input is focused
   }
 
+  CustomerStatus_RadioEvent(evt: any) {
+    this.customerStatus_radiobox_Value = evt.target.id;
+    console.log( "this.customerStatus_radiobox_Value",this.customerStatus_radiobox_Value);
+  }
   handleChange(evt: any) {
-    var xyz = evt.target.id;
-    console.log(xyz, "target");
+    this.customerStatus_radiobox_Value = evt.target.id;
+    console.log( "this.customerStatus_radiobox_Value",this.customerStatus_radiobox_Value);
   }
   partnerTypehandleChange(evt: any) {
     this.partnerTypeMconn = evt.target.id;
@@ -812,7 +824,34 @@ export class CustomernewallComponent implements OnInit {
         this.myFiles.push(event.target.files[i]);
     }
 }
+pageLoad(){
+  this.checkbox_EditShippingAddress=true;
+  if (this.checkbox_EditShippingAddress) {
 
+
+    this.addCustomer.get("ESA_shipto").disable();
+    this.addCustomer.get("ESA_address1").disable();
+    this.addCustomer.get("ESA_address2").disable();
+    this.addCustomer.get("ESA_city").disable();
+    this.addCustomer.get("ESA_state").disable();
+    this.addCustomer.get("ESA_cntPerson").disable();
+    this.addCustomer.get("ESA_zipcode").disable();
+    this.addCustomer.get("ESA_countryname").disable();
+  }
+  else {
+
+    this.addCustomer.get("ESA_shipto").enable();
+    this.addCustomer.get("ESA_address1").enable();
+    this.addCustomer.get("ESA_address2").enable();
+    this.addCustomer.get("ESA_city").enable();
+    this.addCustomer.get("ESA_state").enable();
+    this.addCustomer.get("ESA_cntPerson").enable();
+    this.addCustomer.get("ESA_zipcode").enable();
+    this.addCustomer.get("ESA_countryname").enable();
+
+  }
+
+}
   customerslist() {
     console.log("Customer List UI Display Data after OnInit ")
 
@@ -959,15 +998,42 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.action = "customer_save";
     add_customer_req.user_id = localStorage.getItem('user_id');
 
-    add_customer_req.customerName = this.addCustomer.value.company_Name;
-    add_customer_req.cus_banking_charge = this.addCustomer.value.banking_charge;
+
+    add_customer_req.customerCode = this.addCustomer.value.company_Code;
+    if (this.addCustomer.value.company_Code == null) {
+      iziToast.warning({
+        message: "Company Code Missing",
+        position: 'topRight'
+      });
+    }
+    add_customer_req.customerName = this.CompanyName;
+    if (this.CompanyName == null) {
+      iziToast.warning({
+        message: "Company Name Missing",
+        position: 'topRight'
+      });
+    }
+    add_customer_req.def_biller_id = this.addCustomer.value.defaultBillerName;
+    add_customer_req.company_name = this.addCustomer.value.update;
+    add_customer_req.cus_type = this.addCustomer.value.customerClassification_vignesh;
+    if (this.addCustomer.value.customerClassification_vignesh == null) {
+      iziToast.warning({
+        message: "Customer Classification Missing",
+        position: 'topRight'
+      });
+    }
+
+    add_customer_req.bill_attn = this.addCustomer.value.billingAddress_contactPerson;
     add_customer_req.customerAddress1 = this.addCustomer.value.billingAddress_address1;
     add_customer_req.customerAddress2 = this.addCustomer.value.billingAddress_address2;
     add_customer_req.city = this.addCustomer.value.billingAddress_city;
     add_customer_req.state = this.addCustomer.value.billingAddress_state;
     add_customer_req.zipCode = this.addCustomer.value.billingAddress_zipcode;
     add_customer_req.country = this.addCustomer.value.BA_countryname;
-    add_customer_req.bill_attn = this.addCustomer.value.ESA_cntPerson;
+
+    // add_customer_req.e_shippping = this.addCustomer.value.edit_ship_address;
+    add_customer_req.ship_attn =this.checkbox_EditShippingAddress
+    add_customer_req.ship_attn = this.addCustomer.value.ESA_cntPerson;
     add_customer_req.ship_to = this.addCustomer.value.ESA_shipto;
     add_customer_req.ship_customerAddress1 = this.addCustomer.value.ESA_address1;
     add_customer_req.ship_customerAddress2 = this.addCustomer.value.ESA_address2;
@@ -980,27 +1046,31 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.customerPhone = this.addCustomer.value.ESA_phone;
     add_customer_req.mobilePhone = this.addCustomer.value.ESA_MobilePhone;
     add_customer_req.fax = this.addCustomer.value.ESA_FAX;
-    add_customer_req.tin_no = this.addCustomer.value.send_invoice;
+    add_customer_req.tin_no = this.addCustomer.value.ESA_GSTNO;
     add_customer_req.website_name = this.addCustomer.value.ESA_websiteName;
     add_customer_req.email = result_Email_Field;
     add_customer_req.finance_email = result_FinanceEmail_Field;
+
+    add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment;
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
     add_customer_req.reseller_id = this.addCustomer.value.ESA_c3cxResellerId_add;
-    add_customer_req.reseller_dis_per = this.addCustomer.value.discount_percentage;
-    add_customer_req.banking_charge = this.addCustomer.value.banking_charge;
     add_customer_req.def_currency_id = this.addCustomer.value.currencyname;
+    add_customer_req.reseller_dis_per = this.addCustomer.value.discount_percentage;
+    add_customer_req.cus_banking_charge = this.addCustomer.value.banking_charge;
     add_customer_req.stripe_customerId = this.addCustomer.value.stripe_customer_id;
     add_customer_req.stripe_recurring_state = this.addCustomer.value.stripe_recurr_payment;
     add_customer_req.system_discount_3cx = this.addCustomer.value.c3cx_system_discount;
     add_customer_req.reseller_gst_state = this.addCustomer.value.shopping_gst;
     add_customer_req.send_invoice = this.addCustomer.value.send_invoice;
+    add_customer_req.companyName = this.addCustomer.value.contact_person_CP;
     add_customer_req.bankAccountName = this.addCustomer.value.bank_acc_no;
     add_customer_req.bankAccountNo = this.addCustomer.value.bank_account_number;
-    add_customer_req.cust_status = this.addCustomer.value.addCustomerStatus;
+    add_customer_req.cust_status = this.customerStatus_radiobox_Value;
     add_customer_req.reseller_state = this.addCustomer.value.reseller_status;
     add_customer_req.vs_credit = this.addCustomer.value.voip_switch_credit;
     add_customer_req.def_payment_via = this.addCustomer.value.payment_way;
+
     api_req.element_data = add_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
