@@ -503,3 +503,7 @@ label {
 .mandatoryField{
   color: red;
 }
+
+.mousepoint{
+  cursor: pointer !important;
+}

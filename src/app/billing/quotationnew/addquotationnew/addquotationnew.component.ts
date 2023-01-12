@@ -1415,22 +1415,7 @@ quotationAddSignature_filename:any;
       }
   }
 
-  // productDetails_selectTax_eventCheck(e: any, i: any) {
-  //  this.checkbox_productDetails_selectTax = e.target.checked
-  //  console.log(this.checkbox_productDetails_selectTax);
-  //   var actualPrice = $('#pd_netPrice_' + i).val();
-  //  if (this.addQuotationInvoice_section3.value.section3_gst_dropdown) {
-  //   var tax = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
-  //   tax = (parseFloat(tax) * parseFloat(actualPrice) / 100).toFixed(2);
-  //   if (this.checkbox_productDetails_selectTax == true) {
-  //      this.grandTotal = this.grandTotal + parseFloat(tax);
-  //      this.finalTax = this.finalTax + parseFloat(tax)
-  //   } else {
-  //      this.grandTotal = this.grandTotal - tax;
-  //     this.finalTax = this.finalTax - parseFloat(tax)
-  //   }
-  //  }
-  //}
+
   redirecttoQuotation() {
 
     this.router.navigate(['/quotationnew']);

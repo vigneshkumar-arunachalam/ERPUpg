@@ -628,7 +628,7 @@
                                 <label for="version" class="col-lg-12 col-form-label">Version</label>
                                 <div class="col-lg-12">
                                     <input type="text" class="form-control" formControlName="version_enqForm_addPopUP"
-                                        [(ngModel)]="quotationVersion" id="version" />
+                                    [readonly]="isReadonly"     [(ngModel)]="quotationVersion" id="version" />
                                 </div>
                                 <div *ngIf="addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].dirty || addNewQuotationPopUpForm.controls['version_enqForm_addPopUP'].touched)"
                                     class="alert alert-danger alertdangerCustomCSS">

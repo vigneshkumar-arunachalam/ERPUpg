@@ -274,7 +274,7 @@ export class CustomernewallComponent implements OnInit {
       textField: 'billerName',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 2,
       allowSearchFilter: false
     };
 // if(localStorage.getItem('login_status')=='1'){
@@ -354,7 +354,7 @@ export class CustomernewallComponent implements OnInit {
       textField: 'permissionName',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 2,
+      itemsShowLimit: 5,
       allowSearchFilter: true
     };
 
@@ -1137,46 +1137,51 @@ pageLoad(){
 
         this.editCustomerForm.patchValue({
 
-          'edit_company_Name': response.result.customer_details[0].companyName,
+          'edit_company_Name': response.result.customer_details[0].customerName,
           'edit_defaultBillerName': response.result.customer_details[0].def_biller_id,
           'edit_billernamelist': response.result.billerId_det,
-          'editCustomerClassification': response.result.customer_details[0].cus_type,
-          'e_billingAddress_contactPerson': response.result.customer_details[0].cus_banking_charge,
+          // 'editCustomerClassification': response.result.customer_details[0].cus_type,
+
+          'e_billingAddress_contactPerson': response.result.customer_details[0].bill_attn,
           'e_billingAddress_address1': response.result.customer_details[0].customerAddress1,
           'e_billingAddress_address2': response.result.customer_details[0].customerAddress2,
           'e_billingAddress_city': response.result.customer_details[0].city,
           'e_billingAddress_state': response.result.customer_details[0].state,
           'e_billingAddress_zipcode': response.result.customer_details[0].zipCode,
           'Edit_BA_countryname': response.result.customer_details[0].country,
-          'e_edit_ship_address': response.result.customer_details[0].country,
-          'e_ESA_cntPerson': response.result.customer_details[0].bill_attn,
+
+          'e_edit_ship_address': response.result.customer_details[0].e_shippping,
+
+          'e_ESA_cntPerson': response.result.customer_details[0].ship_attn,
           'e_ESA_shipto': response.result.customer_details[0].ship_to,
           'e_ESA_address1': response.result.customer_details[0].ship_customerAddress1,
           'e_ESA_address2': response.result.customer_details[0].ship_customerAddress2,
           'e_ESA_city': response.result.customer_details[0].ship_city,
           'e_ESA_state': response.result.customer_details[0].ship_state,
           'e_ESA_zipcode': response.result.customer_details[0].ship_zipCode,
-          'e_ESA_countryname': response.result.customer_details[0].country,
+          'e_ESA_countryname': response.result.customer_details[0].ship_country,
+
           'e_ESA_premium': response.result.customer_details[0].premium_id,
           'e_ESA_premiumStatus': response.result.customer_details[0].premium_status,
           'e_ESA_phone': response.result.customer_details[0].customerPhone,
           'e_ESA_MobilePhone': response.result.customer_details[0].mobilePhone,
           'e_ESA_FAX': response.result.customer_details[0].fax,
           'e_ESA_GSTNO': response.result.customer_details[0].tin_no,
+
           'e_ESA_websiteName': response.result.customer_details[0].website_name,
           'e_ESA_FinanceEmail': response.result.customer_details[0].finance_email,
           'e_ESA_Email': response.result.customer_details[0].email,
           'edit_permission': response.result.customer_details[0].cus_permission,
+
           'edit_cmsdepartment': response.result.customer_details[0].cms_department_name,
           'e_ESA_customerLimit': response.result.customer_details[0].credit_amt,
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,
           'edit_currencyname': response.result.customer_details[0].def_currency_id,
+          'e_discount_percentage': response.result.customer_details[0].reseller_dis_per,
+          'e_banking_charge': response.result.customer_details[0].cus_banking_charge,
           'e_stripe_customer_id': response.result.customer_details[0].stripe_customerId,
           'e_stripe_recurr_payment': response.result.customer_details[0].stripe_recurring_state,
           'e_c3cx_system_discount': response.result.customer_details[0].system_discount_3cx,
-          'e_discount_percentage': response.result.customer_details[0].reseller_dis_per,
-          'e_custBankingCharge': response.result.customer_details[0].cus_banking_charge,
-          'e_banking_charge': response.result.customer_details[0].banking_charge,
           'e_shopping_gst': response.result.customer_details[0].reseller_gst_state,
           'e_send_invoice': response.result.customer_details[0].send_invoice,
           'e_contact_person_CP': response.result.customer_details[0].companyName,
@@ -1185,8 +1190,10 @@ pageLoad(){
           'e_editCustomerStatus': response.result.customer_details[0].cust_status,
           'e_reseller_status': response.result.customer_details[0].reseller_state,
           'e_voip_switch_credit': response.result.customer_details[0].vs_credit,
-          'e_custAddressUpdateState': response.result.customer_details[0].address_change_state,
           'edit_payment_way': response.result.customer_details[0].def_payment_via,
+
+          'e_custBankingCharge': response.result.customer_details[0].banking_charge,
+          'e_custAddressUpdateState': response.result.customer_details[0].address_change_state,    
           'e_vsProvisionAttachment': response.result.customer_details[0].vs_provisioning_command,
           'DCIP_edit': response.result.customer_details[0].dc_ip_country,
         });
