@@ -1758,6 +1758,7 @@ export class QuotationnewComponent implements OnInit {
 
 
   AddQuotationGo() {
+    
     if (this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP === null) {
 
       iziToast.warning({

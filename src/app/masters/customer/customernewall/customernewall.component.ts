@@ -26,11 +26,18 @@ export class CustomernewallComponent implements OnInit {
   isReadOnly: boolean = true;
   nx32TrueFalsePermission: any;
   nx32permissionStatus: any;
+  //pagination
+  recordNotFound = false;
+  pageLimit = 10;
+  paginationData: any = { "info": "hide" };
+  offset_count = 0;
   //add & list
   companyCodeAddCustomer = 'D6387';
-  CompanyName:any;
+  CompanyName: any;
   addCustomer: any;
+  revenue_list: any;
   allData: any;
+  customerType_list: any;
   displayDynamicData: any;
   billList: any;
   customer_list: any;
@@ -55,10 +62,21 @@ export class CustomernewallComponent implements OnInit {
   errMsg = true;
   emailErrMsg = true;
   checked: boolean = true;
-  isDisabled: boolean=true;
+  isDisabled: boolean = true;
   customerStatus_radiobox_Value: any = 'New';
-  checkbox_EditShippingAddress:boolean=true;
- 
+  checkbox_EditShippingAddress: boolean = true;
+  // checkbox-customer classification
+  addCustomerClassificationBillerId: any;
+  addCustomerClassificationBiller: any;
+  addCustomerClassificationBillerCheckboxID_array: any = [];
+  //checkbox-add biller name
+  addBillerNameBillerId: any;
+  addBillerNameBiller: any;
+  addBillerNameCheckboxID_array: any = [];
+  //search
+  searchCustomerForm: FormGroup;
+  CustomerSearchTextValue: any;
+  revenueCheckListvalue: any = '';
   //edit
   editCustomerForm: FormGroup;
   get_cust_type: any = [];
@@ -74,9 +92,9 @@ export class CustomernewallComponent implements OnInit {
   mconnectParameter: any;
   image_mconnectLogo: any;
   mconnect_Address_add: any;
-  checkbox_mconnectAddressShow:boolean;
-  checkboxNumber_mconnectAddressShow:any;  
-  partnerTypeMconn:any;
+  checkbox_mconnectAddressShow: boolean;
+  checkboxNumber_mconnectAddressShow: any;
+  partnerTypeMconn: any;
   //mrvoip
   mrvoipParameter: any;
   mrvoipCustomerForm: FormGroup;
@@ -91,8 +109,8 @@ export class CustomernewallComponent implements OnInit {
   file: File;
   getResult: any;
   credit_attachment_id: any;
-  fileAttachCustomerID:any;
-  myFiles:string [] = [];
+  fileAttachCustomerID: any;
+  myFiles: string[] = [];
   myForm: FormGroup;
   //invoice
   invoiceSharedEdit1: any = [];
@@ -118,20 +136,20 @@ export class CustomernewallComponent implements OnInit {
   billCodeEditForm2: FormGroup;
   billCodeResponse: any = [];
   public billCodeFormArray: FormArray;
-  checkbox_autoCredit:any;
+  checkbox_autoCredit: any;
   edit_a: any;
   edit_b: any;
   //quick email 
-  landscapeEmailForm:FormGroup;
-  landscapeEmail_Customer_ID:any;
-  emailFrom:any;
-  emailTo:any;
-  subjectValue:any;
-  emailTemplate:any;
-  msg_id:any;
-  From_List:any;
-  Template_List:any;
-  CRMTemplateID:any;
+  landscapeEmailForm: FormGroup;
+  landscapeEmail_Customer_ID: any;
+  emailFrom: any;
+  emailTo: any;
+  subjectValue: any;
+  emailTemplate: any;
+  msg_id: any;
+  From_List: any;
+  Template_List: any;
+  CRMTemplateID: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
     this.billCodeEditForm1 = this.fb.group({
@@ -243,7 +261,7 @@ export class CustomernewallComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.customerslist();
+    this.customerslist({});
     this.getDynamicList();
     this.initTiny();
 
@@ -277,13 +295,13 @@ export class CustomernewallComponent implements OnInit {
       itemsShowLimit: 2,
       allowSearchFilter: false
     };
-// if(localStorage.getItem('login_status')=='1'){
-//   localStorage.setItem('login_status','0');
-  
-//   window.location.reload();
- 
+    // if(localStorage.getItem('login_status')=='1'){
+    //   localStorage.setItem('login_status','0');
 
-// }
+    //   window.location.reload();
+
+
+    // }
     this.dropdownSettings_customerClassification = {
       singleSelection: false,
       idField: 'customerClassificationId',
@@ -376,6 +394,10 @@ export class CustomernewallComponent implements OnInit {
       'v_bank_acc_number': new FormControl(null),
       'v_reseller_status': new FormControl(null),
     });
+    this.searchCustomerForm = new FormGroup({
+      'searchtext': new FormControl(null),
+      'RevenueTypeWiseShow': new FormControl(null),
+    });
     //add modal
     this.addCustomer = new FormGroup({
       'company_Code': new FormControl(null),
@@ -393,8 +415,8 @@ export class CustomernewallComponent implements OnInit {
       'dcipcountryform': new FormControl(null),
       'addCustomerStatus': new FormControl(null),
       'billername_vignesh': new FormControl(null),
-      'update': new FormControl(null),
-      'customerClassification_vignesh': new FormControl(null, [Validators.required]),
+      'add_billerName': new FormControl(null),
+      'add_customerClassification': new FormControl(null, [Validators.required]),
       'permissionFCAdd': new FormControl(null),
       'permission_vignesh': new FormControl(null),
       'customerClassificationn': new FormControl(null),
@@ -577,15 +599,15 @@ export class CustomernewallComponent implements OnInit {
       'VSKL_PbxHigh': new FormControl(null),
       'VSKL_RetailLow': new FormControl(null),
       'VSKL_RetailHigh': new FormControl(null),
-      'auto_Credit_checklist': new FormControl(null), 
+      'auto_Credit_checklist': new FormControl(null),
 
     });
-    this.landscapeEmailForm=new FormGroup({
-        'landscapeEmail_From':new FormControl(null),
-        'landscapeEmail_To':new FormControl(null),
-        'landscapeEmail_Subject':new FormControl(null),
-        'landscapeEmail_Template':new FormControl(null),
-        'landscapeEmail_Message':new FormControl(null),
+    this.landscapeEmailForm = new FormGroup({
+      'landscapeEmail_From': new FormControl(null),
+      'landscapeEmail_To': new FormControl(null),
+      'landscapeEmail_Subject': new FormControl(null),
+      'landscapeEmail_Template': new FormControl(null),
+      'landscapeEmail_Message': new FormControl(null),
     });
 
 
@@ -599,7 +621,7 @@ export class CustomernewallComponent implements OnInit {
     console.log(billerNameAll);
   }
   onItemSelectCC(cc: any) {
-    console.log(cc);
+    console.log("1 check", cc);
   }
   onSelectAllCC(ccAll: any) {
     console.log(ccAll);
@@ -750,12 +772,12 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_MrvoipAddressShow = event.target.checked;
     console.log(this.checkbox_MrvoipAddressShow)
   }
- 
+
   eventCheckmconnectAddressShow(event: any) {
     this.checkbox_mconnectAddressShow = event.target.checked;
     console.log(this.checkbox_mconnectAddressShow)
-    this.checkboxNumber_mconnectAddressShow=Number(this.checkbox_mconnectAddressShow);
-    console.log(" checkbox 1 or 0---:",this.checkboxNumber_mconnectAddressShow)
+    this.checkboxNumber_mconnectAddressShow = Number(this.checkbox_mconnectAddressShow);
+    console.log(" checkbox 1 or 0---:", this.checkboxNumber_mconnectAddressShow)
   }
   checkbox_RSsearch: any;
   eventCheckRSsearch(event: any) {
@@ -767,16 +789,16 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_InvoiceShared = event.target.checked;
     console.log(this.checkbox_InvoiceShared)
   }
- 
+
   autoCreditPermission(event: any) {
     this.checkbox_autoCredit = event.target.checked;
-    console.log( this.checkbox_autoCredit)
-    if(this.checkbox_autoCredit) {
+    console.log(this.checkbox_autoCredit)
+    if (this.checkbox_autoCredit) {
       this.billCodeEditForm2.get('VS740_RetailHigh')?.disable();
     }
   }
 
-  
+
 
 
   eventCheckNX32Permission(event: any) {
@@ -786,7 +808,7 @@ export class CustomernewallComponent implements OnInit {
   selectEventCustomer(item: any) {
     console.log(item.customerId)
     console.log(item.customerName)
-    this.CompanyName=item.customerName;
+    this.CompanyName = item.customerName;
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
@@ -795,17 +817,17 @@ export class CustomernewallComponent implements OnInit {
 
   CustomerStatus_RadioEvent(evt: any) {
     this.customerStatus_radiobox_Value = evt.target.id;
-    console.log( "this.customerStatus_radiobox_Value",this.customerStatus_radiobox_Value);
+    console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   handleChange(evt: any) {
     this.customerStatus_radiobox_Value = evt.target.id;
-    console.log( "this.customerStatus_radiobox_Value",this.customerStatus_radiobox_Value);
+    console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   partnerTypehandleChange(evt: any) {
     this.partnerTypeMconn = evt.target.id;
-    var abc=evt.target.value;
-    console.log( "partner type mconnect radio", this.partnerTypeMconn);
-    console.log( "partner type mconnect radio", abc);
+    var abc = evt.target.value;
+    console.log("partner type mconnect radio", this.partnerTypeMconn);
+    console.log("partner type mconnect radio", abc);
   }
   fileAttachmentEvent(event: any) {
     this.file = event.target.files[0];
@@ -818,43 +840,60 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
-  onFileChange(event:any) {
-   
-    for (var i = 0; i < event.target.files.length; i++) { 
-        this.myFiles.push(event.target.files[i]);
+  onFileChange(event: any) {
+
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
     }
-}
-pageLoad(){
-  this.checkbox_EditShippingAddress=true;
-  if (this.checkbox_EditShippingAddress) {
-
-
-    this.addCustomer.get("ESA_shipto").disable();
-    this.addCustomer.get("ESA_address1").disable();
-    this.addCustomer.get("ESA_address2").disable();
-    this.addCustomer.get("ESA_city").disable();
-    this.addCustomer.get("ESA_state").disable();
-    this.addCustomer.get("ESA_cntPerson").disable();
-    this.addCustomer.get("ESA_zipcode").disable();
-    this.addCustomer.get("ESA_countryname").disable();
   }
-  else {
+  clearCustomerAdd() {
 
-    this.addCustomer.get("ESA_shipto").enable();
-    this.addCustomer.get("ESA_address1").enable();
-    this.addCustomer.get("ESA_address2").enable();
-    this.addCustomer.get("ESA_city").enable();
-    this.addCustomer.get("ESA_state").enable();
-    this.addCustomer.get("ESA_cntPerson").enable();
-    this.addCustomer.get("ESA_zipcode").enable();
-    this.addCustomer.get("ESA_countryname").enable();
+    this.addCustomer.reset();
+    this.addCustomer.patchValue({
+      'company_Code': 'D6387',
+    });
 
   }
+  CustomerSearchtext(event: any) {
+    this.CustomerSearchTextValue = event.target.value;
+    console.log("Customer Search Text Field Value", this.CustomerSearchTextValue)
+  }
+  pageLoad() {
+    this.checkbox_EditShippingAddress = true;
+    if (this.checkbox_EditShippingAddress) {
 
-}
-  customerslist() {
+
+      this.addCustomer.get("ESA_shipto").disable();
+      this.addCustomer.get("ESA_address1").disable();
+      this.addCustomer.get("ESA_address2").disable();
+      this.addCustomer.get("ESA_city").disable();
+      this.addCustomer.get("ESA_state").disable();
+      this.addCustomer.get("ESA_cntPerson").disable();
+      this.addCustomer.get("ESA_zipcode").disable();
+      this.addCustomer.get("ESA_countryname").disable();
+    }
+    else {
+
+      this.addCustomer.get("ESA_shipto").enable();
+      this.addCustomer.get("ESA_address1").enable();
+      this.addCustomer.get("ESA_address2").enable();
+      this.addCustomer.get("ESA_city").enable();
+      this.addCustomer.get("ESA_state").enable();
+      this.addCustomer.get("ESA_cntPerson").enable();
+      this.addCustomer.get("ESA_zipcode").enable();
+      this.addCustomer.get("ESA_countryname").enable();
+
+    }
+
+  }
+  searchCustomerList() {
+    this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
+    console.log("this.revenueCheckListvalue", this.revenueCheckListvalue);
+    $('#searchCustomerFormId').modal('hide');
+  }
+  customerslist(data: any) {
     console.log("Customer List UI Display Data after OnInit ")
-
+    var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let get_req: any = new Object();
     api_req.moduleType = "customer";
@@ -863,18 +902,32 @@ pageLoad(){
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     get_req.action = "get_det";
     get_req.user_id = localStorage.getItem('user_id');
+    get_req.off_set = list_data.offset;
+    get_req.limit_val = list_data.limit;
+    get_req.revenue_check = this.revenueCheckListvalue;
+    get_req.search_txt = this.CustomerSearchTextValue;
     api_req.element_data = get_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("get response", response);
-      // console.log("Cust status response", response[0].cust_status);
-      // this.nx32TrueFalsePermission = response[0].nx32_state;
-      if (response != '') {
-        this.customer_list = response;
-        console.log(this.customer_list)
 
+      if (response != '') {
+        this.customer_list = response.customer_details;
+        this.revenue_list = response.revenue_list;
+
+        console.log(this.customer_list)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
     })
+  }
+  listDataInfo(list_data: any) {
+    console.log(list_data)
+    // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
+    // list_data.order_by_name = list_data.order_by_name == undefined ? "user.agent_name" : list_data.order_by_name;
+    list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
+    list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
+    list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
+    return list_data;
   }
   searchCustomerData(data: any) {
 
@@ -911,6 +964,7 @@ pageLoad(){
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         this.billerNameList = response.bill_details;
+        this.customerType_list = response.cus_type;
         this.dropdownList_billerName = response.bill_details;
         console.log(this.dropdownList_billerName)
 
@@ -919,6 +973,106 @@ pageLoad(){
     });
 
   }
+  addBillerNameCHK(data: any, event: any) {
+    // console.log("Contract File Attachment Display - CheckBox ID", data);
+    this.addBillerNameBillerId = data;
+    this.addBillerNameBiller = event.target.checked;
+    console.log(this.addBillerNameBiller)
+
+    if (this.addBillerNameBiller) {
+
+      this.addBillerNameCheckboxID_array.push(data);
+      this.addBillerNameCheckboxID_array.join(',');
+      console.log("Final BillerName Checkbox After checkbox selected list", this.addBillerNameCheckboxID_array);
+    }
+    else {
+      const index = this.addBillerNameCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.addBillerNameCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final BillerName Checkbox After Deselected selected list", this.addBillerNameCheckboxID_array)
+
+    }
+
+  }
+
+
+  addCustomerClassificationCHK(data: any, event: any) {
+    // console.log("Contract File Attachment Display - CheckBox ID", data);
+    this.addCustomerClassificationBillerId = data;
+    this.addCustomerClassificationBiller = event.target.checked;
+    console.log(this.addCustomerClassificationBiller)
+
+    if (this.addCustomerClassificationBiller) {
+
+      this.addCustomerClassificationBillerCheckboxID_array.push(data);
+      this.addCustomerClassificationBillerCheckboxID_array.join(',');
+      console.log("Final customer classification Checkbox After checkbox selected list", this.addCustomerClassificationBillerCheckboxID_array);
+    }
+    else {
+      const index = this.addCustomerClassificationBillerCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.addCustomerClassificationBillerCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final customer classification Checkbox After Deselected selected list", this.addCustomerClassificationBillerCheckboxID_array)
+
+    }
+
+  }
+
+  CHKAll_BillerNameSelectAll(event: any) {
+
+
+    if (event.target.checked == true) {
+      var checkAll_ID: any = [];
+      console.log("this.billerNameList", this.billerNameList)
+
+      this.billerNameList.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', true);
+        checkAll_ID.push(element.billerId);
+      });
+      this.addBillerNameCheckboxID_array = [];
+      this.addBillerNameCheckboxID_array = checkAll_ID;
+      console.log("checkedID", checkAll_ID)
+      console.log("this.addBillerNameCheckboxID_array-Select All", this.addBillerNameCheckboxID_array)
+    } else {
+      this.billerNameList.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', false);
+
+      });
+      this.addBillerNameCheckboxID_array = [];
+      console.log("this.addBillerNameCheckboxID_array-De Select All", this.addBillerNameCheckboxID_array)
+
+    }
+
+  }
+  CHKAll_CustomerClassifSelectAll(event: any) {
+
+    alert("custclass")
+    if (event.target.checked == true) {
+      var checkAllCC_ID: any = [];
+      console.log("CHKAll_CustomerClassifSelectAll", this.customerType_list)
+
+      this.customerType_list.forEach((element: any) => {
+
+        checkAllCC_ID.push(element);
+      });
+      this.addCustomerClassificationBillerCheckboxID_array = [];
+      this.addCustomerClassificationBillerCheckboxID_array = checkAllCC_ID;
+      console.log("checkedID", checkAllCC_ID)
+      console.log("this.addCustomerClassificationBillerCheckboxID_array-Select All", this.addCustomerClassificationBillerCheckboxID_array)
+    } else {
+      this.customerType_list.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', false);
+
+      });
+      this.addCustomerClassificationBillerCheckboxID_array = [];
+      console.log("this.addCustomerClassificationBillerCheckboxID_array-De Select All", this.addCustomerClassificationBillerCheckboxID_array)
+
+    }
+
+  }
+
   viewCustomer(id: any) {
 
 
@@ -966,15 +1120,19 @@ pageLoad(){
     });
 
   }
-  clearcustomer(){
-    // this.addCustomer.reset();
-    // this.addCustomer.patchValue({
+  clearcustomer() {
 
-    //   'company_Code':'D6387',
+    this.addCustomer.reset();
 
-    // });
-    window.location.reload();
- 
+    this.addCustomer.patchValue({
+
+      'company_Code': 'D6387',
+
+
+
+    });
+
+
   }
   addCustomerown() {
 
@@ -1000,30 +1158,40 @@ pageLoad(){
 
 
     add_customer_req.customerCode = this.addCustomer.value.company_Code;
-    if (this.addCustomer.value.company_Code == null) {
+    if (this.addCustomer.value.company_Code === null) {
       iziToast.warning({
         message: "Company Code Missing",
         position: 'topRight'
       });
+      return false;
     }
-    add_customer_req.customerName = this.CompanyName;
-    if (this.CompanyName == null) {
+    add_customer_req.customerName = this.addCustomer.value.company_Name;
+    if (this.addCustomer.value.company_Name === null) {
       iziToast.warning({
         message: "Company Name Missing",
         position: 'topRight'
       });
+      return false;
     }
     add_customer_req.def_biller_id = this.addCustomer.value.defaultBillerName;
-    add_customer_req.company_name = this.addCustomer.value.update;
-    add_customer_req.cus_type = this.addCustomer.value.customerClassification_vignesh;
-    if (this.addCustomer.value.customerClassification_vignesh == null) {
+    add_customer_req.company_name = this.addBillerNameCheckboxID_array;
+    add_customer_req.cus_type = this.addCustomerClassificationBillerCheckboxID_array;
+    if (this.addCustomerClassificationBillerCheckboxID_array === null) {
       iziToast.warning({
         message: "Customer Classification Missing",
         position: 'topRight'
       });
+      return false;
     }
 
     add_customer_req.bill_attn = this.addCustomer.value.billingAddress_contactPerson;
+    if (this.addCustomer.value.billingAddress_contactPerson === null) {
+      iziToast.warning({
+        message: "Contact Person(Billing Address) Missing",
+        position: 'topRight'
+      });
+      return false;
+    }
     add_customer_req.customerAddress1 = this.addCustomer.value.billingAddress_address1;
     add_customer_req.customerAddress2 = this.addCustomer.value.billingAddress_address2;
     add_customer_req.city = this.addCustomer.value.billingAddress_city;
@@ -1032,8 +1200,16 @@ pageLoad(){
     add_customer_req.country = this.addCustomer.value.BA_countryname;
 
     // add_customer_req.e_shippping = this.addCustomer.value.edit_ship_address;
-    add_customer_req.ship_attn =this.checkbox_EditShippingAddress
-    add_customer_req.ship_attn = this.addCustomer.value.ESA_cntPerson;
+    add_customer_req.ship_attn = this.checkbox_EditShippingAddress
+
+    // add_customer_req.ship_attn = this.addCustomer.value.ESA_cntPerson;
+    if (!this.checkbox_EditShippingAddress) {
+      iziToast.warning({
+        message: "Contact Person(Edit Shipping Address) Missing",
+        position: 'topRight'
+      });
+      return false;
+    }
     add_customer_req.ship_to = this.addCustomer.value.ESA_shipto;
     add_customer_req.ship_customerAddress1 = this.addCustomer.value.ESA_address1;
     add_customer_req.ship_customerAddress2 = this.addCustomer.value.ESA_address2;
@@ -1049,8 +1225,21 @@ pageLoad(){
     add_customer_req.tin_no = this.addCustomer.value.ESA_GSTNO;
     add_customer_req.website_name = this.addCustomer.value.ESA_websiteName;
     add_customer_req.email = result_Email_Field;
+    if (!result_Email_Field) {
+      iziToast.warning({
+        message: "Email Missing",
+        position: 'topRight'
+      });
+      return false;
+    }
     add_customer_req.finance_email = result_FinanceEmail_Field;
-
+    if (!result_FinanceEmail_Field) {
+      iziToast.warning({
+        message: "Finance Email Missing",
+        position: 'topRight'
+      });
+      return false;
+    }
     add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment;
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
@@ -1073,19 +1262,24 @@ pageLoad(){
 
     api_req.element_data = add_customer_req;
 
+    $("#addCustomerSave").attr("disabled", true);
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       var add_result = response;
       console.log("add", add_result);
+      $("#addCustomerSave").removeAttr("disabled");
       if (response.status == true) {
 
         $('#addCustomerFormId').modal('hide');
+
         iziToast.success({
           message: "Customer Added successfully",
           position: 'topRight'
         });
 
         this.clear();
+        this.customerslist({});
 
       }
       else {
@@ -1193,14 +1387,14 @@ pageLoad(){
           'edit_payment_way': response.result.customer_details[0].def_payment_via,
 
           'e_custBankingCharge': response.result.customer_details[0].banking_charge,
-          'e_custAddressUpdateState': response.result.customer_details[0].address_change_state,    
+          'e_custAddressUpdateState': response.result.customer_details[0].address_change_state,
           'e_vsProvisionAttachment': response.result.customer_details[0].vs_provisioning_command,
           'DCIP_edit': response.result.customer_details[0].dc_ip_country,
         });
 
         console.log(this.editCustomerForm.value);
         $('#editCustomerFormId').modal('show');
-        this.customerslist();
+        this.customerslist({});
       } else {
 
       }
@@ -1355,7 +1549,7 @@ pageLoad(){
         }
 
         $('#specialEditCustomerFormId').modal('show');
-        this.customerslist();
+        this.customerslist({});
       } else {
 
         iziToast.warning({
@@ -1441,7 +1635,7 @@ pageLoad(){
           position: 'topRight'
         });
 
-        this.customerslist();
+        this.customerslist({});
 
       }
       else {
@@ -1476,13 +1670,13 @@ pageLoad(){
       this.getResult = response.result.attachment_details
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
-      if (response.status==true) {
-        
+      if (response.status == true) {
+
         this.myForm.patchValue({
 
 
           'file': response.result.attachment_details.org_file_name,
-         
+
 
 
         });
@@ -1509,63 +1703,63 @@ pageLoad(){
     api_req.element_data = fileattachDelete_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-         
+
       if (response.status == true) {
         // this.myForm.reset();
-          alert("deleted")
-          $("#fileAttachmentFormId").modal("hide");
+        alert("deleted")
+        $("#fileAttachmentFormId").modal("hide");
       }
-      
+
 
     });
 
   }
   fileAttachmentUpdate() {
     this.myForm.reset();
-//  var data = new FormData();
+    //  var data = new FormData();
 
-const data = new FormData();
- 
-for (var i = 0; i < this.myFiles.length; i++) { 
-  data.append("cust_file[]", this.myFiles[i]);
-}
-data.append('customer_id',  this.fileAttachCustomerID ); 
-data.append('action', "customer_file_attachment_save");
+    const data = new FormData();
+
+    for (var i = 0; i < this.myFiles.length; i++) {
+      data.append("cust_file[]", this.myFiles[i]);
+    }
+    data.append('customer_id', this.fileAttachCustomerID);
+    data.append('action', "customer_file_attachment_save");
 
 
-      var self = this;
-      $.ajax({
-          type: 'POST',
-          url: 'https://erp1.cal4care.com/api/customer/customer_file_attachment_save',
-          cache: false,
-          contentType: false,
-          processData: false,
-          data : data,
-          success: function(result:any){
-            if(result.status==true){
-              self.customerslist();
-              console.log(result);
-              $("#fileAttachmentFormId").modal("hide");
-            }
-          },
-          error: function(err:any){
-              console.log(err);
-          }
-        })
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/customer/customer_file_attachment_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          self.customerslist({});
+          console.log(result);
+          $("#fileAttachmentFormId").modal("hide");
+        }
+      },
+      error: function (err: any) {
+        console.log(err);
+      }
+    })
 
   }
   mconnect_address_getList(id: any) {
-this.mconnectCustomerForm.reset();
+    this.mconnectCustomerForm.reset();
     console.log("mconnect address getlist -UI Display Data after OnInit ")
     this.mconnectParameter = id;
     let api_req: any = new Object();
-    let api_mconnectList:any = new Object();
+    let api_mconnectList: any = new Object();
     api_req.moduleType = "customer";
     api_req.api_url = "customer/mconnect_address_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mconnectList.action = "mconnect_address_details";
-    api_mconnectList.customer_id=id;
+    api_mconnectList.customer_id = id;
     api_mconnectList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mconnectList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1580,7 +1774,7 @@ this.mconnectCustomerForm.reset();
           'a_mconnectPartnerEmail': response[0].partner_email,
           'a_mconnectPartnerPhoneNum': response[0].partner_phone_no,
           'a_mconnectPartnerType': response[0].partner_type,
-          
+
           // 'a_selectLogo_mconnect': response[0].mconnect_company_logo,
         });
         iziToast.success({
@@ -1600,40 +1794,40 @@ this.mconnectCustomerForm.reset();
     });
   }
   mconnect_address_add(id: any) {
-    console.log( "inside partner type mconnect radio", this.partnerTypeMconn);
-    var partner_email_mcon= $("#partnerEmail").val();
-    var partner_phone_mcon= $("#partnerPhone").val();
+    console.log("inside partner type mconnect radio", this.partnerTypeMconn);
+    var partner_email_mcon = $("#partnerEmail").val();
+    var partner_phone_mcon = $("#partnerPhone").val();
     // var address_show_mcon= $("#check_mconn").val();
- 
+
     var data = new FormData();
 
     data.append('partner_email_mconnect', partner_email_mcon);
     data.append('partner_phone_no_mconnect', partner_phone_mcon);
     data.append('mconnect_address_show', this.checkboxNumber_mconnectAddressShow);
-    data.append('customer_id', id); 
+    data.append('customer_id', id);
     data.append('mconnect_partner_type', this.partnerTypeMconn);
     data.append('mconnect_company_logo', $("#uploaded-mconnect")[0].files[0]);
     data.append('action', "mconnect_address_save");
 
-      var self = this;
-      $.ajax({
-          type: 'POST',
-          url: 'https://erp1.cal4care.com/api/customer/mconnect_address_save',
-          cache: false,
-          contentType: false,
-          processData: false,
-          data : data,
-          success: function(result:any){
-            if(result.status==true){
-              self.customerslist();
-              console.log(result);
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/customer/mconnect_address_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          self.customerslist({});
+          console.log(result);
 
-            }
-          },
-          error: function(err:any){
-              console.log(err);
-          }
-        })
+        }
+      },
+      error: function (err: any) {
+        console.log(err);
+      }
+    })
 
     // let api_req: any = new Object();
     // let api_mconnectAdd: any = new Object();
@@ -1670,30 +1864,30 @@ this.mconnectCustomerForm.reset();
     data.append('partner_email_mrvoip', $("mv_partnerEmail").val());
     data.append('partner_phone_no_mrvoip', $("mv_partnerPhone").val());
     data.append('mrvoip_address_show', this.checkboxNumber_mconnectAddressShow);
-    data.append('customer_id', id); 
+    data.append('customer_id', id);
     data.append('mrvoip_partner_type', this.partnerTypeMconn);
     data.append('mrvoip_company_logo', $("#uploaded-mconnect")[0].files[0]);
     data.append('action', "mrvoip_address_save");
 
     var self = this;
     $.ajax({
-        type: 'POST',
-        url: 'https://erp1.cal4care.com/api/customer_contract/mrvoip_address_save',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data : data,
-        success: function(result:any){
-          if(result.status==true){
-            self.customerslist();
-            console.log(result);
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/customer_contract/mrvoip_address_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          self.customerslist({});
+          console.log(result);
 
-          }
-        },
-        error: function(err:any){
-            console.log(err);
         }
-      })
+      },
+      error: function (err: any) {
+        console.log(err);
+      }
+    })
 
 
     // let api_req: any = new Object();
@@ -1727,7 +1921,7 @@ this.mconnectCustomerForm.reset();
     //       message: "mrvoip address Added successfully",
     //       position: 'topRight'
     //     });
-        
+
     //   }
     //   else {
 
@@ -1748,14 +1942,14 @@ this.mconnectCustomerForm.reset();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mrvoipList.action = "mrvoip_address_details";
-    api_mrvoipList.customer_id=id;
+    api_mrvoipList.customer_id = id;
     api_mrvoipList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mrvoipList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("get mrvoip address response", response);
 
-      if (response.status==true) {
+      if (response.status == true) {
         this.image_mrvoipLogo = response[0].mrvoip_company_logo;
         this.mrvoipCustomerForm.patchValue({
           'a_MrvoipPartnerEmail': response[0].partner_email,
@@ -1931,7 +2125,7 @@ this.mconnectCustomerForm.reset();
 
   }
   shareCustomerPermission_edit(id: any) {
-    
+
     let api_req: any = new Object();
     api_req.moduleType = "customer";
     api_req.api_url = "customer/" + id + "/customer_share";
@@ -2007,7 +2201,7 @@ this.mconnectCustomerForm.reset();
         console.log("before change", this.isCustomerStatus)
         this.isCustomerStatus = !this.isCustomerStatus;
         console.log("after change", this.isCustomerStatus)
-        this.customerslist();
+        this.customerslist({});
       }
 
     });
@@ -2031,7 +2225,7 @@ this.mconnectCustomerForm.reset();
       if (response.status = true) {
         console.log("before change-employee status", this.isEmployeeStatus)
         this.isEmployeeStatus = !this.isEmployeeStatus;
-        this.customerslist();
+        this.customerslist({});
         console.log("after change-employee status", this.isEmployeeStatus)
       }
     });
@@ -2053,7 +2247,7 @@ this.mconnectCustomerForm.reset();
       if (response.status = true) {
         console.log("before change-reseller status", this.isResllerStatus)
         this.isResllerStatus = !this.isResllerStatus;
-        this.customerslist();
+        this.customerslist({});
         console.log("after change-reseller status", this.isResllerStatus)
       }
     });
@@ -2123,7 +2317,7 @@ this.mconnectCustomerForm.reset();
       }
     });
     $('#customer_NX32PermissionFormId').modal('hide');
-    this.customerslist();
+    this.customerslist({});
 
 
   }
@@ -2146,10 +2340,10 @@ this.mconnectCustomerForm.reset();
       // console.log("bill code edit check other empty", response.primary_bill_code[0].customer_bill_code_id);
 
       this.billCodeResponse = response;
-     
+
       if (response != '') {
         this.edit_a = response.customer_bill_code;
-        this.edit_b=response.primary_bill_code;
+        this.edit_b = response.primary_bill_code;
         const formArray = new FormArray([]);
         for (let index = 0; index < response.customer_bill_code.length; index++) {
 
@@ -2159,7 +2353,7 @@ this.mconnectCustomerForm.reset();
             "billCode_Server_VSKL": response.customer_bill_code[index].bill_code_kl,
             "billCode_Server_VS2_32": response.customer_bill_code[index].bill_code_750,
             "billCode_Server_VS2_8": response.customer_bill_code[index].bill_code_750_8,
-             "billCode_ID":response.customer_bill_code[index].customer_bill_code_id,
+            "billCode_ID": response.customer_bill_code[index].customer_bill_code_id,
 
           })
           );
@@ -2237,31 +2431,31 @@ this.mconnectCustomerForm.reset();
     updateBillCode_req.low_credit_kl = this.billCodeEditForm2.value.VSKL_PbxLow;
     updateBillCode_req.high_credit_kl = this.billCodeEditForm2.value.VSKL_PbxHigh;
     updateBillCode_req.retail_low_credit_kl = this.billCodeEditForm2.value.VSKL_RetailLow;
-    updateBillCode_req.retail_high_credit_kl= this.billCodeEditForm2.value.VSKL_RetailHigh;
-  
+    updateBillCode_req.retail_high_credit_kl = this.billCodeEditForm2.value.VSKL_RetailHigh;
+
     api_req.element_data = updateBillCode_req;
 
-   
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
+
       console.log("update response", response)
 
       if (response != '') {
         Swal.fire({
           icon: 'success',
-          title: 'Bill Code has been updated',  
-          showConfirmButton: false,  
-          timer: 1200, 
+          title: 'Bill Code has been updated',
+          showConfirmButton: false,
+          timer: 1200,
         });
-       
-        this.customerslist();
+
+        this.customerslist({});
       }
-      else{
+      else {
         Swal.fire({
           icon: 'success',
-          title: 'Bill Code has not been updated',  
-          showConfirmButton: false,  
-          timer: 1200, 
+          title: 'Bill Code has not been updated',
+          showConfirmButton: false,
+          timer: 1200,
         });
       }
 
@@ -2269,9 +2463,9 @@ this.mconnectCustomerForm.reset();
 
 
   }
-  landscapeEmailEdit(id:any){
+  landscapeEmailEdit(id: any) {
     this.landscapeEmailForm.reset();
-    this.landscapeEmail_Customer_ID=id;
+    this.landscapeEmail_Customer_ID = id;
     let api_req: any = new Object();
     let api_mail_req: any = new Object();
     api_req.moduleType = "customer";
@@ -2280,36 +2474,36 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mail_req.action = "customer_email_template";
     api_mail_req.user_id = localStorage.getItem('user_id');
-    api_mail_req.customer_id =  this.landscapeEmail_Customer_ID;
+    api_mail_req.customer_id = this.landscapeEmail_Customer_ID;
     api_req.element_data = api_mail_req;
-  
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("Landscape Email Edit display", response)
 
-      if (response!='') {
-     this.From_List=response.email_from_det;
-     this.Template_List=response.crm_template_det;
-     console.log("Landscape  Email Template_List", this.Template_List);
-    
-     this.landscapeEmailForm.patchValue({
-      'landscapeEmail_From': response.email_from_det,
-      'landscapeEmail_To': response.email_id,
-      // 'landscapeEmail_Subject': response.email_from_det,
-      'landscapeEmail_Template': response.crm_template_det,
-      // 'landscapeEmail_Message': response.email_id,
-    });
-    }
-    
+      if (response != '') {
+        this.From_List = response.email_from_det;
+        this.Template_List = response.crm_template_det;
+        console.log("Landscape  Email Template_List", this.Template_List);
+
+        this.landscapeEmailForm.patchValue({
+          'landscapeEmail_From': response.email_from_det,
+          'landscapeEmail_To': response.email_id,
+          // 'landscapeEmail_Subject': response.email_from_det,
+          'landscapeEmail_Template': response.crm_template_det,
+          // 'landscapeEmail_Message': response.email_id,
+        });
+      }
+
 
     });
   }
   // somethingChanged(event: any){
   //   console.log("event value",event.target.value)
   // }
-  LandscapeEmailContentDropdown(event:any){
+  LandscapeEmailContentDropdown(event: any) {
     // alert("hi")
-    this.CRMTemplateID=event.target.value;
-    console.log("template ID check",this.CRMTemplateID);
+    this.CRMTemplateID = event.target.value;
+    console.log("template ID check", this.CRMTemplateID);
     let api_req: any = new Object();
     let api_mailContentDropdown_req: any = new Object();
     api_req.moduleType = "customer";
@@ -2318,23 +2512,23 @@ this.mconnectCustomerForm.reset();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mailContentDropdown_req.action = "get_customer_authendication_details";
     api_mailContentDropdown_req.user_id = localStorage.getItem('user_id');
-    api_mailContentDropdown_req.customer_id =  this.landscapeEmail_Customer_ID;
-    api_mailContentDropdown_req.template_id =  this.CRMTemplateID;
+    api_mailContentDropdown_req.customer_id = this.landscapeEmail_Customer_ID;
+    api_mailContentDropdown_req.template_id = this.CRMTemplateID;
     api_req.element_data = api_mailContentDropdown_req;
-  
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("Landscape Email display after dropdown changes", response)
 
-      if (response.status==true) {
+      if (response.status == true) {
         this.landscapeEmailForm.patchValue({
-          
+
           'landscapeEmail_Subject': response.crm_subject_name,
-         
+
           'landscapeEmail_Message': response.crm_template_content,
         });
-   
+
       }
-    
+
 
     });
   }
@@ -2342,9 +2536,9 @@ this.mconnectCustomerForm.reset();
     this.emailFrom = $('#emailFromLandscape').val();
     this.emailTo = $('#emailToLandscape').val();
     this.subjectValue = $('#subjLandscape').val();
-    this.emailTemplate=$('#templateLandscape').val();
+    this.emailTemplate = $('#templateLandscape').val();
     this.msg_id = tinymce.get('tinyLandscapeEmailID').getContent();
-    
+
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
@@ -2360,7 +2554,7 @@ this.mconnectCustomerForm.reset();
     api_email_req.emailFrom = this.emailTo;
     api_email_req.emailTo = this.emailTo;
     api_email_req.emailSubject = this.subjectValue;
-    api_email_req.emailTemplate =  this.emailTemplate
+    api_email_req.emailTemplate = this.emailTemplate
     api_email_req.emailContent = this.msg_id;
 
     api_req.element_data = api_email_req;
@@ -2375,8 +2569,8 @@ this.mconnectCustomerForm.reset();
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
         $("#TextEditorId").modal("hide");
-      
-        this.customerslist();
+
+        this.customerslist({});
         Swal.fire({
           icon: 'error',
           title: 'Email Not Sent',
@@ -2392,7 +2586,7 @@ this.mconnectCustomerForm.reset();
         tinymce.activeEditor.setContent("");
         $("#TextEditorId").modal("hide");
 
-        this.customerslist();
+        this.customerslist({});
         Swal.fire({
           icon: 'success',
           title: 'Email Notification Sent Successfully',
@@ -2401,11 +2595,11 @@ this.mconnectCustomerForm.reset();
         });
       }
 
-      this.customerslist();
+      this.customerslist({});
     });
   }
   clear() {
-    alert("clear")
+
     this.addCustomer.vs_credit = '';
     this.addCustomer.def_payment_via = '';
   }

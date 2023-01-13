@@ -4,11 +4,23 @@
       <div class="col-lg-12 mb-30">
         <div class="card">
           <div class="card-header color-dark fw-500">
-            Customer Details
-            <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-              data-target="#addCustomerFormId" (click)="pageLoad()">
+            <h3 style="margin-bottom: 0;"> Customer Details</h3>
+
+            <div class="quotation-btn-section">
+              <button type="button" title="Add New Customer" class="btn btn-primary btn-default btn-squared"
+                data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()"
+                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
+              </button>
+
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+                data-target="#searchCustomerFormId">
+                <i class="fas fa-search" style="margin-right:0;"></i>
+              </button>
+            </div>
+            <!-- <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+              data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()">
               Add Customer
-            </button>
+            </button> -->
 
           </div>
           <div class="card-body">
@@ -114,88 +126,182 @@
                                 <a href="#" class="remove" title="View" data-toggle="modal"
                                   data-target="#viewCustomerFormId" (click)="viewCustomer(list.customerId)">
 
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-alert-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Delete" (click)="deleteCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-trash-2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path
+                                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                    </path>
+                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Edit" data-toggle="modal"
                                   data-target="#editCustomerFormId" (click)="editCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-edit">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Special Edit" data-toggle="modal"
                                   data-target="#specialEditCustomerFormId"
                                   (click)="specialEditCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-3"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-edit-3">
+                                    <path d="M12 20h9"></path>
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="MConnect" data-toggle="modal"
                                   data-target="#mconnectPartnerDetailsFormId"
                                   (click)="mconnect_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="MrVoip" data-toggle="modal"
                                   data-target="#MrvoipPartnerDetailsFormId"
                                   (click)="mrvoip_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chrome"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-chrome">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="C4T Partner Details" data-toggle="modal"
                                   data-target="#call4tellPartnerDetailsFormId"
                                   (click)="call4tel_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-move">
+                                    <polyline points="5 9 2 12 5 15"></polyline>
+                                    <polyline points="9 5 12 2 15 5"></polyline>
+                                    <polyline points="15 19 12 22 9 19"></polyline>
+                                    <polyline points="19 9 22 12 19 15"></polyline>
+                                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                                    <line x1="12" y1="2" x2="12" y2="22"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Invoice Share" data-toggle="modal"
                                   data-target="#invoiceSharedCustomerFormId"
                                   (click)="invoiceShare_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-share-2">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Share Customer Permission" data-toggle="modal"
                                   data-target="#SharedCustomerPermissionFormId"
                                   (click)="shareCustomerPermission_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-check-circle">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Customer Status" data-toggle="modal"
                                   (click)="customer_status(list.customerId,list.cust_status)"
                                   *ngIf="list.cust_status =='P'">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-user-plus">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Customer Status" data-toggle="modal"
                                   (click)="customer_status(list.customerId,list.cust_status)"
                                   *ngIf="list.cust_status == 'N'">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-x"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="18" y1="8" x2="23" y2="13"></line><line x1="23" y1="8" x2="18" y2="13"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-user-x">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="18" y1="8" x2="23" y2="13"></line>
+                                    <line x1="23" y1="8" x2="18" y2="13"></line>
+                                  </svg>
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==true">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-eye">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                  </svg>
 
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye-off"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-eye-off">
+                                    <path
+                                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                    </path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                  </svg>
                                 </a>
                               </li>
 
@@ -203,13 +309,24 @@
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Reseller Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-minus-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Reseler Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==true">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-plus-circle">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="8" x2="12" y2="16"></line>
+                                    <line x1="8" y1="12" x2="16" y2="12"></line>
+                                  </svg>
 
                                 </a>
                               </li>
@@ -219,7 +336,12 @@
                                 <a href="#" class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
                                   (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-plus">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                  </svg>
 
                                 </a>
                               </li>
@@ -227,25 +349,49 @@
                                 <a href="#" class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
                                   (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="red" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-x">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-file-plus">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="view" title="Bill Code" data-toggle="modal"
                                   data-target="#billCodeFormId" (click)="billCodeAttachmentEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-book-open">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="remove" title="Quick Email" data-toggle="modal"
                                   data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-mail">
+                                    <path
+                                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                  </svg>
                                 </a>
                               </li>
 
@@ -261,7 +407,43 @@
                 </table>
               </div>
             </div>
+            <br>
             <nav class="atbd-page">
+              <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+
+                <li class="page-item">
+                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.backtab=='show' ? customerslist({'offset':paginationData.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="customerslist({'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? customerslist({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+
+                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="customerslist({'offset':paginationData.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+
+                <li class="page-item">
+                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.nexttab =='show' ? customerslist({'offset':paginationData.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+              </ul>
+
+            </nav>
+            <!-- <nav class="atbd-page">
               <ul class="atbd-pagination d-flex">
                 <li class="atbd-pagination__item">
                   <a href="#" class="atbd-pagination__link pagination-control"><span
@@ -285,7 +467,7 @@
                   </div>
                 </li>
               </ul>
-            </nav>
+            </nav> -->
           </div>
         </div>
       </div>
@@ -470,14 +652,14 @@
 
 
 <div class="modal fade" id="addCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
+  aria-hidden="true">
 
-    <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcustomernewallcss">
-        <div class="modal-header">
+      <div class="modal-header">
         <h1 class="modal-title" id="exampleModalLongTitle">Add Customer Details</h1>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true" (click)="clearcustomer()">&times;</span>
+          <span aria-hidden="true" (click)="clearcustomer()">&times;</span>
         </button>
 
       </div>
@@ -487,7 +669,8 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField"> *</span></label>
+                <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
+                    *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" [(ngModel)]="companyCodeAddCustomer" [readonly]="isReadOnly"
                     formControlName="company_Code" id="companyCode" />
@@ -498,11 +681,11 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <div class="ng-autocomplete">
-                  <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField"> *</span></label>
+                  <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
+                      *</span></label>
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     formControlName="company_Name" (selected)='selectEventCustomer($event)'
-                    (inputChanged)='searchCustomerData($event)' 
-                    (inputFocused)='onFocusedCustomer($event)'
+                    (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
                     [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
 
@@ -513,14 +696,14 @@
                   <ng-template #notFoundTemplate let-notFound>
                     <div [innerHTML]="notFound"></div>
                   </ng-template>
-                 
+
                 </div>
                 <div
-                *ngIf="addCustomer.controls['company_Name'].invalid && (addCustomer.controls['company_Name'].dirty || addCustomer.controls['company_Name'].touched)"
-                class="alert alert-danger alertdangerCustomCSS mt-2">
-                Company Name is Required
-              </div>
-               
+                  *ngIf="addCustomer.controls['company_Name'].invalid && (addCustomer.controls['company_Name'].dirty || addCustomer.controls['company_Name'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  Company Name is Required
+                </div>
+
               </div>
             </div>
 
@@ -540,7 +723,7 @@
             </div>
 
 
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="defaultBillerName" class="col-lg-12 col-form-label">
                   Biller Name</label>
@@ -554,9 +737,9 @@
 
               </div>
 
-            </div>
+            </div> -->
 
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="customerClassificationn" class="col-lg-12 col-form-label">
                   Customer Classification<span class="mandatoryField"> *</span></label>
@@ -566,49 +749,80 @@
                     formControlName="customerClassification_vignesh" (onSelect)="onItemSelectCC($event)"
                     (onSelectAll)="onSelectAllCC($event)">
                   </ng-multiselect-dropdown>
-             
+
                 </div>
                 <div
-                *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && (addCustomer.controls['customerClassification_vignesh'].dirty || addCustomer.controls['customerClassification_vignesh'].touched)"
-                class="alert alert-danger alertdangerCustomCSS mt-2">
-                Company Name is Required
-              </div>
-              <!-- <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
-              *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && addCustomer.controls['customerClassification_vignesh'].touched">
-              Please
-              enter To Address
-          </div> -->
-              
-              </div>
-            </div>
-
-
-            <div class="col-lg-6">
-    
-           </div>
-
-            <div class="col-lg-6">
+                  *ngIf="addCustomer.controls['customerClassification_vignesh'].invalid && (addCustomer.controls['customerClassification_vignesh'].dirty || addCustomer.controls['customerClassification_vignesh'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  Company Name is Required
+                </div>
              
-                <label style="color: rgb(233, 13, 24)!important;">Billing Address*</label>
-         
+
+              </div>
+            </div> -->
+
+            <div class="col-lg-6">
+              <label> Biller Name</label>
+              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                (change)="CHKAll_BillerNameSelectAll($event)">
+              <div class="CheckboxScroll">
+                <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
+
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check-grp-{{i}}"
+                    formControlName="add_billerName" (change)="addBillerNameCHK(display.billerId,$event)">
+                  {{display.billerName}}
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
+              <div>
+                <label style="margin-bottom: 0px;"> Customer Classification</label>
+              </div>
+
+              <!-- <div class="ml-4">
+                <input class="checkbox" type="checkbox" id="check-5" (change)="CHKAll_CustomerClassifSelectAll($event)">
+                <label>All</label>
+              </div> -->
+
+              <div *ngFor="let cust of customerType_list;let j =index;"
+                style="display: flex;padding-left: 30px;align-items: center;">
+
+                <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp1-{{j}}"
+                  formControlName="add_customerClassification" (change)="addCustomerClassificationCHK(cust,$event)">
+                {{cust}}
+
+              </div>
+
+
+            </div>
+
+
+            <div class="col-lg-6 mt-2">
+
+              <label style="color: rgb(233, 13, 24)!important;">Billing Address*</label>
+
             </div>
             <div class="col-lg-6">
-    
+
             </div>
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField"> *</span></label>
+                <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
+                    *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="billingAddress_contactPerson"
                     id="contactPerson" />
-                    <div
+                  <div
                     *ngIf="addCustomer.controls['billingAddress_contactPerson'].invalid && (addCustomer.controls['billingAddress_contactPerson'].dirty || addCustomer.controls['billingAddress_contactPerson'].touched)"
                     class="alert alert-danger alertdangerCustomCSS1 mt-2">
                     Contact Person is Required
                   </div>
                 </div>
-             
+
               </div>
             </div>
             <div class="col-lg-6">
@@ -647,8 +861,9 @@
               <div class="form-group row">
                 <label for="zipcode" class="col-lg-12 col-form-label">ZIP Code</label>
                 <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="billingAddress_zipcode" id="zipcode" />
-                  
+                  <input type="number" title="Enter Numbers only" min="0" max="10" class="form-control"
+                    formControlName="billingAddress_zipcode" id="zipcode" />
+
                 </div>
               </div>
             </div>
@@ -666,7 +881,7 @@
               </div>
             </div>
             <div class="col-lg-6">
-              
+
             </div>
 
             <div class="col-lg-6">
@@ -675,17 +890,18 @@
                   <!-- <input type="checkbox" formControlName="edit_ship_address" id="edit_ship_address"
                     (change)="eventCheck($event)" checked  style="margin-left: 30px;"/> -->
 
-                    <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;" formControlName="edit_ship_address"
-                    (change)="eventCheck($event)" />
+                  <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;"
+                    formControlName="edit_ship_address" (change)="eventCheck($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
-              
+
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField"> *</span></label>
+                <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
+                    *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="ESA_cntPerson" id="cntPerson " />
                   <div *ngIf="
@@ -693,10 +909,10 @@
                       (addCustomer.controls['ESA_cntPerson'].dirty ||
                         addCustomer.controls['ESA_cntPerson'].touched)
                     " class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                  Contact Person is Required
+                    Contact Person is Required
+                  </div>
                 </div>
-                </div>
-              
+
               </div>
             </div>
 
@@ -746,7 +962,8 @@
               <div class="form-group row">
                 <label for="zipcode " class="col-lg-12 col-form-label">ZIP Code</label>
                 <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="ESA_zipcode" id="zipcode " />
+                  <input type="number" title="Enter Numbers only" min="0" max="10" class="form-control"
+                    formControlName="ESA_zipcode" id="zipcode " />
                 </div>
               </div>
             </div>
@@ -774,10 +991,10 @@
 
 
             <div class="col-lg-6">
-              <div class="form-group row"  style="display: flex;align-items: center;">
+              <div class="form-group row" style="display: flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Premium Status
-                  <input type="checkbox" formControlName="ESA_premiumStatus"
-                    (change)="eventCheckPremiumStatus($event)" style="margin-left: 30px;"/>
+                  <input type="checkbox" formControlName="ESA_premiumStatus" (change)="eventCheckPremiumStatus($event)"
+                    style="margin-left: 30px;" />
                 </label>
               </div>
             </div>
@@ -786,7 +1003,8 @@
               <div class="form-group row">
                 <label for="phone " class="col-lg-12 col-form-label">Phone</label>
                 <div class="col-lg-12">
-                  <input type="text" title="Enter Numbers only"  class="form-control" formControlName="ESA_phone" id="phone " />
+                  <input type="text" title="Enter Numbers only" class="form-control" formControlName="ESA_phone"
+                    id="phone " />
                 </div>
               </div>
             </div>
@@ -794,7 +1012,8 @@
               <div class="form-group row">
                 <label for="mobile_phone " class="col-lg-12 col-form-label">Mobile Phone</label>
                 <div class="col-lg-12">
-                  <input type="text" title="Enter Numbers only"  class="form-control" formControlName="ESA_MobilePhone" id="mobile_phone " />
+                  <input type="text" title="Enter Numbers only" class="form-control" formControlName="ESA_MobilePhone"
+                    id="mobile_phone " />
                 </div>
               </div>
             </div>
@@ -907,8 +1126,8 @@
                 <label for="ESA_customerLimit" class="col-lg-12 col-form-label">
                   Credit Limit</label>
                 <div class="col-lg-12">
-                  <input type="number" title="Enter Numbers only" min="0"  max="15" class="form-control" formControlName="ESA_customerLimit_add"
-                    id="ESA_customerLimit" />
+                  <input type="number" title="Enter Numbers only" min="0" max="15" class="form-control"
+                    formControlName="ESA_customerLimit_add" id="ESA_customerLimit" />
                 </div>
               </div>
             </div>
@@ -938,8 +1157,8 @@
               <div class="form-group row">
                 <label for="discount_percentage " class="col-lg-12 col-form-label">Discount Percentage</label>
                 <div class="col-lg-12">
-                  <input type="number" title="Enter Numbers only" min="0"  max="10" class="form-control" formControlName="discount_percentage"
-                    id="discount_percentage " />
+                  <input type="number" title="Enter Numbers only" min="0" max="10" class="form-control"
+                    formControlName="discount_percentage" id="discount_percentage " />
                 </div>
               </div>
             </div>
@@ -947,7 +1166,8 @@
               <div class="form-group row">
                 <label for="banking_charge " class="col-lg-12 col-form-label">Banking Charge</label>
                 <div class="col-lg-12">
-                  <input type="number" title="Enter Numbers only" min="0"  max="14" class="form-control" formControlName="banking_charge" id="banking_charge " />
+                  <input type="number" title="Enter Numbers only" min="0" max="14" class="form-control"
+                    formControlName="banking_charge" id="banking_charge " />
                 </div>
               </div>
             </div>
@@ -974,7 +1194,8 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Stripe recurring payment
 
-                  <input type="checkbox" formControlName="stripe_recurr_payment" style="margin-left:30px;" (change)="eventCheckSRP($event)" />
+                  <input type="checkbox" formControlName="stripe_recurr_payment" style="margin-left:30px;"
+                    (change)="eventCheckSRP($event)" />
                 </label>
               </div>
             </div>
@@ -982,15 +1203,17 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">3CX System Discount
 
-                  <input type="checkbox" formControlName="c3cx_system_discount" style="margin-left:30px;" (change)="eventCheck3CXSD($event)" />
+                  <input type="checkbox" formControlName="c3cx_system_discount" style="margin-left:30px;"
+                    (change)="eventCheck3CXSD($event)" />
                 </label>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label" >Select Shopping GST
- 
-                  <input type="checkbox" formControlName="shopping_gst" style="margin-left:30px;" (change)="eventCheckshoppingGST($event)" />
+                <label class="col-lg-12 col-form-label">Select Shopping GST
+
+                  <input type="checkbox" formControlName="shopping_gst" style="margin-left:30px;"
+                    (change)="eventCheckshoppingGST($event)" />
                 </label>
               </div>
             </div>
@@ -1025,7 +1248,8 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Reseller Status
 
-                  <input type="checkbox" formControlName="reseller_status" style="margin-left:30px;" (change)="eventCheckRS($event)" />
+                  <input type="checkbox" formControlName="reseller_status" style="margin-left:30px;"
+                    (change)="eventCheckRS($event)" />
                 </label>
               </div>
             </div>
@@ -1033,8 +1257,8 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Voip switch credit
 
-                  <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit" title="Disabled"
-                    (change)="eventCheckVSC($event)" style="margin-left:30px;"/>
+                  <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit"
+                    title="Disabled" (change)="eventCheckVSC($event)" style="margin-left:30px;" />
                 </label>
               </div>
             </div>
@@ -1060,27 +1284,27 @@
               </div>
             </div> -->
 
-            <div  class="col-lg-6">
+            <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
-                  <label for="customerstatus" class="col-lg-4 col-form-label">Customer Status</label>
-                  <div  style="display: flex;align-items: center;">
-                      <div class="form-check" style="margin-right:30px;">
-                          <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" 
-                              id="New" [checked]="true" (change)="CustomerStatus_RadioEvent($event)" />
-                             
-                          <label class="form-check-label" for="New"> New
-                          </label>
-                      </div>
-        
-                      <div class="form-check" style="margin-right:30px;">
-                          <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" 
-                              id="Permanent" (change)="CustomerStatus_RadioEvent($event)" />
-                          <label class="form-check-label" for="Permanent">Permanent
-                          </label>
-                      </div>
+                <label for="customerstatus" class="col-lg-4 col-form-label">Customer Status</label>
+                <div style="display: flex;align-items: center;">
+                  <div class="form-check" style="margin-right:30px;">
+                    <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" id="New"
+                      [checked]="true" (change)="CustomerStatus_RadioEvent($event)" />
+
+                    <label class="form-check-label" for="New"> New
+                    </label>
                   </div>
+
+                  <div class="form-check" style="margin-right:30px;">
+                    <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" id="Permanent"
+                      (change)="CustomerStatus_RadioEvent($event)" />
+                    <label class="form-check-label" for="Permanent">Permanent
+                    </label>
+                  </div>
+                </div>
               </div>
-          </div>
+            </div>
 
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1100,7 +1324,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="addCustomerown()">
+        <button type="button" class="btn btn-primary" id="addCustomerSave" (click)="addCustomerown()">
           Save
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1165,7 +1389,7 @@
                 </div>
               </div>
             </div>
-            
+
             <!-- <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="customerClassificationn" class="col-lg-12">
@@ -1193,7 +1417,7 @@
               </div>
             </div>
             <div class="col-lg-6">
-             
+
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1265,7 +1489,8 @@
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
-                  <input type="checkbox" formControlName="e_edit_ship_address" style="margin-left:30px;" (change)="edit_eventCheck($event)" />
+                  <input type="checkbox" formControlName="e_edit_ship_address" style="margin-left:30px;"
+                    (change)="edit_eventCheck($event)" />
                 </label>
               </div>
             </div>
@@ -1357,7 +1582,7 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Premium Status
                   <input type="checkbox" formControlName="e_ESA_premiumStatus"
-                    (change)="eventCheckPremiumStatus($event)" style="margin-left:30px;"/>
+                    (change)="eventCheckPremiumStatus($event)" style="margin-left:30px;" />
                 </label>
               </div>
             </div>
@@ -1509,7 +1734,7 @@
               </div>
             </div>
 
-           
+
 
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1563,9 +1788,9 @@
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">  
+              <div class="form-group row">
                 <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label>
-                <div *ngFor="let display1 of radio;let k=index">
+                <div class="col-lg-12" *ngFor="let display1 of radio;let k=index">
                   <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
                     value="{{display1.values}}" (change)="handleChange($event)" />
                   <label for="new_id2{{k}}" class="col-lg-6 col-form-label">{{display1.name}}</label>
@@ -1640,13 +1865,271 @@
             </div>
 
           </div>
+          <div class="row">
+
+            <label for="companyCode" class="col-lg-12 col-form-label">Bill Code*</label>
+
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive ">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                      <th>Bill Code Name</th>
+                      <th>Server-VS1</th>
+                      <th>Server-VSKL</th>
+                      <th>Server-VS2(32)(TH,JP)</th>
+                      <th>Server-VS2(8)(Special Account)</th>
+
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="userDatatable-header">
+                      <td style="padding-right: 10px!important">
+                        <input type="text" class="form-control">
+                      </td>
+                      <td style="padding-right: 10px!important">
+                        <input type="text" class="form-control">
+                      </td>
+                      <td style="padding-right: 10px!important">
+                        <input type="text" class="form-control">
+                      </td>
+                      <td style="padding-right: 10px!important">
+                        <input type="text" class="form-control">
+                      </td>
+                      <td style="padding-right: 10px!important">
+                        <input type="text" class="form-control">
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+
+
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <form [formGroup]="billCodeEditForm2">
+                <label for="companyCode" class="col-lg-12 col-form-label">Primary Code*</label>
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+
+                  <div class="table-responsive ">
+                    <table class="table mb-0 table-borderless">
+                      <thead>
+                        <tr class="userDatatable-header">
+                          <th>Servers</th>
+                          <th>Pbx Code</th>
+                          <th>Retail Code</th>
+                          <th>PBX Low</th>
+                          <th>PBX High</th>
+                          <th>Retail Low</th>
+                          <th>Retail High</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="userDatatable-header">
+                          <td>
+                            <span><strong>VS 740 server</strong></span>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_PbxCode"
+                              id="VS740_PbxCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_RetailCode"
+                              id="VS740_RetailCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_PbxLow" id="VS740_PbxLow" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_PbxHigh"
+                              id="VS740_PbxHigh" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_RetailLow"
+                              id="VS740_RetailLow" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_RetailHigh"
+                              id="VS740_RetailHigh" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span><strong>VS 750 server</strong></span>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_PbxCode"
+                              id="VS750_PbxCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_RetailCode"
+                              id="VS750_RetailCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_PbxLow" id="VS750_PbxLow" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_PbxHigh"
+                              id="VS750_PbxHigh" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_RetailLow"
+                              id="VS750_RetailLow" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_RetailHigh"
+                              id="VS750_RetailHigh" />
+                          </td>
+
+                        </tr>
+                        <tr class="userDatatable-header">
+                          <td>
+                            <span><strong>VS KL server</strong></span>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_PbxCode" id="VSKL_PbxCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_RetailCode"
+                              id="VSKL_RetailCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_PbxLow" id="VSKL_PbxLow" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_PbxHigh" id="VSKL_PbxHigh" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_RetailLow"
+                              id="VSKL_RetailLow" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_RetailHigh"
+                              id="VSKL_RetailHigh" />
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <label class="col-lg-12 col-form-label">Auto Credit
+                    <input type="checkbox" formControlName="auto_Credit_checklist"
+                      (change)="autoCreditPermission($event)" id="autoCreditCheckBox">
+                  </label>
+                </div>
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+
+                  <div class="table-responsive ">
+                    <table class="table mb-0 table-borderless">
+                      <thead>
+                        <tr class="userDatatable-header">
+                          <th>Servers</th>
+                          <th>Servers Name for Customer</th>
+                          <th>Pbx Threshold Low</th>
+                          <th>Retail Pbx Threshold Low</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="userDatatable-header">
+                          <td>
+                            <span><strong>VS 740 server</strong></span>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_PbxCode"
+                              id="VS740_PbxCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_RetailCode"
+                              id="VS740_RetailCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS740_PbxLow" id="VS740_PbxLow" />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <span><strong>VS 750 server</strong></span>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_PbxCode"
+                              id="VS750_PbxCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_RetailCode"
+                              id="VS750_RetailCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VS750_PbxLow" id="VS750_PbxLow" />
+                          </td>
+
+                        </tr>
+                        <tr class="userDatatable-header">
+                          <td>
+                            <span><strong>VS KL server</strong></span>
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_PbxCode" id="VSKL_PbxCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_RetailCode"
+                              id="VSKL_RetailCode" />
+                          </td>
+                          <td>
+                            <input type="text" class="form-control" formControlName="VSKL_PbxLow" id="VSKL_PbxLow" />
+                          </td>
+                        </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <label class="col-lg-12 col-form-label">Manual Credit
+                    <input type="checkbox" formControlName="auto_Credit_checklist"
+                      (change)="autoCreditPermission($event)" id="autoCreditCheckBox">
+                  </label>
+                  <label class="col-lg-12 col-form-label">Add Credit Amount
+                    <input type="checkbox" formControlName="auto_Credit_checklist"
+                      (change)="autoCreditPermission($event)" id="autoCreditCheckBox">
+                  </label>
+                  <div class="form-group row" style="display: flex; align-items: center;">
+                    <label for="customerstatus" class="col-lg-3 col-form-label">DC IP Allow Countries</label>
+                    <div style="display: flex; align-items: center;">
+                      <div class="form-check" style="margin-right: 30px;">
+                        <input type="checkbox" name="addCustomerStatus" id="japan " class="form-check-input">
+                        <label for="japan " class="form-check-label"> Japan </label>
+                      </div>
+                      <div class="form-check" style="margin-right: 30px;">
+                        <input type="checkbox" name="addCustomerStatus" id="Singapore" class="form-check-input">
+                        <label for="Singapore" class="form-check-label">Singapore </label>
+                      </div>
+                      <div class="form-check" style="margin-right: 30px;">
+                        <input type="checkbox" name="addCustomerStatus" id="Thailand " class="form-check-input">
+                        <label for="Thailand " class="form-check-label">Thailand </label>
+                      </div>
+                      <div class="form-check" style="margin-right: 30px;">
+                        <input type="checkbox" name="addCustomerStatus" id="Malasiya " class="form-check-input">
+                        <label for="Malasiya " class="form-check-label">Malasiya </label>
+                      </div>
+                      <div class="form-check" style="margin-right: 30px;">
+                        <input type="checkbox" name="addCustomerStatus" id="Vietnam " class="form-check-input">
+                        <label for="Vietnam " class="form-check-label">Vietnam </label>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+
+          </div>
 
         </form>
       </div>
 
       <div class="modal-footer">
 
-        
+
         <button type="button " class="btn btn-primary" (click)="update(this.editId)">Update</button>
         <button type="button " class="btn btn-dark" data-dismiss="modal">Cancel</button>
       </div>
@@ -1791,12 +2274,12 @@
 
       <div class="modal-footer">
 
-       
+
         <button type="button " class="btn btn-primary" (click)="specialUpdate(this.specialEditId)">Update
-          </button>
-          <button type="button " class="btn btn-dark" data-dismiss="modal">
-            Cancel
-          </button>
+        </button>
+        <button type="button " class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
@@ -2056,12 +2539,12 @@
         </form>
       </div>
       <div class="modal-footer">
-       
+
         <button type="button" class="btn btn-primary"
           (click)="call4tel_address_add(this.Call4telParameter)">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Cancel
-          </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
 
       </div>
     </div>
@@ -2096,12 +2579,12 @@
         </form>
       </div>
       <div class="modal-footer">
-      
+
         <button type="button" class="btn btn-primary"
           (click)="invoiceShare_update(this.invoiceSharedParameter)">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Cancel
-          </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
@@ -2138,12 +2621,12 @@
         </form>
       </div>
       <div class="modal-footer">
-      
+
         <button type="button" class="btn btn-primary"
           (click)="shareCustomerPermission_update(this.shareCustomerPermissionParameter)">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Cancel
-          </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
@@ -2181,12 +2664,12 @@
         </form>
       </div>
       <div class="modal-footer">
-        
+
         <button type="button" class="btn btn-primary"
           (click)="customer_NX32PermissionUpdate(this.NX32SharePermissionParameter)">Save</button>
-          <button type="button" class="btn btn-dark" data-dismiss="modal">
-            Cancel
-          </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
       </div>
     </div>
   </div>
@@ -2567,3 +3050,65 @@
 </div>
 
 <!-------------------------- ------Modal-Quick Email  ends-------------------------------------- -->
+
+
+<!----------Modal Pop Up (BEGIN)  for Quotation Shared Attachment in customer Contract------------------>
+<div class="modal fade" id="searchCustomerFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced Search</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchCustomerForm">
+                  <div class="row">
+                 <div class="col-lg-6">
+                    <label>
+                      Search Text
+                    </label>
+                     <input type="text" class="form-control" formControlName="searchtext" (keyup)="CustomerSearchtext($event)">
+
+                 </div>
+              
+                  <div class="col-lg-6">
+                    <div class="form-group row">
+                      <label for="biller_name_1" class="col-lg-12 col-form-label"> Revenue Type Wise Show</label>
+                      <div class="col-lg-12">
+                        <select name="biller_name_1" id="biller_name_1" class="form-control"
+                          aria-label="Default select example" formControlName="RevenueTypeWiseShow">
+                          <option [ngValue]="null" selected disabled>Select  Revenue Type Wise Show</option>
+                          <option *ngFor="let revenue of revenue_list" 
+                          value="{{ revenue.revenue_type_id}}">
+                            {{ revenue.revenue_type_name }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                
+
+              
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="searchCustomerList()" (click)="customerslist({})">
+                    Search
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>

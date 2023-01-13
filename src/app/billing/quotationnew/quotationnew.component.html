@@ -13,7 +13,7 @@
                             </button>
 
                             <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                                (click)="addQuotationNew()" data-target="#searchQuotationFormId">
+                                 data-target="#searchQuotationFormId">
                                 <i class="fas fa-search" style="margin-right:0;"></i>
                             </button>
                         </div>
@@ -286,7 +286,7 @@
 
                                                                 </a>
                                                             </li>
-                                                            <li class="dropdown__item"
+                                                            <!-- <li class="dropdown__item"
                                                                 *ngIf="(list.approval_staus=='1')">
                                                                 <a class="hover2" title="Quotation Approval"
                                                                     *ngIf="(list.approval_staus=='1')"
@@ -304,7 +304,7 @@
                                                                         </polyline>
                                                                     </svg>
                                                                 </a>
-                                                            </li>
+                                                            </li> -->
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="Proforma Invoice"
                                                                     *ngIf="(list.pi_convert_status!='0')"
@@ -661,7 +661,7 @@
             <div class="modal-footer">
 
                 <button type="submit" class="btn btn-primary" form="ngForm" 
-                (click)="AddQuotationGo()">Go>></button>
+                (click)="AddQuotationGo()" >Go>></button>
 
 
                 <button type="button" class="btn btn-dark" 

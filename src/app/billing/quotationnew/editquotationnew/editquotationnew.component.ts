@@ -918,6 +918,9 @@ datavalue:any;
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
       addr[i].pd_split = $('#pd_split_'+i).prop('checked');
+      addr[i].to_next_page = $('#to_next_page_'+i).prop('checked');
+      addr[i].pd_selectTax = $('#pd_selectTax_'+i).prop('checked');
+      addr[i].pd_GPTotal = $('#pd_GPTotal_'+i).prop('checked');
     }
     api_UpdateEnquiry_req.values = addr;
 

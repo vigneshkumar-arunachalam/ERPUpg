@@ -62,6 +62,7 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    window.location.reload();
   
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),

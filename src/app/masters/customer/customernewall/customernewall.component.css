@@ -507,3 +507,16 @@ label {
 .mousepoint{
   cursor: pointer !important;
 }
+.CheckboxScroll{
+  height: 140px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+.modal-header{
+  background-color: #ffd0be!important;
+}
+.modal-footer{
+  background-color: #e9e3e525!important;
+}
