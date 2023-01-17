@@ -328,7 +328,7 @@
     color: #fff!important;
 }
 
-tr:nth-child(even) {background: rgb(239, 241, 238)}
+tr:nth-child(even) {background:#FFF}
 tr:nth-child(odd) {background: #FFF}
 
 
@@ -515,7 +515,7 @@ label {
   border-radius: 5px;
 }
 .modal-header{
-  background-color: #ffd0be!important;
+  background-color: #c44918!important;
 }
 .modal-footer{
   background-color: #e9e3e525!important;

@@ -39,6 +39,7 @@ export class CustomernewallComponent implements OnInit {
   allData: any;
   customerType_list: any;
   displayDynamicData: any;
+  customerPermissionList:any;
   billList: any;
   customer_list: any;
   paymentList: any;
@@ -73,6 +74,14 @@ export class CustomernewallComponent implements OnInit {
   addBillerNameBillerId: any;
   addBillerNameBiller: any;
   addBillerNameCheckboxID_array: any = [];
+    //checkbox-add biller name
+    editBillerNameBillerId: any;
+    editBillerNameBiller: any;
+    editBillerNameCheckboxID_array: any = [];
+       //checkbox-add -permission
+       addPermissionId: any;
+       addPermission: any;
+       addPermissionCheckboxID_array: any = [];
   //search
   searchCustomerForm: FormGroup;
   CustomerSearchTextValue: any;
@@ -126,6 +135,8 @@ export class CustomernewallComponent implements OnInit {
   ShareCustomerPermissionForm: FormGroup;
   SharedCustomerPermissionArray: any = [];
   shareCustomerPermissionParameter: any;
+
+  checkbox_InvoiceShared: boolean = false;
   //NX32 Share customer permission
   customerNX32SharePermissionForm: FormGroup;
   NX32SharePermissionParameter: any;
@@ -372,8 +383,8 @@ export class CustomernewallComponent implements OnInit {
       textField: 'permissionName',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 5,
-      allowSearchFilter: true
+      itemsShowLimit: 2,
+      allowSearchFilter: false
     };
 
     //view
@@ -784,7 +795,7 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_RSsearch = event.target.checked;
     console.log(this.checkbox_RSsearch)
   }
-  checkbox_InvoiceShared: any;
+
   eventCheckInvoiceShared(event: any) {
     this.checkbox_InvoiceShared = event.target.checked;
     console.log(this.checkbox_InvoiceShared)
@@ -965,6 +976,7 @@ export class CustomernewallComponent implements OnInit {
       if (response != '') {
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
+        this.customerPermissionList=response.cus_permission;
         this.dropdownList_billerName = response.bill_details;
         console.log(this.dropdownList_billerName)
 
@@ -994,6 +1006,48 @@ export class CustomernewallComponent implements OnInit {
 
     }
 
+  }
+  editBillerNameCHK(data: any, event: any) {
+
+    this.editBillerNameBillerId = data;
+    this.editBillerNameBiller = event.target.checked;
+    console.log(this.editBillerNameBiller)
+
+    if (this.editBillerNameBiller) {
+
+      this.editBillerNameCheckboxID_array.push(data);
+      this.editBillerNameCheckboxID_array.join(',');
+      console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
+    }
+    else {
+      const index = this.editBillerNameCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.editBillerNameCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final BillerName Checkbox After Deselected selected list", this.editBillerNameCheckboxID_array)
+
+    }
+
+  }
+  addPermissionCHK(data: any, event: any){
+    this.addPermissionId = data;
+    this.addPermission = event.target.checked;
+    console.log(this.addPermission)
+
+    if (this.addPermission) {
+
+      this.editBillerNameCheckboxID_array.push(data);
+      this.editBillerNameCheckboxID_array.join(',');
+      console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
+    }
+    else {
+      const index = this.editBillerNameCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.editBillerNameCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final BillerName Checkbox After Deselected selected list", this.editBillerNameCheckboxID_array)
+
+    }
   }
 
 
@@ -1044,6 +1098,60 @@ export class CustomernewallComponent implements OnInit {
       console.log("this.addBillerNameCheckboxID_array-De Select All", this.addBillerNameCheckboxID_array)
 
     }
+
+  }
+  
+  CHKAll_BillerNameSelectAll_Edit(event: any) {
+
+
+    if (event.target.checked == true) {
+      var checkAll_ID: any = [];
+      console.log("this.billerNameList", this.geting_biller)
+
+      this.geting_biller.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', true);
+        checkAll_ID.push(element.billerId);
+      });
+      this.editBillerNameCheckboxID_array = [];
+      this.editBillerNameCheckboxID_array = checkAll_ID;
+      console.log("checkedID", checkAll_ID)
+      console.log("this.editBillerNameCheckboxID_array-Select All", this.editBillerNameCheckboxID_array)
+    } else {
+      this.geting_biller.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', false);
+
+      });
+      this.editBillerNameCheckboxID_array = [];
+      console.log("this.editBillerNameCheckboxID_array-De Select All", this.editBillerNameCheckboxID_array)
+
+    } 
+
+  }
+
+  CHKAll_PermissionSelectAll(event: any) {
+
+
+    if (event.target.checked == true) {
+      var checkAll_ID: any = [];
+      console.log("permission array list", this.customerPermissionList)
+
+      this.customerPermissionList.forEach((element: any, index: any) => {
+        $("#check-grpPerm-" + index).prop('checked', true);
+        checkAll_ID.push(element.id);
+      });
+      this.addPermissionCheckboxID_array = [];
+      this.addPermissionCheckboxID_array = checkAll_ID;
+      console.log("checkedID", checkAll_ID)
+      console.log("this.addPermissionCheckboxID_array-Select All", this.addPermissionCheckboxID_array)
+    } else {
+      this.customerPermissionList.forEach((element: any, index: any) => {
+        $("#check-grpPerm-" + index).prop('checked', false);
+
+      });
+      this.addPermissionCheckboxID_array = [];
+      console.log("this.addPermissionCheckboxID_array-De Select All", this.addPermissionCheckboxID_array)
+
+    } 
 
   }
   CHKAll_CustomerClassifSelectAll(event: any) {
@@ -1613,42 +1721,49 @@ export class CustomernewallComponent implements OnInit {
 
   }
   deleteCustomer(id: any) {
-    alert("delete")
-    let api_req: any = new Object();
-    let delete_customer_req: any = new Object();
-    api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/customer_delete";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    delete_customer_req.action = "customer_delete";
-    delete_customer_req.user_id = localStorage.getItem('user_id');
-    api_req.element_data = delete_customer_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
-
-      console.log("update", response);
-      if (response != '') {
-
-        iziToast.success({
-          message: "Customer Deleted successfully",
-          position: 'topRight'
-        });
-
-        this.customerslist({});
-
+    Swal.fire({
+      title: 'Are you sure to Delete?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!'
+    }).then((result:any) => {
+      if (result.value) {
+  
+        let api_req: any = new Object();
+      let delete_customer_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/" + id + "/customer_delete";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      delete_customer_req.action = "customer_delete";
+      delete_customer_req.user_id = localStorage.getItem('user_id');
+      api_req.element_data = delete_customer_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            
+            iziToast.success({
+              message: "Customer Deleted successfully",
+              position: 'topRight'
+            });
+            this.customerslist({});
+          }   else {
+            iziToast.warning({
+              message: "Customer not deleted. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
-      else {
-
-        iziToast.warning({
-          message: "Customer not deleted. Please try again",
-          position: 'topRight'
-        });
-
-      }
-
-    });
-
+    })
+  
+  
   }
   fileAttachmentEdit(ID: any) {
     $("#fileAttachmentFormId").modal("show");
@@ -2139,15 +2254,15 @@ export class CustomernewallComponent implements OnInit {
       if (response != '') {
 
         this.SharedCustomerPermissionArray = [];
-        this.SharedCustomerPermissionArray = response.access_user;
+        this.SharedCustomerPermissionArray = response.user_details;
 
         console.log(this.SharedCustomerPermissionArray)
 
 
-        this.ShareCustomerPermissionForm.patchValue({
+        // this.ShareCustomerPermissionForm.patchValue({
 
-          'shareCustomerPermission_checklist': response.access_user,
-        });
+        //   'shareCustomerPermission_checklist': response.user_details,
+        // });
       }
     });
 
@@ -2175,84 +2290,160 @@ export class CustomernewallComponent implements OnInit {
     });
 
   }
+
+
   customer_status(id: any, Status_variable: any) {
-
-    console.log("id", id)
-    var status;
-    if (Status_variable == 'P') {
-      status = 'N'
-    } else {
-      status = 'P'
-    }
-    let api_req: any = new Object();
-    let api_customerStatus_req: any = new Object();
-    api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/customer_status_update";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_customerStatus_req.action = "customer_status_update";
-    api_customerStatus_req.user_id = localStorage.getItem('user_id');
-    api_customerStatus_req.cust_status = status;
-    api_req.element_data = api_customerStatus_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
-      if (response.status = true) {
-        console.log("before change", this.isCustomerStatus)
-        this.isCustomerStatus = !this.isCustomerStatus;
-        console.log("after change", this.isCustomerStatus)
-        this.customerslist({});
+    Swal.fire({
+      title: 'Are you sure to change Customer status?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result:any) => {
+      if (result.value) {
+  
+        console.log("id", id)
+        var status;
+        if (Status_variable == 'P') {
+          status = 'N'
+        } else {
+          status = 'P'
+        }
+        let api_req: any = new Object();
+        let api_customerStatus_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/" + id + "/customer_status_update";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_customerStatus_req.action = "customer_status_update";
+        api_customerStatus_req.user_id = localStorage.getItem('user_id');
+        api_customerStatus_req.cust_status = status;
+        api_req.element_data = api_customerStatus_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            console.log("before change", this.isCustomerStatus)
+            this.isCustomerStatus = !this.isCustomerStatus;
+            console.log("after change", this.isCustomerStatus)
+           
+            iziToast.success({
+              message: "Customer Status changed successfully",
+              position: 'topRight'
+            });
+            this.customerslist({});
+          }   else {
+            iziToast.warning({
+              message: "Customer Status not changed. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
-
-    });
-
-
+    })
+  
+  
   }
   employee_status(id: any) {
-
-    let api_req: any = new Object();
-    let api_empStatus_req: any = new Object();
-    api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/emp_status_update";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_empStatus_req.action = "emp_status_update";
-    api_empStatus_req.user_id = localStorage.getItem('user_id');
-    api_req.element_data = api_empStatus_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      if (response.status = true) {
-        console.log("before change-employee status", this.isEmployeeStatus)
-        this.isEmployeeStatus = !this.isEmployeeStatus;
-        this.customerslist({});
-        console.log("after change-employee status", this.isEmployeeStatus)
+    Swal.fire({
+      title: 'Are you sure to change Employee status?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result:any) => {
+      if (result.value) {
+  
+        let api_req: any = new Object();
+      let api_empStatus_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/" + id + "/emp_status_update";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_empStatus_req.action = "emp_status_update";
+      api_empStatus_req.user_id = localStorage.getItem('user_id');
+      api_req.element_data = api_empStatus_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+          
+            console.log("before change-employee status", this.isEmployeeStatus)
+            this.isEmployeeStatus = !this.isEmployeeStatus;
+            console.log("after change-employee status", this.isEmployeeStatus)
+            iziToast.success({
+              message: "Employee Status changed successfully",
+              position: 'topRight'
+            });
+            this.customerslist({});
+          }   else {
+            iziToast.warning({
+              message: "Employee Status not changed. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
-    });
-
+    })
+  
+  
   }
   reseller_statusMethod(id: any) {
-    let api_req: any = new Object();
-    let api_resellerStatus_req: any = new Object();
-    api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/reseller_status_update";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_resellerStatus_req.action = "reseller_status_update";
-    api_resellerStatus_req.user_id = localStorage.getItem('user_id');
-
-    api_req.element_data = api_resellerStatus_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status = true) {
-        console.log("before change-reseller status", this.isResllerStatus)
-        this.isResllerStatus = !this.isResllerStatus;
-        this.customerslist({});
-        console.log("after change-reseller status", this.isResllerStatus)
+    Swal.fire({
+      title: 'Are you sure to change Reseller status?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result:any) => {
+      if (result.value) {
+  
+        let api_req: any = new Object();
+        let api_resellerStatus_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/" + id + "/reseller_status_update";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_resellerStatus_req.action = "reseller_status_update";
+        api_resellerStatus_req.user_id = localStorage.getItem('user_id');
+    
+        api_req.element_data = api_resellerStatus_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+          
+            console.log("before change-reseller status", this.isResllerStatus)
+            this.isResllerStatus = !this.isResllerStatus;
+            console.log("after change-reseller status", this.isResllerStatus)
+            iziToast.success({
+              message: "Reseller Status changed successfully",
+              position: 'topRight'
+            });
+            this.customerslist({});
+          }   else {
+            iziToast.warning({
+              message: "Reseller Status not changed. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
-    });
-
-
+    })
+  
+  
   }
 
   customer_NX32PermissionDisplay(id: any, nx32id: any) {
