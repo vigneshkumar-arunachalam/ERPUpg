@@ -267,21 +267,21 @@
                 <div class="form-check form-check-inline">
     
                     <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
-                        id="exampleRadios1" value="Local" checked>
+                        id="exampleRadios1" value="1" checked>
                     <label class="form-check-label" for="exampleRadios1">
                         Local
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
-                        id="exampleRadios2" value="Export">
+                        id="exampleRadios2" value="2">
                     <label class="form-check-label" for="exampleRadios2">
                         Export
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
-                        id="exampleRadios3" value="Zero Valid">
+                        id="exampleRadios3" value="3">
                     <label class="form-check-label" for="exampleRadios3">
                         Zero Valid
                     </label>
@@ -329,7 +329,7 @@
 
                             <input class="form-check-input radioType" type="radio" 
                             formControlName="extraLogo" name="extraLogo" (change)="handleChangeExtraLogo($event)"
-                                id="exampleRadios1" value="IT Care" >
+                                id="exampleRadios1" value="1" >
                             <label class="form-check-label" for="exampleRadios1">
                                 IT Care
                             </label>
@@ -337,7 +337,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" 
                             formControlName="extraLogo" (change)="handleChangeExtraLogo($event)"
-                                id="exampleRadios2" value="Calncall">
+                                id="exampleRadios2" value="2">
                             <label class="form-check-label" for="exampleRadios2">
                                 Calncall 
                             </label>
@@ -345,7 +345,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" 
                             formControlName="extraLogo" (change)="handleChangeExtraLogo($event)"
-                                id="exampleRadios3" value="DID Sg">
+                                id="exampleRadios3" value="3">
                             <label class="form-check-label" for="exampleRadios3">
                                 DID Sg 
                             </label>
@@ -353,7 +353,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" 
                             formControlName="extraLogo" (change)="handleChangeExtraLogo($event)"
-                                id="exampleRadios3" value="Callcloud">
+                                id="exampleRadios3" value="4">
                             <label class="form-check-label" for="exampleRadios3">
                                 Callcloud
                             </label>
@@ -361,7 +361,7 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo"
                             formControlName="extraLogo"  (change)="handleChangeExtraLogo($event)"
-                                id="exampleRadios3" value="Mrvoip">
+                                id="exampleRadios3" value="5">
                             <label class="form-check-label" for="exampleRadios3">
                                 Mrvoip    
                             </label>
@@ -483,7 +483,7 @@
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_OutCall">
+                                                    formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
 
                                             </div>
                                         </td>
@@ -491,7 +491,7 @@
                                             <div class="userDatatable-content">
 
                                                 <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_CMon">
+                                                    formControlName="pd_CMon" id="pd_CMon_{{i}}">
 
                                             </div>
                                         </td>

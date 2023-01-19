@@ -88,6 +88,7 @@ export class AddPIComponent implements OnInit {
   chkReceivedAuthorizedSignature: boolean = true;
   chklogoAddressSignature: boolean = true;
 //export state-check box
+export_state: any;
 export_state_Local: boolean = true;
 export_state_Export:any;
 export_state_ZeroValid: boolean = true;
@@ -257,16 +258,19 @@ MSDisplay_Value: boolean = true;
 
   handleChangeLocal(event:any){
     this.export_state_Local = event.target.value;
+    this.export_state='Local';
     console.log( this.export_state_Local);
 
   }
   handleChangeExport(event:any){
     this.export_state_Export = event.target.value;
+    this.export_state='Export';
     console.log(this.export_state_Export);
 
   }
   handleChangeZeroValid(event:any){
     this.export_state_ZeroValid = event.target.value;
+    this.export_state='Zero Valid';
     console.log(this.export_state_ZeroValid );
 
   }
@@ -662,8 +666,8 @@ console.log(this.MSDisplay_Value);
   save() {
     let api_req: any = new Object();
     let api_savePI_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/insert_proforma_invoice";
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/insert_proforma_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_savePI_req.action = "insert_proforma_invoice";
@@ -673,9 +677,17 @@ console.log(this.MSDisplay_Value);
     api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
     api_savePI_req.customer_name = this.customerName_Data;
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
+
+    api_savePI_req.b_name = this.addPI_section1.value.BillTo;
     api_savePI_req.b_address1 = this.addPI_section1.value.address_1;
     api_savePI_req.b_address2 = this.addPI_section1.value.address_2;
     api_savePI_req.b_address3 = this.addPI_section1.value.address_3;
+
+    api_savePI_req.s_name = this.addPI_section1.value.ship_to;
+    api_savePI_req.s_address1 = this.addPI_section1.value.ship_address_1;
+    api_savePI_req.s_address2 = this.addPI_section1.value.ship_address_2;
+    api_savePI_req.s_address3 = this.addPI_section1.value.ship_address_3;
+
     api_savePI_req.cstNo = this.addPI_section1.value.cst;
     api_savePI_req.billDate = this.addPI_section1.value.Date;
     api_savePI_req.b_attn = this.addPI_section1.value.Attn_1;
@@ -692,8 +704,47 @@ console.log(this.MSDisplay_Value);
     api_savePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_savePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
     api_savePI_req.bills_logo_id = this.ExtralogoValue;
+    api_savePI_req.mile_discount_state = this.mile_check_value;
+    api_savePI_req.mile_discount_display_state = this.MSDisplay_Value;
+    api_savePI_req.export_state = this.export_state;
+    
     //section-2
-    api_savePI_req.values = this.addPI_section2.value.addresses;
+  //  api_savePI_req.values = this.addPI_section2.value.addresses;
+
+
+  var addr = this.addPI_section2.value.addresses;
+   
+
+    for (let i = 0; i < addr.length; i++) {
+
+      if($('#pd_productName_txtbox_' + i).val()==''){
+        iziToast.warning({
+          message: "Select Minimum 1 Product Details",
+          position: 'topRight'
+        });
+        return false;
+        
+      }
+     
+      console.log(addr[i].pd_quantity_txtbox1)
+      addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
+      addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
+      addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
+      addr[i].pd_unit = $('#pd_unit_' + i).val();
+      addr[i].pd_sellingPrice = $('#pd_SP_' + i).val();
+      addr[i].pd_netPrice = $('#pd_netPrice_' + i).val();
+      addr[i].pd_Total = $('#pd_Total_' + i).val();
+      addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
+      addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
+      addr[i].sub_discount = $('#sub_discount_' + i).val();
+      addr[i].pd_selectTax = $('#pd_selectTax_' + i).val();
+     
+    }
+
+    
+    api_savePI_req.values = addr;
+
+
 //section-3
     api_savePI_req.grossTotal = this.addPI_section3.value.section3_gross_total;
     api_savePI_req.discountAmount = this.addPI_section3.value.final_dis_val;

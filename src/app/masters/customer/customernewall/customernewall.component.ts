@@ -39,7 +39,7 @@ export class CustomernewallComponent implements OnInit {
   allData: any;
   customerType_list: any;
   displayDynamicData: any;
-  customerPermissionList:any;
+  customerPermissionList: any;
   billList: any;
   customer_list: any;
   paymentList: any;
@@ -66,22 +66,26 @@ export class CustomernewallComponent implements OnInit {
   isDisabled: boolean = true;
   customerStatus_radiobox_Value: any = 'New';
   checkbox_EditShippingAddress: boolean = true;
-  // checkbox-customer classification
+  // checkbox-customer classification-add
   addCustomerClassificationBillerId: any;
   addCustomerClassificationBiller: any;
   addCustomerClassificationBillerCheckboxID_array: any = [];
+  // checkbox-customer classification-edit
+  editCustomerClassificationBillerId: any;
+  editCustomerClassificationBiller: any;
+  editCustomerClassificationBillerCheckboxID_array: any = [];
   //checkbox-add biller name
   addBillerNameBillerId: any;
   addBillerNameBiller: any;
   addBillerNameCheckboxID_array: any = [];
-    //checkbox-add biller name
-    editBillerNameBillerId: any;
-    editBillerNameBiller: any;
-    editBillerNameCheckboxID_array: any = [];
-       //checkbox-add -permission
-       addPermissionId: any;
-       addPermission: any;
-       addPermissionCheckboxID_array: any = [];
+  //checkbox-add biller name
+  editBillerNameBillerId: any;
+  editBillerNameBiller: any;
+  editBillerNameCheckboxID_array: any = [];
+  //checkbox-add -permission
+  addPermissionId: any;
+  addPermission: any;
+  addPermissionCheckboxID_array: any = [];
   //search
   searchCustomerForm: FormGroup;
   CustomerSearchTextValue: any;
@@ -93,6 +97,7 @@ export class CustomernewallComponent implements OnInit {
   editId: any;
   radio: any;
   b_id: any = [];
+  geting_biller_edit :any;
   //special edit
   specialEditCustomerForm: FormGroup;
   specialEditId: any;
@@ -482,6 +487,7 @@ export class CustomernewallComponent implements OnInit {
       'edit_defaultBillerName': new FormControl(null),
       'edit_billernamelist': new FormControl(null),
       'editCustomerClassification': new FormControl(null),
+
       'e_billingAddress_contactPerson': new FormControl(null),
       'e_billingAddress_address1': new FormControl(null),
       'e_billingAddress_address2': new FormControl(null),
@@ -869,6 +875,7 @@ export class CustomernewallComponent implements OnInit {
     this.CustomerSearchTextValue = event.target.value;
     console.log("Customer Search Text Field Value", this.CustomerSearchTextValue)
   }
+
   pageLoad() {
     this.checkbox_EditShippingAddress = true;
     if (this.checkbox_EditShippingAddress) {
@@ -945,7 +952,8 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/cal/customer_name_search";
+    api_req.api_url = "customer/customer_name_search";
+    // api_req.api_url = "customer/cal/customer_name_search";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "customer_name_search";
@@ -976,7 +984,7 @@ export class CustomernewallComponent implements OnInit {
       if (response != '') {
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
-        this.customerPermissionList=response.cus_permission;
+        this.customerPermissionList = response.cus_permission;
         this.dropdownList_billerName = response.bill_details;
         console.log(this.dropdownList_billerName)
 
@@ -1029,23 +1037,23 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
-  addPermissionCHK(data: any, event: any){
+  addPermissionCHK(data: any, event: any) {
     this.addPermissionId = data;
     this.addPermission = event.target.checked;
     console.log(this.addPermission)
 
     if (this.addPermission) {
 
-      this.editBillerNameCheckboxID_array.push(data);
-      this.editBillerNameCheckboxID_array.join(',');
-      console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
+      this.addPermissionCheckboxID_array.push(data);
+      this.addPermissionCheckboxID_array.join(',');
+      console.log("Final BillerName Checkbox After checkbox selected list", this.addPermissionCheckboxID_array);
     }
     else {
-      const index = this.editBillerNameCheckboxID_array.findIndex((el: any) => el === data)
+      const index = this.addPermissionCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
-        this.editBillerNameCheckboxID_array.splice(index, 1);
+        this.addPermissionCheckboxID_array.splice(index, 1);
       }
-      console.log("Final BillerName Checkbox After Deselected selected list", this.editBillerNameCheckboxID_array)
+      console.log("Final BillerName Checkbox After Deselected selected list", this.addPermissionCheckboxID_array)
 
     }
   }
@@ -1074,6 +1082,30 @@ export class CustomernewallComponent implements OnInit {
 
   }
 
+  editCustomerClassificationCHK(data: any, event: any) {
+    // console.log("Contract File Attachment Display - CheckBox ID", data);
+    this.editCustomerClassificationBillerId = data;
+    this.editCustomerClassificationBiller = event.target.checked;
+    console.log(this.editCustomerClassificationBiller)
+
+    if (this.editCustomerClassificationBiller) {
+
+      this.editCustomerClassificationBillerCheckboxID_array.push(data);
+      this.editCustomerClassificationBillerCheckboxID_array.join(',');
+      console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
+    }
+    else {
+      const index = this.editCustomerClassificationBillerCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.editCustomerClassificationBillerCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final customer classification(edit) Checkbox After Deselected selected list", this.editCustomerClassificationBillerCheckboxID_array)
+
+    }
+
+  }
+
+
   CHKAll_BillerNameSelectAll(event: any) {
 
 
@@ -1100,7 +1132,7 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
-  
+
   CHKAll_BillerNameSelectAll_Edit(event: any) {
 
 
@@ -1124,7 +1156,7 @@ export class CustomernewallComponent implements OnInit {
       this.editBillerNameCheckboxID_array = [];
       console.log("this.editBillerNameCheckboxID_array-De Select All", this.editBillerNameCheckboxID_array)
 
-    } 
+    }
 
   }
 
@@ -1151,8 +1183,11 @@ export class CustomernewallComponent implements OnInit {
       this.addPermissionCheckboxID_array = [];
       console.log("this.addPermissionCheckboxID_array-De Select All", this.addPermissionCheckboxID_array)
 
-    } 
+    }
 
+  }
+  kk() {
+    console.log('oishfih')
   }
   CHKAll_CustomerClassifSelectAll(event: any) {
 
@@ -1407,10 +1442,11 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let edit_customer_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/edit";
+    api_req.api_url = "customer/edit";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     edit_customer_req.action = "customer_edit";
+	 edit_customer_req.customerId = id;
     edit_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = edit_customer_req;
 
@@ -1434,15 +1470,16 @@ export class CustomernewallComponent implements OnInit {
         console.log("cus permission", response.result.customer_details[0].cus_permission);
         console.log("customer status", response.result.customer_details[0].cust_status);
         this.get_cust_type = response.result.customer_details[0].cus_type;
-        this.geting_biller = response.result.billerId_det;
+        this.geting_biller = response.result.bill_details;
+        this.geting_biller_edit = response.result.billerId_det;
         console.log(this.geting_biller)
 
         this.editCustomerForm.patchValue({
 
           'edit_company_Name': response.result.customer_details[0].customerName,
           'edit_defaultBillerName': response.result.customer_details[0].def_biller_id,
-          'edit_billernamelist': response.result.billerId_det,
-          // 'editCustomerClassification': response.result.customer_details[0].cus_type,
+          // 'edit_billernamelist': response.result.billerId_det,
+          'editCustomerClassification': response.result.customer_details[0].cus_type,
 
           'e_billingAddress_contactPerson': response.result.customer_details[0].bill_attn,
           'e_billingAddress_address1': response.result.customer_details[0].customerAddress1,
@@ -1518,11 +1555,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let update_customer_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/update";
+    api_req.api_url = "customer/update";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     update_customer_req.action = "customer_update";
     update_customer_req.user_id = localStorage.getItem('user_id');
+    update_customer_req.customerId = id;
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = Update_billerNameCheckListDisplay;
     update_customer_req.company_name = this.editCustomerForm.value.edit_defaultBillerName;
@@ -1616,11 +1654,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let specialEdit_customer_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/special_edit";
+    api_req.api_url = "customer/special_edit";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialEdit_customer_req.action = "special_edit";
     specialEdit_customer_req.user_id = localStorage.getItem('user_id');
+    specialEdit_customer_req.customerId =id;
     api_req.element_data = specialEdit_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1675,11 +1714,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let specialUpdate_customer_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/special_update";
+    api_req.api_url = "customer/special_update";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialUpdate_customer_req.action = "special_update";
     specialUpdate_customer_req.user_id = localStorage.getItem('user_id');
+    specialUpdate_customer_req.customerId = id;
     specialUpdate_customer_req.email = this.specialEditCustomerForm.value.spedit_Email;
     specialUpdate_customer_req.finance_email = this.specialEditCustomerForm.value.spedit_FinanceEmail;
     specialUpdate_customer_req.terms_condition = this.specialEditCustomerForm.value.termconditionDD;
@@ -1729,28 +1769,29 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Delete it!'
-    }).then((result:any) => {
+    }).then((result: any) => {
       if (result.value) {
-  
+
         let api_req: any = new Object();
-      let delete_customer_req: any = new Object();
-      api_req.moduleType = "customer";
-      api_req.api_url = "customer/" + id + "/customer_delete";
-      api_req.api_type = "web";
-      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-      delete_customer_req.action = "customer_delete";
-      delete_customer_req.user_id = localStorage.getItem('user_id');
-      api_req.element_data = delete_customer_req;
-  
+        let delete_customer_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/customer_delete";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        delete_customer_req.action = "customer_delete";
+        delete_customer_req.user_id = localStorage.getItem('user_id');
+        delete_customer_req.customerId = id;
+        api_req.element_data = delete_customer_req;
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            
+
             iziToast.success({
               message: "Customer Deleted successfully",
               position: 'topRight'
             });
             this.customerslist({});
-          }   else {
+          } else {
             iziToast.warning({
               message: "Customer not deleted. Please try again",
               position: 'topRight'
@@ -1762,8 +1803,8 @@ export class CustomernewallComponent implements OnInit {
           };
       }
     })
-  
-  
+
+
   }
   fileAttachmentEdit(ID: any) {
     $("#fileAttachmentFormId").modal("show");
@@ -2096,12 +2137,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let api_call4telList: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/call4tel_address_details";
+    api_req.api_url = "customer/call4tel_address_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_req.action = "call4tel_address_details";
     api_call4telList.user_id = localStorage.getItem('user_id');
-
+    api_call4telList.user_id = id;
     api_req.element_data = api_call4telList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -2136,11 +2177,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let api_call4telAdd: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/call4tel_address_save";
+    api_req.api_url = "customer/call4tel_address_save";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_call4telAdd.action = "call4tel_address_save";
     api_call4telAdd.user_id = localStorage.getItem('user_id');
+    api_call4telAdd.user_id = id;
 
     api_call4telAdd.partner_email_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerEmail;
     api_call4telAdd.partner_phone_no_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerPhoneNum;
@@ -2177,12 +2219,15 @@ export class CustomernewallComponent implements OnInit {
   }
   invoiceShare_edit(id: any) {
     let api_req: any = new Object();
+    let invoiceShare_edit_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/invoice_share_edit";
+    api_req.api_url = "customer/invoice_share_edit";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_req.action = "invoice_share_edit";
-    api_req.user_id = localStorage.getItem('user_id');
+    invoiceShare_edit_req.action = "invoice_share_edit";
+    invoiceShare_edit_req.user_id = localStorage.getItem('user_id');
+    invoiceShare_edit_req.customerId =id ;
+    api_req.element_data = invoiceShare_edit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("invoice share response", response);
@@ -2209,11 +2254,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let invoiceShare_update_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/80/invoice_share_update";
+    api_req.api_url = "customer/invoice_share_update";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     invoiceShare_update_req.action = "invoice_share_update";
     invoiceShare_update_req.user_id = localStorage.getItem('user_id');
+    invoiceShare_update_req.customerId = id;
     invoiceShare_update_req.firstName_salary = this.invoiceSharedCustomerForm.value.invShared_checklist;
     api_req.element_data = invoiceShare_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2242,12 +2288,16 @@ export class CustomernewallComponent implements OnInit {
   shareCustomerPermission_edit(id: any) {
 
     let api_req: any = new Object();
+    let shareCustomerPermission_edit: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/" + id + "/customer_share";
+    api_req.api_url = "customer/customer_share";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_req.action = "customer_share";
-    api_req.user_id = localStorage.getItem('user_id');
+    shareCustomerPermission_edit.action = "customer_share";
+    shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
+    shareCustomerPermission_edit.customerId = id;
+    api_req.element_data = shareCustomerPermission_edit;
+    
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("customer share permission response", response);
@@ -2273,11 +2323,12 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let shareCustomerPermission_update_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/80/customer_share_update";
+    api_req.api_url = "customer/customer_share_update";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     shareCustomerPermission_update_req.action = "customer_share_update";
     shareCustomerPermission_update_req.user_id = localStorage.getItem('user_id');
+    shareCustomerPermission_update_req.customerId =id;
     shareCustomerPermission_update_req.access_userid = this.ShareCustomerPermissionForm.value.shareCustomerPermission_checklist;
     api_req.element_data = shareCustomerPermission_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2301,9 +2352,9 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Change it!'
-    }).then((result:any) => {
+    }).then((result: any) => {
       if (result.value) {
-  
+
         console.log("id", id)
         var status;
         if (Status_variable == 'P') {
@@ -2314,26 +2365,27 @@ export class CustomernewallComponent implements OnInit {
         let api_req: any = new Object();
         let api_customerStatus_req: any = new Object();
         api_req.moduleType = "customer";
-        api_req.api_url = "customer/" + id + "/customer_status_update";
+        api_req.api_url = "customer/customer_status_update";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_customerStatus_req.action = "customer_status_update";
         api_customerStatus_req.user_id = localStorage.getItem('user_id');
+        api_customerStatus_req.customerId = id;
         api_customerStatus_req.cust_status = status;
         api_req.element_data = api_customerStatus_req;
-  
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
             console.log("before change", this.isCustomerStatus)
             this.isCustomerStatus = !this.isCustomerStatus;
             console.log("after change", this.isCustomerStatus)
-           
+
             iziToast.success({
               message: "Customer Status changed successfully",
               position: 'topRight'
             });
             this.customerslist({});
-          }   else {
+          } else {
             iziToast.warning({
               message: "Customer Status not changed. Please try again",
               position: 'topRight'
@@ -2345,8 +2397,8 @@ export class CustomernewallComponent implements OnInit {
           };
       }
     })
-  
-  
+
+
   }
   employee_status(id: any) {
     Swal.fire({
@@ -2357,22 +2409,23 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Change it!'
-    }).then((result:any) => {
+    }).then((result: any) => {
       if (result.value) {
-  
+
         let api_req: any = new Object();
-      let api_empStatus_req: any = new Object();
-      api_req.moduleType = "customer";
-      api_req.api_url = "customer/" + id + "/emp_status_update";
-      api_req.api_type = "web";
-      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-      api_empStatus_req.action = "emp_status_update";
-      api_empStatus_req.user_id = localStorage.getItem('user_id');
-      api_req.element_data = api_empStatus_req;
-  
+        let api_empStatus_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/emp_status_update";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_empStatus_req.action = "emp_status_update";
+        api_empStatus_req.user_id = localStorage.getItem('user_id');
+        api_empStatus_req.customerId = id;
+        api_req.element_data = api_empStatus_req;
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-          
+
             console.log("before change-employee status", this.isEmployeeStatus)
             this.isEmployeeStatus = !this.isEmployeeStatus;
             console.log("after change-employee status", this.isEmployeeStatus)
@@ -2381,7 +2434,7 @@ export class CustomernewallComponent implements OnInit {
               position: 'topRight'
             });
             this.customerslist({});
-          }   else {
+          } else {
             iziToast.warning({
               message: "Employee Status not changed. Please try again",
               position: 'topRight'
@@ -2393,8 +2446,8 @@ export class CustomernewallComponent implements OnInit {
           };
       }
     })
-  
-  
+
+
   }
   reseller_statusMethod(id: any) {
     Swal.fire({
@@ -2405,23 +2458,23 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Change it!'
-    }).then((result:any) => {
+    }).then((result: any) => {
       if (result.value) {
-  
+
         let api_req: any = new Object();
         let api_resellerStatus_req: any = new Object();
         api_req.moduleType = "customer";
-        api_req.api_url = "customer/" + id + "/reseller_status_update";
+        api_req.api_url = "customer/reseller_status_update";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_resellerStatus_req.action = "reseller_status_update";
         api_resellerStatus_req.user_id = localStorage.getItem('user_id');
-    
+        api_resellerStatus_req.customerId = id;
         api_req.element_data = api_resellerStatus_req;
-  
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-          
+
             console.log("before change-reseller status", this.isResllerStatus)
             this.isResllerStatus = !this.isResllerStatus;
             console.log("after change-reseller status", this.isResllerStatus)
@@ -2430,7 +2483,7 @@ export class CustomernewallComponent implements OnInit {
               position: 'topRight'
             });
             this.customerslist({});
-          }   else {
+          } else {
             iziToast.warning({
               message: "Reseller Status not changed. Please try again",
               position: 'topRight'
@@ -2442,8 +2495,8 @@ export class CustomernewallComponent implements OnInit {
           };
       }
     })
-  
-  
+
+
   }
 
   customer_NX32PermissionDisplay(id: any, nx32id: any) {
@@ -2794,7 +2847,9 @@ export class CustomernewallComponent implements OnInit {
     this.addCustomer.vs_credit = '';
     this.addCustomer.def_payment_via = '';
   }
-
+  gotoCustomerMasterList() {
+    this.customerslist({});
+  }
   initTiny() {
     var richTextArea_id = 'richTextAreacreated';
     tinymce.init({

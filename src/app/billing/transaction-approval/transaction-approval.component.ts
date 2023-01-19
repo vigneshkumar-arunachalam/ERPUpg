@@ -81,11 +81,11 @@ export class TransactionApprovalComponent implements OnInit {
   }
   CB_Toggle(event: any) {
     this.checkboxCB_ToggleStatus = event.target.checked;
-    console.log("ToggleStatus", this.checkboxCB_ToggleStatus)
+
   }
   CB_BeforeApprovalToggle(event: any) {
     this.checkboxCB_BeforeApprovalToggleStatus = event.target.checked;
-    console.log("before approval-ToggleStatus", this.checkboxCB_BeforeApprovalToggleStatus)
+
   }
   selectAll(event: any) {
 
@@ -104,22 +104,22 @@ export class TransactionApprovalComponent implements OnInit {
   }
 
   EditCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+
     if (this.checkbox_value) {
 
       this.edit_array.push(data);
       this.edit_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array);
     }
     else {
       const index = this.edit_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
@@ -128,7 +128,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   getTransactionApprovalList(data: any) {
 
-    console.log("data value", data)
+   
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let api_transactionList: any = new Object();
@@ -163,7 +163,7 @@ export class TransactionApprovalComponent implements OnInit {
         this.Priority = response.priority;
         this.date = response.transaction_date;
         this.quotationApprovalPendingCount = response.trans_approve_pending_cnt;
-        console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
+        // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
         this.paginationData1 = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'off' });
 
@@ -177,7 +177,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   getTransactionApprovalList1(data: any) {
 
-    console.log("data value", data)
+   
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let api_transactionList: any = new Object();
@@ -225,9 +225,8 @@ export class TransactionApprovalComponent implements OnInit {
 
   }
   listDataInfo(list_data: any) {
-    console.log(list_data)
-    // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
-    // list_data.order_by_name = list_data.order_by_name == undefined ? "user.agent_name" : list_data.order_by_name;
+   
+    
     list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
     list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
@@ -235,7 +234,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   BeforeApprovaltransactionApprovalView(billerName: any, transaction_date: any, priority: any) {
 
-    console.log("before date", transaction_date)
+   
     this.BeforeApprovaltransactionApprovalViewForm.setValue({
       'BeforeApprovalbillerName': billerName,
       'BeforeApprovalDate': transaction_date,
@@ -555,11 +554,11 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
   transactionApprovalPDF(Id: any) {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + Id + "";
     window.open(url, '_blank');
-    console.log("url", url)
+  
   }
 
   transactionApprovalQuotationEdit(link_approval_id: any, enquiry_from_id: any, enquiry_product_description: any, quotation_valid_day: any, duplicate_version: any) {
-    console.log("this.quotationID", this.quotationID)
+
     var x1 = link_approval_id;
     var x2 = enquiry_from_id;
     var x3 = enquiry_product_description;

@@ -62,21 +62,16 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    // window.location.reload();
+
   
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
-      verify_otp_ctrl: new FormControl(null),
-      // otp: new FormControl(null, Validators.required),
+
       
     });
     this.subscribes('');
-    // this.bnIdle.startWatching(300).subscribe((isTimedOut: boolean) => {
-    //   if (isTimedOut) {
-    //     console.log('session expired');
-    //   }
-    // });
+
   }
   subscribes(val:any) {
     this.expired = false;
@@ -90,7 +85,6 @@ export class LoginComponent implements OnInit {
   }
   qrLogin(){
 
-   // console.log('Test fun');
 
     let api_req: any = new Object();
     let addAPI: any = new Object();
@@ -100,7 +94,7 @@ export class LoginComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addAPI.action = "login_qrcode";
     addAPI.userId_encode = this.getdatas['0'].userId;
-    //   "c4c_erp "  base64_encode  values
+
     addAPI.code_val = 'YzRjX2VycA==';
     api_req.element_data = addAPI;
   
@@ -124,13 +118,7 @@ export class LoginComponent implements OnInit {
       if(this.userID!=''){
           this.router.navigate(['/']);
       }
-    
-      // Swal.close();
-      // iziToast.success({
-      //   message: 'Logged In Successfully',
-      //   position: 'topRight',
-      // });
-      
+ 
     });
 
 
@@ -138,13 +126,13 @@ export class LoginComponent implements OnInit {
   }
   qrcodes() {
     this.count = ++this.count;
-   // console.log(this.count);
+
     if (this.count < 5) {
       this.level = 'M';
       this.width = 256;
       this.datas = uuidv4();
       this.typess = btoa('erp');
-   //   console.log(this.typess);
+ 
       const data = [
         {
           type: this.typess,
@@ -152,15 +140,10 @@ export class LoginComponent implements OnInit {
         },
       ];
      
-      // const data = [
-      //   {
-      //     userId: this.typess,
-      //     unique_id_en: this.datas,
-      //   },
-      // ];
+   
 
       this.qrdata = JSON.stringify(data);
-    //  console.log(this.qrdata);
+  
     } else {
       this.expired = true;
       this.unsubscribe();
@@ -186,7 +169,7 @@ export class LoginComponent implements OnInit {
     let api_req: any = new Object();
     let loginFormapi_req: any = new Object();
     api_req.moduleType = 'login';
-  //  api_req.api_url = 'login';
+
 
     let button_val = $('#send_otp_id').val();
     if(button_val=='Send OTP'){
@@ -210,13 +193,9 @@ export class LoginComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-
-
-
       if (response.opt_status == true) {
 
 
-        
         Swal.close();
         iziToast.success({
           message: 'OTP Sent to Email',
@@ -240,8 +219,6 @@ export class LoginComponent implements OnInit {
         this.userID=response.userId;
         this.userName=response.firstName;
         this.role=response.role;
-        
-
 
         localStorage.setItem('access_token','test')
         localStorage.setItem('login_status','1')
@@ -250,12 +227,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('role',response.role)
         localStorage.setItem('profile_image',response.profile_image)
 
-      //   console.log("user id display",response.userId)
-      //   console.log("user id display", this.userID)
-      //   console.log("user name display", this.userName)
-      //   console.log("user permission_role", this.role)
-        
-        // this.router.navigate(['/customernewall']);- whatever we need as home
+
         if(this.userID!=''){
             this.router.navigate(['/']);
         }
@@ -275,65 +247,13 @@ export class LoginComponent implements OnInit {
         });
       }
 
-
-
-
-    
-      // console.log(response);
-      // if (response.status == 'true') {
-      //   this.loginDetails=response;
-      //   this.userID=response.userId;
-      //   this.userName=response.firstName;
-      //   this.role=response.role;
-
-
-      //   localStorage.setItem('access_token','test')
-      //   localStorage.setItem('login_status','1')
-      //   localStorage.setItem('user_id',response.userId)
-      //   localStorage.setItem('user_name',response.firstName)
-      //   localStorage.setItem('role',response.role)
-      //   localStorage.setItem('profile_image',response.profile_image)
-
-      //   console.log("user id display",response.userId)
-      //   console.log("user id display", this.userID)
-      //   console.log("user name display", this.userName)
-      //   console.log("user permission_role", this.role)
-      //   // this.router.navigate(['/customernewall']);- whatever we need as home
-      //   if(this.userID!=''){
-      //   this.router.navigate(['/']);
-      // }
-      //   Swal.close();
-      //   iziToast.success({
-      //     message: 'Logged In Sucessfully',
-      //     position: 'topRight',
-      //   });
-
-       
-      // } else {
-      //   Swal.close();
-      //   iziToast.error({
-      //     message: 'Invalid Login credentials',
-      //     position: 'topRight',
-      //   });
-      // }
     }),
       (error:any) => {
         console.log(error);
       }
-   
-
 
   }
   AddQuotationGo() {
-   
 
-
-    // this.router.navigate(['/navbar'], { queryParams: { 
-    //  userid: this.userID, 
-    //   username: this.userName, 
-    //   role_permission: this.role, 
-    //    } });
-
-   
   }
 }

@@ -46,7 +46,7 @@ export class Sidebar2Component implements OnInit {
     body.appendChild(script);
   }
   change(id:any){
-      // console.log(id);
+      console.log(id);
       this.router.navigate([id]);
   }
 
