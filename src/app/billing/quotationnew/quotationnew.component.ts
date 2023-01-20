@@ -1251,30 +1251,54 @@ export class QuotationnewComponent implements OnInit {
     tinymce.activeEditor.setContent("");
   }
   fileAttachmentDelete(common_attachmentId: any) {
-    this.commonAttachmentID = common_attachmentId;
-    let api_req: any = new Object();
-    let fileattachDelete_req: any = new Object();
-    api_req.moduleType = "quotation";
-    // api_req.api_url = "customer/delete_file_attachment";
-    api_req.api_url = "quotation/quotation_attachment_delete";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    fileattachDelete_req.action = "quotation_attachment_delete";
-    fileattachDelete_req.common_attachmentId = this.commonAttachmentID;
-    fileattachDelete_req.user_id = localStorage.getItem('user_id');
-    fileattachDelete_req.quotationId = this.fileAttach_quotationID;
-    api_req.element_data = fileattachDelete_req;
+    Swal.fire({
+      title: 'Are you sure to Delete?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!'
+    }).then((result: any) => {
+      if (result.value) {
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
+        this.commonAttachmentID = common_attachmentId;
+        let api_req: any = new Object();
+        let fileattachDelete_req: any = new Object();
+        api_req.moduleType = "quotation";
+        // api_req.api_url = "customer/delete_file_attachment";
+        api_req.api_url = "quotation/quotation_attachment_delete";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        fileattachDelete_req.action = "quotation_attachment_delete";
+        fileattachDelete_req.common_attachmentId = this.commonAttachmentID;
+        fileattachDelete_req.user_id = localStorage.getItem('user_id');
+        fileattachDelete_req.quotationId = this.fileAttach_quotationID;
+        api_req.element_data = fileattachDelete_req;
 
-      if (response.status == true) {
-        // this.myForm.reset();
-        alert("deleted")
-        $("#fileAttachmentFormId").modal("hide");
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            iziToast.success({
+              message: "File Attachment Deleted successfully",
+              position: 'topRight'
+            });
+        
+            $("#fileAttachmentFormId").modal("hide");
+           
+          } else {
+            iziToast.warning({
+              message: "File Attachment not deleted. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
+    })
 
-
-    });
 
   }
   fileAttachmentUpdate() {
@@ -1309,6 +1333,11 @@ export class QuotationnewComponent implements OnInit {
           console.log(result);
           $("#fileAttachmentFormId").modal("hide");
           this.edit_array = [];
+
+          iziToast.success({
+            message: "File Attachment Saved successfully",
+            position: 'topRight'
+          });
         }
       },
       error: function (err: any) {
@@ -1355,6 +1384,7 @@ export class QuotationnewComponent implements OnInit {
     });
 
   }
+ 
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);

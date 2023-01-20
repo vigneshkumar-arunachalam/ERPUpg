@@ -663,12 +663,7 @@ datavalue:any;
         });
         console.log(error);
       }
-      //pn
-      // setTimeout(()=>{
-      //   // this.set_display_none(1);
-      //   $('#pd_split_'+2).prop('checked',false);
-      //   $('#pd_split_'+2).click();
-      // },1000)
+    
 
        
       

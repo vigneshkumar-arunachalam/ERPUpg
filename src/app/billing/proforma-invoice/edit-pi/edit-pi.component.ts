@@ -472,6 +472,7 @@ export class EditPIComponent implements OnInit {
 
       if (response.status == true) {
         this.addPI_section1.patchValue({
+          // 'companyName':  this.billerID,
           'invoiceNo': response.invoice_no,
           'Currency': response.currency_id,
 
@@ -500,143 +501,116 @@ export class EditPIComponent implements OnInit {
 
     api_editPI_req.billId = this.editbillerID;
     api_req.element_data = api_editPI_req;
-
-
-
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("response.billing_pararent_details[0].billerId", response.billing_pararent_details[0].billerId)
-      console.log("response.billing_pararent_details[0].invoice_no", response.billing_pararent_details[0].invoice_no)
+      if (response != '') {
+        // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
+        this.addPI_section1.patchValue({
+          'company': response.billing_pararent_details[0].billerId,
+          'invoiceNo': response.billing_pararent_details[0].invoice_no,
+          'BillTo': response.billing_pararent_details[0].b_name,
+          'Reg': response.billing_pararent_details[0].tinNo,
+          'address_1': response.billing_pararent_details[0].b_address1,
+          'address_2': response.billing_pararent_details[0].b_address2,
+          'address_3': response.billing_pararent_details[0].b_address3,
+          'GST': response.billing_pararent_details[0].cstNo,
+          'Date': response.billing_pararent_details[0].billDate,
+          'Attn_1': response.billing_pararent_details[0].b_attn,
+          'PoNo': response.billing_pararent_details[0].po_no,
+          'PoDate': response.billing_pararent_details[0].po_date,
+          'salesRep': response.billing_pararent_details[0].sales_rep,
+          'ShipBy': response.billing_pararent_details[0].ship_by,
+          'ShipDate': response.billing_pararent_details[0].ship_date,
+          'Attn_2': response.billing_pararent_details[0].s_attn,
+          'Ref': response.billing_pararent_details[0].ref,
+          'terms': response.billing_pararent_details[0].terms,
+          'Currency': response.billing_pararent_details[0].currency,
+          'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
+          'PaymentVia': response.billing_pararent_details[0].paymentVIA,
+          'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
+          'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
 
+        });
 
-      this.editResult = response.billing_pararent_details;
-      this.addPI_section1.patchValue({
-        'company': response.billing_pararent_details[0].billerId,
-        'invoiceNo': response.billing_pararent_details[0].invoice_no,
-        'BillTo': response.billing_pararent_details[0].b_name,
-        'Reg': response.billing_pararent_details[0].tinNo,
-        'address_1': response.billing_pararent_details[0].b_address1,
-        'address_2': response.billing_pararent_details[0].b_address2,
-        'address_3': response.billing_pararent_details[0].b_address3,
-        'GST': response.billing_pararent_details[0].cstNo,
-        'Date': response.billing_pararent_details[0].billDate,
-        'Attn_1': response.billing_pararent_details[0].b_attn,
-        'PoNo': response.billing_pararent_details[0].po_no,
-        'PoDate': response.billing_pararent_details[0].po_date,
-        'salesRep': response.billing_pararent_details[0].sales_rep,
-        'ShipBy': response.billing_pararent_details[0].ship_by,
-        'ShipDate': response.billing_pararent_details[0].ship_date, 
-        'Attn_2': response.billing_pararent_details[0].s_attn,
-        'Ref': response.billing_pararent_details[0].ref, 
-        'terms': response.billing_pararent_details[0].terms,
-        'Currency': response.billing_pararent_details[0].currency, 
-        'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
-        'PaymentVia': response.billing_pararent_details[0].paymentVIA, 
-        'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
-        'ExtraLogo': response.billing_pararent_details[0].bills_logo_id, 
+        const formArray = new FormArray([]);
+        for (let index = 0; index < response.billchild_details.length; index++) {
 
+          formArray.push(this.fb.group({
 
+            "pd_nextPage_checkbox": response.billchild_details[index].to_next_page,
+            "pd_productName_txtbox1": response.billchild_details[index].productName,
+            "pd_productName_txtArea": response.billchild_details[index].productDesc,
+            "pd_quantity_txtbox1": response.billchild_details[index].quantity,
+            "pd_unit": response.billchild_details[index].unit,
+            "pd_sellingPrice": response.billchild_details[index].rate,
+            "pd_Total": response.billchild_details[index].total_amt,
+            "pd_netPrice": response.billchild_details[index].net_amt,
+            "pd_OutCall": response.billchild_details[index].out_call_state,
 
-        // 'customerName': response.billing_pararent_details[0].b_name,
-        // 'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
-        // 'Ref': response.billing_pararent_details[0].ref,
-        // 'Date': response.billing_pararent_details[0].billDate,
-        // 'PoNo': response.billing_pararent_details[0].po_no,
-        // 'PoDate': response.billing_pararent_details[0].po_date,
-        // 'salesRep': response.billing_pararent_details[0].sales_rep,
-        // 'ShipBy': response.billing_pararent_details[0].ship_by,
-        // 'ShipDate': response.billing_pararent_details[0].ship_date,
-        // 'terms': response.billing_pararent_details[0].terms,
-        // 'Currency': response.billing_pararent_details[0].currency,
-        // 'PaymentVia': response.billing_pararent_details[0].paymentVIA,
-        // 'address_1': response.billing_pararent_details[0].b_address,
-        // 'Attn_1': response.billing_pararent_details[0].b_attn,
-        // 'Attn_2': response.billing_pararent_details[0].s_attn,
-        // 'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
-        // 'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
+            "pd_CMon": response.billchild_details[index].current_month_str,
+            "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
-      });
+          })
 
+          );
+        }
 
-//-------------
+        console.log(formArray)
+        this.addPI_section2.setControl('addresses', formArray);
+        console.log(this.addresses)
 
- const formArray = new FormArray([]);
- for (let index = 0; index < response.billchild_details.length; index++) {
+        this.addPI_section3.patchValue({
+          //row-1
 
-   formArray.push(this.fb.group({
+          'section3_gross_total': response.quotation_details[0].gross_total,
+          //row-2
+          //  'section3_discount_txtbox': this.finalDiscount,
+          //  'final_dis_val': this.finalDiscountVal,
+          //  'final_dis_type': this.finalDiscountType,
+          // +2 hidden fields
+          //row-3
+          'section3_gst_dropdown': response.quotation_details[0].tax_id1,
+          'section3_taxAmt_txtbox': response.quotation_details[0].tax_amt1,
+          'section3_tax_per_hd': response.quotation_details[0].tax_per1,
+          //row-4
+          'section3_shipping_amt_name_txtbox': response.quotation_details[0].shipping_amt_name,
+          'section3_shipping_amt_txtbox': response.quotation_details[0].shipping_amt,
+          //row-5
+          'section3_grand_total': response.quotation_details[0].grand_total,
+          //row-7
+          'section3_remarks': response.quotation_details[0].remarks,
 
-     "pd_nextPage_checkbox": response.billchild_details[index].to_next_page,
-     "pd_productName_txtbox1": response.billchild_details[index].productName,
-     "pd_productName_txtArea": response.billchild_details[index].productDesc,
-     "pd_quantity_txtbox1": response.billchild_details[index].quantity,
-     "pd_unit": response.billchild_details[index].unit,
-     "pd_sellingPrice": response.billchild_details[index].rate,
-     "pd_Total": response.billchild_details[index].total_amt,
-     "pd_netPrice": response.billchild_details[index].net_amt,
-     "pd_OutCall": response.billchild_details[index].out_call_state,
-    //  "sub_dis_type": this.sub_dis_type,
-    //  "sub_dis_val":  this.sub_dis_val,
- //    "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
-     "pd_CMon": response.billchild_details[index].current_month_str,
-     "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
+          //row-8
+          'section3_termCondition': response.quotation_details[0].terms_cond_chk,
+          //row-9
+          'section3_receivedAuthorizedSignature': response.quotation_details[0].received_signature,
+          //row-10
+          'section3_logo': response.quotation_details[0].logo,
+        });
 
-   })
+      }
+      else {
 
-   );   
+        iziToast.warning({
+          message: "Quotation not updated. Please try again",
+          position: 'topRight'
+        });
 
- }
-
- console.log(formArray)
- this.addPI_section2.setControl('addresses', formArray);
- // this.addresses.push(this.addQuotationInvoice_section2);
- console.log(this.addresses)
-
-
-
-
-
-//-----------------------
-
-
-
-
-
-      this.addPI_section3.patchValue({
-       //row-1
-      
-       'section3_gross_total': response.quotation_details[0].gross_total,
-       //row-2
-      //  'section3_discount_txtbox': this.finalDiscount,
-      //  'final_dis_val': this.finalDiscountVal,
-      //  'final_dis_type': this.finalDiscountType,
-       // +2 hidden fields
-       //row-3
-       'section3_gst_dropdown': response.quotation_details[0].tax_id1,
-       'section3_taxAmt_txtbox': response.quotation_details[0].tax_amt1,
-       'section3_tax_per_hd': response.quotation_details[0].tax_per1,
-       //row-4
-       'section3_shipping_amt_name_txtbox': response.quotation_details[0].shipping_amt_name,
-       'section3_shipping_amt_txtbox': response.quotation_details[0].shipping_amt,
-       //row-5
-       'section3_grand_total': response.quotation_details[0].grand_total,
-       //row-7
-       'section3_remarks': response.quotation_details[0].remarks,
-
-        //row-8
-        'section3_termCondition': response.quotation_details[0].terms_cond_chk,
-         //row-9
-       'section3_receivedAuthorizedSignature': response.quotation_details[0].received_signature,
-        //row-10
-        'section3_logo': response.quotation_details[0].logo,
-      });
-    });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log(error);
+      }
 
   }
 
 
   updatePI() {
-    
+
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
     // api_req.moduleType = "quotation";
@@ -652,9 +626,9 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
     api_updatePI_req.customer_name = this.addPI_section1.value.BillTo;
     api_updatePI_req.tinNo = this.addPI_section1.value.Reg;
-   api_updatePI_req.b_address1 = this.addPI_section1.value.address_1;
-   api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
-   api_updatePI_req.b_address3 = this.addPI_section1.value.address_3;
+    api_updatePI_req.b_address1 = this.addPI_section1.value.address_1;
+    api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
+    api_updatePI_req.b_address3 = this.addPI_section1.value.address_3;
     api_updatePI_req.cstNo = this.addPI_section1.value.GST;
     api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
@@ -688,22 +662,22 @@ export class EditPIComponent implements OnInit {
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
-      addr[i].pd_split = $('#pd_split_'+i).prop('checked');
-      addr[i].to_next_page = $('#to_next_page_'+i).prop('checked');
-      addr[i].pd_selectTax = $('#pd_selectTax_'+i).prop('checked');
-      addr[i].pd_GPTotal = $('#pd_GPTotal_'+i).prop('checked');
+      addr[i].pd_split = $('#pd_split_' + i).prop('checked');
+      addr[i].to_next_page = $('#to_next_page_' + i).prop('checked');
+      addr[i].pd_selectTax = $('#pd_selectTax_' + i).prop('checked');
+      addr[i].pd_GPTotal = $('#pd_GPTotal_' + i).prop('checked');
     }
     api_updatePI_req.values = addr;
 
     //section-3
 
     //row-1
- 
+
     api_updatePI_req.gross_total = this.addPI_section3.value.section3_gross_total;
     //row-2
     api_updatePI_req.discount_amt_tot = this.addPI_section3.value.section3_discount_txtbox;
     api_updatePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
-    api_updatePI_req.final_dis_val = this.addPI_section3.value.final_dis_val;    
+    api_updatePI_req.final_dis_val = this.addPI_section3.value.final_dis_val;
     //row-3
     api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_updatePI_req.taxPer = this.addPI_section3.value.section3_tax_per_hd;
@@ -715,7 +689,7 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.grand_total = this.addPI_section3.value.section3_grand_total;
     //row-6
     api_updatePI_req.remarks = this.addPI_section3.value.section3_remarks;
-//other row
+    //other row
 
     api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
     api_updatePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
@@ -739,7 +713,7 @@ export class EditPIComponent implements OnInit {
       addr[i].sub_discount = $('#sub_discount_' + i).val();
     }
     api_updatePI_req.values = addr;
-	console.log(api_req);
+    console.log(api_req);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("add quotation new save", response);
@@ -749,7 +723,7 @@ export class EditPIComponent implements OnInit {
           title: 'Updated',
           message: 'Quotation Updated Successfully !',
         });
-      
+
         this.addPI_section1.reset();
         this.addPI_section2.reset();
         this.addPI_section3.reset();
@@ -771,7 +745,7 @@ export class EditPIComponent implements OnInit {
       });
       console.log("final error", error);
     }
-      }
+  }
 
   getCurrencyValues(event: any) {
     console.log("event.target;", event.target);

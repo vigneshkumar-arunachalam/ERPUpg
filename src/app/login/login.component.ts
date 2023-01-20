@@ -67,12 +67,15 @@ export class LoginComponent implements OnInit {
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
-
+      verify_otp_ctrl: new FormControl(null),
       
     });
     this.subscribes('');
 
   }
+
+
+
   subscribes(val:any) {
     this.expired = false;
     if (val != '') this.count = 1;

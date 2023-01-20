@@ -266,6 +266,33 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
+                                <a class="view" title="Assign Account Manager" data-toggle="modal"
+                                  data-target="#AssignAccountManager">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-crosshair">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                                    <line x1="12" y1="22" x2="12" y2="18"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="view" title="Quick Mail" (click)="quickMail(list.customerId)" >
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="view" title="Google Authentication" data-toggle="modal"
+                                  data-target="#GoogleAuthentication">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
                                 <a class="remove" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -278,6 +305,13 @@
                                   </svg>
                                 </a>
                               </li>
+
+                              <li class="dropdown__item">
+                                <a class="view" title="Create a Call4Tel Customer">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                </a>
+                              </li>
+
                               <li class="dropdown__item" *ngIf="list.nx32_state==1">
                                 <a class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
@@ -1101,14 +1135,13 @@
 
             <div class="col-lg-6">
               <label>Permission</label>
-              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-7"
-                (change)="CHKAll_PermissionSelectAll($event)">
+              <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-7"
+                (change)="CHKAll_PermissionSelectAll($event)"> -->
               <div class="CheckboxScroll">
                 <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
 
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check-grpPerm-{{k}}"
-                    [checked]="cu.select_state=='true'" (change)="addPermissionCHK(cu.id,$event)"
-                    formControlName="add_billerName">
+                    checked="{{cu.select_state =='true'? 'checked' : ''}}" (change)="addPermissionCHK(cu.id,$event)">
                   {{cu.name}}
 
                 </div>
@@ -1412,18 +1445,16 @@
               <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-4"
                 (change)="  CHKAll_BillerNameSelectAll_Edit($event)">
               <div class="CheckboxScroll">
-             
+
                 <div *ngFor="let display of geting_biller;let i =index;" style="padding-left: 30px;">
 
-                  <div *ngFor="let display1 of geting_biller_edit;let j =index;">
-                    <input class="checkbox" style="margin-right:5px ;" type="checkbox" 
-                      value="{{display.billerId}}" 
-                      checked="{{display.billerId== 'display1.billerId' ? 'checked':''}}"
-                      formControlName="edit_billernamelist" 
-                      (change)="editBillerNameCHK(display.billerId,$event)">
-                    {{display.billerName}}
-                  </div>
-            
+
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
+                    checked="{{this.geting_biller_edit.includes(''+display.billerId+'')== true? 'checked':''}}"
+                    (change)="editBillerNameCHK(display.billerId,$event)">
+                  {{display.billerName}}
+
+
                 </div>
               </div>
             </div>
@@ -1460,7 +1491,8 @@
                 style="display: flex;padding-left: 30px;align-items: center;">
 
                 <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
-                  formControlName="editCustomerClassification" (change)="editCustomerClassificationCHK(cust,$event)">
+                checked="{{this.cus_type_edit.includes(''+cust+'') ==true? 'checked' : ''}}"
+                 (change)="editCustomerClassificationCHK(cust,$event)">
                 {{cust}}
 
               </div>
@@ -1701,6 +1733,19 @@
               </div>
             </div>
 
+            <div class="col-lg-6">
+              <label>Permission</label>
+              <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-12"
+                (change)="CHKAll_PermissionSelectAll($event)"> -->
+              <div class="CheckboxScroll">
+                <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{cu.id}}"
+                    checked="{{this.get_PermissionEdit.includes(''+cu.id+'') ==true? 'checked' : ''}}"
+                    (change)="editPermissionCHK(cu.id,$event)">
+                  {{cu.name}}
+                </div>
+              </div>
+            </div>
 
 
 
@@ -2505,7 +2550,7 @@
                     Type</label>
                 </div>
                 <div class="col-lg-6" *ngFor='let item of radioDynamic;let d=index'>
-                  <input type="radio" id="premiumPartner_id1{{d}}" formControlName="a_MrvoipPartnerType"
+                  <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType"
                     value="{{item.values}}" (change)="handleChange($event)" />
                   <label for="premiumPartner_id1{{d}}" class="col-lg-6 col-form-label">{{item.name}}</label>
                 </div>
@@ -2583,7 +2628,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                  <input type="text" class="form-control" formControlName="a_C4TPartnerEmail" id="partnerEmail" />
+                  <input type="text" class="form-control" formControlName="a_C4TPartnerEmail" id="C4T_partnerEmail" />
                 </div>
               </div>
             </div>
@@ -2594,7 +2639,7 @@
                 </div>
 
                 <div class="col-lg-6">
-                  <input type="text" class="form-control" formControlName="a_C4TPartnerPhoneNum" id="partnerPhone" />
+                  <input type="text" class="form-control" formControlName="a_C4TPartnerPhoneNum" id="C4T_partnerPhone" />
                 </div>
               </div>
             </div>
@@ -2607,7 +2652,7 @@
                 </div>
 
                 <div class="col-lg-6" *ngFor='let item of radioDynamic;let c=index'>
-                  <input type="radio" id="premiumPartner_id{{c}}" formControlName="a_C4TPartnerType"
+                  <input type="radio" id="{{item.values}}" formControlName="a_C4TPartnerType"
                     value="{{item.values}}" (change)="handleChange($event)" />
                   <label for="premiumPartner_id{{c}}" class="col-lg-6 col-form-label">{{item.name}}</label>
                 </div>
@@ -2623,13 +2668,16 @@
                   <label for="logo_C4T" class="col-form-label">Select Logo</label>
                 </div>
 
-
                 <div class="col-lg-6">
-                  <input type="file" class="form-control" formControlName="a_selectLogo_C4T" id="ogo_C4T" />
+                  <input required type="file" name="uploaded-C4T" id="uploaded-C4T" class="form-control"
+                    (change)="fileAttachmentEvent($event)">
+    
                 </div>
+             
+
               </div>
             </div>
-
+          
             <div class="col-lg-12">
               <div class="col-lg-6">
                 <img src="{{this.image_call4telLogo}}" alt="No image to display " height="200px" width="200px">
@@ -2805,10 +2853,12 @@
             <div *ngFor="let i =index;let display1 of  getResult;" style="padding-left: 30px;">
 
               {{display1.attach_file_name}}
-              <button type="button" class="close" aria-label="Close"
-                (click)="fileAttachmentDelete(display1.credit_attach_id)">
-                <span aria-hidden="true">&times;</span>
+              <button type="button" class="btn btn-link" (click)="fileAttachmentDelete(display1.credit_attach_id)">
+                <span class="bi bi-trash"></span>
+
               </button>
+
+
             </div>
 
 
@@ -2818,7 +2868,7 @@
             </div>
             <div style="padding-left: 30px;">
               <div class="form-group">
-                <label for="file">File</label>
+                <!-- <label for="file">File</label> -->
                 <input formControlName="file" id="file" type="file" multiple class="form-control"
                   (change)="onFileChange($event)">
 
@@ -3213,3 +3263,94 @@
   </div>
 </div>
 <!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
+
+<!----------Modal Pop Up (BEGIN)  for Assign Account Manager in customer Contract------------------>
+<div class="modal fade" id="AssignAccountManager" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="AssignAccountManagerModalLongTitle">Advanced Search</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="AssignAccountManagerForm">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-lg-6">
+                <label>
+                  Select Account Manager
+                </label>
+              </div>
+              <!-- <div class="col-lg-6" *ngFor="let display1 of quotationApprovalResult;let i =index">
+
+                <input type="radio" id="{{i}}" [attr.disabled]="approval_Show_hide ? '' : null"
+                  formControlName="radio_approvalPermission" value="{{display1.userId}}"
+                  (change)="handleChange($event,display1.userId)" />
+                <label for="{{i}}" class="col-lg-6 col-form-label">{{display1.firstName}}</label>
+              </div> -->
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="searchCustomerList()" (click)="customerslist({})">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
+
+<!----------Modal Pop Up (BEGIN)  for Google Authentication in customer Contract------------------>
+<div class="modal fade" id="GoogleAuthentication" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="GoogleAuthenticationModalLongTitle">Google Authenticator</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="GoogleAuthenticationForm">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group row">
+              <div class="col-lg-6">
+                <label>
+                 Google Authentication Code
+                </label>
+              </div>
+              <div class="col-lg-6">
+                <input type="text" class="form-control" formControlName="google_AuthenticationCode"/>
+              </div>
+            </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary">
+          Validate
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for Google Authentication in customer master------------------>

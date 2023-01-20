@@ -7,7 +7,7 @@
                 <span style="color:#007cbc ;">Main menus</span>
             </li>
             <li class="has-child" *ngFor="let item of overallmenulist; let i = index">
-                <a href="#" class="active" [ngClass]="{'active': item.isActive== true, 'non_active_class' : item.isActive== false }" routerLink="{{item.value}}"
+                <a class="active" [ngClass]="{'active': item.isActive== true, 'non_active_class' : item.isActive== false }" routerLink="{{item.value}}"
                 routerLinkActive="active" 
                 [routerLinkActiveOptions]={exact:true}>
 
@@ -19,7 +19,7 @@
                 
                     <ul *ngIf="item.childMain && item.childMain.length > 0">
                         <li class="has-child" *ngFor="let innermenu of item.childMain">
-                            <a href="{{innermenu.value}}" class="">
+                            <a routerLink="{{innermenu.value}}" class="">
                                 <i [attr.data-feather]="innermenu.icon" class="nav-icon" ></i>
                                 <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
                                 <span class="toggle-icon"></span>
@@ -29,7 +29,7 @@
                               
                                     <ul *ngIf="innermenu.subchildMain && innermenu.subchildMain.length > 0" >
                                         <li class="has-child" *ngFor="let innersubmenu of innermenu.subchildMain">
-                                            <a href="{{innersubmenu.value}}" class="">
+                                            <a routerLink="#{{innermenu.value}}" class="">
                                                 <i [attr.data-feather]="innersubmenu.icon" class="nav-icon" ></i>
                                                 <span class="menu-text" (click)="change(innersubmenu.value)">{{innersubmenu.name}}</span>
                                                 <span class="toggle-icon"></span>

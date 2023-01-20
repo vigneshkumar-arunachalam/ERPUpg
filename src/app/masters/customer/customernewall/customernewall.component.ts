@@ -98,6 +98,11 @@ export class CustomernewallComponent implements OnInit {
   radio: any;
   b_id: any = [];
   geting_biller_edit :any;
+  get_PermissionallList:any;
+  get_PermissionEdit:any;
+  editPermissionId:any;
+  editPermission:any;
+  editPermissionCheckboxID_array:any=[];
   //special edit
   specialEditCustomerForm: FormGroup;
   specialEditId: any;
@@ -166,6 +171,11 @@ export class CustomernewallComponent implements OnInit {
   From_List: any;
   Template_List: any;
   CRMTemplateID: any;
+   cus_type_edit :any;
+  //AssignAccountManagerForm
+  AssignAccountManagerForm: FormGroup;
+  //GoogleAuthentication
+  GoogleAuthenticationForm: FormGroup;
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
     this.billCodeEditForm1 = this.fb.group({
@@ -593,6 +603,14 @@ export class CustomernewallComponent implements OnInit {
       'file': new FormControl(null),
 
     });
+    this.AssignAccountManagerForm = new FormGroup({
+      'searchtext': new FormControl(null),
+
+    });
+    this.GoogleAuthenticationForm = new FormGroup({
+      'google_AuthenticationCode': new FormControl(null),
+
+    });
 
 
     this.billCodeEditForm2 = new FormGroup({
@@ -985,6 +1003,7 @@ export class CustomernewallComponent implements OnInit {
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
         this.customerPermissionList = response.cus_permission;
+        this.addPermissionCheckboxID_array= response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
         console.log(this.dropdownList_billerName)
 
@@ -1019,7 +1038,7 @@ export class CustomernewallComponent implements OnInit {
 
     this.editBillerNameBillerId = data;
     this.editBillerNameBiller = event.target.checked;
-    console.log(this.editBillerNameBiller)
+    console.log('editBillerNameBiller'+this.editBillerNameBiller)
 
     if (this.editBillerNameBiller) {
 
@@ -1037,10 +1056,34 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
+
+  editPermissionCHK(data: any, event: any) {
+
+    this.editPermissionId = data;
+    this.editPermission = event.target.checked;
+    console.log('editBillerNameBiller'+this.editPermission)
+
+    if (this.editPermission) {
+
+      this.editPermissionCheckboxID_array.push(data);
+      this.editPermissionCheckboxID_array.join(',');
+      console.log("Final BillerName Checkbox After checkbox selected list", this.editPermissionCheckboxID_array);
+    }
+    else {
+      const index = this.editPermissionCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.editPermissionCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final BillerName Checkbox After Deselected selected list", this.editPermissionCheckboxID_array)
+
+    }
+
+  }
+
   addPermissionCHK(data: any, event: any) {
     this.addPermissionId = data;
     this.addPermission = event.target.checked;
-    console.log(this.addPermission)
+    console.log('addPermission'+this.addPermission)
 
     if (this.addPermission) {
 
@@ -1383,7 +1426,8 @@ export class CustomernewallComponent implements OnInit {
       });
       return false;
     }
-    add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
+    // add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
+    add_customer_req.cus_permission = this.addPermissionCheckboxID_array;
     add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment;
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
     add_customer_req.reseller_id = this.addCustomer.value.ESA_c3cxResellerId_add;
@@ -1471,8 +1515,12 @@ export class CustomernewallComponent implements OnInit {
         console.log("customer status", response.result.customer_details[0].cust_status);
         this.get_cust_type = response.result.customer_details[0].cus_type;
         this.geting_biller = response.result.bill_details;
-        this.geting_biller_edit = response.result.billerId_det;
-        console.log(this.geting_biller)
+        this.geting_biller_edit =  response.result.billerId_det;
+        this.editBillerNameCheckboxID_array = response.result.billerId_det;
+        this.get_PermissionallList=response.result.cus_permission_details;
+        this.get_PermissionEdit=response.result.cus_permission_id;
+        this.cus_type_edit = response.result.customer_details[0].cus_type;
+        console.log('selected_biller',response.result.billerId_det);
 
         this.editCustomerForm.patchValue({
 
@@ -1550,8 +1598,9 @@ export class CustomernewallComponent implements OnInit {
 
   update(id: any) {
 
-    let Update_billerNameCheckListDisplay = this.editCustomerForm.value.edit_billernamelist.map((data: any) => data.billerId).join(',');
-    console.log("billerName-in update", Update_billerNameCheckListDisplay);
+    // let Update_billerNameCheckListDisplay = this.editCustomerForm.value.edit_billernamelist.map((data: any) => data.billerId).join(',');
+    // console.log("billerName-in update", Update_billerNameCheckListDisplay);
+    // console.log("billerName-in update", this.editBillerNameCheckboxID_array);
     let api_req: any = new Object();
     let update_customer_req: any = new Object();
     api_req.moduleType = "customer";
@@ -1562,7 +1611,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.user_id = localStorage.getItem('user_id');
     update_customer_req.customerId = id;
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
-    update_customer_req.billerId = Update_billerNameCheckListDisplay;
+    update_customer_req.billerId =  this.editBillerNameCheckboxID_array;
     update_customer_req.company_name = this.editCustomerForm.value.edit_defaultBillerName;
     update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
     update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
@@ -1845,29 +1894,52 @@ export class CustomernewallComponent implements OnInit {
 
   }
   fileAttachmentDelete(credit_attament_id: any) {
-    this.credit_attachment_id = credit_attament_id;
-    let api_req: any = new Object();
-    let fileattachDelete_req: any = new Object();
-    api_req.moduleType = "customer";
-    // api_req.api_url = "customer/delete_file_attachment";
-    api_req.api_url = "customer/customer_file_attachment_delete";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    fileattachDelete_req.action = "customer_file_attachment_delete";
-    fileattachDelete_req.credit_attach_id = "" + credit_attament_id + "";
-    fileattachDelete_req.user_id = localStorage.getItem('user_id');
-    api_req.element_data = fileattachDelete_req;
+    Swal.fire({
+      title: 'Are you sure to Delete?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Delete it!'
+    }).then((result: any) => {
+      if (result.value) {
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
+        this.credit_attachment_id = credit_attament_id;
+        let api_req: any = new Object();
+        let fileattachDelete_req: any = new Object();
+        api_req.moduleType = "customer";
+        // api_req.api_url = "customer/delete_file_attachment";
+        api_req.api_url = "customer/customer_file_attachment_delete";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        fileattachDelete_req.action = "customer_file_attachment_delete";
+        fileattachDelete_req.credit_attach_id = "" + credit_attament_id + "";
+        fileattachDelete_req.user_id = localStorage.getItem('user_id');
+        api_req.element_data = fileattachDelete_req;
 
-      if (response.status == true) {
-        // this.myForm.reset();
-        alert("deleted")
-        $("#fileAttachmentFormId").modal("hide");
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            iziToast.success({
+              message: "File Attachment Deleted successfully",
+              position: 'topRight'
+            });
+            $("#fileAttachmentFormId").modal("hide");
+           
+          } else {
+            iziToast.warning({
+              message: "File Attachment not deleted. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
       }
+    })
 
-
-    });
 
   }
   fileAttachmentUpdate() {
@@ -1879,7 +1951,7 @@ export class CustomernewallComponent implements OnInit {
     for (var i = 0; i < this.myFiles.length; i++) {
       data.append("cust_file[]", this.myFiles[i]);
     }
-    data.append('customer_id', this.fileAttachCustomerID);
+    data.append('customerId', this.fileAttachCustomerID);
     data.append('action', "customer_file_attachment_save");
 
 
@@ -1896,6 +1968,11 @@ export class CustomernewallComponent implements OnInit {
           self.customerslist({});
           console.log(result);
           $("#fileAttachmentFormId").modal("hide");
+
+          iziToast.success({
+            message: "File Attachment Saved successfully",
+            position: 'topRight'
+          });
         }
       },
       error: function (err: any) {
@@ -1915,7 +1992,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mconnectList.action = "mconnect_address_details";
-    api_mconnectList.customer_id = id;
+    api_mconnectList.customerId = id;
     api_mconnectList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mconnectList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1960,7 +2037,7 @@ export class CustomernewallComponent implements OnInit {
     data.append('partner_email_mconnect', partner_email_mcon);
     data.append('partner_phone_no_mconnect', partner_phone_mcon);
     data.append('mconnect_address_show', this.checkboxNumber_mconnectAddressShow);
-    data.append('customer_id', id);
+    data.append('customerId', id);
     data.append('mconnect_partner_type', this.partnerTypeMconn);
     data.append('mconnect_company_logo', $("#uploaded-mconnect")[0].files[0]);
     data.append('action', "mconnect_address_save");
@@ -2015,14 +2092,17 @@ export class CustomernewallComponent implements OnInit {
     // });
   }
   mrvoip_address_add(id: any) {
+    console.log("this.checkbox_MrvoipAddressShow",this.checkbox_MrvoipAddressShow)
+    var partnerEmail=$("#mv_partnerEmail").val()
+    console.log("Partner Email",partnerEmail)
     var data = new FormData();
     $("#partnerEmail").val();
-    data.append('partner_email_mrvoip', $("mv_partnerEmail").val());
-    data.append('partner_phone_no_mrvoip', $("mv_partnerPhone").val());
-    data.append('mrvoip_address_show', this.checkboxNumber_mconnectAddressShow);
-    data.append('customer_id', id);
-    data.append('mrvoip_partner_type', this.partnerTypeMconn);
-    data.append('mrvoip_company_logo', $("#uploaded-mconnect")[0].files[0]);
+    data.append('partner_email_mrvoip', $("#mv_partnerEmail").val());
+    data.append('partner_phone_no_mrvoip', $("#mv_partnerPhone").val());
+    data.append('mrvoip_address_show', this.checkbox_MrvoipAddressShow);
+    data.append('customerId', id);
+    data.append('mrvoip_partner_type', this.customerStatus_radiobox_Value);
+    data.append('mrvoip_company_logo', $("#uploaded-mrvoip")[0].files[0]);
     data.append('action', "mrvoip_address_save");
 
     var self = this;
@@ -2098,7 +2178,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mrvoipList.action = "mrvoip_address_details";
-    api_mrvoipList.customer_id = id;
+    api_mrvoipList.customerId = id;
     api_mrvoipList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mrvoipList;
 
@@ -2173,50 +2253,87 @@ export class CustomernewallComponent implements OnInit {
       }
     });
   }
+
   call4tel_address_add(id: any) {
-    let api_req: any = new Object();
-    let api_call4telAdd: any = new Object();
-    api_req.moduleType = "customer";
-    api_req.api_url = "customer/call4tel_address_save";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_call4telAdd.action = "call4tel_address_save";
-    api_call4telAdd.user_id = localStorage.getItem('user_id');
-    api_call4telAdd.user_id = id;
 
-    api_call4telAdd.partner_email_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerEmail;
-    api_call4telAdd.partner_phone_no_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerPhoneNum;
-    api_call4telAdd.call4tel_address_show = this.Call4telCustomerForm.value.a_C4TAddressShow;
-    api_call4telAdd.call4tel_partner_type = this.Call4telCustomerForm.value.a_C4TPartnerType;
-    api_call4telAdd.customerId = id;
-    api_call4telAdd.cus_permission_popup = this.Call4telCustomerForm.value.a_C4TAddressShow;
-    api_call4telAdd.call4tel_company_logo = this.Call4telCustomerForm.value.a_selectLogo_C4T;
+ 
+    var data = new FormData();
+ 
+    data.append('partner_email_call4tel', $("#C4T_partnerEmail").val());
+    data.append('partner_phone_no_call4tel', $("#C4T_partnerPhone").val());
+    data.append('call4tel_address_show', this.checkbox_C4TAddressShow);
+    data.append('cus_permission_popup', this.checkbox_C4TAddressShow);
+    data.append('customerId', id);
+    data.append('call4tel_partner_type', this.customerStatus_radiobox_Value);
+    data.append('call4tel_company_logo', $("#uploaded-C4T")[0].files[0]);
+    data.append('action', "Cal4Tel_address_save");
 
-    api_req.element_data = api_call4telAdd;
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/customer_contract/call4tel_address_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          self.customerslist({});
+          console.log(result);
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      var result = response;
-      console.log("get call4tel address response", result);
-      if (result) {
-        this.call4tel_Address_add = result;
-        console.log(this.call4tel_Address_add)
-
-        iziToast.success({
-          message: "call4tel address Added successfully",
-          position: 'topRight'
-        });
-
+        }
+      },
+      error: function (err: any) {
+        console.log(err);
       }
-      else {
+    })
 
-        iziToast.warning({
-          message: "call4tel address not updated. Please try again",
-          position: 'topRight'
-        });
-
-      }
-    });
   }
+
+  // call4tel_address_add(id: any) {
+  //   let api_req: any = new Object();
+  //   let api_call4telAdd: any = new Object();
+  //   api_req.moduleType = "customer";
+  //   api_req.api_url = "customer/call4tel_address_save";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_call4telAdd.action = "call4tel_address_save";
+  //   api_call4telAdd.user_id = localStorage.getItem('user_id');
+  //   api_call4telAdd.user_id = id;
+
+  //   api_call4telAdd.partner_email_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerEmail;
+  //   api_call4telAdd.partner_phone_no_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerPhoneNum;
+  //   api_call4telAdd.call4tel_address_show = this.Call4telCustomerForm.value.a_C4TAddressShow;
+  //   api_call4telAdd.call4tel_partner_type = this.Call4telCustomerForm.value.a_C4TPartnerType;
+  //   api_call4telAdd.customerId = id;
+  //   api_call4telAdd.cus_permission_popup = this.Call4telCustomerForm.value.a_C4TAddressShow;
+  //   api_call4telAdd.call4tel_company_logo = this.Call4telCustomerForm.value.a_selectLogo_C4T;
+
+  //   api_req.element_data = api_call4telAdd;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     var result = response;
+  //     console.log("get call4tel address response", result);
+  //     if (result) {
+  //       this.call4tel_Address_add = result;
+  //       console.log(this.call4tel_Address_add)
+
+  //       iziToast.success({
+  //         message: "call4tel address Added successfully",
+  //         position: 'topRight'
+  //       });
+
+  //     }
+  //     else {
+
+  //       iziToast.warning({
+  //         message: "call4tel address not updated. Please try again",
+  //         position: 'topRight'
+  //       });
+
+  //     }
+  //   });
+  // }
   invoiceShare_edit(id: any) {
     let api_req: any = new Object();
     let invoiceShare_edit_req: any = new Object();
@@ -2284,6 +2401,9 @@ export class CustomernewallComponent implements OnInit {
       }
     });
 
+  }
+  quickMail(a:any){
+    
   }
   shareCustomerPermission_edit(id: any) {
 
@@ -2574,7 +2694,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_billCodeEdit_req.action = "get_billcode_details";
-    api_billCodeEdit_req.customer_id = id;
+    api_billCodeEdit_req.customerId = id;
     api_billCodeEdit_req.user_id = localStorage.getItem('user_id');
 
     api_req.element_data = api_billCodeEdit_req;
@@ -2718,7 +2838,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mail_req.action = "customer_email_template";
     api_mail_req.user_id = localStorage.getItem('user_id');
-    api_mail_req.customer_id = this.landscapeEmail_Customer_ID;
+    api_mail_req.customerId = this.landscapeEmail_Customer_ID;
     api_req.element_data = api_mail_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2756,7 +2876,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mailContentDropdown_req.action = "get_customer_authendication_details";
     api_mailContentDropdown_req.user_id = localStorage.getItem('user_id');
-    api_mailContentDropdown_req.customer_id = this.landscapeEmail_Customer_ID;
+    api_mailContentDropdown_req.customerId = this.landscapeEmail_Customer_ID;
     api_mailContentDropdown_req.template_id = this.CRMTemplateID;
     api_req.element_data = api_mailContentDropdown_req;
 

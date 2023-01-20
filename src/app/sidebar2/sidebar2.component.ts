@@ -100,7 +100,8 @@ for(let i=0; i<mainMenus.length; i++){
     childers = [];
   }
 }
-this.overallmenulist = childMenu
+this.overallmenulist = childMenu;
+console.log(this.overallmenulist)
 }
 
 mainMenus2(){
