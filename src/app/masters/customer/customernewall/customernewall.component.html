@@ -134,7 +134,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="remove" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
+                                <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
                                   (click)="editCustomer(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -147,7 +147,7 @@
 
 
                               <li class="dropdown__item">
-                                <a class="view" title="Delete" (click)="deleteCustomer(list.customerId)">
+                                <a class="remove" title="Delete" (click)="deleteCustomer(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-trash-2">
@@ -161,7 +161,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="remove" title="Quick Email" data-toggle="modal"
+                                <a class="view" title="Quick Email" data-toggle="modal"
                                   data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -205,7 +205,7 @@
 
 
                               <li class="dropdown__item">
-                                <a class="remove" title="Reseller Status" data-toggle="modal"
+                                <a class="view" title="Reseller Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==false">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
@@ -216,7 +216,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="remove" title="Reseler Status" data-toggle="modal"
+                                <a class="view" title="Reseler Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==true">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -229,7 +229,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Employee Status" data-toggle="modal"
+                                <a class="remove" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==true">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -241,7 +241,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Employee Status" data-toggle="modal"
+                                <a class="remove" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==false">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
@@ -266,7 +266,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Assign Account Manager" data-toggle="modal"
+                                <a class="remove" title="Assign Account Manager" data-toggle="modal"
                                   data-target="#AssignAccountManager">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -286,14 +286,14 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="view" title="Google Authentication" data-toggle="modal"
+                                <a class="remove" title="Google Authentication" data-toggle="modal"
                                   data-target="#GoogleAuthentication">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="remove" title="File Attachment" data-toggle="modal"
+                                <a class="view" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -307,7 +307,7 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="view" title="Create a Call4Tel Customer">
+                                <a class="remove" title="Create a Call4Tel Customer">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
                                 </a>
                               </li>
@@ -338,7 +338,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Special Edit" data-toggle="modal"
+                                <a class="remove" title="Special Edit" data-toggle="modal"
                                   data-target="#specialEditCustomerFormId"
                                   (click)="specialEditCustomer(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -365,7 +365,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId"
+                                <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId"
                                   (click)="billCodeAttachmentEdit(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -376,7 +376,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="remove" title="C4T Partner Details" data-toggle="modal"
+                                <a class="view" title="C4T Partner Details" data-toggle="modal"
                                   data-target="#call4tellPartnerDetailsFormId"
                                   (click)="call4tel_address_getList(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -392,7 +392,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="MrVoip" data-toggle="modal"
+                                <a class="remove" title="MrVoip" data-toggle="modal"
                                   data-target="#MrvoipPartnerDetailsFormId"
                                   (click)="mrvoip_address_getList(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -407,7 +407,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="remove" title="MConnect" data-toggle="modal"
+                                <a class="view" title="MConnect" data-toggle="modal"
                                   data-target="#mconnectPartnerDetailsFormId"
                                   (click)="mconnect_address_getList(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -1490,10 +1490,10 @@
               <div *ngFor="let cust of customerType_list;let m =index;"
                 style="display: flex;padding-left: 30px;align-items: center;">
 
-                <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
+                <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
                 checked="{{this.cus_type_edit.includes(''+cust+'') ==true? 'checked' : ''}}"
                  (change)="editCustomerClassificationCHK(cust,$event)">
-                {{cust}}
+                {{cust}} -->
 
               </div>
 
@@ -1738,12 +1738,12 @@
               <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-12"
                 (change)="CHKAll_PermissionSelectAll($event)"> -->
               <div class="CheckboxScroll">
-                <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
+                <!-- <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{cu.id}}"
                     checked="{{this.get_PermissionEdit.includes(''+cu.id+'') ==true? 'checked' : ''}}"
                     (change)="editPermissionCHK(cu.id,$event)">
                   {{cu.name}}
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -2760,10 +2760,13 @@
           <div>
 
             <div *ngFor="let displayVariable of SharedCustomerPermissionArray;let i =index">
-              <input type="checkbox" formControlName="shareCustomerPermission_checklist"
-                (change)="eventCheckInvoiceShared($event)" id="check_ids{{i}}">
+              <input type="checkbox" value="{{displayVariable.chk_val}}"
+              checked="{{displayVariable.chk_val == 1 ? 'checked' : ''}}" id="sel_check"
+              (change)="eventCheckSharedCustomerPermission(displayVariable.userId,$event)">
               <span class="ckboxclass"><label class="form-check-label" for="check_ids{{i}}">
                   {{displayVariable.firstName}}</label></span>
+
+
             </div>
 
           </div>

@@ -1,5 +1,5 @@
 <div class="contents-section">
-    <h2>Enter Proforma Invoice Details</h2>
+<h2>Enter Proforma Invoice Details</h2>
     <form [formGroup]="addPI_section1">
         <div class="row">
 
@@ -39,7 +39,7 @@
                         <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                             formControlName="BillTo"
                             (selected)='searchCustomer_selectDropdownData($event)'
-                             (inputChanged)='searchCustomerData($event)'
+                                (inputChanged)='searchCustomerData($event)'
                             (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
                             [notFoundTemplate]="notFoundTemplate">
                         </ng-autocomplete>
@@ -115,7 +115,7 @@
             </div> -->
             <!-- <div class="col-lg-6">
                 <div class="form-group row">
-                  
+                    
                 </div>
             </div> -->
             <div class="col-lg-6">
@@ -143,7 +143,7 @@
             </div>
             <!-- <div class="col-lg-6">
                 <div class="form-group row">
-                 
+                    
                 </div>
             </div> -->
             <div class="col-lg-6">
@@ -248,14 +248,14 @@
                 <div class="form-group row">
                     <div class="form-check form-check-inline"  *ngFor="let radio1 of exportState_Radio;let i=index">
                         <input class="form-check-input" type="radio" name="export_state" id="export_state{{i}}" checked="{{radio1.id == '1' ? 'checked' : ''}}"
-                          formControlName="export_state" value="{{radio1.id}}"  (change)="handleChange(radio1.id,$event)">
+                            formControlName="export_state" value="{{radio1.id}}"  (change)="handleChange(radio1.id,$event)">
                         <label class="form-check-label" for="export_state{{i}}">{{radio1.name}}</label>
                     </div>
-                   
+                    
                 </div>
             </div> -->
 
-           
+            
             <div class="form-check form-check-inline">
 
                 <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
@@ -284,38 +284,38 @@
                         <input class="form-check-input" type="checkbox"  formControlName="mile_Discount" 
                         id="inlineCheckbox{{i}}" value="{{display.id}}" (change)="mile($event)" >
                         <label class="form-check-label" for="inlineCheckbox{{i}}">{{display.name}} </label>
-                      </div> -->
-                      <div class="form-check form-check-inline">
+                        </div> -->
+                        <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio"  checked name="select"
                         id="inlineCheckbox2" value="mile Discount" (change)="mile($event)">
                         <label class="form-check-label" for="inlineCheckbox2"> mile Discount</label>
-                      </div>
-                       <div class="form-check form-check-inline">
+                        </div>
+                        <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="select"
                         id="inlineCheckbox2" value="Mile Stone" (change)="mile($event)">
                         <label class="form-check-label" for="inlineCheckbox2"> Mile Stone</label>
-                      </div>
-                      <div class="form-check form-check-inline">
+                        </div>
+                        <div class="form-check form-check-inline">
                         <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
                         value="M S Display" (change)="handleChange_MSDisplay($event)">
                         <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
-                      </div> 
+                        </div> 
                 </div>
             </div>
 
             <!-- <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-primary active">
-                  <input type="checkbox" checked> Checkbox 1 (pre-checked)
+                    <input type="checkbox" checked> Checkbox 1 (pre-checked)
                 </label>
                 <label class="btn btn-primary">
-                  <input type="checkbox"> Checkbox 2
+                    <input type="checkbox"> Checkbox 2
                 </label>
                 <label class="btn btn-primary">
-                  <input type="checkbox"> Checkbox 3
+                    <input type="checkbox"> Checkbox 3
                 </label>
-              </div> -->
+                </div> -->
 
-              
+                
             <div class="col-lg-6">
                 <div class="form-group">
                     <label for="refResellerDetails" class="form-label">Reference Reseller Name</label>
@@ -373,429 +373,421 @@
                         <input class="form-check-input" type="checkbox"  formControlName="ExtraLogo" 
                         id="inlineCheckbox{{i}}" value="{{logo.id}}" (change)="mile($event)" >
                         <label class="form-check-label" for="inlineCheckbox{{i}}">{{logo.name}} </label>
-                      </div>
-                  
+                        </div>
+                    
                 </div>
             </div> -->
 
         </div>
     </form>
-        <form [formGroup]="addPI_section2">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="form-group row">
-    
-    
-                        <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
-                            class="col-lg-12 col-form-label">Product Details</h2>
-                    </div>
+    <form [formGroup]="addPI_section2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+
+                    <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
+                        class="col-lg-12 col-form-label">Product Details</h2>
                 </div>
-                <div class="col-12">
-    
-                    <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
-    
-                        <div [formGroupName]="i">
-                            <div class="row">
-                                <div class="col-12">
-                                    <!-- <h3 style="text-align:center;color:rgb(141, 87, 129);font-weight: 500;">
-                                        Product Group {{i +
-                                        1}}</h3>&nbsp;&nbsp; -->
-                                </div>
-    
-                            </div>
-                            <div class="table-responsive">
-                                <table class="add-contact-table-section">
-                                    <thead>
-                                        <tr class="userDatatable-header">
-                                            <th> <span class="userDatatable-title">
-                                                Next Page</span>
-                                            </th>
-                                            <th><span class="userDatatable-title">Product Name</span></th>
-                                           
-                                         
-                                            <th><span class="userDatatable-title">Description</span></th>
-                                            <th><span class="userDatatable-title">Quantity</span></th>
-                                            <th><span class="userDatatable-title">Unit</span>
-                                            </th>
-                                            <th><span class="userDatatable-title">	Price</span></th>
-                                            <th><span class="userDatatable-title">	Total</span></th>
-                                            <th><span class="userDatatable-title">Net Total</span></th>
-                                            <th><span class="userDatatable-title">Out Call</span>
-                                            </th>
-                                            <th><span class="userDatatable-title">	C Mon</span>
-                                            </th>
-                                            <th><span class="userDatatable-title">	Select Tax</span>
-                                            </th>
-                                            <th>
-                                                <span class="userDatatable-title">Action</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-    
-    
-                                        <tr>
-                                            <td>
-                                                <div class="userDatatable-content lalign">
-                                                  <input type="checkbox"  formControlName="pd_nextPage_checkbox">
-                                                
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                  
-                                                    
-    
-                                                    <input type="text" class="form-control mt-2 mb-2"
-                                                    formControlName="pd_productName_txtbox1"
-                                                    id="pd_productName_txtbox_{{i}}" />
-      
-                                               
-                                                </div>
-    
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <textarea
-                                                    style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
-                                                    class="form-control mt-2 mb-2" row="2"
-                                                    formControlName="pd_productName_txtArea"
-                                                    id="pd_productName_txtArea_{{i}}"></textarea>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                    />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-    
-                                                    <input type="text" class="form-control" style="text-align: left;"
-                                                            formControlName="pd_unit" id="pd_unit_{{i}}" />
-    
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" style="text-align: right;"
-                                                            formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
-                                                           />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <input type="text" class="form-control" formControlName="pd_Total"
-                                                    style="text-align: right;" id="pd_Total_{{i}}" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content" >
-                                                    <input type="text" class="form-control" style="text-align: right;"
-                                                            formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
-    
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content" >
-                                                    <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_OutCall" >
-    
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    
-                                                    <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_CMon" >
-    
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    
-                                                    <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_selectTax" >
-    
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content d-inline-block">
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                    (click)="removeAddress(i)"   >X</button>
-    
-                                                </div>
-                                        </tr>
-                                    </tbody>
-    
-                                </table>
-                            </div>
-    
-    
-    
-                        </div>
-                    </section>
-    
-                    <div class="text-right">
-    
-                        <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
-                            (click)="addAddress()">Add Product </button> -->
-                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
-                            style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>
-                        </button>
-                    </div>
-    
-                </div>
-    
-    
             </div>
-        </form>
-        <form [formGroup]="addPI_section3">
-            <section class="overall">
-                <section class="left_section">
-                    <!-- <div class="col-lg-12">
-                                <h1>hi</h1>
-                                <h1>hi</h1>
-                                <h1>hi</h1>
-                            </div> -->
-                </section>
-    
-                <section class="right_section">
-    
-    
-                    <div class="col-lg-12">
-    
-    
+            <div class="col-12">
+
+                <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+
+                    <div [formGroupName]="i">
                         <div class="row">
-    
-    
-                           
-                            <div class="col-lg-12">
-    
-                                <div class="row d-flex">
-                                    <div class="col-lg-6">
-                                        <label class="col-form-label" >Gross
-                                            Total(Rs.)</label>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control mt-2" 
-                                            formControlName="section3_gross_total" />
-                                    </div>
-                                </div>
+                            <div class="col-12">
+                                <!-- <h3 style="text-align:center;color:rgb(141, 87, 129);font-weight: 500;">
+                                    Product Group {{i +
+                                    1}}</h3>&nbsp;&nbsp; -->
                             </div>
-    
-    
-    
-                            <div class="col-lg-6">
-                                <button class="btn btn-primary mr-2 mt-2" data-toggle="modal"
-                                    data-target="#discountFormFinal" 
-                                    style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
-                                    (-)</button>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-center">
-    
-    
-                                    <input type="text" class="form-control  mt-2" 
-                                        formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
-                                    <input type="hidden" class="form-control" style="text-align: right;"
-                                        formControlName="final_dis_type" id="final_discount_type"
-                                        />
-                                    <input type="hidden" class="form-control" style="text-align: right;"
-                                        formControlName="final_dis_val" id="final_discount_val"
-                                         />
-                                </div>
-                            </div>
-    
-                            <!-- <div class="d-flex">
-                                        <div class="col-lg-12">
-                                            <div class="d-flex ml-2 mt-2 justify-content-center">
-                                                <select name="billerID" id="billerID" class="form-control"
-                                                    aria-label="Default select example"
-                                                    formControlName="section3_gst_dropdown">
-                                                    <option [ngValue]="null" selected disabled>Select Tax</option>
-    
-    
-                                                    <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
-                                                        {{tax.tax_name}}
-                                                    </option>
-                                                </select>
-                                                <input type="text" formControlName="section3_txtboxRow3" class="form-control ml-2 mt-2" />
-                                            </div>
-                                        </div>
-                                    </div> -->
-                            <div class="col-lg-6">
-                                <div class="form-group ml-2 mt-2">
-    
-    
-                                    <select name="billerID" id="billerIDs" class="form-control"
-                                        aria-label="Default select example" formControlName="section3_gst_dropdown"
-                                        >
-                                        <option [ngValue]="null" selected disabled>Select Tax</option>
-                                      
-    
-    
-                                        <!-- <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
-                                            {{tax.combine_val}}
-                                        </option> -->
-                                    </select>
-                                    <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id"
-                                         />
-                                </div>
-                            </div>
-    
-    
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
-                                        class="form-control mt-2" />
-    
-                                </div>
-                            </div>
-    
-    
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-center">
-                                    <input type="text" class="form-control ml-2 mt-2" placeholder="Shipping"
-                                        formControlName="section3_shipping_amt_name_txtbox" />
-    
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" 
-                                        formControlName="section3_shipping_amt_txtbox" id="shipping_amt_id"
-                                        class="form-control mt-2" />
-                                </div>
-                            </div>
-    
-    
-                            <div class="col-lg-6">
-                                <div class="d-flex justify-content-center">
-                                    <input type="text" class="form-control ml-2 mt-2" placeholder="Banking Charge"
-                                        formControlName="section3_bankingCharge_amt_name_txtbox" />
-    
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" 
-                                        formControlName="section3_bankingCharge_amt_txtbox" id="bankingCharge_amt_id"
-                                        class="form-control mt-2" />
-                                </div>
-                            </div>
-    
-    
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-    
-                                    <div class="col-lg-6">
-                                        <label>Net Total (Rs.)</label>
-                                    </div>
-    
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" 
-                                            formControlName="section3_grand_total"  />
-                                    </div>
-    
-    
-                                </div>
-                            </div>
-    
-    
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-    
-                                    <div class="col-lg-6">
-                                        <label>Remarks</label>
-                                    </div>
-    
-                                    <div class="col-lg-6">
-                                        <input type="text" class="form-control" formControlName="section3_remarks" />
-                                    </div>
-    
-    
-                                </div>
-                            </div>
-    
-    
-    
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label style="font-style: italic;color:#009688">
-                                        (Signature not available. Ask your administrator to upload your
-                                        signature if required)
-                                    </label>
-    
-                                </div>
-                            </div>
-    
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-    
-                                    <div class="col-lg-6">
-                                        <label>Add to terms and condition</label>
-                                    </div>
-    
-                                    <div class="col-lg-6">
-                                        <input type="checkbox"  formControlName="section3_termCondition" />
-                                    </div>
-    
-    
-                                </div>
-                            </div>
-    
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-    
-                                    <div class="col-lg-6">
-                                        <label>Add to Received and Authorized Signature/stamp</label>
-                                    </div>
-    
-                                    <div class="col-lg-6">
-                                        <input type="checkbox"  formControlName="section3_receivedAuthorizedSignature" />
-                                    </div>
-    
-    
-                                </div>
-                            </div>
-    
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-    
-                                    <div class="col-lg-6">
-                                        <label>Add Logo, Address, Signature in PDF</label>
-                                    </div>
-    
-                                    <div class="col-lg-6">
-                                        <input type="checkbox"  formControlName="section3_logo" />
-                                    </div>
-    
-    
-                                </div>
-                            </div>
-                            <div class="buttonAlign" >
-                                <button type="button" class="btn btn-success">Back</button>
-                                <button type="button"  class="btn btn-danger" (click)="PIUpdate()">Submit</button>
-                               
-                            </div>
-    
-    
-    
-    
+
                         </div>
+                        <div class="table-responsive">
+                            <table class="add-contact-table-section">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th> <span class="userDatatable-title">
+                                            Next Page</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">Product Name</span></th>
+                                    
+                                    
+                                        <th><span class="userDatatable-title">Description</span></th>
+                                        <th><span class="userDatatable-title">Quantity</span></th>
+                                        <th><span class="userDatatable-title">Unit</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">	Price</span></th>
+                                        <th><span class="userDatatable-title">	Total</span></th>
+                                        <th><span class="userDatatable-title">Net Total</span></th>
+                                        <th><span class="userDatatable-title">Out Call</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">	C Mon</span>
+                                        </th>
+                                        <th><span class="userDatatable-title">	Select Tax</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+                                    <tr>
+                                        <td>
+                                            <div class="userDatatable-content lalign">
+                                            <input type="checkbox"  formControlName="pd_nextPage_checkbox">
+                                            
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                            
+                                                
+
+                                                <input type="text" class="form-control mt-2 mb-2"
+                                                formControlName="pd_productName_txtbox1"
+                                                id="pd_productName_txtbox_{{i}}" />
+
+                                        
+                                            </div>
+
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <textarea
+                                                style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                class="form-control mt-2 mb-2" row="2"
+                                                formControlName="pd_productName_txtArea"
+                                                id="pd_productName_txtArea_{{i}}"></textarea>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" style="text-align: right;"
+                                                formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
+                                                />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+
+                                                <input type="text" class="form-control" style="text-align: left;"
+                                                        formControlName="pd_unit" id="pd_unit_{{i}}" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
+                                                    />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                <input type="text" class="form-control" formControlName="pd_Total"
+                                                style="text-align: right;" id="pd_Total_{{i}}" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content" >
+                                                <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content" >
+                                                <input type="checkbox" style="text-align: right;"
+                                                formControlName="pd_OutCall" >
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                
+                                                <input type="checkbox" style="text-align: right;"
+                                                formControlName="pd_CMon" >
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content">
+                                                
+                                                <input type="checkbox" style="text-align: right;"
+                                                formControlName="pd_selectTax" >
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                (click)="removeAddress(i)"   >X</button>
+
+                                            </div>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+
                     </div>
                 </section>
+
+                <div class="text-right">
+
+                    <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                        (click)="addAddress()">Add Product </button> -->
+                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                        style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>
+                    </button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </form>
+    <form [formGroup]="addPI_section3">
+        <section class="overall">
+            <section class="left_section">
+                <!-- <div class="col-lg-12">
+                            <h1>hi</h1>
+                            <h1>hi</h1>
+                            <h1>hi</h1>
+                        </div> -->
             </section>
-        </form>
-      
-       
-    
-    
-    
-    
-    
-    
+
+            <section class="right_section">
+
+
+                <div class="col-lg-12">
+
+
+                    <div class="row">
+
+
+                    
+                        <div class="col-lg-12">
+
+                            <div class="row d-flex">
+                                <div class="col-lg-6">
+                                    <label class="col-form-label" >Gross
+                                        Total(Rs.)</label>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control mt-2" 
+                                        formControlName="section3_gross_total" />
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+                            <button class="btn btn-primary mr-2 mt-2" data-toggle="modal"
+                                data-target="#discountFormFinal" 
+                                style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
+                                (-)</button>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-center">
+
+
+                                <input type="text" class="form-control  mt-2" 
+                                    formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
+                                <input type="hidden" class="form-control" style="text-align: right;"
+                                    formControlName="final_dis_type" id="final_discount_type"
+                                    />
+                                <input type="hidden" class="form-control" style="text-align: right;"
+                                    formControlName="final_dis_val" id="final_discount_val"
+                                    />
+                            </div>
+                        </div>
+
+                        <!-- <div class="d-flex">
+                                    <div class="col-lg-12">
+                                        <div class="d-flex ml-2 mt-2 justify-content-center">
+                                            <select name="billerID" id="billerID" class="form-control"
+                                                aria-label="Default select example"
+                                                formControlName="section3_gst_dropdown">
+                                                <option [ngValue]="null" selected disabled>Select Tax</option>
+
+
+                                                <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
+                                                    {{tax.tax_name}}
+                                                </option>
+                                            </select>
+                                            <input type="text" formControlName="section3_txtboxRow3" class="form-control ml-2 mt-2" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                        <div class="col-lg-6">
+                            <div class="form-group ml-2 mt-2">
+
+
+                                <select name="billerID" id="billerIDs" class="form-control"
+                                    aria-label="Default select example" formControlName="section3_gst_dropdown"
+                                    >
+                                    <option [ngValue]="null" selected disabled>Select Tax</option>
+                                
+
+
+                                    <!-- <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
+                                        {{tax.combine_val}}
+                                    </option> -->
+                                </select>
+                                <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id"
+                                    />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="text" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
+                                    class="form-control mt-2" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-center">
+                                <input type="text" class="form-control ml-2 mt-2" placeholder="Shipping"
+                                    formControlName="section3_shipping_amt_name_txtbox" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="text" 
+                                    formControlName="section3_shipping_amt_txtbox" id="shipping_amt_id"
+                                    class="form-control mt-2" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-center">
+                                <input type="text" class="form-control ml-2 mt-2" placeholder="Banking Charge"
+                                    formControlName="section3_bankingCharge_amt_name_txtbox" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="text" 
+                                    formControlName="section3_bankingCharge_amt_txtbox" id="bankingCharge_amt_id"
+                                    class="form-control mt-2" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6">
+                                    <label>Net Total (Rs.)</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" 
+                                        formControlName="section3_grand_total"  />
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6">
+                                    <label>Remarks</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_remarks" />
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label style="font-style: italic;color:#009688">
+                                    (Signature not available. Ask your administrator to upload your
+                                    signature if required)
+                                </label>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6">
+                                    <label>Add to terms and condition</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="checkbox"  formControlName="section3_termCondition" />
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6">
+                                    <label>Add to Received and Authorized Signature/stamp</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="checkbox"  formControlName="section3_receivedAuthorizedSignature" />
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6">
+                                    <label>Add Logo, Address, Signature in PDF</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="checkbox"  formControlName="section3_logo" />
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="PIUpdate()">
+            Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="goBack()">
+            Cancel
+        </button>
     </div>
+      
+</div>

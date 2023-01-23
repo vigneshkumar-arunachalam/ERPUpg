@@ -17,6 +17,7 @@ export class EditPIComponent implements OnInit {
   public addPI_section2: FormGroup;
   public addPI_section3: FormGroup;
   public addresses: FormArray;
+  public DiscountForm: FormGroup;
   isReadOnly: boolean = false;
 
   //load add 
@@ -69,6 +70,21 @@ export class EditPIComponent implements OnInit {
   export_state_Export: any;
   export_state_ZeroValid: boolean = true;
   MSDisplay_Value: boolean = true;
+  //calculation
+  finalDiscount: any;
+  finalDiscountType: any;
+  finalDiscountVal: any;
+  sub_dis_val: any;
+  grandTotal: any;
+  grossTotal: any;
+  finalTax: any;
+  tax_per_hd = 0;
+  tax_per_mod: any;
+  extraCharge = 0;
+  net_amt: any;
+  shipping_amt: any;
+  quotationPriceKey: any;
+  row_cnt_mod: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
@@ -185,6 +201,11 @@ export class EditPIComponent implements OnInit {
       'section3_termCondition': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
+
+    });
+    this.DiscountForm = new FormGroup({
+      'section3_grant_total_show': new FormControl(null),
+      'section3_gross_total': new FormControl(null),
 
     });
 
@@ -778,6 +799,382 @@ export class EditPIComponent implements OnInit {
       }
 
     });
+  }
+
+  totalCalculate() {
+
+    // var grs_amt=0;
+    // var net_amt =0;
+    var tax_amt = 0;
+    var tax_amt_tot = 0;
+    var grs_amt = 0;
+    var sub_total_amt = 0;
+
+    let discount_type: any;
+    var total_amt: any;
+    var dis_amt_val: any;
+
+    var total_amt: any;
+    var addr = this.addPI_section2.value.addresses;
+    var list_cnt = addr.length;
+    //  alert(list_cnt);
+    // var tax_per = $('#tax_per_hd_id').val();
+    //var tax_per = $('#tax_per_hd_id').val();
+    this.finalDiscount = $('#finalDiscount_amt').val();
+    this.shipping_amt = $('#shipping_amt_id').val();
+    this.finalTax = 0;
+    // alert(tax_per);
+    for (let a = 0; a < list_cnt; a++) {
+
+      total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
+      $('#pd_Total_' + a).val(total_amt);
+
+
+      discount_type = $('#sub_discount_type_' + a).val();
+      console.log('discount_type' + discount_type);
+      if (discount_type == 'per') {
+        this.sub_dis_val = $('#sub_discount_val_' + a).val();
+        console.log('discount_type1111' + this.sub_dis_val);
+        dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
+        console.log('dis_amt_val' + dis_amt_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
+        $('#pd_netPrice_' + a).val(sub_total_amt);
+        $('#sub_discount_' + a).val(dis_amt_val);
+      } else if (discount_type == 'amt') {
+        // console.log('discount_type222'+discount_type);
+
+        this.sub_dis_val = $('#sub_discount_val_' + a).val();
+        // console.log('sub_discount_valppp'+this.sub_dis_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
+        $('#pd_netPrice_' + a).val(sub_total_amt);
+      } else {
+        $('#pd_netPrice_' + a).val(total_amt);
+        sub_total_amt = total_amt;
+      }
+
+      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
+        this.net_amt = $('#pd_netPrice_' + a).val();
+
+        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
+        tax_amt_tot += tax_amt;
+
+      }
+
+
+      // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
+      // $('#pd_netPrice_' + a).val(sub_total_amt);
+      //  alert('total_amt'+total_amt);
+      grs_amt += sub_total_amt;
+
+
+      //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
+      //   alert(grs_amt);
+    }
+    this.grossTotal = grs_amt;
+    this.finalTax = tax_amt_tot.toFixed(2);
+    if (this.shipping_amt == '') {
+      this.shipping_amt = 0;
+    }
+    if (this.finalDiscount == '') {
+      this.finalDiscount = 0;
+    }
+    if (this.finalTax == '') {
+      this.finalTax = 0;
+    }
+    //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
+    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
+  }
+  keyPress(event: any, i: any) {
+    this.quotationPriceKey = i;
+    var key = event.target.value;
+    var addr = this.addPI_section2.value.addresses;
+    var v = addr[i].pd_quantity_txtbox1 * $('#pd_SP_' + i);
+    $('#pd_Total_' + i).val(v);
+    $('#pd_netPrice_' + i).val(v);
+    var gtotel = 0;
+    if (this.itre == 0) {
+      gtotel = v;
+    } else {
+      for (let k = 0; k <= this.itre; k++) {
+        if ($('#pd_netPrice_' + k).val() > 0) {
+          gtotel += parseFloat($('#pd_netPrice_' + k).val());
+        }
+
+      }
+    }
+    for (let j = 0; j <= this.itre; j++) {
+      // const formArray = new FormArray([]);
+      console.log($('#pd_Total_' + j).val())
+      console.log($('#pd_netPrice_' + j).val())
+      // formArray.push(this.fb.group({
+      //   "pd_Total": $('#pd_Total_' + j).val(),
+      //   "pd_netPrice":$('#pd_netPrice_' + j).val(),
+      // })
+      // );
+      // this.addQuotationInvoice_section2.setControl('addresses', formArray);
+    }
+
+    this.grossTotal = gtotel;
+    this.grandTotal = gtotel;
+    if (this.finalDiscount > 0) {
+      this.grandTotal = gtotel - this.finalDiscount;
+    }
+    if (this.finalTax > 0) {
+      var tax = this.addPI_section3.value.section3_gst_dropdown;
+      tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
+      if (this.grandTotal > 0) {
+        this.grandTotal = this.grandTotal + parseFloat(tax);
+      }
+      this.finalTax = parseFloat(tax);
+    }
+  }
+  saveDiscount() {
+    var enablePercentabeDiscont = $('#enablePercentabeDiscont').val()
+    var enablePriceDiscont = $('#enablePriceDiscont').val()
+    var disType = $('input:radio[name=discountTYpe]:checked').val();
+    //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
+    //console.log('quotationPriceKey'+this.quotationPriceKey);
+    //console.log('disType'+disType);
+    var final_tot = $('#pd_Total_' + this.quotationPriceKey).val();
+    $('#sub_discount_type_' + this.quotationPriceKey).val(disType);
+    var price: any;
+    if (disType == 'per') {
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      if (enablePercentabeDiscont != '') {
+        console.log('3333' + final_tot);
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+
+
+        $('#sub_discount_' + this.quotationPriceKey).val(price);
+        $('#sub_discount_val_' + this.quotationPriceKey).val(enablePercentabeDiscont);
+        price = final_tot - price;
+      } else {
+        $('#sub_discount_' + this.quotationPriceKey).val('');
+        $('#sub_discount_val_' + this.quotationPriceKey).val('');
+        console.log('222' + final_tot);
+        price = final_tot;
+
+      }
+      //   console.log(price);
+
+    } else {
+      price = final_tot - enablePriceDiscont;
+      $('#sub_discount_' + this.quotationPriceKey).val(enablePriceDiscont);
+      $('#sub_discount_val_' + this.quotationPriceKey).val(enablePriceDiscont);
+
+      // console.log(price);
+    }
+
+    $('#pd_netPrice_' + this.quotationPriceKey).val(price)
+
+    var gtotel = 0;
+    if (this.itre == 0) {
+      gtotel = price;
+    } else {
+      for (let k = 0; k <= this.itre; k++) {
+        gtotel += parseFloat($('#pd_netPrice_' + k).val());
+      }
+    }
+    this.grossTotal = gtotel;
+    if (this.grandTotal > 0) {
+      this.grandTotal = this.grossTotal;
+    }
+    if (this.finalTax > 0) {
+      this.grandTotal = this.grandTotal + this.finalTax;
+    }
+    if (this.finalDiscount > 0) {
+      this.grandTotal = this.grandTotal - this.finalDiscount;
+    }
+    if (this.extraCharge > 0) {
+      this.grandTotal = this.grandTotal + this.extraCharge;
+    }
+    $('#discountFormId').modal('hide');
+    this.DiscountForm.reset();
+    this.totalCalculate();
+
+  }
+  calculateDiscount(val: any) {
+    this.quotationPriceKey = val;
+    this.row_cnt_mod = val;
+    var row_cnt = val;
+    var sub_dis_val = 0;
+    // var sub_dis_amt_val =0;
+    console.log('row_cnt' + row_cnt);
+    $('#enablePercentabeDiscont').val('');
+    $('#enablePriceDiscont').val('');
+    // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
+    var disType = $('#sub_discount_type_' + row_cnt).val();
+
+    if (disType == 'per') {
+      $('#discountTYpe_per').prop('checked', true);
+      sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
+
+      $('#enablePercentabeDiscont').val(sub_dis_val);
+      //   console.log('22'+disType);
+    } else if (disType == 'amt') {
+      $('#discountTYpe_amt').prop('checked', true);
+      sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
+      $('#enablePriceDiscont').val(sub_dis_val);
+      //  console.log('33'+disType);
+    } else {
+      //  console.log('44'+disType);
+      $('#discountTYpe_per').prop('checked', false);
+      $('#discountTYpe_amt').prop('checked', false);
+    }
+  }
+  saveGrossDiscount() {
+    var enablePercentabeDiscont = $('#enablePerFinal').val()
+    var enablePriceDiscont = $('#enablePriceFinal').val()
+    var tax_amt = $('#tax_amt_id').val()
+    var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
+    var final_tot = this.grossTotal;
+    var price: any;
+    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+    $('#final_discount_type').val(disType);
+    this.finalDiscountType = disType;
+
+    if (disType == 'per') {
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      if (enablePercentabeDiscont != '') {
+        //  console.log('3333'+final_tot);
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#final_discount').val(price);
+        $('#final_discount_val').val(enablePercentabeDiscont);
+        this.finalDiscountVal = enablePercentabeDiscont;
+        //     price = final_tot - price;
+      } else {
+        $('#final_discount').val('');
+        $('#final_discount_val').val('');
+        this.finalDiscountVal = '';
+        //   console.log('222'+final_tot);
+        price = 0;
+
+      }
+      //   console.log(price);
+    } else {
+      if (enablePriceDiscont == '') {
+        enablePriceDiscont = 0;
+      }
+      price = enablePriceDiscont;
+
+      $('#final_discount').val(enablePriceDiscont);
+      $('#final_discount_val').val(enablePriceDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
+      console.log('999' + price);
+
+    }
+    if (this.grandTotal > 0) {
+      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
+    }
+    this.finalDiscount = price
+    $('#discountFormFinal').modal('hide');
+  }
+
+  calFinalDiscount() {
+    $('#enablePerFinal').val('');
+    $('#enablePriceFinal').val('');
+    var final_dis_val = 0;
+    var disType = $('#final_discount_type').val();
+    console.log('111' + disType);
+    if (disType == 'per') {
+      $('#finaldiscountType_per').prop('checked', true);
+      final_dis_val = $('#final_discount_val').val();
+
+      $('#enablePerFinal').val(final_dis_val);
+      console.log('22' + disType);
+    } else if (disType == 'amt') {
+      $('#finaldiscountType_amt').prop('checked', true);
+      final_dis_val = $('#final_discount_val').val();
+      $('#enablePriceFinal').val(final_dis_val);
+      console.log('33' + disType);
+    } else {
+      console.log('44' + disType);
+      $('#finaldiscountTYpe_per').prop('checked', false);
+      $('#finaldiscountTYpe_amt').prop('checked', false);
+    }
+
+
+  }
+  getTaxCals() {
+    var tax_id = this.addPI_section3.value.section3_gst_dropdown;
+    var tax: any;
+    let api_req: any = new Object();
+    let api_data_req: any = new Object();
+    this.finalDiscount = $('#finalDiscount_amt').val();
+    this.finalTax = $('#finalDiscount_amt').val();
+    this.extraCharge = 0;
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/get_tax_percent_val";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_data_req.action = "get_tax_percent_val";
+    api_data_req.tax_id = tax_id;
+
+    api_req.element_data = api_data_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.tax_per_mod = response.percent_val;
+      $('#tax_per_hd_id').val(response.percent_val);
+
+      tax = response.percent_val;
+      tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
+
+      this.finalTax = parseFloat(tax);
+      // if (this.grossTotal > 0) {
+      //   this.grandTotal = (this.grossTotal + this.finalTax + this.finalDiscount + this.extraCharge).toFixed(2);
+      // }
+      this.finalTax = parseFloat(tax).toFixed(2);
+
+    });
+
+    // this.totalCalculate();
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1000)
+    // setTimeout(this.totalCalculate(),1000);
+  }
+  extraFees() {
+    var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;
+    this.grandTotal = this.grandTotal + parseFloat(fee);
+    this.extraCharge = parseFloat(fee);
+    this.totalCalculate();
+  }
+  set_display_none(cnt: any) {
+    //PN
+    if ($('#pd_split_' + cnt).prop('checked') == true) {
+      $('#pd_productName_txtArea_' + cnt).fadeOut(1000);
+      $('#pd_qty_' + cnt).fadeOut(1000);
+      $('#pd_unit_' + cnt).fadeOut(1000);
+      $('#pd_SP_' + cnt).fadeOut(1000);
+      $('#discount_btn_' + cnt).fadeOut(1000);
+      $('#pd_Total_' + cnt).fadeOut(1000);
+      $('#sub_discount_' + cnt).fadeOut(1000);
+      $('#pd_netPrice_' + cnt).fadeOut(1000);
+
+      $('#pd_productName_txtArea_' + cnt).val('');
+      $('#pd_qty_' + cnt).val('');
+      $('#pd_unit_' + cnt).val('');
+      $('#pd_SP_' + cnt).val('');
+      $('#discount_btn_' + cnt).val('');
+      $('#pd_Total_' + cnt).val('');
+      $('#sub_discount_' + cnt).val('');
+      $('#pd_netPrice_' + cnt).val('');
+
+    } else {
+      $('#pd_productName_txtArea_' + cnt).fadeIn(1000);
+      $('#pd_qty_' + cnt).fadeIn(1000);
+      $('#pd_unit_' + cnt).fadeIn(1000);
+      $('#pd_SP_' + cnt).fadeIn(1000);
+      $('#discount_btn_' + cnt).fadeIn(1000);
+      $('#pd_Total_' + cnt).fadeIn(1000);
+      $('#sub_discount_' + cnt).fadeIn(1000);
+      $('#pd_netPrice_' + cnt).fadeIn(1000);
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/ProformaInvoice']);
+    
   }
 
 }

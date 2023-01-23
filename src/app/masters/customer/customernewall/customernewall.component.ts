@@ -97,12 +97,12 @@ export class CustomernewallComponent implements OnInit {
   editId: any;
   radio: any;
   b_id: any = [];
-  geting_biller_edit :any;
-  get_PermissionallList:any;
-  get_PermissionEdit:any;
-  editPermissionId:any;
-  editPermission:any;
-  editPermissionCheckboxID_array:any=[];
+  geting_biller_edit: any;
+  get_PermissionallList: any;
+  get_PermissionEdit: any;
+  editPermissionId: any;
+  editPermission: any;
+  editPermissionCheckboxID_array: any = [];
   //special edit
   specialEditCustomerForm: FormGroup;
   specialEditId: any;
@@ -131,6 +131,12 @@ export class CustomernewallComponent implements OnInit {
   fileAttachCustomerID: any;
   myFiles: string[] = [];
   myForm: FormGroup;
+  //customer share permission
+  groupSelect_SharedCustomerPermission: any;
+  checkbox_value_SharedCustomerPermission: any;
+  edit_array_SharedCustomerPermission_Checkbox: any = [];
+  sharedassignVariable: any;
+
   //invoice
   invoiceSharedEdit1: any = [];
   invoiceSharedCustomerForm: FormGroup;
@@ -145,6 +151,7 @@ export class CustomernewallComponent implements OnInit {
   ShareCustomerPermissionForm: FormGroup;
   SharedCustomerPermissionArray: any = [];
   shareCustomerPermissionParameter: any;
+  shareCustomerPermission_ID: any;
 
   checkbox_InvoiceShared: boolean = false;
   //NX32 Share customer permission
@@ -171,7 +178,7 @@ export class CustomernewallComponent implements OnInit {
   From_List: any;
   Template_List: any;
   CRMTemplateID: any;
-   cus_type_edit :any;
+  cus_type_edit: any;
   //AssignAccountManagerForm
   AssignAccountManagerForm: FormGroup;
   //GoogleAuthentication
@@ -819,10 +826,28 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_RSsearch = event.target.checked;
     console.log(this.checkbox_RSsearch)
   }
-
   eventCheckInvoiceShared(event: any) {
-    this.checkbox_InvoiceShared = event.target.checked;
-    console.log(this.checkbox_InvoiceShared)
+
+  }
+
+  eventCheckSharedCustomerPermission(data: any, event: any) {
+
+    this.groupSelect_SharedCustomerPermission = data;
+    this.checkbox_value_SharedCustomerPermission = event.target.checked;
+    console.log(this.checkbox_value_SharedCustomerPermission)
+    if (this.checkbox_value_SharedCustomerPermission) {
+
+      this.edit_array_SharedCustomerPermission_Checkbox.push(data);
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_SharedCustomerPermission_Checkbox);
+    }
+    else {
+      const index = this.edit_array_SharedCustomerPermission_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_SharedCustomerPermission_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_SharedCustomerPermission_Checkbox)
+
+    }
   }
 
   autoCreditPermission(event: any) {
@@ -996,14 +1021,14 @@ export class CustomernewallComponent implements OnInit {
     api_reqs_addCustomer.action = "add_customer";
     api_reqs_addCustomer.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_reqs_addCustomer;
-    console.log("json data format", api_reqs_addCustomer)
+
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
         this.customerPermissionList = response.cus_permission;
-        this.addPermissionCheckboxID_array= response.cus_permission_selected;
+        this.addPermissionCheckboxID_array = response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
         console.log(this.dropdownList_billerName)
 
@@ -1038,7 +1063,7 @@ export class CustomernewallComponent implements OnInit {
 
     this.editBillerNameBillerId = data;
     this.editBillerNameBiller = event.target.checked;
-    console.log('editBillerNameBiller'+this.editBillerNameBiller)
+    console.log('editBillerNameBiller' + this.editBillerNameBiller)
 
     if (this.editBillerNameBiller) {
 
@@ -1061,7 +1086,7 @@ export class CustomernewallComponent implements OnInit {
 
     this.editPermissionId = data;
     this.editPermission = event.target.checked;
-    console.log('editBillerNameBiller'+this.editPermission)
+    console.log('editBillerNameBiller' + this.editPermission)
 
     if (this.editPermission) {
 
@@ -1083,7 +1108,7 @@ export class CustomernewallComponent implements OnInit {
   addPermissionCHK(data: any, event: any) {
     this.addPermissionId = data;
     this.addPermission = event.target.checked;
-    console.log('addPermission'+this.addPermission)
+    console.log('addPermission' + this.addPermission)
 
     if (this.addPermission) {
 
@@ -1490,7 +1515,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     edit_customer_req.action = "customer_edit";
-	 edit_customer_req.customerId = id;
+    edit_customer_req.customerId = id;
     edit_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = edit_customer_req;
 
@@ -1515,12 +1540,12 @@ export class CustomernewallComponent implements OnInit {
         console.log("customer status", response.result.customer_details[0].cust_status);
         this.get_cust_type = response.result.customer_details[0].cus_type;
         this.geting_biller = response.result.bill_details;
-        this.geting_biller_edit =  response.result.billerId_det;
+        this.geting_biller_edit = response.result.billerId_det;
         this.editBillerNameCheckboxID_array = response.result.billerId_det;
-        this.get_PermissionallList=response.result.cus_permission_details;
-        this.get_PermissionEdit=response.result.cus_permission_id;
+        this.get_PermissionallList = response.result.cus_permission_details;
+        this.get_PermissionEdit = response.result.cus_permission_id;
         this.cus_type_edit = response.result.customer_details[0].cus_type;
-        console.log('selected_biller',response.result.billerId_det);
+        console.log('selected_biller', response.result.billerId_det);
 
         this.editCustomerForm.patchValue({
 
@@ -1611,7 +1636,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.user_id = localStorage.getItem('user_id');
     update_customer_req.customerId = id;
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
-    update_customer_req.billerId =  this.editBillerNameCheckboxID_array;
+    update_customer_req.billerId = this.editBillerNameCheckboxID_array;
     update_customer_req.company_name = this.editCustomerForm.value.edit_defaultBillerName;
     update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
     update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
@@ -1708,7 +1733,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialEdit_customer_req.action = "special_edit";
     specialEdit_customer_req.user_id = localStorage.getItem('user_id');
-    specialEdit_customer_req.customerId =id;
+    specialEdit_customer_req.customerId = id;
     api_req.element_data = specialEdit_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1926,7 +1951,7 @@ export class CustomernewallComponent implements OnInit {
               position: 'topRight'
             });
             $("#fileAttachmentFormId").modal("hide");
-           
+
           } else {
             iziToast.warning({
               message: "File Attachment not deleted. Please try again",
@@ -2092,9 +2117,9 @@ export class CustomernewallComponent implements OnInit {
     // });
   }
   mrvoip_address_add(id: any) {
-    console.log("this.checkbox_MrvoipAddressShow",this.checkbox_MrvoipAddressShow)
-    var partnerEmail=$("#mv_partnerEmail").val()
-    console.log("Partner Email",partnerEmail)
+    console.log("this.checkbox_MrvoipAddressShow", this.checkbox_MrvoipAddressShow)
+    var partnerEmail = $("#mv_partnerEmail").val()
+    console.log("Partner Email", partnerEmail)
     var data = new FormData();
     $("#partnerEmail").val();
     data.append('partner_email_mrvoip', $("#mv_partnerEmail").val());
@@ -2256,9 +2281,9 @@ export class CustomernewallComponent implements OnInit {
 
   call4tel_address_add(id: any) {
 
- 
+
     var data = new FormData();
- 
+
     data.append('partner_email_call4tel', $("#C4T_partnerEmail").val());
     data.append('partner_phone_no_call4tel', $("#C4T_partnerPhone").val());
     data.append('call4tel_address_show', this.checkbox_C4TAddressShow);
@@ -2343,7 +2368,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     invoiceShare_edit_req.action = "invoice_share_edit";
     invoiceShare_edit_req.user_id = localStorage.getItem('user_id');
-    invoiceShare_edit_req.customerId =id ;
+    invoiceShare_edit_req.customerId = id;
     api_req.element_data = invoiceShare_edit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -2402,11 +2427,12 @@ export class CustomernewallComponent implements OnInit {
     });
 
   }
-  quickMail(a:any){
-    
+  quickMail(a: any) {
+
   }
   shareCustomerPermission_edit(id: any) {
 
+    this.shareCustomerPermission_ID = id;
     let api_req: any = new Object();
     let shareCustomerPermission_edit: any = new Object();
     api_req.moduleType = "customer";
@@ -2417,15 +2443,27 @@ export class CustomernewallComponent implements OnInit {
     shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_edit.customerId = id;
     api_req.element_data = shareCustomerPermission_edit;
-    
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("customer share permission response", response);
       if (response != '') {
 
         this.SharedCustomerPermissionArray = [];
-        this.SharedCustomerPermissionArray = response.user_details;
 
+        this.SharedCustomerPermissionArray = response.user_details;
+        console.log("response.access_user[0].access_userid", response.access_user[0].access_userid)
+        if (response.access_user[0].access_userid != '') {
+          setTimeout(() => {
+            var checkVariable: any = [];
+            checkVariable.push(response.access_user[0].access_userid);
+            console.log("checkVariable", checkVariable)
+            this.edit_array_SharedCustomerPermission_Checkbox = checkVariable;
+          }, 2000);
+
+        }
+
+        console.log("response.user_details", response.user_details)
         console.log(this.SharedCustomerPermissionArray)
 
 
@@ -2438,6 +2476,7 @@ export class CustomernewallComponent implements OnInit {
 
   }
   shareCustomerPermission_update(id: any) {
+    // alert(this.edit_array_SharedCustomerPermission_Checkbox)
     this.shareCustomerPermissionParameter = id;
 
     let api_req: any = new Object();
@@ -2448,14 +2487,21 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     shareCustomerPermission_update_req.action = "customer_share_update";
     shareCustomerPermission_update_req.user_id = localStorage.getItem('user_id');
-    shareCustomerPermission_update_req.customerId =id;
-    shareCustomerPermission_update_req.access_userid = this.ShareCustomerPermissionForm.value.shareCustomerPermission_checklist;
+    shareCustomerPermission_update_req.customerId = this.shareCustomerPermission_ID;
+    shareCustomerPermission_update_req.access_userid = this.edit_array_SharedCustomerPermission_Checkbox;
     api_req.element_data = shareCustomerPermission_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       console.log("shared customer permission update", response);
       if (response != '') {
+        iziToast.success({
+          message: "Share Customer Permission Updated successfully",
+          position: 'topRight'
+        });
 
+        $('#SharedCustomerPermissionFormId').modal('hide');
+        $("#sel_check").val('');
+        this.edit_array_SharedCustomerPermission_Checkbox = [];
       }
 
     });
