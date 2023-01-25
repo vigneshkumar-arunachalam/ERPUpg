@@ -918,8 +918,7 @@
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
                 <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
-                  <!-- <input type="checkbox" formControlName="edit_ship_address" id="edit_ship_address"
-                    (change)="eventCheck($event)" checked  style="margin-left: 30px;"/> -->
+      
 
                   <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;"
                     formControlName="edit_ship_address" (change)="eventCheck($event)" />
@@ -1078,9 +1077,11 @@
                         <mat-icon>cancel</mat-icon>
                       </button>
                     </mat-chip>
-                    <input placeholder="Type New Email to add Dynamically..." [matChipInputFor]="chipListEmail"
-                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                      (matChipInputTokenEnd)="addEmail($event)">
+                    <input placeholder="Type New Email to add Dynamically..." 
+                    [matChipInputFor]="chipListEmail"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="addEmail($event)">
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
@@ -1447,13 +1448,11 @@
               <div class="CheckboxScroll">
 
                 <div *ngFor="let display of geting_biller;let i =index;" style="padding-left: 30px;">
-
-
-                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
-                    checked="{{this.geting_biller_edit.includes(''+display.billerId+'')== true? 'checked':''}}"
+                  
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"  
+                  checked="{{display.chk_val == true? 'checked' : ''}}"                
                     (change)="editBillerNameCHK(display.billerId,$event)">
-                  {{display.billerName}}
-
+                  {{display.billerName}}{{this.geting_biller_edit}}{{display.billerId}}
 
                 </div>
               </div>
@@ -1487,11 +1486,15 @@
                 <label style="margin-bottom: 0px;"> Customer Classification</label>
               </div>
 
-              <div *ngFor="let cust of customerType_list;let m =index;"
+              <div *ngFor="let cust of customerType_listEdit;let m =index;"
                 style="display: flex;padding-left: 30px;align-items: center;">
 
+                <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
+                checked="{{cust.chk_val == true? 'checked' : ''}}"   
+                 (change)="editCustomerClassificationCHK(cust,$event)">
+                {{cust.name}}
                 <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
-                checked="{{this.cus_type_edit.includes(''+cust+'') ==true? 'checked' : ''}}"
+                checked="{{this.cus_type_edit.indexOf(''+cust+'') !=-1? 'checked' : ''}}"
                  (change)="editCustomerClassificationCHK(cust,$event)">
                 {{cust}} -->
 
@@ -1578,7 +1581,7 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
                   <input type="checkbox" formControlName="e_edit_ship_address" style="margin-left:30px;"
-                    (change)="edit_eventCheck($event)" />
+                  [(ngModel)]=" checkbox_EditShippingAddress"   (change)="edit_eventCheck($event)" />
                 </label>
               </div>
             </div>
@@ -1707,6 +1710,64 @@
                 </div>
               </div>
             </div>
+          
+         
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="Email" class="col-lg-12 col-form-label">
+                  Email</label>
+                <mat-form-field class="example-chip-list ml-2" appearance="outline">
+                  <!-- <mat-label>Email</mat-label> -->
+                  <mat-chip-list #chipListeditEmail aria-label="Email selection">
+                    <mat-chip *ngFor="let emailDisplay of emailList" (removed)="removeEmail(emailDisplay)">
+                      {{emailDisplay.emailParameterName}}
+                      <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip>
+                    <input placeholder="Type New Email to add Dynamically..." 
+                    formControlName="e_ESA_Email"
+                    [matChipInputFor]="chipListeditEmail"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                    [matChipInputAddOnBlur]="addOnBlur"
+                    (matChipInputTokenEnd)="editEmail($event)">
+                  </mat-chip-list>
+                  <br>
+                  <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
+
+                </mat-form-field>
+
+              </div>
+            </div>
+
+         
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="finEmail" class="col-lg-12 col-form-label">
+                  Finance Email</label>
+                <mat-form-field class="example-chip-list ml-2" appearance="outline">
+                  <!-- <mat-label>Finance Email</mat-label> -->
+                  <mat-chip-list #chipListFinance aria-label="Finance Email selection">
+                    <mat-chip *ngFor="let financeemailDisplay of financeemailList"
+                      (removed)="removeFinanceEmail(financeemailDisplay)">
+                      {{financeemailDisplay.financeemailParameterName}}
+                      <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    </mat-chip>
+                    <input placeholder="Type New Finance Email to add Dynamically..."
+                    formControlName="e_ESA_FinanceEmail"
+                      [matChipInputFor]="chipListFinance" 
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur" id="finEmail"
+                      (matChipInputTokenEnd)="editFinanceEmail($event)">
+                  </mat-chip-list>
+                  <br>
+                  <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
+                  </p>
+                </mat-form-field>
+              </div>
+            </div>
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="website_name " class="col-lg-12 col-form-label">Website Name</label>
@@ -1716,34 +1777,20 @@
               </div>
             </div>
             <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="ESA_Email" class="col-lg-12 col-form-label">Email</label>
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="e_ESA_Email" id="ESA_Email" />
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="finance_email" class="col-lg-12 col-form-label">Finance Email</label>
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="e_ESA_FinanceEmail" id="finance_email" />
-                </div>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
               <label>Permission</label>
               <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-12"
                 (change)="CHKAll_PermissionSelectAll($event)"> -->
               <div class="CheckboxScroll">
-                <!-- <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
+                <div *ngFor="let cu of get_PermissionallList;let k =index;" style="padding-left: 30px;">
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{cu.id}}"
-                    checked="{{this.get_PermissionEdit.includes(''+cu.id+'') ==true? 'checked' : ''}}"
+                  checked="{{cu.chk_val == true? 'checked' : ''}}"      
                     (change)="editPermissionCHK(cu.id,$event)">
                   {{cu.name}}
-                </div> -->
+                  <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{cu.id}}"
+                    checked="{{this.get_PermissionEdit.indexOf(''+cu.id+'') !=-1? 'checked' : ''}}"
+                    (change)="editPermissionCHK(cu.id,$event)">
+                  {{cu.name}} -->
+                </div>
               </div>
             </div>
 
@@ -2469,7 +2516,7 @@
             </div>
             <div class="col-lg-12">
               <div class="col-lg-6">
-                <img src="{{this.image_mconnectLogo}}" alt="No image to display " height="200px" width="200px">
+                <img src="{{this.mconnect_Logo_Image}}" alt="No image to display " height="200px" width="200px">
               </div>
             </div>
           </div>
@@ -2574,7 +2621,7 @@
             </div>
             <div class="col-lg-12">
               <div class="col-lg-6">
-                <img src="{{this.image_mrvoipLogo}}" alt="No image to display " height="200px" width="200px">
+                <img src="{{this.mrvoip_Logo_Image}}" alt="No image to display " height="200px" width="200px">
               </div>
             </div>
           </div>
@@ -2653,7 +2700,7 @@
 
                 <div class="col-lg-6" *ngFor='let item of radioDynamic;let c=index'>
                   <input type="radio" id="{{item.values}}" formControlName="a_C4TPartnerType"
-                    value="{{item.values}}" (change)="handleChange($event)" />
+                    value="{{item.values}}" (change)="Radio_Partnertype_C4T($event)" />
                   <label for="premiumPartner_id{{c}}" class="col-lg-6 col-form-label">{{item.name}}</label>
                 </div>
 
@@ -2680,7 +2727,7 @@
           
             <div class="col-lg-12">
               <div class="col-lg-6">
-                <img src="{{this.image_call4telLogo}}" alt="No image to display " height="200px" width="200px">
+                <img src="{{this.C4T_Logo_Image}}" alt="No Logo to display " height="200px" width="200px">
               </div>
             </div>
 
@@ -3132,6 +3179,20 @@
           </div>
           <div class="col-lg-12">
             <div class="form-group row">
+              <label for="templateLandscape" class="col-lg-12 col-form-label">Select Template</label>
+
+              <select name="Template_name_1" id="templateLandscape" class="form-control"
+                (change)=" LandscapeEmailContentDropdown($event)" formControlName="landscapeEmail_Template">
+                <option [ngValue]="null" selected disabled>Select Template</option>
+                <option *ngFor="let templateValue of Template_List" value="{{templateValue.crm_template_id}}">
+                  {{templateValue.crm_template_name}}
+                </option>
+              </select>
+
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <div class="form-group row">
 
               <label for="subjLandscape" class="col-lg-12 col-form-label">Subject</label>
               <input type="email" id="subjLandscape" class="form-control" formControlName="landscapeEmail_Subject">
@@ -3161,20 +3222,7 @@
           </div> -->
 
 
-          <div class="col-lg-12">
-            <div class="form-group row">
-              <label for="templateLandscape" class="col-lg-12 col-form-label">Select Template</label>
-
-              <select name="Template_name_1" id="templateLandscape" class="form-control"
-                (change)=" LandscapeEmailContentDropdown($event)" formControlName="landscapeEmail_Template">
-                <option [ngValue]="null" selected disabled>Select Template</option>
-                <option *ngFor="let templateValue of Template_List" value="{{templateValue.crm_template_id}}">
-                  {{templateValue.crm_template_name}}
-                </option>
-              </select>
-
-            </div>
-          </div>
+        
 
           <div class="col-lg-12">
             <div class="form-group row">

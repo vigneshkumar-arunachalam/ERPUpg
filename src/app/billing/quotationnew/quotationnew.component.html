@@ -1503,7 +1503,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="emailForm" (ngSubmit)="testdatas()">
+                <form [formGroup]="emailForm">
 
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
@@ -1575,19 +1575,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12 col-12">
-                        <div class="form-group row">
-                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
-                            <div class="col-lg-10">
-                                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
-                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
-                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                                    Subject is Required
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
+                
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
@@ -1611,7 +1599,19 @@
 
                         </div>
                     </div>
+                    <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                            <div class="col-lg-10">
+                                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                                <div *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                                    Subject is Required
+                                </div>
+                            </div>
+                        </div>
 
+                    </div>
                     <!-- <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="emailPDFType" class="col-lg-2 col-form-label"><span>Select PDF Type</span> :</label>
@@ -1645,7 +1645,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" [disabled]="!emailForm.valid" (click)="testdatas()">Send
+                <button type="button" class="btn btn-primary" (click)="sendMail()">Send
                     Mail
 
                 </button>

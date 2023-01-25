@@ -57,6 +57,7 @@ export class QuotationnewComponent implements OnInit {
   groupselectQuotationId: any;
   checkbox_quotationShare_value: any;
   quotationSharedCheckboxID_array: any = [];
+  quotationSharedPreviousChecked:any=[];
   sharePermissionQuotationId: any;
   search_SharedPersonName: any;
   values = '';
@@ -765,6 +766,7 @@ export class QuotationnewComponent implements OnInit {
   }
 
   quotationSharedPersonEdit(QuotationId: any) {
+    // this.quotationSharedCheckboxID_array=[];
     this.sharePermissionQuotationId = QuotationId
     // this.quotationSharedResult=[];
     // this.invoiceResult=[];  //for refreshing we are emptying the variable
@@ -786,11 +788,18 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status", response.status);
+     
       if (response.status == true) {
 
         this.quotationSharedResult = response.user_list;
+        console.log("response.user_list",response.user_list);
+        this.quotationSharedPreviousChecked=response.access_userid;
+        console.log("checkbox selected user_list",response.access_userid);
+        this.quotationSharedCheckboxID_array=response.access_userid;
+        console.log("Initial Quotation list before select/deselect", this.quotationSharedCheckboxID_array);
 
+        this.quotationSharedCheckboxID_array.push(this.quotationSharedPreviousChecked);
+        // this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
         // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
 
       }
@@ -813,7 +822,10 @@ export class QuotationnewComponent implements OnInit {
   }
   quotationSharedPersonUpdate() {
     // this.invoiceCheckboxID_array=[];
-    console.log("Quotation Shared checkbox array-on update click", this.quotationSharedCheckboxID_array)
+    console.log("Checkbox current click", this.quotationSharedCheckboxID_array)
+    
+    this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
+    console.log("Checkbox current+edit(past) click", this.quotationSharedCheckboxID_array)
     let api_req: any = new Object();
     let quot_share_update_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -827,11 +839,12 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = quot_share_update_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("check invoice update", response)
+    
       if (response.status == true) {
         this.quotationSharedResult = response.customer_invoice_details;
+        console.log("response.customer_invoice_details",response.customer_invoice_details)
         this.quotationList({});
-        window.location.reload();
+        // window.location.reload();
         $("#quotationSharedPersonId").modal("hide");
         console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
         iziToast.success({
@@ -910,10 +923,11 @@ export class QuotationnewComponent implements OnInit {
 
 
       this.quotationSharedCheckboxID_array.push(data);
-      this.quotationSharedCheckboxID_array.join(',');
+      // this.quotationSharedCheckboxID_array.join(',');
       console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
     }
     else {
+      console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
       const index = this.quotationSharedCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.quotationSharedCheckboxID_array.splice(index, 1);
@@ -1350,7 +1364,7 @@ export class QuotationnewComponent implements OnInit {
     this.emailForm.reset();
     this.EmailQuotationID = QuotationID;
 
-
+   
     let api_req: any = new Object();
     let emailPage_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1425,8 +1439,10 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-  testdatas() {
-
+  sendMail() {
+    Swal.fire('Sending Email');
+    Swal.showLoading();
+   
     this.FromEmailValue = $('#emailFrom').val();
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
@@ -1443,48 +1459,87 @@ export class QuotationnewComponent implements OnInit {
     api_email_req.action = "quotation_sendmail";
     api_email_req.user_id = localStorage.getItem('user_id');
     // api_email_req.customer_contract_id = this.EmailCustomerContractID;
+
     api_email_req.from_email = this.FromEmailValue;
+    if(this.FromEmailValue===null || this.FromEmailValue==='' || this.FromEmailValue==='undefined' || this.FromEmailValue===undefined ){
+     
+      iziToast.warning({
+        message: "Choose From Email Value",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_email_req.to_email = this.emailTo;
+    if(this.emailTo===null){
+     
+      iziToast.warning({
+        message: "Choose To Email Value",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.subject = this.subjectValue;
+    if(this.subjectValue===null || this.subjectValue==='' || this.subjectValue==='undefined' || this.subjectValue===undefined ){
+     
+      iziToast.warning({
+        message: "Choose Subject",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_email_req.mail_message = this.msg_id;
+    if(this.msg_id===null){
+     
+      iziToast.warning({
+        message: "Choose Message",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_email_req.quotation_id = this.EmailQuotationID;
     api_req.element_data = api_email_req;
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer email", response);
-
-      // this.searchResult = response.customer_names;
-      if (response != 'null' && response != null) {
+      console.log("response status", response.status);
+      if (response.status==true) {
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
         this.quotationList({})
-        Swal.fire({
-          icon: 'error',
-          title: 'Email Not Sent',
-          showConfirmButton: false,
-          timer: 1200,
+        Swal.close();
+        iziToast.success({
+          message: "Email Notification Sent Successfully",
+          position: 'topRight'
         });
+        
       }
       else {
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
-
+        Swal.close();
         this.quotationList({})
-        Swal.fire({
-          icon: 'success',
-          title: 'Email Notification Sent Successfully',
-          showConfirmButton: false,
-          timer: 1200,
+        iziToast.success({
+          message: "Email Notification Sent !!!!",
+          position: 'topRight'
         });
+        this.quotationList({})
+      
       }
-
-      this.quotationList({})
-    });
+      Swal.close();
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
   }
   initTiny() {
     var richTextArea_id = 'richTextAreacreated';

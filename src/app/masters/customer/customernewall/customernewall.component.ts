@@ -38,6 +38,7 @@ export class CustomernewallComponent implements OnInit {
   revenue_list: any;
   allData: any;
   customerType_list: any;
+  customerType_listEdit: any;
   displayDynamicData: any;
   customerPermissionList: any;
   billList: any;
@@ -64,8 +65,12 @@ export class CustomernewallComponent implements OnInit {
   emailErrMsg = true;
   checked: boolean = true;
   isDisabled: boolean = true;
-  customerStatus_radiobox_Value: any = 'New';
+  customerStatus_radiobox_Value: any = '';
+  // customerStatus_radiobox_Value: any = 'New';
+
   checkbox_EditShippingAddress: boolean = true;
+  checkbox_EdShippingAddress: boolean = true;
+
   // checkbox-customer classification-add
   addCustomerClassificationBillerId: any;
   addCustomerClassificationBiller: any;
@@ -91,7 +96,7 @@ export class CustomernewallComponent implements OnInit {
   CustomerSearchTextValue: any;
   revenueCheckListvalue: any = '';
   //edit
-  editCustomerForm: FormGroup;
+  editCustomerForm: any;
   get_cust_type: any = [];
   geting_biller: any = [];
   editId: any;
@@ -103,6 +108,7 @@ export class CustomernewallComponent implements OnInit {
   editPermissionId: any;
   editPermission: any;
   editPermissionCheckboxID_array: any = [];
+
   //special edit
   specialEditCustomerForm: FormGroup;
   specialEditId: any;
@@ -111,19 +117,38 @@ export class CustomernewallComponent implements OnInit {
   mconnectParameter: any;
   image_mconnectLogo: any;
   mconnect_Address_add: any;
-  checkbox_mconnectAddressShow: boolean;
+ 
   checkboxNumber_mconnectAddressShow: any;
   partnerTypeMconn: any;
+  //mconnect-new
+  mconnect_PartnerEmail_Value: any;
+  mconnect_PartnerPhoneNumber_Value: any;
+  mconnect_PartnerType_Value_Radio: any;
+  mconnect_AddressShowState_Value: any;
+  mconnect_Logo_Image: any;
   //mrvoip
   mrvoipParameter: any;
   mrvoipCustomerForm: FormGroup;
   image_mrvoipLogo: any;
   mrvoip_Address_add: any;
-  //call4tel
+  //mrvoip-new
+  mrvoip_PartnerEmail_Value: any;
+  mrvoip_PartnerPhoneNumber_Value: any;
+  mrvoip_PartnerType_Value_Radio: any;
+  mrvoip_AddressShowState_Value: any;
+  mrvoip_Logo_Image: any;
+
+
+  //C4T Partner details
   Call4telParameter: any;
   Call4telCustomerForm: FormGroup;
   call4tel_Address_add: any;
-  image_call4telLogo: any;
+  C4T_PartnerEmail_Value: any;
+  C4T_PartnerPhoneNumber_Value: any;
+  C4T_PartnerType_Value_Radio: any;
+  C4T_Logo_Image: any;
+  C4T_AddressShowState_Value: any;
+
   //file attachment
   file: File;
   getResult: any;
@@ -159,6 +184,7 @@ export class CustomernewallComponent implements OnInit {
   NX32SharePermissionParameter: any;
   checkbox_NX32Permission: boolean = false;
   checkbox_status_nx32Permission: any;
+  cms_default_department: any;
   //bill Code edit
   billCodeEditForm1: FormGroup;
   billCodeEditForm2: FormGroup;
@@ -183,6 +209,11 @@ export class CustomernewallComponent implements OnInit {
   AssignAccountManagerForm: FormGroup;
   //GoogleAuthentication
   GoogleAuthenticationForm: FormGroup;
+  //radio-mconnect,mrvoip,cal4tel
+  Partnertype_C4T_radiobox_Value: any;
+
+
+
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
     this.billCodeEditForm1 = this.fb.group({
@@ -253,7 +284,44 @@ export class CustomernewallComponent implements OnInit {
 
     event.chipInput!.clear();
   }
+
+  editEmail(event: MatChipInputEvent): void {
+    console.log(event.value)
+    if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
+      var value: any = (event.value || '').trim();
+
+      this.emailErrMsg = true;
+    }
+    else {
+      this.emailErrMsg = false;
+    }
+    if (value) {
+      this.emailList.push({ emailParameterName: value });
+    }
+
+    event.chipInput!.clear();
+  }
   addFinanceEmail(event: MatChipInputEvent): void {
+
+    console.log(event.value)
+    if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
+      var value: any = (event.value || '').trim();
+
+      this.errMsg = true;
+
+    }
+    else {
+      this.errMsg = false;
+    }
+    if (value) {
+      this.financeemailList.push({ financeemailParameterName: value });
+
+
+    }
+
+    event.chipInput!.clear();
+  }
+  editFinanceEmail(event: MatChipInputEvent): void {
 
     console.log(event.value)
     if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
@@ -308,7 +376,7 @@ export class CustomernewallComponent implements OnInit {
     this.paymentList = this.displayDynamicData[0].payment_det;
     this.departmentData = '[{ "status": true, "result": { "status": true, "data": [ { "department_name": "Sales", "dept_id": "83", "alise_email": "isales@cal4care.com" }, { "department_name": "Activation", "dept_id": "89", "alise_email": "activation@cal4care.com" }, { "department_name": "WebSupport", "dept_id": "90", "alise_email": "Websupport@cal4care.com" }, { "department_name": "CloudNippon", "dept_id": "100", "alise_email": "cc@cloudnippon.com" }, { "department_name": "CallnClear", "dept_id": "97", "alise_email": "cc@callnclear.com" }, { "department_name": "CallaCloud", "dept_id": "99", "alise_email": "CC@callacloud.com" }, { "department_name": "Calncall", "dept_id": "98", "alise_email": "cc@calncall.com" }, { "department_name": "Connectviet", "dept_id": "101", "alise_email": "cc@connectviet.com" }, { "department_name": "Support IN", "dept_id": "102", "alise_email": "Support@dcare.net" }, { "department_name": "Support SG", "dept_id": "103", "alise_email": "Support@cal4care.com" }, { "department_name": "Support SG", "dept_id": "103", "alise_email": "support@cal4care.com.sg" }, { "department_name": "Calncall", "dept_id": "98", "alise_email": "support@calncall.com" }, { "department_name": "Support MY", "dept_id": "104", "alise_email": "support@cal4care.com.my" }, { "department_name": "Support MY", "dept_id": "104", "alise_email": "support@callacloud.com" }, { "department_name": "Support JP", "dept_id": "105", "alise_email": "support@cal4care.co.jp" }, { "department_name": "Support JP", "dept_id": "105", "alise_email": "support@cloudnippon.com" }, { "department_name": "Support TH", "dept_id": "106", "alise_email": "support@cal4care.co.th" }, { "department_name": "Support TH", "dept_id": "106", "alise_email": "support@callnclear.com" }, { "department_name": "Support Call4Tel", "dept_id": "107", "alise_email": "Support@call4tel.com" }, { "department_name": "ACN", "dept_id": "108", "alise_email": "v.support@acncomm.com" }, { "department_name": "Global Sales", "dept_id": "109", "alise_email": "globalsales@mconnectapps.com" }, { "department_name": "WebDev", "dept_id": "110", "alise_email": "webdav@cal4care.com" } ] } }]';
     this.departmentDataOut = JSON.parse(this.departmentData);
-    this.cmsDepartmentList = this.departmentDataOut[0].result.data;
+    // this.cmsDepartmentList = this.departmentDataOut[0].result.data;
     this.customerClassificationValue = ['Calncall', 'Callacloud', 'Voip', 'ITCare', 'Support', 'Cloud Nippon', 'Mrvoip', 'Call4Tel'];
     this.permissionValue = ["Inv", "Credit Note", "License", "Phone", "Project", "Leads", "RMA Issues", "Call History", "IDD Price list", "User Mgt", "3CX Buy", "License Renewal Reminder", "Deal Registeration", "GCC Firewall", "Reseller Product Price", "Call4tel License", "mConnect Buy", "Phone Edit", "DNC", "Mrviop", "Call4tel Address Show", "Mconnect Address Show", "Generate Invoice", "VS Credit Report", "View Shared DO", "CMS Balance Show", "Min Balance Mail Alert", "NX32 Access", "NX32 Logo Update (OEM)", "CMS Ticket"];
     this.dcIPAllowCountries = ["Japan", "Singapore", "Thailand", "Malaysia"];
@@ -706,10 +774,38 @@ export class CustomernewallComponent implements OnInit {
     }
     console.log(this.checkbox_EditShippingAddress)
   }
-  checkbox_EdShippingAddress: any;
+
+
+  // checkbox_EdShippingAddress: any;
   edit_eventCheck(event: any) {
     this.checkbox_EdShippingAddress = event.target.checked;
     console.log(this.checkbox_EdShippingAddress)
+
+    if (this.checkbox_EdShippingAddress) {
+      // console.log(this.editCustomerForm.get('e_ESA_cntPerson').disable())
+      this.editCustomerForm.get("e_ESA_cntPerson").disable();
+      this.editCustomerForm.get("e_ESA_address1").disable();
+      this.editCustomerForm.get("e_ESA_address2").disable();
+      this.editCustomerForm.get("e_ESA_city").disable();
+      this.editCustomerForm.get("e_ESA_state").disable();
+      this.editCustomerForm.get("e_ESA_shipto").disable();
+      this.editCustomerForm.get("e_ESA_zipcode").disable();
+      this.editCustomerForm.get("e_ESA_countryname").disable();
+    }
+    else {
+      // console.log(this.editCustomerForm.get('DCIP_edit'))
+      this.editCustomerForm.get("e_ESA_cntPerson").enable();
+      this.editCustomerForm.get("e_ESA_address1").enable();
+      this.editCustomerForm.get("e_ESA_address2").enable();
+      this.editCustomerForm.get("e_ESA_city").enable();
+      this.editCustomerForm.get("e_ESA_state").enable();
+      this.editCustomerForm.get("e_ESA_shipto").enable();
+      this.editCustomerForm.get("e_ESA_zipcode").enable();
+      this.editCustomerForm.get("e_ESA_countryname").enable();
+
+    }
+    console.log(this.checkbox_EdShippingAddress)
+
   }
 
 
@@ -803,23 +899,23 @@ export class CustomernewallComponent implements OnInit {
   }
 
 
-  checkbox_C4TAddressShow: any;
+
   eventCheckC4TAddressShow(event: any) {
-    this.checkbox_C4TAddressShow = event.target.checked;
-    console.log(this.checkbox_C4TAddressShow)
+    this.C4T_AddressShowState_Value = event.target.checked;
+    console.log("this.checkbox_C4TAddressShow", this.C4T_AddressShowState_Value)
   }
 
-  checkbox_MrvoipAddressShow: any;
+  
   eventCheckMrvoipAddressShow(event: any) {
-    this.checkbox_MrvoipAddressShow = event.target.checked;
-    console.log(this.checkbox_MrvoipAddressShow)
+    this.mrvoip_AddressShowState_Value = event.target.checked;
+    console.log(this.mrvoip_AddressShowState_Value)
   }
 
   eventCheckmconnectAddressShow(event: any) {
-    this.checkbox_mconnectAddressShow = event.target.checked;
-    console.log(this.checkbox_mconnectAddressShow)
-    this.checkboxNumber_mconnectAddressShow = Number(this.checkbox_mconnectAddressShow);
-    console.log(" checkbox 1 or 0---:", this.checkboxNumber_mconnectAddressShow)
+    this.mconnect_AddressShowState_Value = event.target.checked;
+    console.log(this.mconnect_AddressShowState_Value)
+    // this.checkboxNumber_mconnectAddressShow = Number(this.checkbox_mconnectAddressShow);
+    // console.log(" checkbox 1 or 0---:", this.checkboxNumber_mconnectAddressShow)
   }
   checkbox_RSsearch: any;
   eventCheckRSsearch(event: any) {
@@ -882,6 +978,10 @@ export class CustomernewallComponent implements OnInit {
   handleChange(evt: any) {
     this.customerStatus_radiobox_Value = evt.target.id;
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
+  }
+  Radio_Partnertype_C4T(evt: any) {
+    this.Partnertype_C4T_radiobox_Value = evt.target.id;
+    console.log("this.Partnertype_C4T_radiobox_Value", this.Partnertype_C4T_radiobox_Value);
   }
   partnerTypehandleChange(evt: any) {
     this.partnerTypeMconn = evt.target.id;
@@ -975,6 +1075,7 @@ export class CustomernewallComponent implements OnInit {
       if (response != '') {
         this.customer_list = response.customer_details;
         this.revenue_list = response.revenue_list;
+
 
         console.log(this.customer_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
@@ -1542,11 +1643,12 @@ export class CustomernewallComponent implements OnInit {
         this.geting_biller = response.result.bill_details;
         this.geting_biller_edit = response.result.billerId_det;
         this.editBillerNameCheckboxID_array = response.result.billerId_det;
-        this.get_PermissionallList = response.result.cus_permission_details;
+        this.get_PermissionallList = response.result.cus_permission;
         this.get_PermissionEdit = response.result.cus_permission_id;
         this.cus_type_edit = response.result.customer_details[0].cus_type;
+        this.customerType_listEdit = response.result.cus_class_type;
         console.log('selected_biller', response.result.billerId_det);
-
+        this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
 
           'edit_company_Name': response.result.customer_details[0].customerName,
@@ -1585,7 +1687,8 @@ export class CustomernewallComponent implements OnInit {
           'e_ESA_Email': response.result.customer_details[0].email,
           'edit_permission': response.result.customer_details[0].cus_permission,
 
-          'edit_cmsdepartment': response.result.customer_details[0].cms_department_name,
+
+          'edit_cmsdepartment': response.result.customer_details[0].cms_default_department,
           'e_ESA_customerLimit': response.result.customer_details[0].credit_amt,
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,
           'edit_currencyname': response.result.customer_details[0].def_currency_id,
@@ -1626,6 +1729,12 @@ export class CustomernewallComponent implements OnInit {
     // let Update_billerNameCheckListDisplay = this.editCustomerForm.value.edit_billernamelist.map((data: any) => data.billerId).join(',');
     // console.log("billerName-in update", Update_billerNameCheckListDisplay);
     // console.log("billerName-in update", this.editBillerNameCheckboxID_array);
+
+
+    //  email field condition
+    let result_Email_Field = this.emailList.map(o => o.emailParameterName).join(',');
+    console.log(result_Email_Field);
+
     let api_req: any = new Object();
     let update_customer_req: any = new Object();
     api_req.moduleType = "customer";
@@ -1662,7 +1771,15 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.fax = this.editCustomerForm.value.e_ESA_FAX;
     update_customer_req.tin_no = this.editCustomerForm.value.e_ESA_GSTNO;
     update_customer_req.website_name = this.editCustomerForm.value.e_ESA_websiteName;
-    update_customer_req.email = this.editCustomerForm.value.ESA_Email;
+    // update_customer_req.email = this.editCustomerForm.value.ESA_Email;
+    update_customer_req.email = result_Email_Field;
+    // if (!result_Email_Field) {
+    //   iziToast.warning({
+    //     message: "Email Missing",
+    //     position: 'topRight'
+    //   });
+    //   return false;
+    // }
     update_customer_req.finance_email = this.editCustomerForm.value.ESA_FinanceEmail;
     update_customer_req.cms_default_department = this.editCustomerForm.value.edit_cmsdepartment;
 
@@ -2008,7 +2125,7 @@ export class CustomernewallComponent implements OnInit {
   }
   mconnect_address_getList(id: any) {
     this.mconnectCustomerForm.reset();
-    console.log("mconnect address getlist -UI Display Data after OnInit ")
+    this.mconnect_Logo_Image='';
     this.mconnectParameter = id;
     let api_req: any = new Object();
     let api_mconnectList: any = new Object();
@@ -2022,21 +2139,29 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_mconnectList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("get mconnect address response", response);
-      if (response != '') {
-        console.log(response);
-        this.image_mconnectLogo = response.mconnect_company_logo;
-        console.log(this.image_mconnectLogo)
+      if (response.status == true) {
+
+        // this.image_mconnectLogo = response.mconnect_company_logo;
+        // console.log(this.image_mconnectLogo)
+
+        this.mconnect_PartnerEmail_Value = response[0].partner_email;
+        this.mconnect_PartnerPhoneNumber_Value = response[0].partner_phone_no;
+        this.mconnect_PartnerType_Value_Radio = response[0].partner_type;
+        this.mconnect_AddressShowState_Value = Boolean(response.mconnect_show_state);
+        console.log("0 to false, 1 to true response.call4tel_show_state ", this.mconnect_AddressShowState_Value)
+        this.mconnect_Logo_Image = response.mconnect_company_logo;
+
 
         this.mconnectCustomerForm.patchValue({
           'a_mconnectPartnerEmail': response[0].partner_email,
           'a_mconnectPartnerPhoneNum': response[0].partner_phone_no,
           'a_mconnectPartnerType': response[0].partner_type,
+          'a_mconnectAddressShow': response.mconnect_show_state,
 
           // 'a_selectLogo_mconnect': response[0].mconnect_company_logo,
         });
         iziToast.success({
-          message: "mconnect",
+          message: "Mconnect Partner Details displayed successfully",
           position: 'topRight'
 
         });
@@ -2045,25 +2170,23 @@ export class CustomernewallComponent implements OnInit {
       else {
 
         iziToast.warning({
-          message: "mconnect not displayed. Please try again",
+          message: "Mconnect Partner details not available. Please try again",
           position: 'topRight'
         });
       }
     });
   }
   mconnect_address_add(id: any) {
-    console.log("inside partner type mconnect radio", this.partnerTypeMconn);
-    var partner_email_mcon = $("#partnerEmail").val();
-    var partner_phone_mcon = $("#partnerPhone").val();
-    // var address_show_mcon= $("#check_mconn").val();
 
+    Swal.fire('MConnect Partner Details Updating');
+    Swal.showLoading();
     var data = new FormData();
 
-    data.append('partner_email_mconnect', partner_email_mcon);
-    data.append('partner_phone_no_mconnect', partner_phone_mcon);
-    data.append('mconnect_address_show', this.checkboxNumber_mconnectAddressShow);
+    data.append('partner_email_mconnect', this.mconnectCustomerForm.value.a_mconnectPartnerEmail);
+    data.append('partner_phone_no_mconnect', this.mconnectCustomerForm.value.a_mconnectPartnerPhoneNum);
+    data.append('mconnect_address_show', this.mconnect_AddressShowState_Value);
     data.append('customerId', id);
-    data.append('mconnect_partner_type', this.partnerTypeMconn);
+    data.append('mconnect_partner_type', this.mconnectCustomerForm.value.a_mconnectPartnerType);
     data.append('mconnect_company_logo', $("#uploaded-mconnect")[0].files[0]);
     data.append('action', "mconnect_address_save");
 
@@ -2077,8 +2200,10 @@ export class CustomernewallComponent implements OnInit {
       data: data,
       success: function (result: any) {
         if (result.status == true) {
+          Swal.close();
           self.customerslist({});
           console.log(result);
+          $("#mconnectPartnerDetailsFormId").modal("hide")
 
         }
       },
@@ -2086,115 +2211,11 @@ export class CustomernewallComponent implements OnInit {
         console.log(err);
       }
     })
-
-    // let api_req: any = new Object();
-    // let api_mconnectAdd: any = new Object();
-    // api_req.moduleType = "customer";
-    // api_req.api_url = "customer/" + id + "/mconnect_address_save";
-    // api_req.api_type = "web";
-    // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    // api_mconnectAdd.action = "mconnect_address_save";
-    // api_mconnectAdd.user_id = localStorage.getItem('user_id');
-    // api_mconnectAdd.partner_email_mconnect = this.mconnectCustomerForm.value.a_mconnectPartnerEmail;
-    // api_mconnectAdd.partner_phone_no_mconnect = this.mconnectCustomerForm.value.a_mconnectPartnerPhoneNum;
-    // api_mconnectAdd.mconnect_address_show = this.mconnectCustomerForm.value.a_mconnectAddressShow;
-    // api_mconnectAdd.mconnect_partner_type = this.mconnectCustomerForm.value.a_mconnectPartnerType;
-    // api_mconnectAdd.customerId = id;
-    // api_mconnectAdd.cus_permission_popup = this.mconnectCustomerForm.value.a_mconnectAddressShow;
-    // api_mconnectAdd.mconnect_company_logo = this.mconnectCustomerForm.value.a_selectLogo_mconnect;
-    // api_req.element_data = api_mconnectAdd;
-    // console.log(api_req)
-    // this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //   var result = response;
-    //   console.log("get mconnect address response", result);
-    //   if (result) {
-    //     this.mconnect_Address_add = result;
-    //     console.log(this.mconnect_Address_add)
-    //     $('#addCustomerFormId').modal('hide');
-
-    //   }
-
-    // });
   }
-  mrvoip_address_add(id: any) {
-    console.log("this.checkbox_MrvoipAddressShow", this.checkbox_MrvoipAddressShow)
-    var partnerEmail = $("#mv_partnerEmail").val()
-    console.log("Partner Email", partnerEmail)
-    var data = new FormData();
-    $("#partnerEmail").val();
-    data.append('partner_email_mrvoip', $("#mv_partnerEmail").val());
-    data.append('partner_phone_no_mrvoip', $("#mv_partnerPhone").val());
-    data.append('mrvoip_address_show', this.checkbox_MrvoipAddressShow);
-    data.append('customerId', id);
-    data.append('mrvoip_partner_type', this.customerStatus_radiobox_Value);
-    data.append('mrvoip_company_logo', $("#uploaded-mrvoip")[0].files[0]);
-    data.append('action', "mrvoip_address_save");
 
-    var self = this;
-    $.ajax({
-      type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer_contract/mrvoip_address_save',
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (result: any) {
-        if (result.status == true) {
-          self.customerslist({});
-          console.log(result);
-
-        }
-      },
-      error: function (err: any) {
-        console.log(err);
-      }
-    })
-
-
-    // let api_req: any = new Object();
-    // let api_mrvoipAdd: any = new Object();
-    // api_req.moduleType = "customer";
-    // api_req.api_url = "customer/" + id + "/mrvoip_address_save";
-    // api_req.api_type = "web";
-    // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    // api_mrvoipAdd.action = "mrvoip_address_save";
-    // api_mrvoipAdd.user_id = localStorage.getItem('user_id');
-    // api_mrvoipAdd.customerId = id;
-
-    // api_mrvoipAdd.partner_email_mrvoip = this.mrvoipCustomerForm.value.a_MrvoipPartnerEmail;
-    // api_mrvoipAdd.partner_phone_no_mrvoip = this.mrvoipCustomerForm.value.a_MrvoipPartnerPhoneNum;
-    // api_mrvoipAdd.mrvoip_address_show = this.mrvoipCustomerForm.value.a_MrvoipAddressShow;
-    // api_mrvoipAdd.mrvoip_partner_type = this.mrvoipCustomerForm.value.a_MrvoipPartnerType;
-
-    // api_mrvoipAdd.cus_permission_popup = this.mrvoipCustomerForm.value.a_MrvoipAddressShow;
-    // api_mrvoipAdd.mrvoip_company_logo = this.mrvoipCustomerForm.value.a_selectLogo_MrVoip;
-
-    // api_req.element_data = api_mrvoipAdd;
-
-    // this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //   var result = response;
-    //   console.log("get mrvoip address response", result);
-    //   if (result) {
-    //     this.mrvoip_Address_add = result;
-    //     console.log(this.mrvoip_Address_add)
-    //     $('#addCustomerFormId').modal('hide');
-    //     iziToast.success({
-    //       message: "mrvoip address Added successfully",
-    //       position: 'topRight'
-    //     });
-
-    //   }
-    //   else {
-
-    //     iziToast.warning({
-    //       message: "mrvoip address not updated. Please try again",
-    //       position: 'topRight'
-    //     });
-
-    //   }
-    // });
-  }
   mrvoip_address_getList(id: any) {
+    this.mrvoipCustomerForm.reset();
+    this.mrvoip_Logo_Image='';
     this.mrvoipParameter = id;
     let api_req: any = new Object();
     let api_mrvoipList: any = new Object();
@@ -2208,20 +2229,27 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_mrvoipList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("get mrvoip address response", response);
-
       if (response.status == true) {
+
         this.image_mrvoipLogo = response[0].mrvoip_company_logo;
+
+        this.mrvoip_PartnerEmail_Value = response[0].partner_email;
+        this.mrvoip_PartnerPhoneNumber_Value = response[0].partner_phone_no;
+        this.mrvoip_PartnerType_Value_Radio = response[0].partner_type;
+        this.mrvoip_AddressShowState_Value = Boolean(response.mconnect_show_state);
+        console.log("0 to false, 1 to true response.call4tel_show_state ", this.mrvoip_AddressShowState_Value)
+        this.mrvoip_Logo_Image = response.mconnect_company_logo;
+
+
         this.mrvoipCustomerForm.patchValue({
           'a_MrvoipPartnerEmail': response[0].partner_email,
           'a_MrvoipPartnerPhoneNum': response[0].partner_phone_no,
           'a_MrvoipPartnerType': response[0].partner_type,
-          // 'a_selectLogo_MrVoip': response[0].mrvoip_company_logo,
-          // 'a_selectLogoImage_MrVoip': response[0].mrvoip_company_logo,
-
+          'a_MrvoipAddressShow': response.mrvoip_show_state,
+     
         });
         iziToast.success({
-          message: "mrvoip_address ",
+          message: "Mrvoip Partner Details displayed successfully ",
           position: 'topRight'
         });
 
@@ -2229,15 +2257,53 @@ export class CustomernewallComponent implements OnInit {
       else {
 
         iziToast.warning({
-          message: "mrvoip_address not displayed. Please try again",
+          message: "Mrvoip Partner Details not displayed. Please try again",
           position: 'topRight'
         });
       }
     });
 
   }
-  call4tel_address_getList(id: any) {
+  mrvoip_address_add(id: any) {
+   
+    Swal.fire('MrVoip Partner Details Updating');
+    Swal.showLoading();
 
+    var data = new FormData();
+
+    data.append('partner_email_mrvoip', this.mrvoipCustomerForm.value.a_MrvoipPartnerEmail);
+    data.append('partner_phone_no_mrvoip', this.mrvoipCustomerForm.value.a_MrvoipPartnerPhoneNum);
+    data.append('mrvoip_address_show', this.mrvoip_AddressShowState_Value);
+    data.append('customerId', id);
+    data.append('mrvoip_partner_type', this.mrvoipCustomerForm.value.a_MrvoipPartnerType);
+    data.append('mrvoip_company_logo', $("#uploaded-mrvoip")[0].files[0]);
+    data.append('action', "mrvoip_address_save");
+
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/customer/mrvoip_address_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          self.customerslist({});
+          Swal.close();
+          console.log(result);
+          $("#MrvoipPartnerDetailsFormId").modal("hide")
+        }
+      },
+      error: function (err: any) {
+        console.log(err);
+      }
+    })
+  }
+
+  call4tel_address_getList(id: any) {
+    this.Call4telCustomerForm.reset();
+    this.C4T_Logo_Image = '';
     this.Call4telParameter = id;
     let api_req: any = new Object();
     let api_call4telList: any = new Object();
@@ -2247,24 +2313,30 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_req.action = "call4tel_address_details";
     api_call4telList.user_id = localStorage.getItem('user_id');
-    api_call4telList.user_id = id;
+    api_call4telList.customerId = id;
     api_req.element_data = api_call4telList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("get  call4tel address response", response);
-      if (response != '') {
-        console.log(response);
-        this.image_call4telLogo = response.call4tel_company_logo;
-        console.log(this.image_call4telLogo)
+      if (response.status == true) {
+
+        this.C4T_PartnerEmail_Value = response[0].partner_email;
+        this.C4T_PartnerPhoneNumber_Value = response[0].partner_phone_no;
+        this.C4T_PartnerType_Value_Radio = response[0].partner_type;
+        this.C4T_AddressShowState_Value = Boolean(response.call4tel_show_state);
+        console.log("0 to false, 1 to true response.call4tel_show_state ", this.C4T_AddressShowState_Value)
+        this.C4T_Logo_Image = response.call4tel_company_logo;
+        // console.log("response[0].partner_type",response[0].partner_type);
         this.Call4telCustomerForm.patchValue({
 
           'a_C4TPartnerEmail': response[0].partner_email,
           'a_C4TPartnerPhoneNum': response[0].partner_phone_no,
           'a_C4TPartnerType': response[0].partner_type,
           'a_selectLogo_C4T': response[0].call4tel_company_logo,
+          'a_C4TAddressShow': response.call4tel_show_state,
         });
         iziToast.success({
-          message: "call4tel address displayed successfully",
+          message: "Call4tel Partner Details displayed successfully",
           position: 'topRight'
         });
 
@@ -2272,7 +2344,7 @@ export class CustomernewallComponent implements OnInit {
       else {
 
         iziToast.warning({
-          message: "call4tel address not displayed. Please try again",
+          message: "Partner details not available. Please try again",
           position: 'topRight'
         });
       }
@@ -2280,33 +2352,35 @@ export class CustomernewallComponent implements OnInit {
   }
 
   call4tel_address_add(id: any) {
-
-
+    Swal.fire('Call4tel Partner Details Updating');
+    Swal.showLoading();
     var data = new FormData();
 
-    data.append('partner_email_call4tel', $("#C4T_partnerEmail").val());
-    data.append('partner_phone_no_call4tel', $("#C4T_partnerPhone").val());
-    data.append('call4tel_address_show', this.checkbox_C4TAddressShow);
-    data.append('cus_permission_popup', this.checkbox_C4TAddressShow);
+    data.append('partner_email_call4tel', this.Call4telCustomerForm.value.a_C4TPartnerEmail);
+    data.append('partner_phone_no_call4tel', this.Call4telCustomerForm.value.a_C4TPartnerPhoneNum);
+    data.append('call4tel_address_show', this.C4T_AddressShowState_Value);
+    data.append('cus_permission_popup', this.C4T_AddressShowState_Value);
     data.append('customerId', id);
-    data.append('call4tel_partner_type', this.customerStatus_radiobox_Value);
+    data.append('call4tel_partner_type', this.Call4telCustomerForm.value.a_C4TPartnerType);
     data.append('call4tel_company_logo', $("#uploaded-C4T")[0].files[0]);
     data.append('action', "Cal4Tel_address_save");
 
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer_contract/call4tel_address_save',
+      url: 'https://erp1.cal4care.com/api/customer/call4tel_address_save',
       cache: false,
       contentType: false,
       processData: false,
       data: data,
       success: function (result: any) {
         if (result.status == true) {
+          Swal.close();
           self.customerslist({});
           console.log(result);
-
+          $("#call4tellPartnerDetailsFormId").modal("hide")
         }
+
       },
       error: function (err: any) {
         console.log(err);
@@ -2315,50 +2389,6 @@ export class CustomernewallComponent implements OnInit {
 
   }
 
-  // call4tel_address_add(id: any) {
-  //   let api_req: any = new Object();
-  //   let api_call4telAdd: any = new Object();
-  //   api_req.moduleType = "customer";
-  //   api_req.api_url = "customer/call4tel_address_save";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   api_call4telAdd.action = "call4tel_address_save";
-  //   api_call4telAdd.user_id = localStorage.getItem('user_id');
-  //   api_call4telAdd.user_id = id;
-
-  //   api_call4telAdd.partner_email_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerEmail;
-  //   api_call4telAdd.partner_phone_no_call4tel = this.Call4telCustomerForm.value.a_C4TPartnerPhoneNum;
-  //   api_call4telAdd.call4tel_address_show = this.Call4telCustomerForm.value.a_C4TAddressShow;
-  //   api_call4telAdd.call4tel_partner_type = this.Call4telCustomerForm.value.a_C4TPartnerType;
-  //   api_call4telAdd.customerId = id;
-  //   api_call4telAdd.cus_permission_popup = this.Call4telCustomerForm.value.a_C4TAddressShow;
-  //   api_call4telAdd.call4tel_company_logo = this.Call4telCustomerForm.value.a_selectLogo_C4T;
-
-  //   api_req.element_data = api_call4telAdd;
-
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-  //     var result = response;
-  //     console.log("get call4tel address response", result);
-  //     if (result) {
-  //       this.call4tel_Address_add = result;
-  //       console.log(this.call4tel_Address_add)
-
-  //       iziToast.success({
-  //         message: "call4tel address Added successfully",
-  //         position: 'topRight'
-  //       });
-
-  //     }
-  //     else {
-
-  //       iziToast.warning({
-  //         message: "call4tel address not updated. Please try again",
-  //         position: 'topRight'
-  //       });
-
-  //     }
-  //   });
-  // }
   invoiceShare_edit(id: any) {
     let api_req: any = new Object();
     let invoiceShare_edit_req: any = new Object();
@@ -2943,6 +2973,9 @@ export class CustomernewallComponent implements OnInit {
     });
   }
   sendLandscapeMail() {
+    Swal.fire('Sending Email');
+    Swal.showLoading();
+
     this.emailFrom = $('#emailFromLandscape').val();
     this.emailTo = $('#emailToLandscape').val();
     this.subjectValue = $('#subjLandscape').val();
@@ -2955,38 +2988,65 @@ export class CustomernewallComponent implements OnInit {
     let api_req: any = new Object();
     let api_email_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "sendemail/customer_landscape_mail";
+    api_req.api_url = "customer/customer_landscape_mail";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "customer_landscape_mail";
     api_email_req.user_id = localStorage.getItem('user_id');
-    // api_email_req.customer_contract_id = this.EmailCustomerContractID;
-    api_email_req.emailFrom = this.emailTo;
+    // api_email_req.customer_id = this.EmailCustomerContractID;
+    api_email_req.emailFrom = this.emailFrom;
+    if (this.emailFrom === null || this.emailFrom === '' || this.emailFrom === 'undefined' || this.emailFrom === undefined) {
+
+      iziToast.warning({
+        message: "Choose From Email Value",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_email_req.emailTo = this.emailTo;
+    if (this.emailTo === null || this.emailTo === '' || this.emailTo === 'undefined' || this.emailTo === undefined) {
+
+      iziToast.warning({
+        message: "Choose To Email Value",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_email_req.emailSubject = this.subjectValue;
-    api_email_req.emailTemplate = this.emailTemplate
+    api_email_req.emailTemplate = this.emailTemplate;
+    if (this.emailTemplate === null || this.emailTemplate === '' || this.emailTemplate === 'undefined' || this.emailTemplate === undefined) {
+
+      iziToast.warning({
+        message: "Choose To Email Value",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+
     api_email_req.emailContent = this.msg_id;
 
     api_req.element_data = api_email_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer Landscape email", response);
 
-      if (response != 'null' && response != null) {
+
+      if (response.status == true) {
         $('#emailFromLandscape').val('');
         $('#emailToLandscape').val('');
         $('#subjLandscape').val('');
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
-        $("#TextEditorId").modal("hide");
-
-        this.customerslist({});
-        Swal.fire({
-          icon: 'error',
-          title: 'Email Not Sent',
-          showConfirmButton: false,
-          timer: 1200,
+        $("#landscapeEmailFormId").modal("hide");
+        Swal.close();
+        iziToast.success({
+          message: "Email Notification Sent Successfully",
+          position: 'topRight'
         });
+        this.customerslist({});
+
       }
       else {
         $('#emailFromLandscape').val('');
@@ -2994,15 +3054,14 @@ export class CustomernewallComponent implements OnInit {
         $('#subjLandscape').val('');
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
-        $("#TextEditorId").modal("hide");
-
-        this.customerslist({});
-        Swal.fire({
-          icon: 'success',
-          title: 'Email Notification Sent Successfully',
-          showConfirmButton: false,
-          timer: 1200,
+        $("#landscapeEmailFormId").modal("hide");
+        Swal.close();
+        iziToast.success({
+          message: "Email Notification not Sent !!!!",
+          position: 'topRight'
         });
+        this.customerslist({});
+
       }
 
       this.customerslist({});
