@@ -205,13 +205,29 @@ export class CustomernewallComponent implements OnInit {
   Template_List: any;
   CRMTemplateID: any;
   cus_type_edit: any;
+  addUser: any;
+  addUserId: any;
+  addUserId_array: any = [];
   //AssignAccountManagerForm
   AssignAccountManagerForm: FormGroup;
   //GoogleAuthentication
   GoogleAuthenticationForm: FormGroup;
   //radio-mconnect,mrvoip,cal4tel
   Partnertype_C4T_radiobox_Value: any;
-
+//checkbox-shared customer permission-new
+checkbox_ID_SingleParameter_Value: any;
+Checkbox_value: any;
+CheckBox_DynamicArrayList_shareCustomerPermission: any = [];
+shareCustomerPermission_EditOnLoad_Values:any;
+SharedCustomerPermission_List:any;
+//checkbox-invoice_shared customer permission-new
+invoice_shareCustomerPermission_ID:any;
+checkbox_ID_SingleParameter_invoice_Value: any;
+Checkbox_value_invoice: any;
+CheckBox_DynamicArrayList_invoice_shareCustomerPermission: any = [];
+Invoice_shareCustomerPermission_EditOnLoad_Values:any;
+Invoice_SharedCustomerPermission_List:any;
+typeConvertionString:any;
 
 
 
@@ -365,6 +381,7 @@ export class CustomernewallComponent implements OnInit {
     this.customerslist({});
     this.getDynamicList();
     this.initTiny();
+   
 
     this.radio = [{ "name": "New", "values": "N" }, { "name": "Permanent", "values": "P" }];
     this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
@@ -667,6 +684,7 @@ export class CustomernewallComponent implements OnInit {
 
     this.ShareCustomerPermissionForm = new FormGroup({
       'shareCustomerPermission_checklist': new FormControl(null),
+      'oneInputControl': new FormControl(null),
 
     });
 
@@ -922,9 +940,7 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_RSsearch = event.target.checked;
     console.log(this.checkbox_RSsearch)
   }
-  eventCheckInvoiceShared(event: any) {
-
-  }
+ 
 
   eventCheckSharedCustomerPermission(data: any, event: any) {
 
@@ -1384,6 +1400,58 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
+   
+  
+  CheckboxValueChanges_shareCustomerPermission(data: any, event: any) {
+    console.log("List - Checkbox ID", data);
+    this.checkbox_ID_SingleParameter_Value = data;
+    this.Checkbox_value = event.target.checked;
+    console.log(this.Checkbox_value)
+    if (this.Checkbox_value) {
+
+      this.CheckBox_DynamicArrayList_shareCustomerPermission.push(data);
+      this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
+      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
+    }
+    else {
+      
+      const index: number =this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data);
+      console.log(index)
+      if (index == -1) {
+        this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
+    }  
+    console.log("Final check After Deselected selected list",this.CheckBox_DynamicArrayList_shareCustomerPermission)
+     
+    }
+  }
+
+  CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
+  
+    console.log("List - Checkbox ID", data);
+    this.checkbox_ID_SingleParameter_invoice_Value = data;
+    this.Checkbox_value_invoice = event.target.checked;
+    console.log(this.Checkbox_value_invoice)
+
+    if (this.Checkbox_value_invoice) {
+  
+      this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.push(data);
+      // this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.replace("'"," ");
+      // this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.join(',');
+    }
+    else {
+      const index: number =this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data);
+      console.log(index)
+      if (index == -1) {
+        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
+    } else{
+      this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
+    }
+    }
+    this.typeConvertionString = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
+ 
+    console.log("Final check After Deselected selected list",this.typeConvertionString)
+  
+  }
 
   viewCustomer(id: any) {
 
@@ -1746,8 +1814,9 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.customerId = id;
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = this.editBillerNameCheckboxID_array;
-    update_customer_req.company_name = this.editCustomerForm.value.edit_defaultBillerName;
+    update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
     update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
+  //  update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;
     update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
     update_customer_req.customerAddress1 = this.editCustomerForm.value.e_billingAddress_address1;
     update_customer_req.customerAddress2 = this.editCustomerForm.value.e_billingAddress_address2;
@@ -2008,24 +2077,20 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     fileattach_req.action = "get_file_attachment_details";
-    fileattach_req.customerId = "" + ID + "";
+    fileattach_req.customerId = ID;
     fileattach_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("check  file attachment", response)
-      this.getResult = response.result.attachment_details
+    
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
       if (response.status == true) {
+        this.getResult = response.result.attachment_details
 
         this.myForm.patchValue({
-
-
           'file': response.result.attachment_details.org_file_name,
-
-
-
         });
 
       }
@@ -2085,11 +2150,18 @@ export class CustomernewallComponent implements OnInit {
 
   }
   fileAttachmentUpdate() {
+    
     this.myForm.reset();
     //  var data = new FormData();
 
-    const data = new FormData();
-
+    if(this.myFiles.length==0){
+      iziToast.warning({
+        message: "Attachment File Missing",
+        position: 'topRight'
+      });
+    }
+    if(this.myFiles.length>0){
+      const data = new FormData();
     for (var i = 0; i < this.myFiles.length; i++) {
       data.append("cust_file[]", this.myFiles[i]);
     }
@@ -2116,12 +2188,23 @@ export class CustomernewallComponent implements OnInit {
             position: 'topRight'
           });
         }
+        else{
+          iziToast.warning({
+            message: "File Attachment not Saved",
+            position: 'topRight'
+          });
+        }
       },
       error: function (err: any) {
-        console.log(err);
+        console.log("err",err)
+        iziToast.error({
+          message: "Server Side Error",
+          position: 'topRight'
+        });
       }
     })
 
+    }
   }
   mconnect_address_getList(id: any) {
     this.mconnectCustomerForm.reset();
@@ -2147,8 +2230,8 @@ export class CustomernewallComponent implements OnInit {
         this.mconnect_PartnerEmail_Value = response[0].partner_email;
         this.mconnect_PartnerPhoneNumber_Value = response[0].partner_phone_no;
         this.mconnect_PartnerType_Value_Radio = response[0].partner_type;
-        this.mconnect_AddressShowState_Value = Boolean(response.mconnect_show_state);
-        console.log("0 to false, 1 to true response.call4tel_show_state ", this.mconnect_AddressShowState_Value)
+        this.mconnect_AddressShowState_Value = response.mconnect_show_state==1?true:false;
+        console.log("response.mconnect_company_logo", response.mconnect_company_logo)
         this.mconnect_Logo_Image = response.mconnect_company_logo;
 
 
@@ -2156,7 +2239,7 @@ export class CustomernewallComponent implements OnInit {
           'a_mconnectPartnerEmail': response[0].partner_email,
           'a_mconnectPartnerPhoneNum': response[0].partner_phone_no,
           'a_mconnectPartnerType': response[0].partner_type,
-          'a_mconnectAddressShow': response.mconnect_show_state,
+          'a_mconnectAddressShow': response.mconnect_show_state==1?true:false,
 
           // 'a_selectLogo_mconnect': response[0].mconnect_company_logo,
         });
@@ -2170,7 +2253,7 @@ export class CustomernewallComponent implements OnInit {
       else {
 
         iziToast.warning({
-          message: "Mconnect Partner details not available. Please try again",
+          message: "Mconnect Partner details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }
@@ -2184,7 +2267,8 @@ export class CustomernewallComponent implements OnInit {
 
     data.append('partner_email_mconnect', this.mconnectCustomerForm.value.a_mconnectPartnerEmail);
     data.append('partner_phone_no_mconnect', this.mconnectCustomerForm.value.a_mconnectPartnerPhoneNum);
-    data.append('mconnect_address_show', this.mconnect_AddressShowState_Value);
+   // data.append('mconnect_address_show', this.mconnect_AddressShowState_Value);
+    data.append('mconnect_address_show', this.mconnectCustomerForm.controls['a_mconnectAddressShow'].value);
     data.append('customerId', id);
     data.append('mconnect_partner_type', this.mconnectCustomerForm.value.a_mconnectPartnerType);
     data.append('mconnect_company_logo', $("#uploaded-mconnect")[0].files[0]);
@@ -2236,16 +2320,18 @@ export class CustomernewallComponent implements OnInit {
         this.mrvoip_PartnerEmail_Value = response[0].partner_email;
         this.mrvoip_PartnerPhoneNumber_Value = response[0].partner_phone_no;
         this.mrvoip_PartnerType_Value_Radio = response[0].partner_type;
-        this.mrvoip_AddressShowState_Value = Boolean(response.mconnect_show_state);
+      //  this.mrvoip_AddressShowState_Value = response.mconnect_show_state==1?true:false;
         console.log("0 to false, 1 to true response.call4tel_show_state ", this.mrvoip_AddressShowState_Value)
-        this.mrvoip_Logo_Image = response.mconnect_company_logo;
+       // console.log("mrvoip_company_logo ", response.mrvoip_company_logo);
+        this.mrvoip_Logo_Image =  response.mrvoip_company_logo;
 
 
         this.mrvoipCustomerForm.patchValue({
           'a_MrvoipPartnerEmail': response[0].partner_email,
           'a_MrvoipPartnerPhoneNum': response[0].partner_phone_no,
           'a_MrvoipPartnerType': response[0].partner_type,
-          'a_MrvoipAddressShow': response.mrvoip_show_state,
+          'a_MrvoipAddressShow': response.mrvoip_show_state==1?true:false,
+
      
         });
         iziToast.success({
@@ -2257,7 +2343,7 @@ export class CustomernewallComponent implements OnInit {
       else {
 
         iziToast.warning({
-          message: "Mrvoip Partner Details not displayed. Please try again",
+          message: "Mrvoip Partner details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }
@@ -2270,10 +2356,12 @@ export class CustomernewallComponent implements OnInit {
     Swal.showLoading();
 
     var data = new FormData();
-
+    
+   // alert(this.mrvoipCustomerForm.value.a_MrvoipAddressShow);
+   // alert(this.mrvoipCustomerForm.controls['a_MrvoipAddressShow'].value);
     data.append('partner_email_mrvoip', this.mrvoipCustomerForm.value.a_MrvoipPartnerEmail);
     data.append('partner_phone_no_mrvoip', this.mrvoipCustomerForm.value.a_MrvoipPartnerPhoneNum);
-    data.append('mrvoip_address_show', this.mrvoip_AddressShowState_Value);
+    data.append('mrvoip_address_show', this.mrvoipCustomerForm.controls['a_MrvoipAddressShow'].value);
     data.append('customerId', id);
     data.append('mrvoip_partner_type', this.mrvoipCustomerForm.value.a_MrvoipPartnerType);
     data.append('mrvoip_company_logo', $("#uploaded-mrvoip")[0].files[0]);
@@ -2344,7 +2432,7 @@ export class CustomernewallComponent implements OnInit {
       else {
 
         iziToast.warning({
-          message: "Partner details not available. Please try again",
+          message: "Call4tel Partner details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }
@@ -2388,8 +2476,11 @@ export class CustomernewallComponent implements OnInit {
     })
 
   }
-
   invoiceShare_edit(id: any) {
+
+ 
+    this.invoice_shareCustomerPermission_ID = id;
+  
     let api_req: any = new Object();
     let invoiceShare_edit_req: any = new Object();
     api_req.moduleType = "customer";
@@ -2400,29 +2491,60 @@ export class CustomernewallComponent implements OnInit {
     invoiceShare_edit_req.user_id = localStorage.getItem('user_id');
     invoiceShare_edit_req.customerId = id;
     api_req.element_data = invoiceShare_edit_req;
+  
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      console.log("invoice share response", response);
-      if (response != '') {
-
-        this.invoiceSharedEdit1 = [];
-        this.invoiceSharedEdit1 = response.user_details;
-
-        console.log(this.invoiceSharedEdit1)
-
-
-        this.invoiceSharedCustomerForm.patchValue({
-
-          'invShared_checklist': response.user_details,
+  
+      if (response.status==true) {
+        this.Invoice_shareCustomerPermission_EditOnLoad_Values = 
+        response.customer_invoice_arr.invoice_access_userid;
+        this.Invoice_SharedCustomerPermission_List= response.user_details;
+        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid.split(',');
+      }
+      else{
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
         });
       }
     });
-
-
+  
   }
-  invoiceShare_update(id: any) {
-    this.invoiceSharedParameter = id;
+  // invoiceShare_edit(id: any) {
+  //   let api_req: any = new Object();
+  //   let invoiceShare_edit_req: any = new Object();
+  //   api_req.moduleType = "customer";
+  //   api_req.api_url = "customer/invoice_share_edit";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   invoiceShare_edit_req.action = "invoice_share_edit";
+  //   invoiceShare_edit_req.user_id = localStorage.getItem('user_id');
+  //   invoiceShare_edit_req.customerId = id;
+  //   api_req.element_data = invoiceShare_edit_req;
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
 
+  //     console.log("invoice share response", response);
+  //     if (response != '') {
+
+  //       this.invoiceSharedEdit1 = [];
+  //       this.invoiceSharedEdit1 = response.user_details;
+
+  //       console.log(this.invoiceSharedEdit1)
+
+
+  //       this.invoiceSharedCustomerForm.patchValue({
+
+  //         'invShared_checklist': response.user_details,
+  //       });
+  //     }
+  //   });
+
+
+  // }
+
+  invoiceShare_update(id: any) {
+    alert(id)
+    this.invoiceSharedParameter = id;
+  
     let api_req: any = new Object();
     let invoiceShare_update_req: any = new Object();
     api_req.moduleType = "customer";
@@ -2431,35 +2553,115 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     invoiceShare_update_req.action = "invoice_share_update";
     invoiceShare_update_req.user_id = localStorage.getItem('user_id');
-    invoiceShare_update_req.customerId = id;
-    invoiceShare_update_req.firstName_salary = this.invoiceSharedCustomerForm.value.invShared_checklist;
+    invoiceShare_update_req.customerId = this.invoice_shareCustomerPermission_ID;
+    invoiceShare_update_req.invoice_share_user = this.typeConvertionString;
     api_req.element_data = invoiceShare_update_req;
+    
+    
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
-      console.log("invoice shared update", response);
-      if (response != '') {
-
+  
+      if (response.status==true) {
         iziToast.success({
-          message: "Special Update of Customer Updated successfully",
+          message: "Share Customer Permission Updated successfully",
           position: 'topRight'
         });
-        //this.contactsList({});
-
+      
+        $('#invoiceSharedCustomerFormId').modal('hide');
+        $("#sel_check").val('');
+        this.typeConvertionString = [];
       }
-      else {
-
+      else{
         iziToast.warning({
-          message: "Special Update of Customer not updated. Please try again",
+          message: "Response Failed",
           position: 'topRight'
         });
-
       }
+  
     });
-
+  
   }
+
+  // invoiceShare_update(id: any) {
+  //   this.invoiceSharedParameter = id;
+
+  //   let api_req: any = new Object();
+  //   let invoiceShare_update_req: any = new Object();
+  //   api_req.moduleType = "customer";
+  //   api_req.api_url = "customer/invoice_share_update";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   invoiceShare_update_req.action = "invoice_share_update";
+  //   invoiceShare_update_req.user_id = localStorage.getItem('user_id');
+  //   invoiceShare_update_req.customerId = id;
+  //   invoiceShare_update_req.firstName_salary = this.invoiceSharedCustomerForm.value.invShared_checklist;
+  //   api_req.element_data = invoiceShare_update_req;
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     console.log(response);
+  //     console.log("invoice shared update", response);
+  //     if (response != '') {
+
+  //       iziToast.success({
+  //         message: "Special Update of Customer Updated successfully",
+  //         position: 'topRight'
+  //       });
+        
+
+  //     }
+  //     else {
+
+  //       iziToast.warning({
+  //         message: "Special Update of Customer not updated. Please try again",
+  //         position: 'topRight'
+  //       });
+
+  //     }
+  //   });
+
+  // }
   quickMail(a: any) {
 
   }
+  // shareCustomerPermission_edit(id: any) {
+
+  //   this.shareCustomerPermission_ID = id;
+  //   let api_req: any = new Object();
+  //   let shareCustomerPermission_edit: any = new Object();
+  //   api_req.moduleType = "customer";
+  //   api_req.api_url = "customer/customer_share";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   shareCustomerPermission_edit.action = "customer_share";
+  //   shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
+  //   shareCustomerPermission_edit.customerId = id;
+  //   api_req.element_data = shareCustomerPermission_edit;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     console.log("customer share permission response", response);
+  //     if (response.status==true) {
+  //       this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
+  //       this.SharedCustomerPermissionArray = [];
+
+  //       this.SharedCustomerPermission_List= response.user_details;
+  //       console.log("response.access_user[0].access_userid", response.access_user[0].access_userid)
+  //       if (response.access_user[0].access_userid != '') {
+  //         setTimeout(() => {
+  //           var checkVariable: any = [];
+  //           checkVariable.push(response.access_user[0].access_userid);
+  //           console.log("checkVariable", checkVariable)
+  //           this.edit_array_SharedCustomerPermission_Checkbox = checkVariable;
+  //         }, 2000);
+
+  //       }
+
+  //       console.log("response.user_details", response.user_details)
+  //       console.log(this.SharedCustomerPermissionArray)
+
+
+  //     }
+  //   });
+
+  // }
   shareCustomerPermission_edit(id: any) {
 
     this.shareCustomerPermission_ID = id;
@@ -2477,36 +2679,65 @@ export class CustomernewallComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("customer share permission response", response);
-      if (response != '') {
-
-        this.SharedCustomerPermissionArray = [];
-
-        this.SharedCustomerPermissionArray = response.user_details;
-        console.log("response.access_user[0].access_userid", response.access_user[0].access_userid)
-        if (response.access_user[0].access_userid != '') {
-          setTimeout(() => {
-            var checkVariable: any = [];
-            checkVariable.push(response.access_user[0].access_userid);
-            console.log("checkVariable", checkVariable)
-            this.edit_array_SharedCustomerPermission_Checkbox = checkVariable;
-          }, 2000);
-
-        }
-
-        console.log("response.user_details", response.user_details)
-        console.log(this.SharedCustomerPermissionArray)
-
-
-        // this.ShareCustomerPermissionForm.patchValue({
-
-        //   'shareCustomerPermission_checklist': response.user_details,
-        // });
+      if (response.status==true) {
+        this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
+        this.SharedCustomerPermission_List= response.user_details;
+        this.CheckBox_DynamicArrayList_shareCustomerPermission = 
+        response.access_user[0].access_userid.split(',');
+      }
+      else{
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
       }
     });
 
   }
+  // shareCustomerPermission_edit(id: any) {
+
+  //   this.shareCustomerPermission_ID = id;
+  //   let api_req: any = new Object();
+  //   let shareCustomerPermission_edit: any = new Object();
+  //   api_req.moduleType = "customer";
+  //   api_req.api_url = "customer/customer_share";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   shareCustomerPermission_edit.action = "customer_share";
+  //   shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
+  //   shareCustomerPermission_edit.customerId = id;
+  //   api_req.element_data = shareCustomerPermission_edit;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     console.log("customer share permission response", response);
+  //     if (response.status==true) {
+  //       this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
+  //       this.SharedCustomerPermissionArray = [];
+
+  //       this.SharedCustomerPermissionArray = response.user_details;
+  //       console.log("response.access_user[0].access_userid", response.access_user[0].access_userid)
+  //       if (response.access_user[0].access_userid != '') {
+  //         setTimeout(() => {
+  //           var checkVariable: any = [];
+  //           checkVariable.push(response.access_user[0].access_userid);
+  //           console.log("checkVariable", checkVariable)
+  //           this.edit_array_SharedCustomerPermission_Checkbox = checkVariable;
+  //         }, 2000);
+
+  //       }
+
+  //       console.log("response.user_details", response.user_details)
+  //       console.log(this.SharedCustomerPermissionArray)
+
+
+       
+  //     }
+  //   });
+
+  // }
   shareCustomerPermission_update(id: any) {
-    // alert(this.edit_array_SharedCustomerPermission_Checkbox)
+    
     this.shareCustomerPermissionParameter = id;
 
     let api_req: any = new Object();
@@ -2518,20 +2749,26 @@ export class CustomernewallComponent implements OnInit {
     shareCustomerPermission_update_req.action = "customer_share_update";
     shareCustomerPermission_update_req.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_update_req.customerId = this.shareCustomerPermission_ID;
-    shareCustomerPermission_update_req.access_userid = this.edit_array_SharedCustomerPermission_Checkbox;
+    // shareCustomerPermission_update_req.access_userid = this.edit_array_SharedCustomerPermission_Checkbox;
+    shareCustomerPermission_update_req.access_userid = this.CheckBox_DynamicArrayList_shareCustomerPermission;
     api_req.element_data = shareCustomerPermission_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
-      console.log("shared customer permission update", response);
-      if (response != '') {
+
+      if (response.status==true) {
         iziToast.success({
           message: "Share Customer Permission Updated successfully",
           position: 'topRight'
         });
-
+      
         $('#SharedCustomerPermissionFormId').modal('hide');
         $("#sel_check").val('');
-        this.edit_array_SharedCustomerPermission_Checkbox = [];
+        this.CheckBox_DynamicArrayList_shareCustomerPermission = [];
+      }
+      else{
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
       }
 
     });
@@ -3076,10 +3313,13 @@ export class CustomernewallComponent implements OnInit {
     this.customerslist({});
   }
   initTiny() {
+  
     var richTextArea_id = 'richTextAreacreated';
     tinymce.init({
       selector: '#richTextAreacreated',
+     
       height: 500,
+     
       plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
       toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
        alignleft aligncenter alignright alignjustify | \

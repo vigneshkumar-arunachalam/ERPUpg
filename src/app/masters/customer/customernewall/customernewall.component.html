@@ -161,7 +161,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Quick Email" data-toggle="modal"
+                                <a class="view" title="Landscape Email" data-toggle="modal"
                                   data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -280,15 +280,27 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Quick Mail" (click)="quickMail(list.customerId)" >
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-at-sign"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                                <a class="view" title="Quick Mail" (click)="quickMail(list.customerId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-at-sign">
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
+                                  </svg>
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a class="remove" title="Google Authentication" data-toggle="modal"
                                   data-target="#GoogleAuthentication">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-airplay"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"></path><polygon points="12 15 17 21 7 21 12 15"></polygon></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-airplay">
+                                    <path
+                                      d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1">
+                                    </path>
+                                    <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                                  </svg>
                                 </a>
                               </li>
 
@@ -308,7 +320,15 @@
 
                               <li class="dropdown__item">
                                 <a class="remove" title="Create a Call4Tel Customer">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-box"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-box">
+                                    <path
+                                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                    </path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                  </svg>
                                 </a>
                               </li>
 
@@ -918,7 +938,7 @@
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
                 <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
-      
+
 
                   <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;"
                     formControlName="edit_ship_address" (change)="eventCheck($event)" />
@@ -1077,11 +1097,9 @@
                         <mat-icon>cancel</mat-icon>
                       </button>
                     </mat-chip>
-                    <input placeholder="Type New Email to add Dynamically..." 
-                    [matChipInputFor]="chipListEmail"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
-                    [matChipInputAddOnBlur]="addOnBlur"
-                    (matChipInputTokenEnd)="addEmail($event)">
+                    <input placeholder="Type New Email to add Dynamically..." [matChipInputFor]="chipListEmail"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                      (matChipInputTokenEnd)="addEmail($event)">
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
@@ -1710,8 +1728,8 @@
                 </div>
               </div>
             </div>
-          
-         
+
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="Email" class="col-lg-12 col-form-label">
@@ -1725,12 +1743,9 @@
                         <mat-icon>cancel</mat-icon>
                       </button>
                     </mat-chip>
-                    <input placeholder="Type New Email to add Dynamically..." 
-                    formControlName="e_ESA_Email"
-                    [matChipInputFor]="chipListeditEmail"
-                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
-                    [matChipInputAddOnBlur]="addOnBlur"
-                    (matChipInputTokenEnd)="editEmail($event)">
+                    <input placeholder="Type New Email to add Dynamically..." formControlName="e_ESA_Email"
+                      [matChipInputFor]="chipListeditEmail" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="editEmail($event)">
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
@@ -1740,7 +1755,7 @@
               </div>
             </div>
 
-         
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="finEmail" class="col-lg-12 col-form-label">
@@ -1756,11 +1771,9 @@
                       </button>
                     </mat-chip>
                     <input placeholder="Type New Finance Email to add Dynamically..."
-                    formControlName="e_ESA_FinanceEmail"
-                      [matChipInputFor]="chipListFinance" 
-                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                      [matChipInputAddOnBlur]="addOnBlur" id="finEmail"
-                      (matChipInputTokenEnd)="editFinanceEmail($event)">
+                      formControlName="e_ESA_FinanceEmail" [matChipInputFor]="chipListFinance"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                      id="finEmail" (matChipInputTokenEnd)="editFinanceEmail($event)">
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
@@ -2516,7 +2529,7 @@
             </div>
             <div class="col-lg-12">
               <div class="col-lg-6">
-                <img src="{{this.mconnect_Logo_Image}}" alt="No image to display " height="200px" width="200px">
+                <img src="{{this.mconnect_Logo_Image}}" alt="No Logo to display " height="200px" width="200px">
               </div>
             </div>
           </div>
@@ -2621,7 +2634,7 @@
             </div>
             <div class="col-lg-12">
               <div class="col-lg-6">
-                <img src="{{this.mrvoip_Logo_Image}}" alt="No image to display " height="200px" width="200px">
+                <img src="{{this.mrvoip_Logo_Image}}" alt="No Logo to display " height="200px" width="200px">
               </div>
             </div>
           </div>
@@ -2718,13 +2731,13 @@
                 <div class="col-lg-6">
                   <input required type="file" name="uploaded-C4T" id="uploaded-C4T" class="form-control"
                     (change)="fileAttachmentEvent($event)">
-    
+
                 </div>
-             
+
 
               </div>
             </div>
-          
+
             <div class="col-lg-12">
               <div class="col-lg-6">
                 <img src="{{this.C4T_Logo_Image}}" alt="No Logo to display " height="200px" width="200px">
@@ -2762,15 +2775,18 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="invoiceSharedCustomerForm">
-          <div>
-
-            <div *ngFor="let displayVariable of invoiceSharedEdit1;let i =index">
-              <input type="checkbox" formControlName="invShared_checklist" (change)="eventCheckInvoiceShared($event)"
-                id="check_ids{{i}}">
-              <span class="ckboxclass"><label class="form-check-label" for="check_ids{{i}}">
-                  {{displayVariable.firstName_salary}}</label></span>
+          <div class="col-lg-12" *ngFor="let ins of Invoice_SharedCustomerPermission_List;let i=index">
+            <div class="row">
+                <label class="col-lg-4">{{ins.firstName}}</label>
+          
+                <div class="col-lg-4">
+                    <input  type="checkbox" 
+                        id="{{ ins.userId }}" [value]="ins.userId"
+                        checked="{{Invoice_shareCustomerPermission_EditOnLoad_Values.indexOf(ins.userId)!=-1 ? 'checked':''}}"
+                        (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
+          
+                </div>
             </div>
-
           </div>
 
         </form>
@@ -2778,7 +2794,7 @@
       <div class="modal-footer">
 
         <button type="button" class="btn btn-primary"
-          (click)="invoiceShare_update(this.invoiceSharedParameter)">Save</button>
+          (click)="invoiceShare_update(this.invoiceSharedParameter)">Update</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
@@ -2804,26 +2820,40 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="ShareCustomerPermissionForm">
-          <div>
+          <!-- <div>
 
             <div *ngFor="let displayVariable of SharedCustomerPermissionArray;let i =index">
               <input type="checkbox" value="{{displayVariable.chk_val}}"
-              checked="{{displayVariable.chk_val == 1 ? 'checked' : ''}}" id="sel_check"
-              (change)="eventCheckSharedCustomerPermission(displayVariable.userId,$event)">
+                checked="{{displayVariable.chk_val == 1 ? 'checked' : ''}}" id="sel_check"
+                (change)="eventCheckSharedCustomerPermission(displayVariable.userId,$event)">
               <span class="ckboxclass"><label class="form-check-label" for="check_ids{{i}}">
                   {{displayVariable.firstName}}</label></span>
 
 
             </div>
 
-          </div>
+          </div> -->
+
+          <div class="col-lg-12" *ngFor="let item of SharedCustomerPermission_List;let i=index">
+            <div class="row">
+                <label class="col-lg-4">{{item.firstName}}</label>
+
+                <div class="col-lg-4">
+                    <input  type="checkbox" 
+                        id="{{ item.userId }}" [value]="item.userId"
+                        checked="{{shareCustomerPermission_EditOnLoad_Values.indexOf(item.userId)!=-1 ? 'checked':''}}"
+                        (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">
+
+                </div>
+            </div>
+        </div>
 
         </form>
       </div>
       <div class="modal-footer">
 
         <button type="button" class="btn btn-primary"
-          (click)="shareCustomerPermission_update(this.shareCustomerPermissionParameter)">Save</button>
+          (click)="shareCustomerPermission_update(this.shareCustomerPermissionParameter)">Update</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
@@ -2892,12 +2922,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="myForm">
+        <form [formGroup]="myForm" >
 
           <div class="modal-body contractFileAttachmentCSS">
             <div>
-              <label for="contr" class="col-lg-12 col-form-label">
-                <strong>Attached Files</strong></label>
+              <label>
+                Attached Files</label>
             </div>
 
             <div *ngFor="let i =index;let display1 of  getResult;" style="padding-left: 30px;">
@@ -2910,18 +2940,21 @@
 
 
             </div>
+            <br>
+            <br>
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label>
+                    Select New Attachment</label>
+                </div>
+                <div class="col-lg-8" style="padding-left: 30px;">
 
+                  <!-- <label for="file">File</label> -->
+                  <input formControlName="file" id="file" type="file" multiple class="form-control"
+                    (change)="onFileChange($event)">
 
-            <div>
-              <label for="contr1" class="col-lg-12 col-form-label">
-                <strong>Select New Attachment</strong></label>
-            </div>
-            <div style="padding-left: 30px;">
-              <div class="form-group">
-                <!-- <label for="file">File</label> -->
-                <input formControlName="file" id="file" type="file" multiple class="form-control"
-                  (change)="onFileChange($event)">
-
+                </div>
               </div>
             </div>
           </div>
@@ -3146,7 +3179,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="modal-title" id="quickEmailTitle">
-          Quick Email</h2>
+          Landscape Email</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -3222,7 +3255,7 @@
           </div> -->
 
 
-        
+
 
           <div class="col-lg-12">
             <div class="form-group row">
@@ -3230,7 +3263,8 @@
               <label for="message" class="col-lg-12 col-form-label">Message</label>
               <editor id="tinyLandscapeEmailID" formControlName='landscapeEmail_Message' [init]="{
                     base_url: '/tinymce', 
-                    suffix: '.min'
+                    suffix: '.min',
+                    branding: false
                            
                 }"></editor>
 
@@ -3379,15 +3413,15 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group row">
-              <div class="col-lg-6">
-                <label>
-                 Google Authentication Code
-                </label>
+                <div class="col-lg-6">
+                  <label>
+                    Google Authentication Code
+                  </label>
+                </div>
+                <div class="col-lg-6">
+                  <input type="text" class="form-control" formControlName="google_AuthenticationCode" />
+                </div>
               </div>
-              <div class="col-lg-6">
-                <input type="text" class="form-control" formControlName="google_AuthenticationCode"/>
-              </div>
-            </div>
             </div>
           </div>
         </form>

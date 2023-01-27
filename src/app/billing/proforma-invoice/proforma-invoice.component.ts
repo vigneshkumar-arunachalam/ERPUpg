@@ -210,4 +210,8 @@ export class ProformaInvoiceComponent implements OnInit {
     }
   }
 
+  EmailEdit(a:any){
+    
+  }
+
 }

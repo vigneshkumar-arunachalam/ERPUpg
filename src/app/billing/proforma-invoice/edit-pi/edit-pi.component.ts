@@ -30,6 +30,10 @@ export class EditPIComponent implements OnInit {
   //edit
   editbillerID: any;
   editResult: any;
+
+ 
+
+  TaxDropdownList:any
   //radio
   radio_Select: any;
   exportState_Radio: any;
@@ -43,6 +47,11 @@ export class EditPIComponent implements OnInit {
   checkbox_value_MileDiscount: any;
   edit_array_MileDiscount: any = [];
 
+  // section-3
+  chkTermsandcondition: boolean = false;
+  chklogoAddressSignature: boolean = true;
+  chkReceivedAuthorizedSignature: boolean = true;
+
   //checkbox group select-logo
   groupSelectCommonId_ExtraLogo: any;
   checkbox_value_ExtraLogo: any;
@@ -53,6 +62,7 @@ export class EditPIComponent implements OnInit {
   dynamicChangeText: any;
   CurrencyConversionRateDefault: any = 1;
   getCurrencyCode: any;
+  invoicePriceKey: any;
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
@@ -75,6 +85,7 @@ export class EditPIComponent implements OnInit {
   finalDiscountType: any;
   finalDiscountVal: any;
   sub_dis_val: any;
+  sub_dis_type:any;
   grandTotal: any;
   grossTotal: any;
   finalTax: any;
@@ -83,18 +94,22 @@ export class EditPIComponent implements OnInit {
   extraCharge = 0;
   net_amt: any;
   shipping_amt: any;
-  quotationPriceKey: any;
+  invocePriceKey: any;
   row_cnt_mod: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
     this.addPI_section2 = this.fb.group({
-      addresses: this.fb.array([this.createAddress()])
+      addresses: this.fb.array([this.editAddress_FormControl()])
     });
+
+  
   }
 
   ngOnInit(): void {
-
+  
+    
+   
 
     this.route.queryParams
       .subscribe(params => {
@@ -144,12 +159,14 @@ export class EditPIComponent implements OnInit {
       { name: 'Zero Valid', selected: false, id: 3 },
 
     ];
+
+
     this.addPI_section1 = new FormGroup({
       'initial': new FormControl(),
-      'companyName': new FormControl(),
+      'companyName': new FormControl(null,[Validators.required]),
       'invoiceNo': new FormControl(),
-      'BillTo': new FormControl(),
-      'tin': new FormControl(),
+      'BillTo': new FormControl(null,[Validators.required]),
+      'tin': new FormControl(null,[Validators.required]),
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
@@ -216,22 +233,26 @@ export class EditPIComponent implements OnInit {
   }
 
 
-  addAddress(): void {
+  editAddress(): void {
     this.addresses = this.addPI_section2.get('addresses') as FormArray;
-    this.addresses.push(this.createAddress());
+    this.addresses.push(this.editAddress_FormControl());
 
     this.itre = this.itre + 1;
+    console.log(this.addresses);
+    console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
+      console.log(this.test[index]);
+      
 
     });
   }
 
-  createAddress(): FormGroup {
+  editAddress_FormControl(): FormGroup {
     return this.fb.group({
       pd_nextPage_checkbox: '',
       pd_productName_txtbox1: '',
-      pd_productName_txtArea: '',
+      // pd_productName_txtArea: '',
       pd_quantity_txtbox1: '',
       pd_unit: '',
       pd_sellingPrice: '',
@@ -240,11 +261,41 @@ export class EditPIComponent implements OnInit {
       pd_OutCall: '',
       pd_CMon: '',
       pd_selectTax: '',
+      sub_dis_type: '',
+      sub_dis_val: '',
+      sub_dis_amt: '',
 
 
     });
 
   }
+
+  removeAddresstest(i:number){
+
+    console.log(i)
+    console.log(this.addresses)
+        this.addresses.removeAt(i);
+        var addr = this.addPI_section2.value.addresses;
+        var list_cnt = addr.length;
+        this.totalCalculate();
+
+  }
+  // logo......
+
+  chkTermsandconditionEvent(event: any) {
+    this.chkTermsandcondition = event.target.checked;
+    console.log(this.chkTermsandcondition)
+  }
+  chkReceivedAuthorizedSignatureEvent(event: any) {
+    this.chkReceivedAuthorizedSignature = event.target.checked;
+    console.log(this.chkReceivedAuthorizedSignature)
+  }
+   
+  chklogoAddressSignatureEvent(event: any) {
+    this.chklogoAddressSignature = event.target.checked;
+    console.log(this.chklogoAddressSignature)
+  } 
+
   removeAddress(i: number) {
     this.addresses.removeAt(i);
 
@@ -393,8 +444,11 @@ export class EditPIComponent implements OnInit {
 
   }
   loadADD() {
+    
+    
     let api_req: any = new Object();
     let addAPI: any = new Object();
+
     api_req.moduleType = "quotation";
     api_req.api_url = "proforma/add_proforma_invoice";
     api_req.api_type = "web";
@@ -408,7 +462,44 @@ export class EditPIComponent implements OnInit {
       this.ShipByList = response.ship_by;
       this.salesRepList = response.sales_rep;
       this.paymentviaList = response.paymentvia;
+     
+      this.TaxDropdown();
       console.log("response-load-pi", response)
+    });
+
+  }
+  TaxDropdown() {
+
+    let api_req: any = new Object();
+    let api_TaxDropdown_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/tax_dropdown";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_TaxDropdown_req.action = "tax_dropdown";
+    api_TaxDropdown_req.user_id = localStorage.getItem('user_id');
+    api_TaxDropdown_req.billerId = this.addPI_section1.value.companyName;
+    api_req.element_data = api_TaxDropdown_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {    
+
+      if (response.status == true) {
+        this.TaxDropdownList = response.tax_list;
+        setTimeout(() => {
+          this.addPI_section3.patchValue({
+            'section3_gst_dropdown':response.default_tax_id,  
+          });
+
+        }, 500);
+       // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+       console.log('response.default_tax_id'+response.default_tax_id);
+
+           
+
+      }
+
+
+
     });
   }
   searchCustomerData(data: any) {
@@ -429,6 +520,8 @@ export class EditPIComponent implements OnInit {
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
+       
+        
 
       }
 
@@ -470,9 +563,18 @@ export class EditPIComponent implements OnInit {
 
     });
   }
+
+
+
   PIUpdate() {
 
+   this.updatePI();
+  
   }
+
+
+
+
   getCustomerInvoiceDetails(event: any) {
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
@@ -503,7 +605,11 @@ export class EditPIComponent implements OnInit {
 
       }
       else {
+        this.addPI_section1.patchValue({
 
+          'invoiceNo': '',
+          'Currency': '',
+        });
       }
 
     });
@@ -527,23 +633,27 @@ export class EditPIComponent implements OnInit {
       if (response != '') {
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
         this.addPI_section1.patchValue({
-          'company': response.billing_pararent_details[0].billerId,
-          'invoiceNo': response.billing_pararent_details[0].invoice_no,
+          'companyName': response.billing_pararent_details[0].billerId,
           'BillTo': response.billing_pararent_details[0].b_name,
-          'Reg': response.billing_pararent_details[0].tinNo,
-          'address_1': response.billing_pararent_details[0].b_address1,
-          'address_2': response.billing_pararent_details[0].b_address2,
-          'address_3': response.billing_pararent_details[0].b_address3,
-          'GST': response.billing_pararent_details[0].cstNo,
-          'Date': response.billing_pararent_details[0].billDate,
+          'address_1': response.billing_pararent_details[0].b_address,
+          // 'address_2': response.billing_pararent_details[0].b_address2,
+          // 'address_3': response.billing_pararent_details[0].b_address3,
           'Attn_1': response.billing_pararent_details[0].b_attn,
+          // 'shpi_address_1': response.billing_pararent_details[0].b.ship_address_1,
+          // 'shpi_address_2': response.billing_pararent_details[0].b.ship_address_3,
+          // 'shpi_address_3': response.billing_pararent_details[0].b.ship_address_1,
+          'Attn_2': response.billing_pararent_details[0].s_attn,
+          'Ref': response.billing_pararent_details[0].ref,
+
+          'invoiceNo': response.billing_pararent_details[0].invoice_no,
+          'tin': response.billing_pararent_details[0].tinNo,
+          'cst': response.billing_pararent_details[0].cstNo,
+          'Date': response.billing_pararent_details[0].billDate,
           'PoNo': response.billing_pararent_details[0].po_no,
           'PoDate': response.billing_pararent_details[0].po_date,
           'salesRep': response.billing_pararent_details[0].sales_rep,
           'ShipBy': response.billing_pararent_details[0].ship_by,
           'ShipDate': response.billing_pararent_details[0].ship_date,
-          'Attn_2': response.billing_pararent_details[0].s_attn,
-          'Ref': response.billing_pararent_details[0].ref,
           'terms': response.billing_pararent_details[0].terms,
           'Currency': response.billing_pararent_details[0].currency,
           'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
@@ -552,22 +662,34 @@ export class EditPIComponent implements OnInit {
           'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
 
         });
-
+       
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
+
+          // this.sub_dis_type='';
+          // this.sub_dis_val='';
+          // if(response.billchild_details[index].dis_per!=''){
+          //   this.sub_dis_type='per';
+          //   this.sub_dis_val=response.billchild_details[index].dis_per;
+          // }else if(response.quotation_child_det[index].dis_amt!=''){
+          //   this.sub_dis_type='amt';
+          //   this.sub_dis_val=response.billchild_details[index].dis_amt;
+          // }
 
           formArray.push(this.fb.group({
 
             "pd_nextPage_checkbox": response.billchild_details[index].to_next_page,
             "pd_productName_txtbox1": response.billchild_details[index].productName,
-            "pd_productName_txtArea": response.billchild_details[index].productDesc,
+            // "pd_productName_txtArea": response.billchild_details[index].productDesc,
             "pd_quantity_txtbox1": response.billchild_details[index].quantity,
             "pd_unit": response.billchild_details[index].unit,
             "pd_sellingPrice": response.billchild_details[index].rate,
             "pd_Total": response.billchild_details[index].total_amt,
             "pd_netPrice": response.billchild_details[index].net_amt,
             "pd_OutCall": response.billchild_details[index].out_call_state,
-
+            "sub_dis_amt": response.billchild_details[index].dis_amt,
+            "sub_dis_type": this.sub_dis_type,
+            "sub_dis_val":  this.sub_dis_val,
             "pd_CMon": response.billchild_details[index].current_month_str,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
@@ -590,25 +712,41 @@ export class EditPIComponent implements OnInit {
           //  'final_dis_type': this.finalDiscountType,
           // +2 hidden fields
           //row-3
-          'section3_gst_dropdown': response.quotation_details[0].tax_id1,
-          'section3_taxAmt_txtbox': response.quotation_details[0].tax_amt1,
-          'section3_tax_per_hd': response.quotation_details[0].tax_per1,
+          'section3_gst_dropdown': response.billing_pararent_details[0].tax_id1,
+          'section3_taxAmt_txtbox': response.billing_pararent_details[0].tax_amt1,
+          'section3_tax_per_hd': response.billing_pararent_details[0].tax_per1,
           //row-4
-          'section3_shipping_amt_name_txtbox': response.quotation_details[0].shipping_amt_name,
-          'section3_shipping_amt_txtbox': response.quotation_details[0].shipping_amt,
+          'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
+          'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shipping_amt,
           //row-5
-          'section3_grand_total': response.quotation_details[0].grand_total,
+          'section3_grand_total': response.billing_pararent_details[0].grand_total,
           //row-7
-          'section3_remarks': response.quotation_details[0].remarks,
+          'section3_remarks': response.billing_pararent_details[0].remarks,
 
           //row-8
-          'section3_termCondition': response.quotation_details[0].terms_cond_chk,
+          'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
           //row-9
-          'section3_receivedAuthorizedSignature': response.quotation_details[0].received_signature,
+          'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
           //row-10
-          'section3_logo': response.quotation_details[0].logo,
+          'section3_logo': response.billing_pararent_details[0].logo,
         });
+        // this.loadADD();
+        this.editAddress();
+        // this.removeAddresstest(response.billchild_details.length);
+        // console.log(response.billchild_details.length);
+        for (let index = 0; index < response.billchild_details.length; index++) {
+      
+          if(response.billchild_details[index].header_split == 1){
 
+           $('#pd_split_'+[index]).prop('checked',false);
+           setTimeout(()=>{
+             $('#pd_split_'+[index]).click();
+           },1000);
+
+       
+           }          
+        }
+     
       }
       else {
 
@@ -627,6 +765,8 @@ export class EditPIComponent implements OnInit {
         console.log(error);
       }
 
+      
+
   }
 
 
@@ -634,25 +774,28 @@ export class EditPIComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
-    // api_req.moduleType = "quotation";
-    // api_req.api_url = "quotation/update_quotation";
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/update_proforma_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    // api_UpdateEnquiry_req.action = "update_quotation";
+    api_updatePI_req.action = "update_profoma_invoice";
     api_updatePI_req.user_id = localStorage.getItem('user_id');
 
 
 
-    api_updatePI_req.company = this.addPI_section1.value.company
+    api_updatePI_req.billerId = this.addPI_section1.value.companyName
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
-    api_updatePI_req.customer_name = this.addPI_section1.value.BillTo;
-    api_updatePI_req.tinNo = this.addPI_section1.value.Reg;
-    api_updatePI_req.b_address1 = this.addPI_section1.value.address_1;
-    api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
-    api_updatePI_req.b_address3 = this.addPI_section1.value.address_3;
-    api_updatePI_req.cstNo = this.addPI_section1.value.GST;
+    api_updatePI_req.b_name = this.addPI_section1.value.BillTo;
+    api_updatePI_req.tinNo = this.addPI_section1.value.tin;
+    api_updatePI_req.b_address = this.addPI_section1.value.address_1;
+    // api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
+    // api_updatePI_req.b_address3 = this.addPI_section1.value.address_3;
+    api_updatePI_req.cstNo = this.addPI_section1.value.cst;
     api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
+    // api_updatePI_req.b.ship_address_1 = this.addPI_section1.value.shpi_address_1,
+    // api_updatePI_req.b.ship_address_2 = this.addPI_section1.value.shpi_address_2,
+    // api_updatePI_req.b.ship_address_3 = this.addPI_section1.value.shpi_address_3,
     api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
@@ -682,6 +825,7 @@ export class EditPIComponent implements OnInit {
       addr[i].pd_Total = $('#pd_Total_' + i).val();
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
+      addr[i].sub_dis_amt = $('#sub_discount_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
       addr[i].pd_split = $('#pd_split_' + i).prop('checked');
       addr[i].to_next_page = $('#to_next_page_' + i).prop('checked');
@@ -885,7 +1029,7 @@ export class EditPIComponent implements OnInit {
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
   keyPress(event: any, i: any) {
-    this.quotationPriceKey = i;
+    this.invocePriceKey = i;
     var key = event.target.value;
     var addr = this.addPI_section2.value.addresses;
     var v = addr[i].pd_quantity_txtbox1 * $('#pd_SP_' + i);
@@ -928,44 +1072,46 @@ export class EditPIComponent implements OnInit {
       this.finalTax = parseFloat(tax);
     }
   }
-  saveDiscount() {
-    var enablePercentabeDiscont = $('#enablePercentabeDiscont').val()
-    var enablePriceDiscont = $('#enablePriceDiscont').val()
+
+
+  saveDiscount(){
+    var enablePerFinal = $('#enablePerFinal').val()
+    var enablePriceFinal = $('#enablePriceFinal').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
-    //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
-    //console.log('quotationPriceKey'+this.quotationPriceKey);
-    //console.log('disType'+disType);
-    var final_tot = $('#pd_Total_' + this.quotationPriceKey).val();
-    $('#sub_discount_type_' + this.quotationPriceKey).val(disType);
+   //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
+   //console.log('quotationPriceKey'+this.quotationPriceKey);
+   //console.log('disType'+disType);
+    var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
+    $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
-      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-      if (enablePercentabeDiscont != '') {
-        console.log('3333' + final_tot);
-        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+   // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      if (enablePerFinal != '') {
+           console.log('3333'+final_tot);
+        price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
 
 
-        $('#sub_discount_' + this.quotationPriceKey).val(price);
-        $('#sub_discount_val_' + this.quotationPriceKey).val(enablePercentabeDiscont);
+        $('#sub_discount_' + this.invocePriceKey).val(price);
+        $('#sub_discount_val_' + this.invocePriceKey).val(enablePerFinal);
         price = final_tot - price;
       } else {
-        $('#sub_discount_' + this.quotationPriceKey).val('');
-        $('#sub_discount_val_' + this.quotationPriceKey).val('');
-        console.log('222' + final_tot);
+        $('#sub_discount_' + this.invocePriceKey).val('');
+        $('#sub_discount_val_' + this.invocePriceKey).val('');
+           console.log('222'+final_tot);
         price = final_tot;
 
       }
       //   console.log(price);
 
     } else {
-      price = final_tot - enablePriceDiscont;
-      $('#sub_discount_' + this.quotationPriceKey).val(enablePriceDiscont);
-      $('#sub_discount_val_' + this.quotationPriceKey).val(enablePriceDiscont);
+      price = final_tot - enablePriceFinal;
+      $('#sub_discount_' + this.invocePriceKey).val(enablePriceFinal);
+      $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
 
       // console.log(price);
-    }
+          }
 
-    $('#pd_netPrice_' + this.quotationPriceKey).val(price)
+    $('#pd_netPrice_' + this.invocePriceKey).val(price)
 
     var gtotel = 0;
     if (this.itre == 0) {
@@ -989,19 +1135,19 @@ export class EditPIComponent implements OnInit {
       this.grandTotal = this.grandTotal + this.extraCharge;
     }
     $('#discountFormId').modal('hide');
-    this.DiscountForm.reset();
+this.DiscountForm.reset();
     this.totalCalculate();
 
   }
   calculateDiscount(val: any) {
-    this.quotationPriceKey = val;
+    this.invocePriceKey = val;
     this.row_cnt_mod = val;
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
     console.log('row_cnt' + row_cnt);
-    $('#enablePercentabeDiscont').val('');
-    $('#enablePriceDiscont').val('');
+    $('#enablePerFinal').val('');
+    $('#enablePriceFinal').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
     var disType = $('#sub_discount_type_' + row_cnt).val();
 
@@ -1009,12 +1155,12 @@ export class EditPIComponent implements OnInit {
       $('#discountTYpe_per').prop('checked', true);
       sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
 
-      $('#enablePercentabeDiscont').val(sub_dis_val);
+      $('#enablePerFinal').val(sub_dis_val);
       //   console.log('22'+disType);
     } else if (disType == 'amt') {
       $('#discountTYpe_amt').prop('checked', true);
       sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
-      $('#enablePriceDiscont').val(sub_dis_val);
+      $('#enablePriceFinal').val(sub_dis_val);
       //  console.log('33'+disType);
     } else {
       //  console.log('44'+disType);
@@ -1022,9 +1168,10 @@ export class EditPIComponent implements OnInit {
       $('#discountTYpe_amt').prop('checked', false);
     }
   }
-  saveGrossDiscount() {
-    var enablePercentabeDiscont = $('#enablePerFinal').val()
-    var enablePriceDiscont = $('#enablePriceFinal').val()
+
+  saveGrossDiscount() {  
+    var finaldiscountTYpe_per = $('#enablePerFinal').val()
+    var finaldiscountTYpe_amt = $('#enablePriceFinal').val()
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
@@ -1035,12 +1182,12 @@ export class EditPIComponent implements OnInit {
 
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-      if (enablePercentabeDiscont != '') {
+      if (finaldiscountTYpe_per != '') {
         //  console.log('3333'+final_tot);
-        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        price = (parseFloat(finaldiscountTYpe_per) * parseFloat(final_tot) / 100).toFixed(2);
         $('#final_discount').val(price);
-        $('#final_discount_val').val(enablePercentabeDiscont);
-        this.finalDiscountVal = enablePercentabeDiscont;
+        $('#final_discount_val').val(finaldiscountTYpe_per);
+        this.finalDiscountVal = finaldiscountTYpe_per;
         //     price = final_tot - price;
       } else {
         $('#final_discount').val('');
@@ -1052,14 +1199,14 @@ export class EditPIComponent implements OnInit {
       }
       //   console.log(price);
     } else {
-      if (enablePriceDiscont == '') {
-        enablePriceDiscont = 0;
+      if (finaldiscountTYpe_amt == '') {
+        finaldiscountTYpe_amt = 0;
       }
-      price = enablePriceDiscont;
+      price = finaldiscountTYpe_amt;
 
-      $('#final_discount').val(enablePriceDiscont);
-      $('#final_discount_val').val(enablePriceDiscont);
-      this.finalDiscountVal = enablePercentabeDiscont;
+      $('#final_discount').val(finaldiscountTYpe_amt);
+      $('#final_discount_val').val(finaldiscountTYpe_amt);
+      this.finalDiscountVal = finaldiscountTYpe_per;
       console.log('999' + price);
 
     }
@@ -1068,6 +1215,7 @@ export class EditPIComponent implements OnInit {
     }
     this.finalDiscount = price
     $('#discountFormFinal').modal('hide');
+  
   }
 
   calFinalDiscount() {

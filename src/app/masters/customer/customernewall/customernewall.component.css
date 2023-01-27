@@ -20,6 +20,13 @@
 
   color:#ffff;
 }
+#editCustomerFormId .modal-header h2 {
+
+  color:#ffff;
+}
+.modal-title{
+  color:#ffff!important
+}
 
 #addCustomerFormId{
     padding-right: 0px !important;
@@ -440,7 +447,7 @@ transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 
 label {
     font-weight: 600;
-    color: #009688!important;
+    color: #051b5a!important;
 }
 
 
@@ -515,8 +522,20 @@ label {
   border-radius: 5px;
 }
 .modal-header{
-  background-color: #c44918!important;
+  background-color: #17707B!important;
+  color: white !important;
 }
+.modal-header h2{margin-bottom: 0}
 .modal-footer{
   background-color: #e9e3e525!important;
 }
+.close{
+  background: none;
+  opacity: 1;
+}
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover{
+  opacity: 1;
+  background: none;
+}
+.close:focus{outline: 0;}
+.close span{color: #fff;}

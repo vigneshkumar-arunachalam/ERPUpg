@@ -793,12 +793,14 @@ export class QuotationnewComponent implements OnInit {
 
         this.quotationSharedResult = response.user_list;
         console.log("response.user_list",response.user_list);
-        this.quotationSharedPreviousChecked=response.access_userid;
+        var localVar=response.access_userid
+        this.quotationSharedCheckboxID_array = localVar.split(',');
+        console.log(this.quotationSharedCheckboxID_array)
         console.log("checkbox selected user_list",response.access_userid);
         this.quotationSharedCheckboxID_array=response.access_userid;
         console.log("Initial Quotation list before select/deselect", this.quotationSharedCheckboxID_array);
 
-        this.quotationSharedCheckboxID_array.push(this.quotationSharedPreviousChecked);
+        // this.quotationSharedCheckboxID_array.push(this.quotationSharedPreviousChecked);
         // this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
         // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
 
@@ -919,12 +921,12 @@ export class QuotationnewComponent implements OnInit {
 
     console.log(this.checkbox_quotationShare_value)
 
-    if (this.checkbox_quotationShare_value) {
+    if (event.target.checked) {
 
-
-      this.quotationSharedCheckboxID_array.push(data);
-      // this.quotationSharedCheckboxID_array.join(',');
-      console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
+      var k =[];
+k = data.join(',');
+console.log(k)
+      // console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
     }
     else {
       console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
@@ -935,6 +937,8 @@ export class QuotationnewComponent implements OnInit {
       console.log("Final Shared Quotation Person Checkbox After Deselected selected list", this.quotationSharedCheckboxID_array)
 
     }
+      //this.quotationSharedCheckboxID_array.push(data);
+      // this.quotationSharedCheckboxID_array.join(',');
 
   }
   quotationApprovalEdit(id: any) {
