@@ -220,6 +220,7 @@ export class CustomernewallComponent implements OnInit {
   CheckBox_DynamicArrayList_shareCustomerPermission: any = [];
   shareCustomerPermission_EditOnLoad_Values: any;
   SharedCustomerPermission_List: any;
+  typeConvertionString_Shared_Permission:any;
   //checkbox-invoice_shared customer permission-new
   invoice_shareCustomerPermission_ID: any;
   checkbox_ID_SingleParameter_invoice_Value: any;
@@ -227,7 +228,7 @@ export class CustomernewallComponent implements OnInit {
   CheckBox_DynamicArrayList_invoice_shareCustomerPermission: any = [];
   Invoice_shareCustomerPermission_EditOnLoad_Values: any;
   Invoice_SharedCustomerPermission_List: any;
-  typeConvertionString: any;
+  typeConvertionString_invoice_Shared_Permission: any;
 
 
 
@@ -1402,28 +1403,68 @@ export class CustomernewallComponent implements OnInit {
   }
 
 
+  // CheckboxValueChanges_shareCustomerPermission(data: any, event: any) {
+  //   console.log("List - Checkbox ID", data);
+  //   this.checkbox_ID_SingleParameter_Value = data;
+  //   this.Checkbox_value = event.target.checked;
+  //   console.log(this.Checkbox_value)
+  //   if (this.Checkbox_value) {
+
+  //     this.CheckBox_DynamicArrayList_shareCustomerPermission.push(data);
+  //     this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
+  //     console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
+  //   }
+  //   else {
+
+  //     const index: number = this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data);
+  //     console.log(index)
+  //     if (index == -1) {
+  //       this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
+  //     }
+  //     console.log("Final check After Deselected selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
+
+  //   }
+  // }
+
   CheckboxValueChanges_shareCustomerPermission(data: any, event: any) {
     console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_Value = data;
     this.Checkbox_value = event.target.checked;
     console.log(this.Checkbox_value)
     if (this.Checkbox_value) {
-
+  
       this.CheckBox_DynamicArrayList_shareCustomerPermission.push(data);
       this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
       console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
+    
+      if (this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data) < 0) {
+        this.CheckBox_DynamicArrayList_shareCustomerPermission.push(data);
+      } 
+      else {
+        //type something
+      }
+      console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
+    
+    
+    
     }
     else {
-
+  
       const index: number = this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data);
       console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
+      } else {
+        this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
       }
-      console.log("Final check After Deselected selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
-
+      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
+  
     }
+    this.typeConvertionString_Shared_Permission = this.CheckBox_DynamicArrayList_shareCustomerPermission.toString();
+  
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_Shared_Permission)
   }
+  
 
   CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
 
@@ -1453,9 +1494,9 @@ export class CustomernewallComponent implements OnInit {
       }
       console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
     }
-    this.typeConvertionString = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
+    this.typeConvertionString_invoice_Shared_Permission = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString)
+    console.log("Final check After Selected/Deselected selected list", this. typeConvertionString_invoice_Shared_Permission)
 
   }
 
@@ -2497,23 +2538,30 @@ export class CustomernewallComponent implements OnInit {
     invoiceShare_edit_req.user_id = localStorage.getItem('user_id');
     invoiceShare_edit_req.customerId = id;
     api_req.element_data = invoiceShare_edit_req;
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
       if (response.status == true) {
+    
         this.Invoice_shareCustomerPermission_EditOnLoad_Values =
           response.customer_invoice_arr.invoice_access_userid;
         this.Invoice_SharedCustomerPermission_List = response.user_details;
         this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid.split(',');
-        console.log("initial Select/Deselect list",this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
-      }
-      else {
+        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
+      } else {
         iziToast.warning({
           message: "No API Response",
           position: 'topRight'
         });
       }
-    });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
 
   }
   // invoiceShare_edit(id: any) {
@@ -2559,7 +2607,7 @@ export class CustomernewallComponent implements OnInit {
     invoiceShare_update_req.action = "invoice_share_update";
     invoiceShare_update_req.user_id = localStorage.getItem('user_id');
     invoiceShare_update_req.customerId = this.invoice_shareCustomerPermission_ID;
-    invoiceShare_update_req.invoice_share_user = this.typeConvertionString;
+    invoiceShare_update_req.invoice_share_user = this.typeConvertionString_invoice_Shared_Permission;
     api_req.element_data = invoiceShare_update_req;
 
 
@@ -2573,7 +2621,7 @@ export class CustomernewallComponent implements OnInit {
 
         $('#invoiceSharedCustomerFormId').modal('hide');
         $("#sel_check").val('');
-        this.typeConvertionString = [];
+        this.typeConvertionString_invoice_Shared_Permission = [];
       }
       else {
         iziToast.warning({
@@ -2680,25 +2728,33 @@ export class CustomernewallComponent implements OnInit {
     shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_edit.customerId = id;
     api_req.element_data = shareCustomerPermission_edit;
-
+  
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      console.log("customer share permission response", response);
       if (response.status == true) {
+       
         this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
         this.SharedCustomerPermission_List = response.user_details;
         this.CheckBox_DynamicArrayList_shareCustomerPermission =
           response.access_user[0].access_userid.split(',');
-      }
-      else {
+       
+      } else {
         iziToast.warning({
           message: "No API Response",
           position: 'topRight'
         });
       }
-    });
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  
   }
+
+
   // shareCustomerPermission_edit(id: any) {
 
   //   this.shareCustomerPermission_ID = id;
