@@ -5,37 +5,28 @@
         <div class="card">
           <div class="card-header color-dark fw-500">
             <h3 style="margin-bottom: 0;"> Customer Details</h3>
-            <!-- <div class="ng-autocomplete">
-                <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                 (selected)='selectEventCustomer($event)'
-                (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-              </ng-autocomplete>
 
-              <ng-template #itemTemplateCustomer let-item>
-                <a [innerHTML]="item.customerName"></a>
-              </ng-template>
 
-              <ng-template #notFoundTemplate let-notFound>
-                <div [innerHTML]="notFound"></div>
-              </ng-template>
+            <!-- <input type="search" class="form-control searchTop" placeholder="Quick Search"
+              (keyup)="CustomerListQuickSearch($event)" style="height: 40px;width: 160px;" /> -->
 
-            </div> -->
-
-            <input type="search" class="form-control searchTop" placeholder="Quick Search" (keyup)="CustomerListQuickSearch($event)"
-            style="height: 40px;width: 160px;"/>
             <!-- <input type="text" placeholder="Search Shared Person"  class="form-control" (keyup)="quotationSharedPersonNameSearch($event)">
             <p>{{values}}</p> -->
             <div class="quotation-btn-section">
-           
-              
-            
+
+              <div class="search-bar-section">
+                <input type="search" id="box" placeholder="Quick Search anything..." title="Quick Search"
+                  (mouseleave)="CustomerListQuickSearch($event)" (keyup)="CustomerListQuickSearch($event)"
+                  class="search__box">
+                <i class="fas fa-search search__icon" id="icon" onclick="toggleShow()"></i>
+              </div>
+
               <button type="button" title="Add New Customer" class="btn btn-primary btn-default btn-squared"
                 data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()"
                 style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
               </button>
 
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Advanced Search"
                 data-target="#searchCustomerFormId">
                 <i class="fas fa-search" style="margin-right:0;"></i>
               </button>
@@ -54,7 +45,7 @@
                 <table class="table mb-0 table-borderless">
                   <thead>
                     <tr class="userDatatable-header">
-                      <th >
+                      <th>
                         <!-- <div class="d-flex align-items-center">
                             <div class="custom-checkbox  check-all">
                                 <input class="checkbox" type="checkbox" id="check-3"
@@ -64,7 +55,7 @@
                                 </label>
                             </div>
                         </div> -->
-                    </th>
+                      </th>
                       <th style="display:none;">
                         <span class="userDatatable-title">Customer Id</span>
                       </th>
@@ -111,22 +102,20 @@
                     <tr *ngFor="let list of customer_list; let i = index">
                       <td>
                         <div class="d-flex">
-                            <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                <div class="checkbox-group-wrapper">
-                                    <div class="checkbox-group d-flex">
-                                        <div
-                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                            <input class="checkbox" type="checkbox"
-                                                id="check-grp-{{i}}"
-                                                (change)="EditCHK(list.customerId,$event)">
-                                            <label for="check-grp-{{i}}"></label>
-                                        </div>
-                                    </div>
+                          <div class="userDatatable__imgWrapper d-flex align-items-center">
+                            <div class="checkbox-group-wrapper">
+                              <div class="checkbox-group d-flex">
+                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                                    (change)="EditCHK(list.customerId,$event)">
+                                  <label for="check-grp-{{i}}"></label>
                                 </div>
+                              </div>
                             </div>
+                          </div>
 
                         </div>
-                    </td>
+                      </td>
                       <td style="display:none;">
                         {{ list.customerId }}
                       </td>
@@ -319,7 +308,8 @@
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Assign Account Manager" data-toggle="modal"
-                                  data-target="#AssignAccountManager" (click)="AssignAccountManager_edit(list.customerId)">
+                                  data-target="#AssignAccountManager"
+                                  (click)="AssignAccountManager_edit(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-crosshair">
@@ -371,7 +361,8 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="remove" title="Create a Call4Tel Customer" (click)="nx32CustomerCreate(list.customerId)">
+                                <a class="remove" title="Create a Call4Tel Customer"
+                                  (click)="nx32CustomerCreate(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-box">
@@ -546,7 +537,7 @@
               </ul>
 
             </nav>
-          
+
             <!-- <nav class="atbd-page">
               <ul class="atbd-pagination d-flex">
                 <li class="atbd-pagination__item">
@@ -1519,9 +1510,9 @@
               <div class="CheckboxScroll">
 
                 <div *ngFor="let display of geting_biller;let i =index;" style="padding-left: 30px;">
-                  
-                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"  
-                  checked="{{display.chk_val == true? 'checked' : ''}}"                
+
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
+                    checked="{{display.chk_val == true? 'checked' : ''}}"
                     (change)="editBillerNameCHK(display.billerId,$event)">
                   {{display.billerName}}{{this.geting_biller_edit}}{{display.billerId}}
 
@@ -1561,8 +1552,8 @@
                 style="display: flex;padding-left: 30px;align-items: center;">
 
                 <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
-                checked="{{cust.chk_val == true? 'checked' : ''}}"   
-                 (change)="editCustomerClassificationCHK(cust,$event)">
+                  checked="{{cust.chk_val == true? 'checked' : ''}}"
+                  (change)="editCustomerClassificationCHK(cust,$event)">
                 {{cust.name}}
                 <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
                 checked="{{this.cus_type_edit.indexOf(''+cust+'') !=-1? 'checked' : ''}}"
@@ -1652,7 +1643,7 @@
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
                   <input type="checkbox" formControlName="e_edit_ship_address" style="margin-left:30px;"
-                  [(ngModel)]=" checkbox_EditShippingAddress"   (change)="edit_eventCheck($event)" />
+                    [(ngModel)]=" checkbox_EditShippingAddress" (change)="edit_eventCheck($event)" />
                 </label>
               </div>
             </div>
@@ -1849,8 +1840,7 @@
               <div class="CheckboxScroll">
                 <div *ngFor="let cu of get_PermissionallList;let k =index;" style="padding-left: 30px;">
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{cu.id}}"
-                  checked="{{cu.chk_val == true? 'checked' : ''}}"      
-                    (change)="editPermissionCHK(cu.id,$event)">
+                    checked="{{cu.chk_val == true? 'checked' : ''}}" (change)="editPermissionCHK(cu.id,$event)">
                   {{cu.name}}
                   <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{cu.id}}"
                     checked="{{this.get_PermissionEdit.indexOf(''+cu.id+'') !=-1? 'checked' : ''}}"
@@ -2083,67 +2073,68 @@
 
           <div class="row">
 
-          <!-- <div class="col-lg-12"> -->
+            <!-- <div class="col-lg-12"> -->
             <form [formGroup]="billCodeEditForm3">
               <label for="companyCode" class="col-lg-12 col-form-label">Bill Code*</label>
-              <section  >
-              <div class="userDatatable global-shadow border-0 bg-white w-100">
-                <div class="table-responsive">
-                  <table class="table mb-0 table-borderless">
-                    <thead>
-                      <tr class="userDatatable-header">
-                        <th>Bill Code Name</th>
-                        <th>Server-VS1</th>
-                        <th>Server-VSKL</th>
-                        <th>Server-VS2(32)(TH,JP)</th>
-                        <th>Server-VS2(8)(Special Account)</th>
-                        <th> Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="userDatatable-header" formArrayName="addresses"  *ngFor="let address of addressControls.controls; let i = index;">
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="billCodeName"
-                          id="billCodeName{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="bill_code_740"
-                          id="bill_code_740_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="bill_code_kl"
-                          id="bill_code_kl_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="bill_code_750"
-                          id="bill_code_750_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="bill_code_750_8"
-                          id="bill_code_750_8_{{i}}" />
-                        </td>
-                        <td>
-                          <div class="userDatatable-content d-inline-block">
+              <section>
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                  <div class="table-responsive">
+                    <table class="table mb-0 table-borderless">
+                      <thead>
+                        <tr class="userDatatable-header">
+                          <th>Bill Code Name</th>
+                          <th>Server-VS1</th>
+                          <th>Server-VSKL</th>
+                          <th>Server-VS2(32)(TH,JP)</th>
+                          <th>Server-VS2(8)(Special Account)</th>
+                          <th> Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="userDatatable-header" formArrayName="addresses"
+                          *ngFor="let address of addressControls.controls; let i = index;">
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="billCodeName"
+                              id="billCodeName{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="bill_code_740"
+                              id="bill_code_740_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="bill_code_kl"
+                              id="bill_code_kl_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="bill_code_750"
+                              id="bill_code_750_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="bill_code_750_8"
+                              id="bill_code_750_8_{{i}}" />
+                          </td>
+                          <td>
+                            <div class="userDatatable-content d-inline-block">
                               <button type="button" class="btn btn-danger btn-sm" [disabled]="!billCodeEditForm3.valid"
-                                  (click)="removeAddress1(i)">X</button>
-  
-                          </div>
-                  </td>
-  
-                      </tr>
-                    </tbody>
-                  </table>
+                                (click)="removeAddress1(i)">X</button>
+
+                            </div>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-               
+
               </section>
               <div class="text-left">
                 <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="editBillCode()"
-                    style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add More</i>
+                  style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add More</i>
                 </button>
-            </div>
-                </form>
-            
+              </div>
+            </form>
+
           </div>
 
 
@@ -2179,11 +2170,12 @@
                               id="primary_code_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_retail_740"
-                              id="primary_code_retail_740" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="primary_code_retail_740" id="primary_code_retail_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="low_credit_740" id="low_credit_740" />
+                            <input type="text" class="form-control" formControlName="low_credit_740"
+                              id="low_credit_740" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="high_credit_740"
@@ -2207,11 +2199,12 @@
                               id="primary_code_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_retail_750"
-                              id="primary_code_retail_750" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="primary_code_retail_750" id="primary_code_retail_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="low_credit_750" id="low_credit_750" />
+                            <input type="text" class="form-control" formControlName="low_credit_750"
+                              id="low_credit_750" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="high_credit_750"
@@ -2234,17 +2227,20 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_k" id="primary_code_kl" />
+                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_k"
+                              id="primary_code_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_retail_kl"
-                              id="primary_code_retail_kl" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="primary_code_retail_kl" id="primary_code_retail_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="low_credit_kl" id="low_credit_kl" />
+                            <input type="text" class="form-control" formControlName="low_credit_kl"
+                              id="low_credit_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="high_credit_kl" id="high_credit_kl" />
+                            <input type="text" class="form-control" formControlName="high_credit_kl"
+                              id="high_credit_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="retail_low_credit_kl"
@@ -2290,7 +2286,8 @@
                               id="pbx_threshold_limit_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="retail_threshold_limit_740" id="retail_threshold_limit_740" />
+                            <input type="text" class="form-control" formControlName="retail_threshold_limit_740"
+                              id="retail_threshold_limit_740" />
                           </td>
                         </tr>
                         <tr>
@@ -2306,7 +2303,8 @@
                               id="pbx_threshold_limit_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="retail_threshold_limit_750" id="retail_threshold_limit_750" />
+                            <input type="text" class="form-control" formControlName="retail_threshold_limit_750"
+                              id="retail_threshold_limit_750" />
                           </td>
 
                         </tr>
@@ -2315,14 +2313,16 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="server_name_kl" id="server_name_kl" />
+                            <input type="text" class="form-control" formControlName="server_name_kl"
+                              id="server_name_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="pbx_threshold_limit_kl"
                               id="pbx_threshold_limit_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="retail_threshold_limit_kl" id="retail_threshold_limit_kl" />
+                            <input type="text" class="form-control" formControlName="retail_threshold_limit_kl"
+                              id="retail_threshold_limit_kl" />
                           </td>
                         </tr>
 
@@ -2330,8 +2330,8 @@
                     </table>
                   </div>
                   <label class="col-lg-12 col-form-label">Manual Credit
-                    <input type="checkbox" formControlName="manual_credit"
-                      (change)="manualCreditPermission($event)" id="manual_credit">
+                    <input type="checkbox" formControlName="manual_credit" (change)="manualCreditPermission($event)"
+                      id="manual_credit">
                   </label>
                   <label class="col-lg-12 col-form-label">Add Credit Amount
                     <input type="checkbox" formControlName="auto_Credit_checklist"
@@ -2695,8 +2695,8 @@
                     Type</label>
                 </div>
                 <div class="col-lg-6" *ngFor='let item of radioDynamic;let d=index'>
-                  <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType"
-                    value="{{item.values}}" (change)="handleChange($event)" />
+                  <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType" value="{{item.values}}"
+                    (change)="handleChange($event)" />
                   <label for="premiumPartner_id1{{d}}" class="col-lg-6 col-form-label">{{item.name}}</label>
                 </div>
 
@@ -2784,7 +2784,8 @@
                 </div>
 
                 <div class="col-lg-6">
-                  <input type="text" class="form-control" formControlName="a_C4TPartnerPhoneNum" id="C4T_partnerPhone" />
+                  <input type="text" class="form-control" formControlName="a_C4TPartnerPhoneNum"
+                    id="C4T_partnerPhone" />
                 </div>
               </div>
             </div>
@@ -2797,8 +2798,8 @@
                 </div>
 
                 <div class="col-lg-6" *ngFor='let item of radioDynamic;let c=index'>
-                  <input type="radio" id="{{item.values}}" formControlName="a_C4TPartnerType"
-                    value="{{item.values}}" (change)="Radio_Partnertype_C4T($event)" />
+                  <input type="radio" id="{{item.values}}" formControlName="a_C4TPartnerType" value="{{item.values}}"
+                    (change)="Radio_Partnertype_C4T($event)" />
                   <label for="premiumPartner_id{{c}}" class="col-lg-6 col-form-label">{{item.name}}</label>
                 </div>
 
@@ -2862,24 +2863,25 @@
         <form [formGroup]="invoiceSharedCustomerForm">
           <div class="col-lg-12" *ngFor="let ins of Invoice_SharedCustomerPermission_List;let i=index">
             <div class="row">
-                <label class="col-lg-4">{{ins.firstName}}</label>
-          
-                <div class="col-lg-4">
-                    <input  type="checkbox" 
-                        id="{{ ins.userId }}" [value]="ins.userId"
-                        checked="{{Invoice_shareCustomerPermission_EditOnLoad_Values.indexOf(ins.userId)!=-1 ? 'checked':''}}"
-                        (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
-          
-                </div>
+              <label class="col-lg-4">{{ins.firstName}}</label>
+
+
+              <div class="col-lg-4">
+                <input type="checkbox" id="{{ ins.userId }}" [value]="ins.userId"
+                  checked="{{Invoice_shareCustomerPermission_EditOnLoad_Values.indexOf(ins.userId)!=-1 ? 'checked':''}}"
+                  (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
+
+              </div>
+
             </div>
           </div>
+
 
         </form>
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary"
-          (click)="invoiceShare_update()">Update</button>
+        <button type="button" class="btn btn-primary" (click)="invoiceShare_update()">Update</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
@@ -2921,17 +2923,16 @@
 
           <div class="col-lg-12" *ngFor="let item of SharedCustomerPermission_List;let i=index">
             <div class="row">
-                <label class="col-lg-4">{{item.firstName}}</label>
+              <label class="col-lg-4">{{item.firstName}}</label>
 
-                <div class="col-lg-4">
-                    <input  type="checkbox" 
-                        id="{{ item.userId }}" [value]="item.userId"
-                        checked="{{shareCustomerPermission_EditOnLoad_Values.indexOf(item.userId)!=-1 ? 'checked':''}}"
-                        (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">
+              <div class="col-lg-4">{{item.userId}}
+                <input type="checkbox" id="{{ item.userId }}" [value]="item.userId"
+                  checked="{{item.chk_val==1 ? 'checked':''}}"
+                  (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">
 
-                </div>
+              </div>
             </div>
-        </div>
+          </div>
 
         </form>
       </div>
@@ -3007,7 +3008,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="myForm" >
+        <form [formGroup]="myForm">
 
           <div class="modal-body contractFileAttachmentCSS">
             <div>
@@ -3084,70 +3085,71 @@
 
             <form [formGroup]="billCodeEditForm3">
               <label for="companyCode" class="col-lg-12 col-form-label">Bill Code*</label>
-  
-              <section formArrayName="addresses "  >
-                
-              <div class="userDatatable global-shadow border-0 bg-white w-100">
-                <div class="table-responsive ">
-                  <table class="table mb-0 table-borderless">
-                    <thead>
-                      <tr class="userDatatable-header">
-                        <th>Bill Code Name</th>
-                        <th>Server-VS1</th>
-                        <th>Server-VSKL</th>
-                        <th>Server-VS2(32)(TH,JP)</th>
-                        <th>Server-VS2(8)(Special Account)</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="userDatatable-header" *ngFor="let address of addressControls.controls; let i = index;">
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="popup_billCodeName"
-                          id="popup_billCodeName_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="popup_bill_code_740"
-                          id="popup_bill_code_740_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="popup_bill_code_kl"
-                          id="popup_bill_code_kl_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="popup_bill_code_750"
-                          id="popup_bill_code_750_{{i}}" />
-                        </td>
-                        <td style="padding-right: 10px!important">
-                          <input type="text" class="form-control"  formControlName="popup_bill_code_750_8"
-                          id="popup_bill_code_750_8_{{i}}" />
-                        </td>
-                        <td>
-                          <div class="userDatatable-content d-inline-block">
+
+              <section formArrayName="addresses ">
+
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                  <div class="table-responsive ">
+                    <table class="table mb-0 table-borderless">
+                      <thead>
+                        <tr class="userDatatable-header">
+                          <th>Bill Code Name</th>
+                          <th>Server-VS1</th>
+                          <th>Server-VSKL</th>
+                          <th>Server-VS2(32)(TH,JP)</th>
+                          <th>Server-VS2(8)(Special Account)</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr class="userDatatable-header"
+                          *ngFor="let address of addressControls.controls; let i = index;">
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="popup_billCodeName"
+                              id="popup_billCodeName_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="popup_bill_code_740"
+                              id="popup_bill_code_740_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="popup_bill_code_kl"
+                              id="popup_bill_code_kl_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="popup_bill_code_750"
+                              id="popup_bill_code_750_{{i}}" />
+                          </td>
+                          <td style="padding-right: 10px!important">
+                            <input type="text" class="form-control" formControlName="popup_bill_code_750_8"
+                              id="popup_bill_code_750_8_{{i}}" />
+                          </td>
+                          <td>
+                            <div class="userDatatable-content d-inline-block">
                               <button type="button" class="btn btn-danger btn-sm" [disabled]="!billCodeEditForm3.valid"
-                                  (click)="removeAddress1(i)">X</button>
-  
-                          </div>
-                  </td>
-  
-                      </tr>
-                    </tbody>
-                  </table>
+                                (click)="removeAddress1(i)">X</button>
+
+                            </div>
+                          </td>
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
-                
+
               </section>
               <div class="text-left">
                 <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="editBillCode()"
-                    style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add More</i>
+                  style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add More</i>
                 </button>
-            </div>
-              </form>
+              </div>
+            </form>
 
           </div>
 
 
-            <div class="row">
+          <div class="row">
             <div class="col-lg-12">
               <form [formGroup]="popupBillCodeForm2">
                 <label for="companyCode" class="col-lg-12 col-form-label">Primary Code*</label>
@@ -3172,15 +3174,16 @@
                             <span><strong>VS 740 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="popup_primary_code_740"
-                              id="popup_primary_code_740" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="popup_primary_code_740" id="popup_primary_code_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="popu_primary_code_retail_750"
-                              id="popu_primary_code_retail_750" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="popu_primary_code_retail_750" id="popu_primary_code_retail_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="popup_low_credit_740" id="popup_low_credit_740" />
+                            <input type="text" class="form-control" formControlName="popup_low_credit_740"
+                              id="popup_low_credit_740" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_high_credit_740"
@@ -3200,15 +3203,16 @@
                             <span><strong>VS 750 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="popup_primary_code_750"
-                              id="popup_primary_code_750" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="popup_primary_code_750" id="popup_primary_code_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="popup_primary_code_retail_750"
-                              id="popup_primary_code_retail_750" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="popup_primary_code_retail_750" id="popup_primary_code_retail_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="popup_low_credit_750" id="popup_low_credit_750" />
+                            <input type="text" class="form-control" formControlName="popup_low_credit_750"
+                              id="popup_low_credit_750" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_high_credit_750"
@@ -3231,24 +3235,27 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="popup_primary_code_k" id="popup_primary_code_kl" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="popup_primary_code_k" id="popup_primary_code_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="popup_primary_code_retail_kl"
-                              id="popup_primary_code_retail_kl" />
+                            <input type="text" class="form-control" [readonly]="true"
+                              formControlName="popup_primary_code_retail_kl" id="popup_primary_code_retail_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="popup_low_credit_kl" id="popup_low_credit_kl" />
+                            <input type="text" class="form-control" formControlName="popup_low_credit_kl"
+                              id="popup_low_credit_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="popup_high_credit_kl" id="popup_high_credit_kl" />
+                            <input type="text" class="form-control" formControlName="popup_high_credit_kl"
+                              id="popup_high_credit_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_retail_low_credit_kl"
                               id="popup_retail_low_credit_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control"  formControlName="popup_retail_high_credit_kl"
+                            <input type="text" class="form-control" formControlName="popup_retail_high_credit_kl"
                               id="popup_retail_high_credit_kl" />
                           </td>
                         </tr>
@@ -3288,7 +3295,8 @@
                               id="popup_pbx_threshold_limit_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="popup_retail_threshold_limit_740" id="popup_retail_threshold_limit_740" />
+                            <input type="text" class="form-control" formControlName="popup_retail_threshold_limit_740"
+                              id="popup_retail_threshold_limit_740" />
                           </td>
                         </tr>
                         <tr>
@@ -3304,7 +3312,8 @@
                               id="popup_pbx_threshold_limit_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" formControlName="popup_retail_threshold_limit_750" id="popup_retail_threshold_limit_750" />
+                            <input type="text" class="form-control" formControlName="popup_retail_threshold_limit_750"
+                              id="popup_retail_threshold_limit_750" />
                           </td>
 
                         </tr>
@@ -3313,14 +3322,16 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control"  formControlName="popup_server_name_kl" id="popup_server_name_kl" />
+                            <input type="text" class="form-control" formControlName="popup_server_name_kl"
+                              id="popup_server_name_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_pbx_threshold_limit_kl"
                               id="popup_pbx_threshold_limit_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control"  formControlName="popup_retail_threshold_limit_kl" id="popup_retail_threshold_limit_kl" />
+                            <input type="text" class="form-control" formControlName="popup_retail_threshold_limit_kl"
+                              id="popup_retail_threshold_limit_kl" />
                           </td>
                         </tr>
 
@@ -3332,11 +3343,10 @@
                       (change)="manualCreditPermission($event)" id="popup_manual_credit">
                   </label>
                   <label class="col-lg-12 col-form-label">Add Credit Amount
-                    <input type="checkbox" formControlName="auto_Credit_checklist"
-                      id="autoCreditCheckBox">
+                    <input type="checkbox" formControlName="auto_Credit_checklist" id="autoCreditCheckBox">
                   </label>
                 </div>
-                
+
               </form>
             </div>
 
@@ -3506,9 +3516,9 @@
                 <div class="ng-autocomplete">
                   <label for="companyName" class="col-lg-12 col-form-label">Search Text</label>
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                     (selected)='selectEventCustomer($event)'
-                    (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                    (selected)='selectEventCustomer($event)' (inputChanged)='searchCustomerData($event)'
+                    (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                    [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplateCustomer let-item>
@@ -3520,7 +3530,7 @@
                   </ng-template>
 
                 </div>
-               
+
 
               </div>
             </div>
@@ -3578,24 +3588,22 @@
         <form [formGroup]="AssignAccountManagerForm">
           <div class="col-lg-12" *ngFor="let aml of AssignAccountManager_List;let i=index">
             <div class="row">
-                <label class="col-lg-4">{{aml.firstName}}</label>
-          
-                <div class="col-lg-4">
-                  <input  type="radio" name="radio_AssignAccountManager" 
-                  
-                  id="{{aml.userId}}"  
+              <label class="col-lg-4">{{aml.firstName}}</label>
+
+              <div class="col-lg-4">
+                <input type="radio" name="radio_AssignAccountManager" id="{{aml.userId}}"
                   checked="{{aml.userId==AssignAccountManager_SelectedUserID ? 'checked':''}}"
                   (change)="handle_radioChange_AccountManager($event)" />
-          
-                </div>
+
+              </div>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" (click)="AssignAccountManagerUpdate()" >
-         Update
+        <button type="button" class="btn btn-primary" (click)="AssignAccountManagerUpdate()">
+          Update
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Close
