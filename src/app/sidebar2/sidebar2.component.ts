@@ -101,7 +101,7 @@ for(let i=0; i<mainMenus.length; i++){
   }
 }
 this.overallmenulist = childMenu;
-console.log(this.overallmenulist)
+// console.log(this.overallmenulist)
 }
 
 mainMenus2(){

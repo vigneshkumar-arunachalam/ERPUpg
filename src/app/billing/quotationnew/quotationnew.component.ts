@@ -7,6 +7,7 @@ declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
 import Swal from 'sweetalert2'
+import { InputModalityDetector } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-quotationnew',
@@ -36,7 +37,7 @@ export class QuotationnewComponent implements OnInit {
   duplicate_enquiryFromList: any;
   duplicate_quotationValidityList: any;
   duplicate_templateNameList: any;
-  isReadonly:boolean=true;
+  isReadonly: boolean = true;
 
   //search quotation
   searchQuotationForm: FormGroup;
@@ -57,10 +58,18 @@ export class QuotationnewComponent implements OnInit {
   groupselectQuotationId: any;
   checkbox_quotationShare_value: any;
   quotationSharedCheckboxID_array: any = [];
-  quotationSharedPreviousChecked:any=[];
+  quotationSharedPreviousChecked: any = [];
   sharePermissionQuotationId: any;
   search_SharedPersonName: any;
   values = '';
+  //quotation shared-rework--new
+  quotationSharedPerson_EditOnLoad_Values:any;
+  quotationSharedPerson_List:any;
+  quotationSharedPerson_List1:any;
+  CheckBox_DynamicArrayList_quotationSharedPerson:any;
+  typeConvertionString_quotation_Shared_Permission:any;
+  checkbox_ID_SingleParameter_quotationShare_Value:any;
+  Checkbox_value_quotationShare:any;
   //quotation-approval
   quotationApproval_ID: any;
   quotationApprovalForm: FormGroup;
@@ -414,10 +423,6 @@ export class QuotationnewComponent implements OnInit {
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
     console.log(this.Select_To_Type_radiobox_Value);
-
-
-
-
   }
   EditCHK(data: any, event: any) {
     console.log("List - CheckBox ID", data);
@@ -636,14 +641,14 @@ export class QuotationnewComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  clearAddQuotationGo(){
+  clearAddQuotationGo() {
     this.addNewQuotationPopUpForm.reset();
     this.addNewQuotationPopUpForm.patchValue({
 
-      'version_enqForm_addPopUP':'1.0',
+      'version_enqForm_addPopUP': '1.0',
 
     });
-   
+
 
   }
   addQuotationNew() {
@@ -653,7 +658,7 @@ export class QuotationnewComponent implements OnInit {
     //   $("#quot_val").val('');
     // $("#temp_name").val('');
     // }, 2000);
-    
+
 
     $("#addNewQuotationFormId").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
@@ -764,18 +769,8 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-
   quotationSharedPersonEdit(QuotationId: any) {
-    // this.quotationSharedCheckboxID_array=[];
-    this.sharePermissionQuotationId = QuotationId
-    // this.quotationSharedResult=[];
-    // this.invoiceResult=[];  //for refreshing we are emptying the variable
-    // this.invoiceCheckboxID_array=[];
-    //for refreshing we are emptying the variable
-    // this.invoiceContractID = CustomerContractid;
-    // this.invoiceCustomerID = customerID;
-
-
+    this.sharePermissionQuotationId = QuotationId;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -788,21 +783,18 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
+
       if (response.status == true) {
 
-        this.quotationSharedResult = response.user_list;
-        console.log("response.user_list",response.user_list);
-        var localVar=response.access_userid
-        this.quotationSharedCheckboxID_array = localVar.split(',');
-        console.log(this.quotationSharedCheckboxID_array)
-        console.log("checkbox selected user_list",response.access_userid);
-        this.quotationSharedCheckboxID_array=response.access_userid;
-        console.log("Initial Quotation list before select/deselect", this.quotationSharedCheckboxID_array);
 
-        // this.quotationSharedCheckboxID_array.push(this.quotationSharedPreviousChecked);
-        // this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
-        // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
+        this.quotationSharedPerson_EditOnLoad_Values =response.access_userid;
+        setTimeout(() => {
+          this.quotationSharedPerson_List = response.user_list;
+        }, 2000);
+        this.quotationSharedPerson_List1 = response.access_userid;
+        this.quotationSharedResult = response.user_list;
+        this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',');
+        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
       }
       else {
@@ -811,8 +803,7 @@ export class QuotationnewComponent implements OnInit {
           message: "Data Not Found",
           position: 'topRight'
         });
-        // this.editInvoiceGroupForm.reset();
-        // this.contractList();
+
       }
     }), (error: any) => {
       iziToast.error({
@@ -822,12 +813,8 @@ export class QuotationnewComponent implements OnInit {
       console.log("final error", error);
     }
   }
-  quotationSharedPersonUpdate() {
-    // this.invoiceCheckboxID_array=[];
-    console.log("Checkbox current click", this.quotationSharedCheckboxID_array)
-    
-    this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
-    console.log("Checkbox current+edit(past) click", this.quotationSharedCheckboxID_array)
+
+  quotationSharedPersonUpdate(){
     let api_req: any = new Object();
     let quot_share_update_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -837,39 +824,124 @@ export class QuotationnewComponent implements OnInit {
     quot_share_update_req.action = "quotation_shared_user_update";
     quot_share_update_req.quotationId = this.sharePermissionQuotationId;
     quot_share_update_req.user_id = localStorage.getItem('user_id');
-    quot_share_update_req.follower_user_id = this.quotationSharedCheckboxID_array.join(',');
+    quot_share_update_req.follower_user_id = this.typeConvertionString_quotation_Shared_Permission;
     api_req.element_data = quot_share_update_req;
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
       if (response.status == true) {
-        this.quotationSharedResult = response.customer_invoice_details;
-        console.log("response.customer_invoice_details",response.customer_invoice_details)
-        this.quotationList({});
-        // window.location.reload();
-        $("#quotationSharedPersonId").modal("hide");
-        console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
         iziToast.success({
-          message: "Quotation Shared has been Updated",
+          message: "Share Customer Permission Updated successfully",
           position: 'topRight'
         });
 
+        $('#quotationSharedPersonId').modal('hide');
+         this.typeConvertionString_quotation_Shared_Permission = [];
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
       }
-      else {
-
+    }),
+      (error: any) => {
         iziToast.error({
-          message: "Quotation Shared has not been Updated",
+          message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      }
-
-
-      // this.contractList()
-
-    });
-
-
+        console.log("final error", error);
+      };
   }
+ 
+  // quotationSharedPersonUpdate1() {
+  
+  //   console.log("Checkbox current click", this.quotationSharedCheckboxID_array)
+
+  //   this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
+  //   console.log("Checkbox current+edit(past) click", this.quotationSharedCheckboxID_array)
+
+  //   let api_req: any = new Object();
+  //   let quot_share_update_req: any = new Object();
+  //   api_req.moduleType = "quotation";
+  //   api_req.api_url = "quotation/quotation_shared_user_update";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   quot_share_update_req.action = "quotation_shared_user_update";
+  //   quot_share_update_req.quotationId = this.sharePermissionQuotationId;
+  //   quot_share_update_req.user_id = localStorage.getItem('user_id');
+  //   quot_share_update_req.follower_user_id = this.quotationSharedCheckboxID_array.join(',');
+  //   api_req.element_data = quot_share_update_req;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     if (response.status == true) {
+  //       this.quotationSharedResult = response.customer_invoice_details;
+  //       console.log("response.customer_invoice_details", response.customer_invoice_details)
+  //       this.quotationList({});
+       
+  //       $("#quotationSharedPersonId").modal("hide");
+  //       console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
+  //       iziToast.success({
+  //         message: "Quotation Shared has been Updated",
+  //         position: 'topRight'
+  //       });
+
+  //     }
+  //     else {
+
+  //       iziToast.error({
+  //         message: "Quotation Shared has not been Updated",
+  //         position: 'topRight'
+  //       });
+  //     }
+
+
+      
+
+  //   });
+
+
+  // }
+  // quotationSharedPersonEdi(QuotationId: any) {
+ 
+  //   this.sharePermissionQuotationId = QuotationId
+  //   let api_req: any = new Object();
+  //   let quot_share_req: any = new Object();
+  //   api_req.moduleType = "quotation";
+  //   api_req.api_url = "quotation/quotation_shared_person";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   quot_share_req.action = "quotation_shared_person";
+
+  //   quot_share_req.quotationId = this.sharePermissionQuotationId;
+  //   quot_share_req.user_id = localStorage.getItem('user_id');
+  //   api_req.element_data = quot_share_req;
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     if (response.status == true) {
+
+  //       this.quotationSharedResult = response.user_list;
+  //       console.log("response.user_list", response.user_list);
+  //       var localVar = response.access_userid
+  //       this.quotationSharedCheckboxID_array = localVar.split(',');
+  //       console.log(this.quotationSharedCheckboxID_array)
+  //       console.log("checkbox selected user_list", response.access_userid);
+  //       this.quotationSharedCheckboxID_array = response.access_userid;
+  //       console.log("Initial Quotation list before select/deselect", this.quotationSharedCheckboxID_array);
+  //     }
+  //     else {
+  //       $("#quotationSharedPersonId").modal("hide");
+  //       iziToast.error({
+  //         message: "Data Not Found",
+  //         position: 'topRight'
+  //       }); 
+  //     }
+  //   }), (error: any) => {
+  //     iziToast.error({
+  //       message: "Sorry, some server issue occur. Please contact admin",
+  //       position: 'topRight'
+  //     });
+  //     console.log("final error", error);
+  //   }
+  // }
   quotationSharedPersonNameSearch(event: any) {
 
 
@@ -895,7 +967,8 @@ export class QuotationnewComponent implements OnInit {
       console.log("search username ", response)
       if (response.status == true) {
 
-        this.quotationSharedResult = response.user_list;
+        // this.quotationSharedResult = response.user_list;
+        this.quotationSharedPerson_List = response.user_list;
 
       }
       else {
@@ -913,32 +986,60 @@ export class QuotationnewComponent implements OnInit {
 
   }
   QuotationSharedCHK(data: any, event: any) {
-    // this.invoiceCheckboxID_array=[];
-    console.log("Shared Quotation List - CheckBox ID", data);
-    this.groupselectQuotationId = data;
-
-    this.checkbox_quotationShare_value = event.target.checked;
-
-    console.log(this.checkbox_quotationShare_value)
-
-    if (event.target.checked) {
-
-      var k =[];
-k = data.join(',');
-console.log(k)
-      // console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
-    }
-    else {
-      console.log("Final Shared Quotation Person Checkbox After checkbox selected list", this.quotationSharedCheckboxID_array);
-      const index = this.quotationSharedCheckboxID_array.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.quotationSharedCheckboxID_array.splice(index, 1);
+    console.log("before--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
+    console.log("List - Checkbox ID", data);
+    this.checkbox_ID_SingleParameter_quotationShare_Value = data;
+    this.Checkbox_value_quotationShare = event.target.checked;
+    // console.log(this.Checkbox_value_quotationShare)
+//     console.log(this.quotationSharedPerson_List1)
+// var k = this.quotationSharedPerson_List1.split(',');
+    if (this.Checkbox_value_quotationShare) {
+// console.log(k.indexOf(data))
+// for(var i=0;i<=k.length;i++){
+//   if(k[i]!=data){
+// k.push(data);
+//   }
+// }
+// console.log(k)
+      if (this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data) < 0) {
+        this.CheckBox_DynamicArrayList_quotationSharedPerson.push(data);
+        var k = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
+        var a = k.split(',');
+        let filteredArr = a.filter((item: any) => item === data);
+console.log(filteredArr);
       }
-      console.log("Final Shared Quotation Person Checkbox After Deselected selected list", this.quotationSharedCheckboxID_array)
+      else {
+        //type something
+      }
+      console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
+    }else {
+      // for(var i=0;i<=k.length;i++){
+      //   if(k[i]==data){
+      // const index = k.indexOf(data);
+      // console.log(index);
+      // if(index == 1){
+      //   k.splice(index,1);
+      // }else{
+      //   k.splice(index,1);
+      // }
+      //   }
+      // }
+      // console.log(k)
+      const index = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
+      console.log(this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      if (index == 1) {
+        this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
+      } else {
+        this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
+      }
+      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
     }
-      //this.quotationSharedCheckboxID_array.push(data);
-      // this.quotationSharedCheckboxID_array.join(',');
+    // this.quotationSharedPerson_List1 = k.toString();
+    // console.log(this.quotationSharedPerson_List1)
+    this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
+this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
+    console.log("after--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
   quotationApprovalEdit(id: any) {
@@ -1001,7 +1102,7 @@ console.log(k)
     quot_approvalUpdate_req.quotation_comments = this.quotationApprovalForm.value.comments_approvedBy;
     quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
     console.log("this.quotationApprovedBy", this.quotationApprovedBy);
-    if (this.Approval_Type_radiobox_Value=="double" && this.quotationApprovedBy == '') {
+    if (this.Approval_Type_radiobox_Value == "double" && this.quotationApprovedBy == '') {
 
       iziToast.warning({
         message: "Select Approval By for Double Approval",
@@ -1228,6 +1329,7 @@ console.log(k)
   }
 
   fileAttachmentEdit(ID: any) {
+    this.myFiles = [];
     $("#fileAttachmentFormId").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttach_quotationID = ID;
@@ -1301,9 +1403,9 @@ console.log(k)
               message: "File Attachment Deleted successfully",
               position: 'topRight'
             });
-        
+
             $("#fileAttachmentFormId").modal("hide");
-           
+
           } else {
             iziToast.warning({
               message: "File Attachment not deleted. Please try again",
@@ -1319,56 +1421,146 @@ console.log(k)
 
 
   }
+  // fileAttachmentUpdate() {
+  //   this.FileAttachmentForm.reset();
+
+  //   Swal.fire('File Updating');
+  //   Swal.showLoading();
+
+  //   if (this.myFiles.length == 0) {
+  //     Swal.close();
+  //     iziToast.warning({
+  //       message: "Attachment File Missing",
+  //       position: 'topRight'
+  //     });
+  //   }
+
+  //   const data = new FormData();
+
+  //   for (var i = 0; i < this.myFiles.length; i++) {
+  //     data.append("cust_file[]", this.myFiles[i]);
+  //   }
+  //   for (var j = 0; j < this.edit_array.length; j++) {
+  //     data.append("quotation_pdf_add[]", this.edit_array[j]);
+  //   }
+  //   data.append('user_id', "2");
+  //   data.append('quotationId', this.fileAttach_quotationID);
+
+  //   data.append('action', "quotation_attachment_save");
+
+
+  //   var self = this;
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: 'https://erp1.cal4care.com/api/quotation/quotation_attachment_save',
+  //     cache: false,
+  //     contentType: false,
+  //     processData: false,
+  //     data: data,
+  //     success: function (result: any) {
+  //       if (result.status == true) {
+  //         self.quotationList({});
+  //         console.log(result);
+  //         Swal.close();
+  //         $("#fileAttachmentFormId").modal("hide");
+  //         this.edit_array = [];
+
+  //         iziToast.success({
+  //           message: "File Attachment Saved successfully",
+  //           position: 'topRight'
+  //         });
+  //       }
+  //     },
+  //     error: function (err: any) {
+  //       console.log(err);
+  //     }
+  //   })
+
+  // }
   fileAttachmentUpdate() {
+
     this.FileAttachmentForm.reset();
     //  var data = new FormData();
+    Swal.fire('File Updating');
+    Swal.showLoading();
 
-    const data = new FormData();
-
-    for (var i = 0; i < this.myFiles.length; i++) {
-      data.append("cust_file[]", this.myFiles[i]);
+    if (this.myFiles.length == 0) {
+      Swal.close();
+      iziToast.warning({
+        message: "Attachment File Missing",
+        position: 'topRight'
+      });
     }
-    for (var j = 0; j < this.edit_array.length; j++) {
-      data.append("quotation_pdf_add[]", this.edit_array[j]);
-    }
-    data.append('user_id', "2");
-    data.append('quotationId', this.fileAttach_quotationID);
-    // data.append('quotation_pdf_add[]',this.edit_array ); 
-    data.append('action', "quotation_attachment_save");
+
+    if (this.myFiles.length > 0) {
+
+      const data = new FormData();
+
+      for (var i = 0; i < this.myFiles.length; i++) {
+        data.append("cust_file[]", this.myFiles[i]);
+      }
+      for (var j = 0; j < this.edit_array.length; j++) {
+        data.append("quotation_pdf_add[]", this.edit_array[j]);
+      }
+
+      data.append('user_id', "2");
+      data.append('quotationId', this.fileAttach_quotationID);
+      // data.append('quotation_pdf_add[]',this.edit_array ); 
+      data.append('action', "quotation_attachment_save");
 
 
-    var self = this;
-    $.ajax({
-      type: 'POST',
-      url: 'https://erp1.cal4care.com/api/quotation/quotation_attachment_save',
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (result: any) {
-        if (result.status == true) {
-          self.quotationList({});
-          console.log(result);
-          $("#fileAttachmentFormId").modal("hide");
-          this.edit_array = [];
+      var self = this;
+      $.ajax({
+        type: 'POST',
+        url: 'https://erp1.cal4care.com/api/quotation/quotation_attachment_save',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: data,
+        success: function (result: any) {
+          if (result.status == true) {
+            self.quotationList({});
+            console.log(result);
+            Swal.close();
+            $("#fileAttachmentFormId").modal("hide");
+            this.edit_array = [];
 
-          iziToast.success({
-            message: "File Attachment Saved successfully",
+            iziToast.success({
+              message: "File Attachment Saved successfully",
+              position: 'topRight'
+            });
+          }
+          else {
+            Swal.close();
+            $("#fileAttachmentFormId").modal("hide");
+
+            iziToast.warning({
+              message: "File Attachment Update Failed",
+              position: 'topRight'
+            });
+          }
+        },
+        error: function (err: any) {
+
+          console.log("err", err)
+          iziToast.error({
+            message: "Server Side Error",
             position: 'topRight'
           });
+          Swal.close();
+          $("#fileAttachmentFormId").modal("hide");
         }
-      },
-      error: function (err: any) {
-        console.log(err);
-      }
-    })
 
+      })
+
+
+    }
   }
   Email(QuotationID: any) {
     this.emailForm.reset();
     this.EmailQuotationID = QuotationID;
 
-   
+
     let api_req: any = new Object();
     let emailPage_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1402,7 +1594,7 @@ console.log(k)
     });
 
   }
- 
+
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
@@ -1446,7 +1638,7 @@ console.log(k)
   sendMail() {
     Swal.fire('Sending Email');
     Swal.showLoading();
-   
+
     this.FromEmailValue = $('#emailFrom').val();
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
@@ -1465,8 +1657,8 @@ console.log(k)
     // api_email_req.customer_contract_id = this.EmailCustomerContractID;
 
     api_email_req.from_email = this.FromEmailValue;
-    if(this.FromEmailValue===null || this.FromEmailValue==='' || this.FromEmailValue==='undefined' || this.FromEmailValue===undefined ){
-     
+    if (this.FromEmailValue === null || this.FromEmailValue === '' || this.FromEmailValue === 'undefined' || this.FromEmailValue === undefined) {
+
       iziToast.warning({
         message: "Choose From Email Value",
         position: 'topRight'
@@ -1475,8 +1667,8 @@ console.log(k)
 
     }
     api_email_req.to_email = this.emailTo;
-    if(this.emailTo===null){
-     
+    if (this.emailTo === null) {
+
       iziToast.warning({
         message: "Choose To Email Value",
         position: 'topRight'
@@ -1486,8 +1678,8 @@ console.log(k)
     }
     api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.subject = this.subjectValue;
-    if(this.subjectValue===null || this.subjectValue==='' || this.subjectValue==='undefined' || this.subjectValue===undefined ){
-     
+    if (this.subjectValue === null || this.subjectValue === '' || this.subjectValue === 'undefined' || this.subjectValue === undefined) {
+
       iziToast.warning({
         message: "Choose Subject",
         position: 'topRight'
@@ -1496,8 +1688,8 @@ console.log(k)
 
     }
     api_email_req.mail_message = this.msg_id;
-    if(this.msg_id===null){
-     
+    if (this.msg_id === null) {
+
       iziToast.warning({
         message: "Choose Message",
         position: 'topRight'
@@ -1509,7 +1701,7 @@ console.log(k)
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("response status", response.status);
-      if (response.status==true) {
+      if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
@@ -1520,7 +1712,7 @@ console.log(k)
           message: "Email Notification Sent Successfully",
           position: 'topRight'
         });
-        
+
       }
       else {
         $('#subject').val('');
@@ -1534,7 +1726,7 @@ console.log(k)
           position: 'topRight'
         });
         this.quotationList({})
-      
+
       }
       Swal.close();
     }), (error: any) => {
@@ -1623,6 +1815,8 @@ console.log(k)
 
       });
     } else {
+      $('#quotationCommentsId').modal('hide');
+
       iziToast.warning({
         message: "Transaction ID is empty. Unable to save Comments. Please try with Transaction ID",
         position: 'topRight'
@@ -1847,7 +2041,7 @@ console.log(k)
 
 
   AddQuotationGo() {
-    
+
     if (this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP === null) {
 
       iziToast.warning({

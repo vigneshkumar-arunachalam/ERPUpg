@@ -495,7 +495,8 @@ input.form-control {
   max-width: 25%;
 }
 .quotationsharedCSS{
-  height: 200px;
+  height: 300px;
+ 
   overflow-y: scroll;
 }
 .checkbox {
@@ -660,3 +661,4 @@ label {
 /* .tox-statusbar__branding a{
   display:none ;
 } */
+

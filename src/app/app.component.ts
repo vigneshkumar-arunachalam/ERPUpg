@@ -30,7 +30,7 @@ export class AppComponent {
 
   onActivate(event: any) {
     this.file_path = this.router.url;
-    console.log(this.router.url);
+    // console.log(this.router.url);
     if (localStorage.getItem('access_token')) {
       this.templateAuthView = false;
 

@@ -35,7 +35,9 @@ export class AddPIComponent implements OnInit {
   //auto complete
   searchResult: any;
   TaxDropdownList: any;
-
+//search textbox
+customer_ID: any;
+customer_NAME: any;
   //checkbox
   mile_check_value: any;
   dynamicCheckboxwithKey: any;
@@ -562,7 +564,8 @@ console.log(this.MSDisplay_Value);
 
   }
   searchCustomer_selectDropdownData(data: any) {
-
+this.customer_ID=data.customerId;
+this.customer_NAME=data.customerName;
     console.log("search data in dropdown", data)
     console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
@@ -677,6 +680,8 @@ console.log(this.MSDisplay_Value);
     api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
     api_savePI_req.customer_name = this.customerName_Data;
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
+    api_savePI_req.BillTo_customer_ID=this.customer_ID;
+    api_savePI_req.BillTo_customer_NAME=this.customer_NAME;
 
     api_savePI_req.b_name = this.addPI_section1.value.BillTo;
     api_savePI_req.b_address1 = this.addPI_section1.value.address_1;

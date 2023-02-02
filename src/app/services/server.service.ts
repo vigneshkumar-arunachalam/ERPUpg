@@ -52,20 +52,20 @@ export class ServerService {
     
 
         pagination(list_info:any){
-          console.log(list_info)
+         
           var start,eu,next,back,limit,total_count,offset,last_val,last_final_val,current,pagination:any,btn_length;
           limit = list_info.page_limit;
           total_count = list_info.total;
           offset = list_info.offset;
-          console.log("offset",offset)
+          
           start = 0 + offset;
-          console.log("initial start",start)
+       
           eu = start-0;
           if(total_count<start+1 && total_count>1){
   
               eu = start-limit;
               start = eu;
-              console.log("start after lop",start)
+             
           }
           current = eu + limit;
           back = eu - limit;

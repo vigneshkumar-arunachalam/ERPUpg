@@ -436,6 +436,31 @@
                                                                     </svg>
                                                                 </a>
                                                             </li>
+<!-- 
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Share Permission-Duplicate"
+                                                                    data-toggle="modal" data-target="#quotationSharedPersonId"
+                                                                    (click)="quotationSharedPersonEdi(list.quotationId)">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                                                        height="100" viewBox="0 0 24 24" fill="none"
+                                                                        stroke="#009688" stroke-width="3"
+                                                                        stroke-linecap="round" stroke-linejoin="round"
+                                                                        class="feather feather-gift">
+                                                                        <polyline points="20 12 20 22 4 22 4 12">
+                                                                        </polyline>
+                                                                        <rect x="2" y="7" width="20" height="5"></rect>
+                                                                        <line x1="12" y1="22" x2="12" y2="7"></line>
+                                                                        <path
+                                                                            d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z">
+                                                                        </path>
+                                                                        <path
+                                                                            d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z">
+                                                                        </path>
+                                                                    </svg>
+
+                                                                </a>
+                                                            </li> -->
+
 
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Set Template Name"
@@ -982,51 +1007,24 @@
             </div>
             <div class="modal-body quotationsharedCSS">
                 <form [formGroup]="quotationSharedPersonForm">
-                    <!-- <button type="button" 
-                    class="btn btn-primary" 
-                    (click)="quotationSharedPersonNameSearch()">
-                    <i class="fas fa-search" style="margin-right:0;"></i>
-                </button> -->
-
-                    <!-- <div class="input-group">
-                    <div class="form-outline">
-                      <input type="search" id="1f" class="form-control" />
-                      <label class="form-label" for="1f">Search</label>
+               
+                    <input type="search" placeholder="Search Shared Person"  class="form-control mb-2" (keyup)="quotationSharedPersonNameSearch($event)">
+                    <!-- <p>{{values}}</p> -->
+                    <div class="col-lg-12" *ngFor="let quot of quotationSharedPerson_List;let i =index">
+                        <div class="row">
+                           
+                            <div class="col-lg-2">
+                                <input type="checkbox"
+                                id="{{ quot.user_id }}" [value]="quot.user_id"
+                                
+                                checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                                    (change)="QuotationSharedCHK(quot.user_id,$event)">
+                      
+                            </div>
+                            <label class="col-lg-8" style="color: #df631c;font-weight: 400;">{{quot.firstName}}</label>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary" 
-                    (keyup.enter)="quotationSharedPersonNameSearch($event)">
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div> -->
-                    <input type="text" placeholder="Search Shared Person"  class="form-control" (keyup)="quotationSharedPersonNameSearch($event)">
-                    <p>{{values}}</p>
-
-                    <table class="demoTable">
-                        <th>Select Shared Person</th>
-                        <tr>
-                            <!-- <td><strong> </strong>
-                            </td> -->
-                            <td>
-                                <table class="demoTable">
-                                    <tr *ngFor="let quot of quotationSharedResult;let i =index">
-
-                                        <td>
-
-                                            <input type="checkbox" value="{{quot.chk_val}}"
-                                                checked="{{quot.chk_val == 'true' ? 'checked' : ''}}"
-                                                (change)="QuotationSharedCHK(quot.user_id,$event)">
-
-                                        </td>
-                                        <td>{{quot.firstName}}</td>
-                                    </tr>
-
-                                </table>
-
-                            </td>
-
-                        </tr>
-
-                    </table>
+                
 
 
                 </form>
@@ -1133,9 +1131,9 @@
                                         </div>
                                         <div>
                                             <textarea *ngIf="textarea_Show_hide"
-                                                formControlName="comments_approvedBy"></textarea>
+                                                formControlName="comments_approvedBy" placeholder="Approval By Comments"></textarea>
                                             <textarea *ngIf="textarea1_Show_hide" class="form-control textareaformcontrol" rows="3"
-                                                formControlName="comments_approvedBy"></textarea>
+                                            placeholder="Approval By Comments" formControlName="comments_approvedBy"></textarea>
                                         </div>
                                     </div>
 
@@ -1435,10 +1433,10 @@
             <div class="modal-body">
                 <form [formGroup]="FileAttachmentForm">
 
-                    <div class="modal-body contractFileAttachmentCSS">
+                    <div class="modal-body">
                         <div>
-                            <label for="contr" class="col-lg-12 col-form-label" style="width:100%;">
-                                <strong style="color:#252525;font-size:16px">Attached Files</strong></label>
+                            <label style="color: hsl(226, 59%, 21%)!important;">
+                                Attached Files</label>
                         </div>
 
                         <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;"
@@ -1456,20 +1454,26 @@
 
                         </div>
 
-
-                        <div>
-                            <label for="contr1" class="col-lg-6">
-                                <strong>Select New Attachment</strong></label>
-
-                            <div style="padding-left: 30px;">
-
-
-
+                        <div class="col-lg-12 mt-4">
+                            <div class="form-group row">
+                              <div class="col-lg-4">
+                                <label>
+                                  Select New Attachment</label>
+                              </div>
+                              <div class="col-lg-8" style="padding-left: 30px;">
+              
+                                <!-- <label for="file">File</label> -->
+                           
                                 <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
                                     class="form-control" (change)="onFileChange($event)">
-
+              
+                              </div>
                             </div>
                         </div>
+
+
+
+
                     </div>
 
                 </form>

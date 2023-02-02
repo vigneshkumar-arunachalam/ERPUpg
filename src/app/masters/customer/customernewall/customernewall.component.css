@@ -539,3 +539,15 @@ label {
 }
 .close:focus{outline: 0;}
 .close span{color: #fff;}
+.searchTop{
+  border: 1px solid #520505!important;
+}
+.searchTop:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+

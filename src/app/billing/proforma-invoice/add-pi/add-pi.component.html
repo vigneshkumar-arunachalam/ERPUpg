@@ -28,7 +28,8 @@
                             formControlName="BillTo"
                             (selected)='searchCustomer_selectDropdownData($event)'
                              (inputChanged)='searchCustomerData($event)'
-                            (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                            (inputFocused)='onFocusedCustomer($event)' 
+                            [itemTemplate]="itemTemplateCustomer"
                             [notFoundTemplate]="notFoundTemplate">
                         </ng-autocomplete>
 

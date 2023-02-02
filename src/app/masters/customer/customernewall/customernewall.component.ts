@@ -31,6 +31,12 @@ export class CustomernewallComponent implements OnInit {
   pageLimit = 10;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
+  //checkbox group
+  // checkAll_GroupID_Array=[];
+  checkAll_GroupID_Array = Array();
+  edit_array: any = [];
+  groupSelectCommonId: any;
+  checkbox_value: any;
   //add & list
   companyCodeAddCustomer = 'D6387';
   CompanyName: any;
@@ -60,6 +66,7 @@ export class CustomernewallComponent implements OnInit {
   currencyList: any;
   billerName: any;
   searchResult: any;
+  searchResultTest: any;
   billerNameList: any;
   errMsg = true;
   emailErrMsg = true;
@@ -95,6 +102,10 @@ export class CustomernewallComponent implements OnInit {
   searchCustomerForm: FormGroup;
   CustomerSearchTextValue: any;
   revenueCheckListvalue: any = '';
+  //Quick search
+  values = '';
+  search_CustomerListName: any;
+  QuickSearchResultList: any;
   //edit
   editCustomerForm: any;
   get_cust_type: any = [];
@@ -188,9 +199,18 @@ export class CustomernewallComponent implements OnInit {
   //bill Code edit
   billCodeEditForm1: FormGroup;
   billCodeEditForm2: FormGroup;
+  billCodeEditForm3: FormGroup;
+  popupBillCodeForm3: FormGroup;
+  popupBillCodeForm2: FormGroup;
+  public editBillCodeFormArray: FormGroup;
+  public addresses:FormArray;
+  test: boolean[] = [];
+  itre = 0;
   billCodeResponse: any = [];
   public billCodeFormArray: FormArray;
-  checkbox_autoCredit: any;
+  primary_code_auto_credit: boolean= true;
+  primary_code_manual_credit: boolean=true;
+  // isDisabled : boolean;
   edit_a: any;
   edit_b: any;
   //quick email 
@@ -210,6 +230,10 @@ export class CustomernewallComponent implements OnInit {
   addUserId_array: any = [];
   //AssignAccountManagerForm
   AssignAccountManagerForm: FormGroup;
+  radiobuttonValue_AccountManager: any;
+  AssignAccountManager_List: any;
+  AssignAccountManager_SelectedUserID: any;
+  AssignAccountManager_CustomerID: any;
   //GoogleAuthentication
   GoogleAuthenticationForm: FormGroup;
   //radio-mconnect,mrvoip,cal4tel
@@ -220,7 +244,7 @@ export class CustomernewallComponent implements OnInit {
   CheckBox_DynamicArrayList_shareCustomerPermission: any = [];
   shareCustomerPermission_EditOnLoad_Values: any;
   SharedCustomerPermission_List: any;
-  typeConvertionString_Shared_Permission:any;
+  typeConvertionString_Shared_Permission: any;
   //checkbox-invoice_shared customer permission-new
   invoice_shareCustomerPermission_ID: any;
   checkbox_ID_SingleParameter_invoice_Value: any;
@@ -233,9 +257,15 @@ export class CustomernewallComponent implements OnInit {
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
-    this.billCodeEditForm1 = this.fb.group({
-      billCodeFormArray: this.fb.array([this.createBillCode()])
+    
+    this.billCodeEditForm3 = this.fb.group({
+      addresses : this.fb.array([this.editBillCode_FormControl()])
     });
+    
+    
+  /*  this.billCodeEditForm1 = this.fb.group({
+      billCodeFormArray: this.fb.array([this.createBillCode()])
+    });*/
   }
 
   dropdownList_billerName: any = [];
@@ -387,7 +417,7 @@ export class CustomernewallComponent implements OnInit {
     this.radio = [{ "name": "New", "values": "N" }, { "name": "Permanent", "values": "P" }];
     this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
     this.displayDynamicData = JSON.parse(this.allData);
-    console.log("test vignesh dynamic data", this.displayDynamicData)
+
     this.billList = this.displayDynamicData[0].bill_details;
     this.countryList = this.displayDynamicData[0].country_details;
     this.currencyList = this.displayDynamicData[0].currency_det;
@@ -698,7 +728,7 @@ export class CustomernewallComponent implements OnInit {
 
     });
     this.AssignAccountManagerForm = new FormGroup({
-      'searchtext': new FormControl(null),
+      'radio_AssignAccountManager': new FormControl(null),
 
     });
     this.GoogleAuthenticationForm = new FormGroup({
@@ -710,27 +740,93 @@ export class CustomernewallComponent implements OnInit {
     this.billCodeEditForm2 = new FormGroup({
 
 
-      'VS740_PbxCode': new FormControl(null),
-      'VS740_RetailCode': new FormControl(null),
-      'VS740_PbxLow': new FormControl(null),
-      'VS740_PbxHigh': new FormControl(null),
-      'VS740_RetailLow': new FormControl(null),
-      'VS740_RetailHigh': new FormControl(null),
-      'VS750_PbxCode': new FormControl(null),
-      'VS750_RetailCode': new FormControl(null),
-      'VS750_PbxLow': new FormControl(null),
-      'VS750_PbxHigh': new FormControl(null),
-      'VS750_RetailLow': new FormControl(null),
-      'VS750_RetailHigh': new FormControl(null),
-      'VSKL_PbxCode': new FormControl(null),
-      'VSKL_RetailCode': new FormControl(null),
-      'VSKL_PbxLow': new FormControl(null),
-      'VSKL_PbxHigh': new FormControl(null),
-      'VSKL_RetailLow': new FormControl(null),
-      'VSKL_RetailHigh': new FormControl(null),
-      'auto_Credit_checklist': new FormControl(null),
+      'primary_code_740': new FormControl(null),
+      'primary_code_retail_740': new FormControl(null),
+      'low_credit_740': new FormControl(null),
+      'high_credit_740': new FormControl(null),
+      'retail_low_credit_740': new FormControl(null),
+      'retail_high_credit_740': new FormControl(null),
+
+
+      'primary_code_750': new FormControl(null),
+      'primary_code_retail_750': new FormControl(null),
+      'low_credit_750': new FormControl(null),
+      'high_credit_750': new FormControl(null),
+      'retail_low_credit_750': new FormControl(null),
+      'retail_high_credit_750': new FormControl(null),
+
+
+      'primary_code_kl': new FormControl(null),
+      'primary_code_retail_kl': new FormControl(null),
+      'low_credit_kl': new FormControl(null),
+      'high_credit_kl': new FormControl(null),
+      'retail_low_credit_kl': new FormControl(null),
+      'retail_high_credit_kl': new FormControl(null),
+
+      'primary_code_auto_credit': new FormControl(null),
+
+
+      'server_name_740': new FormControl(null),
+      'pbx_threshold_limit_740': new FormControl(null),
+      'retail_threshold_limit_740': new FormControl(null),
+
+      'server_name_750': new FormControl(null),
+      'pbx_threshold_limit_750': new FormControl(null),
+      'retail_threshold_limit_750': new FormControl(null),
+
+      'server_name_kl': new FormControl(null),
+      'pbx_threshold_limit_kl': new FormControl(null),
+      'retail_threshold_limit_kl': new FormControl(null),
+
+      'manual_credit': new FormControl(null),
 
     });
+
+
+    this.popupBillCodeForm2 =new FormGroup({
+
+      
+      // 'popup_primary_code_740': new FormControl(null),
+      'popup_low_credit_740': new FormControl(null),
+      'popup_high_credit_740': new FormControl(null),
+      'popup_retail_low_credit_740': new FormControl(null),
+      'popup_retail_high_credit_740': new FormControl(null),
+
+
+      // 'popup_primary_code_750': new FormControl(null),
+      'popu_primary_code_retail_750': new FormControl(null),
+      'popup_low_credit_750': new FormControl(null),
+      'popup_high_credit_750': new FormControl(null),
+      'popup_retail_low_credit_750': new FormControl(null),
+      'popup_retail_high_credit_750': new FormControl(null),
+
+
+      // 'popup_primary_code_kl': new FormControl(null),
+      'popup_primary_code_retail_kl': new FormControl(null),
+      'popup_low_credit_kl': new FormControl(null),
+      'popup_high_credit_kl': new FormControl(null),
+      'popup_retail_low_credit_kl': new FormControl(null),
+      'popup_retail_high_credit_kl': new FormControl(null),
+
+      'popup_primary_code_auto_credit': new FormControl(null),
+
+
+      'popup_server_name_740': new FormControl(null),
+      'popup_pbx_threshold_limit_740': new FormControl(null),
+      'popup_retail_threshold_limit_740': new FormControl(null),
+
+      'popup_server_name_750': new FormControl(null),
+      'popup_pbx_threshold_limit_750': new FormControl(null),
+      'popup_retail_threshold_limit_750': new FormControl(null),
+
+      'popup_server_name_kl': new FormControl(null),
+      'popup_pbx_threshold_limit_kl': new FormControl(null),
+      'popup_retail_threshold_limit_kl': new FormControl(null),
+
+      'popup_manual_credit': new FormControl(null),
+
+    });
+
     this.landscapeEmailForm = new FormGroup({
       'landscapeEmail_From': new FormControl(null),
       'landscapeEmail_To': new FormControl(null),
@@ -738,9 +834,52 @@ export class CustomernewallComponent implements OnInit {
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
     });
+   }
+
+
+
+  get addressControls() {
+    return this.billCodeEditForm3.get('addresses') as FormArray
+  }
+ 
+
+
+
+  editBillCode(): void {
+
+    this.addresses = this.billCodeEditForm3.get('addresses') as FormArray;
+    this.addresses.push(this.editBillCode_FormControl());
+
+    this.itre = this.itre + 1;
+    console.log(this.editBillCodeFormArray);
+    console.log(this.itre);
+    this.addressControls.controls.forEach((elt, index) => {
+      this.test[index] = true;
+      console.log(this.test[index]);
+      
+
+    });
+  }
+
+  editBillCode_FormControl(): FormGroup {
+    return this.fb.group({
+      
+      billCodeName: '',
+      bill_code_740: '',
+      bill_code_kl: '',
+      bill_code_750: '',
+      bill_code_750_8: '',
+
+    });
+
+  }
+  removeAddress1(i: number) {
+    
+    this.addresses.removeAt(i);
 
 
   }
+
 
   onItemSelect(billerName: any) {
     console.log(billerName);
@@ -964,14 +1103,152 @@ export class CustomernewallComponent implements OnInit {
   }
 
   autoCreditPermission(event: any) {
-    this.checkbox_autoCredit = event.target.checked;
-    console.log(this.checkbox_autoCredit)
-    if (this.checkbox_autoCredit) {
-      this.billCodeEditForm2.get('VS740_RetailHigh')?.disable();
+    this.primary_code_auto_credit = event.target.checked;
+    console.log(this.primary_code_auto_credit)
+    if (this.primary_code_auto_credit) {
+
+      this.billCodeEditForm2.get('low_credit_740')?.enable();
+      this.billCodeEditForm2.get('high_credit_740')?.enable();
+      this.billCodeEditForm2.get('retail_low_credit_740')?.enable();
+      this.billCodeEditForm2.get('retail_high_credit_740')?.enable();
+
+      this.billCodeEditForm2.get('low_credit_750')?.enable();
+      this.billCodeEditForm2.get('high_credit_750')?.enable();
+      this.billCodeEditForm2.get('retail_low_credit_750')?.enable();
+      this.billCodeEditForm2.get('retail_high_credit_750')?.enable();
+
+      this.billCodeEditForm2.get('low_credit_kl')?.enable();
+      this.billCodeEditForm2.get('high_credit_kl')?.enable();
+      this.billCodeEditForm2.get('retail_low_credit_kl')?.enable();
+      this.billCodeEditForm2.get('retail_high_credit_kl')?.enable();
+
+
+
+      this.popupBillCodeForm2.get('popup_low_credit_740')?.enable();
+      this.popupBillCodeForm2.get('popup_high_credit_740')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_low_credit_740')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_high_credit_740')?.enable();
+
+      this.popupBillCodeForm2.get('popup_low_credit_750')?.enable();
+      this.popupBillCodeForm2.get('popup_high_credit_750')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_low_credit_750')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_high_credit_750')?.enable();
+
+      this.popupBillCodeForm2.get('popup_low_credit_kl')?.enable();
+      this.popupBillCodeForm2.get('popup_high_credit_kl')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_low_credit_kl')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_high_credit_kl')?.enable();
+     
+    }
+
+    else{
+
+      this.billCodeEditForm2.get('low_credit_740')?.disable();
+      this.billCodeEditForm2.get('high_credit_740')?.disable();
+      this.billCodeEditForm2.get('retail_low_credit_740')?.disable();
+      this.billCodeEditForm2.get('retail_high_credit_740')?.disable();
+
+      this.billCodeEditForm2.get('low_credit_750')?.disable();
+      this.billCodeEditForm2.get('high_credit_750')?.disable();
+      this.billCodeEditForm2.get('retail_low_credit_750')?.disable();
+      this.billCodeEditForm2.get('retail_high_credit_750')?.disable();
+
+      this.billCodeEditForm2.get('low_credit_kl')?.disable();
+      this.billCodeEditForm2.get('high_credit_kl')?.disable();
+      this.billCodeEditForm2.get('retail_low_credit_kl')?.disable();
+      this.billCodeEditForm2.get('retail_high_credit_kl')?.disable();
+
+
+      this.popupBillCodeForm2.get('popup_low_credit_740')?.disable();
+      this.popupBillCodeForm2.get('popup_high_credit_740')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_low_credit_740')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_high_credit_740')?.disable();
+
+      this.popupBillCodeForm2.get('popup_low_credit_750')?.disable();
+      this.popupBillCodeForm2.get('popup_high_credit_750')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_low_credit_750')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_high_credit_750')?.disable();
+
+      this.popupBillCodeForm2.get('popup_low_credit_kl')?.disable();
+      this.popupBillCodeForm2.get('popup_high_credit_kl')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_low_credit_kl')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_high_credit_kl')?.disable();
+     
     }
   }
 
+  manualCreditPermission(event:any){
+    this.primary_code_manual_credit = event.target.checked;
+    // this.primary_code_manual_credit = event.target.checked;
+    console.log(this.primary_code_manual_credit)
+    if (this.primary_code_manual_credit = event.target.checked ) {
 
+
+      this.billCodeEditForm2.get('server_name_750')?.enable();
+      this.billCodeEditForm2.get('pbx_threshold_limit_750')?.enable();
+      this.billCodeEditForm2.get('retail_threshold_limit_750')?.enable();
+     
+
+      this.billCodeEditForm2.get('server_name_740')?.enable();
+      this.billCodeEditForm2.get('pbx_threshold_limit_740')?.enable();
+      this.billCodeEditForm2.get('retail_threshold_limit_740')?.enable();
+     
+      this.billCodeEditForm2.get('server_name_kl')?.enable();
+      this.billCodeEditForm2.get('pbx_threshold_limit_kl')?.enable();
+      this.billCodeEditForm2.get('retail_threshold_limit_kl')?.enable();
+
+       // billcode popup
+     
+
+      this.popupBillCodeForm2.get('popup_server_name_750')?.enable();
+      this.popupBillCodeForm2.get('popup_pbx_threshold_limit_750')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_threshold_limit_750')?.enable();
+     
+
+      this.popupBillCodeForm2.get('popup_server_name_740')?.enable();
+      this.popupBillCodeForm2.get('popup_pbx_threshold_limit_740')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_threshold_limit_740')?.enable();
+     
+      this.popupBillCodeForm2.get('popup_server_name_kl')?.enable();
+      this.popupBillCodeForm2.get('popup_pbx_threshold_limit_kl')?.enable();
+      this.popupBillCodeForm2.get('popup_retail_threshold_limit_kl')?.enable();
+      
+   
+    }
+
+    else{
+      this.billCodeEditForm2.get('server_name_750')?.disable();
+      this.billCodeEditForm2.get('pbx_threshold_limit_750')?.disable();
+      this.billCodeEditForm2.get('retail_threshold_limit_750')?.disable();
+     
+
+      this.billCodeEditForm2.get('server_name_740')?.disable();
+      this.billCodeEditForm2.get('pbx_threshold_limit_740')?.disable();
+      this.billCodeEditForm2.get('retail_threshold_limit_740')?.disable();
+     
+      this.billCodeEditForm2.get('server_name_kl')?.disable();
+      this.billCodeEditForm2.get('pbx_threshold_limit_kl')?.disable();
+      this.billCodeEditForm2.get('retail_threshold_limit_kl')?.disable();
+
+
+      // billcode popup
+     
+      this.popupBillCodeForm2.get('popup_server_name_750')?.disable();
+      this.popupBillCodeForm2.get('popup_pbx_threshold_limit_750')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_threshold_limit_750')?.disable();
+     
+
+      this.popupBillCodeForm2.get('popup_server_name_740')?.disable();
+      this.popupBillCodeForm2.get('popup_pbx_threshold_limit_740')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_threshold_limit_740')?.disable();
+     
+      this.popupBillCodeForm2.get('popup_server_name_kl')?.disable();
+      this.popupBillCodeForm2.get('popup_pbx_threshold_limit_kl')?.disable();
+      this.popupBillCodeForm2.get('popup_retail_threshold_limit_kl')?.disable();
+     
+     
+    }
+  }
 
 
   eventCheckNX32Permission(event: any) {
@@ -979,13 +1256,16 @@ export class CustomernewallComponent implements OnInit {
     console.log(this.checkbox_NX32Permission)
   }
   selectEventCustomer(item: any) {
+    this.searchResultTest = item.customerName;
     console.log(item.customerId)
     console.log(item.customerName)
+
     this.CompanyName = item.customerName;
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
     // do something when input is focused
+    console.log(e)
   }
 
   CustomerStatus_RadioEvent(evt: any) {
@@ -1032,8 +1312,56 @@ export class CustomernewallComponent implements OnInit {
 
   }
   CustomerSearchtext(event: any) {
-    this.CustomerSearchTextValue = event.target.value;
-    console.log("Customer Search Text Field Value", this.CustomerSearchTextValue)
+    console.log("event", event)
+    // this.CustomerSearchTextValue = event.target.value;
+    this.CustomerSearchTextValue = event;
+
+
+
+  }
+  selectAll(event: any) {
+
+    if (event.target.checked == true) {
+
+      this.checkAll_GroupID_Array = [];//clear the selected array
+      this.customer_list.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', true);
+        console.log("this.customer_list", element.customerId)
+        this.checkAll_GroupID_Array.push(element.customerId)
+        console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
+      });
+    } else {
+      this.customer_list.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', false);
+        this.checkAll_GroupID_Array = [];//empties the array
+        console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
+      });
+
+    }
+    console.log("Final SelectAll/DeSelect All Checkbox array Values", this.checkAll_GroupID_Array)
+    this.edit_array = this.checkAll_GroupID_Array
+  }
+
+  EditCHK(data: any, event: any) {
+
+    this.groupSelectCommonId = data;
+    this.checkbox_value = event.target.checked;
+
+    if (this.checkbox_value) {
+
+      this.edit_array.push(data);
+      this.edit_array.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array);
+    }
+    else {
+     
+      const index = this.edit_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array)
+
+    }
   }
 
   pageLoad() {
@@ -1066,11 +1394,53 @@ export class CustomernewallComponent implements OnInit {
   }
   searchCustomerList() {
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
-    console.log("this.revenueCheckListvalue", this.revenueCheckListvalue);
+
     $('#searchCustomerFormId').modal('hide');
   }
+  CustomerListQuickSearch(data: any) {
+    Swal.fire('Searching');
+    Swal.showLoading();
+    var list_data = this.listDataInfo(data);
+    this.values = data.target.value;
+    console.log("this.values", this.values)
+
+
+    console.log("You entered: ", data.target.value);
+    this.CustomerSearchTextValue = data.target.value;
+
+    let api_req: any = new Object();
+    let quick_Search_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/get_det";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quick_Search_req.action = "get_det";
+    quick_Search_req.user_id = localStorage.getItem('user_id');
+    quick_Search_req.off_set = list_data.offset;
+    quick_Search_req.limit_val = list_data.limit;
+    quick_Search_req.revenue_check = '';
+    quick_Search_req.search_txt = this.CustomerSearchTextValue;
+    api_req.element_data = quick_Search_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("search username ", response)
+      if (response.status != '') {
+        Swal.close();
+        this.QuickSearchResultList = response.user_list;
+        this.customer_list = response.customer_details;
+        this.revenue_list = response.revenue_list;
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+
+
+      }
+      else {
+
+
+      }
+    });
+  }
   customerslist(data: any) {
-    console.log("Customer List UI Display Data after OnInit ")
+
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let get_req: any = new Object();
@@ -1083,24 +1453,33 @@ export class CustomernewallComponent implements OnInit {
     get_req.off_set = list_data.offset;
     get_req.limit_val = list_data.limit;
     get_req.revenue_check = this.revenueCheckListvalue;
-    get_req.search_txt = this.CustomerSearchTextValue;
+    get_req.search_txt = this.searchResultTest;
     api_req.element_data = get_req;
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      console.log("get response", response);
-
       if (response != '') {
         this.customer_list = response.customer_details;
         this.revenue_list = response.revenue_list;
-
-
-        console.log(this.customer_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
-    })
+
+      else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   listDataInfo(list_data: any) {
-    console.log(list_data)
+
     // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
     // list_data.order_by_name = list_data.order_by_name == undefined ? "user.agent_name" : list_data.order_by_name;
     list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
@@ -1110,6 +1489,7 @@ export class CustomernewallComponent implements OnInit {
   }
   searchCustomerData(data: any) {
 
+    this.searchResultTest = data
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
     api_req.moduleType = "customer";
@@ -1121,12 +1501,29 @@ export class CustomernewallComponent implements OnInit {
     api_Search_req.user_id = localStorage.getItem('user_id');
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
-      this.searchResult = response.customer_names;
-      if (response.status = true) {
+
+      if (response != '') {
+        this.searchResult = response.customer_names;
+        console.log(" this.searchResult", this.searchResult)
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
       }
-    });
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   getDynamicList() {
 
@@ -1148,7 +1545,7 @@ export class CustomernewallComponent implements OnInit {
         this.customerPermissionList = response.cus_permission;
         this.addPermissionCheckboxID_array = response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
-        console.log(this.dropdownList_billerName)
+
 
       }
 
@@ -1159,7 +1556,7 @@ export class CustomernewallComponent implements OnInit {
     // console.log("Contract File Attachment Display - CheckBox ID", data);
     this.addBillerNameBillerId = data;
     this.addBillerNameBiller = event.target.checked;
-    console.log(this.addBillerNameBiller)
+
 
     if (this.addBillerNameBiller) {
 
@@ -1290,7 +1687,10 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
-
+  handle_radioChange_AccountManager(event: any) {
+    this.radiobuttonValue_AccountManager = event.target.id;
+    console.log(this.radiobuttonValue_AccountManager);
+  }
 
   CHKAll_BillerNameSelectAll(event: any) {
 
@@ -1432,24 +1832,24 @@ export class CustomernewallComponent implements OnInit {
     this.Checkbox_value = event.target.checked;
     console.log(this.Checkbox_value)
     if (this.Checkbox_value) {
-  
+
       this.CheckBox_DynamicArrayList_shareCustomerPermission.push(data);
       this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
       console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
-    
+
       if (this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data) < 0) {
         this.CheckBox_DynamicArrayList_shareCustomerPermission.push(data);
-      } 
+      }
       else {
         //type something
       }
       console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
-    
-    
-    
+
+
+
     }
     else {
-  
+
       const index: number = this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data);
       console.log(index)
       if (index == -1) {
@@ -1458,13 +1858,13 @@ export class CustomernewallComponent implements OnInit {
         this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
       }
       console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
-  
+
     }
     this.typeConvertionString_Shared_Permission = this.CheckBox_DynamicArrayList_shareCustomerPermission.toString();
-  
+
     console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_Shared_Permission)
   }
-  
+
 
   CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
 
@@ -1477,7 +1877,7 @@ export class CustomernewallComponent implements OnInit {
 
       if (this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data) < 0) {
         this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.push(data);
-      } 
+      }
       else {
         //type something
       }
@@ -1496,12 +1896,10 @@ export class CustomernewallComponent implements OnInit {
     }
     this.typeConvertionString_invoice_Shared_Permission = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this. typeConvertionString_invoice_Shared_Permission)
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoice_Shared_Permission)
 
   }
-
   viewCustomer(id: any) {
-
 
     let api_req: any = new Object();
     let view_customer_req: any = new Object();
@@ -1515,14 +1913,8 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = view_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("view customer response", response);
-
-      if (response != '') {
-        console.log(response);
-
+      if (response.status == true) {
         this.viewCustomerForm.patchValue({
-
-
           'view_company_Name': response.result.customer_details[0].customerName,
           'v_billingAddress_address1': response.result.customer_details[0].customerAddress1,
           'v_billingAddress_address2': response.result.customer_details[0].customerAddress2,
@@ -1538,31 +1930,32 @@ export class CustomernewallComponent implements OnInit {
           'v_bank_acc_name': response.result.customer_details[0].bankAccountName,
           'v_bank_acc_number': response.result.customer_details[0].bankAccountNo,
           'v_reseller_status': response.result.customer_details[0].cust_status,
-
-
         });
 
-
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
       }
-    });
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
+
   clearcustomer() {
-
     this.addCustomer.reset();
-
     this.addCustomer.patchValue({
-
       'company_Code': 'D6387',
-
-
-
     });
-
-
   }
-  addCustomerown() {
 
+  addCustomerown() {
 
     // finance email field condition
     console.log(this.financeemailList);
@@ -1692,11 +2085,14 @@ export class CustomernewallComponent implements OnInit {
 
     $("#addCustomerSave").attr("disabled", true);
 
+
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       var add_result = response;
       console.log("add", add_result);
       $("#addCustomerSave").removeAttr("disabled");
+
       if (response.status == true) {
 
         $('#addCustomerFormId').modal('hide');
@@ -1709,15 +2105,20 @@ export class CustomernewallComponent implements OnInit {
         this.clear();
         this.customerslist({});
 
-      }
-      else {
+      } else {
         iziToast.warning({
           message: "Customer not updated. Please try again",
           position: 'topRight'
         });
       }
-    });
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
   editCustomer(id: any) {
@@ -1735,12 +2136,10 @@ export class CustomernewallComponent implements OnInit {
     edit_customer_req.user_id = localStorage.getItem('user_id');
     api_req.element_data = edit_customer_req;
 
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh", response);
       console.log("vignesh1", response.result.customer_details[0].city);
-
-      if (response != '') {
+      if (response.status == true) {
         var biller_id = response.result.customer_details[0].billerId;
         console.log("dropdown billwer id", biller_id)
         this.b_id = biller_id.split(',');
@@ -1763,6 +2162,8 @@ export class CustomernewallComponent implements OnInit {
         this.cus_type_edit = response.result.customer_details[0].cus_type;
         this.customerType_listEdit = response.result.cus_class_type;
         console.log('selected_biller', response.result.billerId_det);
+        console.log('customer_bill_code_arr',response.result.customer_bill_code_arr[0].bill_code_name);    
+        
         this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
 
@@ -1828,24 +2229,96 @@ export class CustomernewallComponent implements OnInit {
           'DCIP_edit': response.result.customer_details[0].dc_ip_country,
         });
 
+        const formArray = new FormArray([]);
+        for (let index = 0; index < response.result.customer_bill_code_arr.length; index++) {
+
+          formArray.push(this.fb.group({
+
+            "billCodeName": response.result.customer_bill_code_arr[index].bill_code_name,
+            "bill_code_740": response.result.customer_bill_code_arr[index].bill_code_740,
+            "bill_code_kl": response.result.customer_bill_code_arr[index].bill_code_kl,
+            "bill_code_750": response.result.customer_bill_code_arr[index].bill_code_750,
+            "bill_code_750_8": response.result.customer_bill_code_arr[index].bill_code_750_8,
+      
+
+        })
+        );
+      }
+      
+      console.log(formArray)
+      this.billCodeEditForm3.setControl('addresses', formArray);
+      console.log(this.addresses)
+
+       
+
+        this.billCodeEditForm2.patchValue({
+
+          // 'primary_code_740': response.result.customer_primary_code_arr[0].dc_ip_country,
+          'primary_code_retail_740': response.result.customer_primary_code_arr[0].primary_code_retail_740,
+          'low_credit_740': response.result.customer_primary_code_arr[0].low_credit_740,
+          'high_credit_740': response.result.customer_primary_code_arr[0].high_credit_740,
+          'retail_low_credit_740': response.result.customer_primary_code_arr[0].retail_low_credit_740,
+          'retail_high_credit_740': response.result.customer_primary_code_arr[0].retail_high_credit_740,
+
+
+          // 'primary_code_750': response.result.customer_primary_code_arr[0].dc_ip_country,
+          'primary_code_retail_750': response.result.customer_primary_code_arr[0].primary_code_retail_750,
+          'low_credit_750': response.result.customer_primary_code_arr[0].low_credit_750,
+          'high_credit_750': response.result.customer_primary_code_arr[0].high_credit_750,
+          'retail_low_credit_750': response.result.customer_primary_code_arr[0].retail_low_credit_750,
+          'retail_high_credit_750': response.result.customer_primary_code_arr[0].retail_high_credit_750,
+
+          
+          // 'primary_code_kl': response.result.customer_primary_code_arr[0].dc_ip_country,
+          'primary_code_retail_kl': response.result.customer_primary_code_arr[0].primary_code_retail_kl,
+          'low_credit_kl': response.result.customer_primary_code_arr[0].low_credit_kl,
+          'high_credit_kl': response.result.customer_primary_code_arr[0].high_credit_kl,
+          'retail_low_credit_kl': response.result.customer_primary_code_arr[0].retail_low_credit_kl,
+          'retail_high_credit_kl': response.result.customer_primary_code_arr[0].retail_high_credit_kl,
+
+          'primary_code_auto_credit': response.result.customer_primary_code_arr[0].auto_credit,
+
+
+          'server_name_740': response.result.customer_primary_code_arr[0].server_name_740,
+          'pbx_threshold_limit_740': response.result.customer_primary_code_arr[0].pbx_threshold_limit_740,
+          'retail_threshold_limit_740': response.result.customer_primary_code_arr[0].retail_threshold_limit_740,
+
+          'server_name_750': response.result.customer_primary_code_arr[0].server_name_750,
+          'pbx_threshold_limit_750': response.result.customer_primary_code_arr[0].pbx_threshold_limit_750,
+          'retail_threshold_limit_750': response.result.customer_primary_code_arr[0].retail_threshold_limit_750,
+
+          'server_name_kl': response.result.customer_primary_code_arr[0].server_name_kl,
+          'pbx_threshold_limit_kl': response.result.customer_primary_code_arr[0].pbx_threshold_limit_kl,
+          'retail_threshold_limit_kl': response.result.customer_primary_code_arr[0].retail_threshold_limit_kl,
+
+          'manual_credit': response.result.customer_primary_code_arr[0].manual_credit,
+
+
+        })
         console.log(this.editCustomerForm.value);
         $('#editCustomerFormId').modal('show');
-        this.customerslist({});
+    //    this.customerslist({});
       } else {
-
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
       }
-    })
-
-
+this.manualCreditPermission({});
+     this.autoCreditPermission({});
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
-
   update(id: any) {
-
     // let Update_billerNameCheckListDisplay = this.editCustomerForm.value.edit_billernamelist.map((data: any) => data.billerId).join(',');
     // console.log("billerName-in update", Update_billerNameCheckListDisplay);
     // console.log("billerName-in update", this.editBillerNameCheckboxID_array);
-
-
     //  email field condition
     let result_Email_Field = this.emailList.map(o => o.emailParameterName).join(',');
     console.log(result_Email_Field);
@@ -1925,39 +2398,38 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = update_customer_req;
 
     console.log(this.editCustomerForm.value);
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       var update_result = response;
       console.log("update", update_result);
-      if (response != '') {
 
+      if (response.status == true) {
         iziToast.success({
           message: "Customer Updated successfully",
           position: 'topRight'
         });
         $('#editCustomerFormId').modal('hide');
 
-
-      }
-      else {
-
+      } else {
         iziToast.warning({
           message: "Customer not updated. Please try again",
           position: 'topRight'
         });
         $('#editCustomerFormId').modal('hide');
       }
-
-    });
-
-
-
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   specialEditCustomer(id: any) {
 
     this.specialEditId = id;
-
     let api_req: any = new Object();
     let specialEdit_customer_req: any = new Object();
     api_req.moduleType = "customer";
@@ -1970,14 +2442,9 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = specialEdit_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("special edit response", response);
-
       if (response != '') {
         console.log(response);
-
         this.specialEditCustomerForm.patchValue({
-
-
           'spedit_Email': response[0].email,
           'spedit_FinanceEmail': response[0].finance_email,
           'termconditionDD': response[0].terms_condition,
@@ -1989,30 +2456,30 @@ export class CustomernewallComponent implements OnInit {
           'spedit_discount_percentage': response[0].reseller_dis_per,
           'spedit_3cx_BuySpecial': response[0].licence_buy_override,
           'spedit_C3CXLicencepurchase': response[0].payment_chk,
-
-
         });
         console.log(this.specialEditCustomerForm.value);
-
-
-
         if (response.customer_details[0].status == 1) {
           $('#status').prop('checked', true);
         } else {
           $('#status').prop('checked', false);
         }
-
         $('#specialEditCustomerFormId').modal('show');
         this.customerslist({});
-      } else {
 
+      } else {
         iziToast.warning({
-          message: "Customer data could not retrive. Please try again",
+          message: "No API Response",
           position: 'topRight'
         });
-
       }
-    });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
   specialUpdate(id: any) {
@@ -2040,32 +2507,31 @@ export class CustomernewallComponent implements OnInit {
 
     api_req.element_data = specialUpdate_customer_req;
     console.log(this.specialEditCustomerForm.value);
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       var update_result = response;
       console.log("special update", update_result);
       if (response != '') {
-
         iziToast.success({
           message: "Special Update of Customer Updated successfully",
           position: 'topRight'
         });
 
-
-      }
-      else {
-
+      } else {
         iziToast.warning({
           message: "Special Update of Customer not updated. Please try again",
           position: 'topRight'
         });
-
       }
-
-    });
-
-
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   deleteCustomer(id: any) {
     Swal.fire({
@@ -2113,8 +2579,12 @@ export class CustomernewallComponent implements OnInit {
 
 
   }
+
   fileAttachmentEdit(ID: any) {
+
+    this.myFiles = [];
     $("#fileAttachmentFormId").modal("show");
+    $("#file1").val('')
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttachCustomerID = ID;
     let api_req: any = new Object();
@@ -2129,23 +2599,26 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("check  file attachment", response)
-
-      // this.firstResult = response.phone_provision_det;
-      // this.secondResult=response.contract_attachment_arr;
       if (response.status == true) {
         this.getResult = response.result.attachment_details
 
         this.myForm.patchValue({
           'file': response.result.attachment_details.org_file_name,
         });
-
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
       }
-
-
-    });
-
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   fileAttachmentDelete(credit_attament_id: any) {
     Swal.fire({
@@ -2163,7 +2636,7 @@ export class CustomernewallComponent implements OnInit {
         let api_req: any = new Object();
         let fileattachDelete_req: any = new Object();
         api_req.moduleType = "customer";
-        // api_req.api_url = "customer/delete_file_attachment";
+
         api_req.api_url = "customer/customer_file_attachment_delete";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
@@ -2189,7 +2662,11 @@ export class CustomernewallComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
           };
       }
     })
@@ -2200,8 +2677,11 @@ export class CustomernewallComponent implements OnInit {
 
     this.myForm.reset();
     //  var data = new FormData();
+    Swal.fire('File Updating');
+    Swal.showLoading();
 
     if (this.myFiles.length == 0) {
+      Swal.close();
       iziToast.warning({
         message: "Attachment File Missing",
         position: 'topRight'
@@ -2209,6 +2689,7 @@ export class CustomernewallComponent implements OnInit {
     }
     if (this.myFiles.length > 0) {
       const data = new FormData();
+
       for (var i = 0; i < this.myFiles.length; i++) {
         data.append("cust_file[]", this.myFiles[i]);
       }
@@ -2226,8 +2707,11 @@ export class CustomernewallComponent implements OnInit {
         data: data,
         success: function (result: any) {
           if (result.status == true) {
+            this.myFiles = [];
+
             self.customerslist({});
             console.log(result);
+            Swal.close();
             $("#fileAttachmentFormId").modal("hide");
 
             iziToast.success({
@@ -2236,6 +2720,8 @@ export class CustomernewallComponent implements OnInit {
             });
           }
           else {
+            Swal.close();
+            $("#fileAttachmentFormId").modal("hide");
             iziToast.warning({
               message: "File Attachment not Saved",
               position: 'topRight'
@@ -2243,17 +2729,23 @@ export class CustomernewallComponent implements OnInit {
           }
         },
         error: function (err: any) {
+
           console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
           });
+          Swal.close();
+          $("#fileAttachmentFormId").modal("hide");
         }
+
       })
+
 
     }
   }
   mconnect_address_getList(id: any) {
+
     this.mconnectCustomerForm.reset();
     this.mconnect_Logo_Image = '';
     this.mconnectParameter = id;
@@ -2267,8 +2759,8 @@ export class CustomernewallComponent implements OnInit {
     api_mconnectList.customerId = id;
     api_mconnectList.user_id = localStorage.getItem('user_id');
     api_req.element_data = api_mconnectList;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
 
         // this.image_mconnectLogo = response.mconnect_company_logo;
@@ -2296,18 +2788,22 @@ export class CustomernewallComponent implements OnInit {
 
         });
 
-      }
-      else {
-
+      } else {
         iziToast.warning({
           message: "Mconnect Partner details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }
-    });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   mconnect_address_add(id: any) {
-
     Swal.fire('MConnect Partner Details Updating');
     Swal.showLoading();
     var data = new FormData();
@@ -2336,12 +2832,35 @@ export class CustomernewallComponent implements OnInit {
           console.log(result);
           $("#mconnectPartnerDetailsFormId").modal("hide")
 
+          iziToast.success({
+            message: "mconnect details Saved successfully",
+            position: 'topRight'
+          });
+        }
+        else {
+          Swal.close();
+          $("#mconnectPartnerDetailsFormId").modal("hide")
+          iziToast.warning({
+            message: "mconnect details not Saved",
+            position: 'topRight'
+          });
         }
       },
       error: function (err: any) {
-        console.log(err);
+
+        console.log("err", err)
+        iziToast.error({
+          message: "Server Side Error",
+          position: 'topRight'
+        });
+        Swal.close();
+        $("#mconnectPartnerDetailsFormId").modal("hide")
       }
+
     })
+
+
+
   }
 
   mrvoip_address_getList(id: any) {
@@ -2361,7 +2880,6 @@ export class CustomernewallComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-
         this.image_mrvoipLogo = response[0].mrvoip_company_logo;
 
         this.mrvoip_PartnerEmail_Value = response[0].partner_email;
@@ -2386,26 +2904,26 @@ export class CustomernewallComponent implements OnInit {
           position: 'topRight'
         });
 
-      }
-      else {
-
+      } else {
         iziToast.warning({
           message: "Mrvoip Partner details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }
-    });
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   mrvoip_address_add(id: any) {
-
-    Swal.fire('MrVoip Partner Details Updating');
+    Swal.fire('Mrvoip Partner Details Updating');
     Swal.showLoading();
-
     var data = new FormData();
 
-    // alert(this.mrvoipCustomerForm.value.a_MrvoipAddressShow);
-    // alert(this.mrvoipCustomerForm.controls['a_MrvoipAddressShow'].value);
     data.append('partner_email_mrvoip', this.mrvoipCustomerForm.value.a_MrvoipPartnerEmail);
     data.append('partner_phone_no_mrvoip', this.mrvoipCustomerForm.value.a_MrvoipPartnerPhoneNum);
     data.append('mrvoip_address_show', this.mrvoipCustomerForm.controls['a_MrvoipAddressShow'].value);
@@ -2424,15 +2942,36 @@ export class CustomernewallComponent implements OnInit {
       data: data,
       success: function (result: any) {
         if (result.status == true) {
-          self.customerslist({});
           Swal.close();
+          self.customerslist({});
           console.log(result);
           $("#MrvoipPartnerDetailsFormId").modal("hide")
+
+          iziToast.success({
+            message: "MrVoip details Saved successfully",
+            position: 'topRight'
+          });
+        }
+        else {
+          Swal.close();
+          $("#MrvoipPartnerDetailsFormId").modal("hide")
+          iziToast.warning({
+            message: "MrVoip details not Saved",
+            position: 'topRight'
+          });
         }
       },
       error: function (err: any) {
-        console.log(err);
+
+        console.log("err", err)
+        iziToast.error({
+          message: "Server Side Error",
+          position: 'topRight'
+        });
+        Swal.close();
+        $("#MrvoipPartnerDetailsFormId").modal("hide")
       }
+
     })
   }
 
@@ -2450,11 +2989,9 @@ export class CustomernewallComponent implements OnInit {
     api_call4telList.user_id = localStorage.getItem('user_id');
     api_call4telList.customerId = id;
     api_req.element_data = api_call4telList;
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      console.log("get  call4tel address response", response);
       if (response.status == true) {
-
         this.C4T_PartnerEmail_Value = response[0].partner_email;
         this.C4T_PartnerPhoneNumber_Value = response[0].partner_phone_no;
         this.C4T_PartnerType_Value_Radio = response[0].partner_type;
@@ -2475,17 +3012,21 @@ export class CustomernewallComponent implements OnInit {
           position: 'topRight'
         });
 
-      }
-      else {
-
+      } else {
         iziToast.warning({
           message: "Call4tel Partner details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }
-    });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
-
   call4tel_address_add(id: any) {
     Swal.fire('Call4tel Partner Details Updating');
     Swal.showLoading();
@@ -2514,14 +3055,88 @@ export class CustomernewallComponent implements OnInit {
           self.customerslist({});
           console.log(result);
           $("#call4tellPartnerDetailsFormId").modal("hide")
-        }
 
+          iziToast.success({
+            message: "call4tell details Saved successfully",
+            position: 'topRight'
+          });
+        }
+        else {
+          Swal.close();
+          $("#call4tellPartnerDetailsFormId").modal("hide")
+          iziToast.warning({
+            message: "call4tell details not Saved",
+            position: 'topRight'
+          });
+        }
       },
       error: function (err: any) {
-        console.log(err);
+
+        console.log("err", err)
+        iziToast.error({
+          message: "Server Side Error",
+          position: 'topRight'
+        });
+        Swal.close();
+        $("#call4tellPartnerDetailsFormId").modal("hide")
       }
+
     })
 
+
+
+  }
+
+  nx32CustomerCreate(id: any) {
+    Swal.fire({
+      title: 'Are you sure to create NX32 Customer?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes!'
+    }).then((result: any) => {
+      if (result.value) {
+
+        Swal.fire('Email Sending');
+        Swal.showLoading();
+        let api_req: any = new Object();
+        let nx32Create_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/nx32_customer_create";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        nx32Create_req.action = "nx32_customer_create";
+        nx32Create_req.user_id = localStorage.getItem('user_id');
+        nx32Create_req.customerId = id;
+        api_req.element_data = nx32Create_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            Swal.close();
+            iziToast.success({
+              message: "NX32 Customer Created Successfully",
+              position: 'topRight'
+            });
+          } else {
+            Swal.close();
+            iziToast.warning({
+              message: "Duplicate",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            Swal.close();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+      }
+    })
   }
   invoiceShare_edit(id: any) {
 
@@ -2539,8 +3154,9 @@ export class CustomernewallComponent implements OnInit {
     invoiceShare_edit_req.customerId = id;
     api_req.element_data = invoiceShare_edit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      
       if (response.status == true) {
-    
+
         this.Invoice_shareCustomerPermission_EditOnLoad_Values =
           response.customer_invoice_arr.invoice_access_userid;
         this.Invoice_SharedCustomerPermission_List = response.user_details;
@@ -2560,9 +3176,6 @@ export class CustomernewallComponent implements OnInit {
         });
         console.log("final error", error);
       };
-
-
-
   }
   // invoiceShare_edit(id: any) {
   //   let api_req: any = new Object();
@@ -2610,9 +3223,7 @@ export class CustomernewallComponent implements OnInit {
     invoiceShare_update_req.invoice_share_user = this.typeConvertionString_invoice_Shared_Permission;
     api_req.element_data = invoiceShare_update_req;
 
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
       if (response.status == true) {
         iziToast.success({
           message: "Share Customer Permission Updated successfully",
@@ -2622,16 +3233,20 @@ export class CustomernewallComponent implements OnInit {
         $('#invoiceSharedCustomerFormId').modal('hide');
         $("#sel_check").val('');
         this.typeConvertionString_invoice_Shared_Permission = [];
-      }
-      else {
+      } else {
         iziToast.warning({
           message: "Response Failed",
           position: 'topRight'
         });
       }
-
-    });
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
   // invoiceShare_update(id: any) {
@@ -2671,8 +3286,57 @@ export class CustomernewallComponent implements OnInit {
   //   });
 
   // }
-  quickMail(a: any) {
+  quickMail(id: any) {
+    Swal.fire({
+      title: 'Are you sure to Send Quick Mail?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Send it!'
+    }).then((result: any) => {
+      if (result.value) {
 
+        Swal.fire('Email Sending');
+        Swal.showLoading();
+        let api_req: any = new Object();
+        let qckMail_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/customer_quick_mail";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        qckMail_req.action = "customer_quick_mail";
+        qckMail_req.user_id = localStorage.getItem('user_id');
+        qckMail_req.customerId = id;
+        api_req.element_data = qckMail_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            Swal.close();
+            iziToast.success({
+              message: "Quick Mail Sent Successfully",
+              position: 'topRight'
+            });
+          } else {
+            Swal.close();
+            iziToast.warning({
+              message: "Sending Quick Mail Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            Swal.close();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+      }
+    })
   }
   // shareCustomerPermission_edit(id: any) {
 
@@ -2728,15 +3392,15 @@ export class CustomernewallComponent implements OnInit {
     shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_edit.customerId = id;
     api_req.element_data = shareCustomerPermission_edit;
-  
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-       
+
         this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
         this.SharedCustomerPermission_List = response.user_details;
         this.CheckBox_DynamicArrayList_shareCustomerPermission =
           response.access_user[0].access_userid.split(',');
-       
+
       } else {
         iziToast.warning({
           message: "No API Response",
@@ -2751,7 +3415,7 @@ export class CustomernewallComponent implements OnInit {
         });
         console.log("final error", error);
       };
-  
+
   }
 
 
@@ -2798,7 +3462,6 @@ export class CustomernewallComponent implements OnInit {
 
   // }
   shareCustomerPermission_update(id: any) {
-
     this.shareCustomerPermissionParameter = id;
 
     let api_req: any = new Object();
@@ -2813,8 +3476,8 @@ export class CustomernewallComponent implements OnInit {
     // shareCustomerPermission_update_req.access_userid = this.edit_array_SharedCustomerPermission_Checkbox;
     shareCustomerPermission_update_req.access_userid = this.CheckBox_DynamicArrayList_shareCustomerPermission;
     api_req.element_data = shareCustomerPermission_update_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         iziToast.success({
           message: "Share Customer Permission Updated successfully",
@@ -2824,16 +3487,20 @@ export class CustomernewallComponent implements OnInit {
         $('#SharedCustomerPermissionFormId').modal('hide');
         $("#sel_check").val('');
         this.CheckBox_DynamicArrayList_shareCustomerPermission = [];
-      }
-      else {
+      } else {
         iziToast.warning({
           message: "Response Failed",
           position: 'topRight'
         });
       }
-
-    });
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
 
@@ -2887,7 +3554,11 @@ export class CustomernewallComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
           };
       }
     })
@@ -2936,7 +3607,11 @@ export class CustomernewallComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
           };
       }
     })
@@ -2985,16 +3660,18 @@ export class CustomernewallComponent implements OnInit {
           }
         }),
           (error: any) => {
-            console.log(error);
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
           };
       }
     })
 
 
   }
-
   customer_NX32PermissionDisplay(id: any, nx32id: any) {
-
     console.log("checkbox result", this.checkbox_NX32Permission)
     this.NX32SharePermissionParameter = id;
     this.nx32permissionStatus = nx32id;
@@ -3011,26 +3688,38 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_nx32Permission_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("customer nx32 permission", response);
+
       this.checkbox_status_nx32Permission = response.status;
       console.log("customer nx32 permission response.status", response.status);
       if (response != '') {
-        console.log("customer nx32 permission", response)
-        // console.log("before change",this.checkbox_NX32Permission)
-        // this.checkbox_NX32Permission = !this.checkbox_NX32Permission;
-        // console.log("after change",this.checkbox_NX32Permission)
-
         this.customerNX32SharePermissionForm.patchValue({
 
           'nx32CustomerPermission_checklist': response.status,
         });
+
+        iziToast.success({
+          message: "Customer NX32 Permission Displayed successfully",
+          position: 'topRight'
+        });
+
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
       }
-    });
-
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
-  customer_NX32PermissionUpdate(id: any) {
 
+  customer_NX32PermissionUpdate(id: any) {
     let api_req: any = new Object();
     let api_nx32PermissionUpdate_req: any = new Object();
     api_req.moduleType = "customer";
@@ -3045,29 +3734,43 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_nx32PermissionUpdate_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("customer nx32 permission", response);
-      if (response != '') {
-        console.log("customer nx32 permission", response)
-        // console.log("customer nx32 permission", response)
-        // console.log("before change",this.checkbox_NX32Permission)
-        // this.checkbox_NX32Permission = !this.checkbox_NX32Permission;
-        // console.log("after change",this.checkbox_NX32Permission)
+
+      this.checkbox_status_nx32Permission = response.status;
+      console.log("customer nx32 permission response.status", response.status);
+      if (response.status == true) {
+        $('#customer_NX32PermissionFormId').modal('hide');
+        this.customerslist({});
+
+        iziToast.success({
+          message: "Customer NX32 Permission Updated successfully",
+          position: 'topRight'
+        });
+
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
       }
-    });
-    $('#customer_NX32PermissionFormId').modal('hide');
-    this.customerslist({});
-
-
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   billCodeAttachmentEdit(id: any) {
-    this.billCodeEditForm2.reset();
+    // this.billCodeEditForm2.reset();
     let api_req: any = new Object();
     let api_billCodeEdit_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/get_billcode_details";
+    api_req.api_url = "customer/bill_code_details";
     api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_billCodeEdit_req.action = "get_billcode_details";
+    api_req.access_token =  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_billCodeEdit_req.action = "bill_code_details";
     api_billCodeEdit_req.customerId = id;
     api_billCodeEdit_req.user_id = localStorage.getItem('user_id');
 
@@ -3080,58 +3783,80 @@ export class CustomernewallComponent implements OnInit {
       this.billCodeResponse = response;
 
       if (response != '') {
-        this.edit_a = response.customer_bill_code;
-        this.edit_b = response.primary_bill_code;
-        const formArray = new FormArray([]);
-        for (let index = 0; index < response.customer_bill_code.length; index++) {
-
-          formArray.push(this.fb.group({
-            "billCode_Name": response.customer_bill_code[index].bill_code_name,
-            " billCode_Server_VS1": response.customer_bill_code[index].bill_code_740,
-            "billCode_Server_VSKL": response.customer_bill_code[index].bill_code_kl,
-            "billCode_Server_VS2_32": response.customer_bill_code[index].bill_code_750,
-            "billCode_Server_VS2_8": response.customer_bill_code[index].bill_code_750_8,
-            "billCode_ID": response.customer_bill_code[index].customer_bill_code_id,
-
-          })
-          );
+        // this.edit_a = response.customer_bill_code;
+        // this.edit_b = response.primary_bill_code;
 
 
-        }
-        this.billCodeEditForm1.setControl('billCodeFormArray', formArray);
-        if (response.primary_bill_code != '') {
-          this.billCodeEditForm2.patchValue({
+        // const formArray = new FormArray([]);
+        // for (let index = 0; index < response.customer_bill_code_arr.length; index++) {
+        // formArray.push(this.fb.group({
+
+        //   "popup_billCodeName": response.customer_bill_code_arr[index].bill_code_name,
+      //     "bill_code_740": response.customer_bill_code_arr[index].bill_code_740,
+      //     "bill_code_kl": response.customer_bill_code_arr[index].bill_code_kl,
+      //     "bill_code_750": response.customer_bill_code_arr[index].bill_code_750,
+      //     "bill_code_750_8": response.customer_bill_code_arr[index].bill_code_750_8,
+
+      //   })
+      //   );
+      // }
+      // console.log(formArray)
+      // this.popupBillCodeForm3.setControl('addresses', formArray);
+      // console.log(this.addresses)
+
+        // if (response.primary_bill_code != '') {
+          this.popupBillCodeForm2.patchValue({
 
 
-            'VS740_PbxCode': response.primary_bill_code[0].bill_code_740,
-            'VS740_RetailCode': response.primary_bill_code[0].primary_code_retail_740,
-            'VS740_PbxLow': response.primary_bill_code[0].low_credit_740,
-            'VS740_PbxHigh': response.primary_bill_code[0].high_credit_740,
-            'VS740_RetailLow': response.primary_bill_code[0].retail_low_credit_740,
-            'VS740_RetailHigh': response.primary_bill_code[0].retail_high_credit_740,
+          // 'popup_primary_code_740': response.result.customer_primary_code_arr[0].dc_ip_country,
+          'popu_primary_code_retail_750': response.customer_primary_code_arr[0].primary_code_retail_740,
+          'popup_low_credit_740': response.customer_primary_code_arr[0].low_credit_740,
+          'popup_high_credit_740': response.customer_primary_code_arr[0].high_credit_740,
+          'popup_retail_low_credit_740': response.customer_primary_code_arr[0].retail_low_credit_740,
+          'popup_retail_high_credit_740': response.customer_primary_code_arr[0].retail_high_credit_740,
 
-            'VS750_PbxCode': response.primary_bill_code[0].bill_code_750,
-            'VS750_RetailCode': response.primary_bill_code[0].primary_code_retail_750,
-            'VS750_PbxLow': response.primary_bill_code[0].low_credit_750,
-            'VS750_PbxHigh': response.primary_bill_code[0].high_credit_750,
-            'VS750_RetailLow': response.primary_bill_code[0].retail_low_credit_750,
-            'VS750_RetailHigh': response.primary_bill_code[0].retail_high_credit_750,
 
-            'VSKL_PbxCode': response.primary_bill_code[0].bill_code_kl,
-            'VSKL_RetailCode': response.primary_bill_code[0].primary_code_retail_kl,
-            'VSKL_PbxLow': response.primary_bill_code[0].low_credit_kl,
-            'VSKL_PbxHigh': response.primary_bill_code[0].high_credit_kl,
-            'VSKL_RetailLow': response.primary_bill_code[0].retail_low_credit_kl,
-            'VSKL_RetailHigh': response.primary_bill_code[0].retail_high_credit_kl,
+          // 'popup_primary_code_750': response.result.customer_primary_code_arr[0].dc_ip_country,
+          'popup_primary_code_retail_750': response.customer_primary_code_arr[0].primary_code_retail_750,
+          'popup_low_credit_750': response.customer_primary_code_arr[0].low_credit_750,
+          'popup_high_credit_750': response.customer_primary_code_arr[0].high_credit_750,
+          'popup_retail_low_credit_750': response.customer_primary_code_arr[0].retail_low_credit_750,
+          'popup_retail_high_credit_750': response.customer_primary_code_arr[0].retail_high_credit_750,
+
+          
+          // 'popup_primary_code_kl': response.result.customer_primary_code_arr[0].dc_ip_country,
+          'popup_primary_code_retail_kl': response.customer_primary_code_arr[0].primary_code_retail_kl,
+          'popup_low_credit_kl': response.customer_primary_code_arr[0].low_credit_kl,
+          'popup_high_credit_kl': response.customer_primary_code_arr[0].high_credit_kl,
+          'popup_retail_low_credit_kl': response.customer_primary_code_arr[0].retail_low_credit_kl,
+          'popup_retail_high_credit_kl': response.customer_primary_code_arr[0].retail_high_credit_kl,
+
+          'popup_primary_code_auto_credit': response.customer_primary_code_arr[0].auto_credit,
+
+          'popup_server_name_740': response.customer_primary_code_arr[0].server_name_740,
+          'popup_pbx_threshold_limit_740': response.customer_primary_code_arr[0].pbx_threshold_limit_740,
+          'popup_retail_threshold_limit_740': response.customer_primary_code_arr[0].retail_threshold_limit_740,
+
+          'popup_server_name_750': response.customer_primary_code_arr[0].server_name_750,
+          'popup_pbx_threshold_limit_750': response.customer_primary_code_arr[0].pbx_threshold_limit_750,
+          'popup_retail_threshold_limit_750': response.customer_primary_code_arr[0].retail_threshold_limit_750,
+
+          'popup_server_name_kl': response.customer_primary_code_arr[0].server_name_kl,
+          'popup_pbx_threshold_limit_kl': response.customer_primary_code_arr[0].pbx_threshold_limit_kl,
+          'popup_retail_threshold_limit_kl': response.customer_primary_code_arr[0].retail_threshold_limit_kl,
+
+          'manual_credit': response.customer_primary_code_arr[0].manual_credit,
+
           });
 
-        }
+        // }
         console.log("bill code edit form 2", this.billCodeEditForm2.value);
 
       }
-
+      this.manualCreditPermission({});
+      this.autoCreditPermission({});
     });
-
+    
 
 
   }
@@ -3201,6 +3926,85 @@ export class CustomernewallComponent implements OnInit {
 
 
   }
+  AssignAccountManager_edit(id: any) {
+
+    this.AssignAccountManager_CustomerID = id;
+    let api_req: any = new Object();
+    let accManager_edit: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/account_manager_edit";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    accManager_edit.action = "account_manager_edit";
+    accManager_edit.user_id = localStorage.getItem('user_id');
+    accManager_edit.customerId = id;
+    api_req.element_data = accManager_edit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+
+        this.AssignAccountManager_List = response.user_list;
+        this.AssignAccountManager_SelectedUserID = response.account_manager_id;
+        this.AssignAccountManagerForm.patchValue({
+          'radio_AssignAccountManager': response.account_manager_id,
+        }
+        )
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  AssignAccountManagerUpdate() {
+    Swal.fire('Updating');
+    Swal.showLoading();
+    let api_req: any = new Object();
+    let accManager_update: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/account_manager_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    accManager_update.action = "account_manager_update";
+    accManager_update.user_id = localStorage.getItem('user_id');
+    accManager_update.customerId = this.AssignAccountManager_CustomerID;
+    accManager_update.account_manager_id = this.radiobuttonValue_AccountManager;
+    api_req.element_data = accManager_update;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        $("#AssignAccountManager").modal("hide");
+        Swal.close();
+        iziToast.success({
+          message: "Account Manager Updated Successfully",
+          position: 'topRight'
+        });
+
+
+      } else {
+        iziToast.warning({
+          message: "Failed API Response",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
   landscapeEmailEdit(id: any) {
     this.landscapeEmailForm.reset();
     this.landscapeEmail_Customer_ID = id;
@@ -3216,7 +4020,6 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_mail_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("Landscape Email Edit display", response)
 
       if (response != '') {
         this.From_List = response.email_from_det;
@@ -3226,20 +4029,34 @@ export class CustomernewallComponent implements OnInit {
         this.landscapeEmailForm.patchValue({
           'landscapeEmail_From': response.email_from_det,
           'landscapeEmail_To': response.email_id,
-          // 'landscapeEmail_Subject': response.email_from_det,
           'landscapeEmail_Template': response.crm_template_det,
-          // 'landscapeEmail_Message': response.email_id,
+        });
+
+        iziToast.success({
+          message: "Email Details Displayed Successfully",
+          position: 'topRight'
+        });
+
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
         });
       }
-
-
-    });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   // somethingChanged(event: any){
   //   console.log("event value",event.target.value)
   // }
   LandscapeEmailContentDropdown(event: any) {
-    // alert("hi")
     this.CRMTemplateID = event.target.value;
     console.log("template ID check", this.CRMTemplateID);
     let api_req: any = new Object();
@@ -3255,20 +4072,29 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_mailContentDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("Landscape Email display after dropdown changes", response)
 
       if (response.status == true) {
         this.landscapeEmailForm.patchValue({
 
           'landscapeEmail_Subject': response.crm_subject_name,
-
           'landscapeEmail_Message': response.crm_template_content,
         });
 
+
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
       }
-
-
-    });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   sendLandscapeMail() {
     Swal.fire('Sending Email');
@@ -3280,9 +4106,6 @@ export class CustomernewallComponent implements OnInit {
     this.emailTemplate = $('#templateLandscape').val();
     this.msg_id = tinymce.get('tinyLandscapeEmailID').getContent();
 
-    console.log("msgid", this.msg_id)
-    console.log("email to", this.emailTo)
-    console.log("subject", this.subjectValue)
     let api_req: any = new Object();
     let api_email_req: any = new Object();
     api_req.moduleType = "customer";
@@ -3325,11 +4148,9 @@ export class CustomernewallComponent implements OnInit {
     }
 
     api_email_req.emailContent = this.msg_id;
-
     api_req.element_data = api_email_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
 
       if (response.status == true) {
         $('#emailFromLandscape').val('');
@@ -3345,8 +4166,8 @@ export class CustomernewallComponent implements OnInit {
         });
         this.customerslist({});
 
-      }
-      else {
+
+      } else {
         $('#emailFromLandscape').val('');
         $('#emailToLandscape').val('');
         $('#subjLandscape').val('');
@@ -3359,12 +4180,19 @@ export class CustomernewallComponent implements OnInit {
           position: 'topRight'
         });
         this.customerslist({});
-
       }
-
       this.customerslist({});
-    });
+    }),
+      (error: any) => {
+        Swal.close();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
+
   clear() {
 
     this.addCustomer.vs_credit = '';
