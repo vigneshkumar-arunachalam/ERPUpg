@@ -2868,14 +2868,13 @@
 
               <div class="col-lg-4">
                 <input type="checkbox" id="{{ ins.userId }}" [value]="ins.userId"
-                  checked="{{Invoice_shareCustomerPermission_EditOnLoad_Values.indexOf(ins.userId)!=-1 ? 'checked':''}}"
+                checked="{{ins.chk_val==1 ? 'checked':''}}"
                   (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
 
               </div>
 
             </div>
           </div>
-
 
         </form>
       </div>
@@ -2907,25 +2906,11 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="ShareCustomerPermissionForm">
-          <!-- <div>
-
-            <div *ngFor="let displayVariable of SharedCustomerPermissionArray;let i =index">
-              <input type="checkbox" value="{{displayVariable.chk_val}}"
-                checked="{{displayVariable.chk_val == 1 ? 'checked' : ''}}" id="sel_check"
-                (change)="eventCheckSharedCustomerPermission(displayVariable.userId,$event)">
-              <span class="ckboxclass"><label class="form-check-label" for="check_ids{{i}}">
-                  {{displayVariable.firstName}}</label></span>
-
-
-            </div>
-
-          </div> -->
-
           <div class="col-lg-12" *ngFor="let item of SharedCustomerPermission_List;let i=index">
             <div class="row">
               <label class="col-lg-4">{{item.firstName}}</label>
 
-              <div class="col-lg-4">{{item.userId}}
+              <div class="col-lg-4">
                 <input type="checkbox" id="{{ item.userId }}" [value]="item.userId"
                   checked="{{item.chk_val==1 ? 'checked':''}}"
                   (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">

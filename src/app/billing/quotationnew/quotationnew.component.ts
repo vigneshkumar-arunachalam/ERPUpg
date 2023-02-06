@@ -788,9 +788,10 @@ export class QuotationnewComponent implements OnInit {
 
 
         this.quotationSharedPerson_EditOnLoad_Values =response.access_userid;
-        setTimeout(() => {
-          this.quotationSharedPerson_List = response.user_list;
-        }, 2000);
+        // setTimeout(() => {
+        //   this.quotationSharedPerson_List = response.user_list;
+        // }, 2000);
+        this.quotationSharedPerson_List = response.user_list;
         this.quotationSharedPerson_List1 = response.access_userid;
         this.quotationSharedResult = response.user_list;
         this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',');
@@ -973,19 +974,40 @@ export class QuotationnewComponent implements OnInit {
       }
       else {
 
-
       }
-
-
-
 
     });
 
-
-
-
   }
   QuotationSharedCHK(data: any, event: any) {
+    console.log("List - Checkbox ID", data);
+    this.checkbox_ID_SingleParameter_quotationShare_Value = data;
+    this.Checkbox_value_quotationShare = event.target.checked;
+    console.log(this.Checkbox_value_quotationShare)
+    if (this.Checkbox_value_quotationShare) {
+  
+      this.CheckBox_DynamicArrayList_quotationSharedPerson.push(Number(data));
+      this.CheckBox_DynamicArrayList_quotationSharedPerson.join(',');
+      this.CheckBox_DynamicArrayList_quotationSharedPerson.sort();
+      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson);
+  
+    }
+    else {
+      const index: number = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
+        console.log(index)
+        if (index == -1) {
+          this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
+        } else {
+          this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
+        }
+        console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+    }
+    this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
+  
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
+    
+  }
+  QuotationSharedCHK1(data: any, event: any) {
     console.log("before--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
     console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_quotationShare_Value = data;

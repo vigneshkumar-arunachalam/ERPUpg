@@ -492,7 +492,7 @@ input.form-control {
   border-radius: 5px;
 }
 #quotationSharedPersonId .modal-dialog {
-  max-width: 25%;
+  max-width: 50%;
 }
 .quotationsharedCSS{
   height: 300px;
@@ -662,3 +662,135 @@ label {
   display:none ;
 } */
 
+.nameCSS{
+  font-weight: 400;
+  color: #020096!important;
+
+
+}
+.heightCSS{
+  line-height: 35px;
+}
+
+
+
+
+
+/** BEGIN CSS NEEDED FOR SWITCH **/
+.on-off-toggle {
+  width: 56px;
+  height: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.on-off-toggle__slider {
+  width: 60px;
+  height: 24px;
+  display: block;
+  border-radius: 34px;
+  background-color: #d8d8d8;
+  transition: background-color 0.4s
+  
+}
+
+.on-off-toggle__slider:before {
+    content: '';
+    display: block;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #949494;
+    bottom: 3px;
+    height: 18px;
+    left: 3px;
+    position: absolute;
+    transition: .4s;
+    width: 18px;
+    z-index: 5;
+    border-radius: 100%;
+  }
+
+.on-off-toggle__slider:after {
+    display: block;
+    line-height: 24px;
+    /* text-transform: uppercase; */
+    font-size: 12px;
+    font-weight: bold;
+    content: 'No';
+    color: #484848;
+    padding-left: 26px;
+    transition: all 0.4s;
+  }
+
+.on-off-toggle__input {
+  /*
+    This way of hiding the default input is better 
+    for accessibility than using display: none;
+  */
+  position: absolute;
+  opacity: 0;
+}
+
+.on-off-toggle__input:checked + 
+.on-off-toggle__slider {
+  background-color: #009688
+}
+
+.on-off-toggle__input:checked + 
+.on-off-toggle__slider:before {
+    transform: translateX(37px);
+  }
+
+.on-off-toggle__input:checked + 
+.on-off-toggle__slider:after {
+    content: 'Yes';
+    color: #FFFFFF;
+    padding-left: 8px;
+  }
+
+/*** END CSS NEEDED FOR SWITCH **/
+
+
+/*** CSS FOR SEARCH IN SHARED QUOTATION-START **/
+.search{
+  position: relative;
+  box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+    
+  }
+
+  .search input{
+
+   height: 60px;
+   text-indent: 25px;
+   border: 2px solid #d6d4d4;
+
+
+  }
+
+
+  .search input:focus{
+
+   box-shadow: none;
+   border: 2px solid blue;
+
+
+  }
+
+  .search .fa-search{
+
+   position: absolute;
+   top: 20px;
+   left: 16px;
+
+  }
+
+  .search button{
+
+   position: absolute;
+   top: 5px;
+   right: 5px;
+   height: 50px;
+   width: 110px;
+   /* background: rgb(33, 33, 80); */
+   background: #009688;
+  }
+  /*** CSS FOR SEARCH IN SHARED QUOTATION-END **/

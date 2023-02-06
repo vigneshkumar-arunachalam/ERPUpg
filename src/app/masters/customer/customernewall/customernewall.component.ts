@@ -203,13 +203,13 @@ export class CustomernewallComponent implements OnInit {
   popupBillCodeForm3: FormGroup;
   popupBillCodeForm2: FormGroup;
   public editBillCodeFormArray: FormGroup;
-  public addresses:FormArray;
+  public addresses: FormArray;
   test: boolean[] = [];
   itre = 0;
   billCodeResponse: any = [];
   public billCodeFormArray: FormArray;
-  primary_code_auto_credit: boolean= true;
-  primary_code_manual_credit: boolean=true;
+  primary_code_auto_credit: boolean = true;
+  primary_code_manual_credit: boolean = true;
   // isDisabled : boolean;
   edit_a: any;
   edit_b: any;
@@ -253,20 +253,20 @@ export class CustomernewallComponent implements OnInit {
   Invoice_shareCustomerPermission_EditOnLoad_Values: any;
   Invoice_SharedCustomerPermission_List: any;
   typeConvertionString_invoice_Shared_Permission: any;
-// selectedValues
-selectedValues:any;
+  // selectedValues
+  selectedValues: any;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
-    
+
     this.billCodeEditForm3 = this.fb.group({
-      addresses : this.fb.array([this.editBillCode_FormControl()])
+      addresses: this.fb.array([this.editBillCode_FormControl()])
     });
-    
-    
-  /*  this.billCodeEditForm1 = this.fb.group({
-      billCodeFormArray: this.fb.array([this.createBillCode()])
-    });*/
+
+
+    /*  this.billCodeEditForm1 = this.fb.group({
+        billCodeFormArray: this.fb.array([this.createBillCode()])
+      });*/
   }
 
   dropdownList_billerName: any = [];
@@ -784,9 +784,9 @@ selectedValues:any;
     });
 
 
-    this.popupBillCodeForm2 =new FormGroup({
+    this.popupBillCodeForm2 = new FormGroup({
 
-      
+
       // 'popup_primary_code_740': new FormControl(null),
       'popup_low_credit_740': new FormControl(null),
       'popup_high_credit_740': new FormControl(null),
@@ -835,14 +835,14 @@ selectedValues:any;
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
     });
-   }
+  }
 
 
 
   get addressControls() {
     return this.billCodeEditForm3.get('addresses') as FormArray
   }
- 
+
 
 
 
@@ -857,14 +857,14 @@ selectedValues:any;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
       console.log(this.test[index]);
-      
+
 
     });
   }
 
   editBillCode_FormControl(): FormGroup {
     return this.fb.group({
-      
+
       billCodeName: '',
       bill_code_740: '',
       bill_code_kl: '',
@@ -875,7 +875,7 @@ selectedValues:any;
 
   }
   removeAddress1(i: number) {
-    
+
     this.addresses.removeAt(i);
 
 
@@ -1139,10 +1139,10 @@ selectedValues:any;
       this.popupBillCodeForm2.get('popup_high_credit_kl')?.enable();
       this.popupBillCodeForm2.get('popup_retail_low_credit_kl')?.enable();
       this.popupBillCodeForm2.get('popup_retail_high_credit_kl')?.enable();
-     
+
     }
 
-    else{
+    else {
 
       this.billCodeEditForm2.get('low_credit_740')?.disable();
       this.billCodeEditForm2.get('high_credit_740')?.disable();
@@ -1174,80 +1174,80 @@ selectedValues:any;
       this.popupBillCodeForm2.get('popup_high_credit_kl')?.disable();
       this.popupBillCodeForm2.get('popup_retail_low_credit_kl')?.disable();
       this.popupBillCodeForm2.get('popup_retail_high_credit_kl')?.disable();
-     
+
     }
   }
 
-  manualCreditPermission(event:any){
+  manualCreditPermission(event: any) {
     this.primary_code_manual_credit = event.target.checked;
     // this.primary_code_manual_credit = event.target.checked;
     console.log(this.primary_code_manual_credit)
-    if (this.primary_code_manual_credit = event.target.checked ) {
+    if (this.primary_code_manual_credit = event.target.checked) {
 
 
       this.billCodeEditForm2.get('server_name_750')?.enable();
       this.billCodeEditForm2.get('pbx_threshold_limit_750')?.enable();
       this.billCodeEditForm2.get('retail_threshold_limit_750')?.enable();
-     
+
 
       this.billCodeEditForm2.get('server_name_740')?.enable();
       this.billCodeEditForm2.get('pbx_threshold_limit_740')?.enable();
       this.billCodeEditForm2.get('retail_threshold_limit_740')?.enable();
-     
+
       this.billCodeEditForm2.get('server_name_kl')?.enable();
       this.billCodeEditForm2.get('pbx_threshold_limit_kl')?.enable();
       this.billCodeEditForm2.get('retail_threshold_limit_kl')?.enable();
 
-       // billcode popup
-     
+      // billcode popup
+
 
       this.popupBillCodeForm2.get('popup_server_name_750')?.enable();
       this.popupBillCodeForm2.get('popup_pbx_threshold_limit_750')?.enable();
       this.popupBillCodeForm2.get('popup_retail_threshold_limit_750')?.enable();
-     
+
 
       this.popupBillCodeForm2.get('popup_server_name_740')?.enable();
       this.popupBillCodeForm2.get('popup_pbx_threshold_limit_740')?.enable();
       this.popupBillCodeForm2.get('popup_retail_threshold_limit_740')?.enable();
-     
+
       this.popupBillCodeForm2.get('popup_server_name_kl')?.enable();
       this.popupBillCodeForm2.get('popup_pbx_threshold_limit_kl')?.enable();
       this.popupBillCodeForm2.get('popup_retail_threshold_limit_kl')?.enable();
-      
-   
+
+
     }
 
-    else{
+    else {
       this.billCodeEditForm2.get('server_name_750')?.disable();
       this.billCodeEditForm2.get('pbx_threshold_limit_750')?.disable();
       this.billCodeEditForm2.get('retail_threshold_limit_750')?.disable();
-     
+
 
       this.billCodeEditForm2.get('server_name_740')?.disable();
       this.billCodeEditForm2.get('pbx_threshold_limit_740')?.disable();
       this.billCodeEditForm2.get('retail_threshold_limit_740')?.disable();
-     
+
       this.billCodeEditForm2.get('server_name_kl')?.disable();
       this.billCodeEditForm2.get('pbx_threshold_limit_kl')?.disable();
       this.billCodeEditForm2.get('retail_threshold_limit_kl')?.disable();
 
 
       // billcode popup
-     
+
       this.popupBillCodeForm2.get('popup_server_name_750')?.disable();
       this.popupBillCodeForm2.get('popup_pbx_threshold_limit_750')?.disable();
       this.popupBillCodeForm2.get('popup_retail_threshold_limit_750')?.disable();
-     
+
 
       this.popupBillCodeForm2.get('popup_server_name_740')?.disable();
       this.popupBillCodeForm2.get('popup_pbx_threshold_limit_740')?.disable();
       this.popupBillCodeForm2.get('popup_retail_threshold_limit_740')?.disable();
-     
+
       this.popupBillCodeForm2.get('popup_server_name_kl')?.disable();
       this.popupBillCodeForm2.get('popup_pbx_threshold_limit_kl')?.disable();
       this.popupBillCodeForm2.get('popup_retail_threshold_limit_kl')?.disable();
-     
-     
+
+
     }
   }
 
@@ -1355,7 +1355,7 @@ selectedValues:any;
       console.log("Final Checkbox After checkbox selected list", this.edit_array);
     }
     else {
-     
+
       const index = this.edit_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array.splice(index, 1);
@@ -1401,7 +1401,7 @@ selectedValues:any;
   CustomerListQuickSearch(data: any) {
     // Swal.fire('Searching');
     // Swal.showLoading();
-    if(data==''){
+    if (data == '') {
       this.customerslist({});
     }
     var list_data = this.listDataInfo(data);
@@ -1836,18 +1836,15 @@ selectedValues:any;
     this.Checkbox_value = event.target.checked;
     console.log(this.Checkbox_value)
     if (this.Checkbox_value) {
-  
+
       this.CheckBox_DynamicArrayList_shareCustomerPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
-       this.CheckBox_DynamicArrayList_shareCustomerPermission.sort();
+      this.CheckBox_DynamicArrayList_shareCustomerPermission.sort();
       console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission);
 
-    
-    
-    
     }
     else {
-  
+
       const index: number = this.CheckBox_DynamicArrayList_shareCustomerPermission.indexOf(data);
       console.log(index)
       if (index == -1) {
@@ -1856,13 +1853,12 @@ selectedValues:any;
         this.CheckBox_DynamicArrayList_shareCustomerPermission.splice(index, 1);
       }
       console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_shareCustomerPermission)
-  
+
     }
     this.typeConvertionString_Shared_Permission = this.CheckBox_DynamicArrayList_shareCustomerPermission.toString();
-  
+
     console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_Shared_Permission)
   }
-  
 
   CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
 
@@ -1870,33 +1866,63 @@ selectedValues:any;
     this.checkbox_ID_SingleParameter_invoice_Value = data;
     this.Checkbox_value_invoice = event.target.checked;
     console.log(this.Checkbox_value_invoice)
-
+  
     if (this.Checkbox_value_invoice) {
-
-      if (this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data) < 0) {
-        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.push(data);
-      } 
-      else {
-        //type something
-      }
-      console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
-
+  
+      this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.push(Number(data));
+      this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.join(',');
+      this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.sort();
+      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission);
+  
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data);
-      console.log(index)
-      if (index == -1) {
-        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
-      } else {
-        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
-      }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
+        console.log(index)
+        if (index == -1) {
+          this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
+        } else {
+          this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
+        }
+        console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
     }
     this.typeConvertionString_invoice_Shared_Permission = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
-
-    console.log("Final check After Selected/Deselected selected list", this. typeConvertionString_invoice_Shared_Permission)
-
+  
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoice_Shared_Permission)
+  
   }
+  // CheckboxValueChanges_invoice_shareCustomerPermission(data: any, event: any) {
+
+  //   console.log("List - Checkbox ID", data);
+  //   this.checkbox_ID_SingleParameter_invoice_Value = data;
+  //   this.Checkbox_value_invoice = event.target.checked;
+  //   console.log(this.Checkbox_value_invoice)
+
+  //   if (this.Checkbox_value_invoice) {
+
+  //     if (this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data) < 0) {
+  //       this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.push(data);
+  //     }
+  //     else {
+        
+  //     }
+  //     console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
+
+  //   }
+  //   else {
+  //     const index: number = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.indexOf(data);
+  //     console.log(index)
+  //     if (index == -1) {
+  //       this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
+  //     } else {
+  //       this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.splice(index, 1);
+  //     }
+  //     console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
+  //   }
+  //   this.typeConvertionString_invoice_Shared_Permission = this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission.toString();
+
+  //   console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoice_Shared_Permission)
+
+  // }
 
   viewCustomer(id: any) {
 
@@ -2161,8 +2187,8 @@ selectedValues:any;
         this.cus_type_edit = response.result.customer_details[0].cus_type;
         this.customerType_listEdit = response.result.cus_class_type;
         console.log('selected_biller', response.result.billerId_det);
-        console.log('customer_bill_code_arr',response.result.customer_bill_code_arr[0].bill_code_name);    
-        
+        console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
+
         this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
 
@@ -2238,17 +2264,17 @@ selectedValues:any;
             "bill_code_kl": response.result.customer_bill_code_arr[index].bill_code_kl,
             "bill_code_750": response.result.customer_bill_code_arr[index].bill_code_750,
             "bill_code_750_8": response.result.customer_bill_code_arr[index].bill_code_750_8,
-      
 
-        })
-        );
-      }
-      
-      console.log(formArray)
-      this.billCodeEditForm3.setControl('addresses', formArray);
-      console.log(this.addresses)
 
-       
+          })
+          );
+        }
+
+        console.log(formArray)
+        this.billCodeEditForm3.setControl('addresses', formArray);
+        console.log(this.addresses)
+
+
 
         this.billCodeEditForm2.patchValue({
 
@@ -2267,7 +2293,7 @@ selectedValues:any;
           'retail_low_credit_750': response.result.customer_primary_code_arr[0].retail_low_credit_750,
           'retail_high_credit_750': response.result.customer_primary_code_arr[0].retail_high_credit_750,
 
-          
+
           // 'primary_code_kl': response.result.customer_primary_code_arr[0].dc_ip_country,
           'primary_code_retail_kl': response.result.customer_primary_code_arr[0].primary_code_retail_kl,
           'low_credit_kl': response.result.customer_primary_code_arr[0].low_credit_kl,
@@ -2296,15 +2322,15 @@ selectedValues:any;
         })
         console.log(this.editCustomerForm.value);
         $('#editCustomerFormId').modal('show');
-    //    this.customerslist({});
+        //    this.customerslist({});
       } else {
         iziToast.warning({
           message: "No API Response",
           position: 'topRight'
         });
       }
-this.manualCreditPermission({});
-     this.autoCreditPermission({});
+      this.manualCreditPermission({});
+      this.autoCreditPermission({});
     }),
       (error: any) => {
         iziToast.error({
@@ -3137,8 +3163,8 @@ this.manualCreditPermission({});
       }
     })
   }
-  
- 
+
+
   invoiceShare_edit(id: any) {
 
 
@@ -3155,13 +3181,13 @@ this.manualCreditPermission({});
     invoiceShare_edit_req.customerId = id;
     api_req.element_data = invoiceShare_edit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
       if (response.status == true) {
-this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
+        // this.selectedValues = response.customer_invoice_arr.invoice_access_userid;
         this.Invoice_shareCustomerPermission_EditOnLoad_Values =
           response.customer_invoice_arr.invoice_access_userid;
         this.Invoice_SharedCustomerPermission_List = response.user_details;
-        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid_arr;
+        this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid.split(',').map(Number);;
         // this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission = response.customer_invoice_arr.invoice_access_userid.split(',');
         console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoice_shareCustomerPermission)
       } else {
@@ -3340,47 +3366,6 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
       }
     })
   }
-  // shareCustomerPermission_edit(id: any) {
-
-  //   this.shareCustomerPermission_ID = id;
-  //   let api_req: any = new Object();
-  //   let shareCustomerPermission_edit: any = new Object();
-  //   api_req.moduleType = "customer";
-  //   api_req.api_url = "customer/customer_share";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   shareCustomerPermission_edit.action = "customer_share";
-  //   shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
-  //   shareCustomerPermission_edit.customerId = id;
-  //   api_req.element_data = shareCustomerPermission_edit;
-
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-  //     console.log("customer share permission response", response);
-  //     if (response.status==true) {
-  //       this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
-  //       this.SharedCustomerPermissionArray = [];
-
-  //       this.SharedCustomerPermission_List= response.user_details;
-  //       console.log("response.access_user[0].access_userid", response.access_user[0].access_userid)
-  //       if (response.access_user[0].access_userid != '') {
-  //         setTimeout(() => {
-  //           var checkVariable: any = [];
-  //           checkVariable.push(response.access_user[0].access_userid);
-  //           console.log("checkVariable", checkVariable)
-  //           this.edit_array_SharedCustomerPermission_Checkbox = checkVariable;
-  //         }, 2000);
-
-  //       }
-
-  //       console.log("response.user_details", response.user_details)
-  //       console.log(this.SharedCustomerPermissionArray)
-
-
-  //     }
-  //   });
-
-  // }
   shareCustomerPermission_edit(id: any) {
 
     this.shareCustomerPermission_ID = id;
@@ -3394,24 +3379,26 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
     shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_edit.customerId = id;
     api_req.element_data = shareCustomerPermission_edit;
-  
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-       
+
         this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
         this.SharedCustomerPermission_List = response.user_details;
-      //  this.CheckBox_DynamicArrayList_shareCustomerPermission =  response.access_user[0].access_userid.split(',');
-    const chk_arr = response.access_user[0].access_userid.split(',');
-   
-   for(var i=0;i<chk_arr.length;i++){
-    this.CheckBox_DynamicArrayList_shareCustomerPermission.push(Number(chk_arr[i]));
-    this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
-   }
+        this.CheckBox_DynamicArrayList_shareCustomerPermission = response.access_user[0].access_userid.split(',').map(Number);
+        console.log("access_userid", this.CheckBox_DynamicArrayList_shareCustomerPermission);
+      
+        //  this.CheckBox_DynamicArrayList_shareCustomerPermission =  response.access_user[0].access_userid.split(',');
+        // const chk_arr = response.access_user[0].access_userid.split(',');
+        // for (var i = 0; i < chk_arr.length; i++) {
+        //   this.CheckBox_DynamicArrayList_shareCustomerPermission.push(Number(chk_arr[i]));
+        //   this.CheckBox_DynamicArrayList_shareCustomerPermission.join(',');
+        // }
 
 
-   //this.CheckBox_DynamicArrayList_shareCustomerPermission =   response.access_user[0].access_userid.split(',');
-   console.log("access_userid", this.CheckBox_DynamicArrayList_shareCustomerPermission);
-       
+        //this.CheckBox_DynamicArrayList_shareCustomerPermission =   response.access_user[0].access_userid.split(',');
+        
+
       } else {
         iziToast.warning({
           message: "No API Response",
@@ -3428,50 +3415,6 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
       };
 
   }
-
-
-  // shareCustomerPermission_edit(id: any) {
-
-  //   this.shareCustomerPermission_ID = id;
-  //   let api_req: any = new Object();
-  //   let shareCustomerPermission_edit: any = new Object();
-  //   api_req.moduleType = "customer";
-  //   api_req.api_url = "customer/customer_share";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   shareCustomerPermission_edit.action = "customer_share";
-  //   shareCustomerPermission_edit.user_id = localStorage.getItem('user_id');
-  //   shareCustomerPermission_edit.customerId = id;
-  //   api_req.element_data = shareCustomerPermission_edit;
-
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-  //     console.log("customer share permission response", response);
-  //     if (response.status==true) {
-  //       this.shareCustomerPermission_EditOnLoad_Values = response.access_user[0].access_userid;
-  //       this.SharedCustomerPermissionArray = [];
-
-  //       this.SharedCustomerPermissionArray = response.user_details;
-  //       console.log("response.access_user[0].access_userid", response.access_user[0].access_userid)
-  //       if (response.access_user[0].access_userid != '') {
-  //         setTimeout(() => {
-  //           var checkVariable: any = [];
-  //           checkVariable.push(response.access_user[0].access_userid);
-  //           console.log("checkVariable", checkVariable)
-  //           this.edit_array_SharedCustomerPermission_Checkbox = checkVariable;
-  //         }, 2000);
-
-  //       }
-
-  //       console.log("response.user_details", response.user_details)
-  //       console.log(this.SharedCustomerPermissionArray)
-
-
-
-  //     }
-  //   });
-
-  // }
   shareCustomerPermission_update(id: any) {
     this.shareCustomerPermissionParameter = id;
 
@@ -3484,9 +3427,7 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
     shareCustomerPermission_update_req.action = "customer_share_update";
     shareCustomerPermission_update_req.user_id = localStorage.getItem('user_id');
     shareCustomerPermission_update_req.customerId = this.shareCustomerPermission_ID;
-    // shareCustomerPermission_update_req.access_userid = this.edit_array_SharedCustomerPermission_Checkbox;
-     shareCustomerPermission_update_req.access_userid = this.CheckBox_DynamicArrayList_shareCustomerPermission;
-   // shareCustomerPermission_update_req.access_userid = this.ShareCustomerPermissionForm.value.share_username;
+    shareCustomerPermission_update_req.access_userid = this.CheckBox_DynamicArrayList_shareCustomerPermission;
     api_req.element_data = shareCustomerPermission_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -3782,7 +3723,7 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
     api_req.moduleType = "customer";
     api_req.api_url = "customer/bill_code_details";
     api_req.api_type = "web";
-    api_req.access_token =  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_billCodeEdit_req.action = "bill_code_details";
     api_billCodeEdit_req.customerId = id;
     api_billCodeEdit_req.user_id = localStorage.getItem('user_id');
@@ -3805,20 +3746,20 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
         // formArray.push(this.fb.group({
 
         //   "popup_billCodeName": response.customer_bill_code_arr[index].bill_code_name,
-      //     "bill_code_740": response.customer_bill_code_arr[index].bill_code_740,
-      //     "bill_code_kl": response.customer_bill_code_arr[index].bill_code_kl,
-      //     "bill_code_750": response.customer_bill_code_arr[index].bill_code_750,
-      //     "bill_code_750_8": response.customer_bill_code_arr[index].bill_code_750_8,
+        //     "bill_code_740": response.customer_bill_code_arr[index].bill_code_740,
+        //     "bill_code_kl": response.customer_bill_code_arr[index].bill_code_kl,
+        //     "bill_code_750": response.customer_bill_code_arr[index].bill_code_750,
+        //     "bill_code_750_8": response.customer_bill_code_arr[index].bill_code_750_8,
 
-      //   })
-      //   );
-      // }
-      // console.log(formArray)
-      // this.popupBillCodeForm3.setControl('addresses', formArray);
-      // console.log(this.addresses)
+        //   })
+        //   );
+        // }
+        // console.log(formArray)
+        // this.popupBillCodeForm3.setControl('addresses', formArray);
+        // console.log(this.addresses)
 
         // if (response.primary_bill_code != '') {
-          this.popupBillCodeForm2.patchValue({
+        this.popupBillCodeForm2.patchValue({
 
 
           // 'popup_primary_code_740': response.result.customer_primary_code_arr[0].dc_ip_country,
@@ -3836,7 +3777,7 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
           'popup_retail_low_credit_750': response.customer_primary_code_arr[0].retail_low_credit_750,
           'popup_retail_high_credit_750': response.customer_primary_code_arr[0].retail_high_credit_750,
 
-          
+
           // 'popup_primary_code_kl': response.result.customer_primary_code_arr[0].dc_ip_country,
           'popup_primary_code_retail_kl': response.customer_primary_code_arr[0].primary_code_retail_kl,
           'popup_low_credit_kl': response.customer_primary_code_arr[0].low_credit_kl,
@@ -3860,7 +3801,7 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
 
           'manual_credit': response.customer_primary_code_arr[0].manual_credit,
 
-          });
+        });
 
         // }
         console.log("bill code edit form 2", this.billCodeEditForm2.value);
@@ -3869,7 +3810,7 @@ this.selectedValues=response.customer_invoice_arr.invoice_access_userid;
       this.manualCreditPermission({});
       this.autoCreditPermission({});
     });
-    
+
 
 
   }
