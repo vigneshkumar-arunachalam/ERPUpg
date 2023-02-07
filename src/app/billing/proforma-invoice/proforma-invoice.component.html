@@ -150,8 +150,8 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover2" title="Invoice Type Details" data-toggle="modal"
-                                  data-target="#invoiceTypeDetailsFormId">
+                                <a class="hover2" title="Delete" data-toggle="modal"
+                                  data-target="#DeleteInvoice" (click)="deleteInvoice(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-x-square">
@@ -194,6 +194,62 @@
                                   </svg>
                                 </a>
                               </li>
+                              <li class="dropdown__item">
+                                <a class="hover6" title="PDF" data-toggle="modal"
+                                    data-target="#pdfFormId"
+                                    (click)="pdf(list.billId)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                        height="100" viewBox="0 0 24 24" fill="none"
+                                        stroke="#009688" stroke-width="3"
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="feather feather-file">
+                                        <path
+                                            d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z">
+                                        </path>
+                                        <polyline points="13 2 13 9 20 9"></polyline>
+                                    </svg>
+                                </a>
+                            </li>
+                             <li class="dropdown__item">
+                              <a class="hover7" title="show permission" data-toggle="modal"
+                                  data-target="#showPerissionFormId"
+                                  (click)="showPerission()">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                      height="100" viewBox="0 0 24 24" fill="none"
+                                      stroke="#009688" stroke-width="3"
+                                      stroke-linecap="round" stroke-linejoin="round"
+                                      class="feather feather-file">
+                                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>
+                                      <polyline points="13 2 13 9 20 9"></polyline>
+                                  </svg>
+                              </a>
+                          </li>
+                        <li class="dropdown__item">
+                            <a class="hover8" title="set Invoice Type Name" data-toggle="modal"
+                                data-target="#setInvoiceTypeNameFormId"
+                                (click)="setInvoiceTypeName()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                    height="100" viewBox="0 0 24 24" fill="none"
+                                    stroke="#009688" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round"
+                                    class="feather feather-file">
+                                    <path d="M17 18a5 5 0 0 0-10 0"></path><line x1="12" y1="9" x2="12" y2="2"></line><line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line><line x1="1" y1="18" x2="3" y2="18"></line><line x1="21" y1="18" x2="23" y2="18"></line><line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line><line x1="23" y1="22" x2="1" y2="22"></line><polyline points="16 5 12 9 8 5"></polyline>
+                                  </svg>
+                            </a>
+                        </li>
+                        <li class="dropdown__item">
+                          <a class="hover9" title="set Terms & Condition" data-toggle="modal"
+                              data-target="#settermsConditionFormId"
+                              (click)="setTermsCondition()">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="100"
+                                  height="100" viewBox="0 0 24 24" fill="none"
+                                  stroke="#009688" stroke-width="3"
+                                  stroke-linecap="round" stroke-linejoin="round"
+                                  class="feather feather-file">
+                                  <polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line>
+                              </svg>
+                          </a>
+                      </li> 
                             </ul>
                           </div>
                         </div>
@@ -578,3 +634,93 @@
   </div>
 </div>
 <!-------------- Email-Landscape Pop up ends------------------------------------------>
+
+<!---------------------- set Invoice Type Name pop up start  -------------------------->
+
+<div class="modal fade" id="setInvoiceTypeNameFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Invoice Type Details
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="setInvoiceType">
+          <div class="row">
+            <div class="col-lg-12" style="display: flex;">
+              <div class="col-lg-4">
+                <label>Select Invoice Type</label>
+              </div>
+              <div class="col-lg-6">
+                <select class="form-control" formControlName="setInvoice">
+                  <option [ngValue]="null" selected disabled>Select invoice From</option>
+
+                  <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                      {{term.enquiry_from_name}}
+                                  </option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------------------- set Invoice Type Name pop up end ---------------->
+
+<!------------------------ set Terms & Condition pop up start  ---------->
+
+<div class="modal fade" id="settermsConditionFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Terms Condition Details
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="setInvoiceType">
+          <div class="row">
+            <div class="col-lg-12" style="display: flex;">
+              <div class="col-lg-4">
+                <label>Terms Condition	</label>
+              </div>
+              <div class="col-lg-6">
+                <select class="form-control" formControlName="setInvoice">
+                  <option [ngValue]="null" selected disabled>Select term Condition</option>
+
+                  <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                      {{term.enquiry_from_name}}
+                                  </option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

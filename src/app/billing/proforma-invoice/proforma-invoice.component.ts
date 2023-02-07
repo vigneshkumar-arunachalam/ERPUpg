@@ -3,7 +3,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 declare var $: any
-
+declare var iziToast: any;
 import Swal from 'sweetalert2'
 
 @Component({
@@ -41,6 +41,10 @@ export class ProformaInvoiceComponent implements OnInit {
   groupSelect_emailCCId:any;
   email_checkbox_value:any;
 
+  // set-Invoice-type-name
+
+  setInvoiceType: FormGroup;
+
   constructor(private serverService: ServerService, private router: Router) { }
 
   ngOnInit(): void {
@@ -72,7 +76,13 @@ export class ProformaInvoiceComponent implements OnInit {
       'email_CCGroup': new FormControl(null),
       'email_subject': new FormControl(null),
       'email_message': new FormControl(null),
-      'payment': new FormControl(null),
+      'payment': new FormControl(null)
+      });
+      
+      
+      
+         this.setInvoiceType = new FormGroup({
+      'setInvoice' : new FormControl(null)
     });
   }
 
@@ -210,8 +220,72 @@ export class ProformaInvoiceComponent implements OnInit {
     }
   }
 
+  paymentProcess(data:any){
+    var list_payment = data;
+    let api_req: any = new Object();
+    let api_paymentPI_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/invoice_payment_details";
+    api_req.api_type = "web";
+    api_req.access_token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_paymentPI_req.action = "invoice_payment_details";
+    api_paymentPI_req.user_id = localStorage.getItem('user_id');
+     api_paymentPI_req.billId = list_payment ;
+    api_req.element_data = api_paymentPI_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if( response.status==true){
+        // this.enquiryFromList = response.;
+      }
+
+    })
+  }
+
+  deleteInvoice(billId :any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+
+    
+            iziToast.success({
+              message: " Quotation Deleted Successfully",
+              position: 'topRight'
+            });
+           
+          
+      
+      }
+    })
+
+  }
+
   EmailEdit(a:any){
     
   }
+
+  pdf(billId: any) {
+    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + billId + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+  }
+
+  showPerission(){
+
+    alert("Are you sure you want to bill show permission?")
+  }
+
+  setInvoiceTypeName(){
+
+  }
+  setTermsCondition(){
+    
+  }
+
 
 }

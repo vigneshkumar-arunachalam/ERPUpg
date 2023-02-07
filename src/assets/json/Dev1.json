@@ -111,4 +111,25 @@
     ],
     "isVisible": true,
     "value": "/contract"
+},   {
+    "name": "Settings",
+    "icon":"settings",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Profile Details",
+            "icon": "grid",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/profiledetails"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/profiledetails"
 }]

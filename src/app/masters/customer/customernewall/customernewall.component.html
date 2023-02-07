@@ -2076,58 +2076,69 @@
             <!-- <div class="col-lg-12"> -->
             <form [formGroup]="billCodeEditForm3">
               <label for="companyCode" class="col-lg-12 col-form-label">Bill Code*</label>
-              <section>
-                <div class="userDatatable global-shadow border-0 bg-white w-100">
-                  <div class="table-responsive">
-                    <table class="table mb-0 table-borderless">
-                      <thead>
-                        <tr class="userDatatable-header">
-                          <th>Bill Code Name</th>
-                          <th>Server-VS1</th>
-                          <th>Server-VSKL</th>
-                          <th>Server-VS2(32)(TH,JP)</th>
-                          <th>Server-VS2(8)(Special Account)</th>
-                          <th> Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="userDatatable-header" formArrayName="addresses"
-                          *ngFor="let address of addressControls.controls; let i = index;">
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="billCodeName"
-                              id="billCodeName{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="bill_code_740"
-                              id="bill_code_740_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="bill_code_kl"
-                              id="bill_code_kl_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="bill_code_750"
-                              id="bill_code_750_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="bill_code_750_8"
-                              id="bill_code_750_8_{{i}}" />
-                          </td>
-                          <td>
-                            <div class="userDatatable-content d-inline-block">
-                              <button type="button" class="btn btn-danger btn-sm" [disabled]="!billCodeEditForm3.valid"
-                                (click)="removeAddress1(i)">X</button>
 
-                            </div>
-                          </td>
+              <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                  <table class="table mb-0 table-borderless">
+                    <thead>
+                      <tr class="userDatatable-header">
+                        <th>Bill Code Name</th>
+                        <th>Server-VS1</th>
+                        <th>Server-VSKL</th>
+                        <th>Server-VS2(32)(TH,JP)</th>
+                        <th>Server-VS2(8)(Special Account)</th>
+                        <th> Action</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+                      <tr class="userDatatable-header" [formGroupName]="i">
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="billCodeName"
+                            id="billCodeName{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="bill_code_740"
+                            id="bill_code_740_{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="bill_code_kl"
+                            id="bill_code_kl_{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="bill_code_750"
+                            id="bill_code_750_{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="bill_code_750_8"
+                            id="bill_code_750_8_{{i}}" />
+                        </td>
+                        <td>
+                          <div class="userDatatable-content d-inline-block">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress1(i)">X</button>
 
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                          </div>
+                        </td>
+                        <td style="padding-right: 10px!important">
+
+                          <input type="hidden" class="form-control" formControlName="customer_bill_code_id"
+                            id="customer_bill_code_id{{i}}" />
+
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="hidden" class="form-control" formControlName="customer_id"
+                            id="customer_id{{i}}" />
+                        </td>
+
+                        <td style="padding-right: 10px!important">
+                          <input type="hidden" class="form-control" formControlName="conn_state" id="conn_state{{i}}" />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
+              </div>
 
-              </section>
+
               <div class="text-left">
                 <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="editBillCode()"
                   style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add More</i>
@@ -2142,12 +2153,13 @@
 
 
           <div class="row">
+            <!-- formArrayName="TestPrimary" -->
             <div class="col-lg-12">
               <form [formGroup]="billCodeEditForm2">
                 <label for="companyCode" class="col-lg-12 col-form-label">Primary Code*</label>
                 <div class="userDatatable global-shadow border-0 bg-white w-100">
 
-                  <div class="table-responsive ">
+                  <div class="table-responsive">
                     <table class="table mb-0 table-borderless">
                       <thead>
                         <tr class="userDatatable-header">
@@ -2227,7 +2239,7 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_k"
+                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_kl"
                               id="primary_code_kl" />
                           </td>
                           <td>
@@ -2333,10 +2345,76 @@
                     <input type="checkbox" formControlName="manual_credit" (change)="manualCreditPermission($event)"
                       id="manual_credit">
                   </label>
-                  <label class="col-lg-12 col-form-label">Add Credit Amount
-                    <input type="checkbox" formControlName="auto_Credit_checklist"
-                      (change)="autoCreditPermission($event)" id="autoCreditCheckBox">
-                  </label>
+                 
+                  <div class="row">
+                    <div class="col-lg-12">
+                      
+                      <form [formGroup]="billCodeEditForm4">
+                        <label class="col-lg-12 col-form-label">Add Credit Amount
+                          <input type="checkbox"  (click)="autoCreditCheckList()">
+                        </label>
+                        <div class="table-responsive" *ngIf="auto_credit_checkbox_list">
+                          <table class="table mb-0 table-borderless">
+                            <thead>
+                              <tr>
+                              <th>Pbx or Retail </th>
+                              <th>VS 740 server</th>
+                              <th>VS 750 server</th>
+                              <th>VS KL server</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="userDatatable-header">
+                                <td>
+                                  <select formControlName="add_pbx_or_retail" id="add_pbx_or_retail">
+                                    <option value="">PBX</option>
+                                    <option value="retail">Retail</option>
+                                  </select>
+                                </td>
+                                <td>
+                                  <input type="text" class="form-control" formControlName="add_credit_value_for_740"  id="add_credit_value_for_740"/>
+                                </td>
+                                <td>
+                                  <input type="text" class="form-control" formControlName="add_credit_value_for_750"  id="add_credit_value_for_750"/>
+                                </td>
+                                <td>
+                                  <input type="text" class="form-control" formControlName="add_credit_value_for_KL"  id="add_credit_value_for_KL"/>
+                                </td>
+                              </tr>
+                             
+                          </table>
+                          <table class="table mb-0 table-borderless">
+                            <thead>
+                              <tr>
+                              <th> Type </th>
+                              <th>	Server </th>
+                              <th> Amount </th>
+                              <th> Date & Time </th>
+                              <th> Update By </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+        
+                              </tr>
+                            </tbody>
+                          </table>
+                          <label class="col-lg-12 col-form-label"> Current Balance:  Pbx:-  740</label>
+                          <label class="col-lg-12 col-form-label">Current Balance:  Pbx:-  750</label>
+                          <label class="col-lg-12 col-form-label">Current Balance:  Pbx:-  KL</label>
+                          <label class="col-lg-12 col-form-label">Current Balance:  Retail:-  740</label>
+                         
+                        <div class="text-left">
+                          <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" 
+                            style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;" (click)="addCreditAmount(this.editId)"> Add Credit</i>
+                          </button>
+                        </div>
+                      </div>
+                      </form>
+        
+                    </div>
+                  </div>
+                 
                   <div class="form-group row" style="display: flex; align-items: center;">
                     <label for="customerstatus" class="col-lg-3 col-form-label">DC IP Allow Countries</label>
                     <div style="display: flex; align-items: center;">
@@ -3068,64 +3146,78 @@
         <div class="card-body">
           <div class="row">
 
-            <form [formGroup]="billCodeEditForm3">
+            <form [formGroup]="popupBillCodeForm3">
               <label for="companyCode" class="col-lg-12 col-form-label">Bill Code*</label>
+              <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                  <table class="table mb-0 table-borderless">
+                    <thead>
+                      <tr class="userDatatable-header">
+                        <th>Bill Code Name</th>
+                        <th>Server-VS1</th>
+                        <th>Server-VSKL</th>
+                        <th>Server-VS2(32)(TH,JP)</th>
+                        <th>Server-VS2(8)(Special Account)</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="popupBillCode1"
+                      *ngFor="let address of popupaddressControls.controls; let i = index;">
 
-              <section formArrayName="addresses ">
+                      <tr class="userDatatable-header" [formGroupName]="i">
 
-                <div class="userDatatable global-shadow border-0 bg-white w-100">
-                  <div class="table-responsive ">
-                    <table class="table mb-0 table-borderless">
-                      <thead>
-                        <tr class="userDatatable-header">
-                          <th>Bill Code Name</th>
-                          <th>Server-VS1</th>
-                          <th>Server-VSKL</th>
-                          <th>Server-VS2(32)(TH,JP)</th>
-                          <th>Server-VS2(8)(Special Account)</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="userDatatable-header"
-                          *ngFor="let address of addressControls.controls; let i = index;">
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="popup_billCodeName"
-                              id="popup_billCodeName_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="popup_bill_code_740"
-                              id="popup_bill_code_740_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="popup_bill_code_kl"
-                              id="popup_bill_code_kl_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="popup_bill_code_750"
-                              id="popup_bill_code_750_{{i}}" />
-                          </td>
-                          <td style="padding-right: 10px!important">
-                            <input type="text" class="form-control" formControlName="popup_bill_code_750_8"
-                              id="popup_bill_code_750_8_{{i}}" />
-                          </td>
-                          <td>
-                            <div class="userDatatable-content d-inline-block">
-                              <button type="button" class="btn btn-danger btn-sm" [disabled]="!billCodeEditForm3.valid"
-                                (click)="removeAddress1(i)">X</button>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="popup_billCodeName"
+                            id="popup_billCodeName_{{i}}" />
+                        </td>
+                       
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="popup_bill_code_740"
+                            id="popup_bill_code_740_{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="popup_bill_code_kl"
+                            id="popup_bill_code_kl_{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="popup_bill_code_750"
+                            id="popup_bill_code_750_{{i}}" />
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="text" class="form-control" formControlName="popup_bill_code_750_8"
+                            id="popup_bill_code_750_8_{{i}}" />
+                        </td>
+                        <td>
+                          <div class="userDatatable-content d-inline-block">
+                            <button type="button" class="btn btn-danger btn-sm" [disabled]="!billCodeEditForm3.valid"
+                              (click)="removeAddress2(i)">X</button>
 
-                            </div>
-                          </td>
+                          </div>
+                        </td>
+                        <td style="padding-right: 10px!important">
 
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                          <input type="hidden" class="form-control" formControlName="popup_customer_bill_code_id"
+                            id="popup_customer_bill_code_id{{i}}" />
+
+                        </td>
+                        <td style="padding-right: 10px!important">
+                          <input type="hidden" class="form-control" formControlName="popup_customer_id"
+                            id="popup_customer_id{{i}}" />
+                        </td>
+
+                        <td style="padding-right: 10px!important">
+                          <input type="hidden" class="form-control" formControlName="popup_conn_state"
+                            id="popup_conn_state{{i}}" />
+                        </td>
+                      </tr>
+
+                    </tbody>
+                  </table>
                 </div>
+              </div>
 
-              </section>
               <div class="text-left">
-                <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="editBillCode()"
+                <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="popupBillCode()"
                   style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add More</i>
                 </button>
               </div>
@@ -3140,7 +3232,7 @@
                 <label for="companyCode" class="col-lg-12 col-form-label">Primary Code*</label>
                 <div class="userDatatable global-shadow border-0 bg-white w-100">
 
-                  <div class="table-responsive ">
+                  <div class="table-responsive">
                     <table class="table mb-0 table-borderless">
                       <thead>
                         <tr class="userDatatable-header">
@@ -3221,7 +3313,7 @@
                           </td>
                           <td>
                             <input type="text" class="form-control" [readonly]="true"
-                              formControlName="popup_primary_code_k" id="popup_primary_code_kl" />
+                              formControlName="popup_primary_code_kl" id="popup_primary_code_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" [readonly]="true"
@@ -3256,7 +3348,7 @@
 
                 <div class="userDatatable global-shadow border-0 bg-white w-100">
 
-                  <div class="table-responsive ">
+                  <div class="table-responsive">
                     <table class="table mb-0 table-borderless">
                       <thead>
                         <tr class="userDatatable-header">
@@ -3328,18 +3420,13 @@
                       (change)="manualCreditPermission($event)" id="popup_manual_credit">
                   </label>
                   <label class="col-lg-12 col-form-label">Add Credit Amount
-                    <input type="checkbox" formControlName="auto_Credit_checklist" id="autoCreditCheckBox">
+                    <input type="checkbox">
                   </label>
                 </div>
-
               </form>
             </div>
-
-
           </div>
-
         </div>
-
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="billCodeAttachmentUpdate()">
@@ -3348,11 +3435,12 @@
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
-
-      </div>
+  
+    </div>
     </div>
   </div>
 </div>
+
 
 <!-------------------------- ------Modal-Customer Bill Code Display ends-------------------------------------- -->
 

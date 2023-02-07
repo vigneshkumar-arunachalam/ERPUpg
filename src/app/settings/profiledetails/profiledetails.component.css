@@ -1,0 +1,7 @@
+.user-signature-list{
+    background-color: #fff;
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    color: #3d0096;
+  }

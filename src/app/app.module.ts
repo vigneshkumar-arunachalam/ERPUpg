@@ -56,6 +56,8 @@ import { TransactionApprovalComponent } from './billing/transaction-approval/tra
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormarrayComponent } from './formarray/formarray.component';
 import { QRCodeModule } from 'angular2-qrcode';
+import { SettingsComponent } from './settings/settings.component';
+import { ProfiledetailsComponent } from './settings/profiledetails/profiledetails.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -94,6 +96,8 @@ import { QRCodeModule } from 'angular2-qrcode';
      EditPIComponent,
      TransactionApprovalComponent,
      FormarrayComponent,
+     SettingsComponent,
+     ProfiledetailsComponent,
     
   ],
   imports: [
