@@ -62,15 +62,15 @@
 
 
 
-                                    <a class="btn btn-xs btn-white border-light " data-toggle="tab"
-                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="getSampleCSV()">Main <span class="notification-alert">
-
-                                            0
-                                        </span></a>
                                     <a class="btn btn-xs btn-white border-light active" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="getSampleCSV()">Quotation<span class="notification-alert">
+                                        (click)="getMainList({})">Main <span class="notification-alert">
+
+                                            {{this.mainApprovalPendingCount}}
+                                        </span></a>
+                                    <a class="btn btn-xs btn-white border-light " data-toggle="tab"
+                                        area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
+                                        (click)="getTransactionApprovalList({})">Quotation<span class="notification-alert">
 
                                           {{this.quotationApprovalPendingCount}}
                                         </span></a>
@@ -311,6 +311,8 @@
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
                                                                 </a>
                                                             </li> -->
+
+                                                           
                                                         </ul>
 
                                                     </div>

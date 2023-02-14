@@ -244,6 +244,12 @@ export class CustomernewallComponent implements OnInit {
   AssignAccountManager_CustomerID: any;
   //GoogleAuthentication
   GoogleAuthenticationForm: FormGroup;
+  googleAuthent_CustomerId: any;
+  googleAuthentication_status: any;
+  googleAuthentication_customerName: any;
+  googleAuthentication_userDetails: any;
+  googleAuthentication_password: any;
+
   //radio-mconnect,mrvoip,cal4tel
   Partnertype_C4T_radiobox_Value: any;
   //checkbox-shared customer permission-new
@@ -743,6 +749,9 @@ export class CustomernewallComponent implements OnInit {
     });
     this.GoogleAuthenticationForm = new FormGroup({
       'google_AuthenticationCode': new FormControl(null),
+      'GA_customerName': new FormControl(null),
+      'GA_userDetails': new FormControl(null),
+      'GA_password': new FormControl(null),
 
     });
 
@@ -750,6 +759,7 @@ export class CustomernewallComponent implements OnInit {
     this.billCodeEditForm2 = new FormGroup({
 
 
+      'primary_customer_bill_code_id': new FormControl(null),
       'primary_code_740': new FormControl(null),
       'primary_code_retail_740': new FormControl(null),
       'low_credit_740': new FormControl(null),
@@ -786,8 +796,7 @@ export class CustomernewallComponent implements OnInit {
 
       'server_name_kl': new FormControl(null),
       'pbx_threshold_limit_kl': new FormControl(null),
-      'retail_threshold_limit_kl': new FormControl(null),
-
+      'retail_threshold_limit_kl': new FormControl(null),     
       'manual_credit': new FormControl(null),
 
     });
@@ -795,7 +804,7 @@ export class CustomernewallComponent implements OnInit {
 
     this.popupBillCodeForm2 = new FormGroup({
 
-      
+      'popup_primary_customer_bill_code_id': new FormControl(null),
       'popup_primary_code_740': new FormControl(null),
       'popup_low_credit_740': new FormControl(null),
       'popup_high_credit_740': new FormControl(null),
@@ -833,7 +842,7 @@ export class CustomernewallComponent implements OnInit {
       'popup_server_name_kl': new FormControl(null),
       'popup_pbx_threshold_limit_kl': new FormControl(null),
       'popup_retail_threshold_limit_kl': new FormControl(null),
-
+      'popup_customerId': new FormControl(null),
       'popup_manual_credit': new FormControl(null),
 
     });
@@ -1664,7 +1673,7 @@ export class CustomernewallComponent implements OnInit {
 
     if (this.addBillerNameBiller) {
 
-      this.addBillerNameCheckboxID_array.push(data);
+      this.addBillerNameCheckboxID_array.push(Number(data));
       this.addBillerNameCheckboxID_array.join(',');
       console.log("Final BillerName Checkbox After checkbox selected list", this.addBillerNameCheckboxID_array);
     }
@@ -1682,11 +1691,12 @@ export class CustomernewallComponent implements OnInit {
 
     this.editBillerNameBillerId = data;
     this.editBillerNameBiller = event.target.checked;
-    console.log('editBillerNameBiller' + this.editBillerNameBiller)
-
+    console.log('editBillerNameBiller' + this.editBillerNameBiller);
+    console.log('editBillerNameBillerId' + this.editBillerNameBillerId);
+   
     if (this.editBillerNameBiller) {
 
-      this.editBillerNameCheckboxID_array.push(data);
+      this.editBillerNameCheckboxID_array.push(Number(data));
       this.editBillerNameCheckboxID_array.join(',');
       console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
     }
@@ -1709,7 +1719,7 @@ export class CustomernewallComponent implements OnInit {
 
     if (this.editPermission) {
 
-      this.editPermissionCheckboxID_array.push(data);
+      this.editPermissionCheckboxID_array.push(Number(data));
       this.editPermissionCheckboxID_array.join(',');
       console.log("Final BillerName Checkbox After checkbox selected list", this.editPermissionCheckboxID_array);
     }
@@ -2081,6 +2091,8 @@ export class CustomernewallComponent implements OnInit {
   }
 
   addCustomerown() {
+    Swal.fire('Saving Customer Data');
+    Swal.showLoading();
 
     // finance email field condition
     console.log(this.financeemailList);
@@ -2110,8 +2122,8 @@ export class CustomernewallComponent implements OnInit {
       });
       return false;
     }
-    add_customer_req.customerName = this.addCustomer.value.company_Name;
-    if (this.addCustomer.value.company_Name === null) {
+    add_customer_req.customerName = this.searchResultTest;
+    if (this.searchResultTest === null) {
       iziToast.warning({
         message: "Company Name Missing",
         position: 'topRight'
@@ -2219,7 +2231,7 @@ export class CustomernewallComponent implements OnInit {
       $("#addCustomerSave").removeAttr("disabled");
 
       if (response.status == true) {
-
+        Swal.close();
         $('#addCustomerFormId').modal('hide');
 
         iziToast.success({
@@ -2231,6 +2243,7 @@ export class CustomernewallComponent implements OnInit {
         this.customerslist({});
 
       } else {
+        Swal.close();
         iziToast.warning({
           message: "Customer not updated. Please try again",
           position: 'topRight'
@@ -2245,7 +2258,7 @@ export class CustomernewallComponent implements OnInit {
         console.log("final error", error);
       };
   }
-
+ 
   editCustomer(id: any) {
     console.log("id", id)
     this.get_cust_type = [];
@@ -2278,16 +2291,21 @@ export class CustomernewallComponent implements OnInit {
         console.log("cus classification", response.result.customer_details[0].cus_type);
         console.log("cus permission", response.result.customer_details[0].cus_permission);
         console.log("customer status", response.result.customer_details[0].cust_status);
+        console.log("billerId_det", response.result.customer_details[0].billerId);
         this.get_cust_type = response.result.customer_details[0].cus_type;
         this.geting_biller = response.result.bill_details;
         this.geting_biller_edit = response.result.billerId_det;
-        this.editBillerNameCheckboxID_array = response.result.billerId_det;
+        this.geting_biller_edit = response.result.billerId_det;
+       // this.editBillerNameCheckboxID_array = response.result.billerId_det;
+        this.editBillerNameCheckboxID_array = response.result.customer_details[0].billerId.split(',').map(Number);
+        this.editPermissionCheckboxID_array = response.result.customer_details[0].cus_permission.split(',').map(Number);
         this.get_PermissionallList = response.result.cus_permission;
         this.get_PermissionEdit = response.result.cus_permission_id;
-        this.cus_type_edit = response.result.customer_details[0].cus_type;
+     //   this.cus_type_edit = response.result.customer_details[0].cus_type;
+        this.editCustomerClassificationBillerCheckboxID_array = response.result.customer_details[0].cus_type.split(',').map(Number);
         this.customerType_listEdit = response.result.cus_class_type;
-        console.log('selected_biller', response.result.billerId_det);
-        console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
+       // console.log('selected_biller', response.result.billerId_det);
+       // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
         this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
@@ -2355,7 +2373,8 @@ export class CustomernewallComponent implements OnInit {
         });
 
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.result.customer_bill_code_arr.length; index++) {
+        var bill_code_length = response.result.customer_bill_code_arr.length<=1?1:response.result.customer_bill_code_arr.length;
+        for (let index = 0; index < bill_code_length; index++) {
 
           formArray.push(this.fb.group({
 
@@ -2379,6 +2398,7 @@ export class CustomernewallComponent implements OnInit {
 
         this.billCodeEditForm2.patchValue({
 
+          'primary_customer_bill_code_id': response.result.customer_primary_code_arr[0].customer_bill_code_id,
           'primary_code_740': response.result.customer_primary_code_arr[0].bill_code_740,
           'primary_code_retail_740': response.result.customer_primary_code_arr[0].primary_code_retail_740,
           'low_credit_740': response.result.customer_primary_code_arr[0].low_credit_740,
@@ -2447,6 +2467,8 @@ export class CustomernewallComponent implements OnInit {
     //  email field condition
     let result_Email_Field = this.emailList.map(o => o.emailParameterName).join(',');
     console.log(result_Email_Field);
+    let result_FinanceEmail_Field = this.financeemailList.map(o => o.financeemailParameterName).join(',');
+    console.log(result_FinanceEmail_Field);
 
     let api_req: any = new Object();
     let update_customer_req: any = new Object();
@@ -2461,7 +2483,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.billerId = this.editBillerNameCheckboxID_array;
     update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
     update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
-    //  update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;
+    update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;
     update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
     update_customer_req.customerAddress1 = this.editCustomerForm.value.e_billingAddress_address1;
     update_customer_req.customerAddress2 = this.editCustomerForm.value.e_billingAddress_address2;
@@ -2477,6 +2499,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.ship_state = this.editCustomerForm.value.e_ESA_state;
     update_customer_req.ship_zipCode = this.editCustomerForm.value.e_ESA_zipcode;
     update_customer_req.ship_country = this.editCustomerForm.value.e_ESA_countryname;
+    update_customer_req.cus_permission = this.editPermissionCheckboxID_array;
 
     update_customer_req.premium_id = this.editCustomerForm.value.e_ESA_premium;
     update_customer_req.premium_status = this.editCustomerForm.value.e_ESA_premiumStatus;
@@ -2494,12 +2517,12 @@ export class CustomernewallComponent implements OnInit {
     //   });
     //   return false;
     // }
-    update_customer_req.finance_email = this.editCustomerForm.value.ESA_FinanceEmail;
+    update_customer_req.finance_email = result_FinanceEmail_Field;
     update_customer_req.cms_default_department = this.editCustomerForm.value.edit_cmsdepartment;
 
     update_customer_req.credit_amt = this.editCustomerForm.value.e_ESA_customerLimit;
     update_customer_req.reseller_id = this.editCustomerForm.value.e_ESA_c3cxResellerId;
-    update_customer_req.currency_name = this.editCustomerForm.value.edit_currencyname;
+    update_customer_req.def_currency_id = this.editCustomerForm.value.edit_currencyname;
     update_customer_req.stripe_customerId = this.editCustomerForm.value.e_stripe_customer_id;
     update_customer_req.stripe_recurring_state = this.editCustomerForm.value.e_stripe_recurr_payment;
     update_customer_req.system_discount_3cx = this.editCustomerForm.value.e_c3cx_system_discount;
@@ -2527,7 +2550,7 @@ var addr = this.billCodeEditForm3.value.addresses;
 for (let i = 0; i < addr.length; i++){
   console.log(addr[i].bill_code_740)
 
-  addr[i].billCodeName = $('#bill_code_name_' + i).val();
+  addr[i].bill_code_name = $('#billCodeName' + i).val();
   addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
   addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
   addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
@@ -2536,7 +2559,7 @@ for (let i = 0; i < addr.length; i++){
   addr[i].conn_state = $('#conn_state' + i).val();
   addr[i].customer_id = $('#customer_id'+ i).val();
 }
-update_customer_req.value = addr; 
+update_customer_req.billcode_value = addr; 
 
     // section - 3
    var primary = this.billCodeEditForm2.value;
@@ -2591,25 +2614,25 @@ update_customer_req.value = addr;
 
     // section 2
 
-    var addr = this.billCodeEditForm3.value.addresses;
-for (let i = 0; i < addr.length; i++){
-  console.log(addr[i].bill_code_740)
+//     var addr = this.billCodeEditForm3.value.addresses;
+// for (let i = 0; i < addr.length; i++){
+//   console.log(addr[i].bill_code_740)
 
-  addr[i].billCodeName = $('#bill_code_name_' + i).val();
-  addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
-  addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
-  addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
-  addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
-  addr[i].customer_bill_code_id = $('#customer_bill_code_id'+ i).val(); 
-  addr[i].conn_state = $('#conn_state'+ i).val();
-  addr[i].customer_id = $('#customer_id'+ i).val();
+//   addr[i].billCodeName = $('#bill_code_name_' + i).val();
+//   addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
+//   addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
+//   addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
+//   addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
+//   addr[i].customer_bill_code_id = $('#customer_bill_code_id'+ i).val(); 
+//   addr[i].conn_state = $('#conn_state'+ i).val();
+//   addr[i].customer_id = $('#customer_id'+ i).val();
    
-}
-update_customer_req.value = addr; 
-console.log(api_req);
+// }
+// update_customer_req.value = addr; 
+// console.log(api_req);
 
     
-    api_req.element_data = update_customer_req;
+//     api_req.element_data = update_customer_req;
 
     console.log(this.editCustomerForm.value);
 
@@ -2657,7 +2680,7 @@ console.log(api_req);
     api_req.element_data = addCredit_customer_req;
 
     
-
+        addCredit_customer_req.primary_customer_bill_code_id = this.billCodeEditForm2.value.primary_customer_bill_code_id;
         addCredit_customer_req.bill_code_740 = this.billCodeEditForm2.value.primary_code_740;
         addCredit_customer_req.primary_code_retail_740 = this.billCodeEditForm2.value.primary_code_retail_740;
         addCredit_customer_req.bill_code_750 = this.billCodeEditForm2.value.primary_code_750;
@@ -3979,6 +4002,10 @@ console.log(api_req);
     api_billCodeEdit_req.customerId = id;
     api_billCodeEdit_req.user_id = localStorage.getItem('user_id');
 
+    this.popupBillCodeForm2.patchValue({
+      'popup_customerId':id,
+    });
+   
     api_req.element_data = api_billCodeEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3992,7 +4019,8 @@ console.log(api_req);
         // this.edit_b = response.primary_bill_code;
 
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.customer_bill_code_arr.length; index++) {
+        var bill_code_length = response.customer_bill_code_arr.length<=1?1:response.customer_bill_code_arr.length;
+        for (let index = 0; index < bill_code_length; index++) {
         formArray.push(this.fb.group({
 
           "popup_billCodeName": response.customer_bill_code_arr[index].bill_code_name,
@@ -4015,6 +4043,7 @@ console.log(api_req);
         this.popupBillCodeForm2.patchValue({
 
 
+          'popup_primary_customer_bill_code_id': response.customer_primary_code_arr[0].customer_bill_code_id,
           'popup_primary_code_740': response.customer_primary_code_arr[0].bill_code_740,
           'popu_primary_code_retail_750': response.customer_primary_code_arr[0].primary_code_retail_740,
           'popup_low_credit_740': response.customer_primary_code_arr[0].low_credit_740,
@@ -4084,7 +4113,7 @@ console.log(api_req);
     // updateBillCode_req.values2 = this.billCodeEditForm1.value.edit_addresses;
 
      // section - 2
-
+     updateBillCode_req.customerId = this.popupBillCodeForm2.value.popup_customerId;
 var addr = this.popupBillCodeForm3.value.popupBillCode1;
 for (let i = 0; i < addr.length; i++){
   console.log(addr[i].bill_code_740)
@@ -4099,7 +4128,7 @@ for (let i = 0; i < addr.length; i++){
   addr[i].customer_id = $('#customer_id' + i).val();
    
 }
-updateBillCode_req.value = addr;
+updateBillCode_req.billcode_value = addr;
 
     // section - 3  
     
@@ -4155,25 +4184,25 @@ updateBillCode_req.value = addr;
 
     api_req.element_data = updateBillCode_req;
 
-    var addr = this.popupBillCodeForm3.value.popupBillCode1;
-for (let i = 0; i < addr.length; i++){
-  console.log(addr[i].bill_code_740)
+//     var addr = this.popupBillCodeForm3.value.popupBillCode1;
+// for (let i = 0; i < addr.length; i++){
+//   console.log(addr[i].bill_code_740)
 
-  addr[i].billCodeName = $('#bill_code_name_' + i).val();
-  addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
-  addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
-  addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
-  addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
-  addr[i].conn_state = $('#conn_state' + i).val();
-  addr[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
-  addr[i].customer_id = $('#customer_id' + i).val();
+//   addr[i].billCodeName = $('#bill_code_name_' + i).val();
+//   addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
+//   addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
+//   addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
+//   addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
+//   addr[i].conn_state = $('#conn_state' + i).val();
+//   addr[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
+//   addr[i].customer_id = $('#customer_id' + i).val();
    
-}
+// }
 
-updateBillCode_req.value =addr;
-console.log(api_req);
+// updateBillCode_req.value =addr;
+// console.log(api_req);
 
-    api_req.element_data = updateBillCode_req;
+//     api_req.element_data = updateBillCode_req;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -4477,6 +4506,64 @@ console.log(api_req);
 
     this.addCustomer.vs_credit = '';
     this.addCustomer.def_payment_via = '';
+  }
+  GoogleAuthenticationId(id: any) {
+    this.GoogleAuthenticationForm.reset();
+    $('#GoogleAuthentication').modal("show");
+    this.googleAuthent_CustomerId = id;
+  }
+  GoogleAuthenticationValidation() {
+
+    this.GoogleAuthenticationForm.reset();
+    let api_req: any = new Object();
+    let api_googleAuthVali: any = new Object();
+    api_req.moduleType = "common";
+    api_req.api_url = "common/google_auth_check";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_googleAuthVali.action = "google_auth_check";
+    api_googleAuthVali.user_id = localStorage.getItem('user_id');
+    api_googleAuthVali.customerId = this.googleAuthent_CustomerId;
+    api_googleAuthVali.auth_code = this.GoogleAuthenticationForm.value.google_AuthenticationCode;
+    api_req.element_data = api_googleAuthVali;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        this.googleAuthentication_status = response.status;
+        this.googleAuthentication_customerName = response.customer_details.customerName;
+        this.googleAuthentication_userDetails = response.customer_details.user_details;
+        this.googleAuthentication_password = response.customer_details.user_password;
+
+        this.GoogleAuthenticationForm.patchValue({
+          'GA_customerName': response.customer_details.customerName,
+          'GA_userDetails': response.customer_details.user_details,
+          'GA_password': response.customer_details.user_password,
+        })
+
+        iziToast.success({
+          message: "Google Authentication Success",
+          position: 'topRight'
+
+        });
+
+      } else {
+
+        $('#GoogleAuthentication').modal("hide");
+        iziToast.warning({
+          message: "Invalid Google Authentication. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
   }
   gotoCustomerMasterList() {
     this.customerslist({});

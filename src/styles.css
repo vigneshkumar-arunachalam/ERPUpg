@@ -28859,3 +28859,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* -------------------add invoice autocomplete css end--------------------------- */
 
 
+.table-responsive{
+    overflow-x: initial!important;
+}

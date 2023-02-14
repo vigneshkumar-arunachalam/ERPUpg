@@ -71,7 +71,7 @@ export class ProfiledetailsComponent implements OnInit {
 
           // 'a_selectLogo_mconnect': response[0].mconnect_company_logo,
         });
-        this.google_auth();
+       
         iziToast.success({
           message: "Mconnect Partner Details displayed successfully",
           position: 'topRight'

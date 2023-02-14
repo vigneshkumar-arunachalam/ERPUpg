@@ -5,9 +5,7 @@
 .userDatatable .d-flex{justify-content: center;margin-right: 0;}
 .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
 
-
-
-
+.userDatatable  table  td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
 
 
 .dropdown {

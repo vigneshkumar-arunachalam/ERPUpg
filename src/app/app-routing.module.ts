@@ -34,9 +34,18 @@ import { EditPIComponent } from './billing/proforma-invoice/edit-pi/edit-pi.comp
 import { TransactionApprovalComponent } from './billing/transaction-approval/transaction-approval.component';
 import { FormarrayComponent } from './formarray/formarray.component';
 import { ProfiledetailsComponent } from './settings/profiledetails/profiledetails.component';
+import { InvoiceComponent } from './billing/invoice/invoice.component';
+import { AddInvoiceComponent } from './billing/invoice/add-invoice/add-invoice.component';
+
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'AddInvoice', component: AddInvoiceComponent
+  },
+  {
+    path: 'invoice', component: InvoiceComponent
   },
   {
     path: 'profiledetails', component: ProfiledetailsComponent

@@ -58,6 +58,8 @@ import { FormarrayComponent } from './formarray/formarray.component';
 import { QRCodeModule } from 'angular2-qrcode';
 import { SettingsComponent } from './settings/settings.component';
 import { ProfiledetailsComponent } from './settings/profiledetails/profiledetails.component';
+import { InvoiceComponent } from './billing/invoice/invoice.component';
+import { AddInvoiceComponent } from './billing/invoice/add-invoice/add-invoice.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -98,6 +100,8 @@ import { ProfiledetailsComponent } from './settings/profiledetails/profiledetail
      FormarrayComponent,
      SettingsComponent,
      ProfiledetailsComponent,
+     InvoiceComponent,
+     AddInvoiceComponent,
     
   ],
   imports: [

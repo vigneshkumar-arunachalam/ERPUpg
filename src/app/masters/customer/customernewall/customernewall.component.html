@@ -334,7 +334,7 @@
 
                               <li class="dropdown__item">
                                 <a class="remove" title="Google Authentication" data-toggle="modal"
-                                  data-target="#GoogleAuthentication">
+                                  data-target="#GoogleAuthentication" (click)="GoogleAuthenticationId(list.customerId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-airplay">
@@ -489,6 +489,7 @@
                                   </svg>
                                 </a>
                               </li>
+                          
 
                             </ul>
                           </div>
@@ -1553,7 +1554,7 @@
 
                 <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
                   checked="{{cust.chk_val == true? 'checked' : ''}}"
-                  (change)="editCustomerClassificationCHK(cust,$event)">
+                  (change)="editCustomerClassificationCHK(cust.name,$event)">
                 {{cust.name}}
                 <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
                 checked="{{this.cus_type_edit.indexOf(''+cust+'') !=-1? 'checked' : ''}}"
@@ -2178,11 +2179,13 @@
                             <span><strong>VS 740 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_740"
+                            <input type="hidden" class="form-control"  formControlName="primary_customer_bill_code_id"
+                              id="primary_customer_bill_code_id" />
+                            <input type="text" class="form-control"  formControlName="primary_code_740"
                               id="primary_code_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="primary_code_retail_740" id="primary_code_retail_740" />
                           </td>
                           <td>
@@ -2207,11 +2210,11 @@
                             <span><strong>VS 750 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_750"
+                            <input type="text" class="form-control"  formControlName="primary_code_750"
                               id="primary_code_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="primary_code_retail_750" id="primary_code_retail_750" />
                           </td>
                           <td>
@@ -2239,12 +2242,11 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true" formControlName="primary_code_kl"
+                            <input type="text" class="form-control"  formControlName="primary_code_kl"
                               id="primary_code_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
-                              formControlName="primary_code_retail_kl" id="primary_code_retail_kl" />
+                            <input type="text" class="form-control"  formControlName="primary_code_retail_kl" id="primary_code_retail_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="low_credit_kl"
@@ -2267,7 +2269,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <label class="col-lg-12 col-form-label">Auto Credit
+                  <label class=" col-form-label">Auto Credit
                     <input type="checkbox" formControlName="primary_code_auto_credit"
                       (change)="autoCreditPermission($event)" id="primary_code_auto_credit">
                   </label>
@@ -3251,11 +3253,12 @@
                             <span><strong>VS 740 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            
+                            <input type="text" class="form-control" 
                               formControlName="popup_primary_code_740" id="popup_primary_code_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="popu_primary_code_retail_750" id="popu_primary_code_retail_750" />
                           </td>
                           <td>
@@ -3280,11 +3283,11 @@
                             <span><strong>VS 750 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="popup_primary_code_750" id="popup_primary_code_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="popup_primary_code_retail_750" id="popup_primary_code_retail_750" />
                           </td>
                           <td>
@@ -3312,11 +3315,11 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="popup_primary_code_kl" id="popup_primary_code_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" [readonly]="true"
+                            <input type="text" class="form-control" 
                               formControlName="popup_primary_code_retail_kl" id="popup_primary_code_retail_kl" />
                           </td>
                           <td>
@@ -3421,6 +3424,7 @@
                   </label>
                   <label class="col-lg-12 col-form-label">Add Credit Amount
                     <input type="checkbox">
+                    <input type="hidden" formControlName="popup_customerId" id="popup_customerId" />
                   </label>
                 </div>
               </form>
@@ -3712,14 +3716,70 @@
                 <div class="col-lg-6">
                   <input type="text" class="form-control" formControlName="google_AuthenticationCode" />
                 </div>
+
               </div>
+
             </div>
+            
+            
+            
+<div class="col-lg-12 mb-4 mt-2" *ngIf="(googleAuthentication_status==true)">
+  <label style="color:rgb(220, 43, 20) !important;">
+    Customer Details
+  </label>
+</div>
+            <div class="col-lg-12" *ngIf="(googleAuthentication_status==true)">
+              <div class="form-group row">
+                <div class="col-lg-6">
+                  <label>
+                    Customer Name
+                  </label>
+                </div>
+                <div class="col-lg-6">
+                  <label style="color:crimson !important;">{{googleAuthentication_customerName}}</label>
+                  <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_customerName" /> -->
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-lg-12" *ngIf="(googleAuthentication_status==true)">
+              <div class="form-group row">
+                <div class="col-lg-6">
+                  <label>
+                    User details
+                  </label>
+                </div>
+                <div class="col-lg-6" *ngIf="(googleAuthentication_status==true)">
+                  <label style="color:crimson !important;">{{googleAuthentication_userDetails}}</label>
+                  <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_userDetails" /> -->
+                </div>
+
+              </div>
+
+            </div>
+            <div class="col-lg-12" *ngIf="(googleAuthentication_status==true)">
+              <div class="form-group row">
+                <div class="col-lg-6">
+                  <label>
+                    Password
+                  </label>
+                </div>
+                <div class="col-lg-6">
+                  <label style="color:crimson !important;">  {{googleAuthentication_password}}</label>
+                  <!-- <input type="text" [readonly]="isReadOnly"  class="form-control" formControlName="GA_password" /> -->
+                </div>
+
+              </div>
+
+            </div>
+
           </div>
         </form>
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" (click)=" GoogleAuthenticationValidation()">
           Validate
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">

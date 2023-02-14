@@ -121,6 +121,9 @@ export class LoginComponent implements OnInit {
       if(this.userID!=''){
           this.router.navigate(['/']);
       }
+      if(this.userID=='undefined'){
+        this.router.navigate(['/logout']);
+      }
  
     });
 
