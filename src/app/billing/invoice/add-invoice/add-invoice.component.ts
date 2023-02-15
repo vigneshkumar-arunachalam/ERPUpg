@@ -14,6 +14,7 @@ export class AddInvoiceComponent implements OnInit {
   public addPI_section3: FormGroup;
   public addresses: FormArray;
   public DiscountForm: FormGroup;
+  public CommissionForm:FormGroup;
   isReadOnly: boolean = false;
 
   //load add 
@@ -36,10 +37,16 @@ export class AddInvoiceComponent implements OnInit {
 //search textbox
 customer_ID: any;
 customer_NAME: any;
+//EditShipAdd-checkbox
+cbk_ESA_Value:any;
+EditShippingAddress:boolean=false;
   //checkbox
   mile_check_value: any;
   dynamicCheckboxwithKey: any;
   SelectExtraLogoCheckboxwithKey: any;
+  cbk_conversionAmtShow_value:any;
+  cbk_deductWithholdingTax:any;
+  cbk_previousDue:any;
   //checkbox group select-mile
   groupSelectCommonId_MileDiscount: any;
   checkbox_value_MileDiscount: any;
@@ -85,7 +92,7 @@ customer_NAME: any;
   getProformaBillerDetails_cstNo: any;
   //section-3 checkbox
   chkTermsandcondition: boolean = false;
-  previousDue: boolean = false;
+  previousDue: boolean = true;
   chkReceivedAuthorizedSignature: boolean = true;
   chklogoAddressSignature: boolean = true;
   //export state-check box
@@ -104,6 +111,7 @@ customer_NAME: any;
   ngOnInit(): void {
     console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
+    this.EditShippingAddress=true;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
@@ -159,10 +167,12 @@ customer_NAME: any;
       'address_3': new FormControl(),
       'PoNo': new FormControl(),
       'Attn_1': new FormControl(),
-      'ship_to': new FormControl(),
-      'ship_address_1': new FormControl(),
-      'ship_address_2': new FormControl(),
-      'ship_address_3': new FormControl(),
+      'ESA_cntPerson': new FormControl({value: '', disabled: true}, Validators.required),
+      'ESA_Cbk':new FormControl(),
+      'ship_to': new FormControl({value:'',disabled:true},Validators.required),
+      'ship_address_1': new FormControl({value:'',disabled:true},Validators.required),
+      'ship_address_2': new FormControl({value:'',disabled:true},Validators.required),
+      'ship_address_3': new FormControl({value:'',disabled:true},Validators.required),
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
@@ -182,7 +192,7 @@ customer_NAME: any;
       'mile_MSDisplay': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
-      'ESA_Cbk': new FormControl(),
+    
       'CAS_Cbk': new FormControl(),
       'DWT_Cbk': new FormControl(),
     });
@@ -214,7 +224,10 @@ customer_NAME: any;
     this.DiscountForm = new FormGroup({      
       'section3_gross_total': new FormControl(null),
     });
-
+    
+    this.CommissionForm = new FormGroup({      
+      'section3_gross_total': new FormControl(null),
+    });
 
   }
   get addressControls() {
@@ -237,6 +250,7 @@ customer_NAME: any;
     return this.fb.group({
       pd_nextPage_checkbox: '',
       pd_productName_txtbox1: '',
+      pd_current_month_str: '',
       pd_productName_txtArea: '',
       pd_quantity_txtbox1: '',
       pd_unit: '',
@@ -355,6 +369,48 @@ console.log(this.MSDisplay_Value);
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
     console.log(this.chklogoAddressSignature)
+  }
+  // cbk_Fn_EditShipAddress(event: any){
+  //   this.cbk_ESA_Value=event.target.checked;
+  //   console.log(this.cbk_ESA_Value)
+
+  // }
+  cbk_Fn_EditShipAddress(event: any) {
+    this.EditShippingAddress = event.target.checked;
+    console.log(this.EditShippingAddress)
+
+    if (this.EditShippingAddress) {
+
+      this.addPI_section1.get("ship_to").disable();
+      this.addPI_section1.get("ship_address_1").disable();
+      this.addPI_section1.get("ship_address_2").disable();
+      this.addPI_section1.get("ship_address_3").disable();
+   
+    }
+    else {
+
+      this.addPI_section1.get("ship_to").enable();
+      this.addPI_section1.get("ship_address_1").enable();
+      this.addPI_section1.get("ship_address_2").enable();
+      this.addPI_section1.get("ship_address_3").enable();
+   
+
+    }
+    console.log(this.EditShippingAddress)
+  }
+  cbk_fn_conversionAmtShow(event:any){
+    this.cbk_conversionAmtShow_value=event.target.checked;
+    console.log(this.cbk_conversionAmtShow_value)
+
+  }
+  cbk_fn_deductWithholdingTax(event:any){
+    this.cbk_deductWithholdingTax=event.target.checked;
+    console.log(this.cbk_deductWithholdingTax)
+
+  }
+  cbk_fn_previousDue(event:any){
+    this.cbk_previousDue=event.target.checked;
+    console.log(this.cbk_previousDue)
   }
 
   keywordCustomerName = 'customerName';
@@ -644,6 +700,7 @@ this.customer_NAME=data.customerName;
             'address_1':response.customer_details[0].customerAddress1,
             'address_2':response.customer_details[0].customerAddress2,
             'address_3':address_3,
+            'cusInvoiceNo':response.customer_invoice_no,
             'Attn_1':response.customer_details[0].companyName,
             'ship_to':ship_to_str,
             'ship_address_1':ship_address_str1,
@@ -1100,7 +1157,9 @@ this.customer_NAME=data.customerName;
     $('#discountFormFinal').modal('hide');
   }
 
+  calculateCommission(i:any){
 
+  }
 
   getTaxCals() {
     var tax_id = this.addPI_section3.value.section3_gst_dropdown;

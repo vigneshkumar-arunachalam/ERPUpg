@@ -615,3 +615,6 @@ label {
   display: flex;
   align-items: center;
 }
+th{
+  padding: 10px 0px;
+}

@@ -1640,14 +1640,16 @@
             <div class="col-lg-6">
 
             </div>
+          
             <div class="col-lg-6">
-              <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
-                  <input type="checkbox" formControlName="e_edit_ship_address" style="margin-left:30px;"
-                    [(ngModel)]=" checkbox_EditShippingAddress" (change)="edit_eventCheck($event)" />
-                </label>
+              <div class="form-group row" style="display: flex;align-items: center;">
+              <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
+              <input type="checkbox" [readonly]="isReadOnly" style="margin-left:30px;"
+                (change)="edit_eventCheck($event)" />
+              </label>
               </div>
             </div>
+
             <div class="col-lg-6">
 
             </div>

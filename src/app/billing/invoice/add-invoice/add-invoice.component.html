@@ -1,5 +1,5 @@
 <div class="contents-section">
-    <h2 style="text-align: center;">Enter Proforma Invoice Details</h2>
+    <h2 style="text-align: center;">Enter Invoice Details</h2>
     <form [formGroup]="addPI_section1">
         <div class="row">
             <div class="col-lg-6">
@@ -46,7 +46,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Cus Invoice No.</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="cusInvoiceNo"  />
+                            <input type="text" class="form-control" formControlName="cusInvoiceNo" />
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Address 1</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="address_1"  />
+                            <input type="text" class="form-control" formControlName="address_1" />
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Address 2</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="address_2"  />
+                            <input type="text" class="form-control" formControlName="address_2" />
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Address 3</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="address_3"  />
+                            <input type="text" class="form-control" formControlName="address_3" />
                         </div>
                     </div>
                 </div>
@@ -96,11 +96,12 @@
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <div class="col-lg-4">
-                         <label  class=" col-form-label">Edit Shipping Address</label>
+                            <label class=" col-form-label">Edit Shipping Address</label>
                         </div>
-                        
+
                         <div class="col-lg-2 mt-2">
-                            <input type="checkbox"  formControlName="ESA_Cbk"  />
+                            <input type="checkbox" [(ngModel)]="EditShippingAddress" formControlName="ESA_Cbk"
+                                (change)="cbk_Fn_EditShipAddress($event)" />
                         </div>
                     </div>
                 </div>
@@ -120,7 +121,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Ship Address 1</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="ship_address_1"  />
+                            <input type="text" class="form-control" formControlName="ship_address_1" />
                         </div>
                     </div>
                 </div>
@@ -128,7 +129,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Ship Address 2</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="ship_address_2"  />
+                            <input type="text" class="form-control" formControlName="ship_address_2" />
                         </div>
                     </div>
                 </div>
@@ -136,7 +137,7 @@
                     <div class="form-group row">
                         <label for="attn1" class="col-lg-12 col-form-label">Ship Address 3</label>
                         <div class="col-lg-12">
-                            <input type="text" class="form-control" formControlName="ship_address_3"  />
+                            <input type="text" class="form-control" formControlName="ship_address_3" />
                         </div>
                     </div>
                 </div>
@@ -357,22 +358,23 @@
             <div class="col-lg-12">
                 <div class="form-group row">
                     <div class="col-lg-4">
-                     <label  class="col-lg-12 col-form-label">Conversion Amt Show</label>
+                        <label class="col-lg-12 col-form-label">Conversion Amt Show</label>
                     </div>
-                    
+
                     <div class="col-lg-2 mt-2">
-                        <input type="checkbox"  formControlName="CAS_Cbk"  />
+                        <input type="checkbox" formControlName="CAS_Cbk" (change)="cbk_fn_conversionAmtShow($event)" />
                     </div>
                 </div>
             </div>
             <div class="col-lg-12">
                 <div class="form-group row">
                     <div class="col-lg-4">
-                     <label  class="col-lg-12 col-form-label">Deduct 3% Withholding Tax</label>
+                        <label class="col-lg-12 col-form-label">Deduct 3% Withholding Tax</label>
                     </div>
-                    
+
                     <div class="col-lg-2 mt-2">
-                        <input type="checkbox"  formControlName="DWT_Cbk"  />
+                        <input type="checkbox" formControlName="DWT_Cbk"
+                            (change)="cbk_fn_deductWithholdingTax($event)" />
                     </div>
                 </div>
             </div>
@@ -486,13 +488,9 @@
                                         <td>
                                             <div class="userDatatable-content">
 
-
-
                                                 <input type="text" class="form-control mt-2 mb-2"
                                                     formControlName="pd_productName_txtbox1"
                                                     id="pd_productName_txtbox_{{i}}" />
-
-
                                             </div>
 
                                         </td>
@@ -568,6 +566,30 @@
                                             </div>
                                     </tr>
                                     <tr>
+                                        <td></td>
+                                        <td>
+                                            <div class="userDatatable-content">
+
+
+
+
+                                                <input type="text" class="form-control mt-2 mb-2"
+                                                    formControlName="pd_current_month_str"
+                                                    id="pd_current_month_str_{{i}}" />
+
+
+                                            </div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
                                         <td colspan="3">
                                             <div class="userDatatable-content">
                                                 <textarea
@@ -599,6 +621,15 @@
                                         <td colspan="1">
                                             <input type="text" class="form-control" style="text-align: right;"
                                                 formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                        </td>
+                                        <td colspan="1">
+                                        </td>
+                                        <td colspan="1">
+                                            <button type="button"
+                                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                                data-toggle="modal" (click)="calculateCommission(i)"
+                                                data-target="#CommissionFormId">Commission(-)
+                                            </button>
                                         </td>
 
                                     </tr>
@@ -782,8 +813,7 @@
 
                                 <div class="col-lg-6">
                                     <input type="checkbox" [(ngModel)]="previousDue"
-                                        formControlName="section3_previousDue"
-                                         />
+                                        formControlName="section3_previousDue" (change)="cbk_fn_previousDue($event)" />
                                 </div>
 
 
@@ -852,7 +882,7 @@
                         <div class="buttonAlign">
                             <button type="button" class="btn btn-success ">Back</button>
                             <button type="button" class="btn btn-danger" (click)=" save()">Submit</button>
-                            <button type="button" class="btn btn-dark ">Submit & Send Email</button>
+
                         </div>
 
 
@@ -865,3 +895,221 @@
     </form>
 
 </div>
+
+
+<!-----------------Modal Pop Up (BEGIN) discount------------------>
+<div class="modal fade" id="discountFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                <form [formGroup]="DiscountForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="discountTYpe" id="discountTYpe_per" value="per">
+                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePercentabeDiscont" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt">
+                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePriceDiscont" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------  discount Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (Final) discount------------------>
+<div class="modal fade" id="discountFormFinal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                <form [formGroup]="DiscountForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="finaldiscountTYpe" id="finaldiscountTYpe_per" value="per">
+                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePerFinal" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <input type="radio" name="finaldiscountTYpe" id="finaldiscountTYpe_amt" value="amt">
+                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="enablePriceFinal" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------  discount Pop up ends------------------------------------------>
+
+
+
+
+<!-----------------Modal Pop Up (BEGIN) discount------------------>
+<div class="modal fade" id="CommissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Reseller Commission Details-add
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Reseller Commission Details-add
+                </h2>
+                <form [formGroup]="CommissionForm">
+                    <div class="row">
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+
+                                    <label for="per" class="ml-2 discountCSS1">Reseller Name</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="resellerName" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+
+                                    <label for="per" class="ml-2 discountCSS2"> Commission Type</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+            
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" checked name="selectCommission" id="inlineCheckbox7"
+                                                value="Fixed" >
+                                            <label class="form-check-label" for="inlineCheckbox7">Fixed</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="selectCommission" id="inlineCheckbox7"
+                                                value="Percentage(%)" >
+                                            <label class="form-check-label" for="inlineCheckbox7"> Percentage(%)</label>
+                                        </div>
+                                       
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+                          
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <label for="html" class="ml-2 discountCSS1">Commission Value</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="CommissionValue" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label"></label>
+                                <div class="col-lg-6">
+                                    <label for="html" class="ml-2 discountCSS2">Commission Amount</label><br>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" id="CommissionAmount" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="saveDiscount()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!------------------------------  discount Pop up ends------------------------------------------>

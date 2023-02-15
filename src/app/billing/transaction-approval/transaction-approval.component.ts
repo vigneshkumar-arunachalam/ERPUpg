@@ -16,15 +16,19 @@ import Swal from 'sweetalert2'
 export class TransactionApprovalComponent implements OnInit {
   //list
   transApprovalList: any;
+  transApprovalList_Main: any;
   transactionApprovalViewForm: FormGroup;
   BeforeApprovaltransactionApprovalViewForm: FormGroup;
   transactionApprovalCommentsForm: FormGroup;
+  transactionApprovalCommentsForm_main: FormGroup;
   BeforeApprovaltransactionApprovalCommentsForm: FormGroup;
+  BeforeApprovaltransactionApprovalCommentsForm_main: FormGroup;
   isReadOnly: boolean = true;
   checkboxCB_ToggleStatus: any;
   checkboxCB_BeforeApprovalToggleStatus: any;
   TransactionApprovalID: any;
   commentDisplayResult: any;
+  tabValue:any;
   //pagination
   recordNotFound = false;
   pageLimit = 10;
@@ -76,7 +80,17 @@ export class TransactionApprovalComponent implements OnInit {
       'toggleOff': new FormControl(null),
 
     });
+    this.transactionApprovalCommentsForm_main = new FormGroup({
+      'Comments': new FormControl(null),
+      'toggleOff': new FormControl(null),
+
+    });
     this.BeforeApprovaltransactionApprovalCommentsForm = new FormGroup({
+      'BeforeApprovalComments': new FormControl(null),
+      'BeforeApprovaltoggleOff': new FormControl(null),
+
+    });
+    this.BeforeApprovaltransactionApprovalCommentsForm_main = new FormGroup({
       'BeforeApprovalComments': new FormControl(null),
       'BeforeApprovaltoggleOff': new FormControl(null),
 
@@ -99,6 +113,21 @@ export class TransactionApprovalComponent implements OnInit {
       });
     } else {
       this.transApprovalList.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', false);
+      });
+
+    }
+
+  }
+  selectAll_Main(event: any) {
+
+    if (event.target.checked == true) {
+
+      this.transApprovalList_Main.forEach((element: any, index: any) => {
+        $("#check-grp-" + index).prop('checked', true);
+      });
+    } else {
+      this.transApprovalList_Main.forEach((element: any, index: any) => {
         $("#check-grp-" + index).prop('checked', false);
       });
 
@@ -149,8 +178,43 @@ export class TransactionApprovalComponent implements OnInit {
         //  if(=='on'){
         //   this.transApprovalList = response.trans_approve_list;
         //  }
-        this.transApprovalList = response.trans_approve_list;
+        this.transApprovalList_Main = response.trans_approve_list;
+        this.tabValue=response.tab_name;
       
+        this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
+        // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
+        this.paginationData1 = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'off' });
+
+
+      }
+      else {
+
+      }
+    });
+  }
+  getMainList1(data:any){
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_transactionList: any = new Object();
+    api_req.moduleType = "transaction_approval";
+    api_req.api_url = "transaction_approval/main_approval"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_transactionList.action = "main_approval";
+    api_transactionList.user_id = localStorage.getItem('user_id');
+    api_transactionList.off_set = list_data.offset;
+    api_transactionList.limit_val = list_data.limit;
+    api_transactionList.current_page = "";
+    api_req.element_data = api_transactionList;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response) {
+        //  if(=='on'){
+        //   this.transApprovalList = response.trans_approve_list;
+        //  }
+        this.transApprovalList_Main = response.trans_approve_list;
+        this.tabValue=response.tab_name;
         this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
         // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
@@ -188,6 +252,7 @@ export class TransactionApprovalComponent implements OnInit {
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList = response.trans_approve_list;
+        this.tabValue=response.tab_name;
         this.quotationID = response.link_approval_id;
         this.FromID = response.enquiry_from_id;
         this.Subject = response.enquiry_product_description;
@@ -237,6 +302,7 @@ export class TransactionApprovalComponent implements OnInit {
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList = response.trans_approve_list;
+        this.tabValue=response.tab_name;
         this.quotationID = response.link_approval_id;
         this.FromID = response.enquiry_from_id;
         this.Subject = response.enquiry_product_description;
@@ -280,7 +346,29 @@ export class TransactionApprovalComponent implements OnInit {
     });
 
   }
+  BeforeApprovaltransactionApprovalView_Main(billerName: any, transaction_date: any, priority: any) {
+
+   
+    this.BeforeApprovaltransactionApprovalViewForm.setValue({
+      'BeforeApprovalbillerName': billerName,
+      'BeforeApprovalDate': transaction_date,
+      'BeforeApprovalpriority': priority,
+
+    });
+
+  }
   transactionApprovalView(billerName: any, transaction_date: any, priority: any) {
+
+
+    this.transactionApprovalViewForm.setValue({
+      'billerName': billerName,
+      'Date': transaction_date,
+      'priority': priority,
+
+    });
+
+  }
+  transactionApprovalView_Main(billerName: any, transaction_date: any, priority: any) {
 
 
     this.transactionApprovalViewForm.setValue({
@@ -369,6 +457,47 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     }
 
   }
+  transactionApprovalCommentEdit_Main(id: any) {
+    this.TransactionApprovalID = id;
+
+    let api_req: any = new Object();
+    let transAproveComment_edit_req: any = new Object();
+    api_req.moduleType = "transaction_approval";
+    api_req.api_url = "transaction_approval/get_main_comments";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    transAproveComment_edit_req.action = "get_main_comments";
+    transAproveComment_edit_req.user_id = localStorage.getItem('user_id');
+    transAproveComment_edit_req.transaction_approval_id = this.TransactionApprovalID;
+    api_req.element_data = transAproveComment_edit_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+
+        this.commentDisplayResult = response.comments;
+
+        // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
+
+      }
+      else {
+        $("#transactionApprovalCommentsId").modal("hide");
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+        // this.editInvoiceGroupForm.reset();
+        // this.contractList();
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+
+  }
   transactionApprovalCommentsUpdate() {
 
 
@@ -406,6 +535,43 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     });
 
   }
+  transactionApprovalCommentsUpdate_Main() {
+
+
+    let api_req: any = new Object();
+    let transAproveComment_update_req: any = new Object();
+    api_req.moduleType = "transaction_approval";
+    api_req.api_url = "transaction_approval/update_main_comments";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    transAproveComment_update_req.action = "update_main_comments";
+    transAproveComment_update_req.user_id = localStorage.getItem('user_id');
+    transAproveComment_update_req.transaction_approval_id = this.TransactionApprovalID;
+    transAproveComment_update_req.comments = this.BeforeApprovaltransactionApprovalCommentsForm_main.value.BeforeApprovalComments;
+    api_req.element_data = transAproveComment_update_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
+        $("#BeforeApprovaltransactionApprovalCommentsForm_main").modal("hide");
+        this.getMainList({});
+
+
+        iziToast.success({
+          message: "Transaction Approval Comments has been Updated",
+          position: 'topRight'
+        });
+      }
+      else {
+        iziToast.error({
+          message: "Transaction Approval Comments has not been Updated",
+          position: 'topRight'
+        });
+      }
+    });
+
+  }
   transactionApprovalCommentsUpdateAfterApproval() {
     let api_req: any = new Object();
     let transAproveCommentAP_update_req: any = new Object();
@@ -425,6 +591,38 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       if (response.status == true) {
 
         $("#transactionApprovalCommentsId").modal("hide");
+        iziToast.success({
+          message: "Transaction Approval Comments has been Updated",
+          position: 'topRight'
+        });
+      }
+      else {
+        iziToast.error({
+          message: "Transaction Approval Comments has not been Updated",
+          position: 'topRight'
+        });
+      }
+    });
+  }
+  transactionApprovalCommentsUpdateAfterApproval_Main() {
+    let api_req: any = new Object();
+    let transAproveCommentAP_update_req: any = new Object();
+    api_req.moduleType = "transaction_approval";
+    api_req.api_url = "transaction_approval/update_quotation_comments";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    transAproveCommentAP_update_req.action = "update_quotation_comments";
+    transAproveCommentAP_update_req.user_id = localStorage.getItem('user_id');
+    transAproveCommentAP_update_req.transaction_approval_id = this.TransactionApprovalID;
+    transAproveCommentAP_update_req.comments =
+      this.transactionApprovalCommentsForm_main.value.Comments;
+    api_req.element_data = transAproveCommentAP_update_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+
+        $("#transactionApprovalCommentsIdMain").modal("hide");
         iziToast.success({
           message: "Transaction Approval Comments has been Updated",
           position: 'topRight'
@@ -484,6 +682,51 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
 
 
   }
+  transactionApprovalQuotationApproved_Main(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Approve it!'
+    }).then((result:any) => {
+      if (result.value) {
+
+        let api_req: any = new Object();
+        let transAproveQuotAprove_req: any = new Object();
+        api_req.moduleType = "transaction_approval";
+        api_req.api_url = "transaction_approval/main_approved";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        transAproveQuotAprove_req.action = "main_approved";
+        transAproveQuotAprove_req.user_id = localStorage.getItem('user_id');
+        transAproveQuotAprove_req.transaction_approval_id = id;
+        api_req.element_data = transAproveQuotAprove_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.getMainList({});
+            iziToast.success({
+              message: "Approval Success",
+              position: 'topRight'
+            });
+          }   else {
+            iziToast.warning({
+              message: "Not Ok",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
+      }
+    })
+
+
+  }
  
 
   transactionApprovalReject(id: any) {
@@ -519,6 +762,51 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           } else {
             iziToast.warning({
               message: "Rejected Failed",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
+      }
+    })
+  
+  
+  }
+  transactionApprovalReject_Main(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result: any) => {
+      if (result.value) {
+  
+        let api_req: any = new Object();
+        let transAproveQuotReject_req: any = new Object();
+        api_req.moduleType = "transaction_approval";
+        api_req.api_url = "transaction_approval/main_rejected";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        transAproveQuotReject_req.action = "main_rejected";
+        transAproveQuotReject_req.user_id = localStorage.getItem('user_id');
+        transAproveQuotReject_req.transaction_approval_id = id;
+        api_req.element_data = transAproveQuotReject_req;
+  
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.getMainList({});
+            iziToast.success({
+              message: "Main Approval Rejected ",
+              position: 'topRight'
+            });
+          } else {
+            iziToast.warning({
+              message: "Main Rejected Failed",
               position: 'topRight'
             });
           }

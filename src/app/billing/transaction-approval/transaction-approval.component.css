@@ -58,7 +58,7 @@ p {
 
 
 /* .userDatatable table td{padding:2px 0px 2px!important;} */
-  .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 60px; overflow: hidden;text-overflow: ellipsis; }
+  .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 70px; overflow: hidden;text-overflow: ellipsis; }
   /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
   .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
   .userDatatable .d-flex{justify-content: center;margin-right: 0;}
@@ -300,7 +300,7 @@ tr:nth-child(odd) {background: #FFF}
 }
 .transaction-approval-panel .normal-table .userDatatable-header th:nth-child(6), .transaction-approval-panel .normal-table  td:nth-child(6)
 {
- width: 250px;
+ width: 100px;
 }
 .transaction-approval-panel .normal-table .userDatatable-header th:nth-child(6) span, .transaction-approval-panel .normal-table  td:nth-child(6) span{
   width: 75%;
@@ -311,3 +311,71 @@ tr:nth-child(odd) {background: #FFF}
 }
 
 .dropdown button{padding: 0!important;height: 30px!important;}
+
+.custom-checkbox input[type="checkbox"] + label{
+  padding-left: 0!important;
+}
+.userDatatable table tr td:nth-child(2) span{
+  width: 70px;
+}
+
+
+
+/* .transaction-approval-panel .check-box-table td:nth-child(4), 
+.transaction-approval-panel .check-box-table td:nth-child(4) span{
+  width: auto
+} */
+.transaction-approval-panel .check-box-table td:nth-child(5){width: auto;}
+.transaction-approval-panel .check-box-table td:nth-child(5) span{
+  width: 100px;
+}
+.check-box-table td, .check-box-table th, .normal-table  td, .normal-table th
+{border:1px solid rgb(221 221 221 / 35%)!important}
+
+.check-box-table th, .normal-table th{
+  padding: 10px 0px!important;
+  text-align: center;
+}
+.transaction-approval-panel .check-box-table td:nth-child(7){
+  width: 70px;
+}
+.transaction-approval-panel .check-box-table td:nth-child(7) span{width: 100%;}
+th {
+  white-space: normal!important;
+}
+.transaction-approval-panel .check-box-table th:nth-child(5) span {
+  word-break: break-word;
+  width: 66px;
+  display: block;
+  margin: 0 auto;
+}
+.transaction-approval-panel .check-box-table td:nth-child(9) span:first-child{
+  width: 140px;
+}
+.transaction-approval-panel .check-box-table td:nth-child(9) span:last-child{
+  width: 160px;
+  white-space: break-spaces;
+}
+
+.transaction-approval-panel .check-box-table td:nth-child(7) span {
+  width: 100%;
+}
+.transaction-approval-panel .normal-table .userDatatable-header th:nth-child(4) span {
+  word-break: break-word;
+  width: 66px;
+  display: block;
+  margin: 0 auto;
+}
+.transaction-approval-panel .normal-table .userDatatable-header th:nth-child(4), .transaction-approval-panel .normal-table td:nth-child(4){
+  width: 120px;
+}
+.transaction-approval-panel .normal-table td:nth-child(4) span{
+  width: 100px;
+}
+.transaction-approval-panel .normal-table td:nth-child(8) span:last-child {
+  width: 160px;
+  white-space: break-spaces;
+}
+.transaction-approval-panel .normal-table td:nth-child(8) span:first-child {
+  width: 140px;
+}

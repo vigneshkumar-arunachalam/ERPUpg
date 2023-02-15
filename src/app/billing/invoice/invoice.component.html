@@ -4,9 +4,9 @@
         <div class="col-lg-12 mb-30">
           <div class="card">
             <div class="card-header color-dark fw-500">
-              Proforma Invoice and Payment Process
+              Invoice and Payment Process
               <div class="quotation-btn-section">
-                <button type="button" title="Add New Proforma Invoice" class="btn btn-primary btn-default btn-squared"
+                <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
                 (click)="addPIGo()" style="margin-right: 30px;"><i class="fas fa-plus" style="margin-right:0;"></i>
                 </button>
               </div>
@@ -53,9 +53,14 @@
                       </tr>
                     </thead>
                     <tbody *ngFor="let list of PI_list; let i = index">
-                     
+                      <tr>
                         
-                        <td><span>{{ list.invoice_no}}</span></td>
+                        <td>
+                          <span>{{ list.invoice_no}}</span>
+                          <span><button type="button" class="buttonClass"
+                            [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                            list.billerCode}}</button></span>
+                        </td>
                         <td><span>{{ list.customerName}}</span></td>
                         <td><span>{{ list.billDate}}</span></td>
                         <td><span>{{ list.customerName}}</span></td>
@@ -214,13 +219,45 @@
                               </div>
                             </div>
                           </td>
+                        </tr>
+                          <tr *ngIf="list.did_invoice_state==1">
+                            <td  colspan="9" style="height: 1px;background:#00C;padding:0px"></td>
+                          </tr>
+                         
                     </tbody>
                   </table>
                 </div>
               </div>
               <br>
               <nav class="atbd-page">
-              
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? getInvoice({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="getInvoice({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? getInvoice({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="getInvoice({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? getInvoice({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                </ul>
               </nav>
               <br>
               <br>
@@ -235,6 +272,8 @@
                     <td width="100" style="padding-left:20px;"> Not Paid </td>
                     <td width="20" bgcolor="#FA600C">&nbsp;</td>
                     <td width="100" style="padding-left:20px;"> Cancel </td>
+                    <td width="20" bgcolor="#aeffff">&nbsp;</td>
+                    <td width="100" style="padding-left:20px;"> Write OFF </td>
                   </tr>
                 </tbody>
               </table>
