@@ -1,6 +1,6 @@
 <div class="contents-section">
     <h2 style="text-align: center;">Enter Invoice Details</h2>
-    <form [formGroup]="addPI_section1">
+    <form [formGroup]="addInvoice_section1">
         <div class="row">
             <div class="col-lg-6">
 
@@ -881,7 +881,7 @@
                         </div>
                         <div class="buttonAlign">
                             <button type="button" class="btn btn-success ">Back</button>
-                            <button type="button" class="btn btn-danger" (click)=" save()">Submit</button>
+                            <button type="button" class="btn btn-danger" (click)="save()">Submit</button>
 
                         </div>
 
@@ -1045,7 +1045,25 @@
                                     <label for="per" class="ml-2 discountCSS1">Reseller Name</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="resellerName" />
+                                   
+
+                                    <div class="ng-autocomplete">
+
+                                        <ng-autocomplete [data]="usersearchResult" [searchKeyword]="keywordUserName"
+                                            formControlName="ResellerName" (selected)='searchUser_selectDropdownData($event)'
+                                            (inputChanged)='searchUserData($event)' (inputFocused)='onFocusedUser($event)'
+                                            [itemTemplate]="itemTemplateUser" [notFoundTemplate]="notFoundTemplate">
+                                        </ng-autocomplete>
+            
+                                        <ng-template #itemTemplateUser let-item>
+                                            <a [innerHTML]="item.reseller_name"></a>
+                                        </ng-template>
+            
+                                        <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+            
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group row">

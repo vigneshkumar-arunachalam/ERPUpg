@@ -38,6 +38,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/invoice"
+        },{
+            "name": "DID Invoice",
+            "icon": "triangle",
+            "IDs": [2036],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/didInvoice"
         }
        
         

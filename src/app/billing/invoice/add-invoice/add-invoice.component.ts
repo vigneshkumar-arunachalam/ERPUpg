@@ -9,7 +9,7 @@ declare var iziToast: any;
   styleUrls: ['./add-invoice.component.css']
 })
 export class AddInvoiceComponent implements OnInit {
-  public addPI_section1: FormGroup;
+  public addInvoice_section1: FormGroup;
   public addPI_section2: FormGroup;
   public addPI_section3: FormGroup;
   public addresses: FormArray;
@@ -101,6 +101,8 @@ EditShippingAddress:boolean=false;
   export_state_Export:any;
   export_state_ZeroValid: boolean = true;
   MSDisplay_Value: boolean = true;
+  //commision
+  usersearchResult:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder) { 
     this.addPI_section2 = this.fb.group({
@@ -108,6 +110,7 @@ EditShippingAddress:boolean=false;
     });
   }
   keywordCompanyName = 'customerName';
+  keywordUserName = 'reseller_name';
   ngOnInit(): void {
     console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
@@ -151,7 +154,7 @@ EditShippingAddress:boolean=false;
 
 
     ];
-    this.addPI_section1 = new FormGroup({
+    this.addInvoice_section1 = new FormGroup({
       'initial': new FormControl(),
       'companyName': new FormControl(),
       'invoiceNo': new FormControl(),
@@ -222,12 +225,14 @@ EditShippingAddress:boolean=false;
     });
 
     this.DiscountForm = new FormGroup({      
+      'ResellerName': new FormControl(null),
       'section3_gross_total': new FormControl(null),
     });
     
     this.CommissionForm = new FormGroup({      
       'section3_gross_total': new FormControl(null),
     });
+   
 
   }
   get addressControls() {
@@ -381,18 +386,18 @@ console.log(this.MSDisplay_Value);
 
     if (this.EditShippingAddress) {
 
-      this.addPI_section1.get("ship_to").disable();
-      this.addPI_section1.get("ship_address_1").disable();
-      this.addPI_section1.get("ship_address_2").disable();
-      this.addPI_section1.get("ship_address_3").disable();
+      this.addInvoice_section1.get("ship_to").disable();
+      this.addInvoice_section1.get("ship_address_1").disable();
+      this.addInvoice_section1.get("ship_address_2").disable();
+      this.addInvoice_section1.get("ship_address_3").disable();
    
     }
     else {
 
-      this.addPI_section1.get("ship_to").enable();
-      this.addPI_section1.get("ship_address_1").enable();
-      this.addPI_section1.get("ship_address_2").enable();
-      this.addPI_section1.get("ship_address_3").enable();
+      this.addInvoice_section1.get("ship_to").enable();
+      this.addInvoice_section1.get("ship_address_1").enable();
+      this.addInvoice_section1.get("ship_address_2").enable();
+      this.addInvoice_section1.get("ship_address_3").enable();
    
 
     }
@@ -423,17 +428,18 @@ console.log(this.MSDisplay_Value);
   onFocusedCustomer(e: any) {
     // do something when input is focused
   }
-  // gj(j: any) {
-  //   for (var i = 0; i >= this.exportState_Radio.length; i++) {
 
-  //     if (this.exportState_Radio[i].selected == true && this.exportState_Radio[i].id == j) {
-  //       $("#export_state" + j).val(this.exportState_Radio[i].id);
-  //       // return true;
+ 
 
-  //     }
-  //   }
+  selectEventUser(item: any) {
 
-  // }
+    console.log(item)
+    // do something with selected item
+  }
+  onFocusedUser(e: any) {
+    // do something when input is focused
+  }
+
   loadADD() {
     let api_req: any = new Object();
     let addAPI: any = new Object();
@@ -454,14 +460,14 @@ console.log(this.MSDisplay_Value);
               this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
 
               if (response.sales_rep_status.dropdown_status == 0) {
-                this.addPI_section1.patchValue({
+                this.addInvoice_section1.patchValue({
                   'salesRep_id': response.sales_rep.name,
                   'salesRep': response.sales_rep.userid,
                 });
       
               }else{
                 this.SalesRepList = response.sales_rep;
-                this.addPI_section1.patchValue({
+                this.addInvoice_section1.patchValue({
                   'salesRep': localStorage.getItem('user_id'),
                 });
 
@@ -469,7 +475,7 @@ console.log(this.MSDisplay_Value);
               }          
 
 
-              this.addPI_section1.patchValue({
+              this.addInvoice_section1.patchValue({
                 'companyName': response.defaults_biller_id,        
               });
 
@@ -495,7 +501,7 @@ console.log(this.MSDisplay_Value);
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_TaxDropdown_req.action = "tax_dropdown";
     api_TaxDropdown_req.user_id = localStorage.getItem('user_id');
-    api_TaxDropdown_req.billerId = this.addPI_section1.value.companyName;
+    api_TaxDropdown_req.billerId = this.addInvoice_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {    
@@ -607,12 +613,36 @@ console.log(this.MSDisplay_Value);
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "quot_customer_name";
     api_Search_req.user_id = localStorage.getItem('user_id');
-    api_Search_req.billerId = this.addPI_section1.value.companyName;
+    api_Search_req.billerId = this.addInvoice_section1.value.companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
+
+      if (response.status = true) {
+
+      }
+
+    });
+
+  }
+  searchUserData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/inv_reseller_name";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "inv_reseller_name";
+    api_Search_req.user_id = localStorage.getItem('user_id');
+  
+    api_Search_req.key_word = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_name response", response);
+      this.usersearchResult = response.reseller_list;
 
       if (response.status = true) {
 
@@ -696,7 +726,7 @@ this.customer_NAME=data.customerName;
 
 
 
-        this.addPI_section1.patchValue({
+        this.addInvoice_section1.patchValue({
             'address_1':response.customer_details[0].customerAddress1,
             'address_2':response.customer_details[0].customerAddress2,
             'address_3':address_3,
@@ -710,7 +740,7 @@ this.customer_NAME=data.customerName;
         });
       }
       else {
-        this.addPI_section1.patchValue({
+        this.addInvoice_section1.patchValue({
           'address_1':'',
           'address_2':'',
           'address_3':'',
@@ -725,52 +755,95 @@ this.customer_NAME=data.customerName;
 
     });
   }
+  searchUser_selectDropdownData(data: any) {
+
+        let api_req: any = new Object();
+        let api_SearchUser_req: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/inv_reseller_name";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_SearchUser_req.action = "inv_reseller_name";
+        api_SearchUser_req.user_id = localStorage.getItem('user_id');
+        api_SearchUser_req.key_word = data
+        api_req.element_data = api_SearchUser_req;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+    
+          console.log("customer_address_details---response", response)
+          if (response.status == true) {
+           
+    
+    
+    
+    
+    
+            this.CommissionForm.patchValue({
+                'address_1':response.customer_details[0].customerAddress1,
+                'address_2':response.customer_details[0].customerAddress2,
+                          
+            });
+          }
+          else {
+            this.CommissionForm.patchValue({
+              'address_1':'',
+                    
+          });
+          }
+    
+        });
+      }
   save() {
     let api_req: any = new Object();
-    let api_savePI_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/insert_proforma_invoice";
+    let api_saveInvoice_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/insert_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_savePI_req.action = "insert_proforma_invoice";
-    api_savePI_req.user_id = localStorage.getItem('user_id');
+    api_saveInvoice_req.action = "insert_invoice";
+    api_saveInvoice_req.user_id = localStorage.getItem('user_id');
 //section-1
-    api_savePI_req.company = this.addPI_section1.value.companyName;
-    api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
-    api_savePI_req.customer_name = this.customerName_Data;
-    api_savePI_req.tinNo = this.addPI_section1.value.tin;
-    api_savePI_req.BillTo_customer_ID=this.customer_ID;
-    api_savePI_req.BillTo_customer_NAME=this.customer_NAME;
+    api_saveInvoice_req.company = this.addInvoice_section1.value.companyName;
+    api_saveInvoice_req.invoice_no = this.addInvoice_section1.value.invoiceNo;
+    api_saveInvoice_req.customer_name = this.customerName_Data;
+    api_saveInvoice_req.cus_invoice_no = this.addInvoice_section1.value.cusInvoiceNo;
 
-    api_savePI_req.b_name = this.addPI_section1.value.BillTo;
-    api_savePI_req.b_address1 = this.addPI_section1.value.address_1;
-    api_savePI_req.b_address2 = this.addPI_section1.value.address_2;
-    api_savePI_req.b_address3 = this.addPI_section1.value.address_3;
+    api_saveInvoice_req.tinNo = this.addInvoice_section1.value.tin;
+    api_saveInvoice_req.BillTo_customer_ID=this.customer_ID;
+    api_saveInvoice_req.BillTo_customer_NAME=this.customer_NAME;
 
-    api_savePI_req.s_name = this.addPI_section1.value.ship_to;
-    api_savePI_req.s_address1 = this.addPI_section1.value.ship_address_1;
-    api_savePI_req.s_address2 = this.addPI_section1.value.ship_address_2;
-    api_savePI_req.s_address3 = this.addPI_section1.value.ship_address_3;
+    api_saveInvoice_req.b_name = this.addInvoice_section1.value.BillTo;
+    api_saveInvoice_req.b_address1 = this.addInvoice_section1.value.address_1;
+    api_saveInvoice_req.b_address2 = this.addInvoice_section1.value.address_2;
+    api_saveInvoice_req.b_address3 = this.addInvoice_section1.value.address_3;
 
-    api_savePI_req.cstNo = this.addPI_section1.value.cst;
-    api_savePI_req.billDate = this.addPI_section1.value.Date;
-    api_savePI_req.b_attn = this.addPI_section1.value.Attn_1;
-    api_savePI_req.po_no = this.addPI_section1.value.PoNo;
-    api_savePI_req.po_date = this.addPI_section1.value.PoDate;
-    api_savePI_req.sales_rep = this.addPI_section1.value.salesRep;
-    api_savePI_req.ship_by = this.addPI_section1.value.ShipBy;
-    api_savePI_req.ship_date = this.addPI_section1.value.ShipDate;
-    api_savePI_req.s_attn = this.addPI_section1.value.ship_attn;
-    api_savePI_req.ref = this.addPI_section1.value.Ref;
-    api_savePI_req.terms = this.addPI_section1.value.terms;
-    api_savePI_req.currency = this.addPI_section1.value.Currency;
-    api_savePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
-    api_savePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
-    api_savePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
-    api_savePI_req.bills_logo_id = this.ExtralogoValue;
-    api_savePI_req.mile_discount_state = this.mile_check_value;
-    api_savePI_req.mile_discount_display_state = this.MSDisplay_Value;
-    api_savePI_req.export_state = this.export_state;
+    api_saveInvoice_req.s_name = this.addInvoice_section1.value.ship_to;
+    api_saveInvoice_req.s_address1 = this.addInvoice_section1.value.ship_address_1;
+    api_saveInvoice_req.s_address2 = this.addInvoice_section1.value.ship_address_2;
+    api_saveInvoice_req.s_address3 = this.addInvoice_section1.value.ship_address_3;
+
+    api_saveInvoice_req.cstNo = this.addInvoice_section1.value.cst;
+    api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
+    api_saveInvoice_req.b_attn = this.addInvoice_section1.value.Attn_1;
+    api_saveInvoice_req.po_no = this.addInvoice_section1.value.PoNo;
+    api_saveInvoice_req.po_date = this.addInvoice_section1.value.PoDate;
+    api_saveInvoice_req.sales_rep = this.addInvoice_section1.value.salesRep;
+    api_saveInvoice_req.ship_by = this.addInvoice_section1.value.ShipBy;
+    api_saveInvoice_req.ship_date = this.addInvoice_section1.value.ShipDate;
+    api_saveInvoice_req.s_attn = this.addInvoice_section1.value.ship_attn;
+    api_saveInvoice_req.ref = this.addInvoice_section1.value.Ref;
+    api_saveInvoice_req.terms = this.addInvoice_section1.value.terms;
+    api_saveInvoice_req.currency = this.addInvoice_section1.value.Currency;
+    api_saveInvoice_req.conversionRate = this.addInvoice_section1.value.CurrencyConversionRate;
+    api_saveInvoice_req.paymentVIA = this.addInvoice_section1.value.PaymentVia;
+    api_saveInvoice_req.reference_reseller_name = this.addInvoice_section1.value.ReferenceResellerName;
+    api_saveInvoice_req.bills_logo_id = this.ExtralogoValue;
+    api_saveInvoice_req.mile_discount_state = this.mile_check_value;
+    api_saveInvoice_req.mile_discount_display_state = this.MSDisplay_Value;
+    api_saveInvoice_req.export_state = this.export_state;
+
+    api_saveInvoice_req.add_exchange_rate_state = this.cbk_conversionAmtShow_value;
+    api_saveInvoice_req.dw_tax_state = this.cbk_deductWithholdingTax;
+
     
     //section-2
   //  api_savePI_req.values = this.addPI_section2.value.addresses;
@@ -806,23 +879,24 @@ this.customer_NAME=data.customerName;
     }
 
     
-    api_savePI_req.values = addr;
+    api_saveInvoice_req.values = addr;
 
 
 //section-3
-    api_savePI_req.grossTotal = this.addPI_section3.value.section3_gross_total;
-    api_savePI_req.discountAmount = this.addPI_section3.value.final_dis_val;
-    api_savePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
-    api_savePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
-    api_savePI_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
-    api_savePI_req.addAmt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
-    api_savePI_req.netTotal = this.addPI_section3.value.section3_grand_total;
-    api_savePI_req.remarks = this.addPI_section3.value.section3_remarks;
-    api_savePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
-    api_savePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
-    api_savePI_req.logo = this.addPI_section3.value.section3_logo;
+    api_saveInvoice_req.grossTotal = this.addPI_section3.value.section3_gross_total;
+    api_saveInvoice_req.discountAmount = this.addPI_section3.value.final_dis_val;
+    api_saveInvoice_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
+    api_saveInvoice_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
+    api_saveInvoice_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
+    api_saveInvoice_req.addAmt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
+    api_saveInvoice_req.netTotal = this.addPI_section3.value.section3_grand_total;
+    api_saveInvoice_req.remarks = this.addPI_section3.value.section3_remarks;
+    api_saveInvoice_req.previous_due_state = this.cbk_previousDue
+    api_saveInvoice_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
+    api_saveInvoice_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
+    api_saveInvoice_req.logo = this.addPI_section3.value.section3_logo;
    
-    api_req.element_data = api_savePI_req;
+    api_req.element_data = api_saveInvoice_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -848,14 +922,14 @@ this.customer_NAME=data.customerName;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_customer_inv_details";
     api_getInvoiceDetails_req.user_id = localStorage.getItem('user_id');
-    api_getInvoiceDetails_req.billerId = this.addPI_section1.value.companyName;    
+    api_getInvoiceDetails_req.billerId = this.addInvoice_section1.value.companyName;    
     api_req.element_data = api_getInvoiceDetails_req;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        this.addPI_section1.patchValue({
+        this.addInvoice_section1.patchValue({
           'invoiceNo': response.invoice_no,
           // 'Currency': response.currency_id,
 
@@ -881,7 +955,7 @@ this.customer_NAME=data.customerName;
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     add_BillerDetails_req.action = "get_proforma_biller_details";
-    add_BillerDetails_req.billerId = this.addPI_section1.value.companyName;
+    add_BillerDetails_req.billerId = this.addInvoice_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
@@ -892,7 +966,7 @@ this.customer_NAME=data.customerName;
         this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
         this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
         this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
-        this.addPI_section1.patchValue({
+        this.addInvoice_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
           'Currency': response.def_currency_id,
@@ -943,7 +1017,7 @@ this.customer_NAME=data.customerName;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
-        this.addPI_section1.patchValue({
+        this.addInvoice_section1.patchValue({
           'CurrencyConversionRate': response.currency_live_val,
 
         });

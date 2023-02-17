@@ -36,10 +36,18 @@ import { FormarrayComponent } from './formarray/formarray.component';
 import { ProfiledetailsComponent } from './settings/profiledetails/profiledetails.component';
 import { InvoiceComponent } from './billing/invoice/invoice.component';
 import { AddInvoiceComponent } from './billing/invoice/add-invoice/add-invoice.component';
+import { DidinvoiceComponent } from './billing/didinvoice/didinvoice.component';
+import { AddDidInvoiceComponent } from './billing/didinvoice/add-did-invoice/add-did-invoice.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'addDidInvoice', component: AddDidInvoiceComponent
+  },
+  {
+    path: 'didInvoice', component: DidinvoiceComponent
   },
   {
     path: 'AddInvoice', component: AddInvoiceComponent

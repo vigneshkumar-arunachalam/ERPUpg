@@ -60,6 +60,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { ProfiledetailsComponent } from './settings/profiledetails/profiledetails.component';
 import { InvoiceComponent } from './billing/invoice/invoice.component';
 import { AddInvoiceComponent } from './billing/invoice/add-invoice/add-invoice.component';
+import { DidinvoiceComponent } from './billing/didinvoice/didinvoice.component';
+import { AddDidInvoiceComponent } from './billing/didinvoice/add-did-invoice/add-did-invoice.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -102,6 +104,8 @@ import { AddInvoiceComponent } from './billing/invoice/add-invoice/add-invoice.c
      ProfiledetailsComponent,
      InvoiceComponent,
      AddInvoiceComponent,
+     DidinvoiceComponent,
+     AddDidInvoiceComponent,
     
   ],
   imports: [
