@@ -78,4 +78,14 @@ export class DidinvoiceComponent implements OnInit {
   addDidGo(){
     this.router.navigate(['/addDidInvoice'])
   }
+
+  editDidGo(id: any){
+    var editbillID = id;
+    this.router.navigate(['/editDidInvoice'])
+    this.router.navigate(['/editDidInvoice'],{
+      queryParams: {
+        e_editBillID: editbillID,
+      }
+    })
+  }
 }

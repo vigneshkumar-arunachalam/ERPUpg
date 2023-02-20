@@ -14,12 +14,12 @@ export class AddInvoiceComponent implements OnInit {
   public addPI_section3: FormGroup;
   public addresses: FormArray;
   public DiscountForm: FormGroup;
-  public CommissionForm:FormGroup;
+  public CommissionForm: FormGroup;
   isReadOnly: boolean = false;
 
   //load add 
   companyNameList: any;
-  companyNameVal:any;
+  companyNameVal: any;
   currencyNameList: any;
   ShipByList: any;
   salesRepList: any;
@@ -34,19 +34,19 @@ export class AddInvoiceComponent implements OnInit {
   //auto complete
   searchResult: any;
   TaxDropdownList: any;
-//search textbox
-customer_ID: any;
-customer_NAME: any;
-//EditShipAdd-checkbox
-cbk_ESA_Value:any;
-EditShippingAddress:boolean=false;
+  //search textbox
+  customer_ID: any;
+  customer_NAME: any;
+  //EditShipAdd-checkbox
+  cbk_ESA_Value: any;
+  EditShippingAddress: boolean = false;
   //checkbox
   mile_check_value: any;
   dynamicCheckboxwithKey: any;
   SelectExtraLogoCheckboxwithKey: any;
-  cbk_conversionAmtShow_value:any;
-  cbk_deductWithholdingTax:any;
-  cbk_previousDue:any;
+  cbk_conversionAmtShow_value: any;
+  cbk_deductWithholdingTax: any;
+  cbk_previousDue: any;
   //checkbox group select-mile
   groupSelectCommonId_MileDiscount: any;
   checkbox_value_MileDiscount: any;
@@ -55,8 +55,8 @@ EditShippingAddress:boolean=false;
   //checkbox group select-logo
   groupSelectCommonId_ExtraLogo: any;
   checkbox_value_ExtraLogo: any;
-  salesRepDropDown_Textbox_Status:any;
-  SalesRepList:any;
+  salesRepDropDown_Textbox_Status: any;
+  SalesRepList: any;
   grossTotal: any;
   grandTotal: any;
   finalTax: any;
@@ -64,7 +64,7 @@ EditShippingAddress:boolean=false;
   finalDiscountType: any;
   finalDiscountVal: any;
   extraCharge = 0;
- // bankingCharge=0;
+  // bankingCharge=0;
   shipping_amt: any;
   bankingCharge: any;
   tax_per_mod: any;
@@ -83,7 +83,7 @@ EditShippingAddress:boolean=false;
   invoicePriceKey: any;
   row_cnt_mod: any;
   //autocomplete
-  customerName_Data :any;
+  customerName_Data: any;
   //getProformaBillerDetails
   getProformaBillerDetails_BillerID: any;
   getProformaBillerDetails_tinName: any;
@@ -97,14 +97,25 @@ EditShippingAddress:boolean=false;
   chklogoAddressSignature: boolean = true;
   //export state-check box
   export_state: any;
+  radioSelectFooter: any = '1';
   export_state_Local: boolean = true;
-  export_state_Export:any;
+  export_state_Export: any;
   export_state_ZeroValid: boolean = true;
   MSDisplay_Value: boolean = true;
   //commision
-  usersearchResult:any;
+  usersearchResult: any;
+  //shipping address
+  shipAddress1: any;
+  shipAddress2: any;
+  shipAddress3: any;
+  //commission
+  resellerName: any;
+  resellerID: any;
+  commissionType: any;
+  commissionValue: any;
+  commissionAmount: any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder) { 
+  constructor(private serverService: ServerService, private fb: FormBuilder) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -114,7 +125,7 @@ EditShippingAddress:boolean=false;
   ngOnInit(): void {
     console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
-    this.EditShippingAddress=true;
+    this.EditShippingAddress = true;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
@@ -170,12 +181,12 @@ EditShippingAddress:boolean=false;
       'address_3': new FormControl(),
       'PoNo': new FormControl(),
       'Attn_1': new FormControl(),
-      'ESA_cntPerson': new FormControl({value: '', disabled: true}, Validators.required),
-      'ESA_Cbk':new FormControl(),
-      'ship_to': new FormControl({value:'',disabled:true},Validators.required),
-      'ship_address_1': new FormControl({value:'',disabled:true},Validators.required),
-      'ship_address_2': new FormControl({value:'',disabled:true},Validators.required),
-      'ship_address_3': new FormControl({value:'',disabled:true},Validators.required),
+      'ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ESA_Cbk': new FormControl(),
+      'ship_to': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_address_1': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_address_2': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_address_3': new FormControl({ value: '', disabled: true }, Validators.required),
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
@@ -195,7 +206,7 @@ EditShippingAddress:boolean=false;
       'mile_MSDisplay': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
-    
+
       'CAS_Cbk': new FormControl(),
       'DWT_Cbk': new FormControl(),
     });
@@ -224,15 +235,19 @@ EditShippingAddress:boolean=false;
 
     });
 
-    this.DiscountForm = new FormGroup({      
+    this.DiscountForm = new FormGroup({
       'ResellerName': new FormControl(null),
       'section3_gross_total': new FormControl(null),
     });
-    
-    this.CommissionForm = new FormGroup({      
+
+    this.CommissionForm = new FormGroup({
       'section3_gross_total': new FormControl(null),
+      'ResellerName': new FormControl(null),
+      'selectCommission': new FormControl(null),
+      'CommissionValue': new FormControl(null),
+      'CommissionAmount': new FormControl(null),
     });
-   
+
 
   }
   get addressControls() {
@@ -279,24 +294,7 @@ EditShippingAddress:boolean=false;
 
   }
 
-  handleChangeLocal(event:any){
-    this.export_state_Local = event.target.value;
-    this.export_state='Local';
-    console.log( this.export_state_Local);
 
-  }
-  handleChangeExport(event:any){
-    this.export_state_Export = event.target.value;
-    this.export_state='Export';
-    console.log(this.export_state_Export);
-
-  }
-  handleChangeZeroValid(event:any){
-    this.export_state_ZeroValid = event.target.value;
-    this.export_state='Zero Valid';
-    console.log(this.export_state_ZeroValid );
-
-  }
   handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
     var abc = id;
@@ -304,13 +302,13 @@ EditShippingAddress:boolean=false;
     console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
-    var radioSelectFooter = evt.target.value;
+    this.radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", radioSelectFooter);
+    console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
-  handleChangeExtraLogo(event:any){
-     this.ExtralogoValue = event.target.value;
+  handleChangeExtraLogo(event: any) {
+    this.ExtralogoValue = event.target.value;
     // var xyz = id;
     console.log("radio button value for Extra logo", this.ExtralogoValue);
 
@@ -319,10 +317,16 @@ EditShippingAddress:boolean=false;
     this.mile_check_value = e.target.value;
     console.log(this.mile_check_value);
   }
-  handleChange_MSDisplay(event:any){
-this.MSDisplay_Value=event.target.value;
-console.log(this.MSDisplay_Value);
+  handleChange_MSDisplay(event: any) {
+    this.MSDisplay_Value = event.target.value;
+    console.log(this.MSDisplay_Value);
   }
+  radioSelectCommissionType(event: any) {
+    $('#CommissionValue').val('');
+    $('#CommissionAmount').val('');
+  }
+
+
   // EditCHK_MileDiscount(data: any, event: any) {
   //   console.log("List - CheckBox ID", data);
   //   this.groupSelectCommonId_MileDiscount = data;
@@ -390,7 +394,7 @@ console.log(this.MSDisplay_Value);
       this.addInvoice_section1.get("ship_address_1").disable();
       this.addInvoice_section1.get("ship_address_2").disable();
       this.addInvoice_section1.get("ship_address_3").disable();
-   
+
     }
     else {
 
@@ -398,23 +402,23 @@ console.log(this.MSDisplay_Value);
       this.addInvoice_section1.get("ship_address_1").enable();
       this.addInvoice_section1.get("ship_address_2").enable();
       this.addInvoice_section1.get("ship_address_3").enable();
-   
+
 
     }
     console.log(this.EditShippingAddress)
   }
-  cbk_fn_conversionAmtShow(event:any){
-    this.cbk_conversionAmtShow_value=event.target.checked;
+  cbk_fn_conversionAmtShow(event: any) {
+    this.cbk_conversionAmtShow_value = event.target.checked;
     console.log(this.cbk_conversionAmtShow_value)
 
   }
-  cbk_fn_deductWithholdingTax(event:any){
-    this.cbk_deductWithholdingTax=event.target.checked;
+  cbk_fn_deductWithholdingTax(event: any) {
+    this.cbk_deductWithholdingTax = event.target.checked;
     console.log(this.cbk_deductWithholdingTax)
 
   }
-  cbk_fn_previousDue(event:any){
-    this.cbk_previousDue=event.target.checked;
+  cbk_fn_previousDue(event: any) {
+    this.cbk_previousDue = event.target.checked;
     console.log(this.cbk_previousDue)
   }
 
@@ -429,7 +433,7 @@ console.log(this.MSDisplay_Value);
     // do something when input is focused
   }
 
- 
+
 
   selectEventUser(item: any) {
 
@@ -451,42 +455,42 @@ console.log(this.MSDisplay_Value);
     addAPI.user_id = localStorage.getItem('user_id');
     api_req.element_data = addAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-          if( response.status==true){
-              this.companyNameList = response.biller_details;
-              this.currencyNameList = response.currency_list;
-              this.ShipByList = response.ship_by;
-             // this.salesRepList = response.sales_rep;
-              this.paymentviaList = response.paymentvia;
-              this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
+      if (response.status == true) {
+        this.companyNameList = response.biller_details;
+        this.currencyNameList = response.currency_list;
+        this.ShipByList = response.ship_by;
+        // this.salesRepList = response.sales_rep;
+        this.paymentviaList = response.paymentvia;
+        this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
 
-              if (response.sales_rep_status.dropdown_status == 0) {
-                this.addInvoice_section1.patchValue({
-                  'salesRep_id': response.sales_rep.name,
-                  'salesRep': response.sales_rep.userid,
-                });
-      
-              }else{
-                this.SalesRepList = response.sales_rep;
-                this.addInvoice_section1.patchValue({
-                  'salesRep': localStorage.getItem('user_id'),
-                });
+        if (response.sales_rep_status.dropdown_status == 0) {
+          this.addInvoice_section1.patchValue({
+            'salesRep_id': response.sales_rep.name,
+            'salesRep': response.sales_rep.userid,
+          });
 
-                
-              }          
+        } else {
+          this.SalesRepList = response.sales_rep;
+          this.addInvoice_section1.patchValue({
+            'salesRep': localStorage.getItem('user_id'),
+          });
 
 
-              this.addInvoice_section1.patchValue({
-                'companyName': response.defaults_biller_id,        
-              });
-
-             // alert('Test--00'+response.defaults_biller_id);
-           //   this.companyNameVal = response.defaults_biller_id;
-             this.tax_per_mod = response.percent_val;
-              this.getProformaBillerDetails();
-              this.TaxDropdown();
-              this.getCustomerInvoiceDetails()
-            // this.getCustomerInvoiceDetails(response.defaults_biller_id);
         }
+
+
+        this.addInvoice_section1.patchValue({
+          'companyName': response.defaults_biller_id,
+        });
+
+        // alert('Test--00'+response.defaults_biller_id);
+        //   this.companyNameVal = response.defaults_biller_id;
+        this.tax_per_mod = response.percent_val;
+        this.getProformaBillerDetails();
+        this.TaxDropdown();
+        this.getCustomerInvoiceDetails()
+        // this.getCustomerInvoiceDetails(response.defaults_biller_id);
+      }
     });
   }
 
@@ -504,20 +508,20 @@ console.log(this.MSDisplay_Value);
     api_TaxDropdown_req.billerId = this.addInvoice_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {    
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
         setTimeout(() => {
           this.addPI_section3.patchValue({
-            'section3_gst_dropdown':response.default_tax_id,  
+            'section3_gst_dropdown': response.default_tax_id,
           });
 
         }, 500);
-       // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-       console.log('response.default_tax_id'+response.default_tax_id);
+        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+        console.log('response.default_tax_id' + response.default_tax_id);
 
-           
+
 
       }
 
@@ -568,8 +572,8 @@ console.log(this.MSDisplay_Value);
       this.finalTax = parseFloat(tax);
     }
   }
-  
-  
+
+
 
 
   calculateDiscount(val: any) {
@@ -596,13 +600,13 @@ console.log(this.MSDisplay_Value);
       $('#enablePriceDiscont').val(sub_dis_val);
       //  console.log('33'+disType);
     } else {
-      
+
       $('#discountTYpe_per').prop('checked', false);
       $('#discountTYpe_amt').prop('checked', false);
     }
   }
 
-  
+
   searchCustomerData(data: any) {
 
     let api_req: any = new Object();
@@ -637,7 +641,7 @@ console.log(this.MSDisplay_Value);
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "inv_reseller_name";
     api_Search_req.user_id = localStorage.getItem('user_id');
-  
+
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -652,8 +656,8 @@ console.log(this.MSDisplay_Value);
 
   }
   searchCustomer_selectDropdownData(data: any) {
-this.customer_ID=data.customerId;
-this.customer_NAME=data.customerName;
+    this.customer_ID = data.customerId;
+    this.customer_NAME = data.customerName;
     console.log("search data in dropdown", data)
     console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
@@ -671,128 +675,113 @@ this.customer_NAME=data.customerName;
 
       console.log("customer_address_details---response", response)
       if (response.status == true) {
-       // console.log('address'+response.customer_details[0].customerAddress1);
+        // console.log('address'+response.customer_details[0].customerAddress1);
 
 
-       var address_3;
-       var ship_to_str,ship_address_str1,ship_address_str2,ship_address_str3;
+        var address_3;
+        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
 
-       if(response.customer_details[0].city!=''){
-        address_3=response.customer_details[0].city;
-       }
-       if(address_3!='' && response.customer_details[0].state!=''){
-        address_3=address_3+' ,'+response.customer_details[0].state;
-       }else{
-        address_3=response.customer_details[0].state;
-       }
-       if(address_3!='' && response.customer_details[0].country!=''){
-        address_3=address_3+' ,'+response.customer_details[0].country;
-       }else{
-        address_3=response.customer_details[0].country;
-       }
-
-       if(response.customer_details[0].city!=''){
-        ship_address_str3=response.customer_details[0].city;
-       }
-       if(ship_address_str3!='' && response.customer_details[0].state!=''){
-        ship_address_str3=ship_address_str3+' ,'+response.customer_details[0].state;
-       }else{
-        ship_address_str3=response.customer_details[0].state;
-       }
-       if(ship_address_str3!='' && response.customer_details[0].country!=''){
-        ship_address_str3=ship_address_str3+' ,'+response.customer_details[0].country;
-       }else{
-        ship_address_str3=response.customer_details[0].country;
-       }
-
-
-        if(response.customer_details[0].ship_to!=''){
-          ship_to_str =response.customer_details[0].ship_to;
-        }else{
-          ship_to_str =response.customer_details[0].customerName;
+        if (response.customer_details[0].city != '') {
+          address_3 = response.customer_details[0].city;
+        }
+        if (address_3 != '' && response.customer_details[0].state != '') {
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+        } else {
+          address_3 = response.customer_details[0].state;
+        }
+        if (address_3 != '' && response.customer_details[0].country != '') {
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;
+        } else {
+          address_3 = response.customer_details[0].country;
         }
 
-        if(response.customer_details[0].ship_customerAddress1!=''){
-          ship_address_str1 =response.customer_details[0].ship_customerAddress1;
-        }else{
-          ship_address_str1 =response.customer_details[0].customerAddress1;
+        if (response.customer_details[0].city != '') {
+          ship_address_str3 = response.customer_details[0].city;
+          this.shipAddress3 = response.customer_details[0].city;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].state != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
+          this.shipAddress3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
+        } else {
+          ship_address_str3 = response.customer_details[0].state;
+          this.shipAddress3 = response.customer_details[0].state;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].country != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
+          this.shipAddress3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
+        } else {
+          ship_address_str3 = response.customer_details[0].country;
+          this.shipAddress3 = response.customer_details[0].country;
         }
 
-        if(response.customer_details[0].ship_customerAddress2!=''){
-          ship_address_str2 =response.customer_details[0].ship_customerAddress2;
-        }else{
-          ship_address_str2 =response.customer_details[0].customerAddress2;
+
+        if (response.customer_details[0].ship_to != '') {
+          ship_to_str = response.customer_details[0].ship_to;
+        } else {
+          ship_to_str = response.customer_details[0].customerName;
+        }
+
+        if (response.customer_details[0].ship_customerAddress1 != '') {
+          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+          this.shipAddress1 = response.customer_details[0].ship_customerAddress1;
+        } else {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+          this.shipAddress1 = response.customer_details[0].ship_customerAddress1;
+        }
+
+        if (response.customer_details[0].ship_customerAddress2 != '') {
+          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+          this.shipAddress2 = response.customer_details[0].ship_customerAddress2;
+
+        } else {
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+          this.shipAddress2 = response.customer_details[0].ship_customerAddress2;
         }
 
 
 
         this.addInvoice_section1.patchValue({
-            'address_1':response.customer_details[0].customerAddress1,
-            'address_2':response.customer_details[0].customerAddress2,
-            'address_3':address_3,
-            'cusInvoiceNo':response.customer_invoice_no,
-            'Attn_1':response.customer_details[0].companyName,
-            'ship_to':ship_to_str,
-            'ship_address_1':ship_address_str1,
-            'ship_address_2':ship_address_str2,
-            'ship_address_3':ship_address_str3,
-            'ship_attn':response.customer_details[0].companyName,            
+          'address_1': response.customer_details[0].customerAddress1,
+          'address_2': response.customer_details[0].customerAddress2,
+          'address_3': address_3,
+          'cusInvoiceNo': response.customer_invoice_no,
+          'Attn_1': response.customer_details[0].companyName,
+          'ship_to': ship_to_str,
+          'ship_address_1': ship_address_str1,
+          'ship_address_2': ship_address_str2,
+          'ship_address_3': ship_address_str3,
+          'ship_attn': response.customer_details[0].companyName,
         });
       }
       else {
         this.addInvoice_section1.patchValue({
-          'address_1':'',
-          'address_2':'',
-          'address_3':'',
-          'Attn_1':'',
-          'ship_to':'',
-          'ship_address_1':'',
-          'ship_address_2':'',
-          'ship_address_3':'',
-          'ship_attn':'',            
-      });
+          'address_1': '',
+          'address_2': '',
+          'address_3': '',
+          'Attn_1': '',
+          'ship_to': '',
+          'ship_address_1': '',
+          'ship_address_2': '',
+          'ship_address_3': '',
+          'ship_attn': '',
+        });
       }
 
     });
   }
-  searchUser_selectDropdownData(data: any) {
+  searchUser_selectDropdownData(item: any) {
 
-        let api_req: any = new Object();
-        let api_SearchUser_req: any = new Object();
-        api_req.moduleType = "invoice";
-        api_req.api_url = "invoice/inv_reseller_name";
-        api_req.api_type = "web";
-        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_SearchUser_req.action = "inv_reseller_name";
-        api_SearchUser_req.user_id = localStorage.getItem('user_id');
-        api_SearchUser_req.key_word = data
-        api_req.element_data = api_SearchUser_req;
-        this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
-          console.log("customer_address_details---response", response)
-          if (response.status == true) {
-           
-    
-    
-    
-    
-    
-            this.CommissionForm.patchValue({
-                'address_1':response.customer_details[0].customerAddress1,
-                'address_2':response.customer_details[0].customerAddress2,
-                          
-            });
-          }
-          else {
-            this.CommissionForm.patchValue({
-              'address_1':'',
-                    
-          });
-          }
-    
-        });
-      }
+
+    this.resellerName = item.reseller_name;
+    this.resellerID = item.reseller_id;
+
+    console.log(item.reseller_name)
+    console.log(item.reseller_id)
+
+
+  }
   save() {
+   
     let api_req: any = new Object();
     let api_saveInvoice_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -801,15 +790,15 @@ this.customer_NAME=data.customerName;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_saveInvoice_req.action = "insert_invoice";
     api_saveInvoice_req.user_id = localStorage.getItem('user_id');
-//section-1
+    //section-1
     api_saveInvoice_req.company = this.addInvoice_section1.value.companyName;
     api_saveInvoice_req.invoice_no = this.addInvoice_section1.value.invoiceNo;
     api_saveInvoice_req.customer_name = this.customerName_Data;
     api_saveInvoice_req.cus_invoice_no = this.addInvoice_section1.value.cusInvoiceNo;
 
     api_saveInvoice_req.tinNo = this.addInvoice_section1.value.tin;
-    api_saveInvoice_req.BillTo_customer_ID=this.customer_ID;
-    api_saveInvoice_req.BillTo_customer_NAME=this.customer_NAME;
+    api_saveInvoice_req.BillTo_customer_ID = this.customer_ID;
+    api_saveInvoice_req.BillTo_customer_NAME = this.customer_NAME;
 
     api_saveInvoice_req.b_name = this.addInvoice_section1.value.BillTo;
     api_saveInvoice_req.b_address1 = this.addInvoice_section1.value.address_1;
@@ -817,9 +806,35 @@ this.customer_NAME=data.customerName;
     api_saveInvoice_req.b_address3 = this.addInvoice_section1.value.address_3;
 
     api_saveInvoice_req.s_name = this.addInvoice_section1.value.ship_to;
-    api_saveInvoice_req.s_address1 = this.addInvoice_section1.value.ship_address_1;
-    api_saveInvoice_req.s_address2 = this.addInvoice_section1.value.ship_address_2;
-    api_saveInvoice_req.s_address3 = this.addInvoice_section1.value.ship_address_3;
+
+    if (this.addInvoice_section1.value.ship_address_1 == undefined) {
+      api_saveInvoice_req.s_address1 = this.shipAddress1;
+
+    }
+    else {
+      api_saveInvoice_req.s_address1 = this.addInvoice_section1.value.ship_address_1;
+    }
+
+    if (this.addInvoice_section1.value.ship_address_2 == undefined) {
+      api_saveInvoice_req.s_address2 = this.shipAddress2;
+
+    }
+    else {
+      api_saveInvoice_req.s_address2 = this.addInvoice_section1.value.ship_address_2;
+    }
+
+    if (this.addInvoice_section1.value.ship_address_3 == undefined) {
+      api_saveInvoice_req.s_address3 = this.shipAddress3;
+
+    }
+    else {
+      api_saveInvoice_req.s_address3 = this.addInvoice_section1.value.ship_address_3;
+    }
+
+
+
+
+
 
     api_saveInvoice_req.cstNo = this.addInvoice_section1.value.cst;
     api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
@@ -839,30 +854,30 @@ this.customer_NAME=data.customerName;
     api_saveInvoice_req.bills_logo_id = this.ExtralogoValue;
     api_saveInvoice_req.mile_discount_state = this.mile_check_value;
     api_saveInvoice_req.mile_discount_display_state = this.MSDisplay_Value;
-    api_saveInvoice_req.export_state = this.export_state;
+    api_saveInvoice_req.export_state = this.radioSelectFooter;
 
     api_saveInvoice_req.add_exchange_rate_state = this.cbk_conversionAmtShow_value;
     api_saveInvoice_req.dw_tax_state = this.cbk_deductWithholdingTax;
 
-    
+
     //section-2
-  //  api_savePI_req.values = this.addPI_section2.value.addresses;
+    //  api_savePI_req.values = this.addPI_section2.value.addresses;
 
 
-  var addr = this.addPI_section2.value.addresses;
-   
+    var addr = this.addPI_section2.value.addresses;
+
 
     for (let i = 0; i < addr.length; i++) {
 
-      if($('#pd_productName_txtbox_' + i).val()==''){
+      if ($('#pd_productName_txtbox_' + i).val() == '') {
         iziToast.warning({
           message: "Select Minimum 1 Product Details",
           position: 'topRight'
         });
         return false;
-        
+
       }
-     
+
       console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -875,14 +890,14 @@ this.customer_NAME=data.customerName;
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
       addr[i].pd_selectTax = $('#pd_selectTax_' + i).val();
-     
+
     }
 
-    
+
     api_saveInvoice_req.values = addr;
 
 
-//section-3
+    //section-3
     api_saveInvoice_req.grossTotal = this.addPI_section3.value.section3_gross_total;
     api_saveInvoice_req.discountAmount = this.addPI_section3.value.final_dis_val;
     api_saveInvoice_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
@@ -895,24 +910,50 @@ this.customer_NAME=data.customerName;
     api_saveInvoice_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
     api_saveInvoice_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
     api_saveInvoice_req.logo = this.addPI_section3.value.section3_logo;
+
+    //commission popup
+    api_saveInvoice_req.resellerName = this.resellerName;
    
+    api_saveInvoice_req.resellerID = this.resellerID;
+   
+    api_saveInvoice_req.commissionType = this.CommissionForm.value.selectCommission;
+   if(this.CommissionForm.value.selectCommission=='Fixed'){
+    api_saveInvoice_req.commissionValue = this.CommissionForm.value.CommissionValue;
+  
+    api_saveInvoice_req.commissionAmount = this.CommissionForm.value.CommissionValue;
+   }
+   else{
+    api_saveInvoice_req.commissionValue = this.CommissionForm.value.CommissionValue;
+  
+    api_saveInvoice_req.commissionAmount = $('#CommissionAmount' ).val();;
+   }
+    
+   
+
     api_req.element_data = api_saveInvoice_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
 
+        iziToast.success({
+          message: "Invoice saved successfully",
+          position: 'topRight'
+        });
       }
       else {
-
+        iziToast.warning({
+          message: "Invoice not saved. Please try again",
+          position: 'topRight'
+        });
       }
 
     });
 
   }
   getCustomerInvoiceDetails() {
-   // this.billerID = event.target.value;
-   // console.log("billerID check", this.billerID);
+    // this.billerID = event.target.value;
+    // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -922,7 +963,7 @@ this.customer_NAME=data.customerName;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_customer_inv_details";
     api_getInvoiceDetails_req.user_id = localStorage.getItem('user_id');
-    api_getInvoiceDetails_req.billerId = this.addInvoice_section1.value.companyName;    
+    api_getInvoiceDetails_req.billerId = this.addInvoice_section1.value.companyName;
     api_req.element_data = api_getInvoiceDetails_req;
 
 
@@ -947,7 +988,7 @@ this.customer_NAME=data.customerName;
   }
 
   getProformaBillerDetails() {
-    
+
     let api_req: any = new Object();
     let add_BillerDetails_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -1084,7 +1125,7 @@ this.customer_NAME=data.customerName;
         sub_total_amt = total_amt;
       }
 
-      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod!=null)  {
+      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
 
         tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
@@ -1109,9 +1150,9 @@ this.customer_NAME=data.customerName;
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
-    console.log('grs_amt'+grs_amt);
-    console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)+ parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
+    console.log('grs_amt' + grs_amt);
+    console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
+    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
 
 
@@ -1159,24 +1200,9 @@ this.customer_NAME=data.customerName;
       }
     }
     this.grossTotal = gtotel;
-    // if (this.grandTotal > 0) {
-    //   this.grandTotal = this.grossTotal;
-    // }
 
-    // if (this.finalTax > 0) {
-    //   this.grandTotal = this.grandTotal + this.finalTax;
-    // }
-    // if (this.finalDiscount > 0) {
-    //   this.grandTotal = this.grandTotal - this.finalDiscount;
-    // }
-    // if (this.extraCharge > 0) {
-    //   this.grandTotal = this.grandTotal + this.extraCharge;
-    // }
-    // if (this.bankingCharge > 0) {
-    //   this.grandTotal = this.grandTotal + this.bankingCharge;
-    // }
 
-    
+
     $('#discountFormId').modal('hide');
     this.DiscountForm.reset();
     this.totalCalculate();
@@ -1231,8 +1257,50 @@ this.customer_NAME=data.customerName;
     $('#discountFormFinal').modal('hide');
   }
 
-  calculateCommission(i:any){
+  CommissionFormOpen() {
+    $('#CommissionValue').val('')
+    $('#CommissionAmount').val('')
+    $('#CommissionFormId').modal('show');
+  }
+  saveCommission() {
+    var tax_amt = 0;
+    var total_amt: any;
+    var com_amt_val: any;
+    var addr = this.addPI_section2.value.addresses;
+    var list_cnt = addr.length;
+   
+    for (let a = 0; a < list_cnt; a++) {
+      total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
+      $('#pd_Total_' + a).val(total_amt);
 
+      var commissionType3 = $('input:radio[name=selectCommission]:checked').val();
+
+      this.commissionType = commissionType3;
+      console.log("before if-  commissionType3", commissionType3)
+      console.log("before if-  this.commissionValue", this.commissionType)
+      var commissionValue3 = $('#CommissionValue').val()
+      console.log("in if-  commissionValue3", commissionValue3)
+      this.commissionValue = commissionValue3;
+      if (commissionType3 == "Fixed") {
+
+        this.commissionValue = commissionValue3;
+        this.commissionAmount = commissionValue3;
+        console.log("if-fixed  this.commissionValue", this.commissionValue)
+        console.log("if-fixed  this.commissionAmount", this.commissionAmount)
+        var abc=$('#CommissionAmount').val(commissionValue3);
+        this.commissionAmount=abc;
+      }
+      else {
+     
+        com_amt_val = (parseFloat(commissionValue3) * parseFloat(total_amt) / 100).toFixed(2);
+       var abc= $('#CommissionAmount').val(com_amt_val);
+       this.commissionAmount=abc;
+      }
+    }
+    $('#CommissionFormId').modal('hide');
+    // this.CommissionForm.reset();
+   
+    
   }
 
   getTaxCals() {
@@ -1269,11 +1337,11 @@ this.customer_NAME=data.customerName;
 
     });
 
-  
+
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
- 
+
 
   }
   extraFees() {
@@ -1285,7 +1353,7 @@ this.customer_NAME=data.customerName;
     // console.log('bankingCharge'+this.bankingCharge);
     this.totalCalculate();
   }
- 
+
 
 
   calFinalDiscount() {
@@ -1314,8 +1382,8 @@ this.customer_NAME=data.customerName;
 
   }
 
-  
-  
+
+
 
 }
 

@@ -84,5 +84,15 @@ export class InvoiceComponent implements OnInit {
   addPIGo(){
     this.router.navigate(['/AddInvoice'])
   }
+  editPIGo(id: any) {
+    var editbillID = id;
+    this.router.navigate(['/EditInvoice'])
+
+    this.router.navigate(['/EditInvoice'], {
+      queryParams: {
+        e_editBillID: editbillID,
+      }
+    });
+  }
 
 }

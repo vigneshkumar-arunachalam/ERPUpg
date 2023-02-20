@@ -6,14 +6,15 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 declare var $: any;
 declare var iziToast: any;
+
 @Component({
-  selector: 'app-edit-pi',
-  templateUrl: './edit-pi.component.html',
-  styleUrls: ['./edit-pi.component.css']
+  selector: 'app-edit-invoice',
+  templateUrl: './edit-invoice.component.html',
+  styleUrls: ['./edit-invoice.component.css']
 })
-export class EditPIComponent implements OnInit {
+export class EditInvoiceComponent implements OnInit {
 
-
+  
   public addPI_section1: FormGroup;
   public addPI_section2: FormGroup;
   public addPI_section3: FormGroup;
@@ -51,6 +52,7 @@ export class EditPIComponent implements OnInit {
   // section-3
   chkTermsandcondition: boolean = false;
   chklogoAddressSignature: boolean = true;
+  previousDue: boolean = true;
   chkReceivedAuthorizedSignature: boolean = true;
 
   //checkbox group select-logo
@@ -59,11 +61,19 @@ export class EditPIComponent implements OnInit {
   edit_array_ExtraLogo: any = [];
   //autocomplete
   customerName_Data: any;
+    //EditShipAdd-checkbox
+    cbk_ESA_Value: any;
+    EditShippingAddress: boolean = false;
+    //checkbox
+    cbk_conversionAmtShow_value: any;
+    cbk_deductWithholdingTax: any;
+    cbk_previousDue: any;
   //others
   dynamicChangeText: any;
   CurrencyConversionRateDefault: any = 1;
   getCurrencyCode: any;
   invoicePriceKey: any;
+
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
@@ -109,7 +119,7 @@ export class EditPIComponent implements OnInit {
 
   ngOnInit(): void {
   
-    
+    this.EditShippingAddress = true;
    
 
     this.route.queryParams
@@ -169,6 +179,7 @@ export class EditPIComponent implements OnInit {
       'companyName': new FormControl(null,[Validators.required]),
       'customer_name': new FormControl(),
       'invoiceNo': new FormControl(),
+      'cusInvoiceNo': new FormControl(),
       'customer_id_hd': new FormControl(),
       'BillTo': new FormControl(null,[Validators.required]),
       'tin': new FormControl(null,[Validators.required]),
@@ -181,11 +192,12 @@ export class EditPIComponent implements OnInit {
       'address_3': new FormControl(),
       'PoNo': new FormControl(),
       'Attn_1': new FormControl(),
-      'ship_to': new FormControl(),
-      'shipTo_1': new FormControl(),
-      'shipTo_2': new FormControl(),
-      'shipTo_3': new FormControl(),
-      'shipTo_4': new FormControl(),
+      'ESA_Cbk': new FormControl(),
+      'ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_to': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_address_1': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_address_2': new FormControl({ value: '', disabled: true }, Validators.required),
+      'ship_address_3': new FormControl({ value: '', disabled: true }, Validators.required),
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'ShipBy': new FormControl(),
@@ -202,6 +214,8 @@ export class EditPIComponent implements OnInit {
       'mile_MSDisplay': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
+      'CAS_Cbk': new FormControl(),
+      'DWT_Cbk': new FormControl(),
     });
 
     this.addPI_section3 = new FormGroup({
@@ -221,6 +235,7 @@ export class EditPIComponent implements OnInit {
       'banking_charge_amt': new FormControl(null),
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
+      'section3_previousDue': new FormControl(null),
       'section3_termCondition': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
@@ -405,6 +420,45 @@ export class EditPIComponent implements OnInit {
     this.MSDisplay_Value = event.target.value;
     console.log(this.MSDisplay_Value);
   }
+  cbk_fn_conversionAmtShow(event: any) {
+    this.cbk_conversionAmtShow_value = event.target.checked;
+    console.log(this.cbk_conversionAmtShow_value)
+
+  }
+  cbk_fn_deductWithholdingTax(event: any) {
+    this.cbk_deductWithholdingTax = event.target.checked;
+    console.log(this.cbk_deductWithholdingTax)
+
+  }
+  cbk_fn_previousDue(event: any) {
+    this.cbk_previousDue = event.target.checked;
+    console.log(this.cbk_previousDue)
+  }
+
+  cbk_Fn_EditShipAddress(event: any) {
+    this.EditShippingAddress = event.target.checked;
+    console.log(this.EditShippingAddress)
+
+    if (this.EditShippingAddress) {
+
+      this.addPI_section1.get("ship_to").disable();
+      this.addPI_section1.get("ship_address_1").disable();
+      this.addPI_section1.get("ship_address_2").disable();
+      this.addPI_section1.get("ship_address_3").disable();
+
+    }
+    else {
+
+      this.addPI_section1.get("ship_to").enable();
+      this.addPI_section1.get("ship_address_1").enable();
+      this.addPI_section1.get("ship_address_2").enable();
+      this.addPI_section1.get("ship_address_3").enable();
+
+
+    }
+    console.log(this.EditShippingAddress)
+  }
+
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
@@ -722,6 +776,7 @@ export class EditPIComponent implements OnInit {
           'Ref': response.billing_pararent_details[0].ref,
 
           'invoiceNo': response.billing_pararent_details[0].invoice_no,
+          'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
           'tin': response.billing_pararent_details[0].tinNo,
           'cst': response.billing_pararent_details[0].cstNo,
           'Date': response.billing_pararent_details[0].billDate,
@@ -736,6 +791,8 @@ export class EditPIComponent implements OnInit {
           'PaymentVia': response.billing_pararent_details[0].paymentVIA,
           'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
           'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
+          'CAS_Cbk': response.billing_pararent_details[0].add_exchange_rate_state,
+          'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
 
         });
   
@@ -808,6 +865,7 @@ export class EditPIComponent implements OnInit {
           'section3_remarks': response.billing_pararent_details[0].remarks,
 
           //row-8
+          'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
           'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
           //row-9
           'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
@@ -1004,6 +1062,7 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.billId = this.addPI_section1.value.billId_edit;
     api_updatePI_req.billerId = this.addPI_section1.value.companyName;
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
+    api_updatePI_req.cus_invoice_no = this.addPI_section1.value.cusInvoiceNo;
     api_updatePI_req.customerId = this.addPI_section1.value.customer_id_hd;
     api_updatePI_req.b_name = this.addPI_section1.value.customer_name;
     api_updatePI_req.tinNo = this.addPI_section1.value.tin;
@@ -1015,9 +1074,10 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
    // console.log('ship_address_1'+this.addPI_section1.value.shipTo_1);
-    api_updatePI_req.ship_address_1 = this.addPI_section1.value.shipTo_1,
-    api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2,
-    api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
+   api_updatePI_req.shipTo_1 = this.addPI_section1.value.ship_address_1,
+   api_updatePI_req.shipTo_2 = this.addPI_section1.value.ship_address_2,
+   api_updatePI_req.shipTo_3 = this.addPI_section1.value.ship_address_3,
+
     api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
@@ -1031,6 +1091,10 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
     api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
+
+    api_updatePI_req.add_exchange_rate_state = this.addPI_section1.value.CAS_Cbk;
+    api_updatePI_req.dw_tax_state = this.addPI_section1.value.DWT_Cbk;
+
 
     //section-2
     // api_UpdateEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
@@ -1064,7 +1128,7 @@ export class EditPIComponent implements OnInit {
     //row-6
     api_updatePI_req.remarks = this.addPI_section3.value.section3_remarks;
     //other row
-
+    api_updatePI_req.previous_due_state = this.addPI_section1.value.section3_previousDue;
     api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
     api_updatePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
     api_updatePI_req.logo = this.addPI_section3.value.section3_logo;

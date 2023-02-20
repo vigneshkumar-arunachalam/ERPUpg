@@ -91,6 +91,7 @@ customer_NAME: any;
   chklogoAddressSignature: boolean = true;
 //export state-check box
 export_state: any;
+radioSelectFooter:any='1';
 export_state_Local: boolean = true;
 export_state_Export:any;
 export_state_ZeroValid: boolean = true;
@@ -283,9 +284,9 @@ MSDisplay_Value: boolean = true;
     console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
-    var radioSelectFooter = evt.target.value;
+    this.radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", radioSelectFooter);
+    console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event:any){
@@ -711,7 +712,7 @@ this.customer_NAME=data.customerName;
     api_savePI_req.bills_logo_id = this.ExtralogoValue;
     api_savePI_req.mile_discount_state = this.mile_check_value;
     api_savePI_req.mile_discount_display_state = this.MSDisplay_Value;
-    api_savePI_req.export_state = this.export_state;
+    api_savePI_req.export_state = this.radioSelectFooter;
     
     //section-2
   //  api_savePI_req.values = this.addPI_section2.value.addresses;
@@ -768,6 +769,7 @@ this.customer_NAME=data.customerName;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
+
 
       }
       else {

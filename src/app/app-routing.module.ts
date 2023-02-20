@@ -38,10 +38,18 @@ import { InvoiceComponent } from './billing/invoice/invoice.component';
 import { AddInvoiceComponent } from './billing/invoice/add-invoice/add-invoice.component';
 import { DidinvoiceComponent } from './billing/didinvoice/didinvoice.component';
 import { AddDidInvoiceComponent } from './billing/didinvoice/add-did-invoice/add-did-invoice.component';
+import { EditInvoiceComponent } from './billing/invoice/edit-invoice/edit-invoice.component';
+import { EditDidInvoiceComponent } from './billing/didinvoice/edit-did-invoice/edit-did-invoice.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'editDidInvoice', component: EditDidInvoiceComponent
+  },
+  {
+    path: 'EditInvoice', component: EditInvoiceComponent
   },
   {
     path: 'addDidInvoice', component: AddDidInvoiceComponent

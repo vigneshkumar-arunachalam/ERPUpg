@@ -25,6 +25,7 @@ export class AddDidInvoiceComponent implements OnInit {
   companyNameList:any
   currencyNameList: any;
   ShipByList: any;
+  BillCodeList:any;
   salesRepList: any;
   paymentviaList: any;
   billerID: any;
@@ -141,6 +142,8 @@ customer_NAME: any;
       'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
+      
+      'CurrencyConversionRate': new FormControl(),
       'extraLogo': new FormControl(),
       'Currency': new FormControl(),
       'PaymentVia': new FormControl(),
@@ -175,9 +178,7 @@ customer_NAME: any;
 
     });
 
-    this.FixedDiscountForm = new FormGroup({
-
-    }); 
+    
   }
 
   
@@ -360,6 +361,7 @@ console.log(this.MSDisplay_Value);
               this.ShipByList = response.ship_by;
              // this.salesRepList = response.sales_rep;
               this.paymentviaList = response.paymentvia;
+              this.BillCodeList = response.billCode;
               this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
 
               if (response.sales_rep_status.dropdown_status == 0) {
@@ -740,11 +742,16 @@ console.log(this.MSDisplay_Value);
     //section-1
         api_saveDid_req.company = this.addDid_section1.value.companyName;
         api_saveDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
+        api_saveDid_req.cus_invoice_no = this.addDid_section1.value.cusInvoiceNo;
         api_saveDid_req.customer_name = this.customerName_Data;
         api_saveDid_req.tinNo = this.addDid_section1.value.tin;
         api_saveDid_req.BillTo_customer_ID=this.customer_ID;
         api_saveDid_req.BillTo_customer_NAME=this.customer_NAME;
     
+        api_saveDid_req.did_invoice_state = '1';
+
+
+
         api_saveDid_req.b_name = this.addDid_section1.value.BillTo;
         api_saveDid_req.b_address1 = this.addDid_section1.value.address_1;
         api_saveDid_req.b_address2 = this.addDid_section1.value.address_2;
@@ -770,6 +777,7 @@ console.log(this.MSDisplay_Value);
         api_saveDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
         api_saveDid_req.bills_logo_id = this.ExtralogoValue;
         api_saveDid_req.export_state = this.export_state;
+        api_saveDid_req.jom_pay_logo= this.addDid_section1.value.Jompay_logo;
         
         //section-2
         // fixed charge
@@ -1065,9 +1073,7 @@ console.log(this.MSDisplay_Value);
           
     
     $('#fixedDiscountFormId').modal('hide');
-          this.FixedDiscountForm.reset();
-              // this.totalCalculate();
-
+          
   }
 
 
@@ -1150,8 +1156,7 @@ console.log(this.MSDisplay_Value);
             }
           }
     $('#usageDiscountFormId').modal('hide');
-          this.UsageDiscountForm.reset();
-          
+         
 
   }
   
@@ -1185,35 +1190,34 @@ totalCalculate_3(){
 
 otherSaveDiscount(){
 
-  
   var enablePerFinal_3 = $('#enablePerFinal_3').val()
-  var enablePriceFinal_3 = $('#enablePriceFinal_3').val()
-  var disType = $('input:radio[name=oth_DiscountTYpe_per]:checked').val();
-  var final_tot = $('#sub_total_3').val();
-  console.log('final_tot_3' + final_tot);
-  $('#sub_discount_type_3' ).val(disType);
-  var price: any;
+    var enablePriceFinal_3 = $('#enablePriceFinal_3').val()
+    var disType = $('input:radio[name=oth_DiscountTYpe]:checked').val();
+    var final_tot = $('#sub_total_3').val();
+    console.log('final_tot' + final_tot);
+    $('#sub_discount_type_3' ).val(disType);
+    var price: any;
 
-  if (disType == 'per') {
-
-    if (enablePerFinal_3 != '') {
-      
-      price = (parseFloat(enablePerFinal_3) * parseFloat(final_tot) / 100).toFixed(2);
-      console.log(price);
-      $('#sub_discount_3' ).val(price);
-      $('#sub_discount_val_3').val(enablePerFinal_3);
-      price = final_tot - price;
-      console.log("sub_total_3" + price);
-      $('#sub_total_3').val(price);
-      
-    } else {
-      $('#sub_discount_3' ).val('');
-      $('#sub_discount_val_3').val('');
+    if (disType == 'per') {
+  
+      if (enablePerFinal_3 != '') {
         
-      price = final_tot;
+        price = (parseFloat(enablePerFinal_3) * parseFloat(final_tot) / 100).toFixed(2);
+        console.log(price);
+        $('#sub_discount_3' ).val(price);
+        $('#sub_discount_val_3').val(enablePerFinal_3);
+        price = final_tot - price;
+        console.log("sub_total" + price);
+        $('#sub_total_3').val(price);
+        
+      } else {
+        $('#sub_discount_3' ).val('');
+        $('#sub_discount_val_3').val('');
+          
+        price = final_tot;
 
-    }
-  } 
+      }
+    } 
   else {
     price = final_tot - enablePriceFinal_3;
     console.log('price_fin_3'+price);
@@ -1235,7 +1239,7 @@ otherSaveDiscount(){
           }
         }
   $('#otherDiscountFormId').modal('hide');
-        this.OtherDiscountForm.reset();
+      
           
 }
 
@@ -1245,77 +1249,33 @@ gross_total(){
 
   var sub_total1,sub_total2,sub_total3:any = 0;
 
-  sub_total1 = $('#sub_total_1').val();
-  console.log('subtotal 1....'+sub_total1);
-  
-  sub_total2 = $('#sub_total_2').val();
-  sub_total3 = $('#sub_total_3').val();
-  total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
- 
-  console.log(total_amt);
-  gross_tot += parseFloat(total_amt);
-  $('#section3_gross_total').val(gross_tot);
-  $('#section3_grand_total').val(gross_tot);
-  console.log('gross total ='+ gross_tot);
+    sub_total1 = $('#sub_total_1').val();
+    sub_total2 = $('#sub_total_2').val();
+    sub_total3 = $('#sub_total_3').val();
+    total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
 
+    console.log(total_amt);
+    gross_tot += parseFloat(total_amt);
+    $('#section3_gross_total').val(gross_tot);
+    $('#section3_grand_total').val(gross_tot);
+    console.log('gross total =' + gross_tot);
 
-//   if($('#sub_total_1').val()!=''){
-//     $('#section3_gross_total').val(sub_total1);
-//   }else if($('#sub_total_2').val()!=''){
-//     $('#section3_gross_total').val(sub_total2);
-// }else if($('#sub_total_3').val()!=''){
-//   $('#section3_gross_total').val(sub_total3);
-// }else{
-//   $('#section3_gross_total').val(gross_tot);
-//   console.log('gross total ='+ gross_tot);
-// }
+    var tax_amt: any = 0;
+    var tax_amt_tot = 0;
+    var grs_amt = 0;
+    var net_tot: any;
+    var net_price = 0;
 
-var tax_amt:any = 0;
-var tax_amt_tot = 0;
-var grs_amt = 0;
-var net_tot:any;
-var net_price = 0;
-//if ($('#tax_per_hd_id').prop('checked') == true && this.tax_per_mod!=null)  {
-  this.net_amt = $('#section3_gross_total').val();
+    this.net_amt = $('#section3_gross_total').val();
 
-  tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-  console.log('taxamt........ppp'+tax_amt);
-  console.log('....netamt...ppp'+this.net_amt);
-  
-  
-  // tax_amt_tot += tax_amt;
-// }
-grs_amt += gross_tot;
-console.log('.....aaaaa....'+grs_amt);
-console.log('tax amount.....'+tax_amt);
-// var tax = this.addDid_section3.value.section3_gst_dropdown;
-  
-net_tot = (parseFloat(tax_amt) + parseFloat(this.grossTotal) ).toFixed(2);
-  
-  console.log('this.grossTotal.....'+this.grossTotal);
-  console.log("taxx....="+tax_amt_tot);
-  console.log('.....net_total'+net_tot);
-    
+    tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
+    grs_amt += gross_tot;
+    net_tot = (parseFloat(tax_amt) + parseFloat(this.grossTotal)).toFixed(2);
+
+    console.log('this.grossTotal.....' + this.grossTotal);
     net_price += parseFloat(net_tot);
     $('#section3_grand_total').val(net_price);
-   
-
-    console.log('net total ='+ net_price);
-  
-
-
-
-// if (this.finalTax > 0) {
-//   var tax = this.addDid_section3.value.section3_gst_dropdown;
-//   tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
-//  alert('tax'+tax);
-//   // console.log('tax.....'+ tax);
-  
-//   if (this.grandTotal > 0) {
-//     this.grandTotal = this.grandTotal + parseFloat(tax);
-//   }
-//   this.finalTax = parseFloat(tax);
-// }
+    console.log('net total =' + net_price);
 
 this.grossTotal = grs_amt;
 this.finalTax = tax_amt_tot.toFixed(2);
@@ -1392,7 +1352,7 @@ finalSaveDiscount(){
           }
         }
   $('#discountFormFinal').modal('hide');
-        this.FinalDiscountForm.reset();
+       
         
 
 }

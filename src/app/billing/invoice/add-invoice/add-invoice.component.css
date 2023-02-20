@@ -15,7 +15,20 @@
   width: 100%;
 }
 .buttonAlign{
-  display: inline !important;
+  /* display: inline !important;
+  margin: 0 20px;
+  text-align: center !important; */
+
+
+  display: flex !important;
+  flex-wrap: wrap;
+
+  justify-content: center;
+  align-items: center;
+ 
+
+
+
 }
 .lalign{
   text-align: left!important;
