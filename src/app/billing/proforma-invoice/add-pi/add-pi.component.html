@@ -386,9 +386,9 @@
             </div>
             <div class="col-12">
 
-                <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+                <section >
 
-                    <div [formGroupName]="i">
+                    <div >
                        
                         <div class="table-responsive">
                             <table class="add-contact-table-section">
@@ -418,10 +418,10 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
 
 
-                                    <tr>
+                                    <tr [formGroupName]="i">
                                         <td>
                                             <div class="userDatatable-content lalign">
                                                 <input type="checkbox" formControlName="pd_nextPage_checkbox">
@@ -504,9 +504,9 @@
 
                                             </div>
                                         </td>
-                                        <td>
+                                        <td *ngIf="i>0">
                                             <div class="userDatatable-content d-inline-block">
-                                                <button type="button" class="btn btn-danger btn-sm"
+                                                <button type="button" class="btn btn-danger btn-sm" 
                                                     (click)="removeAddress(i)">X</button>
 
                                             </div>

@@ -216,3 +216,74 @@ border-radius: 50%;
   color: rgba(0, 0, 0, 0.589) !important;
   font-weight: 400!important;
 }
+#processPaymentFormId .modal-dialog{
+  max-width: 60% !important;
+}
+#processPaymentFormId label{
+  color: rgb(27, 1, 121)!important;
+  font-weight: 500!important;
+}
+
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f3ecf2 !important;
+    opacity: 0.6;
+    color: black!important;
+}
+
+
+
+#emailFormId .modal-dialog {
+  max-width: 65%;
+}
+
+#emailFormId label {
+  font-weight: 500;
+}
+.card.quotation .card-header {
+  display: flex;
+}
+.userDatatable button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+#quotationSharedPersonId .modal-dialog {
+  max-width: 50%;
+}
+.quotationsharedCSS{
+  height: 300px;
+ 
+  overflow-y: scroll;
+}
+.checkbox {
+  margin-right: 10px;
+}
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* #emailFormId span{width: 138px;    display: inline-block;} */
+label.col-lg-2.col-form-label{text-align: right;}
+
+

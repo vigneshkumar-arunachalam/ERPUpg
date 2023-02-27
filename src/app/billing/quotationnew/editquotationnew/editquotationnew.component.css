@@ -178,3 +178,8 @@ input.form-control {
     animation: bg-hue 2s linear infinite;
   }
   
+  .add-contact-table-section th:first-child{width: 110px;}
+  .add-contact-table-section td:nth-child(4) .userDatatable-content,  .add-contact-table-section td:nth-child(5) .userDatatable-content,
+  .add-contact-table-section td:nth-child(6) .userDatatable-content,  .add-contact-table-section td:nth-child(7) .userDatatable-content,
+  .add-contact-table-section td:nth-child(8) .userDatatable-content
+  {width: 178px;}

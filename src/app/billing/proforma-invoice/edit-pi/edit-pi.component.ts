@@ -98,6 +98,11 @@ export class EditPIComponent implements OnInit {
   invocePriceKey: any;
   row_cnt_mod: any;
 
+  //  quotationAddSignature
+quotationAddSignature_state:any;
+quotationAddSignature_filename:any;
+selectAdditionalSign:boolean=true; 
+
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
     this.addPI_section2 = this.fb.group({
@@ -224,7 +229,7 @@ export class EditPIComponent implements OnInit {
       'section3_termCondition': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
-
+      'section3_select_additional_signature': new FormControl({value: '', disabled: false}, Validators.required),
     });
     this.DiscountForm = new FormGroup({
       'section3_grant_total_show': new FormControl(null),
@@ -362,7 +367,11 @@ export class EditPIComponent implements OnInit {
   
   
   }
-
+  checkbox_selectAdditionalSignature:any;
+  eventCheckSelectAdditionalSignature(e:any){
+    this.checkbox_selectAdditionalSignature = e.target.checked
+    console.log(this.checkbox_selectAdditionalSignature );
+  }
 
   handleChangeLocal(event: any) {
     this.export_state_Local = event.target.value;
@@ -859,7 +868,7 @@ export class EditPIComponent implements OnInit {
        
            }          
         }
-     
+        this.quotationAddSignature();
       }
       else {
 
@@ -1068,7 +1077,7 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
     api_updatePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
     api_updatePI_req.logo = this.addPI_section3.value.section3_logo;
-
+    api_updatePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
 
     var addr = this.addPI_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
@@ -1539,6 +1548,37 @@ this.DiscountForm.reset();
   goBack() {
     this.router.navigate(['/ProformaInvoice']);
     
+  }
+
+  quotationAddSignature(){
+    let api_req: any = new Object();
+    let api_quotationAddSignature_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quotation_add_signature";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationAddSignature_req.action = "quotation_add_signature";
+    api_quotationAddSignature_req.user_id = localStorage.getItem('user_id');
+    api_quotationAddSignature_req.billerId = this.addPI_section1.value.companyName;
+    api_req.element_data = api_quotationAddSignature_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-quotation_add_signature response", response)
+
+      if (response.status == true) {
+      
+        this.quotationAddSignature_state=response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        this.quotationAddSignature_filename=response.signature_filename;
+      }
+      else {
+       
+      }
+
+
+    });
+
+
   }
 
 }

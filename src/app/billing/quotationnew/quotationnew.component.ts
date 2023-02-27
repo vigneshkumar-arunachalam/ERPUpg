@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { BnNgIdleService } from 'bn-ng-idle';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -31,6 +32,8 @@ export class QuotationnewComponent implements OnInit {
   edit_quotationID: any;
   //button flag
   clicked = false;
+  //pdf
+  urlSafe: SafeResourceUrl;
   // duplicate modal
   duplicateQuotationPopUpForm: FormGroup;
   duplicate_quotationID: any;
@@ -156,16 +159,23 @@ export class QuotationnewComponent implements OnInit {
   quotationPermission_Search: any;
   quotationPermission_View: any;
   quotationPermission_Share: any;
+  user_ids:any;
 
-
-  constructor(public serverService: ServerService, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService) {
+  constructor(public serverService: ServerService,public sanitizer: DomSanitizer,private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService) {
+    this.route.queryParams.subscribe(params => {
+      console.log(params)
+      var k = atob(params['ids']);
+      this.user_ids = k;
+      console.log(this.user_ids)
+      }
+      );
     this.setActualCost_FormGroup = this.fb.group({
       addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-
+    this.user_ids = localStorage.getItem('user_id');
     // this.bnIdle.startWatching(120).subscribe((isTimedOut: boolean) => {
     //   if (isTimedOut) {
     //     console.log('session expired');
@@ -252,8 +262,10 @@ export class QuotationnewComponent implements OnInit {
     this.addressControlsActualCost.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
-
-    this.quotationList({});
+setTimeout(() => {
+  this.quotationList({});
+}, 3000);
+    
     this.search_BillerList();
   }
   selectEventCustomer(item: any) {
@@ -514,7 +526,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchBiller_req.action = "biller_dropdown";
-    api_SearchBiller_req.user_id = localStorage.getItem('user_id');
+    api_SearchBiller_req.user_id = this.user_ids;
     api_req.element_data = api_SearchBiller_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-customer_status response", response);
@@ -530,11 +542,11 @@ export class QuotationnewComponent implements OnInit {
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/cal/customer_name_search";
+    api_req.api_url = "customer/customer_name_search";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "customer_name_search";
-    api_Search_req.user_id = localStorage.getItem('user_id');
+    api_Search_req.user_id = this.user_ids;
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -556,7 +568,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = localStorage.getItem('user_id');
+    api_quotationList.user_id = this.user_ids;
     api_quotationList.off_set = "0";
     api_quotationList.limit_val = "50";
     api_req.element_data = api_quotationList;
@@ -581,6 +593,8 @@ export class QuotationnewComponent implements OnInit {
     });
   }
   quotationList(data: any) {
+    Swal.fire('Loading');
+    Swal.showLoading();
     $("#searchQuotationFormId ").modal("hide");
 
     console.log("Quotation List UI Display Data after OnInit ")
@@ -593,7 +607,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = localStorage.getItem('user_id');
+    api_quotationList.user_id = this.user_ids;
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -604,8 +618,10 @@ export class QuotationnewComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+    
       console.log("qoutation list", response);
       if (response) {
+          Swal.close();
         this.quotation_list = response.quotation_details;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit
@@ -669,7 +685,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     add_newQuotation_req.action = "create_popup";
-    add_newQuotation_req.user_id = localStorage.getItem('user_id');
+    add_newQuotation_req.user_id = this.user_ids;
     add_newQuotation_req.enquiry_from_id = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
     add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
@@ -700,7 +716,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     edit_popup_req.action = "edit_enquiry_popup_quotation";
-    edit_popup_req.user_id = localStorage.getItem('user_id');
+    edit_popup_req.user_id = this.user_ids;
     edit_popup_req.quotation_id = this.edit_quotationID;
     api_req.element_data = edit_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -739,7 +755,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     duplicate_popup_req.action = "duplicate_enquiry_popup_quotation";
-    duplicate_popup_req.user_id = localStorage.getItem('user_id');
+    duplicate_popup_req.user_id = this.user_ids;
     duplicate_popup_req.quotation_id = this.duplicate_quotationID;
     api_req.element_data = duplicate_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -780,7 +796,7 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.action = "quotation_shared_person";
 
     quot_share_req.quotationId = this.sharePermissionQuotationId;
-    quot_share_req.user_id = localStorage.getItem('user_id');
+    quot_share_req.user_id = this.user_ids;
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -794,7 +810,7 @@ export class QuotationnewComponent implements OnInit {
         this.quotationSharedPerson_List = response.user_list;
         this.quotationSharedPerson_List1 = response.access_userid;
         this.quotationSharedResult = response.user_list;
-        this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',');
+        this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',').map(Number);
         console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
       }
@@ -824,7 +840,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     quot_share_update_req.action = "quotation_shared_user_update";
     quot_share_update_req.quotationId = this.sharePermissionQuotationId;
-    quot_share_update_req.user_id = localStorage.getItem('user_id');
+    quot_share_update_req.user_id = this.user_ids;
     quot_share_update_req.follower_user_id = this.typeConvertionString_quotation_Shared_Permission;
     api_req.element_data = quot_share_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -867,7 +883,7 @@ export class QuotationnewComponent implements OnInit {
   //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
   //   quot_share_update_req.action = "quotation_shared_user_update";
   //   quot_share_update_req.quotationId = this.sharePermissionQuotationId;
-  //   quot_share_update_req.user_id = localStorage.getItem('user_id');
+  //   quot_share_update_req.user_id = this.user_ids;
   //   quot_share_update_req.follower_user_id = this.quotationSharedCheckboxID_array.join(',');
   //   api_req.element_data = quot_share_update_req;
 
@@ -913,7 +929,7 @@ export class QuotationnewComponent implements OnInit {
   //   quot_share_req.action = "quotation_shared_person";
 
   //   quot_share_req.quotationId = this.sharePermissionQuotationId;
-  //   quot_share_req.user_id = localStorage.getItem('user_id');
+  //   quot_share_req.user_id = this.user_ids;
   //   api_req.element_data = quot_share_req;
   //   this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -1075,7 +1091,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     quot_approval_req.action = "quotation_permission_user";
     quot_approval_req.quotationId = this.quotationApproval_ID;
-    quot_approval_req.user_id = localStorage.getItem('user_id');
+    quot_approval_req.user_id = this.user_ids;
 
     api_req.element_data = quot_approval_req;
 
@@ -1119,7 +1135,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     quot_approvalUpdate_req.action = "quotation_send_to_approval";
     quot_approvalUpdate_req.quotationId = this.quotationApproval_ID;
-    quot_approvalUpdate_req.user_id = localStorage.getItem('user_id');
+    quot_approvalUpdate_req.user_id = this.user_ids;
     quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
     quot_approvalUpdate_req.quotation_comments = this.quotationApprovalForm.value.comments_approvedBy;
     quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
@@ -1192,7 +1208,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         delete_quotation_req.action = "delete_quotation";
         delete_quotation_req.quotationId = id;
-        delete_quotation_req.user_id = localStorage.getItem('user_id');
+        delete_quotation_req.user_id = this.user_ids;
         api_req.element_data = delete_quotation_req;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
@@ -1224,7 +1240,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     templateName_req.action = "get_template_name";
-    templateName_req.user_id = localStorage.getItem('user_id');
+    templateName_req.user_id = this.user_ids;
     templateName_req.quotationId = this.template_quotationID;
     api_req.element_data = templateName_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1251,7 +1267,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     templateNameUpdate_req.action = "temaplete_name_update";
-    templateNameUpdate_req.user_id = localStorage.getItem('user_id');
+    templateNameUpdate_req.user_id = this.user_ids;
     templateNameUpdate_req.quotationId = this.template_quotationID;
     templateNameUpdate_req.template_name = this.setTemplateNameForm.value.txt_templateName;
     api_req.element_data = templateNameUpdate_req;
@@ -1275,7 +1291,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     actualCost_req.action = "get_actualcost_quotation_details";
-    actualCost_req.user_id = localStorage.getItem('user_id');
+    actualCost_req.user_id = this.user_ids;
     actualCost_req.quotationId = this.actualCost_quotationID;
     api_req.element_data = actualCost_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1326,7 +1342,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     actualCostUpdate_req.action = "update_actualcost_quotation_value";
-    actualCostUpdate_req.user_id = localStorage.getItem('user_id');
+    actualCostUpdate_req.user_id = this.user_ids;
     actualCostUpdate_req.quotationId = this.actualCost_quotationID;
     actualCostUpdate_req.values = this.actualCost_ProductList;
     api_req.element_data = actualCostUpdate_req;
@@ -1363,7 +1379,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     fileattach_req.action = "quotation_attachment_details";
     fileattach_req.quotationId = this.fileAttach_quotationID;
-    fileattach_req.user_id = localStorage.getItem('user_id');
+    fileattach_req.user_id = this.user_ids;
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1414,7 +1430,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         fileattachDelete_req.action = "quotation_attachment_delete";
         fileattachDelete_req.common_attachmentId = this.commonAttachmentID;
-        fileattachDelete_req.user_id = localStorage.getItem('user_id');
+        fileattachDelete_req.user_id = this.user_ids;
         fileattachDelete_req.quotationId = this.fileAttach_quotationID;
         api_req.element_data = fileattachDelete_req;
 
@@ -1590,7 +1606,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     emailPage_req.action = "sendmail_popup_quot";
-    emailPage_req.user_id = localStorage.getItem('user_id');
+    emailPage_req.user_id = this.user_ids;
     emailPage_req.quotation_id = this.EmailQuotationID;
     api_req.element_data = emailPage_req;
 
@@ -1627,7 +1643,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
-    api_quotationTemplateDropdown_req.user_id = localStorage.getItem('user_id');
+    api_quotationTemplateDropdown_req.user_id = this.user_ids;
     api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
@@ -1675,7 +1691,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "quotation_sendmail";
-    api_email_req.user_id = localStorage.getItem('user_id');
+    api_email_req.user_id = this.user_ids;
     // api_email_req.customer_contract_id = this.EmailCustomerContractID;
 
     api_email_req.from_email = this.FromEmailValue;
@@ -1825,7 +1841,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
       api_req.api_type = "web";
       api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
       transactionComment_req.action = "transaction_enquiry_command";
-      transactionComment_req.user_id = localStorage.getItem('user_id');
+      transactionComment_req.user_id = this.user_ids;
       transactionComment_req.transaction_id = this.comment_TransactionID;
       api_req.element_data = transactionComment_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1856,7 +1872,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     transactionCommentSave_req.action = "transaction_enquiry_command_save";
-    transactionCommentSave_req.user_id = localStorage.getItem('user_id');
+    transactionCommentSave_req.user_id = this.user_ids;
 
     transactionCommentSave_req.transaction_id = this.comment_TransactionID;
     transactionCommentSave_req.commands = this.quotationCommentsForm.value.quotation_Comments;
@@ -1945,7 +1961,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotConvertPI_req.action = "quotation_convert_to_proformainvoice";
-    api_quotConvertPI_req.user_id = localStorage.getItem('user_id');
+    api_quotConvertPI_req.user_id = this.user_ids;
     api_quotConvertPI_req.quotationId = this.quotationID_PI;
     api_req.element_data = api_quotConvertPI_req;
 
@@ -1976,8 +1992,10 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
   }
   pdf(quotationId: any) {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
-    window.open(url, '_blank');
-    console.log("url", url)
+    // window.open(url, '_blank');
+    // console.log("url", url)
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
   }
   quotationExcelExport(quotationId: any) {
     let api_req: any = new Object();
@@ -1988,7 +2006,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotExcel_req.action = "excel_export";
-    api_quotExcel_req.user_id = localStorage.getItem('user_id');
+    api_quotExcel_req.user_id = this.user_ids;
     api_quotExcel_req.quotation_id = quotationId;
     api_req.element_data = api_quotExcel_req;
 
@@ -2138,7 +2156,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_dup_req.action = "duplicate_quotation";
-    api_dup_req.user_id = localStorage.getItem('user_id');
+    api_dup_req.user_id = this.user_ids;
     api_dup_req.quotation_id = this.duplicate_quotationID;
     api_dup_req.enquiry_from_id = this.duplicateQuotationPopUpForm.value.d_enquiryFrom_addPopUP;
     api_dup_req.quotation_valid_day = this.duplicateQuotationPopUpForm.value.d_quotationValidity_addPopUP;

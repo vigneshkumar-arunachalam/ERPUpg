@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
       if(s.getdatas['0'].userId){
         if(localStorage.getItem('user_id')==null){
           s.qrLogin();
-        }      
+        }  
         this.websocket.onclose;
       }
      
@@ -60,6 +60,8 @@ export class LoginComponent implements OnInit {
 		}; 
 
    }
+  //  code_val=WXpSalgyOXNaR1Z5Y0E9PQ==&uscode=TXprPQ==
+
 
   ngOnInit(): void {
 
@@ -117,6 +119,7 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('user_name',response.firstName)
       localStorage.setItem('role',response.role)
       localStorage.setItem('profile_image',response.profile_image)
+   
 
       if(this.userID!=''){
           this.router.navigate(['/']);
@@ -232,11 +235,12 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('user_name',response.firstName)
         localStorage.setItem('role',response.role)
         localStorage.setItem('profile_image',response.profile_image)
-
+       
 
         if(this.userID!=''){
             this.router.navigate(['/']);
         }
+       
       
         Swal.close();
         iziToast.success({

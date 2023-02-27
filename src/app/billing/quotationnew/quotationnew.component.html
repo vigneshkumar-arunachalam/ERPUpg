@@ -919,7 +919,7 @@
 <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
 <div class="modal fade" id="searchQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content searchQuotationCSS">
             <div class="modal-header">
                 <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
@@ -1088,7 +1088,7 @@
 <!----------Modal Pop Up (BEGIN)  for Quotation Approval in customer Contract------------------>
 <div class="modal fade" id="quotationApprovalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content quotApprovalcss">
             <div class="modal-header ">
                 <h2 class="modal-title" id="invoiceAttachModalLongTitle">Quotation Approval</h2>
@@ -1252,7 +1252,7 @@
 <!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
 <div class="modal fade" id="setActualCostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="invoiceAttachModalLongTitle">Actual Price Update
@@ -1459,7 +1459,7 @@
 <!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
 <div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="exampleModalLongTitle">
@@ -1536,7 +1536,7 @@
 <!----------Modal Pop Up (BEGIN)  for email Text Editor in customer Contract------>
 <div class="modal fade" id="TextEditorId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="contractGenerateModalLongTitle">Quotation-Email </h2>
@@ -1707,7 +1707,7 @@
 <!-- -----------------------Modal-Quotation Comments begins-------------------------------- -->
 <div class="modal fade" id="quotationCommentsId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 class="modal-title" id="exampleModalLongTitle">
@@ -1793,6 +1793,36 @@
     </div>
 </div>
 <!----------Modal Pop Up (END)  for PI(performa) in customer Contract------------------>
+
+
+<!----------Modal Pop Up (BEGIN) PDF------>
+<div class="modal fade" id="pdfFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content temporaryFileGenerateCSS">
+            <div class="modal-header">
+                <h2 class="modal-title" >PDF </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <iframe [src]="urlSafe" style="width: 800px; height: 500px"></iframe>
+              
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!----------Modal Pop Up (END)PDF------>
 
 
 

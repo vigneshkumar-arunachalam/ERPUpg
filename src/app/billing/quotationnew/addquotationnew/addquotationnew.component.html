@@ -325,9 +325,9 @@
                 </div>
                 <div class="col-12" cdkDropList (cdkDropListDropped)="onDrop($event)">
 
-                    <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+                    <section style="overflow: scroll;" >
 
-                        <div [formGroupName]="i">
+                        <div >
                             <div class="row">
                                 <div class="col-12">
                                     <!-- <h3 style="text-align:center;color:rgb(141, 87, 129);font-weight: 500;">
@@ -356,15 +356,15 @@
                                             <th style="width:20px"><span class="userDatatable-title">Select Tax</span>
                                             </th>
 
-                                            <th *ngIf="i>0" style="width:20px">
+                                            <th style="width:20px">
                                                 <span class="userDatatable-title">Action</span>
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody cdkDrag cdkDragLockAxis="y">
+                                    <tbody cdkDrag cdkDragLockAxis="y" formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
 
 
-                                        <tr>
+                                        <tr [formGroupName]="i">
                                             <td style="width:370px;display:block;">
                                                 <div class="userDatatable-content" style="top:0">
                                                     <div class="alignFormArray" style="display:block;text-align: left;">
