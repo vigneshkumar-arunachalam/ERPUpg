@@ -743,6 +743,8 @@ selectAdditionalSign:boolean=true;
           'Currency': response.billing_pararent_details[0].currency,
           'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
           'PaymentVia': response.billing_pararent_details[0].paymentVIA,
+          'export_state': response.billing_pararent_details[0].export_state,
+          'mile_discount_state': response.billing_pararent_details[0].mile_discount_state,
           'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
           'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
 
@@ -754,7 +756,7 @@ selectAdditionalSign:boolean=true;
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
-          console.log('billchild_details++index'+index);
+          console.log('billchild_details+index'+index);
 
           // this.sub_dis_type='';
           // this.sub_dis_val='';
@@ -810,7 +812,9 @@ selectAdditionalSign:boolean=true;
           //row-4
           'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
           'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
-          'section3_bankingCharge_amt_txtbox': response.billing_pararent_details[0].addAmt,
+          'banking_charge_name': response.billing_pararent_details[0].add_name,
+
+          'banking_charge_amt': response.billing_pararent_details[0].add_amt,
           //row-5
           'section3_grand_total': response.billing_pararent_details[0].netPayment,
           //row-7

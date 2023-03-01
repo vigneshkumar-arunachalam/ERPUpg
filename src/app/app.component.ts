@@ -86,11 +86,10 @@ export class AppComponent {
   onActivate(event: any) {
     this.file_path = this.router.url;
     // console.log(this.router.url);
-    if (localStorage.getItem('access_token')) {
-      this.templateAuthView = false;
-
-    } else if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
-      this.templateAuthView = false;
+     if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
+      localStorage.clear();
+      // setTimeout(() => {
+      
       let api_req: any = new Object();
       let addAPI: any = new Object();
       api_req.moduleType = "login";
@@ -113,6 +112,7 @@ export class AppComponent {
         console.log(response)
    
         if (response.userId != '') {
+          this.templateAuthView = false;
           setTimeout(()=>{
             this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
@@ -122,6 +122,10 @@ export class AppComponent {
         }
 
       });
+    // }, 3000);
+    }else if (localStorage.getItem('access_token')) {
+      this.templateAuthView = false;
+
     } else {
       this.templateAuthView = true;
       this.router.navigate(['/login']);

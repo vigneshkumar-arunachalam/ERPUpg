@@ -66,13 +66,13 @@ export class QuotationnewComponent implements OnInit {
   search_SharedPersonName: any;
   values = '';
   //quotation shared-rework--new
-  quotationSharedPerson_EditOnLoad_Values:any;
-  quotationSharedPerson_List:any;
-  quotationSharedPerson_List1:any;
-  CheckBox_DynamicArrayList_quotationSharedPerson:any;
-  typeConvertionString_quotation_Shared_Permission:any;
-  checkbox_ID_SingleParameter_quotationShare_Value:any;
-  Checkbox_value_quotationShare:any;
+  quotationSharedPerson_EditOnLoad_Values: any;
+  quotationSharedPerson_List: any;
+  quotationSharedPerson_List1: any;
+  CheckBox_DynamicArrayList_quotationSharedPerson: any;
+  typeConvertionString_quotation_Shared_Permission: any;
+  checkbox_ID_SingleParameter_quotationShare_Value: any;
+  Checkbox_value_quotationShare: any;
   //quotation-approval
   quotationApproval_ID: any;
   quotationApprovalForm: FormGroup;
@@ -159,16 +159,19 @@ export class QuotationnewComponent implements OnInit {
   quotationPermission_Search: any;
   quotationPermission_View: any;
   quotationPermission_Share: any;
-  user_ids:any;
+  user_ids: any;
 
-  constructor(public serverService: ServerService,public sanitizer: DomSanitizer,private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService) {
+  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService) {
     this.route.queryParams.subscribe(params => {
       console.log(params)
-      var k = atob(params['ids']);
-      this.user_ids = k;
-      console.log(this.user_ids)
+      if(params['ids']!=''&&params['ids']!=undefined&&params['ids']!='undefined'&&params['ids']!=null&&params['ids']!='null'){
+        var k = atob(params['ids']);
+        this.user_ids = k;
+        console.log(this.user_ids)
       }
-      );
+      
+    }
+    );
     this.setActualCost_FormGroup = this.fb.group({
       addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });
@@ -262,10 +265,10 @@ export class QuotationnewComponent implements OnInit {
     this.addressControlsActualCost.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
-setTimeout(() => {
-  this.quotationList({});
-}, 3000);
-    
+    setTimeout(() => {
+      this.quotationList({});
+    }, 3000);
+
     this.search_BillerList();
   }
   selectEventCustomer(item: any) {
@@ -618,10 +621,10 @@ setTimeout(() => {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
+
       console.log("qoutation list", response);
       if (response) {
-          Swal.close();
+        Swal.close();
         this.quotation_list = response.quotation_details;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit
@@ -690,7 +693,9 @@ setTimeout(() => {
     add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
     api_req.element_data = add_newQuotation_req;
+    $("#addNewQuotationFormId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#addNewQuotationFormId").removeAttr("disabled");
       console.log(response);
 
       console.log("pop up for add quotation", response);
@@ -803,7 +808,7 @@ setTimeout(() => {
       if (response.status == true) {
 
 
-        this.quotationSharedPerson_EditOnLoad_Values =response.access_userid;
+        this.quotationSharedPerson_EditOnLoad_Values = response.access_userid;
         // setTimeout(() => {
         //   this.quotationSharedPerson_List = response.user_list;
         // }, 2000);
@@ -831,7 +836,7 @@ setTimeout(() => {
     }
   }
 
-  quotationSharedPersonUpdate(){
+  quotationSharedPersonUpdate() {
     let api_req: any = new Object();
     let quot_share_update_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -851,7 +856,7 @@ setTimeout(() => {
         });
 
         $('#quotationSharedPersonId').modal('hide');
-         this.typeConvertionString_quotation_Shared_Permission = [];
+        this.typeConvertionString_quotation_Shared_Permission = [];
       } else {
         iziToast.warning({
           message: "Response Failed",
@@ -867,9 +872,9 @@ setTimeout(() => {
         console.log("final error", error);
       };
   }
- 
+
   // quotationSharedPersonUpdate1() {
-  
+
   //   console.log("Checkbox current click", this.quotationSharedCheckboxID_array)
 
   //   this.quotationSharedCheckboxID_array.join(this.quotationSharedPreviousChecked);
@@ -893,7 +898,7 @@ setTimeout(() => {
   //       this.quotationSharedResult = response.customer_invoice_details;
   //       console.log("response.customer_invoice_details", response.customer_invoice_details)
   //       this.quotationList({});
-       
+
   //       $("#quotationSharedPersonId").modal("hide");
   //       console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
   //       iziToast.success({
@@ -911,14 +916,14 @@ setTimeout(() => {
   //     }
 
 
-      
+
 
   //   });
 
 
   // }
   // quotationSharedPersonEdi(QuotationId: any) {
- 
+
   //   this.sharePermissionQuotationId = QuotationId
   //   let api_req: any = new Object();
   //   let quot_share_req: any = new Object();
@@ -1001,27 +1006,27 @@ setTimeout(() => {
     this.Checkbox_value_quotationShare = event.target.checked;
     console.log(this.Checkbox_value_quotationShare)
     if (this.Checkbox_value_quotationShare) {
-  
+
       this.CheckBox_DynamicArrayList_quotationSharedPerson.push(Number(data));
       this.CheckBox_DynamicArrayList_quotationSharedPerson.join(',');
       this.CheckBox_DynamicArrayList_quotationSharedPerson.sort();
       console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson);
-  
+
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
-        console.log(index)
-        if (index == -1) {
-          this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
-        } else {
-          this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
-        }
-        console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      console.log(index)
+      if (index == -1) {
+        this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
+      } else {
+        this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
+      }
+      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
     }
     this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
-  
+
     console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
-    
+
   }
   QuotationSharedCHK1(data: any, event: any) {
     console.log("before--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
@@ -1029,29 +1034,29 @@ setTimeout(() => {
     this.checkbox_ID_SingleParameter_quotationShare_Value = data;
     this.Checkbox_value_quotationShare = event.target.checked;
     // console.log(this.Checkbox_value_quotationShare)
-//     console.log(this.quotationSharedPerson_List1)
-// var k = this.quotationSharedPerson_List1.split(',');
+    //     console.log(this.quotationSharedPerson_List1)
+    // var k = this.quotationSharedPerson_List1.split(',');
     if (this.Checkbox_value_quotationShare) {
-// console.log(k.indexOf(data))
-// for(var i=0;i<=k.length;i++){
-//   if(k[i]!=data){
-// k.push(data);
-//   }
-// }
-// console.log(k)
+      // console.log(k.indexOf(data))
+      // for(var i=0;i<=k.length;i++){
+      //   if(k[i]!=data){
+      // k.push(data);
+      //   }
+      // }
+      // console.log(k)
       if (this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data) < 0) {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.push(data);
         var k = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
         var a = k.split(',');
         let filteredArr = a.filter((item: any) => item === data);
-console.log(filteredArr);
+        console.log(filteredArr);
       }
       else {
         //type something
       }
       console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
-    }else {
+    } else {
       // for(var i=0;i<=k.length;i++){
       //   if(k[i]==data){
       // const index = k.indexOf(data);
@@ -1076,7 +1081,7 @@ console.log(filteredArr);
     // this.quotationSharedPerson_List1 = k.toString();
     // console.log(this.quotationSharedPerson_List1)
     this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
-this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
+    this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
     console.log("after--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
@@ -1153,7 +1158,9 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
 
     api_req.element_data = quot_approvalUpdate_req;
 
+    $("#quotationApprovalId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#quotationApprovalId").removeAttr("disabled");
       console.log("response status", response.status);
       if (response.status == true) {
 
@@ -1965,13 +1972,16 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
     api_quotConvertPI_req.quotationId = this.quotationID_PI;
     api_req.element_data = api_quotConvertPI_req;
 
+    $("#PIId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#PIId").removeAttr("disabled");
       console.log("response-quotation convert pi", response)
       if (response.status == true) {
         iziToast.success({
-          message: "Success",
+          message: "PI Conversion Successfull. Go to Old ERP PI List",
           position: 'topRight'
         });
+        this.quotationList({});
         $('#PIId').modal('hide');
       }
       else {
@@ -1980,6 +1990,7 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
           message: "Data Not Found",
           position: 'topRight'
         });
+        this.quotationList({});
 
       }
     }), (error: any) => {
@@ -1992,9 +2003,10 @@ this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationShare
   }
   pdf(quotationId: any) {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
-    // window.open(url, '_blank');
-    // console.log("url", url)
-    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    window.open(url, '_blank');
+    console.log("url", url)
+    $('#pdfFormId').modal('hide');
+    // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
   }
   quotationExcelExport(quotationId: any) {

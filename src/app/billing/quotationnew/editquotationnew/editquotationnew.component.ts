@@ -411,7 +411,7 @@ datavalue:any;
         this.billerIDUpdate = response.footer_details[index].billerId;
         if (response.status == true) {
           this.editQuotationInvoice_section1.patchValue({
-            'e_quotationNumber': response.quotation_no,
+            // 'e_quotationNumber': response.quotation_no,
             'e_selectFooter': this.selected_pdf_footer,
             'e_selectCurrency': response.currency_id,
             'e_termConditionContentChange': response.quotation_terms_cond,

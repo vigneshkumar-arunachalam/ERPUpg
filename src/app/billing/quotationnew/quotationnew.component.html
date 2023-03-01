@@ -233,7 +233,7 @@
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="PDF" data-toggle="modal"
-                                                                    data-target="#pdfFormId"
+                                                                   
                                                                     (click)="pdf(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
                                                                         height="100" viewBox="0 0 24 24" fill="none"
@@ -307,7 +307,7 @@
                                                             </li> -->
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="Proforma Invoice"
-                                                                    *ngIf="(list.pi_convert_status!='0')"
+                                                                    *ngIf="(list.pi_convert_status=='0')"
                                                                     data-toggle="modal" data-target="#PIId"
                                                                     (click)="PIEdit(list.quotationId)">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="100"
@@ -1757,7 +1757,7 @@
         <div class="modal-content invoicecss">
             <div class="modal-header">
                 <h2 class="modal-title" id="invoiceAttachModalLongTitle">
-                    PI Convertion With Small Task</h2>
+                    PI Convertion </h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1808,7 +1808,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <iframe [src]="urlSafe" style="width: 800px; height: 500px"></iframe>
+                <!-- <iframe [src]="urlSafe" style="width: 800px; height: 500px"></iframe> -->
               
             </div>
             <div class="modal-footer">

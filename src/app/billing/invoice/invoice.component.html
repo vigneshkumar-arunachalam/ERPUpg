@@ -464,7 +464,8 @@
                             <div class="checkbox-group d-flex">
                               <div class="on-off-toggle">
                                 <input class="checkbox" type="checkbox" id="check-grp1-{{i}}" 
-                                (change)="InvoiceShowCHK(quot.userId,$event)">
+                                checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                                (change)="InvoiceShowCHK(quot.user_id,$event)">
                                 <label for="check-grp1-{{i}}" ></label>
                               </div>
                             </div>

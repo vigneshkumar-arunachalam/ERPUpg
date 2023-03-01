@@ -553,7 +553,7 @@ export class ProformaInvoiceComponent implements OnInit {
     })
   }
 
-  deleteInvoice(billId :any){
+  deleteProformaInvoice(billId :any){
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
