@@ -9,6 +9,7 @@ declare var iziToast: any;
 declare var tinymce: any;
 import Swal from 'sweetalert2'
 import { InputModalityDetector } from '@angular/cdk/a11y';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-quotationnew',
@@ -804,7 +805,7 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.user_id = this.user_ids;
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+alert(response.HttpErrorResponse.ERROR.headers.status)
       if (response.status == true) {
 
 
@@ -827,12 +828,17 @@ export class QuotationnewComponent implements OnInit {
         });
 
       }
-    }), (error: any) => {
+    }), (error: HttpErrorResponse) => {
+      if(error.status==500){
+        alert("wrong")
+        console.log("vignesh",error)
+      }
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
       console.log("final error", error);
+      
     }
   }
 

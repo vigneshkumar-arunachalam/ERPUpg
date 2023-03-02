@@ -630,27 +630,11 @@ quotationAddSignature_filename:any;
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
-       // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-
-        this.addQuotationInvoice_section3.patchValue({
-               'section3_gst_dropdown': response.default_tax_id,
-  
-           });
-
-        //console.log("default_tax_id", response.default_tax_id);
-        //alert(response.default_tax_id)
-
-        //   if(response.default_tax_id!='null'&&response.default_tax_id!=null){
-        //   $("#billerIDs").val(response.default_tax_id)
-        //   this.addQuotationInvoice_section3.patchValue({
-        //     'section3_gst_dropdown': response,
-
-        //   });
-
-        //   this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-
-
-        // }
+        this.tax_per_mod = response.percent_val;
+        $('#tax_per_hd_id').val(response.percent_val);          
+          setTimeout(()=>{this.settaxId(response.default_tax_id); },1000);
+ 
+        this.totalCalculate()
 
       }
 
@@ -658,6 +642,12 @@ quotationAddSignature_filename:any;
 
     });
   }
+
+
+  settaxId(default_tax_id:any){
+    this.addQuotationInvoice_section3.get('section3_gst_dropdown').setValue(default_tax_id);
+  }
+  
   currencyQuotationTermChange() {
 
     let api_req: any = new Object();
@@ -694,7 +684,7 @@ quotationAddSignature_filename:any;
     });
 
   }
-  saveQuotationEnquiry() {
+  saveQuotationEnquiry($event: MouseEvent) {
     
     console.log("this.checkbox_termsCondition_DontShow",this.checkbox_termsCondition_DontShow);
     console.log("this.checkbox_descriptionDetails_DontShow",this.checkbox_descriptionDetails_DontShow);
@@ -854,8 +844,11 @@ quotationAddSignature_filename:any;
     console.log(api_req);
 
 
-    
+    ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      
+      ($event.target as HTMLButtonElement).disabled = false;
 
       console.log("add quotation new save", response);
       if (response.status == true) {

@@ -117,14 +117,17 @@ export class AppComponent {
             this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
         }
-        if (response.userId == 'undefined') {
+        if (response.userId == undefined || response.userId == 'undefined' || response.userId == '') {
+          console.log("else if test",response.userId)
           this.router.navigate(['/logout']);
         }
 
       });
     // }, 3000);
     }else if (localStorage.getItem('access_token')) {
+     
       this.templateAuthView = false;
+      this.router.navigate(['/logout']);
 
     } else {
       this.templateAuthView = true;

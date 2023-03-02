@@ -853,7 +853,7 @@ datavalue:any;
     });
 
   }
-  updateQuotationEnquiry() {
+  updateQuotationEnquiry($event: MouseEvent) {
     
     let api_req: any = new Object();
     let api_UpdateEnquiry_req: any = new Object();
@@ -966,7 +966,9 @@ datavalue:any;
     }
    api_UpdateEnquiry_req.values = addr;
 	console.log(api_req);
+  ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      ($event.target as HTMLButtonElement).disabled = false;
 
       console.log("add quotation new save", response);
       if (response.status == true) {

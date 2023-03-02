@@ -130,6 +130,7 @@ selectAdditionalSign:boolean=true;
 
 
         this.editPI();
+       
       }
       );
     this.loadADD();
@@ -535,7 +536,7 @@ selectAdditionalSign:boolean=true;
       this.salesRepList = response.sales_rep;
       this.paymentviaList = response.paymentvia;
      
-      this.TaxDropdown();
+    //  this.TaxDropdown();
       console.log("response-load-pi", response)
     });
 
@@ -557,12 +558,14 @@ selectAdditionalSign:boolean=true;
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
+        this.tax_per_mod = response.percent_val;
+        $('#tax_per_hd_id').val(response.percent_val);
         setTimeout(() => {
           this.addPI_section3.patchValue({
             'section3_gst_dropdown':response.default_tax_id,  
           });
 
-        }, 500);
+        }, 1000);
        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
        console.log('response.default_tax_id'+response.default_tax_id);
 
@@ -750,6 +753,8 @@ selectAdditionalSign:boolean=true;
 
         });
   
+        this.TaxDropdown();
+
         console.log('billchild_details.length'+response.billchild_details.length);
         this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
        // this.getProformaBillerDetails();
@@ -857,7 +862,7 @@ selectAdditionalSign:boolean=true;
         //   'section3_logo': response.billing_pararent_details[0].logo,
         // });
         // this.loadADD();
-      this.editAddress();
+     // this.editAddress();
         // this.removeAddresstest(response.billchild_details.length);
         // console.log(response.billchild_details.length);
         for (let index = 0; index < response.billchild_details.length; index++) {
@@ -891,7 +896,7 @@ selectAdditionalSign:boolean=true;
         console.log(error);
       }
 
-      
+     
 
   }
 
