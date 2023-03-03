@@ -602,30 +602,31 @@
                               </div>
                         </div>
                     </div>
-                
                     <div class="col-md-12 col-12">
-                        <div class="form-group row">
-                            <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
-                            <div class="col-lg-10">
-                                <select name="templat" id="template" class="form-control"
-                                    formControlName="email_template" (change)="templateContentEmailDropdown($event)">
-                                    <option [ngValue]="null" selected disabled>Select Template</option>
-                                    <!-- <option *ngFor="let template of email_crmTemplateList"
-                                        value="{{ template.crm_template_id }}">
-                                        {{template.crm_template_name}}
-                                    </option> -->
-                                </select>
-                                <br>
+                      <div class="form-group row">
+                          <label for="emailPDFType" class="col-lg-2 col-form-label"><span> PDF Type</span> :</label>
+                          <div class="col-lg-10 mt-2">
 
-                                <div  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
-                                class="alert alert-danger alertdangerCustomCSS1 ">
-                                Template is Required
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                              (change)="CBF_PDFLink($event)">
+                              <label class="form-check-label" for="PDF Link">PDF Link</label>
                             </div>
+                            <div class="form-check form-check-inline" >
+                              <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                              (change)="CBF_TemplateSelection($event)">
+                              <label class="form-check-label" for="Template Selection"> Template Selection</label>
                             </div>
-                        
+                            <div class="form-check form-check-inline">
+                              <input class="form-check-input" type="checkbox" id="Payment Link" value="option3" 
+                              (change)="CBF_PaymentLink($event)">
+                              <label class="form-check-label" for="Payment Link">Payment Link</label>
+                            </div>
 
-                        </div>
-                    </div>
+                          </div>
+                      </div>
+                  </div>
+                 
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
@@ -639,27 +640,29 @@
                         </div>
 
                     </div>
-                    <div class="col-md-12 col-12">
-                        <div class="form-group row">
-                            <label for="emailPDFType" class="col-lg-2 col-form-label"><span> PDF Type</span> :</label>
-                            <div class="col-lg-10">
+                    <div class="col-md-12 col-12" *ngIf="(CBV_TemplateSelection==true)">
+                      <div class="form-group row">
+                          <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                          <div class="col-lg-10">
+                              <select name="templat" id="template" class="form-control"
+                                  formControlName="email_template" (change)="templateContentEmailDropdown($event)">
+                                  <option [ngValue]="null" selected disabled>Select Template</option>
+                                  <option *ngFor="let template of email_crmTemplateList"
+                                      value="{{ template.crm_template_id }}">
+                                      {{template.crm_template_name}}
+                                  </option>
+                              </select>
+                              <br>
 
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                <label class="form-check-label" for="inlineCheckbox1">PDF Link</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                <label class="form-check-label" for="inlineCheckbox2"> Template Selection</label>
-                              </div>
-                              <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" >
-                                <label class="form-check-label" for="inlineCheckbox3">Payment Link</label>
-                              </div>
+                              <div  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                              class="alert alert-danger alertdangerCustomCSS1 ">
+                              Template is Required
+                          </div>
+                          </div>
+                      
 
-                            </div>
-                        </div>
-                    </div>
+                      </div>
+                  </div>
                     <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>

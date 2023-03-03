@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { ActivatedRoute } from '@angular/router';
 import { ServerService } from './services/server.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,7 +15,7 @@ export class AppComponent {
   uscode: any;
   public file_path: string = "";
   templateAuthView = false;
-  constructor(private bnIdle: BnNgIdleService, private router: Router, private route: ActivatedRoute, private serverService: ServerService) {
+  constructor(private bnIdle: BnNgIdleService, private router: Router, private route: ActivatedRoute, private serverService: ServerService,public datepipe: DatePipe) {
     this.route.queryParams
       .subscribe(params => {
         console.log("params output value", params);
@@ -28,10 +28,15 @@ export class AppComponent {
   ngOnInit(): void {
     //60 = 1 minute
     //3600= 1 hour
-    this.bnIdle.startWatching(3600).subscribe((res) => {
+    this.bnIdle.startWatching(1800).subscribe((res) => {
       if (res) {
-        console.log('session expired after 900 seconds');
-        this.router.navigateByUrl('/logout');
+        localStorage.clear();
+        this.templateAuthView = true;
+        console.log('session expired after half an hour 1800 seconds');
+        let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+        console.log(currentDateTime);
+        // this.router.navigateByUrl('/logout');
+        this.router.navigate(['/login']);
       }
     });
 
@@ -117,17 +122,14 @@ export class AppComponent {
             this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
         }
-        if (response.userId == undefined || response.userId == 'undefined' || response.userId == '') {
-          console.log("else if test",response.userId)
+        if (response.userId == 'undefined') {
           this.router.navigate(['/logout']);
         }
 
       });
     // }, 3000);
     }else if (localStorage.getItem('access_token')) {
-     
       this.templateAuthView = false;
-      this.router.navigate(['/logout']);
 
     } else {
       this.templateAuthView = true;

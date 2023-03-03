@@ -10,7 +10,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips'; 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
-
+import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MastersComponent } from './masters/masters.component';
@@ -121,7 +121,7 @@ import { EditInvoiceComponent } from './billing/invoice/edit-invoice/edit-invoic
     BrowserAnimationsModule,MatFormFieldModule,MatAutocompleteModule,MatInputModule,MatSliderModule,
     AutocompleteLibModule,PdfViewerModule
   ],
-  providers: [   [BnNgIdleService], { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+  providers: [    [DatePipe],  [BnNgIdleService], { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
 ],
   bootstrap: [AppComponent]
 })
