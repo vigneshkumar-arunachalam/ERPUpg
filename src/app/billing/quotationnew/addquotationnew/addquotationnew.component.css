@@ -526,3 +526,7 @@ line-height: 3.42857 !important;
 .add-contact-table-section tbody:nth-child(even) {background: #fcf6fc}
 
 .add-contact-table-section tbody:nth-child(odd) {background: #f5f5f5}
+
+.scrollcontrol{
+  overflow:scroll;
+}

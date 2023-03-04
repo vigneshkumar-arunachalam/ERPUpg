@@ -86,7 +86,7 @@ export class DidinvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_DidList.action = "invoice_list";
-    api_DidList.user_id = localStorage.getItem("user_id");
+    api_DidList.user_id = sessionStorage.getItem("user_id");
     api_DidList.off_set = list_data.offset;
     api_DidList.limit_val = list_data.limit;
     api_DidList.current_page = "";
@@ -151,7 +151,7 @@ export class DidinvoiceComponent implements OnInit {
     api_invoiceTyp.action = "invoice_type_get";
 
     api_invoiceTyp.billId = id;
-    api_invoiceTyp.user_id = localStorage.getItem('user_id');
+    api_invoiceTyp.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_invoiceTyp;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -195,7 +195,7 @@ export class DidinvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_invTypeUpdate.action = "invoice_type_update";
     api_invTypeUpdate.billId =   this.InvoiceType_BillerID;
-    api_invTypeUpdate.user_id = localStorage.getItem('user_id');
+    api_invTypeUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
     api_req.element_data = api_invTypeUpdate;
 
@@ -245,7 +245,7 @@ export class DidinvoiceComponent implements OnInit {
     api_insertProforma.action = "terms_condition_get";
 
     api_insertProforma.billId = id;
-    api_insertProforma.user_id = localStorage.getItem('user_id');
+    api_insertProforma.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_insertProforma;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -289,7 +289,7 @@ export class DidinvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_insertProformaUpdate.action = "terms_condition_update";
     api_insertProformaUpdate.billId =   this.TermCondition_BillerID;
-    api_insertProformaUpdate.user_id = localStorage.getItem('user_id');
+    api_insertProformaUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_insertProformaUpdate.terms_values = this.setTermCondition.value.setTerm;
     api_req.element_data = api_insertProformaUpdate;
 
@@ -337,7 +337,7 @@ export class DidinvoiceComponent implements OnInit {
     quot_share_req.action = "invoice_shared_person";
 
     quot_share_req.billId = this.sharePermissionBillId;
-    quot_share_req.user_id = localStorage.getItem('user_id');
+    quot_share_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -379,7 +379,7 @@ export class DidinvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_insertProformaUpdate.action = "invoice_shared_update";
     api_insertProformaUpdate.billId =   this.SharePermission_BillerID;
-    api_insertProformaUpdate.user_id = localStorage.getItem('user_id');
+    api_insertProformaUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_insertProformaUpdate.shared_user_id = this.SharePermission.value.share_permission;
     api_req.element_data = api_insertProformaUpdate;
 

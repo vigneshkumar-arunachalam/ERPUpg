@@ -27,16 +27,20 @@ export class AppComponent {
   }
   ngOnInit(): void {
     //60 = 1 minute
+    //900 = 15 minute
     //3600= 1 hour
-    this.bnIdle.startWatching(1800).subscribe((res) => {
+    this.bnIdle.startWatching(900).subscribe((res) => {
       if (res) {
-        localStorage.clear();
+        sessionStorage.clear();
         this.templateAuthView = true;
-        console.log('session expired after half an hour 1800 seconds');
+        console.log('session expired after half an hour 900 seconds');
         let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
         console.log(currentDateTime);
         // this.router.navigateByUrl('/logout');
         this.router.navigate(['/login']);
+      }else{
+        let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
+        console.log(currentDateTime);
       }
     });
 
@@ -67,12 +71,12 @@ export class AppComponent {
 
 
 
-  //     localStorage.setItem('access_token','test')
-  //     localStorage.setItem('login_status','1')
-  //     localStorage.setItem('user_id',response.userId)
-  //     localStorage.setItem('user_name',response.firstName)
-  //     localStorage.setItem('role',response.role)
-  //     localStorage.setItem('profile_image',response.profile_image)
+  //     sessionStorage.setItem('access_token','test')
+  //     sessionStorage.setItem('login_status','1')
+  //     sessionStorage.setItem('user_id',response.userId)
+  //     sessionStorage.setItem('user_name',response.firstName)
+  //     sessionStorage.setItem('role',response.role)
+  //     sessionStorage.setItem('profile_image',response.profile_image)
 
 
   //     if(this.userID!=''){
@@ -92,7 +96,7 @@ export class AppComponent {
     this.file_path = this.router.url;
     // console.log(this.router.url);
      if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
-      localStorage.clear();
+      sessionStorage.clear();
       // setTimeout(() => {
       
       let api_req: any = new Object();
@@ -108,12 +112,12 @@ export class AppComponent {
       api_req.element_data = addAPI;
 
       this.serverService.sendServer(api_req).subscribe((response: any) => {
-        localStorage.setItem('access_token', 'test')
-        localStorage.setItem('login_status', '1')
-        localStorage.setItem('user_id', response.userId)
-        localStorage.setItem('user_name', response.firstName)
-        localStorage.setItem('role', response.role)
-        localStorage.setItem('profile_image', response.profile_image)
+        sessionStorage.setItem('access_token', 'test')
+        sessionStorage.setItem('login_status', '1')
+        sessionStorage.setItem('erp_c4c_user_id', response.userId)
+        sessionStorage.setItem('user_name', response.firstName)
+        sessionStorage.setItem('role', response.role)
+        sessionStorage.setItem('profile_image', response.profile_image)
         console.log(response)
    
         if (response.userId != '') {
@@ -128,7 +132,7 @@ export class AppComponent {
 
       });
     // }, 3000);
-    }else if (localStorage.getItem('access_token')) {
+    }else if (sessionStorage.getItem('access_token')) {
       this.templateAuthView = false;
 
     } else {

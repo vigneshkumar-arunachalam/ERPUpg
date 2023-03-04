@@ -5074,7 +5074,8 @@ ul {
     }
 
     .navbar-right__menu .nav-author img {
-        width: 34px;
+        width: 45px;
+        height: 45px;
     }
 
     .navbar-right__menu .nav-item-toggle {

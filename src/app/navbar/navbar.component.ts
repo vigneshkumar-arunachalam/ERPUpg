@@ -16,10 +16,10 @@ export class NavbarComponent implements OnInit {
     setTimeout(() => {
       
     
-    this.userName=localStorage.getItem('user_name');
-    this.userId=localStorage.getItem('user_id');
-    this.role_Permission=localStorage.getItem('role');
-    this.user_ProfileImage=localStorage.getItem('profile_image');
+    this.userName=sessionStorage.getItem('user_name');
+    this.userId=sessionStorage.getItem('erp_c4c_user_id');
+    this.role_Permission=sessionStorage.getItem('role');
+    this.user_ProfileImage=sessionStorage.getItem('profile_image');
   }, 2000);
     // console.log("navigation menu, username",this.userName)
     // console.log("navigation menu, userid",this.userId)
@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit {
   }
  
   logout(){
-    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigate(['/login']);
 
       

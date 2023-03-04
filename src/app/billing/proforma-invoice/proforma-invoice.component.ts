@@ -176,7 +176,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_emailDetails.action = "send_invoice_details";
 
     api_emailDetails.billId = id;
-    api_emailDetails.user_id = localStorage.getItem('user_id');
+    api_emailDetails.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_emailDetails;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -242,7 +242,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
-    api_quotationTemplateDropdown_req.user_id = localStorage.getItem('user_id');
+    api_quotationTemplateDropdown_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
@@ -301,7 +301,7 @@ else{
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "invoice_details_sendmail";
-    api_email_req.user_id = localStorage.getItem('user_id');
+    api_email_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_email_req.billId = this.Email_BillId;
 
     api_email_req.fromEmailId = this.FromEmailValue;
@@ -456,7 +456,7 @@ else{
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = localStorage.getItem("user_id");
+    api_quotationList.user_id = sessionStorage.getItem("user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -576,7 +576,7 @@ else{
     api_req.api_type = "web";
     api_req.access_token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_paymentPI_req.action = "invoice_payment_details";
-    api_paymentPI_req.user_id = localStorage.getItem('user_id');
+    api_paymentPI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
      api_paymentPI_req.billId = list_payment ;
     api_req.element_data = api_paymentPI_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -608,7 +608,7 @@ else{
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         del_req.action = "suspend_invoice";
-        del_req.user_id = localStorage.getItem('user_id');
+        del_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
         del_req.billId = billId;
         api_req.element_data = del_req;
 
@@ -672,7 +672,7 @@ else{
     api_processpaymentEdit.action = "proforma_invoice_payment_details";
 
     api_processpaymentEdit.billId = id;
-    api_processpaymentEdit.user_id = localStorage.getItem('user_id');
+    api_processpaymentEdit.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_processpaymentEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -726,7 +726,7 @@ else{
     api_processpaymentUpdate.action = "proforma_invoice_payment_update";
 
     api_processpaymentUpdate.billId =  this.billID_processPayment;
-    api_processpaymentUpdate.user_id = localStorage.getItem('user_id');
+    api_processpaymentUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     if(this.processPaymentForm.value.amount=== null){
       Swal.close();
       iziToast.warning({
@@ -797,7 +797,7 @@ else{
     api_invoiceTyp.action = "invoice_type_get";
 
     api_invoiceTyp.billId = id;
-    api_invoiceTyp.user_id = localStorage.getItem('user_id');
+    api_invoiceTyp.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_invoiceTyp;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -841,7 +841,7 @@ else{
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_invTypeUpdate.action = "invoice_type_update";
     api_invTypeUpdate.billId =   this.InvoiceType_BillerID;
-    api_invTypeUpdate.user_id = localStorage.getItem('user_id');
+    api_invTypeUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
     api_req.element_data = api_invTypeUpdate;
 
@@ -891,7 +891,7 @@ else{
     api_insertProforma.action = "terms_condition_get";
 
     api_insertProforma.billId = id;
-    api_insertProforma.user_id = localStorage.getItem('user_id');
+    api_insertProforma.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_insertProforma;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -935,7 +935,7 @@ else{
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_insertProformaUpdate.action = "terms_condition_update";
     api_insertProformaUpdate.billId =   this.TermCondition_BillerID;
-    api_insertProformaUpdate.user_id = localStorage.getItem('user_id');
+    api_insertProformaUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_insertProformaUpdate.terms_values = this.setTermCondition.value.setTerm;
     api_req.element_data = api_insertProformaUpdate;
 

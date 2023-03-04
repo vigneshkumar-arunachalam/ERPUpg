@@ -19,6 +19,9 @@ import { FooterComponent } from './footer/footer.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatSliderModule } from '@angular/material/slider';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+import {  CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TableComponent } from './table/table.component';
@@ -114,13 +117,13 @@ import { EditInvoiceComponent } from './billing/invoice/edit-invoice/edit-invoic
   ],
   imports: [
     BrowserModule,
-    FormsModule,MatTabsModule,
+    FormsModule,MatTabsModule,NgxSpinnerModule,
     ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,
     HttpClientModule,MatIconModule, NgMultiSelectDropDownModule.forRoot(),
     BrowserAnimationsModule,MatFormFieldModule,MatAutocompleteModule,MatInputModule,MatSliderModule,
     AutocompleteLibModule,PdfViewerModule
-  ],
+  ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [    [DatePipe],  [BnNgIdleService], { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
 ],
   bootstrap: [AppComponent]

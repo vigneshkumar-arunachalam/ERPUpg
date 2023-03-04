@@ -10,6 +10,7 @@ declare var tinymce: any;
 import Swal from 'sweetalert2'
 import { InputModalityDetector } from '@angular/cdk/a11y';
 import { HttpErrorResponse } from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-quotationnew',
@@ -162,15 +163,15 @@ export class QuotationnewComponent implements OnInit {
   quotationPermission_Share: any;
   user_ids: any;
 
-  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService) {
+  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       console.log(params)
-      if(params['ids']!=''&&params['ids']!=undefined&&params['ids']!='undefined'&&params['ids']!=null&&params['ids']!='null'){
+      if (params['ids'] != '' && params['ids'] != undefined && params['ids'] != 'undefined' && params['ids'] != null && params['ids'] != 'null') {
         var k = atob(params['ids']);
         this.user_ids = k;
         console.log(this.user_ids)
       }
-      
+
     }
     );
     this.setActualCost_FormGroup = this.fb.group({
@@ -179,14 +180,7 @@ export class QuotationnewComponent implements OnInit {
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    this.user_ids = localStorage.getItem('user_id');
-    // this.bnIdle.startWatching(120).subscribe((isTimedOut: boolean) => {
-    //   if (isTimedOut) {
-    //     console.log('session expired');
-    //   }
-    // });
-
-    // this.handle_radioChange('single');
+    this.user_ids = sessionStorage.getItem('erp_c4c_user_id');
     this.searchBillerNameList = ["Cal4Care Pte Ltd", "Marshal System Consultancy", "Cal4Care", "Dcare Technologies Pte Ltd", "DCARE Technologies India Pvt Ltd.", "Cal4care Sdn.Bhd.", "Cal4Care Japan Co., Ltd", "1Msb IT Care Sdn. Bhd.", "Cal4care Telecommunication Services (I) PVT LTD"]
     this.addNewQuotationPopUpForm = new FormGroup({
       'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
@@ -597,8 +591,9 @@ export class QuotationnewComponent implements OnInit {
     });
   }
   quotationList(data: any) {
-    Swal.fire('Loading');
-    Swal.showLoading();
+    // Swal.fire('Loading');
+    // Swal.showLoading();
+    this.spinner.show();
     $("#searchQuotationFormId ").modal("hide");
 
     console.log("Quotation List UI Display Data after OnInit ")
@@ -625,7 +620,8 @@ export class QuotationnewComponent implements OnInit {
 
       console.log("qoutation list", response);
       if (response) {
-        Swal.close();
+        // Swal.close();
+        this.spinner.hide();
         this.quotation_list = response.quotation_details;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit
@@ -805,7 +801,7 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.user_id = this.user_ids;
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-alert(response.HttpErrorResponse.ERROR.headers.status)
+      alert(response.HttpErrorResponse.ERROR.headers.status)
       if (response.status == true) {
 
 
@@ -829,16 +825,16 @@ alert(response.HttpErrorResponse.ERROR.headers.status)
 
       }
     }), (error: HttpErrorResponse) => {
-      if(error.status==500){
+      if (error.status == 500) {
         alert("wrong")
-        console.log("vignesh",error)
+        console.log("vignesh", error)
       }
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
       console.log("final error", error);
-      
+
     }
   }
 
