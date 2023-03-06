@@ -126,7 +126,7 @@ export class AppComponent {
             this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
         }
-        if (response.userId == 'undefined') {
+        if (response.userId == 'undefined' || response.userId === null || response.userId=='' ) {
           this.router.navigate(['/logout']);
         }
 

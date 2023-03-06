@@ -59,3 +59,29 @@
     color: #009688!important;
   
   }
+
+  hr{
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    border-top: 1px solid #102268;
+    width:2500%;
+  }
+
+  .marginSpace{
+    margin-top:2rem !important;
+  }
+
+  .userDatatable-header th  {
+    padding: 0px 18px 0px 18px;
+  }
+  /* .marginSpace td{
+    
+  } */
+
+  .discountCSS1{
+    color: #ff5722!important;
+   }
+   .discountCSS2{
+    color: #b8123b!important;
+   }

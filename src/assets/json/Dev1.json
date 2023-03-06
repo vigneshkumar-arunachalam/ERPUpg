@@ -148,4 +148,25 @@
     ],
     "isVisible": true,
     "value": "/profiledetails"
+},
+{
+    "name": "3CX",
+    "icon":"save",
+    "isActive": false,
+    "menuId":6,
+    "IDs": [6115],
+    "Type": "Main Menu",
+    "children": [
+        {
+            "name": "3CX License Credit",
+            "icon": "clipboard",
+            "IDs": [6115],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/licenseCredit"
+        }
+    ],
+    "isVisible": true,
+    "value": "/LicenseCreditComponent"
 }]
