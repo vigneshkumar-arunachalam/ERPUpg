@@ -708,6 +708,8 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
     api_savePI_req.BillTo_customer_ID = this.customer_ID;
     api_savePI_req.BillTo_customer_NAME = this.customer_NAME;
+   
+    api_savePI_req.performa_invoice = '1';
 
     api_savePI_req.b_name = this.addPI_section1.value.BillTo;
     api_savePI_req.b_address1 = this.addPI_section1.value.address_1;

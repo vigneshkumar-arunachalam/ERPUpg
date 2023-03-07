@@ -128,7 +128,7 @@
                                   </svg>
                                 </a>
                               </li>
-                              <li class="dropdown__item">
+                              <!-- <li class="dropdown__item">
                                 <a class="hover4" title="Email" data-toggle="modal" data-target="#EmailFormId"
                                   (click)="EmailEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -140,7 +140,7 @@
                                     <polyline points="22,6 12,13 2,6"></polyline>
                                   </svg>
                                 </a>
-                              </li>
+                              </li> -->
 
                               <li class="dropdown__item">
                                 <a class="hover3" title="Payment" data-toggle="modal"
@@ -167,9 +167,10 @@
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="hover3" title="PI to Invoice Conversion" data-toggle="modal"
-                                  data-target="#PItoInvoiceConversionFormId">
+                                  (click)="PItoInvoiceConversion(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-move"><polyline points="5 9 2 12 5 15"></polyline><polyline points="9 5 12 2 15 5"></polyline><polyline points="15 19 12 22 9 19"></polyline><polyline points="19 9 22 12 19 15"></polyline><line x1="2" y1="12" x2="22" y2="12"></line><line x1="12" y1="2" x2="12" y2="22"></line></svg>
                                 </a>
+
                               </li>
                            
                               <li class="dropdown__item">
@@ -194,14 +195,9 @@
                               </li>
                               <li class="dropdown__item">
                                 <a class="hover3" title="show permission" data-toggle="modal"
-                                  data-target="#showPerissionFormId" (click)="showPerission()">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-file">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                    <polyline points="13 2 13 9 20 9"></polyline>
-                                  </svg>
+                                  data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+
                                 </a>
                               </li>
                               <li class="dropdown__item">
@@ -246,7 +242,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover3" title="set Terms & Condition" data-toggle="modal"
+                                <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
                                   data-target="#settermsConditionFormId" (click)="setTermsConditionEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -264,6 +260,11 @@
                       </td>
                       <br>
                     </tr>
+
+                    <tr *ngIf="list.did_invoice_state==1">
+                      <td colspan="9" style="height: 1px;background:#00C;padding:0px"></td>
+                    </tr>
+                    
                   </tbody>
                 </table>
               </div>
@@ -794,3 +795,98 @@
     </div>
   </div>
 </div>
+
+
+<!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
+<div class="modal fade" id="showPerissionFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle">Show Permission</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body quotationsharedCSS">
+                <form [formGroup]="showPerissionForm">
+                  <div class="">
+                    <div class="row"  >
+                      <div class="d-flex col-lg-6" *ngFor="let quot of invoiceShowPermission_List;let i =index">
+                      <div class="d-flex" >
+                        <div class="">
+                          <div class="checkbox-group-wrapper">
+                            <div class="checkbox-group d-flex">
+                              <div class="on-off-toggle">
+                                <input class="checkbox" type="checkbox" id="check-grp1-{{i}}" 
+                                checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                                (change)="InvoiceShowCHK(quot.user_id,$event)">
+                                <label for="check-grp1-{{i}}" ></label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+      
+                      </div>
+                      
+                        <span class="" >{{quot.firstName}}</span>
+                
+                    </div>
+                    </div>
+                  </div>
+
+                    <!-- <div class="d-flex col-lg-4" *ngFor="let quot of invoiceShowPermission_List;let i =index">
+                        
+                        <div class="row">
+                          
+                          
+                          <div class="col-lg-8 heightCSS">
+                            <span class="col-lg-8 nameCSS mt-4">{{quot.firstName}}</span>
+                    
+                          </div>
+                         
+                          
+                          <div class="on-off-toggle">
+                            
+                            <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
+                            class="on-off-toggle__input" checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                              (change)="InvoiceShowCHK(quot.user_id,$event)">
+                              <label for="{{ quot.user_id }}" class="on-off-toggle__slider"></label>
+                          </div>
+                        </div>
+                    </div> -->
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="invoiceShowPermissionUpdate()">
+                    Update
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END) for Invoice Show Permission------------------>
+
+
+<!-----------------Modal Pop Up (BEGIN) PI to Invoice conversion------------------>
+
+<div class="modal fade" id="PItoInvoiceConversionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+          
+            <div class="modal-body">
+              <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "small" color = "#920e0e" type = "square-jelly-box" [fullScreen] = "false"><p style="color: white" > Loading... </p></ngx-spinner>
+
+            </div>
+         
+        </div>
+    </div>
+</div>
+
+<!-------------- PI to Invoice conversion Pop up ends------------------------------------------>

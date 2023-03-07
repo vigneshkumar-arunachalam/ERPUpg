@@ -6,6 +6,7 @@ declare var $: any
 declare var iziToast: any;
 declare var tinymce: any;
 import Swal from 'sweetalert2'
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-proforma-invoice',
@@ -30,60 +31,74 @@ export class ProformaInvoiceComponent implements OnInit {
   //payment process
   processPaymentForm: FormGroup;
   isReadOnly: boolean = true;
-  invoiceDetails_payment:any;
-  paymentType_payment:any;
-  paymentDetails_payment:any;
-  billID_processPayment:any;
- 
+  invoiceDetails_payment: any;
+  paymentType_payment: any;
+  paymentDetails_payment: any;
+  billID_processPayment: any;
+
   //invoice type details
   invoiceTypeDetailsForm: FormGroup;
   //coupon assign
-  couponAssignForm:FormGroup;
- 
- 
-    //email-landscape
- 
-    emailForm: FormGroup;
-    EmailQuotationID: any;
-    msg_id: any;
-    emailTo: any;
-    subjectValue: any;
-    Select_To_Type_radiobox_Value: any;
-    email_template: any;
-    email_fromList: any;
-    email_crmTemplateList: any;
-    email_cc_userList: any;
-    email_groupMailList:any;
+  couponAssignForm: FormGroup;
+  //Invoice Show Permission
+  showPerissionForm: FormGroup;
+  checkbox_ID_SingleParameter_invoiceShow_Value: any;
+  Checkbox_value_invoiceShow: any;
+  CheckBox_DynamicArrayList_invoiceShowPermission: any;
+  typeConvertionString_invoiceShowPermission: any;
+  invoiceShowPermission_EditOnLoad_Values: any;
+  invoiceShowPermission_List: any;
+  invoiceShowPermission_List1: any;
+  invoiceShowResult: any;
+  ShowPermission_BillID: any;
 
-    edit_array_emailCC_Checkbox: any = [];
-    quotation_Emailtemplate_id: any;
-    messageContent: any;
-    mailContent: any;
-    FromEmailValue: any;
-    Email_BillId:any;
-    CBV_TemplateSelection:any;
-    CBV_PDFLink:any;
-    CBV_PaymentLink:any;
+
+
+  //email-landscape
+
+  emailForm: FormGroup;
+  EmailQuotationID: any;
+  msg_id: any;
+  emailTo: any;
+  subjectValue: any;
+  Select_To_Type_radiobox_Value: any;
+  email_template: any;
+  email_fromList: any;
+  email_crmTemplateList: any;
+  email_cc_userList: any;
+  email_groupMailList: any;
+
+  edit_array_emailCC_Checkbox: any = [];
+  quotation_Emailtemplate_id: any;
+  messageContent: any;
+  mailContent: any;
+  FromEmailValue: any;
+  Email_BillId: any;
+  CBV_TemplateSelection: any;
+  CBV_PDFLink: any;
+  CBV_PaymentLink: any;
 
   //email-checkbox
   email_array_emailCC_Checkbox: any = [];
-  groupSelect_emailCCId:any;
-  email_checkbox_value:any;
+  groupSelect_emailCCId: any;
+  email_checkbox_value: any;
 
   // set-Invoice-type-name
 
   setInvoiceType: FormGroup;
-  InvoiceType_BillerID:any
-  InvoiceTypeList:any;
+  InvoiceType_BillerID: any
+  InvoiceTypeList: any;
   //term
   setTermCondition: FormGroup;
-  TermDetailsList:any;
-  TermCondition_BillerID:any;
+  TermDetailsList: any;
+  TermCondition_BillerID: any;
+  user_ids: any;
 
-  constructor(private serverService: ServerService, private router: Router) { }
+  constructor(private serverService: ServerService, private router: Router,private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.PIList({});
+    this.user_ids = sessionStorage.getItem('erp_c4c_user_id');
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
       'toal': new FormControl(null),
@@ -101,14 +116,14 @@ export class ProformaInvoiceComponent implements OnInit {
     this.invoiceTypeDetailsForm = new FormGroup({
       'paymenttype': new FormControl(null),
     });
-    
+
     this.couponAssignForm = new FormGroup({
       'couponCode': new FormControl(null),
     });
     this.emailForm = new FormGroup({
       'Subject_Content': new FormControl(null, Validators.required),
       'email_to': new FormControl(null, Validators.required),
-      'radio_ApprovalBy':new FormControl(null, Validators.required),
+      'radio_ApprovalBy': new FormControl(null, Validators.required),
       'email_From': new FormControl(null, Validators.required),
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
@@ -117,31 +132,31 @@ export class ProformaInvoiceComponent implements OnInit {
     });
 
     this.setInvoiceType = new FormGroup({
-    'setInvoice' : new FormControl(null)
+      'setInvoice': new FormControl(null)
     });
-        
+
     this.setTermCondition = new FormGroup({
-      'setTerm' : new FormControl(null)
+      'setTerm': new FormControl(null)
     });
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
     console.log(this.Select_To_Type_radiobox_Value);
   }
-  radioChange_selectToType(event:any){
+  radioChange_selectToType(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
     console.log(this.Select_To_Type_radiobox_Value);
   }
-  CBF_TemplateSelection(event:any){
-    this.CBV_TemplateSelection=event.target.checked;
+  CBF_TemplateSelection(event: any) {
+    this.CBV_TemplateSelection = event.target.checked;
     console.log(this.CBV_TemplateSelection);
   }
-  CBF_PDFLink(event:any){
-    this.CBV_PDFLink=event.target.checked;
+  CBF_PDFLink(event: any) {
+    this.CBV_PDFLink = event.target.checked;
     console.log(this.CBV_PDFLink);
   }
-  CBF_PaymentLink(event:any){
-    this.CBV_PaymentLink=event.target.checked;
+  CBF_PaymentLink(event: any) {
+    this.CBV_PaymentLink = event.target.checked;
     console.log(this.CBV_PaymentLink);
 
   }
@@ -165,8 +180,36 @@ export class ProformaInvoiceComponent implements OnInit {
 
     }
   }
-  getEmailDetails(id:any){
-   this.Email_BillId=id;
+  InvoiceShowCHK(data: any, event: any) {
+    console.log("List - Checkbox ID", data);
+    this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
+    this.Checkbox_value_invoiceShow = event.target.checked;
+    console.log(this.Checkbox_value_invoiceShow)
+    if (this.Checkbox_value_invoiceShow) {
+
+      this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
+      this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
+      this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
+      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+
+    }
+    else {
+      const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
+      console.log(index)
+      if (index == -1) {
+        this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
+      } else {
+        this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
+      }
+      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+    }
+    this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
+
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+
+  }
+  getEmailDetails(id: any) {
+    this.Email_BillId = id;
     let api_req: any = new Object();
     let api_emailDetails: any = new Object();
     api_req.moduleType = "invoice";
@@ -181,34 +224,34 @@ export class ProformaInvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-     
+
         this.email_fromList = response.email_from_arr;
-        this.email_groupMailList=response.group_mail;
+        this.email_groupMailList = response.group_mail;
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
         this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
-         
-          'tinyID': this.mailContent, 
-          'Subject_Content':response.subject,
+
+          'tinyID': this.mailContent,
+          'Subject_Content': response.subject,
 
 
         })
-        if(this.Select_To_Type_radiobox_Value=='finance'){
+        if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
-            'email_to': response.finance_email, 
-            'tinyID': this.mailContent,          
+            'email_to': response.finance_email,
+            'tinyID': this.mailContent,
           })
         }
-        else{
+        else {
           this.emailForm.patchValue({
-            'email_to': response.company_email,    
-            'tinyID': this.mailContent,     
+            'email_to': response.company_email,
+            'tinyID': this.mailContent,
           })
         }
-      
-       
+
+
         iziToast.success({
           message: "Payment Process Details displayed Successfully",
           position: 'topRight'
@@ -272,6 +315,65 @@ export class ProformaInvoiceComponent implements OnInit {
 
     });
   }
+  PItoInvoiceConversion(Id: any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      $('#PItoInvoiceConversionFormId').modal('show');
+      if (result.value) {
+
+        this.spinner.show();
+
+        let api_req: any = new Object();
+        let PItoInv_req: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/proforma_convert_to_invoice";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        PItoInv_req.action = "proforma_convert_to_invoice";
+        PItoInv_req.user_id = this.user_ids;
+        PItoInv_req.billId = Id;
+        api_req.element_data = PItoInv_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            this.spinner.hide();
+            $('#PItoInvoiceConversionFormId').modal('hide');
+            iziToast.success({
+              message: "Successfully Converted from Proforma to Invoice",
+              position: 'topRight'
+            });
+            this.PIList({});
+          } else {
+            this.spinner.hide();
+            $('#PItoInvoiceConversionFormId').modal('hide');
+            iziToast.warning({
+              message: "Converted from Proforma to Invoice Failed",
+              position: 'topRight'
+            });
+            this.PIList({});
+          }
+        }),
+          (error: any) => {
+            this.spinner.hide();
+            $('#PItoInvoiceConversionFormId').modal('hide');
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            this.PIList({});
+            console.log("final error", error);
+          };
+      }
+    })
+  }
   sendMail() {
     Swal.fire('Sending Email');
     Swal.showLoading();
@@ -283,15 +385,15 @@ export class ProformaInvoiceComponent implements OnInit {
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
-    var pdf_state=0
-if(this.CBV_TemplateSelection==true ||  this.CBV_PDFLink==true ||   this.CBV_PaymentLink==true ){
-  var pdf_state=1;
-  console.log("if condition if any checkbox selects",pdf_state)
-}
-else{
-  var pdf_state=0;
-  console.log("if condition if none of checkbox selects",pdf_state)
-}
+    var pdf_state = 0
+    if (this.CBV_TemplateSelection == true || this.CBV_PDFLink == true || this.CBV_PaymentLink == true) {
+      var pdf_state = 1;
+      console.log("if condition if any checkbox selects", pdf_state)
+    }
+    else {
+      var pdf_state = 0;
+      console.log("if condition if none of checkbox selects", pdf_state)
+    }
 
 
     let api_req: any = new Object();
@@ -346,7 +448,7 @@ else{
       return false;
 
     }
- 
+
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
@@ -463,7 +565,7 @@ else{
 
     api_req.element_data = api_quotationList;
 
-    
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("PI list", response);
       if (response) {
@@ -488,7 +590,7 @@ else{
   }
 
   listDataInfo(list_data: any) {
- 
+
     list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
     list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
@@ -546,10 +648,10 @@ else{
     });
   }
 
-  addDidPIGo(){
+  addDidPIGo() {
     this.router.navigate(['/AddDidPI'])
   }
- 
+
   CHKGroup_emailCC(data: any, event: any) {
     console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
@@ -571,27 +673,27 @@ else{
     }
   }
 
-  paymentProcess(data:any){
+  paymentProcess(data: any) {
     var list_payment = data;
     let api_req: any = new Object();
     let api_paymentPI_req: any = new Object();
     api_req.moduleType = "proforma";
     api_req.api_url = "proforma/invoice_payment_details";
     api_req.api_type = "web";
-    api_req.access_token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_paymentPI_req.action = "invoice_payment_details";
     api_paymentPI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
-     api_paymentPI_req.billId = list_payment ;
+    api_paymentPI_req.billId = list_payment;
     api_req.element_data = api_paymentPI_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if( response.status==true){
+      if (response.status == true) {
         // this.enquiryFromList = response.;
       }
 
     })
   }
 
-  deleteProformaInvoice(billId :any){
+  deleteProformaInvoice(billId: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -644,29 +746,109 @@ else{
     })
   }
 
-  EmailEdit(a:any){
-    
+  EmailEdit(a: any) {
+
+  }
+  invoiceShowPersonEdit(Id: any) {
+    this.ShowPermission_BillID = Id;
+    let api_req: any = new Object();
+    let quot_share_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_shared_person";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quot_share_req.action = "invoice_shared_person";
+
+    quot_share_req.user_id = this.user_ids;
+    quot_share_req.billId = Id;
+    api_req.element_data = quot_share_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+
+
+        this.invoiceShowPermission_EditOnLoad_Values = response.access_userid;
+
+        this.invoiceShowPermission_List = response.user_list;
+        this.invoiceShowPermission_List1 = response.access_userid;
+        this.invoiceShowResult = response.user_list;
+        this.CheckBox_DynamicArrayList_invoiceShowPermission = response.access_userid.split(',').map(Number);
+        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+
+      }
+      else {
+        $("#showPerissionFormId").modal("hide");
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+  }
+  invoiceShowPermissionUpdate() {
+    let api_req: any = new Object();
+    let quot_share_update_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_shared_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quot_share_update_req.action = "invoice_shared_update";
+    quot_share_update_req.billId = this.ShowPermission_BillID;
+    quot_share_update_req.user_id = this.user_ids;
+    quot_share_update_req.shared_user_id = this.typeConvertionString_invoiceShowPermission;
+    api_req.element_data = quot_share_update_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        iziToast.success({
+          message: "Show Permission Updated successfully",
+          position: 'topRight'
+        });
+
+        $('#showPerissionFormId').modal('hide');
+        this.typeConvertionString_invoiceShowPermission = [];
+      } else {
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
   pdf(billId: any) {
-    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + billId + "";
+
+    var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
   }
 
-  showPerission(){
+  showPerission() {
 
     alert("Are you sure you want to bill show permission?")
   }
-  clearPaymentProcess(){
+  clearPaymentProcess() {
 
     $("#amount").val('');
     $("#note").val('');
   }
-  processPaymentEdit(id:any){
+  processPaymentEdit(id: any) {
 
- 
-    this.billID_processPayment=id;
+
+    this.billID_processPayment = id;
     let api_req: any = new Object();
     let api_processpaymentEdit: any = new Object();
     api_req.moduleType = "proforma";
@@ -681,19 +863,19 @@ else{
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-       this.invoiceDetails_payment=response.invoice_details;
-       this.paymentType_payment=response.payment_type;
-       this.paymentDetails_payment=response.payment_details;
+        this.invoiceDetails_payment = response.invoice_details;
+        this.paymentType_payment = response.payment_type;
+        this.paymentDetails_payment = response.payment_details;
         this.processPaymentForm.patchValue({
-          'invoiceID':response.invoice_details[0].invoice_no,
-          'toal':response.invoice_details[0].netPayment,
-          'biller':response.invoice_details[0].billerName,
-          'paid':response.paid_amount,
-          'customer':response.invoice_details[0].customerName,
-          'owing':response.owing_amount,
-          
+          'invoiceID': response.invoice_details[0].invoice_no,
+          'toal': response.invoice_details[0].netPayment,
+          'biller': response.invoice_details[0].billerName,
+          'paid': response.paid_amount,
+          'customer': response.invoice_details[0].customerName,
+          'owing': response.owing_amount,
+
         })
-       
+
         iziToast.success({
           message: "Payment Process Details displayed Successfully",
           position: 'topRight'
@@ -717,10 +899,10 @@ else{
         console.log("final error", error);
       };
   }
-  processPaymentUpdate(){
+  processPaymentUpdate() {
     Swal.fire('Updating');
     Swal.showLoading();
-    
+
     let api_req: any = new Object();
     let api_processpaymentUpdate: any = new Object();
     api_req.moduleType = "proforma";
@@ -729,22 +911,22 @@ else{
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_processpaymentUpdate.action = "proforma_invoice_payment_update";
 
-    api_processpaymentUpdate.billId =  this.billID_processPayment;
+    api_processpaymentUpdate.billId = this.billID_processPayment;
     api_processpaymentUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
-    if(this.processPaymentForm.value.amount=== null){
+    if (this.processPaymentForm.value.amount === null) {
       Swal.close();
       iziToast.warning({
         message: "Amount Value Missing",
         position: 'topRight'
       });
-      
+
       return false;
     }
- 
-    api_processpaymentUpdate.amount=this.processPaymentForm.value.amount;
-    api_processpaymentUpdate.paymentDate=this.processPaymentForm.value.date;
-    api_processpaymentUpdate.payment_method=this.processPaymentForm.value.paymenttype;
-    if(this.processPaymentForm.value.paymenttype=== null){
+
+    api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
+    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+    api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+    if (this.processPaymentForm.value.paymenttype === null) {
       Swal.close();
       iziToast.warning({
         message: "Payment Type Missing",
@@ -752,13 +934,13 @@ else{
       });
       return false;
     }
-    api_processpaymentUpdate.note=this.processPaymentForm.value.note;
+    api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
     $("#processPaymentFormId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#processPaymentFormId").removeAttr("disabled");
       if (response.status == true) {
-   
+
         Swal.close();
         $('#processPaymentFormId').modal("hide");
         iziToast.success({
@@ -767,7 +949,7 @@ else{
 
         });
         this.PIList({});
-        
+
       } else {
         Swal.close();
         $('#processPaymentFormId').modal("hide");
@@ -775,7 +957,7 @@ else{
           message: "Payment Process not displayed. Please try again",
           position: 'topRight'
         });
-       
+
       }
     }),
       (error: any) => {
@@ -785,13 +967,13 @@ else{
           position: 'topRight'
         });
         console.log("final error", error);
-        
+
       };
   }
 
-  setInvoiceTypeNameEdit(id:any){
-    this.InvoiceType_BillerID=id;
-    
+  setInvoiceTypeNameEdit(id: any) {
+    this.InvoiceType_BillerID = id;
+
     let api_req: any = new Object();
     let api_invoiceTyp: any = new Object();
     api_req.moduleType = "proforma";
@@ -807,11 +989,11 @@ else{
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
-        console.log("response.selected_invoice_type",response.selected_invoice_type)
+        console.log("response.selected_invoice_type", response.selected_invoice_type)
         this.setInvoiceType.patchValue({
-          'setInvoice':response.selected_invoice_type
+          'setInvoice': response.selected_invoice_type
         })
-       
+
         iziToast.success({
           message: "Invoice Type Details displayed Successfully",
           position: 'topRight'
@@ -835,8 +1017,8 @@ else{
         console.log("final error", error);
       };
   }
-  setInvoiceTypeNameUpdate(){
-    
+  setInvoiceTypeNameUpdate() {
+
     let api_req: any = new Object();
     let api_invTypeUpdate: any = new Object();
     api_req.moduleType = "proforma";
@@ -844,15 +1026,15 @@ else{
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_invTypeUpdate.action = "invoice_type_update";
-    api_invTypeUpdate.billId =   this.InvoiceType_BillerID;
+    api_invTypeUpdate.billId = this.InvoiceType_BillerID;
     api_invTypeUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
     api_req.element_data = api_invTypeUpdate;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-      
-       
+
+
         iziToast.success({
           message: "Term Condition Details Updated Successfully",
           position: 'topRight'
@@ -875,17 +1057,17 @@ else{
         });
         console.log("final error", error);
       };
-    
+
   }
-  setInvoiceTypeClear(){
+  setInvoiceTypeClear() {
     this.setInvoiceType.reset();
   }
 
 
-  setTermsConditionEdit(id:any){
+  setTermsConditionEdit(id: any) {
     // this.setInvoiceType.reset();
-    this.TermCondition_BillerID=id;
-    
+    this.TermCondition_BillerID = id;
+
     let api_req: any = new Object();
     let api_insertProforma: any = new Object();
     api_req.moduleType = "proforma";
@@ -902,9 +1084,9 @@ else{
       if (response.status == true) {
         this.TermDetailsList = response.terms_details;
         this.setTermCondition.patchValue({
-          'setTerm':response.selected_terms
+          'setTerm': response.selected_terms
         })
-       
+
         iziToast.success({
           message: "Term Condition Details displayed Successfully",
           position: 'topRight'
@@ -927,10 +1109,10 @@ else{
         });
         console.log("final error", error);
       };
-    
+
   }
-  setTermsConditionUpdate(){
-    
+  setTermsConditionUpdate() {
+
     let api_req: any = new Object();
     let api_insertProformaUpdate: any = new Object();
     api_req.moduleType = "proforma";
@@ -938,15 +1120,15 @@ else{
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_insertProformaUpdate.action = "terms_condition_update";
-    api_insertProformaUpdate.billId =   this.TermCondition_BillerID;
+    api_insertProformaUpdate.billId = this.TermCondition_BillerID;
     api_insertProformaUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     api_insertProformaUpdate.terms_values = this.setTermCondition.value.setTerm;
     api_req.element_data = api_insertProformaUpdate;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-      
-       
+
+
         iziToast.success({
           message: "Term Condition Details Updated Successfully",
           position: 'topRight'
@@ -969,9 +1151,9 @@ else{
         });
         console.log("final error", error);
       };
-    
+
   }
-  setTermsConditionClear(){
+  setTermsConditionClear() {
     this.setTermCondition.reset();
   }
 

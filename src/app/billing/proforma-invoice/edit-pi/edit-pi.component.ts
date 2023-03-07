@@ -102,6 +102,7 @@ export class EditPIComponent implements OnInit {
 quotationAddSignature_state:any;
 quotationAddSignature_filename:any;
 selectAdditionalSign:boolean=true; 
+  sign_state: number;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
@@ -799,15 +800,38 @@ selectAdditionalSign:boolean=true;
         console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
         console.log(this.addresses)
-
+        
+        this.finalDiscountType = '';
+        this.finalDiscountVal='';
+        this.finalDiscount='';
+        // console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
+       
+        // if(response.billing_pararent_details[0].signature_filename!=''){
+        //   this.sign_state=1;
+        // }
+        // this.quotationAddSignature_filename=response.quotation_details[0].signature_filename;
+  
+        if(response.billing_pararent_details[0].par_dis_per!=''){
+          this.finalDiscountType = 'per';
+         
+          this.finalDiscountVal=response.billing_pararent_details[0].par_dis_per;
+          this.finalDiscount=response.billing_pararent_details[0].par_dis_amt;
+        }else if(response.billing_pararent_details[0].par_dis_amt!=''){
+          this.finalDiscountType = 'amt';
+        
+          this.finalDiscount=response.billing_pararent_details[0].par_dis_amt;
+        }
         this.addPI_section3.patchValue({
+
+
+          
           //row-1
 
           'section3_gross_total': response.billing_pararent_details[0].grossAmount,
           //row-2
-          //  'section3_discount_txtbox': this.finalDiscount,
-          //  'final_dis_val': this.finalDiscountVal,
-          //  'final_dis_type': this.finalDiscountType,
+           'section3_discount_txtbox': this.finalDiscount,
+           'final_dis_val': this.finalDiscountVal,
+           'final_dis_type': this.finalDiscountType,
           // +2 hidden fields
           //taxAmt
           //row-3

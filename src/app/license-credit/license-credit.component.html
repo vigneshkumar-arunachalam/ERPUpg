@@ -11,15 +11,15 @@
           <div class="userDatatable global-shadow border-0 bg-white w-100">
             <div class="userDatatable-header license_list_section">
               <div class="license_list_left">
-                <a class="userDatatable-title" data-toggle="modal" data-target="#invoice_credit_limit_amount"
+                <!-- <a class="userDatatable-title" data-toggle="modal" data-target="#invoice_credit_limit_amount"
                   style="float: left;font-size: 16px;font-weight: bold;">Excess Credit Limit Customer</a>
 
                 <a class="userDatatable-title" data-toggle="modal" data-target="#invoice_credit_duration"
-                  style="float: left;font-size: 16px;font-weight: bold;padding-left: 80px;">30 Days Overdue Customer</a>
+                  style="float: left;font-size: 16px;font-weight: bold;padding-left: 80px;">30 Days Overdue Customer</a> -->
               </div>
               <div class="license_list_right">
-                <a class="userDatatable-title" data-toggle="modal" data-target="#processPaymentFormId"
-                  style="float: left;font-size: 16px;font-weight: bold;padding-left: 20%;">3cx Permission</a>
+                <!-- <a class="userDatatable-title" data-toggle="modal" data-target="#processPaymentFormId"
+                  style="float: left;font-size: 16px;font-weight: bold;padding-left: 20%;">3cx Permission</a>  -->
 
 
                 <div class="on-off-toggle">
@@ -94,7 +94,14 @@
           <div class="scroll-list">
             <table class="table mb-0 table-bordered">
               <thead>
-                <tr class="userDatatable-header">
+                   
+                      <!-- <th *ngFor="let month of months">
+                        <span class="userDatatable-title" style="width: 80px;">{{month}}</span>
+                      </th>
+                     -->
+                   
+                
+                 <tr class="userDatatable-header">
                   <th>
                     <span class="userDatatable-title">2023</span>
                   </th>
@@ -137,7 +144,7 @@
                   <th colspan="2">
                     <span class="userDatatable-title">Total</span>
                   </th>
-                </tr>
+                </tr> 
               </thead>
               <tbody>
                 <tr></tr>
@@ -229,10 +236,16 @@
 
                 <!------ cal4care 1 -------->
 
+                <!-- <tr *ngFor="let list of names;">
+                  <td>{{list}}</td>
+                  
+                  
+                </tr> -->
 
-                <tr *ngFor="let list1 of monthly_list1" >
 
-                  <td>{{ name1 }}</td>
+                 <tr *ngFor="let list1 of monthly_list1">
+
+                  <td>{{ name1}}</td>
 
                   <td>{{ list1.p_amt }}</td>
                   <td>{{ list1.i_amt }}</td>
@@ -301,11 +314,11 @@
 
 
 
-                </tr>
+                </tr> 
 
-                <!-- cal4care 2 -->
+                <!------------------------------- cal4care 2 ------------------------>
 
-                <tr *ngFor="let list1 of monthly_list_2_1">
+                 <tr *ngFor="let list1 of monthly_list_2_1">
 
                   <td>{{ name2 }}</td>
 
@@ -373,11 +386,11 @@
                     <td>{{ list13.total_iamt }}</td>
                   </ng-container>
 
-                </tr>
+                </tr> 
 
+<!--------------------- Cal4care 3  ------------------->
 
-
-                <tr *ngFor="let list1 of monthly_list_3_1">
+                 <tr *ngFor="let list1 of monthly_list_3_1">
 
                   <td>{{ name3 }}</td>
 
@@ -445,9 +458,78 @@
                     <td>{{ list13.total_iamt }}</td>
                   </ng-container>
 
-                </tr>
+                </tr> 
+
+                <!-------------------- Total  ---------------------->
+                <tr *ngFor="let list1 of monthly_list_4_1">
+
+                  <td>Total</td>
+
+                  <td>{{ list1.total_pamt }}</td>
+                  <td>{{ list1.total_iamt }}</td>
+
+                  <ng-container *ngFor="let list2 of monthly_list_4_2">
+                    <td>{{ list2.total_pamt }}</td>
+                    <td>{{ list2.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list3 of monthly_list_4_3">
+                    <td>{{ list3.total_pamt }}</td>
+                    <td>{{ list3.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list4 of monthly_list_4_4">
+                    <td>{{ list4.total_pamt }}</td>
+                    <td>{{ list4.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list5 of monthly_list_4_5">
+                    <td>{{ list5.total_pamt }}</td>
+                    <td>{{ list5.total_iamt }}</td>
+                  </ng-container>
 
 
+                  <ng-container *ngFor="let list6 of monthly_list_4_6">
+                    <td>{{ list6.total_pamt }}</td>
+                    <td>{{ list6.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list7 of monthly_list_4_7">
+                    <td>{{ list7.total_pamt }}</td>
+                    <td>{{ list7.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list8 of monthly_list_4_8">
+                    <td>{{ list8.total_pamt }}</td>
+                    <td>{{ list8.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list9 of monthly_list_4_9">
+                    <td>{{ list9.total_pamt }}</td>
+                    <td>{{ list9.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list10 of monthly_list_4_10">
+                    <td>{{ list10.total_pamt }}</td>
+                    <td>{{ list10.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list11 of monthly_list_4_11">
+                    <td>{{ list11.total_pamt }}</td>
+                    <td>{{ list11.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list12 of monthly_list_4_12">
+                    <td>{{ list12.total_pamt }}</td>
+                    <td>{{ list12.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list13 of monthly_list_4_13">
+                    <td>{{ list13.total_pamt }}</td>
+                    <td>{{ list13.total_iamt }}</td>
+                  </ng-container>
+
+                </tr> 
 
               </tbody>
             </table>
@@ -456,11 +538,308 @@
       </div>
 
 
+      <div class="card">
+        <div class="card-body">
+          <div class="scroll-list">
+            <table class="table mb-0 table-bordered">
+              <thead>
+                   
+                      <!-- <th *ngFor="let month of months">
+                        <span class="userDatatable-title" style="width: 80px;">{{month}}</span>
+                      </th>
+                     -->
+                   
+                
+                 <tr class="userDatatable-header">
+                  <th>
+                    <span class="userDatatable-title">2023</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Jan</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Feb</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Mar</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Apr</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">May </span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Jun</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Jul</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Aug</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Sep</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Oct</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Nov</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Dec</span>
+                  </th>
+                  <th colspan="2">
+                    <span class="userDatatable-title">Total</span>
+                  </th>
+                </tr> 
+              </thead>
+              <tbody>
+                <tr></tr>
+              </tbody>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">P.Amt</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">I.Amt</span>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+
+
+                 <tr *ngFor="let list of dCare">
+
+                  <td>{{list}}</td>
+                  <ng-container *ngFor="let list1 of dCare_list1">
+                  <td>{{ list1.p_amt }}</td>
+                  <td>{{ list1.i_amt }}</td>
+                  </ng-container>
+                  <ng-container *ngFor="let list2 of dCare_list2">
+                    <td>{{ list2.p_amt }}</td>
+                    <td>{{ list2.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list3 of dCare_list3">
+                    <td>{{ list3.p_amt }}</td>
+                    <td>{{ list3.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list4 of dCare_list4">
+                    <td>{{ list4.p_amt }}</td>
+                    <td>{{ list4.i_amt }}</td>
+                  </ng-container>
+
+
+                  <ng-container *ngFor="let list5 of dCare_list5">
+                    <td>{{ list5.p_amt }}</td>
+                    <td>{{ list5.i_amt }}</td>
+                  </ng-container>
+
+
+                  <ng-container *ngFor="let list6 of dCare_list6">
+                    <td>{{ list6.p_amt }}</td>
+                    <td>{{ list6.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list7 of dCare_list7">
+                    <td>{{ list7.p_amt }}</td>
+                    <td>{{ list7.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list8 of dCare_list8">
+                    <td>{{ list8.p_amt }}</td>
+                    <td>{{ list8.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list9 of dCare_list9">
+                    <td>{{ list9.p_amt }}</td>
+                    <td>{{ list9.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list10 of dCare_list10">
+                    <td>{{ list10.p_amt }}</td>
+                    <td>{{ list10.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list11 of dCare_list11">
+                    <td>{{ list11.p_amt }}</td>
+                    <td>{{ list11.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list12 of dCare_list12">
+                    <td>{{ list12.p_amt }}</td>
+                    <td>{{ list12.i_amt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list13 of dCare_list13">
+                    <td>{{ list13.total_pamt }}</td>
+                    <td>{{ list13.total_iamt }}</td>
+                  </ng-container>
+
+
+
+                </tr> 
+                
+
+                <!-------------------- Total  ---------------------->
+                <tr *ngFor="let list1 of d_total_list_1">
+
+                  <td>Total</td>
+
+                  <td>{{ list1.total_pamt }}</td>
+                  <td>{{ list1.total_iamt }}</td>
+
+                  <ng-container *ngFor="let list2 of d_total_list_2">
+                    <td>{{ list2.total_pamt }}</td>
+                    <td>{{ list2.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list3 of d_total_list_3">
+                    <td>{{ list3.total_pamt }}</td>
+                    <td>{{ list3.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list4 of d_total_list_4">
+                    <td>{{ list4.total_pamt }}</td>
+                    <td>{{ list4.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list5 of d_total_list_5">
+                    <td>{{ list5.total_pamt }}</td>
+                    <td>{{ list5.total_iamt }}</td>
+                  </ng-container>
+
+
+                  <ng-container *ngFor="let list6 of d_total_list_6">
+                    <td>{{ list6.total_pamt }}</td>
+                    <td>{{ list6.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list7 of d_total_list_7">
+                    <td>{{ list7.total_pamt }}</td>
+                    <td>{{ list7.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list8 of d_total_list_8">
+                    <td>{{ list8.total_pamt }}</td>
+                    <td>{{ list8.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list9 of d_total_list_9">
+                    <td>{{ list9.total_pamt }}</td>
+                    <td>{{ list9.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list10 of d_total_list_10">
+                    <td>{{ list10.total_pamt }}</td>
+                    <td>{{ list10.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list11 of d_total_list_11">
+                    <td>{{ list11.total_pamt }}</td>
+                    <td>{{ list11.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list12 of d_total_list_12">
+                    <td>{{ list12.total_pamt }}</td>
+                    <td>{{ list12.total_iamt }}</td>
+                  </ng-container>
+
+                  <ng-container *ngFor="let list13 of d_total_list_13">
+                    <td>{{ list13.total_pamt }}</td>
+                    <td>{{ list13.total_iamt }}</td>
+                  </ng-container>
+
+                </tr> 
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
    
 
 <!----------- partner list - cal4care 1 start -------------------------->
 
-<div class="card">
+<!-- <div class="card">
               <div class="card-header color-dark fw-500" style="font-size:150%;">
                 Partner List - Cal4care 1
               </div>
@@ -508,14 +887,14 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 
 
 <!------------------------------------------ partner list - cal4care 2 start ----------------------->
 
-<div class="card">
+<!-- <div class="card">
               <div class="card-header color-dark fw-500" style="font-size:150%;">
                 Partner List - Cal4care 2
               </div>
@@ -563,12 +942,12 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 <!------------------------------------------ partner list - cal4care 3 start ----------------------->
 
-             <div class="card">
+             <!-- <div class="card">
               <div class="card-header color-dark fw-500" style="font-size:150%;">
                 Partner List - Cal4care 3
               </div>
@@ -616,11 +995,11 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 <!----------------------------------------- partner list - dCare start ----------------------->
 
-<div class="card">
+<!-- <div class="card">
               <div class="card-header color-dark fw-500" style="font-size:150%;">
                 Partner List - dCare
               </div>
@@ -668,7 +1047,7 @@
                   </table>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
           </div>
