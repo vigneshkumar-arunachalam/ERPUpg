@@ -118,7 +118,7 @@ export class AddPIComponent implements OnInit {
 
       { name: 'Discount', selected: false, id: 1 },
       { name: 'Mile Stone', selected: false, id: 2 },
-      { name: ' M S Display ', selected: false, id: 3 },
+
 
     ];
     this.SelectExtraLogoCheckboxwithKey = [
@@ -302,7 +302,7 @@ export class AddPIComponent implements OnInit {
     console.log(this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
-    this.MSDisplay_Value = event.target.value;
+    this.MSDisplay_Value = event.target.checked;
     console.log(this.MSDisplay_Value);
   }
   // EditCHK_MileDiscount(data: any, event: any) {
@@ -455,8 +455,8 @@ export class AddPIComponent implements OnInit {
           });
 
         }, 1000);
-       // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-       console.log('response.default_tax_id'+response.default_tax_id);
+        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+        console.log('response.default_tax_id' + response.default_tax_id);
 
 
 
@@ -692,6 +692,10 @@ export class AddPIComponent implements OnInit {
 
     });
   }
+  gotoPIList() {
+   
+    this.router.navigate(['/ProformaInvoice']);
+  }
   save($event: MouseEvent) {
     let api_req: any = new Object();
     let api_savePI_req: any = new Object();
@@ -708,7 +712,7 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
     api_savePI_req.BillTo_customer_ID = this.customer_ID;
     api_savePI_req.BillTo_customer_NAME = this.customer_NAME;
-   
+
     api_savePI_req.performa_invoice = '1';
 
     api_savePI_req.b_name = this.addPI_section1.value.BillTo;
@@ -780,7 +784,12 @@ export class AddPIComponent implements OnInit {
 
     //section-3
     api_savePI_req.grossTotal = this.addPI_section3.value.section3_gross_total;
-    api_savePI_req.discountAmount = this.addPI_section3.value.final_dis_val;
+    
+
+    api_savePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
+    api_savePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
+    api_savePI_req.final_dis_val = this.addPI_section3.value.final_dis_val;
+
     api_savePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_savePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
     api_savePI_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
@@ -803,7 +812,7 @@ export class AddPIComponent implements OnInit {
           message: "Proforma Invoice addedd Successfully",
           position: 'topRight'
         });
-        this.redirecttoQuotation();
+        this.gotoPIList();
 
       }
       else if (response.status == '500') {
@@ -1154,7 +1163,7 @@ export class AddPIComponent implements OnInit {
 
 
   getTaxCals() {
-   
+
     var tax_id = this.addPI_section3.value.section3_gst_dropdown;
     var tax: any;
     let api_req: any = new Object();
@@ -1232,10 +1241,7 @@ export class AddPIComponent implements OnInit {
 
 
   }
-  redirecttoQuotation() {
 
-    this.router.navigate(['/ProformaInvoice']);
-  }
 
 
 

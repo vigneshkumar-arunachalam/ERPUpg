@@ -115,3 +115,20 @@ select{
   color: #b8123b!important;
  }
 
+
+ .marginSpace{
+  margin-top:2rem !important;
+}
+
+.add-contact-table-section tbody:nth-child(even) {background: #f5fffa}
+
+.add-contact-table-section tbody:nth-child(odd) {background: #f5f5f5}
+
+.userDatatable-content{
+line-height: 3.42857 !important;
+text-align: center;
+}
+.userDatatable-header th{
+  padding: 0px !important;
+}
+

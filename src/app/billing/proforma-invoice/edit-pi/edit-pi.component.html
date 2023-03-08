@@ -313,21 +313,21 @@
             </div>
 
 
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <div class="form-group">
-                    <!-- <div class="form-check form-check-inline"  *ngFor="let display of dynamicCheckboxwithKey;let i=index">
-                            <input class="form-check-input" type="checkbox"  formControlName="mile_Discount" 
+                    <div class="form-check form-check-inline"  *ngFor="let display of dynamicCheckboxwithKey;let i=index">
+                            <input class="form-check-input" type="radio"  
                             id="inlineCheckbox{{i}}" value="{{display.id}}" (change)="mile($event)" >
                             <label class="form-check-label" for="inlineCheckbox{{i}}">{{display.name}} </label>
-                            </div> -->
+                            </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox2"
-                            value="mile Discount" (change)="mile($event)">
+                            value="1" (change)="mile($event)">
                         <label class="form-check-label" for="inlineCheckbox2"> mile Discount</label>
                     </div>
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="select" id="inlineCheckbox2"
-                            value="Mile Stone" (change)="mile($event)">
+                            value="2" (change)="mile($event)">
                         <label class="form-check-label" for="inlineCheckbox2"> Mile Stone</label>
                     </div>
                     <div class="form-check form-check-inline">
@@ -335,6 +335,22 @@
                             (change)="handleChange_MSDisplay($event)">
                         <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
                     </div>
+                </div>
+            </div> -->
+
+            <div class="col-lg-6">
+                <div class="form-check form-check-inline" *ngFor="let display1 of dynamicCheckboxwithKey;let k=index">
+                    <input class="form-check-input" type="radio" name="select" [value]="display1.id"
+                        checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
+                        (change)="handleChange_Mile(display1.billerId,$event)" />
+                    <label class="form-check-label" for="exampleRadios{{k}}">
+                        {{display1.name}}
+                    </label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked 
+                        (change)="handleChange_MSDisplay($event)">
+                    <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
                 </div>
             </div>
 
@@ -395,7 +411,7 @@
                                         </td>
 
                                         <!-- PRODUCT NAME -->
-                                        <td>
+                                        <td style="   width: 250px;text-align: center;">
                                             <div class="userDatatable-content" >
                                                 <input type="text" class="form-control mt-2 mb-2"
                                                 formControlName="pd_productName_txtbox1"

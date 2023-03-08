@@ -66,6 +66,9 @@ export class EditPIComponent implements OnInit {
   CurrencyConversionRateDefault: any = 1;
   getCurrencyCode: any;
   invoicePriceKey: any;
+  //mile
+  radioID_Mile:any;
+  radio_Value_Mile:any
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
@@ -79,8 +82,9 @@ export class EditPIComponent implements OnInit {
   getProformaBillerDetails_cstName: any;
   getProformaBillerDetails_cstNo: any;
   //export state-check box
-
+  mileDetails:any;
   MSDisplay_Value: boolean = true;
+  mileDiscountState_value:any;
   //calculation
   finalDiscount: any;
   finalDiscountType: any;
@@ -115,7 +119,7 @@ selectAdditionalSign:boolean=true;
 
   ngOnInit(): void {
   
-    
+    this.mileDetails=[{"name":"Local","id":1  },{"name":"Export  ","id":2  },{"name":"Zero Valid","id":3  }];
    
 
     this.route.queryParams
@@ -144,7 +148,7 @@ selectAdditionalSign:boolean=true;
 
       { name: 'Discount', selected: false, id: 1 },
       { name: 'Mile Stone', selected: false, id: 2 },
-      { name: ' M S Display ', selected: false, id: 3 },
+
 
     ];
     this.SelectExtraLogoCheckboxwithKey = [
@@ -392,6 +396,17 @@ selectAdditionalSign:boolean=true;
     console.log("radio button value", this.radio_Value_Export);
     // console.log("radio button id value", xyz);
   }
+  handleChange_Mile(data: any, evt: any) {
+
+    this.radioID_Mile = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Mile = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
 
   // handleChange(data: any, evt: any) {
   //   var id = data;
@@ -411,7 +426,7 @@ selectAdditionalSign:boolean=true;
     console.log(this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
-    this.MSDisplay_Value = event.target.value;
+    this.MSDisplay_Value = event.target.checked;
     console.log(this.MSDisplay_Value);
   }
   keywordCustomerName = 'customerName';
@@ -717,6 +732,7 @@ selectAdditionalSign:boolean=true;
 
       if (response != '') {
         this.exportState_value = response.billing_pararent_details[0].export_state;
+        this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -811,15 +827,15 @@ selectAdditionalSign:boolean=true;
         // }
         // this.quotationAddSignature_filename=response.quotation_details[0].signature_filename;
   
-        if(response.billing_pararent_details[0].par_dis_per!=''){
+        if(response.billing_pararent_details[0].discountPer!=''){
           this.finalDiscountType = 'per';
          
-          this.finalDiscountVal=response.billing_pararent_details[0].par_dis_per;
-          this.finalDiscount=response.billing_pararent_details[0].par_dis_amt;
-        }else if(response.billing_pararent_details[0].par_dis_amt!=''){
+          this.finalDiscountVal=response.billing_pararent_details[0].discountPer;
+          this.finalDiscount=response.billing_pararent_details[0].discountAmount;
+        }else if(response.billing_pararent_details[0].discountAmount!=''){
           this.finalDiscountType = 'amt';
         
-          this.finalDiscount=response.billing_pararent_details[0].par_dis_amt;
+          this.finalDiscount=response.billing_pararent_details[0].discountAmount;
         }
         this.addPI_section3.patchValue({
 
@@ -1072,6 +1088,8 @@ selectAdditionalSign:boolean=true;
     api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
+    api_updatePI_req.mile_discount_state=this.radio_Value_Mile;
+    api_updatePI_req.mile_discount_display_state=this.MSDisplay_Value;
     api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
 
     //section-2

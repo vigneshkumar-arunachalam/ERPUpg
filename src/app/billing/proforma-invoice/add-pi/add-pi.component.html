@@ -26,10 +26,8 @@
 
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                 formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
-                                (inputChanged)='searchCustomerData($event)' 
-								(inputFocused)='onFocusedCustomer($event)'
-								 [itemTemplate]="itemTemplateCustomer" 
-								[notFoundTemplate]="notFoundTemplate">
+                                (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                             </ng-autocomplete>
 
                             <ng-template #itemTemplateCustomer let-item>
@@ -297,17 +295,17 @@
 
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox2"
-                                value="mile Discount" (change)="mile($event)">
+                                value="1" (change)="mile($event)">
                             <label class="form-check-label" for="inlineCheckbox2"> mile Discount</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="select" id="inlineCheckbox2"
-                                value="Mile Stone" (change)="mile($event)">
+                            <input class="form-check-input" type="radio" name="select" id="inlineCheckbox2" value="2"
+                                (change)="mile($event)">
                             <label class="form-check-label" for="inlineCheckbox2"> Mile Stone</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                                value="M S Display" (change)="handleChange_MSDisplay($event)">
+                                (change)="handleChange_MSDisplay($event)">
                             <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
                         </div>
                     </div>
@@ -318,8 +316,8 @@
 
             <div class="col-lg-6">
                 <div class="form-group">
-                    <label for="refResellerDetails" class="form-label">Reference Reseller Name</label>
-                    <textarea class="form-control" formControlName="ReferenceResellerName" style="height: 70px;"
+                    <label for="refResellerDetails" class="col-lg-12 col-form-label">Reference Reseller Name</label>
+                    <textarea class="form-control ml-2" formControlName="ReferenceResellerName" style="height: 70px;"
                         row="2"></textarea>
                 </div>
             </div>
@@ -390,7 +388,7 @@
                             <table class="add-contact-table-section">
                                 <thead>
                                     <tr class="userDatatable-header">
-                                        <th> <span class="userDatatable-title">
+                                        <th style="width: 50px;"> <span class="userDatatable-title">
                                                 Next Page</span>
                                         </th>
                                         <th><span class="userDatatable-title">Product Name</span></th>
@@ -418,14 +416,14 @@
                                     *ngFor="let address of addressControls.controls; let i = index;">
 
 
-                                    <tr [formGroupName]="i">
-                                        <td>
-                                            <div class="userDatatable-content lalign">
+                                    <tr [formGroupName]="i" class="marginSpace">
+                                        <td style="width: 3px;">
+                                            <div class="userDatatable-content">
                                                 <input type="checkbox" formControlName="pd_nextPage_checkbox">
 
                                             </div>
                                         </td>
-                                        <td>
+                                        <td style="width: 300px;">
                                             <div class="userDatatable-content">
 
 
@@ -466,13 +464,13 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="width: 160px;">
                                                 <input type="text" class="form-control" formControlName="pd_Total"
                                                     style="text-align: right;" id="pd_Total_{{i}}" />
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content" style="width: 160px;">
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
 
@@ -496,21 +494,24 @@
                                         <td>
                                             <div class="userDatatable-content">
 
-                                                <input type="checkbox" style="text-align: right;"  [ngModel]="test[i]" id="pd_selectTax_{{i}}"
-                                                    formControlName="pd_selectTax" checked='checked' (change)="totalCalculate();">
+                                                <input type="checkbox" style="text-align: right;" [ngModel]="test[i]"
+                                                    id="pd_selectTax_{{i}}" formControlName="pd_selectTax"
+                                                    checked='checked' (change)="totalCalculate();">
 
                                             </div>
                                         </td>
-                                        <td *ngIf="i>0">
-                                            <div class="userDatatable-content d-inline-block">
+                                        <td >
+                                            <div *ngIf="i>0" class="userDatatable-content d-inline-block">
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                     (click)="removeAddress(i)">X</button>
 
                                             </div>
+                                        </td>
+                                      
                                     </tr>
-                                    <tr>
+                                    <tr class="marginSpace">
                                         <td colspan="3">
-                                            <div class="userDatatable-content">
+                                            <div class="userDatatable-content ml-2">
                                                 <textarea
                                                     style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
                                                     class="form-control mt-2 mb-2" row="2"
@@ -541,6 +542,11 @@
                                             <input type="text" class="form-control" style="text-align: right;"
                                                 formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
 
                                     </tr>
                                 </tbody>
@@ -608,12 +614,14 @@
                             <div class="d-flex justify-content-center">
 
 
-                                <input type="text" class="form-control  mt-2"  [(ngModel)]="finalDiscount" formControlName="section3_discount_txtbox"
-                                    id="finalDiscount_amt" />
+                                <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
+                                    formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
                                 <input type="hidden" class="form-control" style="text-align: right;"
-                                    formControlName="final_dis_type" id="final_discount_type" [(ngModel)]="finalDiscountType"  />
+                                    formControlName="final_dis_type" id="final_discount_type"
+                                    [(ngModel)]="finalDiscountType" />
                                 <input type="hidden" class="form-control" style="text-align: right;"
-                                    formControlName="final_dis_val" id="final_discount_val" [(ngModel)]="finalDiscountVal" />
+                                    formControlName="final_dis_val" id="final_discount_val"
+                                    [(ngModel)]="finalDiscountVal" />
                             </div>
                         </div>
 
@@ -623,7 +631,8 @@
 
 
                                 <select name="billerID" id="billerIDs" class="form-control"
-                                    aria-label="Default select example" formControlName="section3_gst_dropdown" (change)="getTaxCals()">
+                                    aria-label="Default select example" formControlName="section3_gst_dropdown"
+                                    (change)="getTaxCals()">
                                     <option [ngValue]="null" selected disabled>Select Tax</option>
 
 
@@ -655,8 +664,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()" id="shipping_amt_id"
-                                    class="form-control mt-2" />
+                                <input type="text" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
+                                    id="shipping_amt_id" class="form-control mt-2" />
                             </div>
                         </div>
 
@@ -670,8 +679,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_bankingCharge_amt_txtbox" (keyup)="extraFees()"
-                                    id="bankingCharge_amt_id" class="form-control mt-2" />
+                                <input type="text" formControlName="section3_bankingCharge_amt_txtbox"
+                                    (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
                             </div>
                         </div>
 
@@ -684,7 +693,8 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control"  [(ngModel)]="grandTotal" formControlName="section3_grand_total" />
+                                    <input type="text" class="form-control" [(ngModel)]="grandTotal"
+                                        formControlName="section3_grand_total" />
                                 </div>
 
 
@@ -770,12 +780,7 @@
 
                             </div>
                         </div>
-                        <div class="buttonAlign">
-
-                            <button type="button" class="btn btn-primary" (click)=" save($event)">Submit</button>
-                            <button type="button" class="btn btn-dark ">Cancel</button>
-
-                        </div>
+                       
 
 
 
@@ -784,8 +789,15 @@
                 </div>
             </section>
         </section>
+       
     </form>
 
+    <div style="padding-left: 1040px;">
+
+        <button type="button" class="btn btn-primary mr-2 mt-2 mb-2" (click)=" save($event)">Submit</button>
+        <button type="button" class="btn btn-dark" (click)="gotoPIList()">Cancel</button>
+
+    </div>
 </div>
 
 
