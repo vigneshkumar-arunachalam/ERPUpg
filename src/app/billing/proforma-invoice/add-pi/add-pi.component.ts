@@ -4,6 +4,7 @@ import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@ang
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -100,7 +101,8 @@ export class AddPIComponent implements OnInit {
   MSDisplay_Value: boolean = true;
 
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -570,6 +572,7 @@ export class AddPIComponent implements OnInit {
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
     console.log("search data in dropdown", data)
@@ -586,7 +589,7 @@ export class AddPIComponent implements OnInit {
     api_SearchCUST_req.customerId = this.customerName_Data
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
@@ -693,7 +696,7 @@ export class AddPIComponent implements OnInit {
     });
   }
   gotoPIList() {
-   
+
     this.router.navigate(['/ProformaInvoice']);
   }
   save($event: MouseEvent) {
@@ -784,7 +787,7 @@ export class AddPIComponent implements OnInit {
 
     //section-3
     api_savePI_req.grossTotal = this.addPI_section3.value.section3_gross_total;
-    
+
 
     api_savePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
     api_savePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
@@ -840,6 +843,7 @@ export class AddPIComponent implements OnInit {
 
   }
   getCustomerInvoiceDetails() {
+    this.spinner.show();
     // this.billerID = event.target.value;
     // console.log("billerID check", this.billerID);
 
@@ -856,7 +860,7 @@ export class AddPIComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         this.addPI_section1.patchValue({
           'invoiceNo': response.invoice_no,
@@ -876,7 +880,7 @@ export class AddPIComponent implements OnInit {
   }
 
   getProformaBillerDetails() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let add_BillerDetails_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -887,6 +891,7 @@ export class AddPIComponent implements OnInit {
     add_BillerDetails_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log(response);
 
 

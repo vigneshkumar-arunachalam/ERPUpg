@@ -71,7 +71,10 @@
   .marginSpace{
     margin-top:2rem !important;
   }
+  .add-contact-table-section tbody:nth-child(odd) {background: #f5fffa}
 
+  .add-contact-table-section tbody:nth-child(even) {background: #f7f0f0}
+  
   .userDatatable-header th  {
     padding: 0px 18px 0px 18px;
   }

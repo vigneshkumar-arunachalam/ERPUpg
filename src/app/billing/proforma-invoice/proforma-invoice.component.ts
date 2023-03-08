@@ -209,6 +209,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
   }
   getEmailDetails(id: any) {
+    this.spinner.show();
     this.Email_BillId = id;
     let api_req: any = new Object();
     let api_emailDetails: any = new Object();
@@ -223,6 +224,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_emailDetails;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
 
         this.email_fromList = response.email_from_arr;
@@ -253,7 +255,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
 
         iziToast.success({
-          message: "Payment Process Details displayed Successfully",
+          message: "Email Details displayed Successfully",
           position: 'topRight'
 
         });
@@ -362,8 +364,68 @@ export class ProformaInvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-            this.spinner.hide();
+         
             $('#PItoInvoiceConversionFormId').modal('hide');
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            this.PIList({});
+            console.log("final error", error);
+          };
+      }
+    })
+  }
+  InvoicetoDIDConversion(Id: any){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+     
+      if (result.value) {
+
+        this.spinner.show();
+
+        let api_req: any = new Object();
+        let PItoInv_req: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/invoice_to_did";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        PItoInv_req.action = "invoice_to_did";
+        PItoInv_req.user_id = this.user_ids;
+        PItoInv_req.billId = Id;
+        api_req.element_data = PItoInv_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
+          if (response.status == true) {
+
+            this.spinner.hide();
+           
+            iziToast.success({
+              message: "Successfully Converted from Proforma to Invoice",
+              position: 'topRight'
+            });
+            this.PIList({});
+          } else {
+            this.spinner.hide();
+           
+            iziToast.warning({
+              message: "Converted from Proforma to Invoice Failed",
+              position: 'topRight'
+            });
+            this.PIList({});
+          }
+        }),
+          (error: any) => {
+         
+           
             iziToast.error({
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
@@ -548,6 +610,7 @@ export class ProformaInvoiceComponent implements OnInit {
     tinymce.activeEditor.setContent("");
   }
   PIList(data: any) {
+    this.spinner.show();
 
     var list_data = this.listDataInfo(data);
 
@@ -567,8 +630,10 @@ export class ProformaInvoiceComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("PI list", response);
       if (response) {
+        
         this.PI_list = response.proforma_details;
 
         this.biller_list = response.biller_details;
@@ -750,6 +815,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
   }
   invoiceShowPersonEdit(Id: any) {
+    this.spinner.show();
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
@@ -763,7 +829,7 @@ export class ProformaInvoiceComponent implements OnInit {
     quot_share_req.billId = Id;
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
 
 
@@ -793,6 +859,7 @@ export class ProformaInvoiceComponent implements OnInit {
     }
   }
   invoiceShowPermissionUpdate() {
+    this.spinner.show();
     let api_req: any = new Object();
     let quot_share_update_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -805,6 +872,7 @@ export class ProformaInvoiceComponent implements OnInit {
     quot_share_update_req.shared_user_id = this.typeConvertionString_invoiceShowPermission;
     api_req.element_data = quot_share_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         iziToast.success({
           message: "Show Permission Updated successfully",
@@ -847,7 +915,7 @@ export class ProformaInvoiceComponent implements OnInit {
   }
   processPaymentEdit(id: any) {
 
-
+    this.spinner.show();
     this.billID_processPayment = id;
     let api_req: any = new Object();
     let api_processpaymentEdit: any = new Object();
@@ -875,12 +943,8 @@ export class ProformaInvoiceComponent implements OnInit {
           'owing': response.owing_amount,
 
         })
-
-        iziToast.success({
-          message: "Payment Process Details displayed Successfully",
-          position: 'topRight'
-
-        });
+        this.spinner.hide();
+      
         this.PIList({});
       } else {
 
@@ -900,8 +964,7 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
   processPaymentUpdate() {
-    Swal.fire('Updating');
-    Swal.showLoading();
+   this.spinner.show();
 
     let api_req: any = new Object();
     let api_processpaymentUpdate: any = new Object();
@@ -914,11 +977,8 @@ export class ProformaInvoiceComponent implements OnInit {
     api_processpaymentUpdate.billId = this.billID_processPayment;
     api_processpaymentUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     if (this.processPaymentForm.value.amount === null) {
-      Swal.close();
-      iziToast.warning({
-        message: "Amount Value Missing",
-        position: 'topRight'
-      });
+      this.spinner.hide();
+     
 
       return false;
     }
@@ -927,7 +987,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
     api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
     if (this.processPaymentForm.value.paymenttype === null) {
-      Swal.close();
+      this.spinner.hide();
       iziToast.warning({
         message: "Payment Type Missing",
         position: 'topRight'
@@ -941,7 +1001,7 @@ export class ProformaInvoiceComponent implements OnInit {
       $("#processPaymentFormId").removeAttr("disabled");
       if (response.status == true) {
 
-        Swal.close();
+        this.spinner.hide();
         $('#processPaymentFormId').modal("hide");
         iziToast.success({
           message: "Payment Process Updated Successfully",
@@ -951,7 +1011,7 @@ export class ProformaInvoiceComponent implements OnInit {
         this.PIList({});
 
       } else {
-        Swal.close();
+        this.spinner.hide();
         $('#processPaymentFormId').modal("hide");
         iziToast.warning({
           message: "Payment Process not displayed. Please try again",
@@ -961,7 +1021,7 @@ export class ProformaInvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        Swal.close();
+        
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -972,6 +1032,7 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
   setInvoiceTypeNameEdit(id: any) {
+    this.spinner.show();
     this.InvoiceType_BillerID = id;
 
     let api_req: any = new Object();
@@ -987,6 +1048,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_invoiceTyp;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
         console.log("response.selected_invoice_type", response.selected_invoice_type)
@@ -1018,7 +1080,7 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
   setInvoiceTypeNameUpdate() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let api_invTypeUpdate: any = new Object();
     api_req.moduleType = "proforma";
@@ -1032,6 +1094,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_invTypeUpdate;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
 
 
@@ -1066,6 +1129,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
   setTermsConditionEdit(id: any) {
     // this.setInvoiceType.reset();
+    this.spinner.show();
     this.TermCondition_BillerID = id;
 
     let api_req: any = new Object();
@@ -1081,6 +1145,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_insertProforma;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         this.TermDetailsList = response.terms_details;
         this.setTermCondition.patchValue({
@@ -1112,6 +1177,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
   }
   setTermsConditionUpdate() {
+    this.spinner.show();
 
     let api_req: any = new Object();
     let api_insertProformaUpdate: any = new Object();
@@ -1126,6 +1192,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_insertProformaUpdate;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
 
 

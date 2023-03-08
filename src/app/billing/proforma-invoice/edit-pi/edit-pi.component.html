@@ -171,7 +171,7 @@
                 </div>
             </div>
 
-            
+
 
 
             <div class="col-lg-6">
@@ -348,7 +348,7 @@
                     </label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked 
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
                         (change)="handleChange_MSDisplay($event)">
                     <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
                 </div>
@@ -365,218 +365,238 @@
                     <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
                         class="col-lg-12 col-form-label">Product Details</h2>
                 </div>
-            
-            <div class="col-12">
-                        <div class="table-responsive">
-                            <table class="add-contact-table-section" >
-                                <thead>
-                                    <tr class="userDatatable-header">
-                                        <th style="width: 50px;"> <span class="userDatatable-title">
+
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="add-contact-table-section">
+                            <thead>
+                                <tr class="userDatatable-header">
+                                    <th style="width: 50px;"> <span class="userDatatable-title">
                                             Next Page</span>
-                                        </th>
-                                        <th  style="width:200px"><span class="userDatatable-title">Product Name</span></th>
-                                        <th style="width:150px"><span  class="userDatatable-title">Quantity</span></th>
-                                        <th style="width:150px"><span  class="userDatatable-title">Unit</span></th>
-                                        <th style="width:150px"><span  class="userDatatable-title">	Price</span></th>
-                                        <th style="width:150px"><span  class="userDatatable-title">	Total</span></th>
-                                        <th style="width:150px"><span  class="userDatatable-title">Net Total</span></th>
-                                        <th style="width: 110px;text-align: center;"><span  class="userDatatable-title">Out Call</span>
-                                        </th>
-                                        <th style="width: 110px;text-align: center;"><span  class="userDatatable-title">	C Mon</span>
-                                        </th>
-                                        <th style="width: 110px;text-align: center;"><span  class="userDatatable-title">	Select Tax</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Action</span>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody style="border-bottom: 1px solid #ddd;" formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+                                    </th>
+                                    <th style="padding-left: 50px;"><span class="userDatatable-title">Product
+                                            Name</span></th>
+                                    <th style="padding-left: 150px;"><span class="userDatatable-title">Quantity</span>
+                                    </th>
+                                    <th style="padding-left: 50px;"><span class="userDatatable-title">Unit</span></th>
+                                    <th style="padding-left: 50px;"><span class="userDatatable-title"> Price</span></th>
+                                    <th style="padding-left: 100px;"> <span class="userDatatable-title"> Total</span>
+                                    </th>
+                                    <th style="padding-left: 90px;"><span class="userDatatable-title">Net Total</span>
+                                    </th>
+                                    <th style="padding-left: 110px;"><span class="userDatatable-title">Out Call</span>
+                                    </th>
+                                    <th style="padding-left: 15px;"><span class="userDatatable-title"> C Mon</span>
+                                    </th>
+                                    <th style="padding-left: 0px;"><span class="userDatatable-title"> Select Tax</span>
+                                    </th>
+                                    <th style="padding-left: 0px;">
+                                        <span class="userDatatable-title">Action</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody style="border-bottom: 1px solid #ddd;" formArrayName="addresses"
+                                *ngFor="let address of addressControls.controls; let i = index;">
 
 
-                                    <tr [formGroupName]="i">
+                                <tr [formGroupName]="i">
 
-                                        <td colspan="12">
-                                            <table>
-                                                <tr class="marginSpace">
-                                        <!-- NEXT PAGE -->
-                                        <td  style="   width: 50px;text-align: center;">
-                                            <div class="userDatatable-content lalign" style="   width: 50px;text-align: center!important;;">
-                                            <input type="checkbox"  formControlName="pd_nextPage_checkbox"
-                                            id="to_pd_nextPage_{{i}}">
-                                            <input type="hidden" formControlName="pd_billchild_id"
-                                            id="pd_billchild_id_{{i}}"   />
-                                            
-                                            </div>
-                                        </td>
+                                    <td colspan="12">
+                                        <table>
+                                            <tr class="marginSpace">
+                                                <!-- NEXT PAGE -->
+                                                <td style="   width: 50px;text-align: center;">
+                                                    <div class="userDatatable-content lalign"
+                                                        style="   width: 50px;text-align: center!important;;">
+                                                        <input type="checkbox" formControlName="pd_nextPage_checkbox"
+                                                            id="to_pd_nextPage_{{i}}">
+                                                        <input type="hidden" formControlName="pd_billchild_id"
+                                                            id="pd_billchild_id_{{i}}" />
 
-                                        <!-- PRODUCT NAME -->
-                                        <td style="   width: 250px;text-align: center;">
-                                            <div class="userDatatable-content" >
-                                                <input type="text" class="form-control mt-2 mb-2"
-                                                formControlName="pd_productName_txtbox1"
-                                                id="pd_productName_txtbox_{{i}}" />
-                                            </div>
-                                        </td>
+                                                    </div>
+                                                </td>
 
-                                      
+                                                <!-- PRODUCT NAME -->
+                                                <td>
+                                                    <div class="userDatatable-content"
+                                                        style="width: 250px;text-align: center;">
+                                                        <input type="text" class="form-control mt-2 mb-2"
+                                                            formControlName="pd_productName_txtbox1"
+                                                            id="pd_productName_txtbox_{{i}}" />
+                                                    </div>
+                                                </td>
 
-                                        <!-- QUANTITY -->
 
-                                        <td>
-                                            <div class="userDatatable-content" style="width: 150px;">
-                                                <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}" 
-                                                    (change)="totalCalculate();saveDiscount()"
-                                                    (blur)="totalCalculate();saveDiscount()"
-                                                    (keyup)="totalCalculate();saveDiscount()" />
-                                            </div>
-                                        </td>
-                                      
-                                        <!-- UNIT.... -->
 
-                                        <td>
-                                            <div class="userDatatable-content" style="width: 150px;">
+                                                <!-- QUANTITY -->
 
-                                                <input type="text" class="form-control" style="text-align: left;"
-                                                    formControlName="pd_unit" id="pd_unit_{{i}}"  />
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 120px;">
+                                                        <input type="text" class="form-control"
+                                                            style="text-align: right;"
+                                                            formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
+                                                            (change)="totalCalculate();saveDiscount()"
+                                                            (blur)="totalCalculate();saveDiscount()"
+                                                            (keyup)="totalCalculate();saveDiscount()" />
+                                                    </div>
+                                                </td>
 
-                                            </div>
-                                        </td>
+                                                <!-- UNIT.... -->
 
-                                       <!-- PRICE..... -->
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 100px;">
 
-                                        <td>
-                                            <div class="userDatatable-content" style="width: 150px;">
-                                               
-                                                <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
-                                                    (change)="totalCalculate();saveDiscount()"
-                                                    (blur)="totalCalculate();saveDiscount()"
-                                                    (keyup)="totalCalculate();saveDiscount()"  />
-                                            </div>
-                                        </td>
-                         
+                                                        <input type="text" class="form-control"
+                                                            style="text-align: left;" formControlName="pd_unit"
+                                                            id="pd_unit_{{i}}" />
 
-                                        <td  style="width: 150px;">
-                                            <div class="userDatatable-content" style="width: 150px;">
-                                                <input type="text" class="form-control" formControlName="pd_Total"
-                                                    style="text-align: right;" id="pd_Total_{{i}}"   />
-                                            </div>
-                                        </td>
-                                      
-                                        <td  style="width: 150px;">
-                                            <div class="userDatatable-content" style="width: 150px;">
-                                                <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+                                                    </div>
+                                                </td>
 
-                                            </div>
-                                        </td>
-                                      
-                                        <td>
-                                            <div class="userDatatable-content" style="width: 110px;text-align: center;">
-                                                <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
+                                                <!-- PRICE..... -->
 
-                                            </div>
-                                        </td>
-                                     
-                                        <td>
-                                            <div class="userDatatable-content"  style="width: 100px;text-align: center;">
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 150px;">
 
-                                                <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_CMon" id="pd_CMon_{{i}}">
+                                                        <input type="text" class="form-control"
+                                                            style="text-align: right;" formControlName="pd_sellingPrice"
+                                                            id="pd_SP_{{i}}" (change)="totalCalculate();saveDiscount()"
+                                                            (blur)="totalCalculate();saveDiscount()"
+                                                            (keyup)="totalCalculate();saveDiscount()" />
+                                                    </div>
+                                                </td>
 
-                                            </div>
-                                        </td>
-                                       
 
-                                        <td>
-                                            <div class="userDatatable-content" style="top:-35px;text-align: center;width: 100px;margin-left: -8px">
-                                                <input type="checkbox"  id="pd_selectTax_{{i}}"
-                                                    formControlName="pd_selectTax" (change)="totalCalculate();" />
-    
-    
-                                                </div>
-                                            </td>
-                           
-                                        <td *ngIf="i>0">
-                                            <div class="userDatatable-content d-inline-block" style="margin-left: 50px;">
-                                                <button  type="button" class="btn btn-danger btn-sm"
-                                                    (click)="removeParticular(i)">X</button>
+                                                <td style="width: 150px;">
+                                                    <div class="userDatatable-content" style="width: 150px;">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="pd_Total" style="text-align: right;"
+                                                            id="pd_Total_{{i}}" />
+                                                    </div>
+                                                </td>
 
-                                            </div>
+                                                <td style="width: 150px;">
+                                                    <div class="userDatatable-content" style="width: 150px;">
+                                                        <input type="text" class="form-control"
+                                                            style="text-align: right;" formControlName="pd_netPrice"
+                                                            id="pd_netPrice_{{i}}" />
+
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="userDatatable-content"
+                                                        style="width: 50px;text-align: center;">
+                                                        <input type="checkbox" style="text-align: right;"
+                                                            formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
+
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class="userDatatable-content"
+                                                        style="width: 50px;text-align: center;">
+
+                                                        <input type="checkbox" style="text-align: right;"
+                                                            formControlName="pd_CMon" id="pd_CMon_{{i}}">
+
+                                                    </div>
+                                                </td>
+
+
+                                                <td>
+                                                    <div class="userDatatable-content"
+                                                        style="top:-35px;text-align: center;width: 50px;margin-left: -8px">
+                                                        <input type="checkbox" id="pd_selectTax_{{i}}"
+                                                            formControlName="pd_selectTax"
+                                                            (change)="totalCalculate();" />
+
+
+                                                    </div>
+                                                </td>
+
+                                                <td *ngIf="i>0">
+                                                    <div class="userDatatable-content d-inline-block"
+                                                        style="margin-left: 15px;">
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                            (click)="removeParticular(i)">X</button>
+
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr class="marginSpace">
+
+                                                <!-- Description -->
+                                                <td></td>
+                                                <td colspan="2">
+                                                    <div class="userDatatable-content">
+                                                        <textarea
+                                                            style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                            class="form-control mt-2 mb-2" row="2"
+                                                            formControlName="pd_productName_txtArea"
+                                                            id="pd_productName_txtArea_{{i}}"></textarea>
+                                                    </div>
+                                                </td>
+
+                                                <!-- DISCOUNT -->
+
+                                                <td colspan="1">
+                                                </td>
+                                                <td colspan="1">
+
+                                                    <div class="userDatable-content">
+
+                                                        <button type="button"
+                                                            class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                                            data-toggle="modal" (click)="calculateDiscount(i)"
+                                                            data-target="#discountFormId"
+                                                            id="discount_btn_{{i}}">Discount(-)
+                                                        </button>
+
+                                                    </div>
+                                                </td>
+
+                                                <td colspan="1">
+
+                                                    <input type="text" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                                        formControlName="sub_dis_val" id="sub_discount_val_{{i}}" />
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+
+                                        </table>
                                     </td>
-                                                </tr>
-                                    
-                                    <tr class="marginSpace">
-                                     
-                                          <!-- Description -->
-                                          <td colspan="3">
-                                            <div class="userDatatable-content">
-                                                <textarea
-                                                style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
-                                                class="form-control mt-2 mb-2" row="2" formControlName="pd_productName_txtArea"
-                                                id="pd_productName_txtArea_{{i}}"></textarea>
-                                            </div>
-                                        </td>
+                                </tr>
+                            </tbody>
 
-                                        <!-- DISCOUNT -->
+                        </table>
+                    </div>
 
-                                        <td colspan="1">
-                                        </td>
-                                        <td colspan="1">
+                    <div class="text-right">
 
-                                            <div class="userDatable-content">
-
-                                                <button type="button"
-                                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                                data-toggle="modal" (click)="calculateDiscount(i)"
-                                                data-target="#discountFormId" id="discount_btn_{{i}}" >Discount(-) 
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                              
-                                           <td colspan="1">
-
-                                            <input type="text" class="form-control" style="text-align: right;"
-                                                formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
-                                                <input type="hidden" class="form-control" style="text-align: right;"
-                                                formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
-                                            <input type="hidden" class="form-control" style="text-align: right;"
-                                                formControlName="sub_dis_val" id="sub_discount_val_{{i}}" />
-                                           </td>
-                                           <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                    </tr>
-                                  
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-
-                            </table>
-                        </div>
-
-                <div class="text-right">
-
-                    <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                        <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
                         (click)="addAddress()">Add Product </button> -->
-                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="editAddress()"
-                        style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>
-                    </button>
+                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2"
+                            (click)="editAddress()" style="margin-right: 10px;"><i class="fas fa-plus"
+                                style="margin-right:0;"> Add Product</i>
+                        </button>
+                    </div>
+
                 </div>
 
             </div>
-
-        </div>
         </div>
     </form>
     <form [formGroup]="addPI_section3">
@@ -598,7 +618,7 @@
                     <div class="row">
 
 
-                    
+
                         <div class="col-lg-12">
 
                             <div class="row d-flex">

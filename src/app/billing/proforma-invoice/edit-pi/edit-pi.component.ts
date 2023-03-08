@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -108,7 +109,7 @@ quotationAddSignature_filename:any;
 selectAdditionalSign:boolean=true; 
   sign_state: number;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
@@ -481,6 +482,7 @@ selectAdditionalSign:boolean=true;
   }
   getProformaBillerDetails() {
     //  this.getProformaBillerDetails_BillerID = event.target.value;
+    this.spinner.show();
     let api_req: any = new Object();
     let add_BillerDetails_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -491,6 +493,7 @@ selectAdditionalSign:boolean=true;
     add_BillerDetails_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log(response);
 
 
@@ -620,6 +623,7 @@ selectAdditionalSign:boolean=true;
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
 
     console.log("search data in dropdown", data)
     console.log("search data-customer Id", data.customerId)
@@ -636,7 +640,7 @@ selectAdditionalSign:boolean=true;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-
+      this.spinner.hide();
       if (response.status == true) {
 
         this.addPI_section1.patchValue({
@@ -675,6 +679,7 @@ selectAdditionalSign:boolean=true;
 
 
   getCustomerInvoiceDetails(event: any) {
+    this.spinner.show();
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
 
@@ -691,7 +696,7 @@ selectAdditionalSign:boolean=true;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         this.addPI_section1.patchValue({
           // 'companyName':  this.billerID,
@@ -715,7 +720,7 @@ selectAdditionalSign:boolean=true;
 
   }
   editPI() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let api_editPI_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -731,6 +736,7 @@ selectAdditionalSign:boolean=true;
 
 
       if (response != '') {
+        this.spinner.hide();
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);

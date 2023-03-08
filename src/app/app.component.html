@@ -18,7 +18,10 @@
             <!-- <app-footer></app-footer> -->
             <div class="main-content" *ngIf="templateAuthView == false">
                 <!-- <ngx-spinner type="ball-beat"></ngx-spinner> -->
-                <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "small" color = "#920e0e" type = "square-jelly-box" [fullScreen] = "false"><p style="color: white" > Loading... </p></ngx-spinner>
+                <ngx-spinner bdColor="rgba(0,0,0,0.6)" size="default" color="#920e0e" type="square-jelly-box"
+                    [fullScreen]="true">
+                    <p style="color: white">  </p>
+                </ngx-spinner>
                 <section class="section">
                     <div class="contents expanded">
                         <router-outlet (activate)="onActivate($event)"></router-outlet>
@@ -27,8 +30,8 @@
                 <!-- //<app-setting-menu></app-setting-menu> -->
 
             </div>
-            
-           
+
+
         </div>
 
         <div class="main-body-auth" *ngIf="templateAuthView == true">
