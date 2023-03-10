@@ -34,7 +34,10 @@ export class EditPIComponent implements OnInit {
   editResult: any;
   exportState_value: any;
 
-
+  bills_logo_id_radio:any
+  billsLogo_value:any;
+  radioID_Logo:any;
+  
   TaxDropdownList: any
   //radio
   radio_Select: any;
@@ -86,6 +89,7 @@ export class EditPIComponent implements OnInit {
   mileDetails:any;
   MSDisplay_Value: boolean = true;
   mileDiscountState_value:any;
+  mile_discount_state_radio: any;
   //calculation
   finalDiscount: any;
   finalDiscountType: any;
@@ -108,6 +112,7 @@ quotationAddSignature_state:any;
 quotationAddSignature_filename:any;
 selectAdditionalSign:boolean=true; 
   sign_state: number;
+ 
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
 
@@ -145,22 +150,14 @@ selectAdditionalSign:boolean=true;
       this.test[index] = true;
     });
 
-    this.dynamicCheckboxwithKey = [
+    this.mile_discount_state_radio = [
 
       { name: 'Discount', selected: false, id: 1 },
       { name: 'Mile Stone', selected: false, id: 2 },
 
 
     ];
-    this.SelectExtraLogoCheckboxwithKey = [
-
-      { name: 'IT Care', selected: false, id: 1 },
-      { name: 'Calncall', selected: false, id: 2 },
-      { name: ' DID Sg  ', selected: false, id: 3 },
-      { name: ' Callcloud  ', selected: false, id: 4 },
-      { name: ' Mrvoip  ', selected: false, id: 5 },
-
-    ];
+    
     this.initial_Radio = [
       { name: 'Proforma ', selected: false, id: 1 },
       { name: 'Quotation', selected: false, id: 2 },
@@ -172,6 +169,14 @@ selectAdditionalSign:boolean=true;
       { name: 'Export', selected: false, id: 2 },
       { name: 'Zero Valid', selected: false, id: 3 },
 
+    ];
+
+    this.bills_logo_id_radio =[
+      {name : 'IT Care', selected: false, id : 1},
+      {name : 'Calncall', selected: false, id: 2},
+      {name : 'DID Sg', selected : false, id : 3},
+      {name : 'Callcloud', selected : false , id: 4},
+      {name : 'Mrvoip', selected : false , id: 5}
     ];
 
 
@@ -209,8 +214,8 @@ selectAdditionalSign:boolean=true;
       'CurrencyConversionRate': new FormControl(),
       'PaymentVia': new FormControl(),
       'e_export_state': new FormControl(),
-      'mile_Discount': new FormControl(),
-      'mile_MileStone': new FormControl(),
+      'bills_logo_id': new FormControl(),
+      'mile_discount_state': new FormControl(),
       'mile_MSDisplay': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
@@ -404,6 +409,30 @@ selectAdditionalSign:boolean=true;
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
     this.radio_Value_Mile = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
+
+  handleChange_mileSate(data: any, evt: any) {
+
+    this.radioID_Logo = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
+
+  handleChange_Logo(data: any, evt: any) {
+
+    this.radioID_Logo = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
     // var xyz = id;
     console.log("radio button value", this.radio_Value_Export);
     // console.log("radio button id value", xyz);
@@ -739,6 +768,7 @@ selectAdditionalSign:boolean=true;
         this.spinner.hide();
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
+        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -791,6 +821,7 @@ selectAdditionalSign:boolean=true;
           if(response.billchild_details[index].dis_per!=''){
             this.sub_dis_type='per';
             this.sub_dis_val=response.billchild_details[index].dis_per;
+          
           }else if(response.quotation_child_det[index].dis_amt!=''){
             this.sub_dis_type='amt';
             this.sub_dis_val=response.billchild_details[index].dis_amt;
@@ -826,23 +857,24 @@ selectAdditionalSign:boolean=true;
         this.finalDiscountType = '';
         this.finalDiscountVal='';
         this.finalDiscount='';
-        // console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
+        console.log('response.signature_filename'+response.billing_pararent_details[0].signature_filename);
        
-        // if(response.billing_pararent_details[0].signature_filename!=''){
-        //   this.sign_state=1;
-        // }
-        // this.quotationAddSignature_filename=response.quotation_details[0].signature_filename;
+        if(response.billing_pararent_details[0].signature_filename!=''){
+          this.sign_state=1;
+        }
+        this.quotationAddSignature_filename=response.billing_pararent_details[0].signature_filename;
   
         if(response.billing_pararent_details[0].discountPer!=''){
           this.finalDiscountType = 'per';
-         
           this.finalDiscountVal=response.billing_pararent_details[0].discountPer;
+          console.log('final');
+          
           this.finalDiscount=response.billing_pararent_details[0].discountAmount;
         }else if(response.billing_pararent_details[0].discountAmount!=''){
           this.finalDiscountType = 'amt';
-        
           this.finalDiscount=response.billing_pararent_details[0].discountAmount;
         }
+       
         this.addPI_section3.patchValue({
 
 
@@ -1358,12 +1390,14 @@ selectAdditionalSign:boolean=true;
 
   saveDiscount() {
     var enablePerFinal = $('#enablePerFinal').val()
-    var enablePriceFinal = $('#enablePriceDiscont').val()
+    var enablePriceFinal = $('#enablePriceFinal').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
     //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
     //console.log('quotationPriceKey'+this.quotationPriceKey);
     //console.log('disType'+disType);
     var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
+    console.log('final_ tot',final_tot);
+    
     $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
@@ -1372,6 +1406,8 @@ selectAdditionalSign:boolean=true;
         console.log('3333' + final_tot);
         price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
 
+        console.log('1...price...',price);
+        
 
         $('#sub_discount_' + this.invocePriceKey).val(price);
         $('#sub_discount_val_' + this.invocePriceKey).val(enablePerFinal);
@@ -1379,14 +1415,19 @@ selectAdditionalSign:boolean=true;
       } else {
         $('#sub_discount_' + this.invocePriceKey).val('');
         $('#sub_discount_val_' + this.invocePriceKey).val('');
-        console.log('222' + final_tot);
+       
         price = final_tot;
+        console.log('final_tot....',final_tot);
+        console.log('price....',price);
+        
 
       }
       //   console.log(price);
 
     } else {
       price = final_tot - enablePriceFinal;
+      console.log('price...',price);
+      
       $('#sub_discount_' + this.invocePriceKey).val(enablePriceFinal);
       $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
 
@@ -1452,8 +1493,8 @@ selectAdditionalSign:boolean=true;
   }
 
   saveGrossDiscount() {
-    var finaldiscountTYpe_per = $('#enablePerFinal').val()
-    var finaldiscountTYpe_amt = $('#enablePriceFinal').val()
+    var finaldiscountTYpe_per = $('#enableFinalPercent').val()
+    var finaldiscountTYpe_amt = $('#enableFinalDiscount').val()
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;

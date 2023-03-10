@@ -1163,6 +1163,9 @@ export class AddPIComponent implements OnInit {
     }
     this.finalDiscount = price
     $('#discountFormFinal').modal('hide');
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1500)
   }
 
 

@@ -4,61 +4,156 @@
         <div class="row">
 
 
-
-
             <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
-                    <div class="col-lg-12">
-                        <select name="enqFormValue" id="cmp_name" class="form-control" formControlName="companyName"
-                            (change)="getCustomerInvoiceDetails($event)" (change)="getProformaBillerDetails()">
-                            <option [ngValue]="null" selected disabled>Select Company Name</option>
-                            <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
-                                {{comp_name.billerName}}
-                            </option>
-                        </select>
+                <div class="col-lg-12">
 
+                    <div class="form-group row">
+                        <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
+                        <div class="col-lg-12">
+                            <select name="enqFormValue" id="cmp_name" class="form-control" formControlName="companyName"
+                                (change)="getCustomerInvoiceDetails($event)" (change)="getProformaBillerDetails()">
+                                <option [ngValue]="null" selected disabled>Select Company Name</option>
+                                <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
+                                    {{comp_name.billerName}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
+
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="customerName" class="col-lg-12 col-form-label">Bill To*</label>
+                        <div class="ng-autocomplete">
+    
+                            <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
+                                formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
+                                (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                            </ng-autocomplete>
+    
+    
+                            <ng-template #itemTemplateCustomer let-item>
+                                <a [innerHTML]="item.customerName"></a>
+                            </ng-template>
+    
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                            <!-- <div *ngIf="addQuotationInvoice_section1.controls['customerName'].invalid && (addQuotationInvoice_section1.controls['customerName'].dirty || addQuotationInvoice_section1.controls['customerName'].touched)"
+                                    class=" mt-2 ml-2 mr-2 alert alert-danger">
+                                    Customer Name is Required
+                                </div> -->
+                        </div>
+                        <input type="hidden" formControlName="customer_id_hd" />
+                        <input type="hidden" formControlName="billId_edit" />
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="add" class="col-lg-12 col-form-label">Address</label>
+                        <div class="col-lg-12">
+                            <input type="hidden" formControlName="customer_name" />
+                            <input type="text " class="form-control mt-2" formControlName="address_1" />
+                            <input type="text " class="form-control mt-2" formControlName="address_2" />
+                            <input type="text " class="form-control mt-2" formControlName="address_3" />
+    
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="attn1" class="col-lg-12 col-form-label">Attn</label>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" formControlName="Attn_1" id="attn1" />
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="ship" class="col-lg-12 col-form-label">Ship To</label>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control mt-2" formControlName="ship_to" />
+                            <input type="text" class="form-control mt-2" formControlName="shipTo_1" />
+                            <input type="text" class="form-control mt-2" formControlName="shipTo_2" />
+                            <input type="text" class="form-control mt-2" formControlName="shipTo_3" />
+                            <!-- <input type="text" class="form-control mt-2" formControlName="ShipTo_4" /> -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="attn2" class="col-lg-12 col-form-label">Attn</label>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" formControlName="Attn_2" id="attn2" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="refDetails" class="form-label">Ref</label>
+                        <textarea class="form-control" formControlName="Ref" style="height: 70px;" row="3"></textarea>
+                    </div>
+                </div>
+
+
+
+
+
+
             </div>
 
 
             <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="inv_no" class="col-lg-12 col-form-label">Invoice No</label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="invoiceNo"
-                            [attr.readonly]="isReadOnly" id="inv_no" />
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="inv_no" class="col-lg-12 col-form-label">Invoice No</label>
+                        <div class="col-lg-12">
+                            <input type="text " class="form-control" formControlName="invoiceNo"
+                                [attr.readonly]="isReadOnly" id="inv_no" />
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="customerName" class="col-lg-12 col-form-label">Bill To*</label>
-                    <div class="ng-autocomplete">
-
-                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
-                            formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
-                            (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                        </ng-autocomplete>
 
 
-                        <ng-template #itemTemplateCustomer let-item>
-                            <a [innerHTML]="item.customerName"></a>
-                        </ng-template>
-
-                        <ng-template #notFoundTemplate let-notFound>
-                            <div [innerHTML]="notFound"></div>
-                        </ng-template>
-                        <!-- <div *ngIf="addQuotationInvoice_section1.controls['customerName'].invalid && (addQuotationInvoice_section1.controls['customerName'].dirty || addQuotationInvoice_section1.controls['customerName'].touched)"
-                                class=" mt-2 ml-2 mr-2 alert alert-danger">
-                                Customer Name is Required
-                            </div> -->
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_tinName}}
+                        </label>
+                        <div class="col-lg-12">
+                            <input type="text " class="form-control" formControlName="tin" [attr.readonly]="isReadOnly"
+                                id="regg" />
+                        </div>
+    
+    
                     </div>
-                    <input type="hidden" formControlName="customer_id_hd" />
-                    <input type="hidden" formControlName="billId_edit" />
+    
+                    <div class="form-group row">
+    
+                        <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_cstName}}
+                        </label>
+                        <div class="col-lg-12">
+                            <input type="text " class="form-control" formControlName="cst" [attr.readonly]="isReadOnly"
+                                id="regg" />
+                        </div>
+    
+                    </div>
+    
+                    <div class="form-group row">
+                        <label for="podatee" class="col-lg-12 col-form-label">PO.Date</label>
+                        <div class="col-lg-12">
+                            <input type="date" class="form-control" formControlName="PoDate" id="podatee" />
+                        </div>
+                    </div>
                 </div>
                 <div>
                     <div class="form-group row">
@@ -76,243 +171,150 @@
                     </div>
 
                 </div>
-            </div>
 
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_tinName}}
-                    </label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="tin" [attr.readonly]="isReadOnly"
-                            id="regg" />
-                    </div>
-
-
-                </div>
-
-                <div class="form-group row">
-
-                    <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_cstName}}
-                    </label>
-                    <div class="col-lg-12">
-                        <input type="text " class="form-control" formControlName="cst" [attr.readonly]="isReadOnly"
-                            id="regg" />
-                    </div>
-
-                </div>
-
-                <div class="form-group row">
-                    <label for="podatee" class="col-lg-12 col-form-label">PO.Date</label>
-                    <div class="col-lg-12">
-                        <input type="date" class="form-control" formControlName="PoDate" id="podatee" />
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="sales_rep" class="col-lg-12 col-form-label">Sales Rep</label>
+                        <div class="col-lg-12">
+                            <select id="sales_rep" class="form-control" formControlName="salesRep">
+                                <option [ngValue]="null" selected disabled>Select Sales Rep</option>
+                                <option *ngFor="let sales of salesRepList" value="{{sales.userId}}">
+                                    {{sales.firstName}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="add" class="col-lg-12 col-form-label">Address</label>
-                    <div class="col-lg-12">
-                        <input type="hidden" formControlName="customer_name" />
-                        <input type="text " class="form-control mt-2" formControlName="address_1" />
-                        <input type="text " class="form-control mt-2" formControlName="address_2" />
-                        <input type="text " class="form-control mt-2" formControlName="address_3" />
-
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Ship_By" class="col-lg-12 col-form-label">Ship By</label>
+                        <div class="col-lg-12">
+                            <select id="Ship_By" class="form-control" formControlName="ShipBy">
+                                <option [ngValue]="null" selected disabled>Default Ship By</option>
+                                <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="ship" class="col-lg-12 col-form-label">Ship To</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control mt-2" formControlName="ship_to" />
-                        <input type="text" class="form-control mt-2" formControlName="shipTo_1" />
-                        <input type="text" class="form-control mt-2" formControlName="shipTo_2" />
-                        <input type="text" class="form-control mt-2" formControlName="shipTo_3" />
-                        <!-- <input type="text" class="form-control mt-2" formControlName="ShipTo_4" /> -->
+    
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Ship_Date" class="col-lg-12 col-form-label">Ship Date</label>
+                        <div class="col-lg-12">
+                            <input type="date" class="form-control" formControlName="ShipDate" id="Ship_Date" />
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="attn1" class="col-lg-12 col-form-label">Attn</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="Attn_1" id="attn1" />
-                    </div>
-
-                </div>
-            </div>
-
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="attn2" class="col-lg-12 col-form-label">Attn</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="Attn_2" id="attn2" />
+    
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="term" class="col-lg-12 col-form-label">Terms</label>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" formControlName="terms" id="term" />
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label for="refDetails" class="form-label">Ref</label>
-                    <textarea class="form-control" formControlName="Ref" style="height: 70px;" row="3"></textarea>
+    
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="curren" class="col-lg-12 col-form-label">Currency</label>
+                        <div class="col-lg-12">
+                            <select id="curren" class="form-control" formControlName="Currency"
+                                (change)="getCurrencyValues($event)">
+                                <option [ngValue]="null" selected disabled>Select Currency</option>
+                                <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
+                                    {{comp_name.currency_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="ccr" class="col-lg-12 col-form-label">Currency Conversion Rate</label>
+                        <div class="col-lg-12">
+                            <input type="text" class="form-control" formControlName="CurrencyConversionRate"
+                                [(ngModel)]="CurrencyConversionRateDefault" [attr.readonly]="isReadOnly" id="ccr" />
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
+                        <div class="col-lg-12">
+                            <select id="Payment" class="form-control" formControlName="PaymentVia">
+                                <option [ngValue]="null" selected disabled>Select Payment Via</option>
+                                <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
+                                    {{payment.paymentvia_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-check form-check-inline" *ngFor="let display1 of exportState_Radio;let k=index">
+                        <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
+                            checked="{{display1.id==exportState_value ? 'checked':''}}"
+                            (change)="handleChange(display1.billerId,$event)" />
+                        <label class="form-check-label" for="exampleRadios{{k}}">
+                            {{display1.name}}
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-check form-check-inline" *ngFor="let display1 of mile_discount_state_radio;let k=index">
+                        <input class="form-check-input" type="radio" name="mile_discount_state" [value]="display1.id"
+                            checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
+                            (change)="handleChange_mileSate(display1.billerId,$event)" />
+                        <label class="form-check-label" for="exampleRadios{{k}}">
+                            {{display1.name}}
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
+                            (change)="handleChange_MSDisplay($event)">
+                        <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
+                    </div>
+                </div>
+
             </div>
             <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="form-group">
                     <label for="refResellerDetails" class="form-label">Reference Reseller Name</label>
                     <textarea class="form-control" formControlName="ReferenceResellerName" style="height: 70px;"
                         row="3"></textarea>
                 </div>
             </div>
-
-
-
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="sales_rep" class="col-lg-12 col-form-label">Sales Rep</label>
-                    <div class="col-lg-12">
-                        <select id="sales_rep" class="form-control" formControlName="salesRep">
-                            <option [ngValue]="null" selected disabled>Select Sales Rep</option>
-                            <option *ngFor="let sales of salesRepList" value="{{sales.userId}}">
-                                {{sales.firstName}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="Ship_By" class="col-lg-12 col-form-label">Ship By</label>
-                    <div class="col-lg-12">
-                        <select id="Ship_By" class="form-control" formControlName="ShipBy">
-                            <option [ngValue]="null" selected disabled>Default Ship By</option>
-                            <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
-                                {{ship.ship_name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="Ship_Date" class="col-lg-12 col-form-label">Ship Date</label>
-                    <div class="col-lg-12">
-                        <input type="date" class="form-control" formControlName="ShipDate" id="Ship_Date" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="term" class="col-lg-12 col-form-label">Terms</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="terms" id="term" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="curren" class="col-lg-12 col-form-label">Currency</label>
-                    <div class="col-lg-12">
-                        <select id="curren" class="form-control" formControlName="Currency"
-                            (change)="getCurrencyValues($event)">
-                            <option [ngValue]="null" selected disabled>Select Currency</option>
-                            <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
-                                {{comp_name.currency_name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="ccr" class="col-lg-12 col-form-label">Currency Conversion Rate</label>
-                    <div class="col-lg-12">
-                        <input type="text" class="form-control" formControlName="CurrencyConversionRate"
-                            [(ngModel)]="CurrencyConversionRateDefault" [attr.readonly]="isReadOnly" id="ccr" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
-                    <div class="col-lg-12">
-                        <select id="Payment" class="form-control" formControlName="PaymentVia">
-                            <option [ngValue]="null" selected disabled>Select Payment Via</option>
-                            <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
-                                {{payment.paymentvia_name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-group row">
-                    <label for="Payment" class="col-lg-12 col-form-label">Select Extra Logo</label>
-                    <div class="col-lg-12">
-                        <div class="form-check form-check-inline">
-
-                            <input class="form-check-input radioType" type="radio" name="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios1" value="IT Care">
-                            <label class="form-check-label" for="exampleRadios1">
-                                IT Care
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios2" value="Calncall">
-                            <label class="form-check-label" for="exampleRadios2">
-                                Calncall
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios3" value="DID Sg">
-                            <label class="form-check-label" for="exampleRadios3">
-                                DID Sg
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios3" value="Callcloud">
-                            <label class="form-check-label" for="exampleRadios3">
-                                Callcloud
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios3" value="Mrvoip">
-                            <label class="form-check-label" for="exampleRadios3">
-                                Mrvoip
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="form-check form-check-inline" *ngFor="let display1 of exportState_Radio;let k=index">
-                    <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
-                        checked="{{display1.id==exportState_value ? 'checked':''}}"
-                        (change)="handleChange(display1.billerId,$event)" />
+            <div class="col-lg-12">
+            <div class="form-group">
+                <label for="Payment" class="col-lg-12 col-form-label">Select Extra Logo :</label>
+            <div class="col-lg-12">
+                <div class="form-check form-check-inline" *ngFor="let display1 of bills_logo_id_radio;let k=index">
+                    <input class="form-check-input" type="radio" name="bills_logo_id" [value]="display1.id"
+                        checked="{{display1.id==billsLogo_value ? 'checked':''}}"
+                        (change)="handleChange_Logo(display1.billerId,$event)" />
                     <label class="form-check-label" for="exampleRadios{{k}}">
                         {{display1.name}}
                     </label>
                 </div>
             </div>
+            </div>
+            </div>
+        </div>
+           
 
 
+
+          
+
+            
             <!-- <div class="col-lg-6">
                 <div class="form-group">
                     <div class="form-check form-check-inline"  *ngFor="let display of dynamicCheckboxwithKey;let i=index">
@@ -337,22 +339,6 @@
                     </div>
                 </div>
             </div> -->
-
-            <div class="col-lg-6">
-                <div class="form-check form-check-inline" *ngFor="let display1 of dynamicCheckboxwithKey;let k=index">
-                    <input class="form-check-input" type="radio" name="select" [value]="display1.id"
-                        checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
-                        (change)="handleChange_Mile(display1.billerId,$event)" />
-                    <label class="form-check-label" for="exampleRadios{{k}}">
-                        {{display1.name}}
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                        (change)="handleChange_MSDisplay($event)">
-                    <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
-                </div>
-            </div>
 
         </div>
     </form>
@@ -384,7 +370,7 @@
                                     </th>
                                     <th style="padding-left: 90px;"><span class="userDatatable-title">Net Total</span>
                                     </th>
-                                    <th style="padding-left: 110px;"><span class="userDatatable-title">Out Call</span>
+                                    <th style="padding-left: 60px;"><span class="userDatatable-title">Out Call</span>
                                     </th>
                                     <th style="padding-left: 15px;"><span class="userDatatable-title"> C Mon</span>
                                     </th>
@@ -486,7 +472,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="width: 50px;text-align: center;">
+                                                        style="width: 100px;text-align: center;">
                                                         <input type="checkbox" style="text-align: right;"
                                                             formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
 
@@ -495,7 +481,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="width: 50px;text-align: center;">
+                                                        style="width: 65px;text-align: center;">
 
                                                         <input type="checkbox" style="text-align: right;"
                                                             formControlName="pd_CMon" id="pd_CMon_{{i}}">
@@ -506,7 +492,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="top:-35px;text-align: center;width: 50px;margin-left: -8px">
+                                                        style="top:-35px;text-align: center;width: 61px;margin-left: -8px">
                                                         <input type="checkbox" id="pd_selectTax_{{i}}"
                                                             formControlName="pd_selectTax"
                                                             (change)="totalCalculate();" />
@@ -946,7 +932,7 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePerFinal" />
+                                    <input type="text" class="form-control" id="enableFinalPercent" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -956,7 +942,7 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePriceFinal" />
+                                    <input type="text" class="form-control" id="enableFinalDiscount" />
                                 </div>
                             </div>
                         </div>
