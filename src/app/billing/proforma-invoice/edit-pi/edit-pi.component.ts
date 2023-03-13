@@ -814,18 +814,11 @@ selectAdditionalSign:boolean=true;
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
-          console.log('billchild_details+index' + index);
+         
+         
+        
 
-          this.sub_dis_type='';
-          this.sub_dis_val='';
-          if(response.billchild_details[index].dis_per!=''){
-            this.sub_dis_type='per';
-            this.sub_dis_val=response.billchild_details[index].dis_per;
           
-          }else if(response.quotation_child_det[index].dis_amt!=''){
-            this.sub_dis_type='amt';
-            this.sub_dis_val=response.billchild_details[index].dis_amt;
-          }
 
           formArray.push(this.fb.group({
             "pd_billchild_id": response.billchild_details[index].billChildid,
@@ -839,8 +832,8 @@ selectAdditionalSign:boolean=true;
             "pd_netPrice": response.billchild_details[index].net_amt,
             "pd_OutCall": response.billchild_details[index].out_call_state,
             "sub_dis_amt": response.billchild_details[index].dis_amt,
-            "sub_dis_type": this.sub_dis_type,
-            "sub_dis_val": this.sub_dis_val,
+            "sub_dis_type": response.billchild_details[index].dis_type,
+            "sub_dis_val": response.billchild_details[index].dis_per,
             "pd_CMon": response.billchild_details[index].current_month_str,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
@@ -856,7 +849,7 @@ selectAdditionalSign:boolean=true;
         
         this.finalDiscountType = '';
         this.finalDiscountVal='';
-        this.finalDiscount='';
+         this.finalDiscount='';
         console.log('response.signature_filename'+response.billing_pararent_details[0].signature_filename);
        
         if(response.billing_pararent_details[0].signature_filename!=''){
@@ -866,15 +859,18 @@ selectAdditionalSign:boolean=true;
   
         if(response.billing_pararent_details[0].discountPer!=''){
           this.finalDiscountType = 'per';
+         
           this.finalDiscountVal=response.billing_pararent_details[0].discountPer;
-          console.log('final');
-          
           this.finalDiscount=response.billing_pararent_details[0].discountAmount;
         }else if(response.billing_pararent_details[0].discountAmount!=''){
           this.finalDiscountType = 'amt';
+        
           this.finalDiscount=response.billing_pararent_details[0].discountAmount;
         }
        
+
+
+
         this.addPI_section3.patchValue({
 
 
@@ -1181,7 +1177,7 @@ selectAdditionalSign:boolean=true;
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_dis_amt = $('#sub_discount_' + i).val();
-      addr[i].sub_discount = $('#sub_discount_' + i).val();
+     // addr[i].sub_discount = $('#sub_discount_' + i).val();
       addr[i].pd_split = $('#pd_split_' + i).prop('checked');
       addr[i].to_next_page = $('#to_next_page_' + i).prop('checked');
       addr[i].pd_selectTax = $('#pd_selectTax_' + i).prop('checked');
@@ -1199,10 +1195,11 @@ selectAdditionalSign:boolean=true;
       if (response.status == true) {
 
         iziToast.success({
-          title: 'Updated',
-          message: 'Quotation Updated Successfully !',
+          message: 'PI Updated Successfully !',
+          position: 'topRight'
         });
 
+        this.gotoPIList();
         this.addPI_section1.reset();
         this.addPI_section2.reset();
         this.addPI_section3.reset();
@@ -1212,9 +1209,10 @@ selectAdditionalSign:boolean=true;
 
 
         iziToast.warning({
-          message: "Quotation Not Saved Successfully",
+          message: "PI Not Saved Successfully",
           position: 'topRight'
         });
+        this.gotoPIList();
 
       }
     }), (error: any) => {
@@ -1301,8 +1299,8 @@ selectAdditionalSign:boolean=true;
       } else if (discount_type == 'amt') {
         // console.log('discount_type222'+discount_type);
 
-        this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        // console.log('sub_discount_valppp'+this.sub_dis_val);
+        this.sub_dis_val = $('#sub_discount_' + a).val();
+         console.log('sub_discount_valppp'+this.sub_dis_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
         $('#pd_netPrice_' + a).val(sub_total_amt);
       } else {
@@ -1389,49 +1387,40 @@ selectAdditionalSign:boolean=true;
 
 
   saveDiscount() {
-    var enablePerFinal = $('#enablePerFinal').val()
-    var enablePriceFinal = $('#enablePriceFinal').val()
+    var enablePerItem = $('#enablePerItem').val()
+    var enablePriceItem = $('#enablePriceItem').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
     //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
     //console.log('quotationPriceKey'+this.quotationPriceKey);
-    //console.log('disType'+disType);
+    console.log('enablePerFinal'+enablePriceItem);
     var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
-    console.log('final_ tot',final_tot);
-    
     $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-      if (enablePerFinal != '') {
+      if (enablePerItem != '') {
         console.log('3333' + final_tot);
-        price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
+        price = (parseFloat(enablePerItem) * parseFloat(final_tot) / 100).toFixed(2);
 
-        console.log('1...price...',price);
-        
 
-        $('#sub_discount_' + this.invocePriceKey).val(price);
-        $('#sub_discount_val_' + this.invocePriceKey).val(enablePerFinal);
+        $('#sub_discount_' + this.invocePriceKey).val('');
+        $('#sub_discount_val_' + this.invocePriceKey).val(enablePerItem);
         price = final_tot - price;
       } else {
         $('#sub_discount_' + this.invocePriceKey).val('');
         $('#sub_discount_val_' + this.invocePriceKey).val('');
-       
+        console.log('222' + final_tot);
         price = final_tot;
-        console.log('final_tot....',final_tot);
-        console.log('price....',price);
-        
 
       }
       //   console.log(price);
 
     } else {
-      price = final_tot - enablePriceFinal;
-      console.log('price...',price);
-      
-      $('#sub_discount_' + this.invocePriceKey).val(enablePriceFinal);
-      $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
+      price = final_tot - enablePriceItem;
+      $('#sub_discount_' + this.invocePriceKey).val(enablePriceItem);
+      $('#sub_discount_val_' + this.invocePriceKey).val('');
 
-      // console.log(price);
+       console.log('enablePriceFinal'+enablePriceItem);
     }
 
     $('#pd_netPrice_' + this.invocePriceKey).val(price)
@@ -1469,8 +1458,8 @@ selectAdditionalSign:boolean=true;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
     console.log('row_cnt' + row_cnt);
-    $('#enablePerFinal').val('');
-    $('#enablePriceFinal').val('');
+    $('#enablePerItem').val('');
+    $('#enablePriceItem').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
     var disType = $('#sub_discount_type_' + row_cnt).val();
 
@@ -1478,12 +1467,12 @@ selectAdditionalSign:boolean=true;
       $('#discountTYpe_per').prop('checked', true);
       sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
 
-      $('#enablePerFinal').val(sub_dis_val);
+      $('#enablePerItem').val(sub_dis_val);
       //   console.log('22'+disType);
     } else if (disType == 'amt') {
       $('#discountTYpe_amt').prop('checked', true);
-      sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
-      $('#enablePriceFinal').val(sub_dis_val);
+      sub_dis_val = $('#sub_discount_' + row_cnt).val();
+      $('#enablePriceItem').val(sub_dis_val);
       //  console.log('33'+disType);
     } else {
       //  console.log('44'+disType);
@@ -1493,8 +1482,8 @@ selectAdditionalSign:boolean=true;
   }
 
   saveGrossDiscount() {
-    var finaldiscountTYpe_per = $('#enableFinalPercent').val()
-    var finaldiscountTYpe_amt = $('#enableFinalDiscount').val()
+    var finaldiscountTYpe_per = $('#enablePerFinal').val()
+    var finaldiscountTYpe_amt = $('#enablePriceFinal').val()
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
@@ -1555,7 +1544,7 @@ selectAdditionalSign:boolean=true;
       console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
-      final_dis_val = $('#final_discount_val').val();
+      final_dis_val = $('#finalDiscount_amt').val();
       $('#enablePriceFinal').val(final_dis_val);
       console.log('33' + disType);
     } else {
@@ -1677,6 +1666,10 @@ selectAdditionalSign:boolean=true;
     });
 
 
+  }
+  gotoPIList() {
+
+    this.router.navigate(['/ProformaInvoice']);
   }
 
 }

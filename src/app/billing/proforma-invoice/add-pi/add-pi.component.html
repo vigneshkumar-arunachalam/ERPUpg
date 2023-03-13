@@ -328,36 +328,36 @@
                         <div class="form-check form-check-inline">
 
                             <input class="form-check-input radioType" type="radio" formControlName="extraLogo"
-                                name="extraLogo" (change)="handleChangeExtraLogo($event)" id="exampleRadios1" value="1">
-                            <label class="form-check-label" for="exampleRadios1">
+                                name="extraLogo" (change)="handleChangeExtraLogo($event)" id="extraLogoRadios1" value="1">
+                            <label class="form-check-label" for="extraLogoRadios1">
                                 IT Care
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios2" value="2">
-                            <label class="form-check-label" for="exampleRadios2">
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios2" value="2">
+                            <label class="form-check-label" for="extraLogoRadios2">
                                 Calncall
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios3" value="3">
-                            <label class="form-check-label" for="exampleRadios3">
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios3" value="3">
+                            <label class="form-check-label" for="extraLogoRadios3">
                                 DID Sg
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios3" value="4">
-                            <label class="form-check-label" for="exampleRadios3">
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios4" value="4">
+                            <label class="form-check-label" for="extraLogoRadios4">
                                 Callcloud
                             </label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                (change)="handleChangeExtraLogo($event)" id="exampleRadios3" value="5">
-                            <label class="form-check-label" for="exampleRadios3">
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios5" value="5">
+                            <label class="form-check-label" for="extraLogoRadios5">
                                 Mrvoip
                             </label>
                         </div>
@@ -441,9 +441,8 @@
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                    (change)="totalCalculate();saveDiscount()"
-                                                    (blur)="totalCalculate();saveDiscount()"
-                                                    (keyup)="totalCalculate();saveDiscount()" />
+                                                 
+                                                    (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
                                             </div>
                                         </td>
                                         <td>
@@ -458,21 +457,20 @@
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
-                                                    (change)="totalCalculate();saveDiscount()"
-                                                    (blur)="totalCalculate();saveDiscount()"
-                                                    (keyup)="totalCalculate();saveDiscount()" />
+                                                 
+                                                    (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" style="width: 160px;">
                                                 <input type="text" class="form-control" formControlName="pd_Total"
-                                                    style="text-align: right;" id="pd_Total_{{i}}" />
+                                                [readonly]="isReadonly"   style="text-align: right;" id="pd_Total_{{i}}" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" style="width: 160px;">
                                                 <input type="text" class="form-control" style="text-align: right;"
-                                                    formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+                                                [readonly]="isReadonly"  formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
 
                                             </div>
                                         </td>
@@ -496,7 +494,7 @@
 
                                                 <input type="checkbox" style="text-align: right;" [ngModel]="test[i]"
                                                     id="pd_selectTax_{{i}}" formControlName="pd_selectTax"
-                                                    checked='checked' (change)="totalCalculate();">
+                                                    checked='checked' (change)="totalCalculate();saveDiscount();saveGrossDiscount()">
 
                                             </div>
                                         </td>
@@ -694,7 +692,7 @@
 
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" [(ngModel)]="grandTotal"
-                                        formControlName="section3_grand_total" />
+                                    [readonly]="isReadonly"  formControlName="section3_grand_total" />
                                 </div>
 
 

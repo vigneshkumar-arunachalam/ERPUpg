@@ -104,7 +104,7 @@
                               </li>
                               <li class="dropdown__item">
                                 <a class="hover4" title="Delete" data-toggle="modal"
-                                (click)="deleteInvoice(list.billId)">
+                                  (click)="deleteInvoice(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-x-square">
@@ -116,7 +116,8 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Payment" data-toggle="modal" data-target="#processPaymentFormId">
+                                <a class="hover3" title="Payment" data-toggle="modal"
+                                  data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-dollar-sign">
@@ -127,8 +128,9 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Send Invoice to Post" data-toggle="modal" 
-                                data-target="#InvoiceSendingMethodFormId" (click)="InvoiceSendingMethodEdit(list.billId)">
+                                <a class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                                  data-target="#InvoiceSendingMethodFormId"
+                                  (click)="InvoiceSendingMethodEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-check-circle">
@@ -140,9 +142,10 @@
                                 </a>
                               </li>
 
+
                               <li class="dropdown__item">
-                                <a class="hover4" title="Landscape Email" data-toggle="modal"
-                                  data-target="#EmailFormId">
+                                <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
+                                  (click)="getEmailDetails(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-mail">
@@ -155,7 +158,8 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover4" title="Landscape PDF" data-toggle="modal" data-target="#pdfFormId">
+                                <a class="hover4" title="Landscape PDF" data-toggle="modal" data-target="#pdfFormId"
+                                  (click)="pdf(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-file">
@@ -165,50 +169,72 @@
                                   </svg>
                                 </a>
                               </li>
-
                               <li class="dropdown__item">
+                                <a class="hover3" title="show permission" data-toggle="modal"
+                                  data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-info">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                  </svg>
+
+                                </a>
+                              </li>
+                              <!-- <li class="dropdown__item">
                                 <a class="hover3" title="Show Permission" data-toggle="modal"
                                   data-target="#showPerissionFormId" 
                                   (click)="invoiceShowPersonEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                                 </a>
-                              </li>
+                              </li> -->
                               <li class="dropdown__item">
-                                <a href="#" class="hover4" title="Share Permission" data-toggle="modal"
+                                <a href="#" class="hover4" title="Coupon Assign" data-toggle="modal"
                                   data-target="#couponAssignFormId">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-edit-3">
+                                    <path d="M12 20h9"></path>
+                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a href="#" class="hover3" title="Recurring" data-toggle="modal"
-                                  data-target="#PItoInvoiceConversionFormId">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-crosshair"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>
+                                  data-target="#RecurringFormId">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-crosshair">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <line x1="22" y1="12" x2="18" y2="12"></line>
+                                    <line x1="6" y1="12" x2="2" y2="12"></line>
+                                    <line x1="12" y1="6" x2="12" y2="2"></line>
+                                    <line x1="12" y1="22" x2="12" y2="18"></line>
+                                  </svg>
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a class="hover3" title="Set Previous due" data-toggle="modal"
                                   data-target="#showPerissimId">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-book-open"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-                                </a>
-                              </li>
-                              <li class="dropdown__item">
-                                <a class="hover4" title="Coupoun Assign" data-toggle="modal"
-                                  data-target="#setInvoiceTypeNameFormId">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-file">
-                                    <path d="M17 18a5 5 0 0 0-10 0"></path>
-                                    <line x1="12" y1="9" x2="12" y2="2"></line>
-                                    <line x1="4.22" y1="10.22" x2="5.64" y2="11.64"></line>
-                                    <line x1="1" y1="18" x2="3" y2="18"></line>
-                                    <line x1="21" y1="18" x2="23" y2="18"></line>
-                                    <line x1="18.36" y1="11.64" x2="19.78" y2="10.22"></line>
-                                    <line x1="23" y1="22" x2="1" y2="22"></line>
-                                    <polyline points="16 5 12 9 8 5"></polyline>
+                                    stroke-linejoin="round" class="feather feather-book-open">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                   </svg>
                                 </a>
                               </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="File Attachment" data-toggle="modal"
+                                  data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+                                 
+                                </a>
+                              </li>
+                           
                               <li class="dropdown__item">
                                 <a class="hover3" title="Payment Link" data-toggle="modal"
                                   data-target="#settermsConditionFormId">
@@ -293,7 +319,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="processPaymentFormId1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -314,7 +340,7 @@
             </div>
 
             <div class="col-lg-6">
-              <label >Toal</label>
+              <label>Toal</label>
               <input type="text" class="form-control" formControlName="toal" [readonly]="isReadOnly">
 
             </div>
@@ -390,8 +416,8 @@
 <!-------------- Process Payment Pop up ends------------------------------------------>
 
 <!-----------------Modal Pop Up-BEGIN-Invoice Sending Method------------------>
-<div class="modal fade" id="InvoiceSendingMethodFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="InvoiceSendingMethodFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -404,20 +430,20 @@
       <div class="modal-body">
         <form [formGroup]="InvoiceSendingMethodForm">
           <div class="row">
-        
+
             <div class="form-check form-check-inline">
               <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-               name="InvoiceSendingInput" id="0" value="By Post" (change)="radio_InvoiceSendingInput($event)">
+                name="InvoiceSendingInput" id="0" value="By Post" (change)="radio_InvoiceSendingInput($event)">
               <label class="form-check-label" for="ByPost">By Post</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio"
-              formControlName="InvoiceSendingInput"  name="InvoiceSendingInput" id="1" value="By Email" (change)="radio_InvoiceSendingInput($event)">
+              <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                name="InvoiceSendingInput" id="1" value="By Email" (change)="radio_InvoiceSendingInput($event)">
               <label class="form-check-label" for="ByEmail">By Email</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" 
-              formControlName="InvoiceSendingInput" name="InvoiceSendingInput" id="2" value="None" (change)="radio_InvoiceSendingInput($event)">
+              <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                name="InvoiceSendingInput" id="2" value="None" (change)="radio_InvoiceSendingInput($event)">
               <label class="form-check-label" for="None">None </label>
             </div>
 
@@ -442,45 +468,46 @@
 <!-------------- -Modal Pop Up-ENDS-Invoice Sending Method------------------------------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
-<div class="modal fade" id="showPerissionFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle">Show Permission</h2>
+<div class="modal fade" id="showPerissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle">Show Permission
+        </h2>
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body quotationsharedCSS">
-                <form [formGroup]="showPerissionForm">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body quotationsharedCSS">
+        <form [formGroup]="showPerissionForm">
+          <div class="">
+            <div class="row">
+              <div class="d-flex col-lg-6" *ngFor="let quot of invoiceShowPermission_List;let i =index">
+                <div class="d-flex">
                   <div class="">
-                    <div class="row"  >
-                      <div class="d-flex col-lg-6" *ngFor="let quot of invoiceShowPermission_List;let i =index">
-                      <div class="d-flex" >
-                        <div class="">
-                          <div class="checkbox-group-wrapper">
-                            <div class="checkbox-group d-flex">
-                              <div class="on-off-toggle">
-                                <input class="checkbox" type="checkbox" id="check-grp1-{{i}}" 
-                                checked="{{quot.chk_val=='true' ? 'checked':''}}"
-                                (change)="InvoiceShowCHK(quot.user_id,$event)">
-                                <label for="check-grp1-{{i}}" ></label>
-                              </div>
-                            </div>
-                          </div>
+                    <div class="checkbox-group-wrapper">
+                      <div class="checkbox-group d-flex">
+                        <div class="on-off-toggle">
+                          <input class="checkbox" type="checkbox" id="check-grp1-{{i}}"
+                            checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                            (change)="InvoiceShowCHK(quot.user_id,$event)">
+                          <label for="check-grp1-{{i}}"></label>
                         </div>
-      
                       </div>
-                      
-                        <span class="" >{{quot.firstName}}</span>
-                
-                    </div>
                     </div>
                   </div>
 
-                    <!-- <div class="d-flex col-lg-4" *ngFor="let quot of invoiceShowPermission_List;let i =index">
+                </div>
+
+                <span class="">{{quot.firstName}}</span>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="d-flex col-lg-4" *ngFor="let quot of invoiceShowPermission_List;let i =index">
                         
                         <div class="row">
                           
@@ -500,19 +527,547 @@
                           </div>
                         </div>
                     </div> -->
-                </form>
-            </div>
-            <div class="modal-footer">
+        </form>
+      </div>
+      <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="invoiceShowPermissionUpdate()">
-                    Update
-                </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
-                    Close
-                </button>
-            </div>
-        </div>
+        <button type="button" class="btn btn-primary" (click)="invoiceShowPermissionUpdate()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
     </div>
+  </div>
 </div>
 <!----------Modal Pop Up (END) for Invoice Show Permission------------------>
 
+<!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
+<div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Process Payment
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="processPaymentForm">
+          <div class="row">
+            <div class="col-lg-6">
+              <label>Invoice Id</label>
+              <input type="text" class="form-control" formControlName="invoiceID" [readonly]="isReadOnly">
+
+            </div>
+
+            <div class="col-lg-6">
+              <label>Toal</label>
+              <input type="text" class="form-control" formControlName="toal" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Biller</label>
+              <input type="text" class="form-control" formControlName="biller" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Paid</label>
+              <input type="text" class="form-control" formControlName="paid" [readonly]="isReadOnly">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Customer</label>
+              <input type="text" class="form-control" formControlName="customer" [readonly]="isReadOnly">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Owing</label>
+              <input type="text" class="form-control" formControlName="owing" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Amount</label>
+              <input type="number" class="form-control" formControlName="amount" id="amount">
+              <div
+                *ngIf="processPaymentForm.controls['amount'].invalid && (processPaymentForm.controls['amount'].dirty || processPaymentForm.controls['amount'].touched)"
+                class="alert alert-danger alertdangerCustomCSS mt-2">
+                Amount is Required(Number Format>0)
+              </div>
+
+            </div>
+
+            <div class="col-lg-6">
+              <label class="mt-4">Date</label>
+              <input type="date" class="form-control" formControlName="date">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Payment Type/Method</label>
+              <select class="form-control" formControlName="paymenttype">
+                <option [ngValue]="null" selected disabled>Select Payment Method</option>
+
+                <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
+                  {{term.payment_type_name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Note</label>
+
+              <textarea class="form-control" rows="3" formControlName="note" id="note"></textarea>
+
+            </div>
+            <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment">
+              <label class="mt-4">Payment Details</label>
+              <!-- <input type="text" class="form-control" formControlName="paymentDetails" [readonly]="isReadOnly"> -->
+              {{pay.paidAmount}}&nbsp;&nbsp; {{pay.payment_type_name}}&nbsp;&nbsp; from &nbsp;&nbsp;
+              {{pay.firstName}}&nbsp;&nbsp; on &nbsp;&nbsp; {{pay.processDate}}
+            </div>
+
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit" class="btn btn-primary" (click)="processPaymentUpdate()">Update
+
+        </button>
+
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPaymentProcess()">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- Process Payment Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+
+<div class="modal fade" id="emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="emailForm">
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+              <div class="col-lg-10">
+                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
+                  <option [ngValue]="null" selected disabled>Select From</option>
+                  <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                    {{ from.from_email }}
+                  </option>
+                </select>
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                  Please
+                  enter To Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+              <div class="col-md-9 col-9" style="display: flex;">
+                <div class="form-check" style="margin-right: 10px;">
+                  <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy" id="company"
+                    (change)="handle_radioChange_email($event)" />
+
+                  <label class="form-check-label" for="company"> Company
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy" id="finance"
+                    [checked]="true" (change)="handle_radioChange_email($event)" />
+                  <label class="form-check-label" for="finance">Finance
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+              <div class="col-lg-10">
+                <input type="email" id="emailto" class="form-control" formControlName="email_to">
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                  Please
+                  enter To Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+
+              <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+              <div class="col-lg-10 email-cc-template">
+                <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
+                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}" formControlName="email_cc"
+                    (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.group_name}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailPDFType" class="col-lg-2 col-form-label"><span> PDF Type</span> :</label>
+              <div class="col-lg-10 mt-2">
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                    (change)="CBF_PDFLink($event)">
+                  <label class="form-check-label" for="PDF Link">PDF Link</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                    (change)="CBF_TemplateSelection($event)">
+                  <label class="form-check-label" for="Template Selection"> Template Selection</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
+                    (change)="CBF_PaymentLink($event)">
+                  <label class="form-check-label" for="Payment Link">Payment Link</label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+              <div class="col-lg-10">
+                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                <div
+                  *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                  Subject is Required
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12" *ngIf="(CBV_TemplateSelection==true)">
+            <div class="form-group row">
+              <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+              <div class="col-lg-10">
+                <select name="templat" id="template" class="form-control" formControlName="email_template"
+                  (change)="templateContentEmailDropdown($event)">
+                  <option [ngValue]="null" selected disabled>Select Template</option>
+                  <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
+                    {{template.crm_template_name}}
+                  </option>
+                </select>
+                <br>
+
+                <div
+                  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 ">
+                  Template is Required
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+              <div class="col-lg-10">
+                <editor id="tinyID" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                        </div>
+                    </div> -->
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+          Mail
+
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
+
+
+<!-----------------Modal Pop Up-Recurring-Begin------------------>
+<div class="modal fade" id="RecurringFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Select New Recurring Options
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="RecurringForm">
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Date</label>
+              </div>
+              <div class="col-lg-8">
+                <input type="date" class="form-control" formControlName="date">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Recurring</label>
+              </div>
+              <div class="col-lg-8">
+                <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
+                  <input class="form-check-input" type="radio" formControlName="recurring_state" name="recurring_state"
+                    id="{{ity.id}}" (change)="radio_recurring($event)">
+                  <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Fixed Charge Dt</label>
+              </div>
+              <div class="col-lg-8" style="display: flex;">
+                <input type="checkbox" formControlName="fixedChargeDtCBX">
+                <input type="text" class="form-control ml-4" formControlName="fixedChargeDt_value">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Fixed Charge Duration</label>
+                <p>Next Rec Dt : 00/00/0000</p>
+              </div>
+              <div class="col-lg-8">
+                <select class="form-control" formControlName="fixedChargeDuration">
+                  <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                    {{term.enquiry_from_name}}
+                                </option> -->
+
+                </select>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Usage Charge Dt</label>
+              </div>
+              <div class="col-lg-8" style="display: flex;">
+                <input type="checkbox" formControlName="usageChargeDtCBX">
+                <input type="text" class="form-control ml-4" formControlName="usageChargeDt_value">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Usage Charges Duration</label>
+                <p>Next Rec Dt : 00/00/0000</p>
+              </div>
+              <div class="col-lg-8">
+                <select class="form-control" formControlName="usageChargeDuration">
+                  <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                    {{term.enquiry_from_name}}
+                                </option> -->
+
+                </select>
+
+              </div>
+            </div>
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
+
+
+<!-----------------Modal Pop Up (BEGIN) Coupon Assign------------------>
+<div class="modal fade" id="couponAssignFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Select Coupon Code
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="couponAssignForm">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="col-lg-6">
+                <label>Coupon Code - % - Amt</label>
+              </div>
+              <div class="col-lg-6">
+                <select class="form-control" formControlName="couponCode">
+                  <option [ngValue]="null" selected disabled>Select Coupon Code</option>
+
+                  <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                    {{term.enquiry_from_name}}
+                                </option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!--------------  Coupon Assign Pop up ends------------------------------------------>
+
+
+<!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
+<div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">File Attachment
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="FileAttachmentForm">
+
+          <div class="modal-body">
+              <div>
+                  <label style="color: hsl(226, 59%, 21%)!important;">
+                      Attached Files</label>
+              </div>
+
+              <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;"
+                  style="padding-left: 30px;">
+
+                  {{display1.uploadFileName}}
+                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                      checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
+                      (change)="EditCHK(display1.common_attachmentId,$event)">
+                  <button type="button" class="btn btn-link"
+                      (click)="fileAttachmentDelete(display1.common_attachmentId) "><span
+                          class="bi bi-trash"></span>
+
+                  </button>
+
+              </div>
+
+              <div class="col-lg-12 mt-4">
+                  <div class="form-group row">
+                    <div class="col-lg-4">
+                      <label>
+                        Select New Attachment</label>
+                    </div>
+                    <div class="col-lg-8" style="padding-left: 30px;">
+    
+                      <!-- <label for="file">File</label> -->
+                 
+                      <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
+                          class="form-control" (change)="onFileChange($event)">
+    
+                    </div>
+                  </div>
+              </div>
+
+
+
+
+          </div>
+
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- File Attachment Pop up ends------------------------------------------>

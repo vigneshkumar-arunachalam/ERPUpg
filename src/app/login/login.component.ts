@@ -8,6 +8,8 @@ declare var $: any;
 import Swal from 'sweetalert2';
 import { v4 as uuidv4 } from 'uuid';
 import { interval, Subscription } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,9 +33,20 @@ export class LoginComponent implements OnInit {
   typess: any;
   websocket: any;
   getdatas: any;
-
-
-  constructor(private router: Router, private serverService: ServerService, private bnIdle: BnNgIdleService) {
+  code_val: any;
+  uscode: any;
+  constructor(private router: Router, private route: ActivatedRoute,private serverService: ServerService, private bnIdle: BnNgIdleService,private spinner:NgxSpinnerService) {
+    this.route.queryParams
+      .subscribe(params => {
+        console.log("params output value", params);
+        this.code_val = params['code_val'];
+        this.uscode = params['uscode'];
+        console.log(this.code_val);
+        if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
+          this.old_erp_login();
+        }
+      }
+      );
     this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
     var s = this;
     this.websocket.onopen = function (event: any) {
@@ -52,10 +65,12 @@ export class LoginComponent implements OnInit {
     };
 
     this.websocket.onerror = function (event: any) {
+      this.spinner.hide();
       console.log('error');
       console.log(event.message);
     };
     this.websocket.onclose = function (event: any) {
+      this.spinner.hide();
       console.log('close');
     };
 
@@ -119,6 +134,8 @@ export class LoginComponent implements OnInit {
       sessionStorage.setItem('user_name', response.firstName)
       sessionStorage.setItem('role', response.role)
       sessionStorage.setItem('profile_image', response.profile_image)
+      
+      console.log("profile_image",alert);
 
 
       if (this.userID != '') {
@@ -132,6 +149,38 @@ export class LoginComponent implements OnInit {
 
 
 
+  }
+  old_erp_login(){
+    let api_req: any = new Object();
+      let addAPI: any = new Object();
+      api_req.moduleType = "login";
+      api_req.api_url = "login_olderp";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      addAPI.action = "login_olderp";
+      addAPI.uscode = this.uscode;
+
+      addAPI.code_val = this.code_val;
+      api_req.element_data = addAPI;
+
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        sessionStorage.setItem('access_token', 'test')
+        sessionStorage.setItem('login_status', '1')
+        sessionStorage.setItem('erp_c4c_user_id', response.userId)
+        sessionStorage.setItem('user_name', response.firstName)
+        sessionStorage.setItem('role', response.role)
+        sessionStorage.setItem('profile_image', response.profile_image)
+        console.log("profile_image",alert);
+        console.log(response)
+        if (response.userId != '') {
+          setTimeout(()=>{
+            this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
+          },1000) 
+        }
+        if (response.userId == 'undefined' || response.userId === null || response.userId=='' ) {
+          this.router.navigate(['/logout']);
+        }
+      });
   }
   qrcodes() {
     this.count = ++this.count;
@@ -235,6 +284,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('user_name', response.firstName)
         sessionStorage.setItem('role', response.role)
         sessionStorage.setItem('profile_image', response.profile_image)
+        console.log("profile_image",alert);
 
 
         if (this.userID != '') {

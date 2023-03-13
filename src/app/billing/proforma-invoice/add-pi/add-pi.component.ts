@@ -99,6 +99,8 @@ export class AddPIComponent implements OnInit {
   export_state_Export: any;
   export_state_ZeroValid: boolean = true;
   MSDisplay_Value: boolean = true;
+  //read only fields
+  isReadonly: boolean = true;
 
 
 
@@ -789,9 +791,14 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.grossTotal = this.addPI_section3.value.section3_gross_total;
 
 
-    api_savePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
-    api_savePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
-    api_savePI_req.final_dis_val = this.addPI_section3.value.final_dis_val;
+    // api_savePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
+    // api_savePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
+    // api_savePI_req.final_dis_val = this.addPI_section3.value.final_dis_val;
+
+    
+    api_savePI_req.discountAmount = $('#finalDiscount_amt').val();
+    api_savePI_req.final_dis_type = $('#final_discount_type').val();
+    api_savePI_req.final_dis_val = $('#final_discount_val').val();
 
     api_savePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_savePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
@@ -812,7 +819,7 @@ export class AddPIComponent implements OnInit {
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
         iziToast.success({
-          message: "Proforma Invoice addedd Successfully",
+          message: "Proforma Invoice added Successfully",
           position: 'topRight'
         });
         this.gotoPIList();
@@ -820,13 +827,13 @@ export class AddPIComponent implements OnInit {
       }
       else if (response.status == '500') {
         iziToast.warning({
-          message: "Proforma Invoice not addedd Successfully",
+          message: "Proforma Invoice not added Successfully",
           position: 'topRight'
         });
       }
       else {
         iziToast.warning({
-          message: "Proforma Invoice not addedd Successfully",
+          message: "Proforma Invoice not added Successfully",
           position: 'topRight'
         });
 
@@ -1020,8 +1027,9 @@ export class AddPIComponent implements OnInit {
 
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
-
-        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
+      //  alert(this.finalDiscount);
+        
+        tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
         tax_amt_tot += tax_amt;
 
       }

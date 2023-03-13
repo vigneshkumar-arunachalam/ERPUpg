@@ -131,4 +131,9 @@ text-align: center;
 .userDatatable-header th{
   padding: 0px !important;
 }
-
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f7e3f5 !important;
+    opacity: 0.6;
+    color: black!important;
+}

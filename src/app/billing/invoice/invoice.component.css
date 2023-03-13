@@ -306,3 +306,49 @@ border-radius: 50%;
 .heightCSS{
   line-height: 35px;
 }
+
+#processPaymentFormId .modal-dialog{
+  max-width: 60% !important;
+}
+#processPaymentFormId label{
+  color: rgb(27, 1, 121)!important;
+  font-weight: 500!important;
+}
+#emailFormId .modal-dialog {
+  max-width: 65%;
+}
+
+#emailFormId label {
+  font-weight: 500;
+}
+.checkbox {
+  margin-right: 10px;
+}
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+
+/* #emailFormId span{width: 138px;    display: inline-block;} */
+label.col-lg-2.col-form-label{text-align: right;}
+
+
