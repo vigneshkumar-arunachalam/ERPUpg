@@ -711,9 +711,28 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.action = "insert_proforma_invoice";
     api_savePI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
     //section-1
+    
+    if(this.addPI_section1.value.companyName===null){
+     
+      iziToast.warning({
+        message: "Select Company Name",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_savePI_req.company = this.addPI_section1.value.companyName;
     api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
     api_savePI_req.customer_name = this.customerName_Data;
+    if(this.customerName_Data===null){
+     
+      iziToast.warning({
+        message: "Select Customer",
+        position: 'topRight'
+      });
+      return false;
+
+    }
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
     api_savePI_req.BillTo_customer_ID = this.customer_ID;
     api_savePI_req.BillTo_customer_NAME = this.customer_NAME;
