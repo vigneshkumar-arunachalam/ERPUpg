@@ -42,9 +42,14 @@ import { EditInvoiceComponent } from './billing/invoice/edit-invoice/edit-invoic
 import { EditDidInvoiceComponent } from './billing/didinvoice/edit-did-invoice/edit-did-invoice.component';
 import { LicenseCreditComponent } from './license-credit/license-credit.component';
 import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didpi.component';
+import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
+
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'EditDidPI', component: EditDidpiComponent
   },
   {
     path: 'AddDidPI', component: AddDidpiComponent

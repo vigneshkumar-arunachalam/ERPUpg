@@ -352,3 +352,10 @@ border-radius: 50%;
 label.col-lg-2.col-form-label{text-align: right;}
 
 
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f3ecf2 !important;
+    opacity: 0.6;
+    color: black!important;
+}

@@ -445,62 +445,56 @@
             </div>
             <div class="col-12">
 
-                <section>
+                <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
 
-                    <div>
+                    <div [formGroupName]="i">
 
                         <div class="table-responsive">
                             <table class="add-contact-table-section">
                                 <thead>
                                     <tr class="userDatatable-header">
-                                       
-                                        <th><span class="userDatatable-title" style="padding-left: 40px;">Product Name</span></th>
-
-
-                                        <!-- <th><span class="userDatatable-title">Description</span></th> -->
-                                        <th><span class="userDatatable-title" style="padding-left: 20px;">Quantity</span></th>
-                                        <th><span class="userDatatable-title" style="padding-left: 20px;">Unit</span>
+                                      
+                                        <th><span class="userDatatable-title">Product Name</span></th>
+                                        <th><span class="userDatatable-title">Quantity</span></th>
+                                        <th><span class="userDatatable-title">Unit</span>
                                         </th>
-                                        <th><span class="userDatatable-title" style="padding-left: 20px;"> Price</span></th>
-                                        <th><span class="userDatatable-title" style="padding-left: 20px;"> Total</span></th>
-                                        <th><span class="userDatatable-title" style="padding-left: 20px;">Net Total</span></th>
-                                        <th><span class="userDatatable-title" style="padding-left: 5px;">Out Call</span>
+                                        <th><span class="userDatatable-title"> Price</span></th>
+                                        <th><span class="userDatatable-title"> Total</span></th>
+                                        <th><span class="userDatatable-title">Net Total</span></th>
+                                        <th style="width: 50px;"><span class="userDatatable-title">Out Call</span>
                                         </th>
-                                        <th><span class="userDatatable-title" style="padding-left: 25px;">C Mon</span>
+                                   
+                                        <th><span class="userDatatable-title"> C Mon</span>
                                         </th>
-                                        <th><span class="userDatatable-title" style="padding-left: 2px;">Select Tax</span>
+                                        <th><span class="userDatatable-title"> Select Tax</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title" style="padding-left: 2px;">Action</span>
+                                            <span class="userDatatable-title">Action</span>
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody formArrayName="addresses"
-                                    *ngFor="let address of addressControls.controls; let i = index;">
+                                <tbody>
 
 
-                                    <tr [formGroupName]="i" class="marginSpace">
-                                
-                                        <td style="width: 300px;">
+                                    <tr>
+                        
+                                        <td >
                                             <div class="userDatatable-content ml-2">
-
-
 
                                                 <input type="text" class="form-control mt-2 mb-2"
                                                     formControlName="pd_productName_txtbox1"
                                                     id="pd_productName_txtbox_{{i}}" />
-
-
                                             </div>
 
                                         </td>
 
-                                        <td>
+                                        <td >
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                 
-                                                    (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                    (change)="totalCalculate();saveDiscount()"
+                                                    (blur)="totalCalculate();saveDiscount()"
+                                                    (keyup)="totalCalculate();saveDiscount()" />
                                             </div>
                                         </td>
                                         <td>
@@ -511,36 +505,48 @@
 
                                             </div>
                                         </td>
-                                        <td>
+                                        <td >
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
-                                                 
-                                                    (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                    (change)="totalCalculate();saveDiscount()"
+                                                    (blur)="totalCalculate();saveDiscount()"
+                                                    (keyup)="totalCalculate();saveDiscount()" />
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="userDatatable-content" style="width: 160px;">
+                                        <td >
+                                            <div class="userDatatable-content">
                                                 <input type="text" class="form-control" formControlName="pd_Total"
-                                                [readonly]="isReadonly"   style="text-align: right;" id="pd_Total_{{i}}" />
+                                                    style="text-align: right;" id="pd_Total_{{i}}" />
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="userDatatable-content" style="width: 160px;">
+                                        <td >
+                                            <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
-                                                [readonly]="isReadonly"  formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+                                                    formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
 
                                             </div>
                                         </td>
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
+                                        <td >
+                                         <input type="checkbox" style="text-align: right;"
+                                                    formControlName="pd_OutCall" id="pd_OutCall_{{i}}"> 
 
-                                            </div>
+                                      
                                         </td>
-                                        <td>
-                                            <div class="userDatatable-content">
+                                        <td >
+                                            <input type="checkbox" style="text-align: right;"
+                                                       formControlName="pd_OutCall" id="pd_OutCall_{{i}}"> 
+   
+                                         
+                                           </td>
+                                           <td >
+                                            <input type="checkbox" style="text-align: right;"
+                                                       formControlName="pd_OutCall" id="pd_OutCall_{{i}}"> 
+   
+                                         
+                                           </td>
+                                        <!-- <td >
+                                            <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
 
                                                 <input type="checkbox" style="text-align: right;"
                                                     formControlName="pd_CMon" id="pd_CMon_{{i}}">
@@ -549,21 +555,19 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-
-                                                <input type="checkbox" style="text-align: right;" [ngModel]="test[i]"
+<span>
+                                                <input type="checkbox" style="text-align: right;"
                                                     id="pd_selectTax_{{i}}" formControlName="pd_selectTax"
-                                                    checked='checked' (change)="totalCalculate();saveDiscount();saveGrossDiscount()">
-
+                                                    (change)="totalCalculate();">
+                                                </span>
                                             </div>
-                                        </td>
-                                        <td >
-                                            <div *ngIf="i>0" class="userDatatable-content d-inline-block">
+                                        </td> -->
+                                        <td>
+                                            <div class="userDatatable-content d-inline-block">
                                                 <button type="button" class="btn btn-danger btn-sm"
                                                     (click)="removeAddress(i)">X</button>
 
                                             </div>
-                                        </td>
-                                      
                                     </tr>
                                     <tr>
                                         
@@ -588,10 +592,9 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                     </tr>
                                     <tr>
-                                        <td colspan="3">
+                                        <td colspan="2">
                                             <div class="userDatatable-content ml-2">
                                                 <textarea
                                                     style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
@@ -631,8 +634,7 @@
                                                 data-toggle="modal" (click)="  CommissionFormOpen()">Commission(-)
                                             </button>
                                         </td>
-                                        <td></td>
-                                        <td></td>
+
                                     </tr>
                                 </tbody>
 

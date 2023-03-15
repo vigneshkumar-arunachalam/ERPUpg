@@ -80,22 +80,22 @@ export class InvoiceComponent implements OnInit {
   email_checkbox_value: any;
   checkbox_value: any;
   //recurring
-  RecurringForm:FormGroup;
-  recurringState:any;
-  recurring_State_value:any;
+  RecurringForm: FormGroup;
+  recurringState: any;
+  recurring_State_value: any;
   //coupon assign
   couponAssignForm: FormGroup;
 
-   //file attachment
-   fileAttach_quotationID: any;
-   FileAttachmentForm: FormGroup;
-   getFileAttachmentResult: any;
-   myFiles: string[] = [];
-   edit_array: any = [];
-   checkbox_value_file: any;
-   groupSelectCommonId: any;
-   commonAttachmentID: any;
-   checkboxAdding: any = [];
+  //file attachment
+  fileAttach_quotationID: any;
+  FileAttachmentForm: FormGroup;
+  getFileAttachmentResult: any;
+  myFiles: string[] = [];
+  edit_array: any = [];
+  checkbox_value_file: any;
+  groupSelectCommonId: any;
+  commonAttachmentID: any;
+  checkboxAdding: any = [];
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
 
@@ -103,7 +103,7 @@ export class InvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.getInvoice({});
     this.user_ids = sessionStorage.getItem('erp_c4c_user_id');
-    this.recurringState=[{"id":1,"name":"Active"},{"id":2,"name":"Inactive"}];
+    this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 2, "name": "Inactive" }];
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
       'toal': new FormControl(null),
@@ -134,15 +134,15 @@ export class InvoiceComponent implements OnInit {
       'email_cc': new FormControl(null, Validators.required),
 
     });
-    this.RecurringForm=new FormGroup({
-      'date':new FormControl(null),
-      'recurring_state':new FormControl(null),
-      'fixedChargeDtCBX':new FormControl(null),
-      'usageChargeDuration':new FormControl(null),
-      'fixedChargeDuration':new FormControl(null),
-      'fixedChargeDt_value':new FormControl(null),
-      'usageChargeDtCBX':new FormControl(null),
-      'usageChargeDt_value':new FormControl(null),
+    this.RecurringForm = new FormGroup({
+      'date': new FormControl(null),
+      'recurring_state': new FormControl(null),
+      'fixedChargeDtCBX': new FormControl(null),
+      'usageChargeDuration': new FormControl(null),
+      'fixedChargeDuration': new FormControl(null),
+      'fixedChargeDt_value': new FormControl(null),
+      'usageChargeDtCBX': new FormControl(null),
+      'usageChargeDt_value': new FormControl(null),
 
     });
     this.couponAssignForm = new FormGroup({
@@ -154,8 +154,8 @@ export class InvoiceComponent implements OnInit {
     this.InvoiceSendingValue = event.target.value;
     console.log(this.InvoiceSendingValue)
   }
-  radio_recurring(event: any){
-    this.recurring_State_value=event.target.id;
+  radio_recurring(event: any) {
+    this.recurring_State_value = event.target.id;
     console.log(this.recurring_State_value)
 
   }
@@ -227,7 +227,7 @@ export class InvoiceComponent implements OnInit {
   EditCHK(data: any, event: any) {
     console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
-    this. checkbox_value_file = event.target.checked;
+    this.checkbox_value_file = event.target.checked;
     // console.log(this.checkbox_value_file)
     for (let i = 0; i <= this.getFileAttachmentResult.length; i++) {
       console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
@@ -501,8 +501,12 @@ export class InvoiceComponent implements OnInit {
   }
   clearPaymentProcess() {
 
+    this.processPaymentForm.value.reset();
+
     $("#amount").val('');
     $("#note").val('');
+    $("#paytype").val('');
+    $("#dateee").val('');
   }
   processPaymentEdit(id: any) {
 
@@ -569,7 +573,10 @@ export class InvoiceComponent implements OnInit {
     api_processpaymentUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     if (this.processPaymentForm.value.amount === null) {
       this.spinner.hide();
-
+      iziToast.error({
+        message: "Amount Value missing",
+        position: 'topRight'
+      });
 
       return false;
     }
@@ -579,7 +586,7 @@ export class InvoiceComponent implements OnInit {
     api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
     if (this.processPaymentForm.value.paymenttype === null) {
       this.spinner.hide();
-      iziToast.warning({
+      iziToast.error({
         message: "Payment Type Missing",
         position: 'topRight'
       });
@@ -736,7 +743,7 @@ export class InvoiceComponent implements OnInit {
 
     });
   }
- 
+
   sendMail() {
     Swal.fire('Sending Email');
     Swal.showLoading();

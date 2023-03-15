@@ -120,7 +120,7 @@
                             <ul class="dropdown__list">
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Edit" (click)="editPIGo(list.billId )">
+                                <a class="hover3" title="Edit" (click)="list.did_invoice_state==0?editPIGo(list.billId):editDidPIGo(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-edit">
@@ -383,7 +383,7 @@
             </div>
 
             <div class="col-lg-6">
-              <label>Toal</label>
+              <label>Total</label>
               <input type="text" class="form-control" formControlName="toal" [readonly]="isReadOnly">
 
             </div>
@@ -418,11 +418,11 @@
 
             <div class="col-lg-6">
               <label class="mt-4">Date</label>
-              <input type="date" class="form-control" formControlName="date">
+              <input type="date" class="form-control" formControlName="dateeei" id="dateee">
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Payment Type/Method</label>
-              <select class="form-control" formControlName="paymenttype">
+              <select class="form-control" formControlName="paymenttype" id="paytype">
                 <option [ngValue]="null" selected disabled>Select Payment Method</option>
 
                 <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">

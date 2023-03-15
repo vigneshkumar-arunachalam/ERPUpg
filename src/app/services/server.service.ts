@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Subject,Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class ServerService {
-
-  constructor(private http:HttpClient) { }
+  reload_profile: Subject<any> = new Subject()
+  constructor(private http:HttpClient) { 
+    
+  }
   sendServer(postData:any){
     const httpOptions = {
       headers: new HttpHeaders({

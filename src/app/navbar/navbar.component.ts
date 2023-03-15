@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ServerService } from '../services/server.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -10,7 +11,19 @@ export class NavbarComponent implements OnInit {
   userId:any;
   role_Permission:any;
   user_ProfileImage:any;
-  constructor(private router:Router) { }
+  constructor(private router:Router,private serverService: ServerService) {
+    this.serverService.reload_profile.subscribe((res:any)=>{
+      console.log(res);
+      var kk = JSON.parse(res);
+      console.log(kk)
+      if(kk.data=='reload_profile_data'){
+        this.userName=sessionStorage.getItem('user_name');
+        this.userId=sessionStorage.getItem('erp_c4c_user_id');
+        this.role_Permission=sessionStorage.getItem('role');
+        this.user_ProfileImage=sessionStorage.getItem('profile_image');
+      }
+    })
+   }
 
   ngOnInit(): void {
     setTimeout(() => {

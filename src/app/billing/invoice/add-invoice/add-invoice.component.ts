@@ -114,6 +114,8 @@ export class AddInvoiceComponent implements OnInit {
   commissionType: any;
   commissionValue: any;
   commissionAmount: any;
+    //read only fields
+    isReadonly: boolean = true;
 
   constructor(private serverService: ServerService, private fb: FormBuilder) {
     this.addPI_section2 = this.fb.group({
@@ -315,10 +317,10 @@ export class AddInvoiceComponent implements OnInit {
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
+    console.log("mile",this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
-    this.MSDisplay_Value = event.target.value;
+    this.MSDisplay_Value = event.target.checked;
     console.log(this.MSDisplay_Value);
   }
   radioSelectCommissionType(event: any) {
@@ -751,6 +753,7 @@ export class AddInvoiceComponent implements OnInit {
           'ship_address_2': ship_address_str2,
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
+          'terms':response.customer_details[0].terms_condition,
         });
       }
       else {
@@ -764,6 +767,7 @@ export class AddInvoiceComponent implements OnInit {
           'ship_address_2': '',
           'ship_address_3': '',
           'ship_attn': '',
+          'terms':'',
         });
       }
 
@@ -790,6 +794,8 @@ export class AddInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_saveInvoice_req.action = "insert_invoice";
     api_saveInvoice_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+
+
     //section-1
     api_saveInvoice_req.company = this.addInvoice_section1.value.companyName;
     api_saveInvoice_req.invoice_no = this.addInvoice_section1.value.invoiceNo;
@@ -855,7 +861,6 @@ export class AddInvoiceComponent implements OnInit {
     api_saveInvoice_req.mile_discount_state = this.mile_check_value;
     api_saveInvoice_req.mile_discount_display_state = this.MSDisplay_Value;
     api_saveInvoice_req.export_state = this.radioSelectFooter;
-
     api_saveInvoice_req.add_exchange_rate_state = this.cbk_conversionAmtShow_value;
     api_saveInvoice_req.dw_tax_state = this.cbk_deductWithholdingTax;
 

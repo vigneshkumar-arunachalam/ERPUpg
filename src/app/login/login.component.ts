@@ -174,6 +174,8 @@ export class LoginComponent implements OnInit {
         console.log(response)
         if (response.userId != '') {
           setTimeout(()=>{
+            var k = '{"data":"reload_profile_data"}';
+            this.serverService.reload_profile.next(k);
             this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
         }

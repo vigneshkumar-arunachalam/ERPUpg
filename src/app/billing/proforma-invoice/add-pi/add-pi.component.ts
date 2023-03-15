@@ -798,7 +798,7 @@ export class AddPIComponent implements OnInit {
     
     api_savePI_req.discountAmount = $('#finalDiscount_amt').val();
     api_savePI_req.final_dis_type = $('#final_discount_type').val();
-    api_savePI_req.final_dis_val = $('#final_discount_val').val();
+    api_savePI_req.discountPer = $('#final_discount_val').val();
 
     api_savePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_savePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
@@ -950,7 +950,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
-    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_BillerID;
+    api_getInvoiceDetails_req.billerId = this.addPI_section1.value.companyName;
     api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 

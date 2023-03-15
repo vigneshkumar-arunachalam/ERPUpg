@@ -107,7 +107,7 @@ export class ProformaInvoiceComponent implements OnInit {
       'customer': new FormControl(null),
       'owing': new FormControl(null),
       'amount': new FormControl(null, [Validators.required, Validators.pattern('^-?[1-9]\\d*(\\.\\d{1,2})?$')]),
-      'date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'dateeei': new FormControl((new Date()).toISOString().substring(0, 10)),
       'paymenttype': new FormControl(null),
       'note': new FormControl(null),
       'paymentDetails': new FormControl(null),
@@ -713,6 +713,20 @@ export class ProformaInvoiceComponent implements OnInit {
     });
   }
 
+ 
+  editDidPIGo(id: any) {
+    
+    var editbillID = id;
+    this.router.navigate(['/EditDidPI'])
+
+    this.router.navigate(['/EditDidPI'], {
+      queryParams: {
+        e_editBillID: editbillID,
+      }
+    });
+  }
+
+ 
   addDidPIGo() {
     this.router.navigate(['/AddDidPI'])
   }
@@ -909,9 +923,12 @@ export class ProformaInvoiceComponent implements OnInit {
     alert("Are you sure you want to bill show permission?")
   }
   clearPaymentProcess() {
+    this.processPaymentForm.value.reset();
 
     $("#amount").val('');
     $("#note").val('');
+    $("#paytype").val('');
+    $("#dateee").val('');
   }
   processPaymentEdit(id: any) {
 
@@ -978,17 +995,20 @@ export class ProformaInvoiceComponent implements OnInit {
     api_processpaymentUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
     if (this.processPaymentForm.value.amount === null) {
       this.spinner.hide();
-     
+      iziToast.error({
+        message: "Amount Value missing",
+        position: 'topRight'
+      });
 
       return false;
     }
 
     api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.dateeei;
     api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
     if (this.processPaymentForm.value.paymenttype === null) {
       this.spinner.hide();
-      iziToast.warning({
+      iziToast.error({
         message: "Payment Type Missing",
         position: 'topRight'
       });

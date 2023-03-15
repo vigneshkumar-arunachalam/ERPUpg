@@ -363,7 +363,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_quotationNumber': response.quotation_no,
             //         'e_selectFooter': response.footer_details[index].pdf_footer_id,
             'e_selectCurrency': response.currency_id,
-            'e_termConditionContentChange': response.quotation_terms_cond,
+           // 'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
           });
 
@@ -374,7 +374,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_quotationNumber': '',
             //       'e_selectFooter': '',
             'e_selectCurrency': '',
-            'e_termConditionContentChange': '',
+          //  'e_termConditionContentChange': '',
             // 'e_DescriptionText': '',
 
           });
@@ -414,7 +414,7 @@ export class EditquotationnewComponent implements OnInit {
             // 'e_quotationNumber': response.quotation_no,
             'e_selectFooter': this.selected_pdf_footer,
             'e_selectCurrency': response.currency_id,
-            'e_termConditionContentChange': response.quotation_terms_cond,
+     //       'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
           });
 
@@ -425,7 +425,7 @@ export class EditquotationnewComponent implements OnInit {
             'e_quotationNumber': '',
             //      'e_selectFooter': '',
             'e_selectCurrency': '',
-            'e_termConditionContentChange': '',
+      //      'e_termConditionContentChange': '',
             // 'e_DescriptionText': '',
 
           });
@@ -621,8 +621,10 @@ export class EditquotationnewComponent implements OnInit {
         this.editAddress();
         console.log(response.quotation_child_det.length);
         this.removeAddresstest(response.quotation_child_det.length);
-
-
+       
+      //  'e_selectTermsConditions': response.quotation_details[0].terms_condition_id,
+      //  'e_termsCondition_DontShow': response.quotation_details[0].terms_conditions_show_state,
+        
 
         for (let index = 0; index < response.quotation_child_det.length; index++) {
 
@@ -747,7 +749,7 @@ export class EditquotationnewComponent implements OnInit {
         });
       }
       else {
-
+       
       }
 
 
@@ -755,6 +757,8 @@ export class EditquotationnewComponent implements OnInit {
 
 
   }
+
+  
   TermsConditionsContentDropdown(event: any) {
     this.terms_condition_id = event.target.value;
     console.log("template terms_condition ID check", this.terms_condition_id);
@@ -841,7 +845,7 @@ export class EditquotationnewComponent implements OnInit {
       if (response.status == true) {
         this.editQuotationInvoice_section1.patchValue({
 
-          'e_termConditionContentChange': response.terms,
+       //   'e_termConditionContentChange': response.terms,
 
         });
 
@@ -849,7 +853,7 @@ export class EditquotationnewComponent implements OnInit {
       else {
         this.editQuotationInvoice_section1.patchValue({
 
-          'e_termConditionContentChange': '',
+      //    'e_termConditionContentChange': '',
         });
       }
     });

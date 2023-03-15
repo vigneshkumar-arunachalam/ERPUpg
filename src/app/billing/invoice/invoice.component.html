@@ -600,11 +600,11 @@
 
             <div class="col-lg-6">
               <label class="mt-4">Date</label>
-              <input type="date" class="form-control" formControlName="date">
+              <input type="date" class="form-control" formControlName="date" id="dateee">
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Payment Type/Method</label>
-              <select class="form-control" formControlName="paymenttype">
+              <select class="form-control" formControlName="paymenttype" id="paytype">
                 <option [ngValue]="null" selected disabled>Select Payment Method</option>
 
                 <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">

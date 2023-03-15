@@ -131,9 +131,27 @@ color: #b8123b!important;
 
 
 
+
+
+
+.marginSpace{
+  margin-top:2rem !important;
+}
+
+.add-contact-table-section tbody:nth-child(odd) {background: #f5fffa}
+
+.add-contact-table-section tbody:nth-child(even) {background: #f7f0f0}
+
+.userDatatable-content{
+line-height: 3.42857 !important;
+text-align: center;
+}
+.userDatatable-header th{
+  /* padding: 0px !important; */
+}
 .form-control:disabled,
 .form-control[readonly] {
-    background-color: #f3d2f0 !important;
+    background-color: #f3ecf2 !important;
     opacity: 0.6;
     color: black!important;
 }
