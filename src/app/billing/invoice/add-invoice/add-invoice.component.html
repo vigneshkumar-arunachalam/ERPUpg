@@ -676,13 +676,13 @@
                         <div class="col-lg-12">
 
                             <div class="row d-flex">
-                                <div class="col-lg-6">
-                                    <label class="col-form-label">Gross
-                                        Total(Rs.)</label>
+                                <div class="col-lg-6 mt-2">
+                                  <span style="padding-left: 300px;"><label class="col-form-label">Gross
+                                    Total (Rs.)</label></span>  
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                        formControlName="section3_gross_total" />
+                                    [attr.readonly]="isReadOnly"      formControlName="section3_gross_total" />
                                 </div>
                             </div>
                         </div>
@@ -774,12 +774,13 @@
                             <div class="form-group row">
 
                                 <div class="col-lg-6">
-                                    <label>Net Total (Rs.)</label>
+                                    <span style="padding-left: 300px;"><label class="col-form-label">Net Total (Rs.)</label></span> 
+                                    
                                 </div>
 
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control" [(ngModel)]="grandTotal"
-                                        formControlName="section3_grand_total" />
+                                    [attr.readonly]="isReadOnly"     formControlName="section3_grand_total" />
                                 </div>
 
 
@@ -791,7 +792,8 @@
                             <div class="form-group row">
 
                                 <div class="col-lg-6">
-                                    <label>Remarks</label>
+                                    <span style="padding-left: 300px;"><label class="col-form-label">Remarks</label></span> 
+                                 
                                 </div>
 
                                 <div class="col-lg-6">
@@ -809,7 +811,8 @@
                             <div class="form-group row">
 
                                 <div class="col-lg-6">
-                                    <label>Previous Due</label>
+                                    <span style="padding-left: 300px;"><label class="col-form-label">Previous Due</label></span> 
+                                   
                                 </div>
 
                                 <div class="col-lg-6">
@@ -880,11 +883,7 @@
 
                             </div>
                         </div>
-                        <div class="buttonAlign">
-
-                            <button type="button" class="btn btn-primary" (click)="save()">Submit</button>
-                            <button type="button" class="btn btn-dark">Cancel</button>
-                        </div>
+                     
 
 
 
@@ -895,6 +894,11 @@
         </section>
     </form>
 
+    <div class="buttonAlign mt-4 mb-2" style="padding-left: 1000px;">
+
+        <button type="button" class="btn btn-primary mr-4 " (click)="save()">Submit</button>
+        <button type="button" class="btn btn-dark">Cancel</button>
+    </div>
 </div>
 
 

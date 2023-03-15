@@ -3,13 +3,13 @@
         <div class="col-lg-12 mb-30">
             <div class="card">
                 <div class="card-header color-dark fw-500">
-                    <h2>Update Proforma Invoice</h2>
+                    <h2 style="align-items: center;">Update Proforma Invoice</h2>
                 </div>
             </div>
-            
+
         </div>
     </div>
-   
+
 </div>
 
 
@@ -41,18 +41,18 @@
                     <div class="form-group row">
                         <label for="customerName" class="col-lg-12 col-form-label">Bill To*</label>
                         <div class="ng-autocomplete">
-    
+
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                 formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
                                 (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
                                 [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                             </ng-autocomplete>
-    
-    
+
+
                             <ng-template #itemTemplateCustomer let-item>
                                 <a [innerHTML]="item.customerName"></a>
                             </ng-template>
-    
+
                             <ng-template #notFoundTemplate let-notFound>
                                 <div [innerHTML]="notFound"></div>
                             </ng-template>
@@ -74,7 +74,7 @@
                             <input type="text " class="form-control mt-2" formControlName="address_1" />
                             <input type="text " class="form-control mt-2" formControlName="address_2" />
                             <input type="text " class="form-control mt-2" formControlName="address_3" />
-    
+
                         </div>
                     </div>
                 </div>
@@ -85,10 +85,10 @@
                         <div class="col-lg-12">
                             <input type="text" class="form-control" formControlName="Attn_1" id="attn1" />
                         </div>
-    
+
                     </div>
                 </div>
-    
+
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="ship" class="col-lg-12 col-form-label">Ship To</label>
@@ -116,6 +116,45 @@
                     <div class="form-group">
                         <label for="refDetails" class="form-label">Ref</label>
                         <textarea class="form-control" formControlName="Ref" style="height: 70px;" row="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="refResellerDetails" class="form-label">Reference Reseller Name</label>
+                        <textarea class="form-control" formControlName="ReferenceResellerName" style="height: 70px;"
+                            row="3"></textarea>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Select Extra Logo </label>
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline"
+                                *ngFor="let display1 of bills_logo_id_radio;let k=index">
+                                <input class="form-check-input" type="radio" name="bills_logo_id" [value]="display1.id"
+                                    checked="{{display1.id==billsLogo_value ? 'checked':''}}"
+                                    (change)="handleChange_Logo(display1.billerId,$event)" />
+                                <label class="form-check-label" for="exampleRadios{{k}}">
+                                    {{display1.name}}
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Export State</label>
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline"
+                                *ngFor="let display1 of exportState_Radio;let k=index">
+                                <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
+                                    checked="{{display1.id==exportState_value ? 'checked':''}}"
+                                    (change)="handleChange(display1.billerId,$event)" />
+                                <label class="form-check-label" for="exampleRadios{{k}}">
+                                    {{display1.name}}
+                                </label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -148,21 +187,21 @@
                             <input type="text " class="form-control" formControlName="tin" [attr.readonly]="isReadOnly"
                                 id="regg" />
                         </div>
-    
-    
+
+
                     </div>
-    
+
                     <div class="form-group row">
-    
+
                         <label for="regg" class="col-lg-12 col-form-label">{{this.getProformaBillerDetails_cstName}}
                         </label>
                         <div class="col-lg-12">
                             <input type="text " class="form-control" formControlName="cst" [attr.readonly]="isReadOnly"
                                 id="regg" />
                         </div>
-    
+
                     </div>
-    
+
                     <div class="form-group row">
                         <label for="podatee" class="col-lg-12 col-form-label">PO.Date</label>
                         <div class="col-lg-12">
@@ -172,21 +211,21 @@
                 </div>
                 <div>
                     <div class="col-lg-12">
-                    <div class="form-group row">
-                        <label for="datee" class="col-lg-12 col-form-label">Date *</label>
-                        <div class="col-lg-12">
-                            <input type="date" class="form-control" formControlName="Date" id="datee" />
-                        </div>
+                        <div class="form-group row">
+                            <label for="datee" class="col-lg-12 col-form-label">Date *</label>
+                            <div class="col-lg-12">
+                                <input type="date" class="form-control" formControlName="Date" id="datee" />
+                            </div>
 
-                    </div>
+                        </div>
                     </div>
                     <div class="col-lg-12">
-                    <div class="form-group row">
-                        <label for="po" class="col-lg-12 col-form-label">PO.No</label>
-                        <div class="col-lg-12">
-                            <input type="text " class="form-control" formControlName="PoNo" id="po" />
+                        <div class="form-group row">
+                            <label for="po" class="col-lg-12 col-form-label">PO.No</label>
+                            <div class="col-lg-12">
+                                <input type="text " class="form-control" formControlName="PoNo" id="po" />
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
 
@@ -217,7 +256,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="Ship_Date" class="col-lg-12 col-form-label">Ship Date</label>
@@ -226,7 +265,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="term" class="col-lg-12 col-form-label">Terms</label>
@@ -235,7 +274,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="curren" class="col-lg-12 col-form-label">Currency</label>
@@ -259,7 +298,7 @@
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
@@ -275,64 +314,40 @@
                 </div>
 
                 <div class="col-lg-12">
-                    <div class="form-check form-check-inline" *ngFor="let display1 of exportState_Radio;let k=index">
-                        <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
-                            checked="{{display1.id==exportState_value ? 'checked':''}}"
-                            (change)="handleChange(display1.billerId,$event)" />
-                        <label class="form-check-label" for="exampleRadios{{k}}">
-                            {{display1.name}}
-                        </label>
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Invoice Type</label>
+                        <div class="col-lg-12">
+                            <div class="form-check form-check-inline"
+                                *ngFor="let display1 of mile_discount_state_radio;let k=index">
+                                <input class="form-check-input" type="radio" name="mile_discount_state"
+                                    [value]="display1.id"
+                                    checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
+                                    (change)="handleChange_mileSate(display1.billerId,$event)" />
+                                <label class="form-check-label" for="exampleRadios{{k}}">
+                                    {{display1.name}}
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
+                                    (change)="handleChange_MSDisplay($event)">
+                                <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="col-lg-12">
-                    <div class="form-check form-check-inline" *ngFor="let display1 of mile_discount_state_radio;let k=index">
-                        <input class="form-check-input" type="radio" name="mile_discount_state" [value]="display1.id"
-                            checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
-                            (change)="handleChange_mileSate(display1.billerId,$event)" />
-                        <label class="form-check-label" for="exampleRadios{{k}}">
-                            {{display1.name}}
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                            (change)="handleChange_MSDisplay($event)">
-                        <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
-                    </div>
-                </div>
+
 
             </div>
-            <div class="col-lg-6">
-            <div class="col-lg-12">
-                <div class="form-group">
-                    <label for="refResellerDetails" class="form-label">Reference Reseller Name</label>
-                    <textarea class="form-control" formControlName="ReferenceResellerName" style="height: 70px;"
-                        row="3"></textarea>
-                </div>
-            </div>
-            <div class="col-lg-12">
-            <div class="form-group">
-                <label for="Payment" class="col-lg-12 col-form-label">Select Extra Logo :</label>
-            <div class="col-lg-12">
-                <div class="form-check form-check-inline" *ngFor="let display1 of bills_logo_id_radio;let k=index">
-                    <input class="form-check-input" type="radio" name="bills_logo_id" [value]="display1.id"
-                        checked="{{display1.id==billsLogo_value ? 'checked':''}}"
-                        (change)="handleChange_Logo(display1.billerId,$event)" />
-                    <label class="form-check-label" for="exampleRadios{{k}}">
-                        {{display1.name}}
-                    </label>
-                </div>
-            </div>
-            </div>
-            </div>
-        </div>
-           
 
 
 
-          
 
-            
+
+
+
+
             <!-- <div class="col-lg-6">
                 <div class="form-group">
                     <div class="form-check form-check-inline"  *ngFor="let display of dynamicCheckboxwithKey;let i=index">
@@ -439,9 +454,7 @@
                                                         <input type="text" class="form-control"
                                                             style="text-align: right;"
                                                             formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                            (change)="totalCalculate();saveDiscount()"
-                                                            (blur)="totalCalculate();saveDiscount()"
-                                                            (keyup)="totalCalculate();saveDiscount()" />
+                                                            (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
                                                     </div>
                                                 </td>
 
@@ -464,9 +477,8 @@
 
                                                         <input type="text" class="form-control"
                                                             style="text-align: right;" formControlName="pd_sellingPrice"
-                                                            id="pd_SP_{{i}}" (change)="totalCalculate();saveDiscount()"
-                                                            (blur)="totalCalculate();saveDiscount()"
-                                                            (keyup)="totalCalculate();saveDiscount()" />
+                                                            id="pd_SP_{{i}}" 
+                                                            (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
                                                     </div>
                                                 </td>
 
@@ -513,7 +525,7 @@
                                                         style="top:-35px;text-align: center;width: 61px;margin-left: -8px">
                                                         <input type="checkbox" id="pd_selectTax_{{i}}"
                                                             formControlName="pd_selectTax"
-                                                            (change)="totalCalculate();" />
+                                                            (change)="totalCalculate();saveDiscount();saveGrossDiscount()" />
 
 
                                                     </div>

@@ -801,10 +801,10 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.user_id = this.user_ids;
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      alert(response.HttpErrorResponse.ERROR.headers.status)
+      
       if (response.status == true) {
 
-
+console.log("response.HttpErrorResponse.ERROR.headers.status",response.HttpErrorResponse.ERROR.headers.status)
         this.quotationSharedPerson_EditOnLoad_Values = response.access_userid;
         // setTimeout(() => {
         //   this.quotationSharedPerson_List = response.user_list;

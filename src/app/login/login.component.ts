@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
         if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
           this.old_erp_login();
         }
+     
       }
       );
     this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
@@ -56,9 +57,9 @@ export class LoginComponent implements OnInit {
       s.getdatas = JSON.parse(event.data);
       console.log('socket detail' + sessionStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
-        if (sessionStorage.getItem('erp_c4c_user_id') == null) {
+        // if (sessionStorage.getItem('erp_c4c_user_id') == null) {
           s.qrLogin();
-        }
+        // }
         this.websocket.onclose;
       }
 
@@ -87,7 +88,7 @@ export class LoginComponent implements OnInit {
       verify_otp_ctrl: new FormControl(null),
 
     });
-    this.subscribes('');
+    // this.subscribes('');
 
   }
 

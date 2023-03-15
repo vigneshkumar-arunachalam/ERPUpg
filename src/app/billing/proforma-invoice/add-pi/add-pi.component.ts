@@ -73,6 +73,8 @@ export class AddPIComponent implements OnInit {
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
+  test_outcall: boolean[] = [];
+  test_CMon: boolean[] = [];
   itre = 0;
   //others
   dynamicChangeText: any;
@@ -116,6 +118,9 @@ export class AddPIComponent implements OnInit {
     this.loadADD();
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
+      console.log("this.test[index]",this.test[index]);
+      this.test_outcall[index] = false;
+      this.test_CMon[index] = false;
     });
 
     this.dynamicCheckboxwithKey = [
@@ -234,6 +239,9 @@ export class AddPIComponent implements OnInit {
     this.itre = this.itre + 1;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
+      console.log(" this.test[index] ", this.test[index] )
+      this.test_outcall[index] = false;
+      this.test_CMon[index] = false;
 
     });
   }
@@ -702,6 +710,7 @@ export class AddPIComponent implements OnInit {
     this.router.navigate(['/ProformaInvoice']);
   }
   save($event: MouseEvent) {
+   
     let api_req: any = new Object();
     let api_savePI_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -712,7 +721,7 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
     //section-1
     
-    if(this.addPI_section1.value.companyName===null){
+    if(this.addPI_section1.value.companyName===null || this.addPI_section1.value.companyName===undefined){
      
       iziToast.warning({
         message: "Select Company Name",
@@ -720,19 +729,24 @@ export class AddPIComponent implements OnInit {
       });
       return false;
 
+    }else{
+      api_savePI_req.company = this.addPI_section1.value.companyName;
     }
-    api_savePI_req.company = this.addPI_section1.value.companyName;
+   
     api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
-    api_savePI_req.customer_name = this.customerName_Data;
-    if(this.customerName_Data===null){
+    
+    if(this.customerName_Data===null||this.customerName_Data===undefined){
      
       iziToast.warning({
-        message: "Select Customer",
+        message: "Select Bill",
         position: 'topRight'
       });
       return false;
 
+    }else{
+      api_savePI_req.customer_name = this.customerName_Data;
     }
+    
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
     api_savePI_req.BillTo_customer_ID = this.customer_ID;
     api_savePI_req.BillTo_customer_NAME = this.customer_NAME;
@@ -798,7 +812,7 @@ export class AddPIComponent implements OnInit {
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
-      addr[i].pd_selectTax = $('#pd_selectTax_' + i).val();
+      // addr[i].pd_selectTax = $('#pd_selectTax_' + i).val();
 
     }
 
@@ -835,8 +849,11 @@ export class AddPIComponent implements OnInit {
     ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      alert("no error");
+     
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
+        alert("status == true")
         iziToast.success({
           message: "Proforma Invoice added Successfully",
           position: 'topRight'
@@ -844,13 +861,15 @@ export class AddPIComponent implements OnInit {
         this.gotoPIList();
 
       }
-      else if (response.status == '500') {
-        iziToast.warning({
+      else if (response.status === 500) {
+        alert("status == 500")
+        iziToast.error({
           message: "Proforma Invoice not added Successfully",
           position: 'topRight'
         });
       }
       else {
+        alert("status == false")
         iziToast.warning({
           message: "Proforma Invoice not added Successfully",
           position: 'topRight'
@@ -860,11 +879,14 @@ export class AddPIComponent implements OnInit {
 
     }),
       (error: any) => {
+        ($event.target as HTMLButtonElement).disabled = false;
+        alert(error)
+
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+        console.log("500",error);
       }
 
   }

@@ -73,6 +73,10 @@ export class EditPIComponent implements OnInit {
   //mile
   radioID_Mile: any;
   radio_Value_Mile: any
+
+   //export state-check box
+   export_state: any;
+   radioSelectFooter: any = '1';
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
@@ -834,11 +838,11 @@ export class EditPIComponent implements OnInit {
             "pd_sellingPrice": response.billchild_details[index].rate,
             "pd_Total": response.billchild_details[index].total_amt,
             "pd_netPrice": response.billchild_details[index].net_amt,
-            "pd_OutCall": response.billchild_details[index].out_call_state,
+            "pd_OutCall": response.billchild_details[index].out_call_state== 1 ? true : false,
             "sub_dis_amt": response.billchild_details[index].dis_amt,
             "sub_dis_type": response.billchild_details[index].dis_type,
             "sub_dis_val": response.billchild_details[index].dis_per,
-            "pd_CMon": response.billchild_details[index].current_month_str,
+            "pd_CMon": response.billchild_details[index].current_month== 1 ? true : false,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
           })
@@ -1128,7 +1132,7 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
-    
+    api_updatePI_req.export_state = this.radio_Value_Export;
     api_updatePI_req.mile_discount_state = this.radio_Value_Mile;
     api_updatePI_req.mile_discount_display_state = this.MSDisplay_Value;
     api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
@@ -1497,7 +1501,7 @@ export class EditPIComponent implements OnInit {
       //   console.log('22'+disType);
     } else if (disType == 'amt') {
       $('#discountTYpe_amt').prop('checked', true);
-      sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
+      sub_dis_val = $('#sub_discount_' + row_cnt).val();
       $('#enablePriceFinal').val(sub_dis_val);
      
       //  console.log('33'+disType);
@@ -1513,7 +1517,7 @@ export class EditPIComponent implements OnInit {
     var finaldiscountTYpe_amt = $('#enableFinalDiscount').val()
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-    alert(disType+'---'+finaldiscountTYpe_per+'---'+finaldiscountTYpe_amt);
+   // alert(disType+'---'+finaldiscountTYpe_per+'---'+finaldiscountTYpe_amt);
     var final_tot = this.grossTotal;
     var price: any;
     // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);

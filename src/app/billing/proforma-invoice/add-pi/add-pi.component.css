@@ -34,8 +34,11 @@
     padding-left: 4px !important;
   }
   label {
+    
+    /* color: #009688!important; */
+
     font-weight: 500;
-    color: #009688!important;
+  color: #182679!important;
   
   }
 
