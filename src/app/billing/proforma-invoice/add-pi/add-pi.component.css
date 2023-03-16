@@ -140,3 +140,12 @@ text-align: center;
     opacity: 0.6;
     color: black!important;
 }
+
+.userDatatable-title{
+  color: #182679 !important;
+  font-weight: 550!important;
+  
+}
+.userDatatable-header{
+  background-color: white!important;
+}

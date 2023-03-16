@@ -254,12 +254,7 @@ export class ProformaInvoiceComponent implements OnInit {
         }
 
 
-        iziToast.success({
-          message: "Email Details displayed Successfully",
-          position: 'topRight'
-
-        });
-        this.PIList({});
+        
       } else {
 
         $('#processPaymentFormId').modal("hide");
@@ -325,7 +320,7 @@ export class ProformaInvoiceComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, convert it!'
     }).then((result) => {
       $('#PItoInvoiceConversionFormId').modal('show');
       if (result.value) {
@@ -384,7 +379,7 @@ export class ProformaInvoiceComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, convert it!'
     }).then((result) => {
      
       if (result.value) {

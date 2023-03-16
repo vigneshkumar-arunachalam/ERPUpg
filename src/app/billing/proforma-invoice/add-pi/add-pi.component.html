@@ -1,5 +1,5 @@
 <div class="contents-section">
-    <h2 style="text-align: center;">Enter Proforma Invoice Details</h2>
+    <h2 style="text-align: center;" class="mt-4 mb-4">Enter Proforma Invoice Details</h2>
     <form [formGroup]="addPI_section1">
         <div class="row">
             <div class="col-lg-6">
@@ -460,19 +460,19 @@
                             <table class="add-contact-table-section">
                                 <thead>
                                     <tr class="userDatatable-header">
-                                        <th style="width: 50px;"> <span class="userDatatable-title">
+                                        <th style="width: 50px;padding-left: 15px!important"> <span class="userDatatable-title">
                                                 Next Page</span>
                                         </th>
-                                        <th><span class="userDatatable-title">Product Name</span></th>
+                                        <th style="padding-left: 80px!important;"><span class="userDatatable-title">Product Name</span></th>
 
 
                                         <!-- <th><span class="userDatatable-title">Description</span></th> -->
-                                        <th><span class="userDatatable-title">Quantity</span></th>
-                                        <th><span class="userDatatable-title">Unit</span>
+                                        <th style="padding-left: 20px!important;"><span class="userDatatable-title">Quantity</span></th>
+                                        <th style="padding-left: 20px!important;"><span class="userDatatable-title">Unit</span>
                                         </th>
-                                        <th><span class="userDatatable-title"> Price</span></th>
-                                        <th><span class="userDatatable-title"> Total</span></th>
-                                        <th><span class="userDatatable-title">Net Total</span></th>
+                                        <th style="padding-left: 20px!important;"><span class="userDatatable-title"> Price</span></th>
+                                        <th style="padding-left: 20px!important;"><span class="userDatatable-title"> Total</span></th>
+                                        <th style="padding-left: 20px!important;"><span class="userDatatable-title">Net Total</span></th>
                                         <th><span class="userDatatable-title">Out Call</span>
                                         </th>
                                         <th><span class="userDatatable-title"> C Mon</span>
@@ -665,9 +665,10 @@
 
                             <div class="row d-flex">
                                 <div class="col-lg-6">
-                                    <label class="col-form-label">Gross
-                                        Total(Rs.)</label>
-                                </div>
+                                  
+                                <span>  <label class="col-form-label">Gross
+                                    Total(Rs.)</label></span>
+                                    </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
                                         formControlName="section3_gross_total" />
