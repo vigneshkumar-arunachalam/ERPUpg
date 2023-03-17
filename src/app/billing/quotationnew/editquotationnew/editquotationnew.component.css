@@ -139,11 +139,12 @@ input.form-control {
     }
   }
   label {
-    font-weight: 600;
+    font-weight: 500;
     /* color: black; */
-    color: #009688!important;
+    color: #182679!important;
   
   }
+
   select{
     /* padding: 0 !important; */
     padding-left: 4px !important;
@@ -160,7 +161,8 @@ input.form-control {
 
 
    .contents-section{
-    background-color: #fafafa!important;
+    /* background-color: #fafafa!important; */
+    background-color: white!important;
   }
   
   
@@ -207,10 +209,25 @@ input.form-control {
 
   /* form array css for space #fcf6fc */
 
-  .add-contact-table-section tbody:nth-child(even) {background: #fcf6fc}
+  .add-contact-table-section tbody:nth-child(even) {background: #fafffd}
 
-  .add-contact-table-section tbody:nth-child(odd) {background: #f5f5f5}
+  .add-contact-table-section tbody:nth-child(odd) {background: #fcf9f9}
 
   .scrollcontrol{
     overflow:scroll;
   }
+
+
+  .userDatatable-title{
+    text-align: left !important;
+    color: #182679 !important;
+    font-weight: bold;
+  }
+
+
+  .form-control:disabled,
+.form-control[readonly] {
+    background-color: #f5f5f5 !important;
+    opacity: 0.6;
+    color: black!important;
+}

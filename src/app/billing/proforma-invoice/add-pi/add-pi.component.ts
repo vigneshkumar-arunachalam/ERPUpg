@@ -473,8 +473,12 @@ export class AddPIComponent implements OnInit {
 
 
       }
-
+    var price_amt =  $('#pd_SP_1').val();
+    if(price_amt>0){
       this.totalCalculate();
+    }
+      
+
 
 
     });
@@ -1069,16 +1073,21 @@ export class AddPIComponent implements OnInit {
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
       //  alert(this.finalDiscount);
+       //setTimeout(() => { }, 1500);
+       console.log('-this.finalDiscount---'+this.finalDiscount);
+    //    tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
+     //   tax_amt_tot += tax_amt;
         
-        tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
-        tax_amt_tot += tax_amt;
-
       }
 
       grs_amt += sub_total_amt;
 
     }
     this.grossTotal = grs_amt;
+   // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
+    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal)-parseFloat(this.finalDiscount)) / 100);
+
+   
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
       this.shipping_amt = 0;
@@ -1086,7 +1095,7 @@ export class AddPIComponent implements OnInit {
     if (this.finalDiscount == '') {
       this.finalDiscount = 0;
     }
-    if (this.finalTax == '') {
+    if (this.finalTax == '' || isNaN(this.finalTax)) {
       this.finalTax = 0;
     }
     if (this.bankingCharge == '') {

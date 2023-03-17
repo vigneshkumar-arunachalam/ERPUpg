@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
 declare var iziToast: any;
@@ -105,7 +105,7 @@ export class EditquotationnewComponent implements OnInit {
   edit_array: any = [];
   datavalue: any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addQuotationInvoice_section2 = this.fb.group({
       addresses: this.fb.array([this.EditAddress_FormControl()])
     });
@@ -337,6 +337,7 @@ export class EditquotationnewComponent implements OnInit {
 
 
   dynamicChange(event: any) {
+    this.spinner.show();
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
     // this.TaxDropdown();
@@ -351,6 +352,7 @@ export class EditquotationnewComponent implements OnInit {
     api_dynamicDropdown_req.billerId = this.billerID;
     api_req.element_data = api_dynamicDropdown_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       //		   this.FooterDetails = response.footer_details;
       console.log("dynamic Dropdown change response", response)
 
@@ -385,6 +387,7 @@ export class EditquotationnewComponent implements OnInit {
     });
   }
   dynamicChange_edit(val: any) {
+    this.spinner.show();
     this.billerID = val;
     console.log("billerID check", this.billerID);
     this.TaxDropdown();
@@ -401,6 +404,7 @@ export class EditquotationnewComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       this.FooterDetails = response.footer_details;
       console.log("dynamic Dropdown change response", response)
       console.log("dynamic term condition change response", response.quotation_terms_cond)
@@ -674,6 +678,7 @@ export class EditquotationnewComponent implements OnInit {
 
   }
   templateContentDropdown(event: any) {
+    this.spinner.show();
     this.quotation_template_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_template_id);
     let api_req: any = new Object();
@@ -688,6 +693,7 @@ export class EditquotationnewComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
@@ -760,6 +766,7 @@ export class EditquotationnewComponent implements OnInit {
 
   
   TermsConditionsContentDropdown(event: any) {
+    this.spinner.show();
     this.terms_condition_id = event.target.value;
     console.log("template terms_condition ID check", this.terms_condition_id);
     let api_req: any = new Object();
@@ -775,6 +782,7 @@ export class EditquotationnewComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
@@ -1008,7 +1016,7 @@ export class EditquotationnewComponent implements OnInit {
   }
 
   searchCustomer_selectDropdownData(data: any) {
-
+this.spinner.show();
     console.log("search data in dropdown", data)
     console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
@@ -1023,6 +1031,7 @@ export class EditquotationnewComponent implements OnInit {
     api_SearchCUST_req.customerId = this.customerName_Data
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
 
       //  console.log('response'+response);
       if (response.status == true) {
@@ -1116,7 +1125,7 @@ export class EditquotationnewComponent implements OnInit {
   }
   productNameAutoFill(i: any) {
 
-
+this.spinner.show();
     let api_req: any = new Object();
     let api_ProdAutoFill_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1129,6 +1138,7 @@ export class EditquotationnewComponent implements OnInit {
     api_req.element_data = api_ProdAutoFill_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("response", response)
       console.log("response.length", response.length)
       console.log("partNo by auto fill", response[0].partNo);
@@ -1448,6 +1458,7 @@ export class EditquotationnewComponent implements OnInit {
 
   }
   getTaxCals() {
+    this.spinner.show();
     var tax_id = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
     var tax: any;
     let api_req: any = new Object();
@@ -1465,6 +1476,7 @@ export class EditquotationnewComponent implements OnInit {
     api_req.element_data = api_data_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       this.tax_per_mod = response.percent_val;
       $('#tax_per_hd_id').val(response.percent_val);
 

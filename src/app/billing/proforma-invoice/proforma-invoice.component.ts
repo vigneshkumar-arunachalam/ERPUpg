@@ -470,6 +470,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Choose From Email Value",
         position: 'topRight'
       });
+      
       return false;
 
     }
@@ -480,6 +481,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Choose To Email Value",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -492,6 +494,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Choose Subject",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -502,6 +505,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Choose Message",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -513,20 +517,21 @@ export class ProformaInvoiceComponent implements OnInit {
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
+        $("#emailFormId").modal("hide");
         tinymce.activeEditor.setContent("");
-        this.PIList({});
+        
         Swal.close();
         iziToast.success({
           message: "Email Notification Sent Successfully",
           position: 'topRight'
         });
+        this.PIList({});
 
       }
       else {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
+        $("#emailFormId").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.PIList({});

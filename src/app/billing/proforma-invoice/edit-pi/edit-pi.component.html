@@ -1,20 +1,11 @@
-<div class="contents-section">
-    <div class="container-fluid">
-        <div class="col-lg-12 mb-30">
-            <div class="card">
-                <div class="card-header color-dark fw-500">
-                    <h2 style="align-items: center;">Update Proforma Invoice</h2>
-                </div>
-            </div>
 
-        </div>
-    </div>
-
-</div>
 
 
 <div class="contents-section">
-    <h2 style="text-align: center;">Enter Proforma Invoice Details</h2>
+    <!-- <div class="heading">
+        <span>Update Proforma Invoice Details</span>
+    </div> -->
+    <h2 style="text-align: center;" class="mt-4 mb-4">Update Proforma Invoice Details</h2>
     <form [formGroup]="addPI_section1">
         <div class="row">
 
@@ -125,40 +116,66 @@
                             row="3"></textarea>
                     </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12 ">
                     <div class="form-group">
                         <label for="Payment" class="form-label">Select Extra Logo </label>
-                        <div class="col-lg-12">
-                            <div class="form-check form-check-inline"
+                      
+                            <div class="form-check form-check-inline ml-2" 
                                 *ngFor="let display1 of bills_logo_id_radio;let k=index">
-                                <input class="form-check-input" type="radio" name="bills_logo_id" [value]="display1.id"
+                                <input class="form-check-input mt-4" type="radio" name="bills_logo_id" [value]="display1.id"
                                     checked="{{display1.id==billsLogo_value ? 'checked':''}}"
                                     (change)="handleChange_Logo(display1.billerId,$event)" />
-                                <label class="form-check-label" for="exampleRadios{{k}}">
-                                    {{display1.name}}
+                                <label class="form-check-label mt-4" for="exampleRadios{{k}}">
+                                    <span style="color:#009688 !important;">{{display1.name}}</span>
+                                    
                                 </label>
+                                    
+                                
                             </div>
-                        </div>
+                      
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="Payment" class="form-label">Export State</label>
-                        <div class="col-lg-12">
-                            <div class="form-check form-check-inline"
+                       
+                            <div class="form-check form-check-inline ml-2"
                                 *ngFor="let display1 of exportState_Radio;let k=index">
                                 <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
                                     checked="{{display1.id==exportState_value ? 'checked':''}}"
                                     (change)="handleChange(display1.billerId,$event)" />
                                 <label class="form-check-label" for="exampleRadios{{k}}">
-                                    {{display1.name}}
+                                    <span style="color:#009688 !important;">{{display1.name}}</span>
                                 </label>
                             </div>
-                        </div>
+                        
                     </div>
                 </div>
 
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Invoice Type</label>
+                        
+                            <div class="form-check form-check-inline ml-2"
+                                *ngFor="let display1 of mile_discount_state_radio;let k=index">
+                                <input class="form-check-input" type="radio" name="mile_discount_state"
+                                    [value]="display1.id"
+                                    checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
+                                    (change)="handleChange_mileSate(display1.billerId,$event)" />
+                                <label class="form-check-label" for="exampleRadios{{k}}">
+                                    <span style="color:#009688 !important;">{{display1.name}}</span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
+                                    (change)="handleChange_MSDisplay($event)">
+                                <label class="form-check-label" for="inlineCheckbox3">
+                                    <span style="color:#009688 !important;">M S Display</span> </label>
+                            </div>
+                       
 
+                    </div>
+                </div>
 
 
 
@@ -313,29 +330,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12">
-                    <div class="form-group">
-                        <label for="Payment" class="form-label">Invoice Type</label>
-                        <div class="col-lg-12">
-                            <div class="form-check form-check-inline"
-                                *ngFor="let display1 of mile_discount_state_radio;let k=index">
-                                <input class="form-check-input" type="radio" name="mile_discount_state"
-                                    [value]="display1.id"
-                                    checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
-                                    (change)="handleChange_mileSate(display1.billerId,$event)" />
-                                <label class="form-check-label" for="exampleRadios{{k}}">
-                                    {{display1.name}}
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                                    (change)="handleChange_MSDisplay($event)">
-                                <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
+                
 
 
 
@@ -389,27 +384,27 @@
                     <div class="table-responsive">
                         <table class="add-contact-table-section">
                             <thead>
-                                <tr class="userDatatable-header">
+                                <tr class="userDatatable-header" style="display: flex;">
                                     <th style="width: 50px;"> <span class="userDatatable-title">
                                             Next Page</span>
                                     </th>
-                                    <th style="padding-left: 50px;"><span class="userDatatable-title">Product
+                                    <th style="width: 250px;"><span class="userDatatable-title">Product
                                             Name</span></th>
-                                    <th style="padding-left: 150px;"><span class="userDatatable-title">Quantity</span>
+                                    <th style="width: 120px;"><span class="userDatatable-title">Quantity</span>
                                     </th>
-                                    <th style="padding-left: 50px;"><span class="userDatatable-title">Unit</span></th>
-                                    <th style="padding-left: 50px;"><span class="userDatatable-title"> Price</span></th>
-                                    <th style="padding-left: 100px;"> <span class="userDatatable-title"> Total</span>
+                                    <th style="width: 100px;"><span class="userDatatable-title">Unit</span></th>
+                                    <th style="width: 150px;"><span class="userDatatable-title"> Price</span></th>
+                                    <th style="width: 150px;"> <span class="userDatatable-title"> Total</span>
                                     </th>
-                                    <th style="padding-left: 90px;"><span class="userDatatable-title">Net Total</span>
+                                    <th style="width: 150px;"><span class="userDatatable-title">Net Total</span>
                                     </th>
-                                    <th style="padding-left: 60px;"><span class="userDatatable-title">Out Call</span>
+                                    <th style="width: 60px;"><span class="userDatatable-title">Out Call</span>
                                     </th>
-                                    <th style="padding-left: 15px;"><span class="userDatatable-title"> C Mon</span>
+                                    <th style="width: 65px;"><span class="userDatatable-title"> C Mon</span>
                                     </th>
-                                    <th style="padding-left: 0px;"><span class="userDatatable-title"> Select Tax</span>
+                                    <th style="width: 61px;"><span class="userDatatable-title"> Select Tax</span>
                                     </th>
-                                    <th style="padding-left: 0px;">
+                                    <th style="width: 15px;">
                                         <span class="userDatatable-title">Action</span>
                                     </th>
                                 </tr>
@@ -451,7 +446,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content" style="width: 120px;">
-                                                        <input type="text" class="form-control"
+                                                        <input type="number" class="form-control"
                                                             style="text-align: right;"
                                                             formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
                                                             (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
@@ -475,7 +470,7 @@
                                                 <td>
                                                     <div class="userDatatable-content" style="width: 150px;">
 
-                                                        <input type="text" class="form-control"
+                                                        <input type="number" class="form-control"
                                                             style="text-align: right;" formControlName="pd_sellingPrice"
                                                             id="pd_SP_{{i}}" 
                                                             (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
@@ -485,16 +480,16 @@
 
                                                 <td style="width: 150px;">
                                                     <div class="userDatatable-content" style="width: 150px;">
-                                                        <input type="text" class="form-control"
-                                                            formControlName="pd_Total" style="text-align: right;"
+                                                        <input type="number" class="form-control"
+                                                        [attr.readonly]="isReadOnly"   formControlName="pd_Total" style="text-align: right;"
                                                             id="pd_Total_{{i}}" />
                                                     </div>
                                                 </td>
 
                                                 <td style="width: 150px;">
                                                     <div class="userDatatable-content" style="width: 150px;">
-                                                        <input type="text" class="form-control"
-                                                            style="text-align: right;" formControlName="pd_netPrice"
+                                                        <input type="number" class="form-control"
+                                                        [attr.readonly]="isReadOnly"   style="text-align: right;" formControlName="pd_netPrice"
                                                             id="pd_netPrice_{{i}}" />
 
                                                     </div>
@@ -502,7 +497,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="width: 100px;text-align: center;">
+                                                        style="width: 60px;text-align: center;">
                                                         <input type="checkbox" style="text-align: right;"
                                                             formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
 
@@ -575,8 +570,8 @@
 
                                                 <td colspan="1">
 
-                                                    <input type="text" class="form-control" style="text-align: right;"
-                                                        formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                                    <input type="number" class="form-control" style="text-align: right;"
+                                                    [attr.readonly]="isReadOnly"    formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
                                                     <input type="hidden" class="form-control" style="text-align: right;"
                                                         formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
                                                     <input type="hidden" class="form-control" style="text-align: right;"
@@ -638,13 +633,14 @@
                         <div class="col-lg-12">
 
                             <div class="row d-flex">
-                                <div class="col-lg-6">
-                                    <label class="col-form-label">Gross
-                                        Total(Rs.)</label>
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <span ><label class="col-form-label">Gross
+                                        Total(Rs.)</label></span>
+                                    
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                        formControlName="section3_gross_total" />
+                                    [attr.readonly]="isReadOnly"   formControlName="section3_gross_total" />
                                 </div>
                             </div>
                         </div>
@@ -663,13 +659,13 @@
 
 
                                 <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
-                                    formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
+                                [attr.readonly]="isReadOnly"   formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
                                 <input type="hidden" class="form-control" style="text-align: right;"
                                     formControlName="final_dis_type" id="final_discount_type"
                                     [(ngModel)]="finalDiscountType" />
                                 <input type="hidden" class="form-control" style="text-align: right;"
                                     formControlName="final_dis_val" id="final_discount_val"
-                                    [(ngModel)]="finalDiscountVal" />
+                                      [(ngModel)]="finalDiscountVal" />
 
                             </div>
                         </div>
@@ -717,8 +713,8 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="text" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
-                                    [(ngModel)]="finalTax" class="form-control mt-2" />
-
+                                [attr.readonly]="isReadOnly"  [(ngModel)]="finalTax" class="form-control mt-2" />
+                                   
                             </div>
                         </div>
 
@@ -757,13 +753,13 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-4" style="text-align: right;">
                                     <label>Net Total (Rs.)</label>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2">
                                     <input type="text" class="form-control" [(ngModel)]="grandTotal"
-                                        formControlName="section3_grand_total" (change)="totalCalculate();" />
+                                    [attr.readonly]="isReadOnly"    formControlName="section3_grand_total" (change)="totalCalculate();" />
                                 </div>
 
 
@@ -774,11 +770,11 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-4" style="text-align: right;">
                                     <label>Remarks</label>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2">
                                     <input type="text" class="form-control" formControlName="section3_remarks" />
                                 </div>
 
@@ -793,11 +789,11 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
                                     <label>Add to terms and condition</label>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2">
                                     <input type="checkbox" formControlName="section3_termCondition"
                                         [(ngModel)]="chkTermsandcondition"
                                         (change)="chkTermsandconditionEvent($event)" />
@@ -810,13 +806,13 @@
                         <div class="col-lg-12">
                             <div class="form-group row" *ngIf="(quotationAddSignature_state==1)">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
                                     <label>Add to Received and Authorized Signature/stamp
                                         {{checkbox_selectAdditionalSignature}}
                                     </label>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2">
                                     <input type="checkbox" [(ngModel)]="selectAdditionalSign"
                                         formControlName="section3_select_additional_signature"
                                         (change)="eventCheckSelectAdditionalSignature($event)" /><br>
@@ -832,7 +828,7 @@
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="form-group">
+                            <div class="col-lg-6 mt-2" style="text-align: right;">
                                 <label style="font-style: italic;color:#009688">
                                     (Signature not available. Ask your administrator to upload your
                                     signature if required)
@@ -844,11 +840,11 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
                                     <label>Add Logo, Address, Signature in PDF</label>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2">
                                     <input type="checkbox" [(ngModel)]="chklogoAddressSignature"
                                         formControlName="section3_logo"
                                         (change)="chklogoAddressSignatureEvent($event)" />
@@ -858,21 +854,22 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-
-                            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePI()">
-                                Update
-                            </button>
-                            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="goBack()">
-                                Cancel
-                            </button>
-                        </div>
+    
 
                     </div>
                 </div>
             </section>
         </section>
     </form>
+    <div class="footerButton">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePI()">
+            Update
+        </button>
+        <button type="button" class="btn btn-dark ml-4" data-dismiss="modal" (click)="goBack()">
+            Cancel
+        </button>
+    </div>
+ 
 
 
 </div>
@@ -902,7 +899,7 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePerFinal" />
+                                    <input type="number" class="form-control" id="enablePerFinal" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -912,7 +909,7 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePriceFinal" />
+                                    <input type="number" class="form-control" id="enablePriceFinal" />
                                 </div>
                             </div>
                         </div>
@@ -962,7 +959,7 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enableFinalPercent" />
+                                    <input type="number" class="form-control" id="enableFinalPercent" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -972,7 +969,7 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enableFinalDiscount" />
+                                    <input type="number" class="form-control" id="enableFinalDiscount" />
                                 </div>
                             </div>
                         </div>

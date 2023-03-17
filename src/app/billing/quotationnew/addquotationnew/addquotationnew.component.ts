@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { JsonPipe } from '@angular/common';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -91,7 +92,9 @@ export class AddquotationnewComponent implements OnInit {
 quotationAddSignature_state:any;
 quotationAddSignature_filename:any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+
+
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addQuotationInvoice_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -323,6 +326,7 @@ quotationAddSignature_filename:any;
   }
 
   dynamicChange(event: any) {
+    this.spinner.show();
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
     // this.TaxDropdown();
@@ -338,6 +342,7 @@ quotationAddSignature_filename:any;
     api_req.element_data = api_dynamicDropdown_req;
    
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       this.FooterDetails = response.footer_details;
       console.log("dynamic Dropdown change response", response)
       this.currencyOld_RadioValue = response.currency_id;
@@ -375,6 +380,7 @@ quotationAddSignature_filename:any;
     });
   }
   dynamicChange1() {
+    this.spinner.show();
     console.log("billerID check", this.billerID);
     this.TaxDropdown();
     let api_req: any = new Object();
@@ -390,6 +396,7 @@ quotationAddSignature_filename:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       this.FooterDetails = response.footer_details;
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency=response.quotation_terms_cond;
@@ -504,6 +511,7 @@ quotationAddSignature_filename:any;
 
   templateContentDropdown(event: any) {
    
+    this.spinner.show();
     this.quotation_template_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_template_id);
     let api_req: any = new Object();
@@ -518,6 +526,7 @@ quotationAddSignature_filename:any;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
@@ -574,6 +583,7 @@ quotationAddSignature_filename:any;
   
 
   TermsConditionsContentDropdown(event: any) {
+    this.spinner.show();
     this.terms_condition_id = event.target.value;
     console.log("template terms_condition ID check", this.terms_condition_id);
     let api_req: any = new Object();
@@ -589,6 +599,7 @@ quotationAddSignature_filename:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
@@ -890,6 +901,7 @@ quotationAddSignature_filename:any;
 }
 
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
 
     console.log("search data in dropdown", data)
     console.log("search data-customer Id", data.customerId)
@@ -908,6 +920,7 @@ quotationAddSignature_filename:any;
 
 
       if (response.status == true) {
+        this.spinner.hide();
 
         this.addQuotationInvoice_section1.patchValue({
 
@@ -995,6 +1008,7 @@ quotationAddSignature_filename:any;
   }
   productNameAutoFill(i: any) {
 
+    this.spinner.show();
     let api_req: any = new Object();
     let api_ProdAutoFill_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1007,6 +1021,7 @@ quotationAddSignature_filename:any;
     api_req.element_data = api_ProdAutoFill_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("response", response)
       console.log("response.length", response.length)
       console.log("partNo by auto fill", response[0].partNo);
@@ -1323,6 +1338,7 @@ quotationAddSignature_filename:any;
 
   }
   getTaxCals() {
+    this.spinner.show();
     var tax_id = this.addQuotationInvoice_section3.value.section3_gst_dropdown;
     var tax: any;
     let api_req: any = new Object();
@@ -1341,6 +1357,7 @@ quotationAddSignature_filename:any;
     api_req.element_data = api_data_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       this.tax_per_mod = response.percent_val;
       $('#tax_per_hd_id').val(response.percent_val);
 

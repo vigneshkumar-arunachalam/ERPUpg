@@ -1325,8 +1325,8 @@ export class EditPIComponent implements OnInit {
         this.net_amt = $('#pd_netPrice_' + a).val();
 
        // tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-        tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
-        tax_amt_tot += tax_amt;
+      //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
+      //  tax_amt_tot += tax_amt;
 
       }
 
@@ -1340,7 +1340,12 @@ export class EditPIComponent implements OnInit {
       //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
       //   alert(grs_amt);
     }
+
     this.grossTotal = grs_amt;
+   // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
+    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal)-parseFloat(this.finalDiscount)) / 100);
+
+
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
       this.shipping_amt = 0;

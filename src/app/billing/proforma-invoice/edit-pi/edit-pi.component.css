@@ -20,6 +20,22 @@
   .lalign{
     text-align: left!important;
   }
+  .heading{
+    font-size:x-large;
+    color: #96005c;
+   text-align: center;
+   padding: 20px 0px;
+  }
+  .footerButton{
+    align-items: end;
+    margin-top: 20px;
+    margin-right:20px;
+    margin-left:1000px;
+  }
+  /* .userDatatable-header th{
+    padding: 0px   !important;
+    
+  } */
 
 
 
@@ -32,32 +48,37 @@
     background-color: #d4f1eb!important;
   } */
   
-  .form-control:focus {
+  /* .form-control:focus {
     color: #495057;
     background-color: #fff;
-    /* border-color: #5f63f2!important; */
-    /* border-color: #3D0096!important; blue correct color*/
-    /* border-color: #313949!important; */
-    /* border-color: #009688!important; */
+ 
       border-color:   #3d0096!important;
     outline: 0;
     box-shadow: 0 0, 0 5px 20px #5f63f21a;
-    /* padding: 0.375rem 1.2rem; */
+   
     padding-left: 4px !important;
   }
   .form-control {
-    /* border: 1px solid   #5a5f7d !important; */
+ 
     border: 1px solid   #beeaca!important;
   }
   select{
-    /* padding: 0 !important; */
+ 
     padding-left: 4px !important;
-  }
+  } */
   label {
     font-weight: 500;
     /* color: black; */
-    color: #009688!important;
+    color: #182679!important;
   
+  }
+  .userDatatable-title{
+    color: #182679 !important;
+    font-weight: bold;
+    
+  }
+  .userDatatable-header{
+    background-color: white!important;
   }
 
   hr{
@@ -88,3 +109,105 @@
    .discountCSS2{
     color: #b8123b!important;
    }
+
+
+
+   .userDatatable-title{
+    text-align: left !important;
+  }
+
+  select{
+  
+    padding-left: 4px !important;
+  }
+  label {
+    
+    /* color: #009688!important; */
+
+    font-weight: 500;
+  color: #182679!important;
+  
+  }
+
+
+
+  .ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input{
+   background: transparent;
+   padding: 0 5px !important;
+   color: #495057 !important;
+ }
+ .ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input:focus {
+   outline: none;
+   border: 2px solid transparent!important;
+   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+   background-origin: border-box;
+   background-clip: padding-box, border-box;
+   animation: bg-hue 2s linear infinite;
+   padding: 0 5px !important;
+   color: #495057 !important;
+ }
+
+ .form-control{
+  border: 1px solid #e1e1e1;
+  background: transparent;}
+ .form-control:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+/* @keyframes for the gradient animation */
+@keyframes bg-hue {
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+input.form-control {
+  padding: 4px 8px !important;
+}
+select{
+  /* padding: 0 !important; */
+  padding-left: 4px !important;
+}
+
+.contents-section{
+  background-color: white!important;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f5f5f5 !important;
+    opacity: 0.6;
+    color: black!important;
+}
+
+
+.alertdangerCustomCSS1 {
+
+  color: white!important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.cdk-drop-list{
+  cursor:move !important;
+ }
+ .discountCSS1{
+  color: #ff5722!important;
+ }
+ .discountCSS2{
+  color: #b8123b!important;
+ }
