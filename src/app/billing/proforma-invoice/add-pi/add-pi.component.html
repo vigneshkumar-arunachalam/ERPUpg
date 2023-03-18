@@ -541,7 +541,7 @@
                                         </td>
                                         <td colspan="1">
                                             <input type="number" class="form-control" style="text-align: right;"
-                                                formControlName="sub_discount" id="sub_discount_{{i}}" />
+                                            [attr.readonly]="isReadOnly"   formControlName="sub_discount" id="sub_discount_{{i}}" />
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -666,7 +666,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
+                                <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
                                     id="shipping_amt_id" class="form-control mt-2" />
                             </div>
                         </div>
@@ -681,7 +681,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_bankingCharge_amt_txtbox"
+                                <input type="number" formControlName="section3_bankingCharge_amt_txtbox"
                                     (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
                             </div>
                         </div>

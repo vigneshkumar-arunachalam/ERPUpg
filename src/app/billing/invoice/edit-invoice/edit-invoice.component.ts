@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 
@@ -32,7 +33,7 @@ export class EditInvoiceComponent implements OnInit {
   //edit
   editbillerID: any;
   editResult: any;
-
+  exportState_value: any;
  
 
   TaxDropdownList:any
@@ -40,6 +41,8 @@ export class EditInvoiceComponent implements OnInit {
   radio_Select: any;
   exportState_Radio: any;
   initial_Radio: any;
+  radioID_Export: any;
+  radio_Value_Export: any;
   //checkbox
   mile_check_value: any;
   dynamicCheckboxwithKey: any;
@@ -73,7 +76,9 @@ export class EditInvoiceComponent implements OnInit {
   CurrencyConversionRateDefault: any = 1;
   getCurrencyCode: any;
   invoicePriceKey: any;
-
+  mileDiscountState_value: any;
+  billsLogo_value:any;
+  radioID_Logo: any;
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
@@ -108,7 +113,7 @@ export class EditInvoiceComponent implements OnInit {
   invocePriceKey: any;
   row_cnt_mod: any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
@@ -147,7 +152,7 @@ export class EditInvoiceComponent implements OnInit {
 
       { name: 'Discount', selected: false, id: 1 },
       { name: 'Mile Stone', selected: false, id: 2 },
-      { name: ' M S Display ', selected: false, id: 3 },
+   
 
     ];
     this.SelectExtraLogoCheckboxwithKey = [
@@ -171,6 +176,7 @@ export class EditInvoiceComponent implements OnInit {
       { name: 'Zero Valid', selected: false, id: 3 },
 
     ];
+  
 
 
     this.addPI_section1 = new FormGroup({
@@ -205,6 +211,7 @@ export class EditInvoiceComponent implements OnInit {
       'Attn_2': new FormControl(),
       'terms': new FormControl(),
       'Ref': new FormControl(),
+      'billCode': new FormControl(),
       'Currency': new FormControl(),
       'CurrencyConversionRate': new FormControl(),
       'PaymentVia': new FormControl(),
@@ -400,10 +407,37 @@ export class EditInvoiceComponent implements OnInit {
     console.log("radio button value", radioSelectInitial);
     console.log("radio button id value", abc);
   }
-  handleChange(evt: any) {
-    var radioSelectFooter = evt.target.value;
+  handleChange(data: any, evt: any) {
+
+    this.radioID_Export = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", radioSelectFooter);
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
+  handleChange_Logo(data: any, evt: any) {
+
+    this.radioID_Logo = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
+  handleChange_mileSate(data: any, evt: any) {
+
+    this.radioID_Logo = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
@@ -417,7 +451,7 @@ export class EditInvoiceComponent implements OnInit {
     console.log(this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
-    this.MSDisplay_Value = event.target.value;
+    this.MSDisplay_Value = event.target.checked;
     console.log(this.MSDisplay_Value);
   }
   cbk_fn_conversionAmtShow(event: any) {
@@ -648,6 +682,7 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
 
     console.log("search data in dropdown", data)
     console.log("search data-customer Id", data.customerId)
@@ -664,7 +699,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-
+      this.spinner.hide();
       if (response.status == true) {
 
         this.addPI_section1.patchValue({         
@@ -703,6 +738,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
   getCustomerInvoiceDetails(event: any) {
+    this.spinner.show();
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
 
@@ -719,7 +755,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         this.addPI_section1.patchValue({
           // 'companyName':  this.billerID,
@@ -759,6 +795,9 @@ export class EditInvoiceComponent implements OnInit {
 
       if (response != '') {
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
+        this.exportState_value = response.billing_pararent_details[0].export_state;
+        this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
+        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,

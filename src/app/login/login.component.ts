@@ -58,9 +58,12 @@ export class LoginComponent implements OnInit {
       console.log('socket detail' + sessionStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
         // if (sessionStorage.getItem('erp_c4c_user_id') == null) {
-          s.qrLogin();
+          // s.qrLogin();
         // }
         this.websocket.onclose;
+      }
+      if(s.getdatas.login_status=="login_successful"){
+        s.qrLogin();
       }
 
     };
@@ -97,7 +100,7 @@ export class LoginComponent implements OnInit {
   subscribes(val: any) {
     this.expired = false;
     if (val != '') this.count = 1;
-    this.qrcodes();
+    // this.qrcodes();
     const source = interval(30000);
     this.subscription = source.subscribe((val) => this.qrcodes());
   }

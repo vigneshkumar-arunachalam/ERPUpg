@@ -38,7 +38,8 @@ export class EditPIComponent implements OnInit {
   billsLogo_value: any;
   radioID_Logo: any;
 
-  TaxDropdownList: any
+  TaxDropdownList: any;
+  grossTotalTax: any;
   //radio
   radio_Select: any;
   exportState_Radio: any;
@@ -310,6 +311,9 @@ export class EditPIComponent implements OnInit {
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     this.totalCalculate();
+    setTimeout(() => {      
+       this.saveGrossDiscount();
+    }, 500);
 
   }
   // logo......
@@ -1292,6 +1296,7 @@ export class EditPIComponent implements OnInit {
     this.finalDiscount = $('#finalDiscount_amt').val();
     this.shipping_amt = $('#shipping_amt_id').val();
     this.finalTax = 0;
+    var netAmt=0;
     // alert(tax_per);
     for (let a = 0; a < list_cnt; a++) {
 
@@ -1323,10 +1328,12 @@ export class EditPIComponent implements OnInit {
 
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
-
+        netAmt = parseFloat($('#pd_netPrice_' + a).val());
+        console.log('-this.finalDiscount---'+this.finalDiscount);
        // tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
       //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
       //  tax_amt_tot += tax_amt;
+         tax_amt_tot += netAmt;
 
       }
 
@@ -1341,9 +1348,10 @@ export class EditPIComponent implements OnInit {
       //   alert(grs_amt);
     }
 
+    this.grossTotalTax = tax_amt_tot;
     this.grossTotal = grs_amt;
    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
-    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal)-parseFloat(this.finalDiscount)) / 100);
+    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax)-parseFloat(this.finalDiscount)) / 100);
 
 
     this.finalTax = tax_amt_tot.toFixed(2);
@@ -1518,58 +1526,54 @@ export class EditPIComponent implements OnInit {
   }
 
   saveGrossDiscount() {
-    var finaldiscountTYpe_per = $('#enableFinalPercent').val()
-    var finaldiscountTYpe_amt = $('#enableFinalDiscount').val()
+    var enablePercentabeDiscont = $('#enablePerFinal').val()
+    var enablePriceDiscont = $('#enablePriceFinal').val()
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-   // alert(disType+'---'+finaldiscountTYpe_per+'---'+finaldiscountTYpe_amt);
     var final_tot = this.grossTotal;
     var price: any;
     // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 
+    console.log('disType' + disType+'final_tot'+final_tot);
+
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-      if (finaldiscountTYpe_per != '') {
+      if (enablePercentabeDiscont != '') {
         //  console.log('3333'+final_tot);
-        price = (parseFloat(finaldiscountTYpe_per) * parseFloat(final_tot) / 100).toFixed(2);
-        $('#finalDiscount_amt').val('');
-        this.addPI_section3.controls['section3_discount_txtbox'].setValue('');  
-        this.addPI_section3.controls['final_dis_val'].setValue(finaldiscountTYpe_per);     
-        $('#final_discount_val').val(finaldiscountTYpe_per);
-      //  this.finalDiscountVal = finaldiscountTYpe_per;
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#final_discount').val(price);
+        $('#final_discount_val').val(enablePercentabeDiscont);
+        this.finalDiscountVal = enablePercentabeDiscont;
         //     price = final_tot - price;
       } else {
         $('#final_discount').val('');
         $('#final_discount_val').val('');
-      //  this.finalDiscountVal = '';
+        this.finalDiscountVal = '';
         //   console.log('222'+final_tot);
         price = 0;
 
       }
       //   console.log(price);
     } else {
-      if (finaldiscountTYpe_amt == '') {
-        finaldiscountTYpe_amt = 0;
+      if (enablePriceDiscont == '') {
+        enablePriceDiscont = 0;
       }
-      price = finaldiscountTYpe_amt;
-
-      $('#finalDiscount_amt').val(finaldiscountTYpe_amt);
-      $('#final_discount_val').val('');
-   //  this.finalDiscountVal = finaldiscountTYpe_per;   
-       this.addPI_section3.controls['final_dis_val'].setValue('');
-       
-   
+      price = enablePriceDiscont;
+      $('#final_discount').val(enablePriceDiscont);
+      $('#final_discount_val').val(enablePriceDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
       console.log('999' + price);
-
     }
+
     if (this.grandTotal > 0) {
       this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
     }
+
+    console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
     $('#discountFormFinal').modal('hide');
-
     setTimeout(() => {
       this.totalCalculate();
     }, 1500)
@@ -1638,7 +1642,7 @@ export class EditPIComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-    // setTimeout(this.totalCalculate(),1000);
+    this.saveGrossDiscount();
   }
   extraFees() {
     var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;

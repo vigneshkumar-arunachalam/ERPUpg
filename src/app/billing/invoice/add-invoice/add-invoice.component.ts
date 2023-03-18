@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -117,7 +118,7 @@ export class AddInvoiceComponent implements OnInit {
     //read only fields
     isReadonly: boolean = true;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder) {
+  constructor(private serverService: ServerService, private fb: FormBuilder,private spinner:NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -658,6 +659,9 @@ export class AddInvoiceComponent implements OnInit {
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
+
+
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
     console.log("search data in dropdown", data)
@@ -674,7 +678,7 @@ export class AddInvoiceComponent implements OnInit {
     api_SearchCUST_req.customerId = this.customerName_Data
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
@@ -959,7 +963,7 @@ export class AddInvoiceComponent implements OnInit {
   getCustomerInvoiceDetails() {
     // this.billerID = event.target.value;
     // console.log("billerID check", this.billerID);
-
+this.spinner.show();
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -973,7 +977,7 @@ export class AddInvoiceComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         this.addInvoice_section1.patchValue({
           'invoiceNo': response.invoice_no,

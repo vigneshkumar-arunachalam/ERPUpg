@@ -29,7 +29,7 @@ export class AppComponent {
     //60 = 1 minute
     //900 = 15 minute
     //3600= 1 hour
-    this.bnIdle.startWatching(900).subscribe((res) => {
+    this.bnIdle.startWatching(3600).subscribe((res) => {
       if (res) {
         sessionStorage.clear();
         this.templateAuthView = true;
@@ -97,10 +97,10 @@ export class AppComponent {
     // console.log(this.router.url);
      if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
       sessionStorage.clear();
-      // setTimeout(() => {
+      
         this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode}});
       
-    // }, 3000);
+   
     }else if (sessionStorage.getItem('access_token')) {
       this.templateAuthView = false;
 

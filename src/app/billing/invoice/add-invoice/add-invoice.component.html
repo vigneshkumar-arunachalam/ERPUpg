@@ -163,45 +163,114 @@
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="Payment" class="form-label">Select Extra Logo</label>
-                        <div class="col-lg-12">
-                            <div class="form-check form-check-inline">
-                                    
-                                <input class="form-check-input " type="radio" formControlName="extraLogo"
-                                    name="extraLogo" (change)="handleChangeExtraLogo($event)" id="extralogoRadios1"
-                                    value="1">
-                                <label class="form-check-label" for="extralogoRadios1">
-                                    IT Care
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                    (change)="handleChangeExtraLogo($event)" id="extralogoRadios2" value="2">
-                                <label class="form-check-label" for="extralogoRadios2">
-                                    Calncall
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                    (change)="handleChangeExtraLogo($event)" id="extralogoRadios3" value="3">
-                                <label class="form-check-label" for="extralogoRadios3">
-                                    DID Sg
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                    (change)="handleChangeExtraLogo($event)" id="extralogoRadios4" value="4">
-                                <label class="form-check-label" for="extralogoRadios4">
-                                    Callcloud
-                                </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
-                                    (change)="handleChangeExtraLogo($event)" id="extralogoRadios5" value="5">
-                                <label class="form-check-label" for="extralogoRadios5">
-                                    Mrvoip
-                                </label>
-                            </div>
+
+                        <div class="form-check form-check-inline ml-4 mt-4">
+
+                            <input class="form-check-input radioType" type="radio" formControlName="extraLogo"
+                                name="extraLogo" (change)="handleChangeExtraLogo($event)" id="extraLogoRadios1"
+                                value="1">
+                            <label class="form-check-label" for="extraLogoRadios1">
+                                <span style="color:#009688 !important;">IT Care</span>
+
+                            </label>
                         </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios2" value="2">
+                            <label class="form-check-label" for="extraLogoRadios2">
+                                <span style="color:#009688 !important;"> Calncall</span>
+
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios3" value="3">
+                            <label class="form-check-label" for="extraLogoRadios3">
+                                <span style="color:#009688 !important;">DID Sg</span>
+
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios4" value="4">
+                            <label class="form-check-label" for="extraLogoRadios4">
+                                <span style="color:#009688 !important;">Callcloud</span>
+
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
+                                (change)="handleChangeExtraLogo($event)" id="extraLogoRadios5" value="5">
+                            <label class="form-check-label" for="extraLogoRadios5">
+                                <span style="color:#009688 !important;">Mrvoip</span>
+
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Invoice Type</label>
+
+                        <div class="form-check form-check-inline ml-4 mt-2">
+                            <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox2"
+                                value="1" (change)="mile($event)">
+                            <label class="form-check-label" for="inlineCheckbox2"><span
+                                    style="color:#009688 !important;">Mile Discount</span> </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="select" id="inlineCheckbox2" value="2"
+                                (change)="mile($event)">
+                            <label class="form-check-label" for="inlineCheckbox2"><span
+                                    style="color:#009688 !important;">Mile Stone</span> </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
+                                (change)="handleChange_MSDisplay($event)">
+                            <label class="form-check-label" for="inlineCheckbox3"><span
+                                    style="color:#009688 !important;">M S Display</span> </label>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Export State</label>
+
+
+                        <div class="form-check form-check-inline ml-4 mt-2">
+
+                            <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
+                            id="exampleRadios1" value="1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                <span style="color:#009688 !important;">Local</span>
+
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="export_state"
+                                (change)="handleChange($event)" id="exampleRadios2" value="2">
+                               
+                            <label class="form-check-label" for="exampleRadios2">
+                                <span style="color:#009688 !important;">Export</span>
+
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
+                            id="exampleRadios3" value="3">
+                                 
+                            <label class="form-check-label" for="exampleRadios3">
+                                <span style="color:#009688 !important;">Zero Valid</span>
+
+                            </label>
+                        </div>
+
                     </div>
                 </div>
 
@@ -358,54 +427,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-12">
+             
 
-                    <div class="form-check form-check-inline">
 
-                        <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
-                            id="exampleRadios1" value="1" checked>
-                        <label class="form-check-label" for="exampleRadios1">
-                            Local
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
-                            id="exampleRadios2" value="2">
-                        <label class="form-check-label" for="exampleRadios2">
-                            Export
-                        </label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="export_state" (change)="handleChange($event)"
-                            id="exampleRadios3" value="3">
-                        <label class="form-check-label" for="exampleRadios3">
-                            Zero Valid
-                        </label>
-                    </div>
-                </div>
+               
 
 
 
-                <div class="col-lg-12">
-                    <div class="form-group">
-
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox2"
-                                value="1" (change)="mile($event)">
-                            <label class="form-check-label" for="inlineCheckbox2"> mile Discount</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="select" id="inlineCheckbox2" value="2"
-                                (change)="mile($event)">
-                            <label class="form-check-label" for="inlineCheckbox2"> Mile Stone</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                                (change)="handleChange_MSDisplay($event)">
-                            <label class="form-check-label" for="inlineCheckbox3">M S Display </label>
-                        </div>
-                    </div>
-                </div>
+          
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <div class="form-check form-check-inline">
@@ -620,8 +649,8 @@
                                             </div>
                                         </td>
                                         <td colspan="1">
-                                            <input type="text" class="form-control" style="text-align: right;"
-                                                formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                            <input type="number" class="form-control" style="text-align: right;"
+                                            [attr.readonly]="isReadOnly"     formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
                                         </td>
                                         <td colspan="1">
                                         </td>
@@ -676,9 +705,10 @@
                         <div class="col-lg-12">
 
                             <div class="row d-flex">
-                                <div class="col-lg-6 mt-2">
-                                  <span style="padding-left: 300px;"><label class="col-form-label">Gross
-                                    Total (Rs.)</label></span>  
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+
+                                    <span> <label class="col-form-label">Gross
+                                            Total(Rs.)</label></span>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
@@ -699,8 +729,8 @@
                             <div class="d-flex justify-content-center">
 
 
-                                <input type="text" class="form-control  mt-2" [(ngModel)]="finalDiscount"
-                                    formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
+                                <input type="number" class="form-control  mt-2" [(ngModel)]="finalDiscount"
+                                [attr.readonly]="isReadOnly"     formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
                                 <input type="hidden" class="form-control" style="text-align: right;"
                                     formControlName="final_dis_type" id="final_discount_type"
                                     [(ngModel)]="finalDiscountType" />
@@ -733,8 +763,8 @@
 
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
-                                    [(ngModel)]="finalTax" class="form-control mt-2" />
+                                <input type="number" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
+                                [attr.readonly]="isReadOnly"     [(ngModel)]="finalTax" class="form-control mt-2" />
 
                             </div>
                         </div>
@@ -749,7 +779,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
+                                <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
                                     id="shipping_amt_id" class="form-control mt-2" />
                             </div>
                         </div>
@@ -764,7 +794,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="text" formControlName="section3_bankingCharge_amt_txtbox"
+                                <input type="number" formControlName="section3_bankingCharge_amt_txtbox"
                                     (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
                             </div>
                         </div>
@@ -773,9 +803,8 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
-                                    <span style="padding-left: 300px;"><label class="col-form-label">Net Total (Rs.)</label></span> 
-                                    
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>Net Total (Rs.)</label>
                                 </div>
 
                                 <div class="col-lg-6">
@@ -791,9 +820,8 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
-                                    <span style="padding-left: 300px;"><label class="col-form-label">Remarks</label></span> 
-                                 
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>Remarks</label>
                                 </div>
 
                                 <div class="col-lg-6">
@@ -809,11 +837,10 @@
 
                         <div class="col-lg-12">
                             <div class="form-group row">
-
-                                <div class="col-lg-6">
-                                    <span style="padding-left: 300px;"><label class="col-form-label">Previous Due</label></span> 
-                                   
+                                <div class="col-lg-6 " style="text-align: right;">
+                                    <label>Previous Due</label>
                                 </div>
+                              
 
                                 <div class="col-lg-6">
                                     <input type="checkbox" [(ngModel)]="previousDue"
@@ -827,7 +854,7 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 " style="text-align: right;">
                                     <label>Add to terms and condition</label>
                                 </div>
 
@@ -844,7 +871,7 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6" style="text-align: right;">
                                     <label>Add to Received and Authorized Signature/stamp</label>
                                 </div>
 
@@ -858,8 +885,8 @@
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <div class="form-group">
-                                <label style="font-style: italic;color:#009688">
+                            <div class="col-lg-6 mt-2" style="text-align: right;">
+                                <label style="font-style: italic;">
                                     (Signature not available. Ask your administrator to upload your
                                     signature if required)
                                 </label>
@@ -870,7 +897,7 @@
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 " style="text-align: right;">
                                     <label>Add Logo, Address, Signature in PDF</label>
                                 </div>
 
@@ -894,7 +921,7 @@
         </section>
     </form>
 
-    <div class="buttonAlign mt-4 mb-2" style="padding-left: 1000px;">
+    <div class="modal-footer">
 
         <button type="button" class="btn btn-primary mr-4 " (click)="save()">Submit</button>
         <button type="button" class="btn btn-dark">Cancel</button>

@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
+
 @Component({
-  selector: 'app-add-didpi',
-  templateUrl: './add-didpi.component.html',
-  styleUrls: ['./add-didpi.component.css']
+  selector: 'app-edit-didpi',
+  templateUrl: './edit-didpi.component.html',
+  styleUrls: ['./edit-didpi.component.css']
 })
-export class AddDidpiComponent implements OnInit {
+export class EditDidpiComponent implements OnInit {
 
   public addDid_section1: FormGroup;
   public addDid_section3: FormGroup;
@@ -22,12 +24,13 @@ export class AddDidpiComponent implements OnInit {
   public otherAddress: FormArray;
   isReadOnly: boolean = false;
 
+  editbillerID: any;
   companyNameList: any
   currencyNameList: any;
   ShipByList: any;
-  BillCodeList: any;
   salesRepList: any;
   paymentviaList: any;
+  BillCodeList: any;
   billerID: any;
   getCurrencyCode: any;
   CurrencyConversionRateDefault: any = 1;
@@ -59,9 +62,6 @@ export class AddDidpiComponent implements OnInit {
   // DID Commission popup
   public DidCommissionForm: FormGroup;
 
-  test: boolean[] = [];
-  itre = 0;
-
   //commision
   usersearchResult: any;
   //commission
@@ -70,6 +70,10 @@ export class AddDidpiComponent implements OnInit {
   commissionType: any;
   commissionValue: any;
   commissionAmount: any;
+
+
+  test: boolean[] = [];
+  itre = 0;
 
   //calculation
   finalDiscount: any;
@@ -97,8 +101,7 @@ export class AddDidpiComponent implements OnInit {
   export_state_Local: boolean = true;
   export_state_Export: any;
   export_state_ZeroValid: boolean = true;
-  Jompay_logo_Value: boolean = true;
-
+ 
   //extra logo
   ExtralogoValue: any;
   //checkbox
@@ -109,7 +112,27 @@ export class AddDidpiComponent implements OnInit {
   quotationAddSignature_state: any;
   quotationAddSignature_filename: any;
   selectAdditionalSign: boolean = true;
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router) {
+  exportState_value: any;
+  billsLogo_value: any;
+  exportState_Radio: any;
+  bills_logo_id_radio: any;
+  radioID_Export: any;
+  radio_Value_Export: any;
+  radioID_Logo: any;
+  Jompay_logo_Value: any;
+  chklogoAddressSignature :boolean = true;
+  chkTermsandcondition :boolean = true;
+  previousDue: boolean = true;
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
+
+    this.route.queryParams
+      .subscribe(params => {
+        console.log("params output value", params);
+
+        this.editbillerID = params['e_editBillID'];
+        console.log("edit biller id", this.editbillerID);
+      });
+
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
     });
@@ -121,17 +144,37 @@ export class AddDidpiComponent implements OnInit {
     this.did_Invice_other_charges = this.fb.group({
       otherAddress: this.fb.array([this.otherFormDid()])
     });
-   }
-   keywordUserName = 'reseller_name';
-   ngOnInit(): void {
+  }
+  keywordUserName = 'reseller_name';
 
+  ngOnInit(): void {
+
+    this.editDidInvice();
     this.addDidLoad();
+
+    this.exportState_Radio = [
+      { name: 'Local', selected: false, id: 1 },
+      { name: 'Export', selected: false, id: 2 },
+      { name: 'Zero Valid', selected: false, id: 3 },
+
+    ];
+
+    this.bills_logo_id_radio = [
+      { name: 'IT Care', selected: false, id: 1 },
+      { name: 'Calncall', selected: false, id: 2 },
+      { name: 'DID Sg', selected: false, id: 3 },
+      { name: 'Callcloud', selected: false, id: 4 },
+      { name: 'Mrvoip', selected: false, id: 5 }
+    ];
 
     this.addDid_section1 = new FormGroup({
       'initial': new FormControl(),
-      'companyName': new FormControl(),
+      'billId_edit': new FormControl(),
+      'companyName': new FormControl(null, [Validators.required]),
+      'customer_name': new FormControl(),
       'invoiceNo': new FormControl(),
-      'BillTo': new FormControl(null, [Validators.required]),
+      'customer_id_hd': new FormControl(),
+      'BillTo': new FormControl(),
       'cusInvoiceNo': new FormControl(),
       'tin': new FormControl(),
       'cst': new FormControl(),
@@ -157,10 +200,10 @@ export class AddDidpiComponent implements OnInit {
       'terms': new FormControl(),
 
       'CurrencyConversionRate': new FormControl(),
-      'extraLogo': new FormControl(),
       'Currency': new FormControl(),
       'PaymentVia': new FormControl(),
-      'export_state': new FormControl(),
+      'e_export_state': new FormControl(),
+      'bills_logo_id': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
       'Jompay_logo': new FormControl(),
@@ -180,8 +223,8 @@ export class AddDidpiComponent implements OnInit {
       'section3_taxAmt_txtbox': new FormControl(null),
       'section3_shipping_amt_name_txtbox': new FormControl(null),
       'section3_shipping_amt_txtbox': new FormControl(null),
-      'section3_bankingCharge_amt_name_txtbox': new FormControl(null),
-      'section3_bankingCharge_amt_txtbox': new FormControl(null),
+      'banking_charge_name': new FormControl(null),
+      'banking_charge_amt': new FormControl(null),
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
@@ -212,14 +255,12 @@ export class AddDidpiComponent implements OnInit {
 
     });
     this.DidCommissionForm = new FormGroup({
-
       'ResellerName': new FormControl(null),
       'selectCommission': new FormControl(null),
       'CommissionValue': new FormControl(null),
       'CommissionAmount': new FormControl(null),
 
     });
-
 
   }
 
@@ -253,10 +294,10 @@ export class AddDidpiComponent implements OnInit {
       productDesc1: '',
       amt1: '',
       call_duration1: '',
-      sub_total1:'',
-      sub_dis_amt1:'',
-      sub_dis_type1:'',
-      sub_dis_val1:'',
+      sub_total1: '',
+      sub_dis_amt1: '',
+      sub_dis_type1: '',
+      sub_dis_val1: '',
 
 
     });
@@ -296,11 +337,7 @@ export class AddDidpiComponent implements OnInit {
       productDesc2: '',
       amt2: '',
       call_duration2: '',
-      billCode: '',
-      sub_total2:'',
-      sub_dis_amt2:'',
-      sub_dis_type2:'',
-      sub_dis_val2:'',
+
     });
   }
   removeDid2(i: number) {
@@ -337,10 +374,6 @@ export class AddDidpiComponent implements OnInit {
       productDesc3: '',
       amt3: '',
       call_duration3: '',
-      sub_total3:'',
-      sub_dis_amt3:'',
-      sub_dis_type3:'',
-      sub_dis_val3:'',
 
 
     });
@@ -351,113 +384,64 @@ export class AddDidpiComponent implements OnInit {
     var list_cnt = addr.length;
   }
 
-  handleChangeLocal(event: any) {
-    this.export_state_Local = event.target.value;
-    this.export_state = 'Local';
-    console.log(this.export_state_Local);
-
-  }
-  handleChangeExport(event: any) {
-    this.export_state_Export = event.target.value;
-    this.export_state = 'Export';
-    console.log(this.export_state_Export);
-
-  }
-  handleChangeZeroValid(event: any) {
-    this.export_state_ZeroValid = event.target.value;
-    this.export_state = 'Zero Valid';
-    console.log(this.export_state_ZeroValid);
-
-  }
-  handleChange_initial(id: any, evt: any) {
-    var radioSelectInitial = evt.target.value;
-    var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
-  }
-  handleChange(evt: any) {
-    this.radioSelectFooter = evt.target.value;
-    // var xyz = id;
-    console.log("radio button value",this.radioSelectFooter);
-    // console.log("radio button id value", xyz);
-  }
-  handleChangeExtraLogo(event: any) {
-    this.ExtralogoValue = event.target.value;
-    // var xyz = id;
-    console.log("radio button value for Extra logo", this.ExtralogoValue);
-
-  }
-  mile(e: any) {
-    this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
-  }
-
 
   radioSelectCommissionType(event: any) {
     $('#CommissionValue').val('');
     $('#CommissionAmount').val('');
   }
-
   checkbox_selectAdditionalSignature: any;
   eventCheckSelectAdditionalSignature(e: any) {
     this.checkbox_selectAdditionalSignature = e.target.checked
     console.log(this.checkbox_selectAdditionalSignature);
   }
 
+  handleChange(data: any, evt: any) {
+
+    this.radioID_Export = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
+
+  handleChange_Logo(data: any, evt: any) {
+
+    this.radioID_Logo = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_Export = evt.target.value;
+    // var xyz = id;
+    console.log("radio button value", this.radio_Value_Export);
+    // console.log("radio button id value", xyz);
+  }
+
+
   handleChange_Jompay_logo(event: any) {
     this.Jompay_logo_Value = event.target.checked;
     console.log(this.Jompay_logo_Value);
   }
 
-  addDidLoad() {
-
-    let api_req: any = new Object();
-    let addAPI: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "proforma/add_proforma_invoice";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    addAPI.action = "add_proforma_invoice";
-    addAPI.user_id = sessionStorage.getItem('erp_c4c_user_id');
-    api_req.element_data = addAPI;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status == true) {
-        this.companyNameList = response.biller_details;
-        this.currencyNameList = response.currency_list;
-        this.ShipByList = response.ship_by;
-        // this.salesRepList = response.sales_rep;
-        this.paymentviaList = response.paymentvia;
-        this.BillCodeList = response.billCode;
-        this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
-
-        if (response.sales_rep_status.dropdown_status == 0) {
-          this.addDid_section1.patchValue({
-            'salesRep_id': response.sales_rep.name,
-            'salesRep': response.sales_rep.userid,
-          });
-
-        } else {
-          this.SalesRepList = response.sales_rep;
-          this.addDid_section1.patchValue({
-            'salesRep': sessionStorage.getItem('erp_c4c_user_id'),
-          });
-        }
-        this.addDid_section1.patchValue({
-          'companyName': response.defaults_biller_id,
-
-        });
-        this.tax_per_mod = response.percent_val;
-        console.log('petrcentage.......' + this.tax_per_mod);
-        this.quotationAddSignature();
-        this.getProformaBillerDetails();
-        this.TaxDropdown();
-        this.getCustomerInvoiceDetails()
-        // this.getCustomerInvoiceDetails(response.defaults_biller_id);
-      }
-    });
+  chklogoAddressSignatureEvent(event: any) {
+    this.chklogoAddressSignature = event.target.checked;
+    console.log(this.chklogoAddressSignature)
   }
 
-  getCustomerInvoiceDetails() {
+  chkTermsandconditionEvent(event: any) {
+    this.chkTermsandcondition = event.target.checked;
+    console.log(this.chkTermsandcondition)
+  }
+  chkpreviousDueEvent(event: any) {
+    this.previousDue = event.target.checked;
+    console.log(this.previousDue)
+  }
+
+  getCustomerInvoiceDetails(event: any) {
+    this.billerID = event.target.value;
+    console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -475,8 +459,9 @@ export class AddDidpiComponent implements OnInit {
 
       if (response.status == true) {
         this.addDid_section1.patchValue({
+          // 'companyName':  this.billerID,
           'invoiceNo': response.invoice_no,
-          'cusInvoiceNo': response.customer_invoice_no,
+          'Currency': response.currency_id,
 
 
         });
@@ -484,6 +469,11 @@ export class AddDidpiComponent implements OnInit {
 
       }
       else {
+        this.addDid_section1.patchValue({
+
+          'invoiceNo': '',
+          'Currency': '',
+        });
 
       }
 
@@ -574,6 +564,57 @@ export class AddDidpiComponent implements OnInit {
 
     });
   }
+  addDidLoad() {
+
+    let api_req: any = new Object();
+    let addAPI: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "proforma/add_proforma_invoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addAPI.action = "add_proforma_invoice";
+    addAPI.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = addAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        this.companyNameList = response.biller_details;
+        this.currencyNameList = response.currency_list;
+        this.ShipByList = response.ship_by;
+        // this.salesRepList = response.sales_rep;
+        this.paymentviaList = response.paymentvia;
+        this.BillCodeList = response.billCode;
+        this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
+
+        if (response.sales_rep_status.dropdown_status == 0) {
+          this.addDid_section1.patchValue({
+            'salesRep_id': response.sales_rep.name,
+            'salesRep': response.sales_rep.userid,
+          });
+
+        } else {
+          this.SalesRepList = response.sales_rep;
+          this.addDid_section1.patchValue({
+            'salesRep': sessionStorage.getItem('erp_c4c_user_id'),
+          });
+
+
+        }
+
+
+        this.addDid_section1.patchValue({
+          'companyName': response.defaults_biller_id,
+        });
+
+        // alert('Test--00'+response.defaults_biller_id);
+        //   this.companyNameVal = response.defaults_biller_id;
+        this.tax_per_mod = response.percent_val;
+        this.getProformaBillerDetails();
+        this.TaxDropdown();
+        // this.getCustomerInvoiceDetails()
+        // this.getCustomerInvoiceDetails(response.defaults_biller_id);
+      }
+    });
+  }
 
 
   searchUserData(data: any) {
@@ -656,6 +697,7 @@ export class AddDidpiComponent implements OnInit {
 
     });
   }
+
   getTaxCals() {
     var tax_id = this.addDid_section3.value.section3_gst_dropdown;
     var tax: any;
@@ -678,12 +720,19 @@ export class AddDidpiComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.tax_per_mod = response.percent_val;
       $('#tax_per_hd_id').val(response.percent_val);
+
+      //tax = response.percent_val;
       tax = (parseFloat(response.percent_val) * parseFloat(this.grossTotal) / 100).toFixed(2);
+
+
+      // if (this.grossTotal > 0) {
+      //   this.grandTotal = (this.grossTotal + this.finalTax + this.finalDiscount + this.extraCharge).toFixed(2);
+      // }
       this.finalTax = parseFloat(tax).toFixed(2);
 
       this.grandTotal = (parseFloat(tax) + parseFloat(this.grossTotal));
     });
-
+    //this.gross_total();
 
 
 
@@ -717,18 +766,21 @@ export class AddDidpiComponent implements OnInit {
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
-
+        this.addDid_section1.patchValue({
+          "customer_id_hd": response.customer_list.customerId
+        });
       }
 
     });
 
   }
-  searchCustomer_selectDropdownData(data: any) {
-    this.customer_ID = data.customerId;
-    this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
-    this.customerName_Data = data.customerId;
+
+  Customer_selectDropdownData(customerId: any) {
+    //   this.customer_ID=customerId;
+    //   this.customer_NAME=data.customerName;
+    //    console.log("search data in dropdown", data)
+    //    console.log("search data-customer Id", data.customerId)
+    this.customerName_Data = customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -737,12 +789,14 @@ export class AddDidpiComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
     api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
-    api_SearchCUST_req.customerId = this.customerName_Data
+    api_SearchCUST_req.customerId = customerId;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("customer_address_details---response", response)
       if (response.status == true) {
+        // console.log('address'+response.customer_details[0].customerAddress1);
+
 
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
@@ -761,16 +815,16 @@ export class AddDidpiComponent implements OnInit {
           address_3 = response.customer_details[0].country;
         }
 
-        if (response.customer_details[0].city != '') {
-          ship_address_str3 = response.customer_details[0].city;
+        if (response.customer_details[0].ship_city != '') {
+          ship_address_str3 = response.customer_details[0].ship_city;
         }
-        if (ship_address_str3 != '' && response.customer_details[0].state != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
+        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
         } else {
           ship_address_str3 = response.customer_details[0].state;
         }
-        if (ship_address_str3 != '' && response.customer_details[0].country != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
+        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
         } else {
           ship_address_str3 = response.customer_details[0].country;
         }
@@ -802,11 +856,10 @@ export class AddDidpiComponent implements OnInit {
           'address_3': address_3,
           'Attn_1': response.customer_details[0].companyName,
           'ship_to': ship_to_str,
-          'ship_address_1': ship_address_str1,
-          'ship_address_2': ship_address_str2,
-          'ship_address_3': ship_address_str3,
+          'shipTo_1': ship_address_str1,
+          'shipTo_2': ship_address_str2,
+          'shipTo_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
-          'cusInvoiceNo': response.customer_invoice_no,
         });
       }
       else {
@@ -816,68 +869,308 @@ export class AddDidpiComponent implements OnInit {
           'address_3': '',
           'Attn_1': '',
           'ship_to': '',
-          'ship_address_1': '',
-          'ship_address_2': '',
-          'ship_address_3': '',
+          'shipTo_1': '',
+          'shipTo_2': '',
+          'shipTo_3': '',
           'ship_attn': '',
-          'cusInvoiceNo': '',
         });
       }
 
     });
   }
 
-
-  save() {
+  searchCustomer_selectDropdownData(data: any) {
+    this.customer_ID = data.customerId;
+    this.customer_NAME = data.customerName;
+    console.log("search data in dropdown", data)
+    console.log("search data-customer Id", data.customerId)
+    this.customerName_Data = data.customerId;
     let api_req: any = new Object();
-    let api_saveDid_req: any = new Object();
+    let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/insert_did_proforma_invoice";
+    api_req.api_url = "proforma/customer_address_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_saveDid_req.action = "insert_did_proforma_invoice";
-    api_saveDid_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.action = "quot_customer_details";
+    api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.customerId = this.customerName_Data
+    api_req.element_data = api_SearchCUST_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      if (response.status == true) {
+        this.addDid_section1.patchValue({
+          "customer_id_hd": response.customer_list.customerId,
+          "b_name": response.customer_list.customerName,
+          "customer_name": response.customer_list.customerName,
+          "address_1": response.customer_list.customerAddress1,
+          "address_2": response.customer_list.customerAddress2,
+          "address_3": response.customer_list.customerAddress3,
+          "Attn_1": response.customer_list.kind_Attention,
+          "ship_to": response.customer_list.ship_to,
+          "shipTo_1": response.customer_list.ship_customerAddress1,
+          "shipTo_2": response.customer_list.ship_customerAddress2,
+          "shipTo_3": response.customer_list.ship_customerAddress3,
+          "Attn_2": response.customer_list.ship_attn,
+
+
+
+        });
+      }
+      else {
+        this.addDid_section1.patchValue({
+
+
+        });
+      }
+    });
+  }
+
+  editDidInvice() {
+
+    let api_req: any = new Object();
+    let api_editDid_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/edit_did_profoma_invoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_editDid_req.action = "edit_did_profoma_invoice";
+    api_editDid_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_editDid_req.billId = this.editbillerID;
+    api_req.element_data = api_editDid_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      console.log("response-load-pi", response)
+      if (response != '') {
+
+
+        this.exportState_value = response.billing_pararent_details[0].export_state;
+        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+
+
+        this.addDid_section1.patchValue({
+          'billId_edit': response.billing_pararent_details[0].billId,
+          'companyName': response.billing_pararent_details[0].billerId,
+          'BillTo': response.billing_pararent_details[0].b_name,
+          'customer_name': response.billing_pararent_details[0].b_name,
+          'customer_id_hd': response.billing_pararent_details[0].custId,
+          'address_1': response.billing_pararent_details[0].b_address,
+          // 'address_2': response.billing_pararent_details[0].b_address2,
+          // 'address_3': response.billing_pararent_details[0].b_address3,
+          'Attn_1': response.billing_pararent_details[0].b_attn,
+          'ship_to': response.billing_pararent_details[0].s_name,
+          'ship_address_2': response.billing_pararent_details[0].s_address,
+          // 'shpi_address_3': response.billing_pararent_details[0].s_address3,
+          'Attn_2': response.billing_pararent_details[0].s_attn,
+
+          'invoiceNo': response.billing_pararent_details[0].invoice_no,
+          'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
+          'tin': response.billing_pararent_details[0].tinNo,
+          'cst': response.billing_pararent_details[0].cstNo,
+          'Date': response.billing_pararent_details[0].billDate,
+          'PoNo': response.billing_pararent_details[0].po_no,
+          'PoDate': response.billing_pararent_details[0].po_date,
+          'salesRep': response.billing_pararent_details[0].sales_rep,
+          'ShipBy': response.billing_pararent_details[0].ship_by,
+          'billCode': response.billing_pararent_details[0].billCode,
+          'ShipDate': response.billing_pararent_details[0].ship_date,
+          'terms': response.billing_pararent_details[0].terms,
+          'Currency': response.billing_pararent_details[0].currency,
+          'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
+          'PaymentVia': response.billing_pararent_details[0].paymentVIA,
+          'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
+          'Jompay_logo': response.billing_pararent_details[0].jom_pay_logo,
+          'e_export_state': response.billing_pararent_details[0].export_state,
+          'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
+
+        });
+
+        this.addDid_section1.controls['e_export_state'].setValue('response.billing_pararent_details[0].export_state');
+        this.TaxDropdown();
+
+        console.log('billchild_details.length' + response.billing_pararent_details.length);
+        this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+
+        // section-2
+
+        // part-1
+
+        const formArray1 = new FormArray([]);
+        for (let index = 0; index < response.bill_fixed_details.length; index++) {
+
+          console.log('bill_fixed_details++index' + index);
+
+          formArray1.push(this.fb.group({
+            "particular1": response.bill_fixed_details[index].productName,
+            "fromdt1": response.bill_fixed_details[index].fromDate,
+            "todt1": response.bill_fixed_details[index].toDate,
+            "md_chk1": response.bill_fixed_details[index].md_state,
+            "did_diff_date1": response.bill_fixed_details[index].did_diff_date,
+            "productDesc1": response.bill_fixed_details[index].productDesc,
+            "amt1": response.bill_fixed_details[index].total_amt,
+            "call_duration1": response.bill_fixed_details[index].call_duration_state,
+            "sub_total1": response.bill_fixed_details[index].net_amt,
+            "sub_dis_amt1": response.bill_fixed_details[index].dis_amt,
+            "sub_dis_type1": response.bill_fixed_details[index].dis_type,
+            "sub_dis_val1": response.bill_fixed_details[index].dis_per,
+          })
+
+          );
+        }
+
+        console.log(formArray1)
+        this.did_Invice_fixed_charges.setControl('fixedAddresses', formArray1);
+        console.log(this.fixedAddresses);
+
+
+        // part-2
+
+        const formArray2 = new FormArray([]);
+        for (let index = 0; index < response.bill_usage_details.length; index++) {
+
+          console.log('bill_usage_details++index' + index);
+
+          formArray2.push(this.fb.group({
+            "particular2": response.bill_usage_details[index].productName,
+            "fromdt2": response.bill_usage_details[index].fromDate,
+            "todt2": response.bill_usage_details[index].toDate,
+            "md_chk2": response.bill_usage_details[index].md_state,
+            "did_diff_date2": response.bill_usage_details[index].did_diff_date,
+            "productDesc2": response.bill_usage_details[index].productDesc,
+            "amt2": response.bill_usage_details[index].total_amt,
+            "call_duration2": response.bill_usage_details[index].call_duration_state,
+            "sub_total1": response.bill_usage_details[index].net_amt,
+            "sub_dis_amt1": response.bill_usage_details[index].dis_amt,
+            "sub_dis_type1": response.bill_usage_details[index].dis_type,
+            "sub_dis_val1": response.bill_usage_details[index].dis_per,
+          })
+
+          );
+        }
+
+        console.log(formArray2)
+        this.did_Invice_usage_Charges.setControl('usageAddress', formArray2);
+        console.log(this.usageAddress);
+
+
+        // part-2
+
+        const formArray3 = new FormArray([]);
+        for (let index = 0; index < response.bill_other_details.length; index++) {
+
+          console.log('bill_other_details++index' + index);
+
+          formArray3.push(this.fb.group({
+            "particular3": response.bill_other_details[index].productName,
+            "fromdt3": response.bill_other_details[index].fromDate,
+            "todt3": response.bill_other_details[index].toDate,
+            "md_chk3": response.bill_other_details[index].md_state,
+            "did_diff_date3": response.bill_other_details[index].did_diff_date,
+            "productDesc3": response.bill_other_details[index].productDesc,
+            "amt3": response.bill_other_details[index].total_amt,
+            "call_duration3": response.bill_other_details[index].call_duration_state,
+            "sub_total1": response.bill_other_details[index].net_amt,
+            "sub_dis_amt1": response.bill_other_details[index].dis_amt,
+            "sub_dis_type1": response.bill_other_details[index].dis_type,
+            "sub_dis_val1": response.bill_other_details[index].dis_per,
+          })
+
+          );
+        }
+
+        console.log(formArray3)
+        this.did_Invice_other_charges.setControl('otherAddress', formArray3);
+        console.log(this.otherAddress);
+
+
+
+
+
+        // section-3
+        this.addDid_section3.patchValue({
+          //row-1
+
+          'section3_gross_total': response.billing_pararent_details[0].grossAmount,
+          //row-2
+          'section3_discount_txtbox': this.finalDiscount,
+          'final_dis_val': this.finalDiscountVal,
+          'final_dis_type': this.finalDiscountType,
+          // +2 hidden fields
+          //taxAmt
+          //row-3
+          'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
+          'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
+          'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
+          //row-4
+          'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
+          'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
+          'banking_charge_name': response.billing_pararent_details[0].add_name,
+
+          'banking_charge_amt': response.billing_pararent_details[0].add_amt,
+          //row-5
+          'section3_grand_total': response.billing_pararent_details[0].netPayment,
+          //row-7
+          'section3_remarks': response.billing_pararent_details[0].remarks,
+
+          //row-8
+          'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
+          //row-9
+          'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
+          //row-10
+          'section3_logo': response.billing_pararent_details[0].logo,
+        });
+      }
+      this.quotationAddSignature();
+    });
+
+  }
+
+
+  updateDidInvoice() {
+    let api_req: any = new Object();
+    let api_updateDid_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/update_proforma_invoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_updateDid_req.action = "update_proforma_invoice";
+    api_updateDid_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+
+    console.log('this.addPI_section3.value.billId_edit' + this.addDid_section1.value.billId_edit);
     //section-1
-    api_saveDid_req.company = this.addDid_section1.value.companyName;
-    api_saveDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
+    api_updateDid_req.billerId = this.addDid_section1.value.companyName;
+    api_updateDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
+    api_updateDid_req.customer_name = this.customerName_Data;
+    api_updateDid_req.tinNo = this.addDid_section1.value.tin;
+    api_updateDid_req.BillTo_customer_ID = this.customer_ID;
+    api_updateDid_req.BillTo_customer_NAME = this.customer_NAME;
 
-    api_saveDid_req.cusInvoiceNo = this.addDid_section1.value.customer_invoice_no;
-    api_saveDid_req.customer_name = this.customerName_Data;
-    api_saveDid_req.tinNo = this.addDid_section1.value.tin;
-    api_saveDid_req.BillTo_customer_ID = this.customer_ID;
-    api_saveDid_req.BillTo_customer_NAME = this.customer_NAME;
+    api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
+    api_updateDid_req.b_address1 = this.addDid_section1.value.address_1;
+    api_updateDid_req.b_address2 = this.addDid_section1.value.address_2;
+    api_updateDid_req.b_address3 = this.addDid_section1.value.address_3;
 
-    api_saveDid_req.did_invoice_state = '1';
-    api_saveDid_req.performa_invoice = '1';
+    api_updateDid_req.s_name = this.addDid_section1.value.ship_to;
+    api_updateDid_req.s_address1 = this.addDid_section1.value.ship_address_1;
+    api_updateDid_req.s_address2 = this.addDid_section1.value.ship_address_2;
+    api_updateDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
 
-    api_saveDid_req.b_name = this.addDid_section1.value.BillTo;
-    api_saveDid_req.b_address1 = this.addDid_section1.value.address_1;
-    api_saveDid_req.b_address2 = this.addDid_section1.value.address_2;
-    api_saveDid_req.b_address3 = this.addDid_section1.value.address_3;
-
-    api_saveDid_req.s_name = this.addDid_section1.value.ship_to;
-    api_saveDid_req.s_address1 = this.addDid_section1.value.ship_address_1;
-    api_saveDid_req.s_address2 = this.addDid_section1.value.ship_address_2;
-    api_saveDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
-
-    api_saveDid_req.cstNo = this.addDid_section1.value.cst;
-    api_saveDid_req.billDate = this.addDid_section1.value.Date;
-    api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
-    api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
-    api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
-    api_saveDid_req.sales_rep = this.addDid_section1.value.salesRep;
-    api_saveDid_req.ship_by = this.addDid_section1.value.ShipBy;
-    api_saveDid_req.ship_date = this.addDid_section1.value.ShipDate;
-    api_saveDid_req.s_attn = this.addDid_section1.value.ship_attn;
-    api_saveDid_req.terms = this.addDid_section1.value.terms;
-    api_saveDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
-    api_saveDid_req.currency = this.addDid_section1.value.Currency;
-    api_saveDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
-    api_saveDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
-    api_saveDid_req.bills_logo_id = this.ExtralogoValue;
-    api_saveDid_req.export_state = this.radioSelectFooter;
-    api_saveDid_req.jom_pay_logo = this.Jompay_logo_Value;
-
+    api_updateDid_req.cstNo = this.addDid_section1.value.cst;
+    api_updateDid_req.billDate = this.addDid_section1.value.Date;
+    api_updateDid_req.b_attn = this.addDid_section1.value.Attn_1;
+    api_updateDid_req.po_no = this.addDid_section1.value.PoNo;
+    api_updateDid_req.po_date = this.addDid_section1.value.PoDate;
+    api_updateDid_req.sales_rep = this.addDid_section1.value.salesRep;
+    api_updateDid_req.ship_by = this.addDid_section1.value.ShipBy;
+    api_updateDid_req.ship_date = this.addDid_section1.value.ShipDate;
+    api_updateDid_req.s_attn = this.addDid_section1.value.ship_attn;
+    api_updateDid_req.terms = this.addDid_section1.value.terms;
+    api_updateDid_req.currency = this.addDid_section1.value.Currency;
+    api_updateDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
+    api_updateDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
+    api_updateDid_req.bills_logo_id = this.ExtralogoValue;
+    api_updateDid_req.export_state = this.export_state;
+    api_updateDid_req.jom_pay_logo = this.Jompay_logo_Value;
     if (this.addDid_section1.value.BillTo === null) {
 
       iziToast.warning({
@@ -899,9 +1192,9 @@ export class AddDidpiComponent implements OnInit {
       return false;
 
     }
-
-
     // fixed charge
+
+    //  api_updateDid_req.fixed_value = this.did_Invice_fixed_charges.value.fixedAddresses;
 
     console.log('response........' + this.did_Invice_fixed_charges.value.particular1);
 
@@ -909,6 +1202,7 @@ export class AddDidpiComponent implements OnInit {
 
 
     for (let i = 0; i < addr1.length; i++) {
+
       console.log(addr1)
       addr1[i].particular1 = $('#particular_1_' + i).val();
       addr1[i].fromdt1 = $('#fromdt_1_' + i).val();
@@ -918,25 +1212,24 @@ export class AddDidpiComponent implements OnInit {
       addr1[i].productDesc1 = $('#productDesc_1_' + i).val();
       addr1[i].amt1 = $('#amt_1_' + i).val();
       addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
-      addr1[i].sub_dis_type1 = $('#sub_discount_type_1' ).val();
-      addr1[i].sub_dis_val1 = $('#sub_discount_val_1' ).val();
-      addr1[i].sub_dis_amt1 = $('#sub_discount_1' ).val();
-      addr1[i].sub_total1 = $('#sub_total_1').val();
-
-     
-
+      addr1[i].sub_total1 = $('#sub_total_1' + i).val();
+      addr1[i].sub_dis_amt1 = $('#sub_discount_1' + i).val();
+      addr1[i].sub_dis_type1 = $('#sub_discount_type_1' + i).val();
+      addr1[i].sub_dis_val1 = $('#sub_discount_val_1' + i).val();
     }
 
 
-    api_saveDid_req.fixed_value = addr1;
+    api_updateDid_req.fixed_value = addr1;
 
     // usage charge
+
+    //  api_updateDid_req.usage_values = this.did_Invice_usage_Charges.value.usageAddress;
+
 
     var addr2 = this.did_Invice_usage_Charges.value.usageAddress;
 
 
     for (let i = 0; i < addr2.length; i++) {
-
 
       console.log(addr1[i].amt2)
       addr2[i].particular2 = $('#particular2_' + i).val();
@@ -947,26 +1240,23 @@ export class AddDidpiComponent implements OnInit {
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].sub_dis_type2 = $('#sub_discount_type_2' ).val();
-      addr2[i].sub_dis_val2 = $('#sub_discount_val_2' ).val();
-      addr2[i].sub_dis_amt2 = $('#sub_discount_2' ).val();
-      addr2[i].sub_total2 = $('#sub_total_2').val();
 
     }
 
     console.log('addr2' + addr2);
 
-    api_saveDid_req.usage_value = addr2;
+    api_updateDid_req.usage_value = addr2;
 
     // other charge
 
-    //  api_saveDid_req.other_values = this.did_Invice_other_charges.value.otherAddress;
+    //  api_updateDid_req.other_values = this.did_Invice_other_charges.value.otherAddress;
 
 
     var addr3 = this.did_Invice_other_charges.value.otherAddress;
 
 
     for (let i = 0; i < addr3.length; i++) {
+
 
       console.log(addr3[i].amt3)
       addr3[i].particular3 = $('#particular3_' + i).val();
@@ -977,49 +1267,47 @@ export class AddDidpiComponent implements OnInit {
       addr3[i].productDesc3 = $('#productDesc3_' + i).val();
       addr3[i].amt3 = $('#amt3_' + i).val();
       addr3[i].call_duration3 = $('#call_duration3_' + i).val();
-      addr3[i].sub_dis_type3 = $('#sub_discount_type_3' ).val();
-      addr3[i].sub_dis_val3 = $('#sub_discount_val_3' ).val();
-      addr3[i].sub_dis_amt3 = $('#sub_discount_3' ).val();
-      addr3[i].sub_total3 = $('#sub_total_3').val();
 
     }
 
 
-    api_saveDid_req.other_values = addr3;
+    api_updateDid_req.other_values = addr3;
 
 
 
     //section-3
-    api_saveDid_req.grossTotal = this.addDid_section3.value.section3_gross_total;
-    api_saveDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
-    api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
-    api_saveDid_req.taxAmt = this.addDid_section3.value.section3_taxAmt_txtbox;
-    api_saveDid_req.shippingAmt = this.addDid_section3.value.section3_shipping_amt_txtbox;
-    api_saveDid_req.shippingName = this.addDid_section3.value.section3_shipping_amt_name_txtbox;
-    api_saveDid_req.add_name = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
-    api_saveDid_req.add_amt = this.addDid_section3.value.section3_bankingCharge_amt_txtbox;
-    api_saveDid_req.netTotal = this.addDid_section3.value.section3_grand_total;
-    api_saveDid_req.remarks = this.addDid_section3.value.section3_remarks;
-    api_saveDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
-    api_saveDid_req.received_signature = this.addDid_section3.value.section3_receivedAuthorizedSignature;
-    api_saveDid_req.logo = this.addDid_section3.value.section3_logo;
-    api_saveDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
-    api_req.element_data = api_saveDid_req;
+    api_updateDid_req.grossTotal = this.addDid_section3.value.section3_gross_total;
+    api_updateDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
+    api_updateDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
+    api_updateDid_req.taxAmt = this.addDid_section3.value.section3_taxAmt_txtbox;
+    api_updateDid_req.shippingAmt = this.addDid_section3.value.section3_shipping_amt_txtbox;
+    api_updateDid_req.addAmt = this.addDid_section3.value.section3_bankingCharge_amt_txtbox;
+    api_updateDid_req.netTotal = this.addDid_section3.value.section3_grand_total;
+    api_updateDid_req.remarks = this.addDid_section3.value.section3_remarks;
+    api_updateDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
+    api_updateDid_req.received_signature = this.addDid_section3.value.section3_receivedAuthorizedSignature;
+    api_updateDid_req.logo = this.addDid_section3.value.section3_logo;
+    api_updateDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
+    api_req.element_data = api_updateDid_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
         iziToast.success({
           title: 'Saved',
-          message: 'DID PI added Successfully!',
-          position: 'topRight'
+          message: 'DID Invoice Saved Successfully !',
         });
-        this.redirecttoPI();
-       
+        // this.redirecttoQuotation();
+        // this.addDid_section1.reset();
+        // this.did_Invice_fixed_charges.reset();
+        // this.did_Invice_usage_Charges.reset();
+        // this.did_Invice_other_charges.reset();
+
+        // this.addDid_section3.reset();
       }
       else {
         iziToast.warning({
-          message: "DID PI Not Saved Successfully",
+          message: "DID Invoice Not Saved Successfully",
           position: 'topRight'
         });
       }
@@ -1027,9 +1315,9 @@ export class AddDidpiComponent implements OnInit {
     });
 
   }
-  redirecttoPI() {
+  redirecttoQuotation() {
 
-    this.router.navigate(['/ProformaInvoice']);
+    this.router.navigate(['/did']);
   }
 
   addCommission() {
@@ -1039,7 +1327,7 @@ export class AddDidpiComponent implements OnInit {
 
   // increment and decrement
 
-  addButton = 0;
+  addButton = 1;
   plus(v: any) {
     console.log(v)
     if (this.addButton != 50) {
@@ -1057,7 +1345,7 @@ export class AddDidpiComponent implements OnInit {
   }
 
 
-  addButton2 = 0;
+  addButton2 = 1;
   plus2(v: any) {
 
     if (this.addButton2 != 50) {
@@ -1075,7 +1363,7 @@ export class AddDidpiComponent implements OnInit {
   }
 
 
-  addButton3 = 0  ;
+  addButton3 = 1;
   plus3(v: any) {
 
     if (this.addButton3 != 50) {
@@ -1100,8 +1388,6 @@ export class AddDidpiComponent implements OnInit {
     var list_cnt = addr.length;
     var total_amt_tot = 0;
 
-    let discount_type:any;
-
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt_1_' + a).val();
       console.log('subtotal 1...' + total_amt);
@@ -1114,8 +1400,6 @@ export class AddDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
-
-    
     this.gross_total();
   }
 
@@ -1179,6 +1463,7 @@ export class AddDidpiComponent implements OnInit {
 
     $('#fixedDiscountFormId').modal('hide');
 
+
   }
 
 
@@ -1205,7 +1490,7 @@ export class AddDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
-    // this.gross_total();
+    this.gross_total();
 
   }
 
@@ -1261,6 +1546,7 @@ export class AddDidpiComponent implements OnInit {
       }
     }
     $('#usageDiscountFormId').modal('hide');
+
 
 
   }
@@ -1373,11 +1659,10 @@ export class AddDidpiComponent implements OnInit {
 
     this.net_amt = $('#section3_gross_total').val();
 
-    tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt) - parseFloat(this.finalDiscount))/ 100);
+    tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
     grs_amt += gross_tot;
     net_tot = (parseFloat(tax_amt) + parseFloat(this.grossTotal)).toFixed(2);
 
-    //  - parseFloat(this.finalDiscount)
 
     net_price += parseFloat(net_tot);
     this.addDid_section3.value.section3_grand_total = net_price;
@@ -1394,6 +1679,7 @@ export class AddDidpiComponent implements OnInit {
     this.finalTax = tax_amt.toFixed(2);
 
     if (this.shipping_amt == '') {
+      console.log("Shipping Amount........." + this.shipping_amt);
       this.shipping_amt = 0;
     }
     if (this.finalDiscount == '') {
@@ -1405,8 +1691,8 @@ export class AddDidpiComponent implements OnInit {
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
-    //console.log('grs_amt' + grs_amt);
-    // console.log('tax_per =  ' + this.tax_per_mod + 'grossTotal  =  ' + '' + this.grossTotal + 'this.finalTax = ' + '' + this.finalTax + '' + 'shipping_amt = ' + this.shipping_amt + '' + 'bankingCharge  = ' + '' + this.bankingCharge + '' + 'finalDiscount = ' + '' + this.finalDiscount);
+    console.log('grs_amt' + grs_amt);
+    console.log('tax_per =  ' + this.tax_per_mod + 'grossTotal  =  ' + '' + this.grossTotal + 'this.finalTax = ' + '' + this.finalTax + '' + 'shipping_amt = ' + this.shipping_amt + '' + 'bankingCharge  = ' + '' + this.bankingCharge + '' + 'finalDiscount = ' + '' + this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
 
     $('#section3_grand_total').val(this.grandTotal);
@@ -1476,11 +1762,7 @@ export class AddDidpiComponent implements OnInit {
     }
 
     $('#discountFormFinal').modal('hide');
-    setTimeout(() => {
-      this.totalCalculate_1();
-      this.totalCalculate_2();
-      this.totalCalculate_3();
-    }, 1500)
+
 
   }
 
@@ -1529,7 +1811,6 @@ export class AddDidpiComponent implements OnInit {
     this.router.navigate(['/didInvoice']);
 
   }
-
   quotationAddSignature() {
     let api_req: any = new Object();
     let api_quotationAddSignature_req: any = new Object();
@@ -1556,5 +1837,6 @@ export class AddDidpiComponent implements OnInit {
       }
     });
   }
+
 
 }
