@@ -156,42 +156,43 @@
                     </div>
                 </div>
 
-                <!-- <div class="col-lg-12">
+                <div class="col-lg-12">
                     <div class="form-group">
                         <label for="refDetails" class="form-label">Ref</label>
                         <textarea class="form-control" formControlName="Ref" style="height: 70px;" row="2"></textarea>
-                    </div>
-                </div> -->
-                <div class="col-lg-12">
-                    <div class="form-group row">
-                        <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
-                        <div class="col-lg-12">
-                            <select id="Ship_By" class="form-control" formControlName="billCode">
-                                <option [ngValue]="null" selected disabled>Select Bill Code</option>
-                                <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
-                                    {{ship.ship_name}}
-                                </option> -->
-                            </select>
-                        </div>
                     </div>
                 </div>
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="refResellerDetails" class="form-label">Reference Reseller Name</label>
-                        <textarea class="form-control ml-2 mr-2" formControlName="ReferenceResellerName"
+                        <textarea class="form-control  mr-2" formControlName="ReferenceResellerName"
                             style="height: 70px;" row="2"></textarea>
                     </div>
                 </div>
+                <!-- <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
+                        <div class="col-lg-12">
+                            <select id="Ship_By" class="form-control" formControlName="billCode">
+                                <option [ngValue]="null" selected disabled>Select Bill Code</option>
+                                <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+             
                 <div class="col-lg-12 ">
                     <div class="form-group">
                         <label for="Payment" class="form-label">Select Extra Logo </label>
 
                         <div class="form-check form-check-inline ml-2"
                             *ngFor="let display1 of SelectExtraLogoCheckboxwithKey;let k=index">
-                            <input class="form-check-input mt-4" type="radio" name="bills_logo_id" [value]="display1.id"
+                            <input class="form-check-input " type="radio" name="bills_logo_id" [value]="display1.id"
                                 checked="{{display1.id==billsLogo_value ? 'checked':''}}"
-                                (change)="handleChange_Logo(display1.billerId,$event)" />
-                            <label class="form-check-label mt-4" for="exampleRadios{{k}}">
+                                (change)="handleChange_SelectExtraLogo(display1.billerId,$event)" />
+                            <label class="form-check-label " for="exampleRadios{{k}}">
                                 <span style="color:#009688 !important;">{{display1.name}}</span>
 
                             </label>
@@ -209,7 +210,7 @@
                             *ngFor="let display1 of exportState_Radio;let k=index">
                             <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
                                 checked="{{display1.id==exportState_value ? 'checked':''}}"
-                                (change)="handleChange(display1.billerId,$event)" />
+                                (change)="handleChange_ExportState(display1.billerId,$event)" />
                             <label class="form-check-label" for="exampleRadios{{k}}">
                                 <span style="color:#009688 !important;">{{display1.name}}</span>
                             </label>
@@ -217,26 +218,28 @@
 
                     </div>
                 </div>
+              
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="Payment" class="form-label">Invoice Type</label>
-
-                        <div class="form-check form-check-inline ml-2"
-                            *ngFor="let display1 of dynamicCheckboxwithKey;let k=index">
-                            <input class="form-check-input" type="radio" name="mile_discount_state"
-                                [value]="display1.id" checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
-                                (change)="handleChange_mileSate(display1.billerId,$event)" />
-                            <label class="form-check-label" for="exampleRadios{{k}}">
-                                <span style="color:#009688 !important;">{{display1.name}}</span>
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
-                                (change)="handleChange_MSDisplay($event)">
-                            <label class="form-check-label" for="inlineCheckbox3">
-                                <span style="color:#009688 !important;">M S Display</span> </label>
-                        </div>
-
+                        
+                            <div class="form-check form-check-inline ml-2"
+                                *ngFor="let display1 of dynamicCheckboxwithKey;let k=index">
+                                <input class="form-check-input" type="radio" name="mile_discount_state"
+                                    [value]="display1.id"
+                                    checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
+                                    (change)="handleChange_mileSate_InvoiceType(display1.billerId,$event)" />
+                                <label class="form-check-label" for="exampleRadios{{k}}">
+                                    <span style="color:#009688 !important;">{{display1.name}}</span>
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" checked
+                                    (change)="handleChange_MSDisplay($event)">
+                                <label class="form-check-label" for="inlineCheckbox3">
+                                    <span style="color:#009688 !important;">M S Display</span> </label>
+                            </div>
+                       
 
                     </div>
                 </div>
@@ -401,30 +404,42 @@
 
 
 
+              
+              
                 <div class="col-lg-12">
                     <div class="form-group row">
+                        <div class="form-check form-check-inline">
+                            <input class="ml-3 form-check-input" type="checkbox" checked name="CAS_Cbk" id="convamt"
+                            formControlName="CAS_Cbk" (change)="cbk_fn_conversionAmtShow($event)">
+                            <label class="form-check-label" for="convamt"> Conversion Amt Show</label>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <div class="form-check form-check-inline">
+                            <input class="ml-3 form-check-input" type="checkbox" checked name="DWT_Cbk" id="dedwt"
+                            formControlName="DWT_Cbk" (change)="cbk_fn_deductWithholdingTax($event)">
+                            <label class="form-check-label" for="dedwt"> Deduct 3% Withholding Tax</label>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- <div class="col-lg-12">
+                    <div class="form-group row">
                         <div class="col-lg-4 mt-2">
-                            <label class="form-label">Conversion Amt Show</label>
+                            <label class="form-label">JomPAY Logo</label>
                         </div>
 
                         <div class="col-lg-2 mt-2">
-                            <input type="checkbox" formControlName="CAS_Cbk"
-                                (change)="cbk_fn_conversionAmtShow($event)" />
+                            <input type="checkbox" formControlName="JomPAYLogo_Cbk"
+                                (change)="cbk_fn_JomPAYLogo($event)" />
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="form-group row">
-                        <div class="col-lg-4 mt-2">
-                            <label class="form-label">Deduct 3% Withholding Tax</label>
-                        </div>
-
-                        <div class="col-lg-2 mt-2">
-                            <input type="checkbox" formControlName="DWT_Cbk"
-                                (change)="cbk_fn_deductWithholdingTax($event)" />
-                        </div>
-                    </div>
-                </div>
+                </div> -->
+               
 
             </div>
 

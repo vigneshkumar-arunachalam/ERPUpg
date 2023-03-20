@@ -55,6 +55,8 @@ export class QuotationnewComponent implements OnInit {
   searchResult_CustomerID: any;
   quotationId_new: any;
   searchResult_CustomerName: any;
+  //search info
+  allData: any;
   // quotation_list:any=[];
   quotationValidityList: any = [];
   //quotation-shared

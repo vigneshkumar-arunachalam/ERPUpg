@@ -14,6 +14,10 @@
                 class="btn btn-secondary btn-default btn-squared" (click)="addDidPIGo()" style="margin-right: 30px;"><i
                   class="fas fa-plus" style="margin-right:0;"></i>
               </button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+                data-target="#searchPIFormId">
+                <i class="fas fa-search" style="margin-right:0;"></i>
+              </button>
             </div>
           </div>
           <div class="card-body">
@@ -120,7 +124,8 @@
                             <ul class="dropdown__list">
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Edit" (click)="list.did_invoice_state==0?editPIGo(list.billId):editDidPIGo(list.billId)">
+                                <a class="hover3" title="Edit"
+                                  (click)="list.did_invoice_state==0?editPIGo(list.billId):editDidPIGo(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-edit">
@@ -224,8 +229,8 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover3" title="Convert to DID Invoice" data-toggle="modal" 
-                                (click)="InvoicetoDIDConversion(list.billId)">
+                                <a class="hover3" title="Convert to DID Invoice" data-toggle="modal"
+                                  (click)="InvoicetoDIDConversion(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-chrome">
@@ -930,3 +935,111 @@
 </div> -->
 
 <!-------------- PI to Invoice conversion Pop up ends------------------------------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchPIFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
+        <div class="col-lg-3">
+          <div class="form-group row">
+              <div class="ng-autocomplete">
+                  <label for="companyName" class="col-lg-12 ">Search Text</label>
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                      formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                      (inputChanged)='searchCustomerData($event)'
+                      
+                      (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                      [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplateCustomer let-item>
+                      <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                  </ng-template>
+              </div>
+
+          </div>
+      </div>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="searchPIForm">
+          <div class="row">
+            <div class="col-lg-3 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Biller Name</label>
+                <div class="col-lg-12 " *ngFor="let biller of billList;let i =index">
+                  <input type="checkbox">
+                  <!-- <input type="checkbox" value="{{biller.billId}}"
+                                        (change)="QuotationSearchCHK(biller.billId,$event)"> -->
+                  {{biller.billerName}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Years</label>
+                <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
+                  <input type="checkbox">
+                  <!-- <input type="checkbox" value="{{biller.billId}}"
+                                      (change)="QuotationSearchCHK(biller.billId,$event)"> -->
+                  {{yrs}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Invoice Type</label>
+                <div class="col-lg-12">
+                  <select id="Payment" class="form-control" formControlName="PaymentVia">
+                    <option [ngValue]="null" selected disabled>Select Invoice Type</option>
+                    <option *ngFor="let exp of exportState_Radio" value="{{exp.id}}">
+                      {{exp.name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Others</label>
+                <div class="col-lg-12 " *ngFor="let srs of searchOthers;let i =index">
+                  <input type="checkbox">
+                  <!-- <input type="checkbox" value="{{biller.billId}}"
+                                  (change)="QuotationSearchCHK(biller.billId,$event)"> -->
+                  {{srs}}
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="PIList({})">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>

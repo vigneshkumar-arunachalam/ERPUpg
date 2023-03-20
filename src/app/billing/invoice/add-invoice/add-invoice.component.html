@@ -215,15 +215,15 @@
                         <label for="Payment" class="form-label">Invoice Type</label>
 
                         <div class="form-check form-check-inline ml-4 mt-2">
-                            <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox2"
+                            <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox11"
                                 value="1" (change)="mile($event)">
-                            <label class="form-check-label" for="inlineCheckbox2"><span
+                            <label class="form-check-label" for="inlineCheckbox11"><span
                                     style="color:#009688 !important;">Mile Discount</span> </label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="select" id="inlineCheckbox2" value="2"
+                            <input class="form-check-input" type="radio" name="select" id="inlineCheckbox12" value="2"
                                 (change)="mile($event)">
-                            <label class="form-check-label" for="inlineCheckbox2"><span
+                            <label class="form-check-label" for="inlineCheckbox12"><span
                                     style="color:#009688 !important;">Mile Stone</span> </label>
                         </div>
                         <div class="form-check form-check-inline">
@@ -526,7 +526,7 @@
 
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" style="text-align: right;"
+                                                <input type="number" class="form-control" style="text-align: right;"
                                                     formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
                                                  
                                                     (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
@@ -542,7 +542,7 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
-                                                <input type="text" class="form-control" style="text-align: right;"
+                                                <input type="number" class="form-control" style="text-align: right;"
                                                     formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
                                                  
                                                     (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
@@ -550,21 +550,24 @@
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" style="width: 160px;">
-                                                <input type="text" class="form-control" formControlName="pd_Total"
-                                                [readonly]="isReadonly"   style="text-align: right;" id="pd_Total_{{i}}" />
+                                                <input type="number" class="form-control" formControlName="pd_Total"
+                                                    [readonly]="isReadonly" style="text-align: right;"
+                                                    id="pd_Total_{{i}}" />
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" style="width: 160px;">
-                                                <input type="text" class="form-control" style="text-align: right;"
-                                                [readonly]="isReadonly"  formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
+                                                <input type="number" class="form-control" style="text-align: right;"
+                                                    [readonly]="isReadonly" formControlName="pd_netPrice"
+                                                    id="pd_netPrice_{{i}}" />
 
                                             </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content">
                                                 <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_OutCall" id="pd_OutCall_{{i}}">
+                                                    [ngModel]="test_outcall[i]" formControlName="pd_OutCall"
+                                                    id="pd_OutCall_{{i}}">
 
                                             </div>
                                         </td>
@@ -572,7 +575,8 @@
                                             <div class="userDatatable-content">
 
                                                 <input type="checkbox" style="text-align: right;"
-                                                    formControlName="pd_CMon" id="pd_CMon_{{i}}">
+                                                    [ngModel]="test_CMon[i]" formControlName="pd_CMon"
+                                                    id="pd_CMon_{{i}}">
 
                                             </div>
                                         </td>
@@ -581,7 +585,8 @@
 
                                                 <input type="checkbox" style="text-align: right;" [ngModel]="test[i]"
                                                     id="pd_selectTax_{{i}}" formControlName="pd_selectTax"
-                                                    checked='checked' (change)="totalCalculate();saveDiscount();saveGrossDiscount()">
+                                                    checked='checked'
+                                                    (change)="totalCalculate();saveDiscount();saveGrossDiscount()">
 
                                             </div>
                                         </td>
@@ -650,7 +655,7 @@
                                         </td>
                                         <td colspan="1">
                                             <input type="number" class="form-control" style="text-align: right;"
-                                            [attr.readonly]="isReadOnly"     formControlName="sub_dis_amt" id="sub_discount_{{i}}" />
+                                            [attr.readonly]="isReadOnly"   formControlName="sub_discount" id="sub_discount_{{i}}" />
                                         </td>
                                         <td colspan="1">
                                         </td>
@@ -711,8 +716,8 @@
                                             Total(Rs.)</label></span>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                    [attr.readonly]="isReadOnly"      formControlName="section3_gross_total" />
+                                    <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
+                                    [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
                                 </div>
                             </div>
                         </div>
@@ -808,8 +813,8 @@
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" [(ngModel)]="grandTotal"
-                                    [attr.readonly]="isReadOnly"     formControlName="section3_grand_total" />
+                                    <input type="number" class="form-control" [(ngModel)]="grandTotal"
+                                    [attr.readonly]="isReadOnly"    [readonly]="isReadonly" formControlName="section3_grand_total" />
                                 </div>
 
 
@@ -923,7 +928,7 @@
 
     <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary mr-4 " (click)="save()">Submit</button>
+        <button type="button" class="btn btn-primary mr-4 " (click)="save($event)">Submit</button>
         <button type="button" class="btn btn-dark">Cancel</button>
     </div>
 </div>
@@ -954,7 +959,7 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePercentabeDiscont" />
+                                    <input type="number" class="form-control" id="enablePercentabeDiscont" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -964,7 +969,7 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePriceDiscont" />
+                                    <input type="number" class="form-control" id="enablePriceDiscont" />
                                 </div>
                             </div>
                         </div>
@@ -1013,7 +1018,7 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePerFinal" />
+                                    <input type="number" class="form-control" id="enablePerFinal" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -1023,7 +1028,7 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePriceFinal" />
+                                    <input type="number" class="form-control" id="enablePriceFinal" />
                                 </div>
                             </div>
                         </div>

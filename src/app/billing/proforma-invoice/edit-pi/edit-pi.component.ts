@@ -74,10 +74,11 @@ export class EditPIComponent implements OnInit {
   //mile
   radioID_Mile: any;
   radio_Value_Mile: any
-
+  radio_Value_Export_edit:any;
    //export state-check box
    export_state: any;
    radioSelectFooter: any = '1';
+
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
@@ -111,7 +112,8 @@ export class EditPIComponent implements OnInit {
   shipping_amt: any;
   invocePriceKey: any;
   row_cnt_mod: any;
-
+  radio_Value_Export_edit:any;
+  radio_Value_Export_logo:any;
   //  quotationAddSignature
   quotationAddSignature_state: any;
   quotationAddSignature_filename: any;
@@ -120,9 +122,15 @@ export class EditPIComponent implements OnInit {
 
   //read only fields
   isReadonly: boolean = true;
+  input1: string;
+  input2: string;
+  input3: string;
+  input4: string;
 
-
-
+  // input1: any;
+  // input2: any;
+ radio_Value_InvoiceType:any;
+  radio_Value_ExportState:any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -397,76 +405,46 @@ export class EditPIComponent implements OnInit {
     console.log(this.checkbox_selectAdditionalSignature);
   }
 
-  handleChange_initial(id: any, evt: any) {
-    var radioSelectInitial = evt.target.value;
-    var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
-  }
-  handleChange(data: any, evt: any) {
+
+  handleChange_ExportState(data: any, evt: any) {
 
     this.radioID_Export = data;
     console.log("evt", evt.target.checked)
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
-    this.radio_Value_Export = evt.target.value;
+    this.radio_Value_ExportState = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
-    // console.log("radio button id value", xyz);
-  }
-  handleChange_Mile(data: any, evt: any) {
-
-    this.radioID_Mile = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
-    this.radio_Value_Mile = evt.target.value;
-    // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
+    console.log("radio button value", this.radio_Value_ExportState);
     // console.log("radio button id value", xyz);
   }
 
-  handleChange_mileSate(data: any, evt: any) {
+
+  handleChange_mileSate_InvoiceType(data: any, evt: any) {
 
     this.radioID_Logo = data;
     console.log("evt", evt.target.checked)
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
-    this.radio_Value_Export = evt.target.value;
+    this.radio_Value_InvoiceType = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
+    console.log("radio button value", this.radio_Value_InvoiceType);
     // console.log("radio button id value", xyz);
   }
 
-  handleChange_Logo(data: any, evt: any) {
+  handleChange_EXTRALogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
     console.log("evt", evt.target.checked)
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
-    this.radio_Value_Export = evt.target.value;
+    this.radio_Value_Export_logo = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
+    console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
 
-  // handleChange(data: any, evt: any) {
-  //   var id = data;
-  //   this.BillerID = id;
-  //   console.log(id, "biller ID");
-  //   var xyz = evt.target.id;
-  //   console.log(xyz, "target");
-  // }
-  handleChangeExtraLogo(event: any) {
-    var Extralogo = event.target.value;
-    // var xyz = id;
-    console.log("radio button value", Extralogo);
-
-  }
-  mile(e: any) {
-    this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
-  }
+  
+ 
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.checked;
     console.log(this.MSDisplay_Value);
@@ -780,8 +758,15 @@ export class EditPIComponent implements OnInit {
         this.spinner.hide();
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
+        console.log(" this.mileDiscountState_value", this.mileDiscountState_value)
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
+
+
+       this.radio_Value_Export_logo= response.billing_pararent_details[0].bills_logo_id;
+       this.radio_Value_ExportState= response.billing_pararent_details[0].export_state;;
+       this.radio_Value_InvoiceType= response.billing_pararent_details[0].mile_discount_state;
+       
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
@@ -817,6 +802,8 @@ export class EditPIComponent implements OnInit {
           'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
 
         });
+
+        this.radio_Value_Mile=response.billing_pararent_details[0].mile_discount_state
         this.addPI_section1.controls['e_export_state'].setValue('response.billing_pararent_details[0].export_state');
         this.TaxDropdown();
 
@@ -1136,10 +1123,11 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
-    api_updatePI_req.export_state = this.radio_Value_Export;
-    api_updatePI_req.mile_discount_state = this.radio_Value_Mile;
+    api_updatePI_req.bills_logo_id = this.radio_Value_Export_logo;
+    api_updatePI_req.export_state = this.radio_Value_ExportState;
+    api_updatePI_req.mile_discount_state = this.radio_Value_InvoiceType;
     api_updatePI_req.mile_discount_display_state = this.MSDisplay_Value;
-    api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
+   
 
     //section-2
     // api_UpdateEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
@@ -1723,4 +1711,15 @@ export class EditPIComponent implements OnInit {
     this.router.navigate(['/ProformaInvoice']);
   }
 
+  clearInput1() {
+    this.input2 = '';
+    $("#enablePriceFinal").val('')
+  }
+  
+  clearInput2() {
+    this.input1 ='';
+    $("#enablePerFinal").val('');
+  }
+
+  
 }

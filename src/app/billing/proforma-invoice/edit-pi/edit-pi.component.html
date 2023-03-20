@@ -124,7 +124,7 @@
                                 *ngFor="let display1 of bills_logo_id_radio;let k=index">
                                 <input class="form-check-input mt-4" type="radio" name="bills_logo_id" [value]="display1.id"
                                     checked="{{display1.id==billsLogo_value ? 'checked':''}}"
-                                    (change)="handleChange_Logo(display1.billerId,$event)" />
+                                    (change)="handleChange_EXTRALogo(display1.billerId,$event)" />
                                 <label class="form-check-label mt-4" for="exampleRadios{{k}}">
                                     <span style="color:#009688 !important;">{{display1.name}}</span>
                                     
@@ -143,7 +143,7 @@
                                 *ngFor="let display1 of exportState_Radio;let k=index">
                                 <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
                                     checked="{{display1.id==exportState_value ? 'checked':''}}"
-                                    (change)="handleChange(display1.billerId,$event)" />
+                                    (change)="handleChange_ExportState(display1.billerId,$event)" />
                                 <label class="form-check-label" for="exampleRadios{{k}}">
                                     <span style="color:#009688 !important;">{{display1.name}}</span>
                                 </label>
@@ -161,7 +161,7 @@
                                 <input class="form-check-input" type="radio" name="mile_discount_state"
                                     [value]="display1.id"
                                     checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
-                                    (change)="handleChange_mileSate(display1.billerId,$event)" />
+                                    (change)="handleChange_mileSate_InvoiceType(display1.billerId,$event)" />
                                 <label class="form-check-label" for="exampleRadios{{k}}">
                                     <span style="color:#009688 !important;">{{display1.name}}</span>
                                 </label>
@@ -899,17 +899,17 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" id="enablePerFinal" />
+                                    <input type="number" class="form-control" id="enablePerFinal" [(ngModel)]="input1" (input)="clearInput1()"/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
-                                    <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt">
+                                    <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt"  />
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" id="enablePriceFinal" />
+                                    <input type="number" class="form-control" id="enablePriceFinal" [(ngModel)]="input2" (input)="clearInput2()" />
                                 </div>
                             </div>
                         </div>

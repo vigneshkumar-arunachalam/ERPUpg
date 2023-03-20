@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
 @Component({
@@ -76,6 +78,8 @@ export class AddInvoiceComponent implements OnInit {
   // tax_amt_tot=0;  
 
   test: boolean[] = [];
+  test_outcall: boolean[] = [];
+  test_CMon: boolean[] = [];
   itre = 0;
   //others
   dynamicChangeText: any;
@@ -118,7 +122,7 @@ export class AddInvoiceComponent implements OnInit {
     //read only fields
     isReadonly: boolean = true;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder,private spinner:NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -788,7 +792,11 @@ export class AddInvoiceComponent implements OnInit {
 
 
   }
-  save() {
+  gotoInvoiceList() {
+
+    this.router.navigate(['/Invoice']);
+  }
+  save($event: MouseEvent) {
    
     let api_req: any = new Object();
     let api_saveInvoice_req: any = new Object();
@@ -801,9 +809,34 @@ export class AddInvoiceComponent implements OnInit {
 
 
     //section-1
-    api_saveInvoice_req.company = this.addInvoice_section1.value.companyName;
+ 
+    if(this.addInvoice_section1.value.companyName===null ||  this.addInvoice_section1.value.companyName===undefined){
+     
+      iziToast.warning({
+        message: "Select Company Name",
+        position: 'topRight'
+      });
+      return false;
+
+    }else{
+      api_saveInvoice_req.company = this.addInvoice_section1.value.companyName;
+    }
     api_saveInvoice_req.invoice_no = this.addInvoice_section1.value.invoiceNo;
-    api_saveInvoice_req.customer_name = this.customerName_Data;
+
+    if(this.customerName_Data===null||this.customerName_Data===undefined){
+     
+      iziToast.warning({
+        message: "Select Bill",
+        position: 'topRight'
+      });
+      return false;
+
+    }else{
+      api_saveInvoice_req.customer_name = this.customerName_Data;
+    }
+
+
+   
     api_saveInvoice_req.cus_invoice_no = this.addInvoice_section1.value.cusInvoiceNo;
 
     api_saveInvoice_req.tinNo = this.addInvoice_section1.value.tin;
@@ -898,7 +931,7 @@ export class AddInvoiceComponent implements OnInit {
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
-      addr[i].pd_selectTax = $('#pd_selectTax_' + i).val();
+      // addr[i].pd_selectTax = $('#pd_selectTax_' + i).val();
 
     }
 
@@ -908,9 +941,12 @@ export class AddInvoiceComponent implements OnInit {
 
     //section-3
     api_saveInvoice_req.grossTotal = this.addPI_section3.value.section3_gross_total;
-    api_saveInvoice_req.discountAmount = this.addPI_section3.value.final_dis_val;
+    api_saveInvoice_req.discountAmount =  $('#finalDiscount_amt').val();
+    api_saveInvoice_req.final_dis_type = $('#final_discount_type').val();
+    api_saveInvoice_req.discountPer = $('#final_discount_val').val();
     api_saveInvoice_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_saveInvoice_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
+
     api_saveInvoice_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
     api_saveInvoice_req.addAmt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
     api_saveInvoice_req.netTotal = this.addPI_section3.value.section3_grand_total;
@@ -940,24 +976,45 @@ export class AddInvoiceComponent implements OnInit {
    
 
     api_req.element_data = api_saveInvoice_req;
+ ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
+ ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
 
         iziToast.success({
           message: "Invoice saved successfully",
           position: 'topRight'
         });
+ this.gotoInvoiceList();
+      }
+      else if (response.status === 500) {
+        alert("status == 500")
+        iziToast.error({
+          message: "Invoice not added Successfully",
+          position: 'topRight'
+        });
       }
       else {
+        alert("status == false")
         iziToast.warning({
-          message: "Invoice not saved. Please try again",
+          message: "Invoice not added Successfully",
           position: 'topRight'
         });
       }
 
-    });
+    }),
+      (error: any) => {
+        ($event.target as HTMLButtonElement).disabled = false;
+        alert(error)
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("500",error);
+      }
 
   }
   getCustomerInvoiceDetails() {

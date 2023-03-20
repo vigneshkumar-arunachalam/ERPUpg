@@ -15,7 +15,7 @@ declare var iziToast: any;
 })
 export class EditInvoiceComponent implements OnInit {
 
-  
+
   public addPI_section1: FormGroup;
   public addPI_section2: FormGroup;
   public addPI_section3: FormGroup;
@@ -34,9 +34,9 @@ export class EditInvoiceComponent implements OnInit {
   editbillerID: any;
   editResult: any;
   exportState_value: any;
- 
 
-  TaxDropdownList:any
+
+  TaxDropdownList: any
   //radio
   radio_Select: any;
   exportState_Radio: any;
@@ -64,20 +64,20 @@ export class EditInvoiceComponent implements OnInit {
   edit_array_ExtraLogo: any = [];
   //autocomplete
   customerName_Data: any;
-    //EditShipAdd-checkbox
-    cbk_ESA_Value: any;
-    EditShippingAddress: boolean = false;
-    //checkbox
-    cbk_conversionAmtShow_value: any;
-    cbk_deductWithholdingTax: any;
-    cbk_previousDue: any;
+  //EditShipAdd-checkbox
+  cbk_ESA_Value: any;
+  EditShippingAddress: boolean = false;
+  //checkbox
+  cbk_conversionAmtShow_value: any;
+  cbk_deductWithholdingTax: any;
+  cbk_previousDue: any;
   //others
   dynamicChangeText: any;
   CurrencyConversionRateDefault: any = 1;
   getCurrencyCode: any;
   invoicePriceKey: any;
   mileDiscountState_value: any;
-  billsLogo_value:any;
+  billsLogo_value: any;
   radioID_Logo: any;
   // tax_amt_tot=0;  
 
@@ -101,7 +101,7 @@ export class EditInvoiceComponent implements OnInit {
   finalDiscountType: any;
   finalDiscountVal: any;
   sub_dis_val: any;
-  sub_dis_type:any;
+  sub_dis_type: any;
   grandTotal: any;
   grossTotal: any;
   finalTax: any;
@@ -112,20 +112,25 @@ export class EditInvoiceComponent implements OnInit {
   shipping_amt: any;
   invocePriceKey: any;
   row_cnt_mod: any;
+  cbk_JomPAYLogo: any;
+  //radio button value
+  radio_Value_ExportState: any;
+  radio_Value_SelectExtraLogo: any;
+  radio_Value_mileSate_InvoiceType: any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
     });
 
-  
+
   }
 
   ngOnInit(): void {
-  
+
     this.EditShippingAddress = true;
-   
+
 
     this.route.queryParams
       .subscribe(params => {
@@ -143,7 +148,7 @@ export class EditInvoiceComponent implements OnInit {
       }
       );
     this.loadADD();
-    
+
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
@@ -152,7 +157,7 @@ export class EditInvoiceComponent implements OnInit {
 
       { name: 'Discount', selected: false, id: 1 },
       { name: 'Mile Stone', selected: false, id: 2 },
-   
+
 
     ];
     this.SelectExtraLogoCheckboxwithKey = [
@@ -176,19 +181,19 @@ export class EditInvoiceComponent implements OnInit {
       { name: 'Zero Valid', selected: false, id: 3 },
 
     ];
-  
+
 
 
     this.addPI_section1 = new FormGroup({
       'initial': new FormControl(),
       'billId_edit': new FormControl(),
-      'companyName': new FormControl(null,[Validators.required]),
+      'companyName': new FormControl(null, [Validators.required]),
       'customer_name': new FormControl(),
       'invoiceNo': new FormControl(),
       'cusInvoiceNo': new FormControl(),
       'customer_id_hd': new FormControl(),
-      'BillTo': new FormControl(null,[Validators.required]),
-      'tin': new FormControl(null,[Validators.required]),
+      'BillTo': new FormControl(null, [Validators.required]),
+      'tin': new FormControl(null, [Validators.required]),
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
@@ -221,8 +226,8 @@ export class EditInvoiceComponent implements OnInit {
       'mile_MSDisplay': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
-      'CAS_Cbk': new FormControl(),
-      'DWT_Cbk': new FormControl(),
+      'CASJomPAYLogo_Cbk_Cbk': new FormControl(),
+
     });
 
     this.addPI_section3 = new FormGroup({
@@ -271,7 +276,7 @@ export class EditInvoiceComponent implements OnInit {
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
       console.log(this.test[index]);
-      
+
 
     });
   }
@@ -299,14 +304,14 @@ export class EditInvoiceComponent implements OnInit {
 
   }
 
-  removeAddresstest(i:number){
+  removeAddresstest(i: number) {
 
     console.log(i)
     console.log(this.addresses)
-        this.addresses.removeAt(i);
-        var addr = this.addPI_section2.value.addresses;
-        var list_cnt = addr.length;
-        this.totalCalculate();
+    this.addresses.removeAt(i);
+    var addr = this.addPI_section2.value.addresses;
+    var list_cnt = addr.length;
+    this.totalCalculate();
 
   }
   // logo......
@@ -319,11 +324,11 @@ export class EditInvoiceComponent implements OnInit {
     this.chkReceivedAuthorizedSignature = event.target.checked;
     console.log(this.chkReceivedAuthorizedSignature)
   }
-   
+
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
     console.log(this.chklogoAddressSignature)
-  } 
+  }
 
   removeAddress(i: number) {
     alert(i)
@@ -336,12 +341,12 @@ export class EditInvoiceComponent implements OnInit {
 
   removeParticular(i: number) {
     alert(i)
-    console.log('iiii--'+i)
+    console.log('iiii--' + i)
     console.log(this.addresses)
-    
-    var pd_billchild_id = $('#pd_billchild_id_'+i).val();
+
+    var pd_billchild_id = $('#pd_billchild_id_' + i).val();
     //console.log('quotationChildId'+quotationChildId);
-  
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -356,100 +361,68 @@ export class EditInvoiceComponent implements OnInit {
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
         this.totalCalculate();
-  
-  
+
+
         let api_req: any = new Object();
-      let api_ProdAutoFill_req: any = new Object();
-      api_req.moduleType = "proforma";
-      api_req.api_url = "proforma/delete_billing_child";
-      api_req.api_type = "web";
-      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-      api_ProdAutoFill_req.action = "delete_quotation_child";
-      api_ProdAutoFill_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
-      api_ProdAutoFill_req.billchild_id = pd_billchild_id;
-      api_req.element_data = api_ProdAutoFill_req;
-  
-      this.serverService.sendServer(api_req).subscribe((response: any) => {
-  console.log("response", response)
-  
-  
-      });
-  
-  
-  
-       
-       
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "proforma";
+        api_req.api_url = "proforma/delete_billing_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_quotation_child";
+        api_ProdAutoFill_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+
+        });
+
+
       }
     })
-  
-  
+
+
   }
 
 
-  handleChangeLocal(event: any) {
-    this.export_state_Local = event.target.value;
-    console.log(this.export_state_Local);
 
-  }
-  handleChangeExport(event: any) {
-    this.export_state_Export = event.target.value;
-    console.log(this.export_state_Export);
-
-  }
-  handleChangeZeroValid(event: any) {
-    this.export_state_ZeroValid = event.target.value;
-    console.log(this.export_state_ZeroValid);
-
-  }
-  handleChange_initial(id: any, evt: any) {
-    var radioSelectInitial = evt.target.value;
-    var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
-  }
-  handleChange(data: any, evt: any) {
+  handleChange_ExportState(data: any, evt: any) {
 
     this.radioID_Export = data;
     console.log("evt", evt.target.checked)
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
-    this.radio_Value_Export = evt.target.value;
+    this.radio_Value_ExportState = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
+    console.log("radio button value", this.radio_Value_ExportState);
     // console.log("radio button id value", xyz);
   }
-  handleChange_Logo(data: any, evt: any) {
+  handleChange_SelectExtraLogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
     console.log("evt", evt.target.checked)
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
-    this.radio_Value_Export = evt.target.value;
+    this.radio_Value_SelectExtraLogo = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
+    console.log("radio button value", this.radio_Value_SelectExtraLogo);
     // console.log("radio button id value", xyz);
   }
-  handleChange_mileSate(data: any, evt: any) {
+  handleChange_mileSate_InvoiceType(data: any, evt: any) {
 
     this.radioID_Logo = data;
     console.log("evt", evt.target.checked)
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
-    this.radio_Value_Export = evt.target.value;
+    this.radio_Value_mileSate_InvoiceType = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export);
+    console.log("radio button value", this.radio_Value_mileSate_InvoiceType);
     // console.log("radio button id value", xyz);
   }
-  handleChangeExtraLogo(event: any) {
-    var Extralogo = event.target.value;
-    // var xyz = id;
-    console.log("radio button value", Extralogo);
 
-  }
-  mile(e: any) {
-    this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
-  }
+
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.checked;
     console.log(this.MSDisplay_Value);
@@ -467,6 +440,10 @@ export class EditInvoiceComponent implements OnInit {
   cbk_fn_previousDue(event: any) {
     this.cbk_previousDue = event.target.checked;
     console.log(this.cbk_previousDue)
+  }
+  cbk_fn_JomPAYLogo(event: any) {
+    this.cbk_JomPAYLogo = event.target.checked;
+    console.log(this.cbk_JomPAYLogo)
   }
 
   cbk_Fn_EditShipAddress(event: any) {
@@ -544,7 +521,7 @@ export class EditInvoiceComponent implements OnInit {
     }
   }
   getProformaBillerDetails() {
-  //  this.getProformaBillerDetails_BillerID = event.target.value;
+    //  this.getProformaBillerDetails_BillerID = event.target.value;
     let api_req: any = new Object();
     let add_BillerDetails_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -595,8 +572,8 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   loadADD() {
-    
-    
+
+
     let api_req: any = new Object();
     let addAPI: any = new Object();
 
@@ -613,7 +590,7 @@ export class EditInvoiceComponent implements OnInit {
       this.ShipByList = response.ship_by;
       this.salesRepList = response.sales_rep;
       this.paymentviaList = response.paymentvia;
-     
+
       this.TaxDropdown();
       console.log("response-load-pi", response)
     });
@@ -632,20 +609,20 @@ export class EditInvoiceComponent implements OnInit {
     api_TaxDropdown_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {    
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
         setTimeout(() => {
           this.addPI_section3.patchValue({
-            'section3_gst_dropdown':response.default_tax_id,  
+            'section3_gst_dropdown': response.default_tax_id,
           });
 
         }, 500);
-       // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-       console.log('response.default_tax_id'+response.default_tax_id);
+        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+        console.log('response.default_tax_id' + response.default_tax_id);
 
-           
+
 
       }
 
@@ -673,8 +650,8 @@ export class EditInvoiceComponent implements OnInit {
       if (response.status = true) {
 
         this.addPI_section1.patchValue({
-           "customer_id_hd":response.customer_list.customerId   
-        })   
+          "customer_id_hd": response.customer_list.customerId
+        })
 
       }
 
@@ -702,25 +679,25 @@ export class EditInvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
 
-        this.addPI_section1.patchValue({         
-            "customer_id_hd":response.customer_list.customerId,
-            "b_name":response.customer_list.customerName,
-            "customer_name":response.customer_list.customerName,
-            "address_1":response.customer_list.customerAddress1,
-            "address_2":response.customer_list.customerAddress2,
-            "address_3":response.customer_list.customerAddress3,
-            "Attn_1":response.customer_list.kind_Attention,
-            "ship_to":response.customer_list.ship_to,
-            "shipTo_1":response.customer_list.ship_customerAddress1,
-            "shipTo_2":response.customer_list.ship_customerAddress2,
-            "shipTo_3":response.customer_list.ship_customerAddress3,
-            "Attn_2":response.customer_list.ship_attn,
+        this.addPI_section1.patchValue({
+          "customer_id_hd": response.customer_list.customerId,
+          "b_name": response.customer_list.customerName,
+          "customer_name": response.customer_list.customerName,
+          "address_1": response.customer_list.customerAddress1,
+          "address_2": response.customer_list.customerAddress2,
+          "address_3": response.customer_list.customerAddress3,
+          "Attn_1": response.customer_list.kind_Attention,
+          "ship_to": response.customer_list.ship_to,
+          "shipTo_1": response.customer_list.ship_customerAddress1,
+          "shipTo_2": response.customer_list.ship_customerAddress2,
+          "shipTo_3": response.customer_list.ship_customerAddress3,
+          "Attn_2": response.customer_list.ship_attn,
         });
 
-        
+
       }
       else {
-        
+
       }
 
     });
@@ -730,8 +707,8 @@ export class EditInvoiceComponent implements OnInit {
 
   PIUpdate() {
 
-   this.updatePI();
-  
+    this.updatePI();
+
   }
 
 
@@ -798,6 +775,12 @@ export class EditInvoiceComponent implements OnInit {
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+
+        this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
+        this.radio_Value_SelectExtraLogo  = response.billing_pararent_details[0].bills_logo_id;
+        this.radio_Value_mileSate_InvoiceType= response.billing_pararent_details[0].mile_discount_state;
+
+
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
@@ -834,14 +817,14 @@ export class EditInvoiceComponent implements OnInit {
           'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
 
         });
-  
-        console.log('billchild_details.length'+response.billchild_details.length);
+
+        console.log('billchild_details.length' + response.billchild_details.length);
         this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
-       // this.getProformaBillerDetails();
+        // this.getProformaBillerDetails();
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
-          console.log('billchild_details++index'+index);
+          console.log('billchild_details++index' + index);
 
           // this.sub_dis_type='';
           // this.sub_dis_val='';
@@ -866,7 +849,7 @@ export class EditInvoiceComponent implements OnInit {
             "pd_OutCall": response.billchild_details[index].out_call_state,
             "sub_dis_amt": response.billchild_details[index].dis_amt,
             "sub_dis_type": this.sub_dis_type,
-            "sub_dis_val":  this.sub_dis_val,
+            "sub_dis_val": this.sub_dis_val,
             "pd_CMon": response.billchild_details[index].current_month_str,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
@@ -875,7 +858,7 @@ export class EditInvoiceComponent implements OnInit {
           );
         }
 
-        
+
         console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
         console.log(this.addresses)
@@ -911,7 +894,7 @@ export class EditInvoiceComponent implements OnInit {
           //row-10
           'section3_logo': response.billing_pararent_details[0].logo,
         });
-        
+
         // this.addPI_section3.patchValue({
         //   //row-1
 
@@ -941,22 +924,22 @@ export class EditInvoiceComponent implements OnInit {
         //   'section3_logo': response.billing_pararent_details[0].logo,
         // });
         // this.loadADD();
-      this.editAddress();
+        this.editAddress();
         // this.removeAddresstest(response.billchild_details.length);
         // console.log(response.billchild_details.length);
         for (let index = 0; index < response.billchild_details.length; index++) {
-      
-          if(response.billchild_details[index].header_split == 1){
 
-           $('#pd_split_'+[index]).prop('checked',false);
-           setTimeout(()=>{
-             $('#pd_split_'+[index]).click();
-           },1000);
+          if (response.billchild_details[index].header_split == 1) {
 
-       
-           }          
+            $('#pd_split_' + [index]).prop('checked', false);
+            setTimeout(() => {
+              $('#pd_split_' + [index]).click();
+            }, 1000);
+
+
+          }
         }
-     
+
       }
       else {
 
@@ -975,116 +958,116 @@ export class EditInvoiceComponent implements OnInit {
         console.log(error);
       }
 
-      
+
 
   }
 
 
-  Customer_selectDropdownData(customerId:any) {
+  Customer_selectDropdownData(customerId: any) {
     //   this.customer_ID=customerId;
     //   this.customer_NAME=data.customerName;
     //    console.log("search data in dropdown", data)
     //    console.log("search data-customer Id", data.customerId)
-        this.customerName_Data = customerId;
-        let api_req: any = new Object();
-        let api_SearchCUST_req: any = new Object();
-        api_req.moduleType = "proforma";
-        api_req.api_url = "proforma/customer_address_details";
-        api_req.api_type = "web";
-        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_SearchCUST_req.action = "quot_customer_details";
-        api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
-        api_SearchCUST_req.customerId = customerId;
-        api_req.element_data = api_SearchCUST_req;
-        this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
-          console.log("customer_address_details---response", response)
-          if (response.status == true) {
-           // console.log('address'+response.customer_details[0].customerAddress1);
-    
-    
-           var address_3;
-           var ship_to_str,ship_address_str1,ship_address_str2,ship_address_str3;
-    
-           if(response.customer_details[0].city!=''){
-            address_3=response.customer_details[0].city;
-           }
-           if(address_3!='' && response.customer_details[0].state!=''){
-            address_3=address_3+' ,'+response.customer_details[0].state;
-           }else{
-            address_3=response.customer_details[0].state;
-           }
-           if(address_3!='' && response.customer_details[0].country!=''){
-            address_3=address_3+' ,'+response.customer_details[0].country;
-           }else{
-            address_3=response.customer_details[0].country;
-           }
-    
-           if(response.customer_details[0].ship_city!=''){
-            ship_address_str3=response.customer_details[0].ship_city;
-           }
-           if(ship_address_str3!='' && response.customer_details[0].ship_state!=''){
-            ship_address_str3=ship_address_str3+' ,'+response.customer_details[0].ship_state;
-           }else{
-            ship_address_str3=response.customer_details[0].state;
-           }
-           if(ship_address_str3!='' && response.customer_details[0].ship_country!=''){
-            ship_address_str3=ship_address_str3+' ,'+response.customer_details[0].ship_country;
-           }else{
-            ship_address_str3=response.customer_details[0].country;
-           }
-    
-    
-            if(response.customer_details[0].ship_to!=''){
-              ship_to_str =response.customer_details[0].ship_to;
-            }else{
-              ship_to_str =response.customer_details[0].customerName;
-            }
-    
-            if(response.customer_details[0].ship_customerAddress1!=''){
-              ship_address_str1 =response.customer_details[0].ship_customerAddress1;
-            }else{
-              ship_address_str1 =response.customer_details[0].customerAddress1;
-            }
-    
-            if(response.customer_details[0].ship_customerAddress2!=''){
-              ship_address_str2 =response.customer_details[0].ship_customerAddress2;
-            }else{
-              ship_address_str2 =response.customer_details[0].customerAddress2;
-            }
-    
-    
-          
-            this.addPI_section1.patchValue({
-                'address_1':response.customer_details[0].customerAddress1,
-                'address_2':response.customer_details[0].customerAddress2,
-                'address_3':address_3,
-                'Attn_1':response.customer_details[0].companyName,
-                'ship_to':ship_to_str,
-                'shipTo_1':ship_address_str1,
-                'shipTo_2':ship_address_str2,
-                'shipTo_3':ship_address_str3,
-                'ship_attn':response.customer_details[0].companyName,            
-            });
-          }
-          else {
-            this.addPI_section1.patchValue({
-              'address_1':'',
-              'address_2':'',
-              'address_3':'',
-              'Attn_1':'',
-              'ship_to':'',
-              'shipTo_1':'',
-              'shipTo_2':'',
-              'shipTo_3':'',
-              'ship_attn':'',            
-          });
-          }
-    
+    this.customerName_Data = customerId;
+    let api_req: any = new Object();
+    let api_SearchCUST_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/customer_address_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_SearchCUST_req.action = "quot_customer_details";
+    api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.customerId = customerId;
+    api_req.element_data = api_SearchCUST_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      console.log("customer_address_details---response", response)
+      if (response.status == true) {
+        // console.log('address'+response.customer_details[0].customerAddress1);
+
+
+        var address_3;
+        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
+
+        if (response.customer_details[0].city != '') {
+          address_3 = response.customer_details[0].city;
+        }
+        if (address_3 != '' && response.customer_details[0].state != '') {
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+        } else {
+          address_3 = response.customer_details[0].state;
+        }
+        if (address_3 != '' && response.customer_details[0].country != '') {
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;
+        } else {
+          address_3 = response.customer_details[0].country;
+        }
+
+        if (response.customer_details[0].ship_city != '') {
+          ship_address_str3 = response.customer_details[0].ship_city;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
+        } else {
+          ship_address_str3 = response.customer_details[0].state;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
+        } else {
+          ship_address_str3 = response.customer_details[0].country;
+        }
+
+
+        if (response.customer_details[0].ship_to != '') {
+          ship_to_str = response.customer_details[0].ship_to;
+        } else {
+          ship_to_str = response.customer_details[0].customerName;
+        }
+
+        if (response.customer_details[0].ship_customerAddress1 != '') {
+          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+        } else {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+        }
+
+        if (response.customer_details[0].ship_customerAddress2 != '') {
+          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+        } else {
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+        }
+
+
+
+        this.addPI_section1.patchValue({
+          'address_1': response.customer_details[0].customerAddress1,
+          'address_2': response.customer_details[0].customerAddress2,
+          'address_3': address_3,
+          'Attn_1': response.customer_details[0].companyName,
+          'ship_to': ship_to_str,
+          'shipTo_1': ship_address_str1,
+          'shipTo_2': ship_address_str2,
+          'shipTo_3': ship_address_str3,
+          'ship_attn': response.customer_details[0].companyName,
+        });
+      }
+      else {
+        this.addPI_section1.patchValue({
+          'address_1': '',
+          'address_2': '',
+          'address_3': '',
+          'Attn_1': '',
+          'ship_to': '',
+          'shipTo_1': '',
+          'shipTo_2': '',
+          'shipTo_3': '',
+          'ship_attn': '',
         });
       }
 
-      
+    });
+  }
+
+
 
   updatePI() {
 
@@ -1097,7 +1080,7 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.action = "update_proforma_invoice";
     api_updatePI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
 
-    console.log('this.addPI_section3.value.billId_edit'+this.addPI_section1.value.billId_edit);
+    console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
     api_updatePI_req.billId = this.addPI_section1.value.billId_edit;
     api_updatePI_req.billerId = this.addPI_section1.value.companyName;
     api_updatePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
@@ -1112,12 +1095,12 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
-   // console.log('ship_address_1'+this.addPI_section1.value.shipTo_1);
-   api_updatePI_req.shipTo_1 = this.addPI_section1.value.ship_address_1,
-   api_updatePI_req.shipTo_2 = this.addPI_section1.value.ship_address_2,
-   api_updatePI_req.shipTo_3 = this.addPI_section1.value.ship_address_3,
+    // console.log('ship_address_1'+this.addPI_section1.value.shipTo_1);
+    api_updatePI_req.shipTo_1 = this.addPI_section1.value.ship_address_1,
+      api_updatePI_req.shipTo_2 = this.addPI_section1.value.ship_address_2,
+      api_updatePI_req.shipTo_3 = this.addPI_section1.value.ship_address_3,
 
-    api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
+      api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
     api_updatePI_req.ship_by = this.addPI_section1.value.ShipBy;
@@ -1129,7 +1112,14 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
+
     api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
+
+
+    api_updatePI_req.bills_logo_id =  this.radio_Value_SelectExtraLogo;
+    api_updatePI_req.export_state = this.radio_Value_ExportState;
+    api_updatePI_req.mile_discount_state = this.radio_Value_mileSate_InvoiceType;
+    api_updatePI_req.mile_discount_display_state = this.MSDisplay_Value;
 
     api_updatePI_req.add_exchange_rate_state = this.addPI_section1.value.CAS_Cbk;
     api_updatePI_req.dw_tax_state = this.addPI_section1.value.DWT_Cbk;
@@ -1138,7 +1128,7 @@ export class EditInvoiceComponent implements OnInit {
     //section-2
     // api_UpdateEnquiry_req.values = this.addQuotationInvoice_section2.value.addresses;
 
-    
+
 
     //section-3
 
@@ -1152,7 +1142,7 @@ export class EditInvoiceComponent implements OnInit {
     //row-3
     api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_updatePI_req.taxPer = $('#tax_per_hd_id').val();
-    
+
     api_updatePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
     //row-4
     api_updatePI_req.shippingName = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
@@ -1161,7 +1151,7 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.add_name = this.addPI_section3.value.banking_charge_name;
     api_updatePI_req.add_amt = this.addPI_section3.value.banking_charge_amt;
 
-    
+
     //row-5
     api_updatePI_req.netPayment = this.addPI_section3.value.section3_grand_total;
     //row-6
@@ -1175,7 +1165,7 @@ export class EditInvoiceComponent implements OnInit {
 
     var addr = this.addPI_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-      console.log('pd_billchild_id_'+$('#pd_billchild_id_' + i).val())
+      console.log('pd_billchild_id_' + $('#pd_billchild_id_' + i).val())
       addr[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -1197,7 +1187,7 @@ export class EditInvoiceComponent implements OnInit {
 
     api_req.element_data = api_updatePI_req;
 
-    
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       console.log("add quotation new save", response);
@@ -1393,20 +1383,20 @@ export class EditInvoiceComponent implements OnInit {
   }
 
 
-  saveDiscount(){
+  saveDiscount() {
     var enablePerFinal = $('#enablePerFinal').val()
     var enablePriceFinal = $('#enablePriceFinal').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
-   //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
-   //console.log('quotationPriceKey'+this.quotationPriceKey);
-   //console.log('disType'+disType);
+    //var disType = $('sub_discount_type_'+this.quotationPriceKey).val();
+    //console.log('quotationPriceKey'+this.quotationPriceKey);
+    //console.log('disType'+disType);
     var final_tot = $('#pd_Total_' + this.invocePriceKey).val();
     $('#sub_discount_type_' + this.invocePriceKey).val(disType);
     var price: any;
     if (disType == 'per') {
-   // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePerFinal != '') {
-           console.log('3333'+final_tot);
+        console.log('3333' + final_tot);
         price = (parseFloat(enablePerFinal) * parseFloat(final_tot) / 100).toFixed(2);
 
 
@@ -1416,7 +1406,7 @@ export class EditInvoiceComponent implements OnInit {
       } else {
         $('#sub_discount_' + this.invocePriceKey).val('');
         $('#sub_discount_val_' + this.invocePriceKey).val('');
-           console.log('222'+final_tot);
+        console.log('222' + final_tot);
         price = final_tot;
 
       }
@@ -1428,7 +1418,7 @@ export class EditInvoiceComponent implements OnInit {
       $('#sub_discount_val_' + this.invocePriceKey).val(enablePriceFinal);
 
       // console.log(price);
-          }
+    }
 
     $('#pd_netPrice_' + this.invocePriceKey).val(price)
 
@@ -1454,7 +1444,7 @@ export class EditInvoiceComponent implements OnInit {
       this.grandTotal = this.grandTotal + this.extraCharge;
     }
     $('#discountFormId').modal('hide');
-this.DiscountForm.reset();
+    this.DiscountForm.reset();
     this.totalCalculate();
 
   }
@@ -1488,7 +1478,7 @@ this.DiscountForm.reset();
     }
   }
 
-  saveGrossDiscount() {  
+  saveGrossDiscount() {
     var finaldiscountTYpe_per = $('#enablePerFinal').val()
     var finaldiscountTYpe_amt = $('#enablePriceFinal').val()
     var tax_amt = $('#tax_amt_id').val()
@@ -1534,7 +1524,7 @@ this.DiscountForm.reset();
     }
     this.finalDiscount = price
     $('#discountFormFinal').modal('hide');
-  
+
   }
 
   calFinalDiscount() {
@@ -1641,7 +1631,7 @@ this.DiscountForm.reset();
 
   goBack() {
     this.router.navigate(['/ProformaInvoice']);
-    
+
   }
 
 }
