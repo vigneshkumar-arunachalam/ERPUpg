@@ -1,4 +1,3 @@
-
 <div class="contents-section">
   <div class="container-fluid">
     <div class="row">
@@ -177,7 +176,7 @@
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
-                                  (click)="editCustomer(list.customerId)">
+                                  (click)="editCustomer(list.customerId)" >
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-edit">
@@ -258,7 +257,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="view" title="Reseler Status" data-toggle="modal"
+                                <a class="view" title="Reseller Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==true">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -490,7 +489,7 @@
                                   </svg>
                                 </a>
                               </li>
-                          
+
 
                             </ul>
                           </div>
@@ -575,10 +574,10 @@
 <!-- -----------------------Modal-View Customer begins-------------------------------- -->
 <div class="modal fade" id="viewCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Customer Details </h2>
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Customer Details </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -751,10 +750,10 @@
 <div class="modal fade" id="addCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content addcustomernewallcss">
       <div class="modal-header">
-        <h1 class="modal-title" id="exampleModalLongTitle">Add Customer Details</h1>
+        <h1 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Add Customer Details</h1>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" (click)="clearcustomer()">&times;</span>
         </button>
@@ -762,7 +761,7 @@
       </div>
       <div class="modal-body mousepoint">
         <form [formGroup]="addCustomer" (ngSubmit)="addCustomerown()">
-          <h3 style="font-size:large;text-align: center;">Enter Customer Details</h3>
+        
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
@@ -860,8 +859,8 @@
 
             <div class="col-lg-6">
               <label> Biller Name</label>
-              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                (change)="CHKAll_BillerNameSelectAll($event)">
+              <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                (change)="CHKAll_BillerNameSelectAll($event)"> -->
               <div class="CheckboxScroll">
                 <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
 
@@ -877,7 +876,7 @@
             <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
               <div>
                 <label style="margin-bottom: 0px;"> Customer Classification<span class="mandatoryField">
-                  *</span></label>
+                    *</span></label>
               </div>
 
               <!-- <div class="ml-4">
@@ -1156,7 +1155,7 @@
 
               </div>
             </div>
-            
+
             <div class="col-lg-12">
               <div class="form-group row">
                 <label for="Email" class="col-lg-12 col-form-label">
@@ -1174,8 +1173,7 @@
                     </mat-chip>
                     <input placeholder="Type New Finance Email to add Dynamically..."
                       [matChipInputFor]="chipListFinanceEmailAdd" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                      [matChipInputAddOnBlur]="addOnBlur" 
-                      (matChipInputTokenEnd)="addFinanceEmail($event)">
+                      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addFinanceEmail($event)">
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
@@ -1459,10 +1457,10 @@
 <div class="modal fade" id="editCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="myLargeModalLabel ">
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="myLargeModalLabel ">
           Update Customer Details
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1508,29 +1506,29 @@
               </div>
             </div> -->
             <!-- vignesh hidden previous working code above -->
-
+      
             <div class="col-lg-6">
               <label> Biller Name</label>
               <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-4"
                 (change)="  CHKAll_BillerNameSelectAll_Edit($event)">
               <div class="CheckboxScroll">
-
+      
                 <div *ngFor="let display of geting_biller;let i =index;" style="padding-left: 30px;">
-
+      
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
                     checked="{{display.chk_val == true? 'checked' : ''}}"
                     (change)="editBillerNameCHK(display.billerId,$event)">
                   {{display.billerName}}{{this.geting_biller_edit}}{{display.billerId}}
-
+      
                 </div>
               </div>
             </div>
             <!-- <input type="checkbox" value="{{quot.chk_val}}"
             checked="{{quot.chk_val == 'true' ? 'checked' : ''}}"
             (change)="QuotationSharedCHK(quot.user_id,$event)"> -->
-
-
-
+      
+      
+      
             <!-- <div class="col-lg-6">
                 <div class="form-group row">
                     <label for="customerClassificationn" class="col-lg-12">
@@ -1547,16 +1545,16 @@
                     </div>
                 </div>
             </div> -->
-
-
+      
+      
             <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
               <div>
                 <label style="margin-bottom: 0px;"> Customer Classification*</label>
               </div>
-
+      
               <div *ngFor="let cust of customerType_listEdit;let m =index;"
                 style="display: flex;padding-left: 30px;align-items: center;">
-
+      
                 <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
                   checked="{{cust.chk_val == true? 'checked' : ''}}"
                   (change)="editCustomerClassificationCHK(cust.name,$event)">
@@ -1565,10 +1563,10 @@
                 checked="{{this.cus_type_edit.indexOf(''+cust+'') !=-1? 'checked' : ''}}"
                  (change)="editCustomerClassificationCHK(cust,$event)">
                 {{cust}} -->
-
+      
               </div>
-
-
+      
+      
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1576,7 +1574,7 @@
               </div>
             </div>
             <div class="col-lg-6">
-
+      
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1641,24 +1639,25 @@
                 </div>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
-
+      
             </div>
+      
           
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
-              <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
-              <input type="checkbox" [readonly]="isReadOnly" style="margin-left:30px;"
-                (change)="edit_eventCheck($event)" />
-              </label>
+                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
+                  <input type="checkbox" [(ngModel)]="checkbox_EdShippingAddress" style="margin-left:30px;"
+                   (change)="edit_eventCheck($event)" />
+                </label>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
-
+      
             </div>
-
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person*</label>
@@ -1728,17 +1727,17 @@
                 </div>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="zipcode" class="col-lg-12 col-form-label">Premium</label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="e_ESA_premium" id="zipcode" />
-
+      
                 </div>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
                 <label class="col-lg-12 col-form-label">Premium Status
@@ -1747,7 +1746,7 @@
                 </label>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="phone" class="col-lg-12 col-form-label">Phone</label>
@@ -1780,8 +1779,8 @@
                 </div>
               </div>
             </div>
-
-
+      
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="Email" class="col-lg-12 col-form-label">
@@ -1801,14 +1800,14 @@
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
-
+      
                 </mat-form-field>
-
+      
               </div>
-            </div> 
-    
-
-
+            </div>
+      
+      
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="finEmail" class="col-lg-12 col-form-label">
@@ -1826,7 +1825,7 @@
                     <input placeholder="Type New Finance Email to add Dynamically..."
                       formControlName="e_ESA_FinanceEmail" [matChipInputFor]="chipListEditFinance"
                       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
-                       (matChipInputTokenEnd)="editFinanceEmail($event)">
+                      (matChipInputTokenEnd)="editFinanceEmail($event)">
                   </mat-chip-list>
                   <br>
                   <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
@@ -1858,9 +1857,9 @@
                 </div>
               </div>
             </div>
-
-
-
+      
+      
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="cmsdepartment" class="col-lg-12 col-form-label">CMS Default
@@ -1900,7 +1899,7 @@
                 <label for="currencyname" class="col-lg-12 col-form-label">Default Currency</label>
                 <div class="col-lg-12">
                   <select name="currencyname" class="form-control" formControlName="edit_currencyname">
-
+      
                     <option *ngFor="let currency of currencyList" value="{{currency.currencyId}}">
                       {{currency.currency_name}}
                     </option>
@@ -1908,7 +1907,7 @@
                 </div>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="stripe_customer_id" class="col-lg-12 col-form-label">Stripe
@@ -1919,23 +1918,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Stripe recurring payment
-
-                  <input type="checkbox" formControlName="e_stripe_recurr_payment" (change)="eventCheckSRP($event)" />
-                </label>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">3CX System Discount
-
-                  <input type="checkbox" formControlName="e_c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
-                </label>
-              </div>
-            </div>
-
+      
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="discount_percentage " class="col-lg-12 col-form-label">Discount
@@ -1946,9 +1930,9 @@
                 </div>
               </div>
             </div>
-
-
-
+      
+      
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="banking_charge" class="col-lg-12 col-form-label">Banking Charge</label>
@@ -1957,25 +1941,11 @@
                 </div>
               </div>
             </div>
-
-
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Select Shopping GST
-
-                  <input type="checkbox" formControlName="e_shopping_gst" (change)="eventCheckshoppingGST($event)" />
-                </label>
-              </div>
-            </div>
-
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Send invoice to customer
-
-                  <input type="checkbox" formControlName="e_send_invoice" (change)="eventCheckIncoice($event)" />
-                </label>
-              </div>
-            </div>
+      
+      
+         
+      
+          
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="contact_person" class="col-lg-12 col-form-label">Contact Person</label>
@@ -2000,59 +1970,95 @@
                 </div>
               </div>
             </div>
+        
+      
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label>
-                <div class="col-lg-12" *ngFor="let display1 of radio;let k=index">
-                  <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
-                    value="{{display1.values}}" (change)="handleChange($event)" />
-                  <label for="new_id2{{k}}" class="col-lg-6 col-form-label">{{display1.name}}</label>
-                </div>
+                
+                  <label class="col-lg-12 col-form-label">Stripe recurring payment
+                
+            
+                
+                  <input class="ml-4" type="checkbox" formControlName="e_stripe_recurr_payment" (change)="eventCheckSRP($event)" />
+                
+                </label>
+            
               </div>
             </div>
-
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Reseller Status
-
-                  <input type="checkbox" formControlName="e_reseller_status" (change)="eventCheckRS($event)" />
+                <label class="col-lg-12 col-form-label">3CX System Discount
+            
+                  <input class="ml-4" type="checkbox" formControlName="e_c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
                 </label>
               </div>
             </div>
-
-
-
+            <div class="col-lg-6">
+              <div class="form-group row">
+                
+                  <label class="col-lg-12 col-form-label">Select Shopping GST
+                
+            
+                
+                  <input class="ml-4" type="checkbox" formControlName="e_shopping_gst" (change)="eventCheckshoppingGST($event)" />
+            
+                </label>
+            
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label class="col-lg-12 col-form-label">Send invoice to customer
+            
+                  <input class="ml-4" type="checkbox" formControlName="e_send_invoice" (change)="eventCheckIncoice($event)" />
+                </label>
+              </div>
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label class="col-lg-12 col-form-label">Reseller Status
+            
+                  <input class="ml-4" type="checkbox" formControlName="e_reseller_status" (change)="eventCheckRS($event)" />
+                </label>
+              </div>
+            </div>
+            
+            
+            
             <div class="col-lg-6">
               <div class="form-group row">
                 <label class="col-lg-12 col-form-label">Customer Banking Charge
-
-                  <input type="checkbox" formControlName="e_custBankingCharge"
+            
+                  <input class="ml-4" type="checkbox" formControlName="e_custBankingCharge"
                     (change)="eventCheck_CustBankingCharge($event)" />
                 </label>
               </div>
             </div>
-
-
+            
             <div class="col-lg-6">
               <div class="form-group row">
                 <label class="col-lg-12 col-form-label">Voip switch credit
-
-                  <input type="checkbox" formControlName="e_voip_switch_credit" (change)="eventCheckVSC($event)" />
+            
+                  <input class="ml-4" type="checkbox" formControlName="e_voip_switch_credit" (change)="eventCheckVSC($event)" />
                 </label>
               </div>
             </div>
-
+            
             <div class="col-lg-6">
               <div class="form-group row">
                 <label class="col-lg-12 col-form-label">Customer Address Update State
-
-                  <input type="checkbox" formControlName="e_custAddressUpdateState" (change)="eventCheckCAUS($event)" />
+            
+                  <input class="ml-4" type="checkbox" formControlName="e_custAddressUpdateState" (change)="eventCheckCAUS($event)" />
                 </label>
               </div>
             </div>
-
-
-
+      
+      
+         
+      
+      
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="payment_way" class="col-lg-12 col-form-label">Default Payment Via</label>
@@ -2066,7 +2072,7 @@
                 </div>
               </div>
             </div>
-
+      
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="vsProvisionAttachment" class="col-lg-12 col-form-label">VS Provision
@@ -2076,7 +2082,17 @@
                 </div>
               </div>
             </div>
-
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label>
+                <div class="col-lg-12" *ngFor="let display1 of radio;let k=index">
+                  <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
+                    value="{{display1.values}}" (change)="handleChange($event)" />
+                  <label for="new_id2{{k}}" class="col-lg-6 col-form-label">{{display1.name}}</label>
+                </div>
+              </div>
+            </div>
+      
           </div>
 
 
@@ -2187,14 +2203,14 @@
                             <span><strong>VS 740 server</strong></span>
                           </td>
                           <td>
-                            <input type="hidden" class="form-control"  formControlName="primary_customer_bill_code_id"
+                            <input type="hidden" class="form-control" formControlName="primary_customer_bill_code_id"
                               id="primary_customer_bill_code_id" />
-                            <input type="text" class="form-control"  formControlName="primary_code_740"
+                            <input type="text" class="form-control" formControlName="primary_code_740"
                               id="primary_code_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="primary_code_retail_740" id="primary_code_retail_740" />
+                            <input type="text" class="form-control" formControlName="primary_code_retail_740"
+                              id="primary_code_retail_740" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="low_credit_740"
@@ -2218,12 +2234,12 @@
                             <span><strong>VS 750 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control"  formControlName="primary_code_750"
+                            <input type="text" class="form-control" formControlName="primary_code_750"
                               id="primary_code_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="primary_code_retail_750" id="primary_code_retail_750" />
+                            <input type="text" class="form-control" formControlName="primary_code_retail_750"
+                              id="primary_code_retail_750" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="low_credit_750"
@@ -2250,11 +2266,12 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control"  formControlName="primary_code_kl"
+                            <input type="text" class="form-control" formControlName="primary_code_kl"
                               id="primary_code_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control"  formControlName="primary_code_retail_kl" id="primary_code_retail_kl" />
+                            <input type="text" class="form-control" formControlName="primary_code_retail_kl"
+                              id="primary_code_retail_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="low_credit_kl"
@@ -2355,23 +2372,23 @@
                     <input type="checkbox" formControlName="manual_credit" (change)="manualCreditPermission($event)"
                       id="manual_credit">
                   </label>
-                 
+
                   <div class="row">
                     <div class="col-lg-12">
-                      
+
                       <form [formGroup]="billCodeEditForm4">
                         <label class="col-lg-12 col-form-label">Add Credit Amount
-                          <input type="checkbox"  (click)="autoCreditCheckList()">
+                          <input type="checkbox" (click)="autoCreditCheckList()">
                         </label>
                         <div class="table-responsive" *ngIf="auto_credit_checkbox_list">
                           <table class="table mb-0 table-borderless">
                             <thead>
                               <tr>
-                              <th>Pbx or Retail </th>
-                              <th>VS 740 server</th>
-                              <th>VS 750 server</th>
-                              <th>VS KL server</th>
-                            </tr>
+                                <th>Pbx or Retail </th>
+                                <th>VS 740 server</th>
+                                <th>VS 750 server</th>
+                                <th>VS KL server</th>
+                              </tr>
                             </thead>
                             <tbody>
                               <tr class="userDatatable-header">
@@ -2382,49 +2399,53 @@
                                   </select>
                                 </td>
                                 <td>
-                                  <input type="text" class="form-control" formControlName="add_credit_value_for_740"  id="add_credit_value_for_740"/>
+                                  <input type="text" class="form-control" formControlName="add_credit_value_for_740"
+                                    id="add_credit_value_for_740" />
                                 </td>
                                 <td>
-                                  <input type="text" class="form-control" formControlName="add_credit_value_for_750"  id="add_credit_value_for_750"/>
+                                  <input type="text" class="form-control" formControlName="add_credit_value_for_750"
+                                    id="add_credit_value_for_750" />
                                 </td>
                                 <td>
-                                  <input type="text" class="form-control" formControlName="add_credit_value_for_KL"  id="add_credit_value_for_KL"/>
+                                  <input type="text" class="form-control" formControlName="add_credit_value_for_KL"
+                                    id="add_credit_value_for_KL" />
                                 </td>
                               </tr>
-                             
+
                           </table>
                           <table class="table mb-0 table-borderless">
                             <thead>
                               <tr>
-                              <th> Type </th>
-                              <th>	Server </th>
-                              <th> Amount </th>
-                              <th> Date & Time </th>
-                              <th> Update By </th>
+                                <th> Type </th>
+                                <th> Server </th>
+                                <th> Amount </th>
+                                <th> Date & Time </th>
+                                <th> Update By </th>
                               </tr>
                             </thead>
                             <tbody>
                               <tr>
-        
+
                               </tr>
                             </tbody>
                           </table>
-                          <label class="col-lg-12 col-form-label"> Current Balance:  Pbx:-  740</label>
-                          <label class="col-lg-12 col-form-label">Current Balance:  Pbx:-  750</label>
-                          <label class="col-lg-12 col-form-label">Current Balance:  Pbx:-  KL</label>
-                          <label class="col-lg-12 col-form-label">Current Balance:  Retail:-  740</label>
-                         
-                        <div class="text-left">
-                          <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" 
-                            style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;" (click)="addCreditAmount(this.editId)"> Add Credit</i>
-                          </button>
+                          <label class="col-lg-12 col-form-label"> Current Balance: Pbx:- 740</label>
+                          <label class="col-lg-12 col-form-label">Current Balance: Pbx:- 750</label>
+                          <label class="col-lg-12 col-form-label">Current Balance: Pbx:- KL</label>
+                          <label class="col-lg-12 col-form-label">Current Balance: Retail:- 740</label>
+
+                          <div class="text-left">
+                            <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2"
+                              style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"
+                                (click)="addCreditAmount(this.editId)"> Add Credit</i>
+                            </button>
+                          </div>
                         </div>
-                      </div>
                       </form>
-        
+
                     </div>
                   </div>
-                 
+
                   <div class="form-group row" style="display: flex; align-items: center;">
                     <label for="customerstatus" class="col-lg-3 col-form-label">DC IP Allow Countries</label>
                     <div style="display: flex; align-items: center;">
@@ -2480,10 +2501,10 @@
 <div class="modal fade" id="specialEditCustomerFormId" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="myLargeModalLabel ">
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="myLargeModalLabel ">
           Update Customer Details(Special Edit)
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2622,10 +2643,10 @@
 <!-- -------------------Modal-mconnect Partner details begins----------------------------------- -->
 <div class="modal fade" id="mconnectPartnerDetailsFormId" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Mconnect Partner Details</h2>
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Mconnect Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -2725,10 +2746,10 @@
 <!-- -----------------------Modal-MrVoip Partner Details-begins---------------------------------------- -->
 <div class="modal fade" id="MrvoipPartnerDetailsFormId" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Mrvoip Partner Details</h2>
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Mrvoip Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -2828,10 +2849,10 @@
 <!-- Modal-Call4tel Partner Details-begins -->
 <div class="modal fade" id="call4tellPartnerDetailsFormId" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Call4tel Partner Details</h2>
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Call4tel Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -2938,10 +2959,10 @@
 <!-- -----------------------Modal-invoice shared---------------begins---------------------------------------- -->
 <div class="modal fade" id="invoiceSharedCustomerFormId" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Select Invoice Shared </h2>
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Select Invoice Shared </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -2949,21 +2970,65 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="invoiceSharedCustomerForm">
-          <div class="col-lg-12" *ngFor="let ins of Invoice_SharedCustomerPermission_List;let i=index">
+          <!-- <div class="col-lg-12" *ngFor="let ins of Invoice_SharedCustomerPermission_List;let i=index">
             <div class="row">
               <label class="col-lg-4">{{ins.firstName}}</label>
 
 
               <div class="col-lg-4">
                 <input type="checkbox" id="{{ ins.userId }}" [value]="ins.userId"
-                checked="{{ins.chk_val==1 ? 'checked':''}}"
+                  checked="{{ins.chk_val==1 ? 'checked':''}}"
                   (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
 
               </div>
 
             </div>
+          </div> -->
+          <!-- <div class="row">
+            <div class="d-flex col-lg-6" *ngFor="let ins of Invoice_SharedCustomerPermission_List;let i=index">
+              <div class="d-flex">
+                <div class="">
+                  <div class="checkbox-group-wrapper">
+                    <div class="checkbox-group d-flex">
+                      <div class="on-off-toggle">
+                        <input type="checkbox" id="{{ ins.userId }}" [value]="ins.userId"
+                        checked="{{ins.chk_val==1 ? 'checked':''}}"
+                        (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
+                        <label for="check-grp1-{{i}}"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+        
+              <span class="">{{ins.firstName}}</span>
+        
+            </div>
+          </div> -->
+          <div class="row">
+            <div class="d-flex col-lg-4" *ngFor="let ins of Invoice_SharedCustomerPermission_List;let i=index">
+              <div class="d-flex">
+                <div class="">
+                  <div class="checkbox-group-wrapper">
+                    <div class="checkbox-group">
+                   
+                      <input type="checkbox" id="{{ ins.userId }}" [value]="ins.userId"
+                      checked="{{ins.chk_val==1 ? 'checked':''}}" class="chb chb-3"
+                      (change)="CheckboxValueChanges_invoice_shareCustomerPermission(ins.userId,$event)">
+                        <label class="mt-2" for="{{ ins.userId }}">{{ins.firstName}}</label>
+                      
+                    </div>
+                  </div>
+                </div>
+          
+              </div>
+          
+              <!-- <span class="">{{item.firstName}}</span> -->
+          
+            </div>
           </div>
-
+          
         </form>
       </div>
       <div class="modal-footer">
@@ -2982,10 +3047,10 @@
 <!-- -----------------------Modal-customer share permission begins-------------------------------- -->
 <div class="modal fade" id="SharedCustomerPermissionFormId" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">
           Select Shared Person</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2994,7 +3059,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="ShareCustomerPermissionForm">
-          <div class="col-lg-12" *ngFor="let item of SharedCustomerPermission_List;let i=index">
+          <!-- <div class="col-lg-12" *ngFor="let item of SharedCustomerPermission_List;let i=index">
             <div class="row">
               <label class="col-lg-4">{{item.firstName}}</label>
 
@@ -3005,8 +3070,29 @@
 
               </div>
             </div>
+          </div> -->
+          <div class="row">
+            <div class="d-flex col-lg-4" *ngFor="let item of SharedCustomerPermission_List;let i=index">
+              <div class="d-flex">
+                <div class="">
+                  <div class="checkbox-group-wrapper">
+                    <div class="checkbox-group">
+                   
+                        <input type="checkbox" id="{{ item.userId }}" [value]="item.userId"
+                          checked="{{item.chk_val==1 ? 'checked':''}}" class="chb chb-3"
+                          (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">
+                        <label class="mt-2" for="{{ item.userId }}">{{item.firstName}}</label>
+                      
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+        
+              <!-- <span class="">{{item.firstName}}</span> -->
+        
+            </div>
           </div>
-
         </form>
       </div>
       <div class="modal-footer">
@@ -3180,7 +3266,7 @@
                           <input type="text" class="form-control" formControlName="popup_billCodeName"
                             id="popup_billCodeName_{{i}}" />
                         </td>
-                       
+
                         <td style="padding-right: 10px!important">
                           <input type="text" class="form-control" formControlName="popup_bill_code_740"
                             id="popup_bill_code_740_{{i}}" />
@@ -3261,13 +3347,13 @@
                             <span><strong>VS 740 server</strong></span>
                           </td>
                           <td>
-                            
-                            <input type="text" class="form-control" 
-                              formControlName="popup_primary_code_740" id="popup_primary_code_740" />
+
+                            <input type="text" class="form-control" formControlName="popup_primary_code_740"
+                              id="popup_primary_code_740" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="popu_primary_code_retail_750" id="popu_primary_code_retail_750" />
+                            <input type="text" class="form-control" formControlName="popu_primary_code_retail_750"
+                              id="popu_primary_code_retail_750" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_low_credit_740"
@@ -3291,12 +3377,12 @@
                             <span><strong>VS 750 server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="popup_primary_code_750" id="popup_primary_code_750" />
+                            <input type="text" class="form-control" formControlName="popup_primary_code_750"
+                              id="popup_primary_code_750" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="popup_primary_code_retail_750" id="popup_primary_code_retail_750" />
+                            <input type="text" class="form-control" formControlName="popup_primary_code_retail_750"
+                              id="popup_primary_code_retail_750" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_low_credit_750"
@@ -3323,12 +3409,12 @@
                             <span><strong>VS KL server</strong></span>
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="popup_primary_code_kl" id="popup_primary_code_kl" />
+                            <input type="text" class="form-control" formControlName="popup_primary_code_kl"
+                              id="popup_primary_code_kl" />
                           </td>
                           <td>
-                            <input type="text" class="form-control" 
-                              formControlName="popup_primary_code_retail_kl" id="popup_primary_code_retail_kl" />
+                            <input type="text" class="form-control" formControlName="popup_primary_code_retail_kl"
+                              id="popup_primary_code_retail_kl" />
                           </td>
                           <td>
                             <input type="text" class="form-control" formControlName="popup_low_credit_kl"
@@ -3447,8 +3533,8 @@
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
-  
-    </div>
+
+      </div>
     </div>
   </div>
 </div>
@@ -3459,10 +3545,10 @@
 <!-- --------------------------Modal-Quick Email begins------------------------------------------ -->
 <div class="modal fade" id="landscapeEmailFormId" tabindex="-1" role="dialog" aria-labelledby="landscapeEmailTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="quickEmailTitle">
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="quickEmailTitle">
           Landscape Email</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3660,10 +3746,10 @@
 <!----------Modal Pop Up (BEGIN)  for Assign Account Manager in customer Contract------------------>
 <div class="modal fade" id="AssignAccountManager" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="AssignAccountManagerModalLongTitle">Assign Account Manager</h2>
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="AssignAccountManagerModalLongTitle">Assign Account Manager</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -3671,7 +3757,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="AssignAccountManagerForm">
-          <div class="col-lg-12" *ngFor="let aml of AssignAccountManager_List;let i=index">
+          <!-- <div class="col-lg-12" *ngFor="let aml of AssignAccountManager_List;let i=index">
             <div class="row">
               <label class="col-lg-4">{{aml.firstName}}</label>
 
@@ -3682,7 +3768,59 @@
 
               </div>
             </div>
+          </div> -->
+
+
+
+          <!-- <div class="row">
+            <div class="d-flex col-lg-6" *ngFor="let aml of AssignAccountManager_List;let i=index">
+              <div class="d-flex">
+                <div class="">
+                  <div class="checkbox-group-wrapper">
+                    <div class="checkbox-group d-flex mb-2">
+                      <div class="on-off-toggle">
+                        <input  type="radio" name="radio_AssignAccountManager" id="{{aml.userId}}"
+                        checked="{{aml.userId==AssignAccountManager_SelectedUserID ? 'checked':''}}"
+                        (change)="handle_radioChange_AccountManager($event)" />
+                        <label for="check-grp1-{{i}}"></label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+        
+              <span class="mb-2">{{aml.firstName}}</span>
+        
+            </div>
+          </div> -->
+
+
+          <div class="row">
+            <div class="d-flex col-lg-6" *ngFor="let aml of AssignAccountManager_List;let i=index">
+              <div class="d-flex">
+                <div class="">
+                  <div class="checkbox-group-wrapper">
+                    <div class="checkbox-group">
+                      <label class="sq-radio mt-2" for="{{ aml.userId }}">
+                      <input  type="radio" name="radio_AssignAccountManager" id="{{aml.userId}}"
+                                  checked="{{aml.userId==AssignAccountManager_SelectedUserID ? 'checked':''}}"
+                                class="mt-2"  (change)="handle_radioChange_AccountManager($event)" />
+                                  <span class="checkmark"></span>
+                        {{aml.firstName}}</label>
+                      
+                    </div>
+                  </div>
+                </div>
+          
+              </div>
+          
+              <!-- <span class="">{{item.firstName}}</span> -->
+          
+            </div>
           </div>
+
+
         </form>
       </div>
       <div class="modal-footer">
@@ -3728,59 +3866,61 @@
               </div>
 
             </div>
-            
-            
-            
-<div class="col-lg-12 mb-4 mt-2" *ngIf="(googleAuthentication_status==true)">
-  <label style="color:rgb(220, 43, 20) !important;">
-    Customer Details
-  </label>
-</div>
-            <div class="col-lg-12" *ngIf="(googleAuthentication_status==true)">
-              <div class="form-group row">
-                <div class="col-lg-6">
-                  <label>
-                    Customer Name
-                  </label>
-                </div>
-                <div class="col-lg-6">
-                  <label style="color:crimson !important;">{{googleAuthentication_customerName}}</label>
-                  <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_customerName" /> -->
+
+            <div *ngIf="(googleAuthentication_status==true)" id="showhide">
+                  <div class="col-lg-12 mb-4 mt-2">
+                    <label style="color:rgb(220, 43, 20) !important;">
+                      Customer Details
+                    </label>
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="col-lg-6">
+                        <label>
+                          Customer Name
+                        </label>
+                      </div>
+                      <div class="col-lg-6">
+                        <label style="color:crimson !important;">{{googleAuthentication_customerName}}</label>
+                        <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_customerName" /> -->
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="col-lg-6">
+                        <label>
+                          User details
+                        </label>
+                      </div>
+                      <div class="col-lg-6">
+                        <label style="color:crimson !important;">{{googleAuthentication_userDetails}}</label>
+                        <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_userDetails" /> -->
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="col-lg-6">
+                        <label>
+                          Password
+                        </label>
+                      </div>
+                      <div class="col-lg-6">
+                        <label style="color:crimson !important;"> {{googleAuthentication_password}}</label>
+                        <!-- <input type="text" [readonly]="isReadOnly"  class="form-control" formControlName="GA_password" /> -->
+                      </div>
+
+                    </div>
+
+                  </div>
                 </div>
 
-              </div>
 
-            </div>
-            <div class="col-lg-12" *ngIf="(googleAuthentication_status==true)">
-              <div class="form-group row">
-                <div class="col-lg-6">
-                  <label>
-                    User details
-                  </label>
-                </div>
-                <div class="col-lg-6" *ngIf="(googleAuthentication_status==true)">
-                  <label style="color:crimson !important;">{{googleAuthentication_userDetails}}</label>
-                  <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_userDetails" /> -->
-                </div>
-
-              </div>
-
-            </div>
-            <div class="col-lg-12" *ngIf="(googleAuthentication_status==true)">
-              <div class="form-group row">
-                <div class="col-lg-6">
-                  <label>
-                    Password
-                  </label>
-                </div>
-                <div class="col-lg-6">
-                  <label style="color:crimson !important;">  {{googleAuthentication_password}}</label>
-                  <!-- <input type="text" [readonly]="isReadOnly"  class="form-control" formControlName="GA_password" /> -->
-                </div>
-
-              </div>
-
-            </div>
 
           </div>
         </form>

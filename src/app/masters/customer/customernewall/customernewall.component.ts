@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { COMMA, ENTER, } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import Swal from 'sweetalert2';
+
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -1503,6 +1504,35 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
+  
+  pageEditLoad() {
+    this.checkbox_EdShippingAddress = true;
+    if (this.checkbox_EdShippingAddress) {
+
+      this.editCustomerForm.get("e_ESA_cntPerson").disable();
+      this.editCustomerForm.get("e_ESA_address1").disable();
+      this.editCustomerForm.get("e_ESA_address2").disable();
+      this.editCustomerForm.get("e_ESA_city").disable();
+      this.editCustomerForm.get("e_ESA_state").disable();
+      this.editCustomerForm.get("e_ESA_shipto").disable();
+      this.editCustomerForm.get("e_ESA_zipcode").disable();
+      this.editCustomerForm.get("e_ESA_countryname").disable();
+    
+    }
+    else {
+
+      this.editCustomerForm.get("e_ESA_cntPerson").enable();
+      this.editCustomerForm.get("e_ESA_address1").enable();
+      this.editCustomerForm.get("e_ESA_address2").enable();
+      this.editCustomerForm.get("e_ESA_city").enable();
+      this.editCustomerForm.get("e_ESA_state").enable();
+      this.editCustomerForm.get("e_ESA_shipto").enable();
+      this.editCustomerForm.get("e_ESA_zipcode").enable();
+      this.editCustomerForm.get("e_ESA_countryname").enable();
+
+    }
+
+  }
   searchCustomerList() {
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
 
@@ -1511,6 +1541,7 @@ export class CustomernewallComponent implements OnInit {
   CustomerListQuickSearch(data: any) {
     // Swal.fire('Searching');
     // Swal.showLoading();
+    this.spinner.show();
     if (data == '') {
       this.customerslist({});
     }
@@ -1537,6 +1568,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = quick_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log("search username ", response)
       if (response.status != '') {
         Swal.close();
@@ -1548,7 +1580,10 @@ export class CustomernewallComponent implements OnInit {
 
       }
       else {
-
+        iziToast.warning({
+          message: "No Matching Records",
+          position: 'topRight'
+        });
 
       }
     });
@@ -1603,8 +1638,7 @@ export class CustomernewallComponent implements OnInit {
     return list_data;
   }
   searchCustomerData(data: any) {
-    Swal.fire("Fetching Company Name ");
-    Swal.showLoading();
+ this.spinner.show();
 
     this.searchResultTest = data
     let api_req: any = new Object();
@@ -1620,7 +1654,8 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      Swal.close();
+      this.spinner.hide();
+     
       if (response != '') {
         this.searchResult = response.customer_names;
         console.log(" this.searchResult", this.searchResult)
@@ -1896,7 +1931,7 @@ export class CustomernewallComponent implements OnInit {
   }
   CHKAll_CustomerClassifSelectAll(event: any) {
 
-    alert("custclass")
+  
     if (event.target.checked == true) {
       var checkAllCC_ID: any = [];
       console.log("CHKAll_CustomerClassifSelectAll", this.customerType_list)
@@ -2288,6 +2323,7 @@ export class CustomernewallComponent implements OnInit {
   }
 
   editCustomer(id: any) {
+    this.pageEditLoad();
     console.log("id", id)
     this.get_cust_type = [];
     this.editId = id;
@@ -2491,6 +2527,7 @@ export class CustomernewallComponent implements OnInit {
       };
   }
   update(id: any) {
+    
     // let Update_billerNameCheckListDisplay = this.editCustomerForm.value.edit_billernamelist.map((data: any) => data.billerId).join(',');
     // console.log("billerName-in update", Update_billerNameCheckListDisplay);
     // console.log("billerName-in update", this.editBillerNameCheckboxID_array);
@@ -2514,14 +2551,15 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
     update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
     update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;
-    update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
+    // update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
+    update_customer_req.bill_attn = this.editCustomerForm.value.e_billingAddress_contactPerson;
     update_customer_req.customerAddress1 = this.editCustomerForm.value.e_billingAddress_address1;
     update_customer_req.customerAddress2 = this.editCustomerForm.value.e_billingAddress_address2;
     update_customer_req.city = this.editCustomerForm.value.e_billingAddress_city;
     update_customer_req.state = this.editCustomerForm.value.e_billingAddress_state;
     update_customer_req.zipCode = this.editCustomerForm.value.e_billingAddress_zipcode;
     update_customer_req.country = this.editCustomerForm.value.Edit_BA_countryname;
-    update_customer_req.bill_attn = this.editCustomerForm.value.e_ESA_cntPerson;
+    update_customer_req.ship_attn = this.editCustomerForm.value.e_ESA_cntPerson;
     update_customer_req.ship_to = this.editCustomerForm.value.e_ESA_shipto;
     update_customer_req.ship_customerAddress1 = this.editCustomerForm.value.e_ESA_address1;
     update_customer_req.ship_customerAddress2 = this.editCustomerForm.value.e_ESA_address2;
@@ -4398,6 +4436,7 @@ export class CustomernewallComponent implements OnInit {
   //   console.log("event value",event.target.value)
   // }
   LandscapeEmailContentDropdown(event: any) {
+    this.spinner.show();
     this.CRMTemplateID = event.target.value;
     console.log("template ID check", this.CRMTemplateID);
     let api_req: any = new Object();
@@ -4413,7 +4452,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_mailContentDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         this.landscapeEmailForm.patchValue({
 
@@ -4542,11 +4581,16 @@ export class CustomernewallComponent implements OnInit {
   GoogleAuthenticationId(id: any) {
     this.GoogleAuthenticationForm.reset();
     $('#GoogleAuthentication').modal("show");
+
     this.googleAuthent_CustomerId = id;
+
+    $(document).ready(function() {
+      $("#showhide").hide();
+  });
   }
   GoogleAuthenticationValidation() {
-
-    this.GoogleAuthenticationForm.reset();
+  
+    // this.GoogleAuthenticationForm.reset();
     let api_req: any = new Object();
     let api_googleAuthVali: any = new Object();
     api_req.moduleType = "common";
@@ -4561,6 +4605,9 @@ export class CustomernewallComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
+        $(document).ready(function() {
+          $("#showhide").show();
+      });
         this.googleAuthentication_status = response.status;
         this.googleAuthentication_customerName = response.customer_details.customerName;
         this.googleAuthentication_userDetails = response.customer_details.user_details;

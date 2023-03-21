@@ -97,7 +97,7 @@ export class AppComponent {
     // console.log(this.router.url);
      if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
       sessionStorage.clear();
-      
+      this.templateAuthView == false
         this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode}});
       
    

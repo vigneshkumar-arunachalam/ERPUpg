@@ -498,7 +498,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     }
 
   }
-  transactionApprovalCommentsUpdate() {
+  transactionApprovalCommentsUpdate($event: MouseEvent) {
 
 
     let api_req: any = new Object();
@@ -513,8 +513,10 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     transAproveComment_update_req.comments = this.BeforeApprovaltransactionApprovalCommentsForm.value.BeforeApprovalComments;
     api_req.element_data = transAproveComment_update_req;
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
+    ($event.target as HTMLButtonElement).disabled = true;
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
         // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
         $("#BeforeApprovaltransactionApprovalCommentsId").modal("hide");
@@ -535,7 +537,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     });
 
   }
-  transactionApprovalCommentsUpdate_Main() {
+  transactionApprovalCommentsUpdate_Main(event: any) {
 
 
     let api_req: any = new Object();
@@ -550,8 +552,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     transAproveComment_update_req.comments = this.BeforeApprovaltransactionApprovalCommentsForm_main.value.BeforeApprovalComments;
     api_req.element_data = transAproveComment_update_req;
 
+   
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+     
       if (response.status == true) {
         // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
         $("#BeforeApprovaltransactionApprovalCommentsForm_main").modal("hide");
@@ -572,7 +575,8 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     });
 
   }
-  transactionApprovalCommentsUpdateAfterApproval() {
+  transactionApprovalCommentsUpdateAfterApproval($event: MouseEvent) {
+
     let api_req: any = new Object();
     let transAproveCommentAP_update_req: any = new Object();
     api_req.moduleType = "transaction_approval";
@@ -586,8 +590,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       this.transactionApprovalCommentsForm.value.Comments;
     api_req.element_data = transAproveCommentAP_update_req;
 
+    ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
 
         $("#transactionApprovalCommentsId").modal("hide");
@@ -604,7 +609,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       }
     });
   }
-  transactionApprovalCommentsUpdateAfterApproval_Main() {
+  transactionApprovalCommentsUpdateAfterApproval_Main($event: MouseEvent) {
     let api_req: any = new Object();
     let transAproveCommentAP_update_req: any = new Object();
     api_req.moduleType = "transaction_approval";
@@ -618,8 +623,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       this.transactionApprovalCommentsForm_main.value.Comments;
     api_req.element_data = transAproveCommentAP_update_req;
 
+    ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
 
         $("#transactionApprovalCommentsIdMain").modal("hide");

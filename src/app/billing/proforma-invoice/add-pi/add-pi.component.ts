@@ -42,7 +42,7 @@ export class AddPIComponent implements OnInit {
   customer_ID: any;
   customer_NAME: any;
   //checkbox
-  mile_check_value: any;
+  mile_discount_state: any;
   dynamicCheckboxwithKey: any;
   SelectExtraLogoCheckboxwithKey: any;
   //checkbox group select-mile
@@ -96,16 +96,19 @@ export class AddPIComponent implements OnInit {
   chkReceivedAuthorizedSignature: boolean = true;
   chklogoAddressSignature: boolean = true;
   //export state-check box
-  export_state: any;
-  radioSelectFooter: any = '1';
+
+  export_state: any = '1';
   export_state_Local: boolean = true;
   export_state_Export: any;
   export_state_ZeroValid: boolean = true;
-  MSDisplay_Value: boolean = true;
+  mile_discount_display_state: boolean = true;
   //read only fields
   isReadonly: boolean = true;
-
-
+  invoiceAddSignature_state:any;
+  invoiceAddSignature_filename:any;
+  checkbox_selectAdditionalSignature:any;
+  selectAdditionalSign:boolean=true;
+  bills_logo_id:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
@@ -306,24 +309,32 @@ export class AddPIComponent implements OnInit {
     console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
-    this.radioSelectFooter = evt.target.value;
+    this.export_state = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radioSelectFooter);
+    console.log("radio button value", this.export_state);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
-    this.ExtralogoValue = event.target.value;
+    this.bills_logo_id = event.target.value;
     // var xyz = id;
-    console.log("radio button value for Extra logo", this.ExtralogoValue);
+    console.log("radio button value for Extra logo", this.bills_logo_id);
 
   }
+
+
+  eventCheckSelectAdditionalSignature(e:any){
+    this.checkbox_selectAdditionalSignature = e.target.checked
+    console.log(this.checkbox_selectAdditionalSignature );
+  }
+
+
   mile(e: any) {
-    this.mile_check_value = e.target.value;
-    console.log(this.mile_check_value);
+    this.mile_discount_state = e.target.value;
+    console.log(this.mile_discount_state);
   }
   handleChange_MSDisplay(event: any) {
-    this.MSDisplay_Value = event.target.checked;
-    console.log(this.MSDisplay_Value);
+    this.mile_discount_display_state = event.target.checked;
+    console.log(this.mile_discount_display_state);
   }
   // EditCHK_MileDiscount(data: any, event: any) {
   //   console.log("List - CheckBox ID", data);
@@ -444,6 +455,7 @@ export class AddPIComponent implements OnInit {
         this.getProformaBillerDetails();
         this.TaxDropdown();
         this.getCustomerInvoiceDetails()
+        this.invoiceAddSignature()
         // this.getCustomerInvoiceDetails(response.defaults_biller_id);
       }
     });
@@ -613,7 +625,7 @@ export class AddPIComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       console.log("customer_address_details---response", response)
-      if (response.status == true) {
+        if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
 
@@ -624,44 +636,17 @@ export class AddPIComponent implements OnInit {
           address_3 = response.customer_details[0].city;
         }
         if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
-        } else if (address_3 != '' && response.customer_details[0].state == '') {
-          address_3 = address_3;
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;        
         } else {
           address_3 = response.customer_details[0].state;
         }
         if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
-        } else if (address_3 != '' && response.customer_details[0].country == '') {
-          address_3 = address_3;
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;      
         } else {
           address_3 = response.customer_details[0].country;
         }
 
-        if (response.customer_details[0].ship_city == '' || response.customer_details[0].ship_city == null) {
-          ship_address_str3 = response.customer_details[0].city;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_city;
-        }
-        if (ship_address_str3 == '' && (response.customer_details[0].ship_state == '' || response.customer_details[0].ship_state == null)) {
-          ship_address_str3 = response.customer_details[0].state;
-        } else if (ship_address_str3 != '' && (response.customer_details[0].ship_state == '' || response.customer_details[0].ship_state == null)) {
-          if (response.customer_details[0].state != '') {
-            ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
-          }
-        } else {
-          ship_address_str3 = response.customer_details[0].state;
-        }
-        if (ship_address_str3 == '' && (response.customer_details[0].ship_country == '' || response.customer_details[0].ship_country == null)) {
-          ship_address_str3 = response.customer_details[0].country;
-        } else if (ship_address_str3 != '' && (response.customer_details[0].ship_country == '' || response.customer_details[0].ship_country == null)) {
-          if (response.customer_details[0].country != '') {
-            ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
-          }
-
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
-        }
+        
 
 
         if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
@@ -682,9 +667,32 @@ export class AddPIComponent implements OnInit {
         if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
           ship_address_str2 = response.customer_details[0].customerAddress2;
         } else {
-
-
           ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+        }
+
+
+        if (response.customer_details[0].ship_city != '') {
+          ship_address_str3 = response.customer_details[0].city;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
+        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;        
+        }else {
+          ship_address_str3 = response.customer_details[0].ship_state;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
+        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;      
+        } else {
+          ship_address_str3 = response.customer_details[0].ship_country;
+        }
+
+        if(response.customer_details[0].ship_to==''){
+          ship_address_str1= response.customer_details[0].customerAddress1;
+          ship_address_str2= response.customer_details[0].customerAddress2;
+          ship_address_str3= address_3;
         }
 
 
@@ -699,6 +707,7 @@ export class AddPIComponent implements OnInit {
           'ship_address_2': ship_address_str2,
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
+          'terms': response.customer_details[0].terms_condition,
         });
       }
       else {
@@ -712,6 +721,7 @@ export class AddPIComponent implements OnInit {
           'ship_address_2': '',
           'ship_address_3': '',
           'ship_attn': '',
+          'terms': '',
         });
       }
 
@@ -785,15 +795,18 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.ship_date = this.addPI_section1.value.ShipDate;
     api_savePI_req.s_attn = this.addPI_section1.value.ship_attn;
     api_savePI_req.ref = this.addPI_section1.value.Ref;
-    api_savePI_req.terms = this.addPI_section1.value.terms;
+   // api_savePI_req.terms = this.addPI_section1.value.terms;
+    api_savePI_req.terms_condition= this.addPI_section1.value.terms;
     api_savePI_req.currency = this.addPI_section1.value.Currency;
     api_savePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_savePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_savePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
-    api_savePI_req.bills_logo_id = this.ExtralogoValue;
-    api_savePI_req.mile_discount_state = this.mile_check_value;
-    api_savePI_req.mile_discount_display_state = this.MSDisplay_Value;
-    api_savePI_req.export_state = this.radioSelectFooter;
+
+
+    api_savePI_req.bills_logo_id = this.bills_logo_id;
+    api_savePI_req.mile_discount_state = this.mile_discount_state;
+    api_savePI_req.mile_discount_display_state = this.mile_discount_display_state;
+    api_savePI_req.export_state = this.export_state;
 
     //section-2
     //  api_savePI_req.values = this.addPI_section2.value.addresses;
@@ -861,11 +874,11 @@ export class AddPIComponent implements OnInit {
     ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      alert("no error");
+   
      
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
-        alert("status == true")
+    
         iziToast.success({
           message: "Proforma Invoice added Successfully",
           position: 'topRight'
@@ -874,14 +887,14 @@ export class AddPIComponent implements OnInit {
 
       }
       else if (response.status === 500) {
-        alert("status == 500")
+      
         iziToast.error({
           message: "Proforma Invoice not added Successfully",
           position: 'topRight'
         });
       }
       else {
-        alert("status == false")
+      
         iziToast.warning({
           message: "Proforma Invoice not added Successfully",
           position: 'topRight'
@@ -892,7 +905,7 @@ export class AddPIComponent implements OnInit {
     }),
       (error: any) => {
         ($event.target as HTMLButtonElement).disabled = false;
-        alert(error)
+       
 
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
@@ -902,6 +915,42 @@ export class AddPIComponent implements OnInit {
       }
 
   }
+
+
+  invoiceAddSignature(){
+    let api_req: any = new Object();
+    let api_invoiceAddSignature_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_add_signature";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invoiceAddSignature_req.action = "invoice_add_signature";
+    api_invoiceAddSignature_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_invoiceAddSignature_req.billerId = this.addPI_section1.value.companyName;
+    api_req.element_data = api_invoiceAddSignature_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("invoice_add_signature response", response)
+
+      if (response.status == true) {
+      
+        this.invoiceAddSignature_state=response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        this.invoiceAddSignature_filename=response.signature_filename;
+      
+        
+      }
+      else {
+       
+      }
+
+
+    });
+
+
+  }
+
+
   getCustomerInvoiceDetails() {
     this.spinner.show();
     // this.billerID = event.target.value;

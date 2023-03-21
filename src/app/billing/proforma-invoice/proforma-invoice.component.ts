@@ -25,7 +25,7 @@ export class ProformaInvoiceComponent implements OnInit {
   user_list: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 50;
+  pageLimit = 200;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   //payment process
@@ -35,7 +35,7 @@ export class ProformaInvoiceComponent implements OnInit {
   paymentType_payment: any;
   paymentDetails_payment: any;
   billID_processPayment: any;
-
+  payLink:any;
   //invoice type details
   invoiceTypeDetailsForm: FormGroup;
   //coupon assign
@@ -750,6 +750,10 @@ export class ProformaInvoiceComponent implements OnInit {
         this.PI_list = response.proforma_details;
 
         this.biller_list = response.biller_details;
+       // this.payLink=response.proforma_details[0].payment_link;
+
+        
+        
 
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
@@ -773,6 +777,15 @@ export class ProformaInvoiceComponent implements OnInit {
     list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
+  }
+  paymentLink(paylink_id:any) {
+    
+    var url =  "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment="+paylink_id;
+    window.open(url, '_blank');
+    console.log("url", url)
+    // $('#pdfFormId').modal('hide');
+    // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
   }
   selectAll(event: any) {
     console.log(event.target.checked)
@@ -1027,9 +1040,10 @@ export class ProformaInvoiceComponent implements OnInit {
   pdf(billId: any,did_invoice_state:any) {
 
     if(did_invoice_state==1){
-      var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
+      var url = "https://erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
     }else{
-      var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+      var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+
 
     }
       

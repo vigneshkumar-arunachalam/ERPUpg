@@ -96,6 +96,8 @@ export class EditPIComponent implements OnInit {
   MSDisplay_Value: boolean = true;
   mileDiscountState_value: any;
   mile_discount_state_radio: any;
+  MSDisplayDetails:any;
+  ckeck_value_MileDisplay:any;
   //calculation
   finalDiscount: any;
   finalDiscountType: any;
@@ -112,13 +114,16 @@ export class EditPIComponent implements OnInit {
   shipping_amt: any;
   invocePriceKey: any;
   row_cnt_mod: any;
-  radio_Value_Export_edit:any;
+
   radio_Value_Export_logo:any;
   //  quotationAddSignature
   quotationAddSignature_state: any;
   quotationAddSignature_filename: any;
   selectAdditionalSign: boolean = true;
   sign_state: number;
+  invoiceAddSignature_state: any;
+  invoiceAddSignature_filename: any;
+  invoiceAddSignatureCHKShowState: any;
 
   //read only fields
   isReadonly: boolean = true;
@@ -195,6 +200,11 @@ export class EditPIComponent implements OnInit {
       { name: 'Callcloud', selected: false, id: 4 },
       { name: 'Mrvoip', selected: false, id: 5 }
     ];
+    this.MSDisplayDetails = [
+      { name: 'MSDisplay', selected: false, id: 1 },
+      { name: 'MSDisplay', selected: false, id: 2 },
+    
+    ];
 
 
     this.addPI_section1 = new FormGroup({
@@ -234,6 +244,7 @@ export class EditPIComponent implements OnInit {
       'bills_logo_id': new FormControl(),
       'mile_discount_state': new FormControl(),
       'mile_MSDisplay': new FormControl(),
+      'msDisplayFC': new FormControl(),
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
     });
@@ -400,10 +411,26 @@ export class EditPIComponent implements OnInit {
 
   }
   checkbox_selectAdditionalSignature: any;
+
   eventCheckSelectAdditionalSignature(e: any) {
+    if (this.invoiceAddSignature_state == 1) {
+      if (e.target.checked == true) {
+        $('#signature_img_id').css("display", "block");
+      } else {
+        $('#signature_img_id').css("display", "none");
+      }
+    } else {
+      $('#signature_message_id').css("display", "block");
+    }
     this.checkbox_selectAdditionalSignature = e.target.checked
     console.log(this.checkbox_selectAdditionalSignature);
   }
+
+
+  // eventCheckSelectAdditionalSignature(e: any) {
+  //   this.checkbox_selectAdditionalSignature = e.target.checked
+  //   console.log(this.checkbox_selectAdditionalSignature);
+  // }
 
 
   handleChange_ExportState(data: any, evt: any) {
@@ -447,6 +474,7 @@ export class EditPIComponent implements OnInit {
  
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.checked;
+    // this.MSDisplay_Value = id;
     console.log(this.MSDisplay_Value);
   }
   keywordCustomerName = 'customerName';
@@ -766,6 +794,7 @@ export class EditPIComponent implements OnInit {
        this.radio_Value_Export_logo= response.billing_pararent_details[0].bills_logo_id;
        this.radio_Value_ExportState= response.billing_pararent_details[0].export_state;;
        this.radio_Value_InvoiceType= response.billing_pararent_details[0].mile_discount_state;
+       this.ckeck_value_MileDisplay=response.billing_pararent_details[0].mile_discount_display_state;
        
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -800,6 +829,7 @@ export class EditPIComponent implements OnInit {
           'mile_discount_state': response.billing_pararent_details[0].mile_discount_state,
           'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
           'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
+          'msDisplayFC':response.billing_pararent_details[0].mile_discount_display_state,
 
         });
 
@@ -952,7 +982,11 @@ export class EditPIComponent implements OnInit {
 
           }
         }
-        this.quotationAddSignature();
+
+        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signtureId);
+
+    
+       
       }
       else {
 
@@ -1006,49 +1040,69 @@ export class EditPIComponent implements OnInit {
           address_3 = response.customer_details[0].city;
         }
         if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;        
         } else {
           address_3 = response.customer_details[0].state;
         }
         if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;      
         } else {
           address_3 = response.customer_details[0].country;
         }
 
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].ship_city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else {
-          ship_address_str3 = response.customer_details[0].state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else {
-          ship_address_str3 = response.customer_details[0].country;
-        }
+        
 
 
-        if (response.customer_details[0].ship_to != '') {
-          ship_to_str = response.customer_details[0].ship_to;
-        } else {
+        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
+
           ship_to_str = response.customer_details[0].customerName;
+
+        } else {
+          ship_to_str = response.customer_details[0].ship_to;
         }
 
-        if (response.customer_details[0].ship_customerAddress1 != '') {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-        } else {
+        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
           ship_address_str1 = response.customer_details[0].customerAddress1;
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 != '') {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
         } else {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+
         }
 
+        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+        } else {
+          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+        }
+
+
+        if (response.customer_details[0].ship_city != '') {
+          ship_address_str3 = response.customer_details[0].city;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
+        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;        
+        }else {
+          ship_address_str3 = response.customer_details[0].ship_state;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
+        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;      
+        } else {
+          ship_address_str3 = response.customer_details[0].ship_country;
+        }
+
+        if(response.customer_details[0].ship_to==''){
+          ship_address_str1= response.customer_details[0].customerAddress1;
+          ship_address_str2= response.customer_details[0].customerAddress2;
+          ship_address_str3= address_3;
+        }
+
+
+        console.log("ship_address_str1---response", ship_address_str1);
+        console.log("ship_address_str2---response", ship_address_str2)
+        console.log("ship_address_str3---response", ship_address_str3)
 
 
         this.addPI_section1.patchValue({
@@ -1514,8 +1568,8 @@ export class EditPIComponent implements OnInit {
   }
 
   saveGrossDiscount() {
-    var enablePercentabeDiscont = $('#enablePerFinal').val()
-    var enablePriceDiscont = $('#enablePriceFinal').val()
+    var enablePercentabeDiscont = $('#enableFinalPercent').val()
+    var enablePriceDiscont = $('#enableFinalDiscount').val()
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
@@ -1676,26 +1730,45 @@ export class EditPIComponent implements OnInit {
 
   }
 
-  quotationAddSignature() {
+  
+
+  invoiceAddSignatureEdit(sign_val: any) {
+    //alert('sign_state'+sign_state);
     let api_req: any = new Object();
-    let api_quotationAddSignature_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/quotation_add_signature";
+    let api_invoiceAddSignatureEdit_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_add_signature_edit";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_quotationAddSignature_req.action = "quotation_add_signature";
-    api_quotationAddSignature_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
-    api_quotationAddSignature_req.billerId = this.addPI_section1.value.companyName;
-    api_req.element_data = api_quotationAddSignature_req;
+    api_invoiceAddSignatureEdit_req.action = "invoice_add_signature_edit";
+    //api_quotationAddSignatureEdit_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_invoiceAddSignatureEdit_req.user_id = this.addPI_section1.value.salesRep;
+    // api_quotationAddSignatureEdit_req.billerId = this.billerID ;
+    api_invoiceAddSignatureEdit_req.billerId = this.addPI_section1.value.companyName;
+    api_invoiceAddSignatureEdit_req.billId = this.editbillerID;
+    api_req.element_data = api_invoiceAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
-        this.quotationAddSignature_state = response.signature_state;
+        this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
-        this.quotationAddSignature_filename = response.signature_filename;
+        if (sign_val == 0) {
+          console.log('response.signature_filename' + response.signature_filename);
+          this.invoiceAddSignature_filename = response.signature_filename;
+        }
+
+        this.invoiceAddSignatureCHKShowState = response.invoice_signature_show_state;
+
+        this.addPI_section3.patchValue({
+          //section-3
+
+          //row-9
+          //     'section3_select_additional_signature': response.quot_signature_show_state,
+
+        });
       }
       else {
 

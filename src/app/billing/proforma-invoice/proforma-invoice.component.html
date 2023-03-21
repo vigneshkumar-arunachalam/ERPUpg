@@ -243,7 +243,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover3" title="Payment" data-toggle="modal">
+                                <a class="hover3" title="Payment" data-toggle="modal" (click)="paymentLink(list.paylink_id)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-eye-off">
@@ -255,7 +255,7 @@
                                 </a>
                               </li>
 
-                              <li class="dropdown__item">
+                              <!-- <li class="dropdown__item">
                                 <a href="#" class="hover4" title="Coupon Assign" data-toggle="modal"
                                   data-target="#couponAssignFormId">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -265,7 +265,7 @@
                                     <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
                                   </svg>
                                 </a>
-                              </li>
+                              </li> -->
                               <li class="dropdown__item">
                                 <a class="hover4" title="set Invoice Type Name" data-toggle="modal"
                                   data-target="#setInvoiceTypeNameFormId" (click)="setInvoiceTypeNameEdit(list.billId)">
