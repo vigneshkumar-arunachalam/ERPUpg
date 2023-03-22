@@ -982,13 +982,13 @@
             </div>
 
             <div class="col-lg-6">
-              <div class="form-group row" style="display: flex;align-items: center;">
-                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
+              <div class="form-group row" style="display: flex;align-items: left;">
+                
 
 
                   <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;"
-                    formControlName="edit_ship_address" (change)="eventCheck($event)" />
-                </label>
+                  id="sesa"  class="chb chb-3" formControlName="edit_ship_address" (change)="eventCheck($event)" />
+                    <label  style="color: rgb(233, 13, 24)!important;" for="sesa">Edit Shipping Address </label>
               </div>
             </div>
             <div class="col-lg-6">
@@ -1088,10 +1088,10 @@
 
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Premium Status
+                
                   <input type="checkbox" formControlName="ESA_premiumStatus" (change)="eventCheckPremiumStatus($event)"
-                    style="margin-left: 30px;" />
-                </label>
+                  id="prest"  class="chb1 chb1-altered" style="margin-left: 30px;" />
+                    <label class="col-lg-12 col-form-label" for="prest">Premium Status</label>
               </div>
             </div>
 
@@ -1317,29 +1317,29 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">3CX System Discount
+                
 
                   <input type="checkbox" formControlName="c3cx_system_discount" style="margin-left:30px;"
-                    (change)="eventCheck3CXSD($event)" />
-                </label>
+                  id="3cxsd"  class="chb1 chb1-altered"  (change)="eventCheck3CXSD($event)" />
+                  <label class="col-lg-12 col-form-label" for="3cxsd">3CX System Discount</label>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Select Shopping GST
+                
 
                   <input type="checkbox" formControlName="shopping_gst" style="margin-left:30px;"
-                    (change)="eventCheckshoppingGST($event)" />
-                </label>
+                  id="ssgst"  class="chb1 chb1-altered"   (change)="eventCheckshoppingGST($event)" />
+                    <label class="col-lg-12 col-form-label" for="ssgst">Select Shopping GST</label>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Send invoice to customer
+                
 
                   <input type="checkbox" [(ngModel)]="checked" style="margin-left:30px;" formControlName="send_invoice"
-                    (change)="eventCheckIncoice($event)" />
-                </label>
+                  id="sic"  class="chb1 chb1-altered" (change)="eventCheckIncoice($event)" />
+                    <label class="col-lg-12 col-form-label" for="sic">Send invoice to customer</label>
               </div>
             </div>
 
@@ -1362,20 +1362,20 @@
 
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Reseller Status
+                
 
                   <input type="checkbox" formControlName="reseller_status" style="margin-left:30px;"
-                    (change)="eventCheckRS($event)" />
-                </label>
+                  id="resstat"  class="chb1 chb1-altered"  (change)="eventCheckRS($event)" />
+                  <label class="col-lg-12 col-form-label" for="resstat">Reseller Status</label>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Voip switch credit
+                
 
                   <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit"
-                    title="Disabled" (change)="eventCheckVSC($event)" style="margin-left:30px;" />
-                </label>
+                  id="voipSC"  class="chb1 chb1-altered"  title="Disabled" (change)="eventCheckVSC($event)" style="margin-left:30px;" />
+                    <label class="col-lg-12 col-form-label" for="voipSC">Voip switch credit</label>
               </div>
             </div>
             <!-- <div class="col-lg-6">
@@ -1404,6 +1404,32 @@
               <div class="form-group row" style="display: flex;align-items: center;">
                 <label for="customerstatus" class="col-lg-4 col-form-label">Customer Status</label>
                 <div style="display: flex;align-items: center;">
+                  <div  style="margin-right:20px;">
+                  
+
+                    <label class="sq-radio" for="New"> 
+                      <input  type="radio" name="addCustomerStatus" id="New"
+                      [checked]="true" (change)="CustomerStatus_RadioEvent($event)" />
+                      <span class="checkmark"></span>
+                      New
+                    </label>
+                  </div>
+
+                  <div  style="margin-right:20px;">
+                    <label class="sq-radio"  for="Permanent">
+                    <input  type="radio" name="addCustomerStatus" id="Permanent"
+                      (change)="CustomerStatus_RadioEvent($event)" />
+                      <span class="checkmark"></span>
+                    Permanent
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-6">
+              <div class="form-group row" style="display: flex;align-items: center;">
+                <label for="customerstatus" class="col-lg-4 col-form-label">Customer Status</label>
+                <div style="display: flex;align-items: center;">
                   <div class="form-check" style="margin-right:30px;">
                     <input mdbRadio class="form-check-input" type="radio" name="addCustomerStatus" id="New"
                       [checked]="true" (change)="CustomerStatus_RadioEvent($event)" />
@@ -1420,7 +1446,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1647,9 +1673,10 @@
           
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
-                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Edit Shipping Address
+                
                   <input type="checkbox" [(ngModel)]="checkbox_EdShippingAddress" style="margin-left:30px;"
-                   (change)="edit_eventCheck($event)" />
+                  id="esa2"  class="chb chb-3"  (change)="edit_eventCheck($event)" />
+                  <label  style="color: rgb(233, 13, 24)!important;" for="esa2">Edit Shipping Address
                 </label>
               </div>
             </div>
@@ -1740,10 +1767,10 @@
       
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Premium Status
+               
                   <input type="checkbox" formControlName="e_ESA_premiumStatus"
-                    (change)="eventCheckPremiumStatus($event)" style="margin-left:30px;" />
-                </label>
+                  id="eprestat"  class="chb1 chb1-altered" (change)="eventCheckPremiumStatus($event)" style="margin-left:30px;" />
+                    <label class="col-lg-12 col-form-label" for="eprestat">Premium Status </label>
               </div>
             </div>
       
@@ -1975,52 +2002,52 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 
-                  <label class="col-lg-12 col-form-label">Stripe recurring payment
+                  
                 
             
                 
-                  <input class="ml-4" type="checkbox" formControlName="e_stripe_recurr_payment" (change)="eventCheckSRP($event)" />
+                  <input class="ml-4"  id="esrp"  class="chb1 chb1-altered" type="checkbox" formControlName="e_stripe_recurr_payment" (change)="eventCheckSRP($event)" />
                 
-                </label>
+                  <label class="col-lg-12 col-form-label" for="esrp">Stripe recurring payment</label>
             
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label class="col-lg-12 col-form-label">3CX System Discount
-            
-                  <input class="ml-4" type="checkbox" formControlName="e_c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
-                </label>
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
                 
-                  <label class="col-lg-12 col-form-label">Select Shopping GST
+            
+                  <input class="ml-4" id="e3cxsd"  class="chb1 chb1-altered"  type="checkbox" formControlName="e_c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
+                  <label class="col-lg-12 col-form-label" for="e3cxsd">3CX System Discount</label>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                
+                  
                 
             
                 
-                  <input class="ml-4" type="checkbox" formControlName="e_shopping_gst" (change)="eventCheckshoppingGST($event)" />
+                  <input class="ml-4" id="esgst"  class="chb1 chb1-altered" type="checkbox" formControlName="e_shopping_gst" (change)="eventCheckshoppingGST($event)" />
             
-                </label>
+                  <label class="col-lg-12 col-form-label" for="esgst">Select Shopping GST</label>
             
               </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Send invoice to customer
+                
             
-                  <input class="ml-4" type="checkbox" formControlName="e_send_invoice" (change)="eventCheckIncoice($event)" />
-                </label>
+                  <input class="ml-4" id="esic"  class="chb1 chb1-altered" type="checkbox" formControlName="e_send_invoice" (change)="eventCheckIncoice($event)" />
+                  <label class="col-lg-12 col-form-label" for="esic">Send invoice to customer</label>
               </div>
             </div>
             
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Reseller Status
+                
             
-                  <input class="ml-4" type="checkbox" formControlName="e_reseller_status" (change)="eventCheckRS($event)" />
-                </label>
+                  <input class="ml-4" id="erss"  class="chb1 chb1-altered"  type="checkbox" formControlName="e_reseller_status" (change)="eventCheckRS($event)" />
+                  <label class="col-lg-12 col-form-label" for="erss">Reseller Status </label>
               </div>
             </div>
             
@@ -2028,29 +2055,29 @@
             
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Customer Banking Charge
+                
             
-                  <input class="ml-4" type="checkbox" formControlName="e_custBankingCharge"
-                    (change)="eventCheck_CustBankingCharge($event)" />
-                </label>
+                  <input class="ml-4" id="ecbc" type="checkbox" formControlName="e_custBankingCharge"
+                  class="chb1 chb1-altered" (change)="eventCheck_CustBankingCharge($event)" />
+                    <label class="col-lg-12 col-form-label" for="ecbc">Customer Banking Charge</label>
               </div>
             </div>
             
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Voip switch credit
+               
             
-                  <input class="ml-4" type="checkbox" formControlName="e_voip_switch_credit" (change)="eventCheckVSC($event)" />
-                </label>
+                  <input class="ml-4" id="evsc" class="chb1 chb1-altered" type="checkbox" formControlName="e_voip_switch_credit" (change)="eventCheckVSC($event)" />
+                  <label class="col-lg-12 col-form-label" for="evsc">Voip switch credit </label>
               </div>
             </div>
             
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="col-lg-12 col-form-label">Customer Address Update State
+               
             
-                  <input class="ml-4" type="checkbox" formControlName="e_custAddressUpdateState" (change)="eventCheckCAUS($event)" />
-                </label>
+                  <input class="ml-4"  id="caus" class="chb1 chb1-altered" type="checkbox" formControlName="e_custAddressUpdateState" (change)="eventCheckCAUS($event)" />
+                  <label class="col-lg-12 col-form-label" for="caus"> Address Update State</label>
               </div>
             </div>
       
@@ -2086,12 +2113,25 @@
               <div class="form-group row">
                 <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label>
                 <div class="col-lg-12" *ngFor="let display1 of radio;let k=index">
+                  
+                  <label for="new_id2{{k}}"class="sq-radio mt-2">
+                    <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
+                    value="{{display1.values}}" (change)="handleChange($event)" />
+                    <span class="checkmark"></span>
+                    {{display1.name}}</label>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label>
+                <div class="col-lg-12" *ngFor="let display1 of radio;let k=index">
                   <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
                     value="{{display1.values}}" (change)="handleChange($event)" />
                   <label for="new_id2{{k}}" class="col-lg-6 col-form-label">{{display1.name}}</label>
                 </div>
               </div>
-            </div>
+            </div> -->
       
           </div>
 

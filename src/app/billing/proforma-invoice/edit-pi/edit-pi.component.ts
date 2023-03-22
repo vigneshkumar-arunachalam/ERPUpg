@@ -124,6 +124,8 @@ export class EditPIComponent implements OnInit {
   invoiceAddSignature_state: any;
   invoiceAddSignature_filename: any;
   invoiceAddSignatureCHKShowState: any;
+  received_signature_state: any;
+  print_logo_state: any;
 
   //read only fields
   isReadonly: boolean = true;
@@ -937,6 +939,9 @@ export class EditPIComponent implements OnInit {
           //row-10
           'section3_logo': response.billing_pararent_details[0].logo,
         });
+
+       this.received_signature_state = response.billing_pararent_details[0].received_signature;
+       this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
         // this.addPI_section3.patchValue({
         //   //row-1

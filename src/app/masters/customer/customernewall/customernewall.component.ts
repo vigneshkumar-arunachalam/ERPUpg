@@ -2297,11 +2297,12 @@ export class CustomernewallComponent implements OnInit {
         $('#addCustomerFormId').modal('hide');
 
         iziToast.success({
-          message: "Customer Added successfully",
+          message: "Customer Added successfully,Send to Approval",
           position: 'topRight'
         });
 
         this.clear();
+        this.customerslist({});
         this.customerslist({});
 
       } else {

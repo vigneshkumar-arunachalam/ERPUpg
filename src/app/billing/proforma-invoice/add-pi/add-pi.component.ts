@@ -222,6 +222,7 @@ export class AddPIComponent implements OnInit {
       'section3_termCondition': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
+      'section3_select_additional_signature': new FormControl({ value: '', disabled: false }, Validators.required),
 
     });
 
@@ -866,6 +867,7 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.add_amt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
     api_savePI_req.netTotal = this.addPI_section3.value.section3_grand_total;
     api_savePI_req.remarks = this.addPI_section3.value.section3_remarks;
+    api_savePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
     api_savePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
     api_savePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
     api_savePI_req.logo = this.addPI_section3.value.section3_logo;
