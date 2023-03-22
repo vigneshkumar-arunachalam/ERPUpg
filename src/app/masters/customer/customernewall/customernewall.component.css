@@ -228,13 +228,13 @@
     width: 80px;
     overflow: hidden;
   } */
-  .userDatatable table td{padding:4px 0px 4px!important;}
+  .userDatatable table td{padding:4px 4px 4px!important;}
   .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
   /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
   .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
   .userDatatable .d-flex{justify-content: center;margin-right: 0;}
   .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
-  
+  /* .userDatatable table th{padding-left: 10px! important} */
 
 
 
@@ -627,7 +627,7 @@ th{
 }
 
 
-
+/*   checkbox for permission pop up -starts*/
 .chb {
   visibility: hidden;
 }
@@ -665,12 +665,15 @@ th{
   height: 14px;
 }
 
+/*   checkbox for permission pop up -ends*/
+
 
 
 .sq-radio {
   /* display: block; */
   position: relative;
-  padding-left: 35px;
+  padding-left: 45px;
+  padding-top: 2px;
   margin-bottom: 12px;
   cursor: pointer;
   font-size: 14px;
@@ -685,6 +688,9 @@ th{
   position: absolute;
   opacity: 0;
   cursor: pointer;
+  padding-left: 5px;
+  padding-top: 3px;
+  
 }
 
 /* Create a custom radio button */
@@ -692,8 +698,8 @@ th{
   position: absolute;
   top: 0;
   left: 0;
-  width: 32px;
-  height: 32px;
+  width: 20px;
+  height: 20px;
   border-radius: 25px;
   background-color: #e9b7b7;
 }
@@ -722,10 +728,52 @@ th{
 
 /* Style the indicator (dot/circle) */
 .sq-radio .checkmark:after {
- 	top: 7px;
-	left: 7px;
-  width: 18px;
-  height: 18px;
+ 	top: 4px;
+	left: 4px;
+  width: 12px;
+  height: 12px;
   border-radius: 2px;
   background-color: #241d25;
 }
+
+
+
+/*   checkbox for permission pop up -starts*/
+.chb1 {
+  visibility: hidden;
+}
+
+.chb1 + label {
+  position: relative;
+  padding-left: 14px;
+  padding-top: 3px;
+}
+
+
+.chb1-altered + label::before {
+  position: absolute;
+  left: 185px;
+  top: 4px;
+/*   text-align: center; */
+  
+  border: 2px solid #3498db;
+  content: " ";
+  width: 16px;
+  height: 16px;
+  
+  transition: all 0.1s ease-in,  border-color 0.05s ease-in;
+}
+
+.chb1-altered:checked + label::before {
+  transform: rotate(40deg);
+  border-top-color: transparent;
+  border-left-color: transparent;
+  
+  
+  top: 2px;
+  left: 185px;
+  width: 7px;
+  height: 14px;
+}
+
+/*   checkbox for permission pop up -ends*/

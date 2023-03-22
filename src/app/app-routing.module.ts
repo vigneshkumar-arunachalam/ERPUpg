@@ -41,8 +41,8 @@ import { AddDidInvoiceComponent } from './billing/didinvoice/add-did-invoice/add
 import { EditInvoiceComponent } from './billing/invoice/edit-invoice/edit-invoice.component';
 import { EditDidInvoiceComponent } from './billing/didinvoice/edit-did-invoice/edit-did-invoice.component';
 import { LicenseCreditComponent } from './license-credit/license-credit.component';
-import { AddDidpiComponent } from './billing/proforma-invoice/edit-didpi/add-didpi/add-didpi.component';
-import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi/edit-didpi.component'; 
+import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didpi.component';
+import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
 
 const routes: Routes = [
   {

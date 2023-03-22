@@ -1308,11 +1308,11 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
-                <label class="col-lg-12 col-form-label">Stripe recurring payment
+                
 
                   <input type="checkbox" formControlName="stripe_recurr_payment" style="margin-left:30px;"
-                    (change)="eventCheckSRP($event)" />
-                </label>
+                id="srp"  class="chb1 chb1-altered" (change)="eventCheckSRP($event)" />
+                <label class="col-lg-12 col-form-label" for="srp">Stripe recurring payment </label>
               </div>
             </div>
             <div class="col-lg-6">
@@ -2137,7 +2137,7 @@
                           <input type="text" class="form-control" formControlName="bill_code_750_8"
                             id="bill_code_750_8_{{i}}" />
                         </td>
-                        <td>
+                        <td *ngIf="i>0">
                           <div class="userDatatable-content d-inline-block">
                             <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress1(i)">X</button>
 
@@ -3797,7 +3797,7 @@
 
 
           <div class="row">
-            <div class="d-flex col-lg-6" *ngFor="let aml of AssignAccountManager_List;let i=index">
+            <div class="d-flex col-lg-4" *ngFor="let aml of AssignAccountManager_List;let i=index">
               <div class="d-flex">
                 <div class="">
                   <div class="checkbox-group-wrapper">
