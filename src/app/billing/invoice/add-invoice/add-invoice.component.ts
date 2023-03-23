@@ -519,6 +519,7 @@ export class AddInvoiceComponent implements OnInit {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
+        this.tax_per_mod = response.percent_val;
         setTimeout(() => {
           this.addPI_section3.patchValue({
             'section3_gst_dropdown': response.default_tax_id,
@@ -903,7 +904,7 @@ export class AddInvoiceComponent implements OnInit {
 
 
     //section-2
-    //  api_savePI_req.values = this.addPI_section2.value.addresses;
+    //  api_saveInvoice_req.values = this.addPI_section2.value.addresses;
 
 
     var addr = this.addPI_section2.value.addresses;
@@ -928,6 +929,7 @@ export class AddInvoiceComponent implements OnInit {
       addr[i].pd_sellingPrice = $('#pd_SP_' + i).val();
       addr[i].pd_netPrice = $('#pd_netPrice_' + i).val();
       addr[i].pd_Total = $('#pd_Total_' + i).val();
+      addr[i].pd_current_month_str = $('#pd_current_month_str_' + i).val();
       addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
       addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
       addr[i].sub_discount = $('#sub_discount_' + i).val();
@@ -939,22 +941,31 @@ export class AddInvoiceComponent implements OnInit {
     api_saveInvoice_req.values = addr;
 
 
-    //section-3
+    //section-3 
     api_saveInvoice_req.grossTotal = this.addPI_section3.value.section3_gross_total;
-    api_saveInvoice_req.discountAmount =  $('#finalDiscount_amt').val();
+
+
+    // api_saveInvoice_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
+    // api_saveInvoice_req.final_dis_type = this.addPI_section3.value.final_dis_type;
+    // api_saveInvoice_req.final_dis_val = this.addPI_section3.value.final_dis_val;
+
+    
+    api_saveInvoice_req.discountAmount = $('#finalDiscount_amt').val();
     api_saveInvoice_req.final_dis_type = $('#final_discount_type').val();
     api_saveInvoice_req.discountPer = $('#final_discount_val').val();
+
     api_saveInvoice_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_saveInvoice_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
-
     api_saveInvoice_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
-    api_saveInvoice_req.addAmt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
+    api_saveInvoice_req.shippingName = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
+    api_saveInvoice_req.add_name = this.addPI_section3.value.section3_bankingCharge_amt_name_txtbox;
+    api_saveInvoice_req.add_amt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
     api_saveInvoice_req.netTotal = this.addPI_section3.value.section3_grand_total;
     api_saveInvoice_req.remarks = this.addPI_section3.value.section3_remarks;
-    api_saveInvoice_req.previous_due_state = this.cbk_previousDue
     api_saveInvoice_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
     api_saveInvoice_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
     api_saveInvoice_req.logo = this.addPI_section3.value.section3_logo;
+
 
     //commission popup
     api_saveInvoice_req.resellerName = this.resellerName;

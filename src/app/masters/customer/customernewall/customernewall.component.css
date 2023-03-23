@@ -777,3 +777,7 @@ th{
 }
 
 /*   checkbox for permission pop up -ends*/
+.call4tel-address-show::before{
+  left: -13px!important;
+  
+}

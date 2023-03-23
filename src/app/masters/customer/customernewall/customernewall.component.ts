@@ -29,7 +29,7 @@ export class CustomernewallComponent implements OnInit {
   nx32permissionStatus: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 10;
+  pageLimit = 100;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   //checkbox group
@@ -63,6 +63,7 @@ export class CustomernewallComponent implements OnInit {
   specialEditCustomerValue: any;
   specialEditCustomerRaw: any;
   radioDynamic: any;
+  radioDynamic_Call4tel:any;
   countryList: any;
   currencyList: any;
   billerName: any;
@@ -342,6 +343,7 @@ export class CustomernewallComponent implements OnInit {
       this.emailErrMsg = false;
     }
     if (value) {
+      alert(value)
       this.emailList.push({ emailParameterName: value });
     }
 
@@ -451,7 +453,7 @@ export class CustomernewallComponent implements OnInit {
     this.specialEditCustomerRaw = ['[ { "email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "finance_email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "system_discount_3cx": 1, "stripe_recurring_state": 0, "licence_buy_override": 0 }, { "previous_invoice_bill": 7692.75 }, { "pending_bill_days": 20 } ]'];
     this.specialEditCustomerValue = JSON.parse(this.specialEditCustomerRaw);
     this.radioDynamic = [{ "name": "Reseller", "values": "prem" }, { "name": "Distributor", "values": "affi" }];
-
+    this.radioDynamic_Call4tel = [{ "nameCT": "Reseller", "valuesCT": "prem" },{ "nameCT": "Distributor", "valuesCT": "affi" }];
     this.dropdownSettings_billerName = {
       singleSelection: false,
       idField: 'billerId',
@@ -1638,7 +1640,7 @@ export class CustomernewallComponent implements OnInit {
     return list_data;
   }
   searchCustomerData(data: any) {
- this.spinner.show();
+
 
     this.searchResultTest = data
     let api_req: any = new Object();
@@ -1654,7 +1656,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
+     
      
       if (response != '') {
         this.searchResult = response.customer_names;
@@ -2144,7 +2146,7 @@ export class CustomernewallComponent implements OnInit {
     let result_Email_Field = this.emailList.map(o => o.emailParameterName).join(',');
     console.log(result_Email_Field);
 
-
+    // this.searchResultTest='';
     let api_req: any = new Object();
     let add_customer_req: any = new Object();
     api_req.moduleType = "customer";
@@ -2197,6 +2199,7 @@ export class CustomernewallComponent implements OnInit {
       Swal.close();
       return false;
     }
+   
     add_customer_req.customerAddress1 = this.addCustomer.value.billingAddress_address1;
     add_customer_req.customerAddress2 = this.addCustomer.value.billingAddress_address2;
     add_customer_req.city = this.addCustomer.value.billingAddress_city;
@@ -2278,7 +2281,7 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.reseller_state = this.addCustomer.value.reseller_status;
     add_customer_req.vs_credit = this.addCustomer.value.voip_switch_credit;
     add_customer_req.def_payment_via = this.addCustomer.value.payment_way;
-
+    this.searchResultTest='';
     api_req.element_data = add_customer_req;
 
     $("#addCustomerSave").attr("disabled", true);
@@ -2303,7 +2306,7 @@ export class CustomernewallComponent implements OnInit {
 
         this.clear();
         this.customerslist({});
-        this.customerslist({});
+       
 
       } else {
         Swal.close();
