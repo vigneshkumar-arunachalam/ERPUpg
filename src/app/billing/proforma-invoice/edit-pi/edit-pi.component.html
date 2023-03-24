@@ -454,7 +454,7 @@
                                                         <input type="number" class="form-control"
                                                             style="text-align: right;"
                                                             formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                            (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                            (keyup)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
                                                     </div>
                                                 </td>
 
@@ -478,7 +478,7 @@
                                                         <input type="number" class="form-control"
                                                             style="text-align: right;" formControlName="pd_sellingPrice"
                                                             id="pd_SP_{{i}}"
-                                                            (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                            (keyup)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
                                                     </div>
                                                 </td>
 
@@ -525,7 +525,7 @@
                                                         style="top:-35px;text-align: center;width: 61px;margin-left: -8px">
                                                         <input type="checkbox" id="pd_selectTax_{{i}}"
                                                             formControlName="pd_selectTax"
-                                                            (change)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                            (change)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
 
 
                                                     </div>
@@ -752,7 +752,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="number" formControlName="banking_charge_amt" id="bankingCharge_amt_id"
-                                    class="form-control mt-2" />
+                                    class="form-control mt-2" (keyup)="extraFees()"  />
                             </div>
                         </div>
 
@@ -816,18 +816,18 @@
 
                                 <div class="col-lg-6 mt-2" style="text-align: right;">
                                     <label>Add to Received and Authorized Signature/stamp
-                                        {{checkbox_selectAdditionalSignature}}
+                                        <!-- {{checkbox_selectAdditionalSignature}} -->
                                     </label>
                                 </div>
 
                                 <div class="col-lg-6 mt-2">
-                                    <input type="checkbox" [(ngModel)]="selectAdditionalSign"
-                                        formControlName="section3_select_additional_signature"
-                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="{{this.received_signature_state==1?'checked':''}}" /><br>
-                                    <div *ngIf="this.checkbox_selectAdditionalSignature==true">
+                                    <input type="checkbox" [(ngModel)]="selectReceivedSign"
+                                        formControlName="section3_receivedAuthorizedSignature"
+                                        (change)="eventCheckSelectReceivedSignature($event)" checked="{{this.received_signature_state==1?'checked':''}}" /><br>
+                                    <!-- <div *ngIf="this.checkbox_selectAdditionalSignature==true">
                                         <img src="{{this.quotationAddSignature_filename}}" alt="No image to display "
                                             height="80px" width="100px">
-                                    </div>
+                                    </div> -->
 
                                 </div>
 
@@ -846,7 +846,7 @@
                                 <div class="col-lg-6" >
                                     <input type="checkbox" 
                                     formControlName="section3_select_additional_signature"
-                                        (change)="eventCheckSelectAdditionalSignature($event)" /><br>
+                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="{{this.invoiceAddSignatureCHKShowState==1?'checked':''}}" /><br>
                                     <div id="signature_img_id" style="display:none">
                                         <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
                                             height="80px" width="100px">
@@ -875,7 +875,7 @@
                                 <div class="col-lg-6">
                                     <input type="checkbox" [(ngModel)]="selectAdditionalSign"
                                         formControlName="section3_select_additional_signature"
-                                        (change)="eventCheckSelectAdditionalSignature($event)" /><br>
+                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="{{this.invoiceAddSignatureCHKShowState==1?'checked':''}}" /><br>
                                     <div *ngIf="this.checkbox_selectAdditionalSignature==true">
                                         <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
                                             height="80px" width="100px">

@@ -102,7 +102,7 @@ export class InvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.getInvoice({});
-    this.user_ids = sessionStorage.getItem('erp_c4c_user_id');
+    this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 2, "name": "Inactive" }];
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
@@ -268,7 +268,7 @@ export class InvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = sessionStorage.getItem("erp_c4c_user_id");
+    api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.current_page = "";
@@ -427,7 +427,7 @@ export class InvoiceComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         del_req.action = "suspend_invoice";
-        del_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        del_req.user_id = localStorage.getItem('erp_c4c_user_id');
         del_req.billId = billId;
         api_req.element_data = del_req;
 
@@ -521,7 +521,7 @@ export class InvoiceComponent implements OnInit {
     api_processpaymentEdit.action = "proforma_invoice_payment_details";
 
     api_processpaymentEdit.billId = id;
-    api_processpaymentEdit.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_processpaymentEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_processpaymentEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -570,7 +570,7 @@ export class InvoiceComponent implements OnInit {
     api_processpaymentUpdate.action = "proforma_invoice_payment_update";
 
     api_processpaymentUpdate.billId = this.billID_processPayment;
-    api_processpaymentUpdate.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
     if (this.processPaymentForm.value.amount === null) {
       this.spinner.hide();
       iziToast.error({
@@ -640,7 +640,7 @@ export class InvoiceComponent implements OnInit {
     api_emailDetails.action = "send_invoice_details";
 
     api_emailDetails.billId = id;
-    api_emailDetails.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_emailDetails;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -713,7 +713,7 @@ export class InvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
-    api_quotationTemplateDropdown_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
@@ -773,7 +773,7 @@ export class InvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "invoice_details_sendmail";
-    api_email_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_email_req.billId = this.Email_BillId;
 
     api_email_req.fromEmailId = this.FromEmailValue;

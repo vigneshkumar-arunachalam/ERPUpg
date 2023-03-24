@@ -97,6 +97,8 @@ export class CustomernewallComponent implements OnInit {
   editBillerNameBillerId: any;
   editBillerNameBiller: any;
   editBillerNameCheckboxID_array: any = [];
+  typeConvertionString_editBillName:any;
+  typeConvertionString_editCustomerClass:any;
   //checkbox-add -permission
   addPermissionId: any;
   addPermission: any;
@@ -343,7 +345,7 @@ export class CustomernewallComponent implements OnInit {
       this.emailErrMsg = false;
     }
     if (value) {
-      alert(value)
+    
       this.emailList.push({ emailParameterName: value });
     }
 
@@ -463,8 +465,8 @@ export class CustomernewallComponent implements OnInit {
       itemsShowLimit: 2,
       allowSearchFilter: false
     };
-    // if(sessionStorage.getItem('login_status')=='1'){
-    //   sessionStorage.setItem('login_status','0');
+    // if(localStorage.getItem('login_status')=='1'){
+    //   localStorage.setItem('login_status','0');
 
     //   window.location.reload();
 
@@ -1543,7 +1545,7 @@ export class CustomernewallComponent implements OnInit {
   CustomerListQuickSearch(data: any) {
     // Swal.fire('Searching');
     // Swal.showLoading();
-    this.spinner.show();
+    // this.spinner.show();
     if (data == '') {
       this.customerslist({});
     }
@@ -1562,7 +1564,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     quick_Search_req.action = "get_det";
-    quick_Search_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    quick_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     quick_Search_req.off_set = list_data.offset;
     quick_Search_req.limit_val = list_data.limit;
     quick_Search_req.revenue_check = '';
@@ -1570,7 +1572,14 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = quick_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
+      // this.spinner.hide();
+     
+      if(response.total_cnt==0){
+        iziToast.warning({
+          message: "No Matching Records",
+          position: 'topRight'
+        });
+      }
       console.log("search username ", response)
       if (response.status != '') {
         Swal.close();
@@ -1600,7 +1609,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     get_req.action = "get_det";
-    get_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    get_req.user_id = localStorage.getItem('erp_c4c_user_id');
     get_req.off_set = list_data.offset;
     get_req.limit_val = list_data.limit;
     get_req.revenue_check = this.revenueCheckListvalue;
@@ -1608,7 +1617,15 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = get_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      
       this.spinner.hide();
+    
+      if(response.total_cnt==0){
+        iziToast.warning({
+          message: "No Matching Records",
+          position: 'topRight'
+        });
+      }
       if (response != '') {
         this.customer_list = response.customer_details;
         this.revenue_list = response.revenue_list;
@@ -1651,7 +1668,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "customer_name_search";
-    api_Search_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
 
@@ -1689,7 +1706,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_reqs_addCustomer.action = "add_customer";
-    api_reqs_addCustomer.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_reqs_addCustomer.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_reqs_addCustomer;
 
 
@@ -1740,16 +1757,25 @@ export class CustomernewallComponent implements OnInit {
 
       this.editBillerNameCheckboxID_array.push(Number(data));
       this.editBillerNameCheckboxID_array.join(',');
+      this.editBillerNameCheckboxID_array.sort();
       console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
     }
     else {
-      const index = this.editBillerNameCheckboxID_array.findIndex((el: any) => el === data)
-      if (index > -1) {
+      const index: number = this.editBillerNameCheckboxID_array.indexOf(data);
+      console.log(index)
+      if (index == -1) {
+        this.editBillerNameCheckboxID_array.splice(index, 1);
+      } else {
         this.editBillerNameCheckboxID_array.splice(index, 1);
       }
+      console.log("Final check After  de-selected list", this.editBillerNameCheckboxID_array)
+      
       console.log("Final BillerName Checkbox After Deselected selected list", this.editBillerNameCheckboxID_array)
 
     }
+    this.typeConvertionString_editBillName = this.editBillerNameCheckboxID_array.toString();
+
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editBillName)
 
   }
 
@@ -1829,18 +1855,28 @@ export class CustomernewallComponent implements OnInit {
 
     if (this.editCustomerClassificationBiller) {
 
-      this.editCustomerClassificationBillerCheckboxID_array.push(data);
+      this.editCustomerClassificationBillerCheckboxID_array.push(Number(data));
       this.editCustomerClassificationBillerCheckboxID_array.join(',');
+      this.editCustomerClassificationBillerCheckboxID_array.sort();
       console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
     }
     else {
-      const index = this.editCustomerClassificationBillerCheckboxID_array.findIndex((el: any) => el === data)
-      if (index > -1) {
+      const index: number = this.editCustomerClassificationBillerCheckboxID_array.indexOf(data);
+
+      if (index == -1) {
+        this.editCustomerClassificationBillerCheckboxID_array.splice(index, 1);
+      } else {
         this.editCustomerClassificationBillerCheckboxID_array.splice(index, 1);
       }
-      console.log("Final customer classification(edit) Checkbox After Deselected selected list", this.editCustomerClassificationBillerCheckboxID_array)
+      console.log("Final check After  de-selected list", this.editCustomerClassificationBillerCheckboxID_array)
+    
+      console.log("Final BillerName Checkbox After Deselected selected list", this.editCustomerClassificationBillerCheckboxID_array)
+      
 
     }
+    this.typeConvertionString_editCustomerClass = this.editCustomerClassificationBillerCheckboxID_array.toString();
+
+  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editCustomerClass)
 
   }
   handle_radioChange_AccountManager(event: any) {
@@ -1856,7 +1892,7 @@ export class CustomernewallComponent implements OnInit {
       console.log("this.billerNameList", this.billerNameList)
 
       this.billerNameList.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', true);
+        $("#check1-grp-" + index).prop('checked', true);
         checkAll_ID.push(element.billerId);
       });
       this.addBillerNameCheckboxID_array = [];
@@ -1865,7 +1901,7 @@ export class CustomernewallComponent implements OnInit {
       console.log("this.addBillerNameCheckboxID_array-Select All", this.addBillerNameCheckboxID_array)
     } else {
       this.billerNameList.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check1-grp-" + index).prop('checked', false);
 
       });
       this.addBillerNameCheckboxID_array = [];
@@ -1876,14 +1912,14 @@ export class CustomernewallComponent implements OnInit {
   }
 
   CHKAll_BillerNameSelectAll_Edit(event: any) {
-
+    // check2-grp-{{i}}
 
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
       console.log("this.billerNameList", this.geting_biller)
 
       this.geting_biller.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', true);
+        $("#check-4" + index).prop('checked', true);
         checkAll_ID.push(element.billerId);
       });
       this.editBillerNameCheckboxID_array = [];
@@ -1892,7 +1928,7 @@ export class CustomernewallComponent implements OnInit {
       console.log("this.editBillerNameCheckboxID_array-Select All", this.editBillerNameCheckboxID_array)
     } else {
       this.geting_biller.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check2-grp-" + index).prop('checked', false);
 
       });
       this.editBillerNameCheckboxID_array = [];
@@ -2086,7 +2122,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     view_customer_req.action = "view_customer_details";
     view_customer_req.customerId = id;
-    view_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    view_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = view_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2154,7 +2190,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     add_customer_req.action = "customer_save";
-    add_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    add_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
 
     add_customer_req.customerCode = this.addCustomer.value.company_Code;
@@ -2339,7 +2375,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     edit_customer_req.action = "customer_edit";
     edit_customer_req.customerId = id;
-    edit_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    edit_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = edit_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2353,7 +2389,10 @@ export class CustomernewallComponent implements OnInit {
         var newArray = this.b_id.map(function (item: any) {
           return { 'id': item }
         })
-
+      
+        this.emailList = response.result.customer_email;
+        console.log(this.emailList)
+        this.financeemailList=response.result.customer_finance_email;
         console.log("just", newArray)
         console.log(response);
         console.log("cus classification", response.result.customer_details[0].cus_type);
@@ -2362,10 +2401,13 @@ export class CustomernewallComponent implements OnInit {
         console.log("billerId_det", response.result.customer_details[0].billerId);
         this.get_cust_type = response.result.customer_details[0].cus_type;
         this.geting_biller = response.result.bill_details;
+
         this.geting_biller_edit = response.result.billerId_det;
         this.geting_biller_edit = response.result.billerId_det;
         // this.editBillerNameCheckboxID_array = response.result.billerId_det;
+
         this.editBillerNameCheckboxID_array = response.result.customer_details[0].billerId.split(',').map(Number);
+
         this.editPermissionCheckboxID_array = response.result.customer_details[0].cus_permission.split(',').map(Number);
         this.get_PermissionallList = response.result.cus_permission;
         this.get_PermissionEdit = response.result.cus_permission_id;
@@ -2412,8 +2454,8 @@ export class CustomernewallComponent implements OnInit {
           'e_ESA_GSTNO': response.result.customer_details[0].tin_no,
 
           'e_ESA_websiteName': response.result.customer_details[0].website_name,
-          'e_ESA_FinanceEmail': response.result.customer_details[0].finance_email,
-          'e_ESA_Email': response.result.customer_details[0].email,
+          // 'e_ESA_FinanceEmail': response.result.customer_details[0].finance_email,
+          // 'e_ESA_Email': response.result.customer_details[0].email,
           'edit_permission': response.result.customer_details[0].cus_permission,
 
 
@@ -2548,7 +2590,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     update_customer_req.action = "customer_update";
-    update_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    update_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
     update_customer_req.customerId = id;
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = this.editBillerNameCheckboxID_array;
@@ -2749,7 +2791,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addCredit_customer_req.action = "add_call_credit_amt";
-    addCredit_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    addCredit_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
     addCredit_customer_req.customerId = id;
     api_req.element_data = addCredit_customer_req;
 
@@ -2810,7 +2852,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialEdit_customer_req.action = "special_edit";
-    specialEdit_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    specialEdit_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
     specialEdit_customer_req.customerId = id;
     api_req.element_data = specialEdit_customer_req;
 
@@ -2865,7 +2907,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     specialUpdate_customer_req.action = "special_update";
-    specialUpdate_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    specialUpdate_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
     specialUpdate_customer_req.customerId = id;
     specialUpdate_customer_req.email = this.specialEditCustomerForm.value.spedit_Email;
     specialUpdate_customer_req.finance_email = this.specialEditCustomerForm.value.spedit_FinanceEmail;
@@ -2925,7 +2967,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         delete_customer_req.action = "customer_delete";
-        delete_customer_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        delete_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
         delete_customer_req.customerId = id;
         api_req.element_data = delete_customer_req;
 
@@ -2968,7 +3010,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     fileattach_req.action = "get_file_attachment_details";
     fileattach_req.customerId = ID;
-    fileattach_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    fileattach_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3015,7 +3057,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         fileattachDelete_req.action = "customer_file_attachment_delete";
         fileattachDelete_req.credit_attach_id = "" + credit_attament_id + "";
-        fileattachDelete_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        fileattachDelete_req.user_id = localStorage.getItem('erp_c4c_user_id');
         api_req.element_data = fileattachDelete_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3130,7 +3172,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mconnectList.action = "mconnect_address_details";
     api_mconnectList.customerId = id;
-    api_mconnectList.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_mconnectList.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_mconnectList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3248,7 +3290,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mrvoipList.action = "mrvoip_address_details";
     api_mrvoipList.customerId = id;
-    api_mrvoipList.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_mrvoipList.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_mrvoipList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3359,7 +3401,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_req.action = "call4tel_address_details";
-    api_call4telList.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_call4telList.user_id = localStorage.getItem('erp_c4c_user_id');
     api_call4telList.customerId = id;
     api_req.element_data = api_call4telList;
 
@@ -3481,7 +3523,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         nx32Create_req.action = "nx32_customer_create";
-        nx32Create_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        nx32Create_req.user_id = localStorage.getItem('erp_c4c_user_id');
         nx32Create_req.customerId = id;
         api_req.element_data = nx32Create_req;
 
@@ -3525,7 +3567,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     invoiceShare_edit_req.action = "invoice_share_edit";
-    invoiceShare_edit_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    invoiceShare_edit_req.user_id = localStorage.getItem('erp_c4c_user_id');
     invoiceShare_edit_req.customerId = id;
     api_req.element_data = invoiceShare_edit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3561,7 +3603,7 @@ export class CustomernewallComponent implements OnInit {
   //   api_req.api_type = "web";
   //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
   //   invoiceShare_edit_req.action = "invoice_share_edit";
-  //   invoiceShare_edit_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+  //   invoiceShare_edit_req.user_id = localStorage.getItem('erp_c4c_user_id');
   //   invoiceShare_edit_req.customerId = id;
   //   api_req.element_data = invoiceShare_edit_req;
   //   this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -3594,7 +3636,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     invoiceShare_update_req.action = "invoice_share_update";
-    invoiceShare_update_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    invoiceShare_update_req.user_id = localStorage.getItem('erp_c4c_user_id');
     invoiceShare_update_req.customerId = this.invoice_shareCustomerPermission_ID;
     invoiceShare_update_req.invoice_share_user = this.typeConvertionString_invoice_Shared_Permission;
     api_req.element_data = invoiceShare_update_req;
@@ -3635,7 +3677,7 @@ export class CustomernewallComponent implements OnInit {
   //   api_req.api_type = "web";
   //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
   //   invoiceShare_update_req.action = "invoice_share_update";
-  //   invoiceShare_update_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+  //   invoiceShare_update_req.user_id = localStorage.getItem('erp_c4c_user_id');
   //   invoiceShare_update_req.customerId = id;
   //   invoiceShare_update_req.firstName_salary = this.invoiceSharedCustomerForm.value.invShared_checklist;
   //   api_req.element_data = invoiceShare_update_req;
@@ -3683,7 +3725,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         qckMail_req.action = "customer_quick_mail";
-        qckMail_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        qckMail_req.user_id = localStorage.getItem('erp_c4c_user_id');
         qckMail_req.customerId = id;
         api_req.element_data = qckMail_req;
 
@@ -3724,7 +3766,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     shareCustomerPermission_edit.action = "customer_share";
-    shareCustomerPermission_edit.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    shareCustomerPermission_edit.user_id = localStorage.getItem('erp_c4c_user_id');
     shareCustomerPermission_edit.customerId = id;
     api_req.element_data = shareCustomerPermission_edit;
 
@@ -3773,7 +3815,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     shareCustomerPermission_update_req.action = "customer_share_update";
-    shareCustomerPermission_update_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    shareCustomerPermission_update_req.user_id = localStorage.getItem('erp_c4c_user_id');
     shareCustomerPermission_update_req.customerId = this.shareCustomerPermission_ID;
     shareCustomerPermission_update_req.access_userid = this.CheckBox_DynamicArrayList_shareCustomerPermission;
     api_req.element_data = shareCustomerPermission_update_req;
@@ -3832,7 +3874,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_customerStatus_req.action = "customer_status_update";
-        api_customerStatus_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        api_customerStatus_req.user_id = localStorage.getItem('erp_c4c_user_id');
         api_customerStatus_req.customerId = id;
         api_customerStatus_req.cust_status = status;
         api_req.element_data = api_customerStatus_req;
@@ -3886,7 +3928,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_empStatus_req.action = "emp_status_update";
-        api_empStatus_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        api_empStatus_req.user_id = localStorage.getItem('erp_c4c_user_id');
         api_empStatus_req.customerId = id;
         api_req.element_data = api_empStatus_req;
 
@@ -3939,7 +3981,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_resellerStatus_req.action = "reseller_status_update";
-        api_resellerStatus_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        api_resellerStatus_req.user_id = localStorage.getItem('erp_c4c_user_id');
         api_resellerStatus_req.customerId = id;
         api_req.element_data = api_resellerStatus_req;
 
@@ -3985,7 +4027,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_nx32Permission_req.action = "get_customer_nx32_permission";
     api_nx32Permission_req.customerId = id;
-    api_nx32Permission_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_nx32Permission_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
     api_req.element_data = api_nx32Permission_req;
 
@@ -4030,7 +4072,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_nx32PermissionUpdate_req.action = "customer_nx32_update";
     api_nx32PermissionUpdate_req.customerId = this.NX32SharePermissionParameter;
-    api_nx32PermissionUpdate_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_nx32PermissionUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_nx32PermissionUpdate_req.nx32_perm = this.checkbox_NX32Permission;
 
     api_req.element_data = api_nx32PermissionUpdate_req;
@@ -4074,7 +4116,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_billCodeEdit_req.action = "bill_code_details";
     api_billCodeEdit_req.customerId = id;
-    api_billCodeEdit_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_billCodeEdit_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
     this.popupBillCodeForm2.patchValue({
       'popup_customerId': id,
@@ -4181,7 +4223,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     updateBillCode_req.action = "billcode_details_update";
-    updateBillCode_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    updateBillCode_req.user_id = localStorage.getItem('erp_c4c_user_id');
     updateBillCode_req.customer_bill_code = this.edit_a;
     updateBillCode_req.primary_bill_code = this.edit_b;
     // updateBillCode_req.values2 = this.billCodeEditForm1.value.edit_addresses;
@@ -4319,7 +4361,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     accManager_edit.action = "account_manager_edit";
-    accManager_edit.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    accManager_edit.user_id = localStorage.getItem('erp_c4c_user_id');
     accManager_edit.customerId = id;
     api_req.element_data = accManager_edit;
 
@@ -4358,7 +4400,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     accManager_update.action = "account_manager_update";
-    accManager_update.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    accManager_update.user_id = localStorage.getItem('erp_c4c_user_id');
     accManager_update.customerId = this.AssignAccountManager_CustomerID;
     accManager_update.account_manager_id = this.radiobuttonValue_AccountManager;
     api_req.element_data = accManager_update;
@@ -4398,7 +4440,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mail_req.action = "customer_email_template";
-    api_mail_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_mail_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_mail_req.customerId = this.landscapeEmail_Customer_ID;
     api_req.element_data = api_mail_req;
 
@@ -4450,7 +4492,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mailContentDropdown_req.action = "get_customer_authendication_details";
-    api_mailContentDropdown_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_mailContentDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_mailContentDropdown_req.customerId = this.landscapeEmail_Customer_ID;
     api_mailContentDropdown_req.template_id = this.CRMTemplateID;
     api_req.element_data = api_mailContentDropdown_req;
@@ -4497,7 +4539,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "customer_landscape_mail";
-    api_email_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
     // api_email_req.customer_id = this.EmailCustomerContractID;
     api_email_req.emailFrom = this.emailFrom;
     if (this.emailFrom === null || this.emailFrom === '' || this.emailFrom === 'undefined' || this.emailFrom === undefined) {
@@ -4602,7 +4644,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_googleAuthVali.action = "google_auth_check";
-    api_googleAuthVali.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_googleAuthVali.user_id = localStorage.getItem('erp_c4c_user_id');
     api_googleAuthVali.customerId = this.googleAuthent_CustomerId;
     api_googleAuthVali.auth_code = this.GoogleAuthenticationForm.value.google_AuthenticationCode;
     api_req.element_data = api_googleAuthVali;

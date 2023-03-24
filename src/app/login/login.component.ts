@@ -35,12 +35,14 @@ export class LoginComponent implements OnInit {
   getdatas: any;
   code_val: any;
   uscode: any;
+  page_url: any;
   constructor(private router: Router, private route: ActivatedRoute,private serverService: ServerService, private bnIdle: BnNgIdleService,private spinner:NgxSpinnerService) {
     this.route.queryParams
       .subscribe(params => {
         console.log("params output value", params);
         this.code_val = params['code_val'];
         this.uscode = params['uscode'];
+        this.page_url = params['page_url'];
         console.log(this.code_val);
         if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
           this.old_erp_login();
@@ -55,9 +57,9 @@ export class LoginComponent implements OnInit {
     };
     this.websocket.onmessage = function (event: any) {
       s.getdatas = JSON.parse(event.data);
-      console.log('socket detail' + sessionStorage.getItem('erp_c4c_user_id'));
+      console.log('socket detail' + localStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
-        // if (sessionStorage.getItem('erp_c4c_user_id') == null) {
+        // if (localStorage.getItem('erp_c4c_user_id') == null) {
           // s.qrLogin();
         // }
         this.websocket.onclose;
@@ -132,12 +134,12 @@ export class LoginComponent implements OnInit {
 
 
 
-      sessionStorage.setItem('access_token', 'test')
-      sessionStorage.setItem('login_status', '1')
-      sessionStorage.setItem('erp_c4c_user_id', response.userId)
-      sessionStorage.setItem('user_name', response.firstName)
-      sessionStorage.setItem('role', response.role)
-      sessionStorage.setItem('profile_image', response.profile_image)
+      localStorage.setItem('access_token', 'test')
+      localStorage.setItem('login_status', '1')
+      localStorage.setItem('erp_c4c_user_id', response.userId)
+      localStorage.setItem('user_name', response.firstName)
+      localStorage.setItem('role', response.role)
+      localStorage.setItem('profile_image', response.profile_image)
       
       console.log("profile_image",alert);
 
@@ -168,18 +170,20 @@ export class LoginComponent implements OnInit {
       api_req.element_data = addAPI;
 
       this.serverService.sendServer(api_req).subscribe((response: any) => {
-        sessionStorage.setItem('access_token', 'test')
-        sessionStorage.setItem('login_status', '1')
-        sessionStorage.setItem('erp_c4c_user_id', response.userId)
-        sessionStorage.setItem('user_name', response.firstName)
-        sessionStorage.setItem('role', response.role)
-        sessionStorage.setItem('profile_image', response.profile_image)
+        localStorage.setItem('access_token', 'test')
+        localStorage.setItem('login_status', '1')
+        localStorage.setItem('erp_c4c_user_id', response.userId)
+        localStorage.setItem('user_name', response.firstName)
+        localStorage.setItem('role', response.role)
+        localStorage.setItem('profile_image', response.profile_image)
         console.log("profile_image",alert);
         console.log(response)
         if (response.userId != '') {
           setTimeout(()=>{
             var k = '{"data":"reload_profile_data"}';
             this.serverService.reload_profile.next(k);
+            var v = btoa(this.page_url);
+            // this.router.navigate(['/'+v],{ queryParams: { ids: btoa(response.userId)}});
             this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
         }
@@ -284,12 +288,12 @@ export class LoginComponent implements OnInit {
         this.userName = response.firstName;
         this.role = response.role;
 
-        sessionStorage.setItem('access_token', 'test')
-        sessionStorage.setItem('login_status', '1')
-        sessionStorage.setItem('erp_c4c_user_id', response.userId)
-        sessionStorage.setItem('user_name', response.firstName)
-        sessionStorage.setItem('role', response.role)
-        sessionStorage.setItem('profile_image', response.profile_image)
+        localStorage.setItem('access_token', 'test')
+        localStorage.setItem('login_status', '1')
+        localStorage.setItem('erp_c4c_user_id', response.userId)
+        localStorage.setItem('user_name', response.firstName)
+        localStorage.setItem('role', response.role)
+        localStorage.setItem('profile_image', response.profile_image)
         console.log("profile_image",alert);
 
 

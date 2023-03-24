@@ -398,7 +398,7 @@ export class EditInvoiceComponent implements OnInit {
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_quotation_child";
-        api_ProdAutoFill_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
         api_ProdAutoFill_req.billchild_id = pd_billchild_id;
         api_req.element_data = api_ProdAutoFill_req;
 
@@ -610,7 +610,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addAPI.action = "add_proforma_invoice";
-    addAPI.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    addAPI.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = addAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
@@ -633,7 +633,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_TaxDropdown_req.action = "tax_dropdown";
-    api_TaxDropdown_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_TaxDropdown_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
@@ -642,6 +642,7 @@ export class EditInvoiceComponent implements OnInit {
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
         this.tax_per_mod = response.percent_val;
+        $('#tax_per_hd_id').val(response.percent_val);
         setTimeout(() => {
           this.addPI_section3.patchValue({
             'section3_gst_dropdown': response.default_tax_id,
@@ -668,7 +669,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "quot_customer_name";
-    api_Search_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_Search_req.billerId = this.addPI_section1.value.companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
@@ -700,7 +701,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
-    api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_SearchCUST_req.customerId = this.customerName_Data
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -755,7 +756,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_customer_inv_details";
-    api_getInvoiceDetails_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_getInvoiceDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_getInvoiceDetails_req.billerId = this.billerID;
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -793,7 +794,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_editPI_req.action = "edit_profoma_invoice";
-    api_editPI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_editPI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
     api_editPI_req.billId = this.editbillerID;
     api_req.element_data = api_editPI_req;
@@ -870,11 +871,11 @@ export class EditInvoiceComponent implements OnInit {
             "pd_sellingPrice": response.billchild_details[index].rate,
             "pd_Total": response.billchild_details[index].total_amt,
             "pd_netPrice": response.billchild_details[index].net_amt,
-            "pd_OutCall": response.billchild_details[index].out_call_state,
+            "pd_OutCall": response.billchild_details[index].out_call_state== 1 ? true : false,
             "sub_dis_amt": response.billchild_details[index].dis_amt,
             "sub_dis_type": response.billchild_details[index].dis_type,
             "sub_dis_val": response.billchild_details[index].dis_per,
-            "pd_CMon": response.billchild_details[index].current_month,
+            "pd_CMon": response.billchild_details[index].current_month== 1 ? true : false,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
           })
@@ -994,7 +995,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
-    api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_SearchCUST_req.customerId = customerId;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1021,39 +1022,59 @@ export class EditInvoiceComponent implements OnInit {
           address_3 = response.customer_details[0].country;
         }
 
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].ship_city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else {
-          ship_address_str3 = response.customer_details[0].state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else {
-          ship_address_str3 = response.customer_details[0].country;
-        }
+        
 
 
-        if (response.customer_details[0].ship_to != '') {
-          ship_to_str = response.customer_details[0].ship_to;
-        } else {
+        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
+
           ship_to_str = response.customer_details[0].customerName;
+
+        } else {
+          ship_to_str = response.customer_details[0].ship_to;
         }
 
-        if (response.customer_details[0].ship_customerAddress1 != '') {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-        } else {
+        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
           ship_address_str1 = response.customer_details[0].customerAddress1;
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 != '') {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
         } else {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+
         }
 
+        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+        } else {
+          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+        }
+
+
+        if (response.customer_details[0].ship_city != '') {
+          ship_address_str3 = response.customer_details[0].city;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
+        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;        
+        }else {
+          ship_address_str3 = response.customer_details[0].ship_state;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
+        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;      
+        } else {
+          ship_address_str3 = response.customer_details[0].ship_country;
+        }
+
+        if(response.customer_details[0].ship_to==''){
+          ship_address_str1= response.customer_details[0].customerAddress1;
+          ship_address_str2= response.customer_details[0].customerAddress2;
+          ship_address_str3= address_3;
+        }
+
+
+        console.log("ship_address_str1---response", ship_address_str1);
+        console.log("ship_address_str2---response", ship_address_str2)
+        console.log("ship_address_str3---response", ship_address_str3)
 
 
         this.addPI_section1.patchValue({
@@ -1096,7 +1117,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_updatePI_req.action = "update_proforma_invoice";
-    api_updatePI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_updatePI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
     console.log('this.addPI_section3.value.billId_edit' + this.addPI_section1.value.billId_edit);
     api_updatePI_req.billId = this.addPI_section1.value.billId_edit;
@@ -1114,10 +1135,9 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
     // console.log('ship_address_1'+this.addPI_section1.value.shipTo_1);
-    api_updatePI_req.shipTo_1 = this.addPI_section1.value.ship_address_1,
-      api_updatePI_req.shipTo_2 = this.addPI_section1.value.ship_address_2,
-      api_updatePI_req.shipTo_3 = this.addPI_section1.value.ship_address_3,
-
+    api_updatePI_req.ship_address_1 = this.addPI_section1.value.shipTo_1,
+      api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2,
+      api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
       api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
@@ -1400,9 +1420,10 @@ export class EditInvoiceComponent implements OnInit {
 
     this.grossTotalTax = tax_amt_tot;
     this.grossTotal = grs_amt;
-    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
-    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax) - parseFloat(this.finalDiscount)) / 100);
-
+   // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
+   if(tax_amt_tot>0){
+    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax)-parseFloat(this.finalDiscount)) / 100);
+   }
 
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
@@ -1411,13 +1432,15 @@ export class EditInvoiceComponent implements OnInit {
     if (this.finalDiscount == '') {
       this.finalDiscount = 0;
     }
-    if (this.finalTax == '') {
+    if (this.finalTax == '' || isNaN(this.finalTax)) {
       this.finalTax = 0;
     }
+
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
-    console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+ 'banking charge....'+this.bankingCharge+this.finalDiscount+'...this.finalDiscount');
+
+    //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)+ parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
   keyPress(event: any, i: any) {

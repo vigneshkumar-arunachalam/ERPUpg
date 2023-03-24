@@ -419,7 +419,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     addAPI.action = "add_proforma_invoice";
-    addAPI.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    addAPI.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = addAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
@@ -439,7 +439,7 @@ export class AddPIComponent implements OnInit {
         } else {
           this.SalesRepList = response.sales_rep;
           this.addPI_section1.patchValue({
-            'salesRep': sessionStorage.getItem('erp_c4c_user_id'),
+            'salesRep': localStorage.getItem('erp_c4c_user_id'),
           });
 
 
@@ -472,7 +472,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_TaxDropdown_req.action = "tax_dropdown";
-    api_TaxDropdown_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_TaxDropdown_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
@@ -591,7 +591,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "quot_customer_name";
-    api_Search_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_Search_req.billerId = this.addPI_section1.value.companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
@@ -620,7 +620,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
-    api_SearchCUST_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_SearchCUST_req.customerId = this.customerName_Data
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -741,7 +741,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_savePI_req.action = "insert_proforma_invoice";
-    api_savePI_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_savePI_req.user_id = localStorage.getItem('erp_c4c_user_id');
     //section-1
     
     if(this.addPI_section1.value.companyName===null || this.addPI_section1.value.companyName===undefined){
@@ -796,8 +796,8 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.ship_date = this.addPI_section1.value.ShipDate;
     api_savePI_req.s_attn = this.addPI_section1.value.ship_attn;
     api_savePI_req.ref = this.addPI_section1.value.Ref;
-   // api_savePI_req.terms = this.addPI_section1.value.terms;
-    api_savePI_req.terms_condition= this.addPI_section1.value.terms;
+   api_savePI_req.terms = this.addPI_section1.value.terms;
+    // api_savePI_req.terms_condition= this.addPI_section1.value.terms;
     api_savePI_req.currency = this.addPI_section1.value.Currency;
     api_savePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_savePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
@@ -927,7 +927,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_invoiceAddSignature_req.action = "invoice_add_signature";
-    api_invoiceAddSignature_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_invoiceAddSignature_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_invoiceAddSignature_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = api_invoiceAddSignature_req;
 
@@ -965,7 +965,7 @@ export class AddPIComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_customer_inv_details";
-    api_getInvoiceDetails_req.user_id = sessionStorage.getItem('erp_c4c_user_id');
+    api_getInvoiceDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_getInvoiceDetails_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -1149,7 +1149,10 @@ export class AddPIComponent implements OnInit {
     this.grossTotalTax = tax_amt_tot;
     this.grossTotal = grs_amt;
    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
-    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax)-parseFloat(this.finalDiscount)) / 100);
+   if(tax_amt_tot>0){
+     tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax)-parseFloat(this.finalDiscount)) / 100);
+   }
+   
 
    
     this.finalTax = tax_amt_tot.toFixed(2);

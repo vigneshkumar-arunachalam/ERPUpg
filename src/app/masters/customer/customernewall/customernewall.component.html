@@ -861,12 +861,12 @@
 
             <div class="col-lg-6">
               <label> Biller Name</label>
-              <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                (change)="CHKAll_BillerNameSelectAll($event)"> -->
+              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                (change)="CHKAll_BillerNameSelectAll($event)">
               <div class="CheckboxScroll">
                 <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
-
-                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check-grp-{{i}}"
+                 
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp-{{i}}"
                     formControlName="add_billerName" (change)="addBillerNameCHK(display.billerId,$event)">
                   {{display.billerName}}
 
@@ -1148,8 +1148,8 @@
                     </mat-chip>
                     <input placeholder="Type New Email to add Dynamically..." 
                     [matChipInputFor]="chipListEmail"
-                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [
-                      matChipInputAddOnBlur]="addOnBlur"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
+                      [matChipInputAddOnBlur]="addOnBlur"
                       (matChipInputTokenEnd)="addEmail($event)">
                   </mat-chip-list>
                   <br>
@@ -1540,17 +1540,20 @@
 
             <div class="col-lg-6">
               <label> Biller Name</label>
-              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-4"
-                (change)="  CHKAll_BillerNameSelectAll_Edit($event)">
+              <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-4"
+                (change)="CHKAll_BillerNameSelectAll_Edit($event)"> -->
               <div class="CheckboxScroll">
 
                 <div *ngFor="let display of geting_biller;let i =index;" style="padding-left: 30px;">
 
-                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
-                    checked="{{display.chk_val == true? 'checked' : ''}}"
-                    (change)="editBillerNameCHK(display.billerId,$event)">
-                  {{display.billerName}}{{this.geting_biller_edit}}{{display.billerId}}
+                 
 
+
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
+                  id="check2-grp-{{i}}" checked="{{display.chk_val == 1? 'checked' : ''}}"
+                    (change)="editBillerNameCHK(display.billerId,$event)">
+                  <!-- {{display.billerName}}{{this.geting_biller_edit}}{{display.billerId}} -->
+                  {{display.billerName}}
                 </div>
               </div>
             </div>
@@ -1587,7 +1590,7 @@
                 style="display: flex;padding-left: 30px;align-items: center;">
 
                 <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
-                  checked="{{cust.chk_val == true? 'checked' : ''}}"
+                  checked="{{cust.chk_val == 1? 'checked' : ''}}"
                   (change)="editCustomerClassificationCHK(cust.name,$event)">
                 {{cust.name}}
                 <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="checke-grpe-{{m}}"
