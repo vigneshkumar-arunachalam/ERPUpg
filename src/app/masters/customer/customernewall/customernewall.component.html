@@ -865,7 +865,7 @@
                 (change)="CHKAll_BillerNameSelectAll($event)">
               <div class="CheckboxScroll">
                 <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
-                 
+
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp-{{i}}"
                     formControlName="add_billerName" (change)="addBillerNameCHK(display.billerId,$event)">
                   {{display.billerName}}
@@ -1146,10 +1146,8 @@
                         <mat-icon>cancel</mat-icon>
                       </button>
                     </mat-chip>
-                    <input placeholder="Type New Email to add Dynamically..." 
-                    [matChipInputFor]="chipListEmail"
-                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" 
-                      [matChipInputAddOnBlur]="addOnBlur"
+                    <input placeholder="Type New Email to add Dynamically..." [matChipInputFor]="chipListEmail"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
                       (matChipInputTokenEnd)="addEmail($event)">
                   </mat-chip-list>
                   <br>
@@ -1227,13 +1225,28 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="cmsdepartment" class="col-lg-12 col-form-label">CMS Default Department</label>
                 <div class="col-lg-12">
                   <select name="cmsdepartment" id="cmsdepartment_name " class="form-control"
                     formControlName="cmsdepartment">
                     <option [ngValue]="null" selected disabled>Select Department</option>
+                    <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }} ">
+                      {{ cmsdept.department_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="cmsdepartment" class="col-lg-12 col-form-label">CMS Default
+                  Department</label>
+                <div class="col-lg-12">
+                  <select name="cmsdepartment" id="cmsdepartment_name1 " class="form-control"
+                    formControlName="cmsdepartment">
+                    <option value="0">Select Department</option>
                     <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }} ">
                       {{ cmsdept.department_name }}
                     </option>
@@ -1515,7 +1528,7 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="companyName " class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
-                  *</span></label>
+                    *</span></label>
                 <div class="col-lg-12">
                   <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="edit_company_Name"
                     id="companyName " />
@@ -1558,11 +1571,11 @@
 
                 <div *ngFor="let display of geting_biller;let i =index;" style="padding-left: 30px;">
 
-                 
+
 
 
                   <input class="checkbox" style="margin-right:5px ;" type="checkbox" value="{{display.billerId}}"
-                  id="check2-grp-{{i}}" checked="{{display.chk_val == 1? 'checked' : ''}}"
+                    id="check2-grp-{{i}}" checked="{{display.chk_val == 1? 'checked' : ''}}"
                     (change)="editBillerNameCHK(display.billerId,$event)">
                   <!-- {{display.billerName}}{{this.geting_biller_edit}}{{display.billerId}} -->
                   {{display.billerName}}
@@ -1596,7 +1609,7 @@
             <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
               <div>
                 <label style="margin-bottom: 0px;"> Customer Classification<span class="mandatoryField">
-                  *</span></label>
+                    *</span></label>
               </div>
 
               <div *ngFor="let cust of customerType_listEdit;let m =index;"
@@ -1617,8 +1630,9 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Billing Address<span class="mandatoryField">
-                  *</span></label>
+                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Billing Address<span
+                    class="mandatoryField">
+                    *</span></label>
               </div>
             </div>
             <div class="col-lg-6">
@@ -1627,7 +1641,7 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
-                  *</span></label>
+                    *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="e_billingAddress_contactPerson"
                     id="contactPerson " />
@@ -1711,7 +1725,7 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
-                  *</span></label>
+                    *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="e_ESA_cntPerson" id="cntPerson" />
                 </div>
@@ -2098,7 +2112,7 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="evsc" class="chb1 chb1-altered" type="checkbox"
+                <input class="ml-4" id="evsc" class="chb1 chb1-altered" type="checkbox" [readonly]="isReadOnly"
                   formControlName="e_voip_switch_credit" (change)="eventCheckVSC($event)" />
                 <label class="col-lg-12 col-form-label" for="evsc">Voip switch credit </label>
               </div>
@@ -2138,7 +2152,8 @@
                 <label for="vsProvisionAttachment" class="col-lg-12 col-form-label">VS Provision
                   Attachment</label>
                 <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="e_vsProvisionAttachment" unchecked />
+                  <input type="text" class="form-control" [readonly]="isReadOnly"
+                    formControlName="e_vsProvisionAttachment" unchecked />
                 </div>
               </div>
             </div>
@@ -2174,9 +2189,13 @@
 
                 <div class="form-check form-check-inline" *ngFor="let display1 of radio;let k=index">
 
-                  <label for="new_id2{{k}}" class="sq-radio mt-2">
-                    <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
-                      value="{{display1.values}}" (change)="handleChange($event)" />
+                  <label for="{{display1.values}}" class="sq-radio mt-2">
+                    <!-- <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
+                    checked="customerStatusEdit?'Permanent':true"  value="{{display1.values}}" (change)="handleChange($event)" /> -->
+                    <input type="radio" name="e_editCustomerStatus" id="{{display1.values}}"
+                      formControlName="e_editCustomerStatus"
+                      checked="{{display1.name==customerStatusEdit ? 'checked':''}}" value="{{display1.values}}"
+                      (change)="handleChange($event)" />
                     <span class="checkmark"></span>
                     {{display1.name}}</label>
                 </div>
@@ -2765,12 +2784,12 @@
                   <label class="col-form-label">Mconnect Address Show </label>
                 </div>
                 <div class="col-lg-6">
-            
-                  <input type="checkbox" formControlName="a_mconnectAddressShow" id="check_mconn1"
-                  class="chb chb-3"        (change)="eventCheckmconnectAddressShow($event)" />
+
+                  <input type="checkbox" formControlName="a_mconnectAddressShow" id="check_mconn1" class="chb chb-3"
+                    (change)="eventCheckmconnectAddressShow($event)" />
                   <label class="col-form-label call4tel-address-show" for="check_mconn1"></label>
                 </div>
-            
+
               </div>
             </div>
 
@@ -2805,10 +2824,9 @@
                     Type</label>
                 </div>
                 <div class="col-lg-6">
-                  <div class="form-check form-check-inline" *ngFor='let item of radioDynamic;let i=index'
-          >
-                    <input type="radio" id="{{item.values}}" formControlName="a_mconnectPartnerType" value="{{item.values}}"
-                      (change)="partnerTypehandleChange($event)" />
+                  <div class="form-check form-check-inline" *ngFor='let item of radioDynamic;let i=index'>
+                    <input type="radio" id="{{item.values}}" formControlName="a_mconnectPartnerType"
+                      value="{{item.values}}" (change)="partnerTypehandleChange($event)" />
                     <label for="mconnect_partnerType_{{i}}" class="col-lg-6 col-form-label">{{item.name}}</label>
                   </div>
                 </div>

@@ -223,9 +223,15 @@ export class EditInvoiceComponent implements OnInit {
       'ESA_Cbk': new FormControl(),
       'ESA_cntPerson': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_to': new FormControl({ value: '', disabled: true }, Validators.required),
-      'ship_address_1': new FormControl({ value: '', disabled: true }, Validators.required),
-      'ship_address_2': new FormControl({ value: '', disabled: true }, Validators.required),
-      'ship_address_3': new FormControl({ value: '', disabled: true }, Validators.required),
+      'shipTo_1': new FormControl({ value: '', disabled: true }, Validators.required),
+      'shipTo_2': new FormControl({ value: '', disabled: true }, Validators.required),
+      'shipTo_3': new FormControl({ value: '', disabled: true }, Validators.required),
+     
+      // 'shipTo_1': new FormControl(),
+      // 'shipTo_2': new FormControl(),
+      // 'shipTo_3': new FormControl(),
+      // 'shipTo_4': new FormControl(),
+      
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'ShipBy': new FormControl(),
@@ -481,17 +487,17 @@ export class EditInvoiceComponent implements OnInit {
     if (this.EditShippingAddress) {
 
       this.addPI_section1.get("ship_to").disable();
-      this.addPI_section1.get("ship_address_1").disable();
-      this.addPI_section1.get("ship_address_2").disable();
-      this.addPI_section1.get("ship_address_3").disable();
+      this.addPI_section1.get("shipTo_1").disable();
+      this.addPI_section1.get("shipTo_2").disable();
+      this.addPI_section1.get("shipTo_3").disable();
 
     }
     else {
 
       this.addPI_section1.get("ship_to").enable();
-      this.addPI_section1.get("ship_address_1").enable();
-      this.addPI_section1.get("ship_address_2").enable();
-      this.addPI_section1.get("ship_address_3").enable();
+      this.addPI_section1.get("shipTo_1").enable();
+      this.addPI_section1.get("shipTo_2").enable();
+      this.addPI_section1.get("shipTo_3").enable();
 
 
     }
@@ -853,7 +859,7 @@ export class EditInvoiceComponent implements OnInit {
         
         this.TaxDropdown();
         
-        // this.getProformaBillerDetails();
+        
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
@@ -959,6 +965,7 @@ export class EditInvoiceComponent implements OnInit {
           }
         }
 
+        this.getProformaBillerDetails();
       }
       else {
 

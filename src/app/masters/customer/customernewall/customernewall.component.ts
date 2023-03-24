@@ -76,6 +76,7 @@ export class CustomernewallComponent implements OnInit {
   isDisabled: boolean = true;
   customerStatus_radiobox_Value: any = '';
   primary_billcode_array: any = [];
+  customerStatusEdit:any;
   // customerStatus_radiobox_Value: any = 'New';
 
   checkbox_EditShippingAddress: boolean = false;
@@ -446,7 +447,7 @@ export class CustomernewallComponent implements OnInit {
     this.paymentList = this.displayDynamicData[0].payment_det;
     this.departmentData = '[{ "status": true, "result": { "status": true, "data": [ { "department_name": "Sales", "dept_id": "83", "alise_email": "isales@cal4care.com" }, { "department_name": "Activation", "dept_id": "89", "alise_email": "activation@cal4care.com" }, { "department_name": "WebSupport", "dept_id": "90", "alise_email": "Websupport@cal4care.com" }, { "department_name": "CloudNippon", "dept_id": "100", "alise_email": "cc@cloudnippon.com" }, { "department_name": "CallnClear", "dept_id": "97", "alise_email": "cc@callnclear.com" }, { "department_name": "CallaCloud", "dept_id": "99", "alise_email": "CC@callacloud.com" }, { "department_name": "Calncall", "dept_id": "98", "alise_email": "cc@calncall.com" }, { "department_name": "Connectviet", "dept_id": "101", "alise_email": "cc@connectviet.com" }, { "department_name": "Support IN", "dept_id": "102", "alise_email": "Support@dcare.net" }, { "department_name": "Support SG", "dept_id": "103", "alise_email": "Support@cal4care.com" }, { "department_name": "Support SG", "dept_id": "103", "alise_email": "support@cal4care.com.sg" }, { "department_name": "Calncall", "dept_id": "98", "alise_email": "support@calncall.com" }, { "department_name": "Support MY", "dept_id": "104", "alise_email": "support@cal4care.com.my" }, { "department_name": "Support MY", "dept_id": "104", "alise_email": "support@callacloud.com" }, { "department_name": "Support JP", "dept_id": "105", "alise_email": "support@cal4care.co.jp" }, { "department_name": "Support JP", "dept_id": "105", "alise_email": "support@cloudnippon.com" }, { "department_name": "Support TH", "dept_id": "106", "alise_email": "support@cal4care.co.th" }, { "department_name": "Support TH", "dept_id": "106", "alise_email": "support@callnclear.com" }, { "department_name": "Support Call4Tel", "dept_id": "107", "alise_email": "Support@call4tel.com" }, { "department_name": "ACN", "dept_id": "108", "alise_email": "v.support@acncomm.com" }, { "department_name": "Global Sales", "dept_id": "109", "alise_email": "globalsales@mconnectapps.com" }, { "department_name": "WebDev", "dept_id": "110", "alise_email": "webdav@cal4care.com" } ] } }]';
     this.departmentDataOut = JSON.parse(this.departmentData);
-    // this.cmsDepartmentList = this.departmentDataOut[0].result.data;
+    //this.cmsDepartmentList_add = this.departmentDataOut[0].result.data;
     this.customerClassificationValue = ['Calncall', 'Callacloud', 'Voip', 'ITCare', 'Support', 'Cloud Nippon', 'Mrvoip', 'Call4Tel'];
     this.permissionValue = ["Inv", "Credit Note", "License", "Phone", "Project", "Leads", "RMA Issues", "Call History", "IDD Price list", "User Mgt", "3CX Buy", "License Renewal Reminder", "Deal Registeration", "GCC Firewall", "Reseller Product Price", "Call4tel License", "mConnect Buy", "Phone Edit", "DNC", "Mrviop", "Call4tel Address Show", "Mconnect Address Show", "Generate Invoice", "VS Credit Report", "View Shared DO", "CMS Balance Show", "Min Balance Mail Alert", "NX32 Access", "NX32 Logo Update (OEM)", "CMS Ticket"];
     this.dcIPAllowCountries = ["Japan", "Singapore", "Thailand", "Malaysia"];
@@ -1390,7 +1391,12 @@ export class CustomernewallComponent implements OnInit {
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   handleChange(evt: any) {
-    this.customerStatus_radiobox_Value = evt.target.id;
+    if(evt.target.id=='N'){
+      this.customerStatus_radiobox_Value = "New";
+    }else{
+      this.customerStatus_radiobox_Value = "Permanent";
+    }
+   
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   Radio_Partnertype_C4T(evt: any) {
@@ -2456,6 +2462,8 @@ export class CustomernewallComponent implements OnInit {
         //   this.cus_type_edit = response.result.customer_details[0].cus_type;
         this.editCustomerClassificationBillerCheckboxID_array = response.result.customer_details[0].cus_type.split(',').map(Number);
         this.customerType_listEdit = response.result.cus_class_type;
+        this.customerStatusEdit=response.result.customer_details[0].cust_status;
+
         // console.log('selected_biller', response.result.billerId_det);
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
@@ -2487,6 +2495,7 @@ export class CustomernewallComponent implements OnInit {
           'e_ESA_state': response.result.customer_details[0].ship_state,
           'e_ESA_zipcode': response.result.customer_details[0].ship_zipCode,
           'e_ESA_countryname': response.result.customer_details[0].ship_country,
+          
 
           'e_ESA_premium': response.result.customer_details[0].premium_id,
           'e_ESA_premiumStatus': response.result.customer_details[0].premium_status,
@@ -2506,6 +2515,7 @@ export class CustomernewallComponent implements OnInit {
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,
           'edit_currencyname': response.result.customer_details[0].def_currency_id,
           'e_discount_percentage': response.result.customer_details[0].reseller_dis_per,
+          // cus_banking_charge
           'e_banking_charge': response.result.customer_details[0].cus_banking_charge,
           'e_stripe_customer_id': response.result.customer_details[0].stripe_customerId,
           'e_stripe_recurr_payment': response.result.customer_details[0].stripe_recurring_state,
@@ -2637,7 +2647,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = this.editBillerNameCheckboxID_array;
     update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
-    update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
+    // update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
     update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;
     // update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;
     update_customer_req.bill_attn = this.editCustomerForm.value.e_billingAddress_contactPerson;
@@ -2654,6 +2664,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.ship_city = this.editCustomerForm.value.e_ESA_city;
     update_customer_req.ship_state = this.editCustomerForm.value.e_ESA_state;
     update_customer_req.ship_zipCode = this.editCustomerForm.value.e_ESA_zipcode;
+    
     update_customer_req.ship_country = this.editCustomerForm.value.e_ESA_countryname;
     update_customer_req.cus_permission = this.editPermissionCheckboxID_array;
 
@@ -2683,8 +2694,8 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.stripe_recurring_state = this.editCustomerForm.value.e_stripe_recurr_payment;
     update_customer_req.system_discount_3cx = this.editCustomerForm.value.e_c3cx_system_discount;
     update_customer_req.reseller_dis_per = this.editCustomerForm.value.e_discount_percentage;
-    update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_custBankingCharge;
-    update_customer_req.banking_charge = this.editCustomerForm.value.e_banking_charge;
+    update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_banking_charge;
+    update_customer_req.banking_charge = this.editCustomerForm.value.e_custBankingCharge;
     update_customer_req.reseller_gst_state = this.editCustomerForm.value.e_shopping_gst;
     update_customer_req.send_invoice = this.editCustomerForm.value.e_send_invoice;
 
@@ -2722,48 +2733,48 @@ export class CustomernewallComponent implements OnInit {
     console.log(primary);
 
     update_customer_req.primary_billcode_details = primary
-    // update_customer_req.bill_code_740 = this.billCodeEditForm2.value.primary_code_740;
-    // update_customer_req.primary_code_retail_740 = this.billCodeEditForm2.value.primary_code_retail_740;
-    // update_customer_req.low_credit_740 = this.billCodeEditForm2.value.low_credit_740;
-    // update_customer_req.high_credit_740 = this.billCodeEditForm2.value.high_credit_740;
-    // update_customer_req.retail_low_credit_740 = this.billCodeEditForm2.value.retail_low_credit_740;
-    // update_customer_req.retail_high_credit_740 = this.billCodeEditForm2.value.retail_high_credit_740;
+    update_customer_req.bill_code_740 = this.billCodeEditForm2.value.primary_code_740;
+    update_customer_req.primary_code_retail_740 = this.billCodeEditForm2.value.primary_code_retail_740;
+    update_customer_req.low_credit_740 = this.billCodeEditForm2.value.low_credit_740;
+    update_customer_req.high_credit_740 = this.billCodeEditForm2.value.high_credit_740;
+    update_customer_req.retail_low_credit_740 = this.billCodeEditForm2.value.retail_low_credit_740;
+    update_customer_req.retail_high_credit_740 = this.billCodeEditForm2.value.retail_high_credit_740;
 
 
 
-    // update_customer_req.bill_code_750 = this.billCodeEditForm2.value.primary_code_750;
-    // update_customer_req.primary_code_retail_750 = this.billCodeEditForm2.value.primary_code_retail_750;
-    // update_customer_req.low_credit_750 = this.billCodeEditForm2.value.low_credit_750;
-    // update_customer_req.high_credit_750 = this.billCodeEditForm2.value.high_credit_750;
-    // update_customer_req.retail_low_credit_750 = this.billCodeEditForm2.value.retail_low_credit_750;
-    // update_customer_req.retail_high_credit_750 = this.billCodeEditForm2.value.retail_high_credit_750;
+    update_customer_req.bill_code_750 = this.billCodeEditForm2.value.primary_code_750;
+    update_customer_req.primary_code_retail_750 = this.billCodeEditForm2.value.primary_code_retail_750;
+    update_customer_req.low_credit_750 = this.billCodeEditForm2.value.low_credit_750;
+    update_customer_req.high_credit_750 = this.billCodeEditForm2.value.high_credit_750;
+    update_customer_req.retail_low_credit_750 = this.billCodeEditForm2.value.retail_low_credit_750;
+    update_customer_req.retail_high_credit_750 = this.billCodeEditForm2.value.retail_high_credit_750;
 
 
-    // update_customer_req.bill_code_kl = this.billCodeEditForm2.value.primary_code_kl;
-    // update_customer_req.primary_code_retail_kl = this.billCodeEditForm2.value.primary_code_retail_kl;
-    // update_customer_req.low_credit_kl = this.billCodeEditForm2.value.low_credit_kl;
-    // update_customer_req.high_credit_kl = this.billCodeEditForm2.value.high_credit_kl;
-    // update_customer_req.retail_low_credit_kl = this.billCodeEditForm2.value.retail_low_credit_kl;
-    // update_customer_req.retail_high_credit_kl = this.billCodeEditForm2.value.retail_high_credit_kl;
+    update_customer_req.bill_code_kl = this.billCodeEditForm2.value.primary_code_kl;
+    update_customer_req.primary_code_retail_kl = this.billCodeEditForm2.value.primary_code_retail_kl;
+    update_customer_req.low_credit_kl = this.billCodeEditForm2.value.low_credit_kl;
+    update_customer_req.high_credit_kl = this.billCodeEditForm2.value.high_credit_kl;
+    update_customer_req.retail_low_credit_kl = this.billCodeEditForm2.value.retail_low_credit_kl;
+    update_customer_req.retail_high_credit_kl = this.billCodeEditForm2.value.retail_high_credit_kl;
 
 
-    // update_customer_req.auto_credit = this.billCodeEditForm2.value.primary_code_auto_credit;
+    update_customer_req.auto_credit = this.billCodeEditForm2.value.primary_code_auto_credit;
 
-    // update_customer_req.server_name_740 = this.billCodeEditForm2.value.server_name_740;
-    // update_customer_req.pbx_threshold_limit_740 = this.billCodeEditForm2.value.pbx_threshold_limit_740;
-    // update_customer_req.retail_threshold_limit_740 = this.billCodeEditForm2.value.retail_threshold_limit_740;
-
-
-    // update_customer_req.server_name_750 = this.billCodeEditForm2.value.server_name_750;
-    // update_customer_req.pbx_threshold_limit_750 = this.billCodeEditForm2.value.pbx_threshold_limit_750;
-    // update_customer_req.retail_threshold_limit_750 = this.billCodeEditForm2.value.retail_threshold_limit_750;
+    update_customer_req.server_name_740 = this.billCodeEditForm2.value.server_name_740;
+    update_customer_req.pbx_threshold_limit_740 = this.billCodeEditForm2.value.pbx_threshold_limit_740;
+    update_customer_req.retail_threshold_limit_740 = this.billCodeEditForm2.value.retail_threshold_limit_740;
 
 
-    // update_customer_req.server_name_kl = this.billCodeEditForm2.value.server_name_kl;
-    // update_customer_req.pbx_threshold_limit_kl = this.billCodeEditForm2.value.pbx_threshold_limit_kl;
-    // update_customer_req.retail_threshold_limit_kl = this.billCodeEditForm2.value.retail_threshold_limit_kl;
+    update_customer_req.server_name_750 = this.billCodeEditForm2.value.server_name_750;
+    update_customer_req.pbx_threshold_limit_750 = this.billCodeEditForm2.value.pbx_threshold_limit_750;
+    update_customer_req.retail_threshold_limit_750 = this.billCodeEditForm2.value.retail_threshold_limit_750;
 
-    // update_customer_req.manual_credit = this.billCodeEditForm2.value.manual_credit;
+
+    update_customer_req.server_name_kl = this.billCodeEditForm2.value.server_name_kl;
+    update_customer_req.pbx_threshold_limit_kl = this.billCodeEditForm2.value.pbx_threshold_limit_kl;
+    update_customer_req.retail_threshold_limit_kl = this.billCodeEditForm2.value.retail_threshold_limit_kl;
+
+    update_customer_req.manual_credit = this.billCodeEditForm2.value.manual_credit;
 
 
     api_req.element_data = update_customer_req;
@@ -4297,48 +4308,48 @@ export class CustomernewallComponent implements OnInit {
     updateBillCode_req.primary_billcode_details = popup_primary_code_arr;
 
 
-    // updateBillCode_req.bill_code_740 = this.popupBillCodeForm2.value.primary_code_740;
-    // updateBillCode_req.primary_code_retail_740 = this.popupBillCodeForm2.value.popup_primary_code_retail_740;
-    // updateBillCode_req.low_credit_740 = this.popupBillCodeForm2.value.popup_low_credit_740;
-    // updateBillCode_req.high_credit_740 = this.popupBillCodeForm2.value.popup_high_credit_740;
-    // updateBillCode_req.retail_low_credit_740 = this.popupBillCodeForm2.value.popup_retail_low_credit_740;
-    // updateBillCode_req.retail_high_credit_740 = this.popupBillCodeForm2.value.popup_retail_high_credit_740;
+    updateBillCode_req.bill_code_740 = this.popupBillCodeForm2.value.primary_code_740;
+    updateBillCode_req.primary_code_retail_740 = this.popupBillCodeForm2.value.popup_primary_code_retail_740;
+    updateBillCode_req.low_credit_740 = this.popupBillCodeForm2.value.popup_low_credit_740;
+    updateBillCode_req.high_credit_740 = this.popupBillCodeForm2.value.popup_high_credit_740;
+    updateBillCode_req.retail_low_credit_740 = this.popupBillCodeForm2.value.popup_retail_low_credit_740;
+    updateBillCode_req.retail_high_credit_740 = this.popupBillCodeForm2.value.popup_retail_high_credit_740;
 
 
 
-    // updateBillCode_req.bill_code_750 = this.popupBillCodeForm2.value.popup_primary_code_750;
-    // updateBillCode_req.primary_code_retail_750 = this.popupBillCodeForm2.value.popup_primary_code_retail_750;
-    // updateBillCode_req.low_credit_750 = this.popupBillCodeForm2.value.popup_low_credit_750;
-    // updateBillCode_req.high_credit_750 = this.popupBillCodeForm2.value.popup_high_credit_750;
-    // updateBillCode_req.retail_low_credit_750 = this.popupBillCodeForm2.value.popup_retail_low_credit_750;
-    // updateBillCode_req.retail_high_credit_750 = this.popupBillCodeForm2.value.popup_retail_high_credit_750;
+    updateBillCode_req.bill_code_750 = this.popupBillCodeForm2.value.popup_primary_code_750;
+    updateBillCode_req.primary_code_retail_750 = this.popupBillCodeForm2.value.popup_primary_code_retail_750;
+    updateBillCode_req.low_credit_750 = this.popupBillCodeForm2.value.popup_low_credit_750;
+    updateBillCode_req.high_credit_750 = this.popupBillCodeForm2.value.popup_high_credit_750;
+    updateBillCode_req.retail_low_credit_750 = this.popupBillCodeForm2.value.popup_retail_low_credit_750;
+    updateBillCode_req.retail_high_credit_750 = this.popupBillCodeForm2.value.popup_retail_high_credit_750;
 
 
-    // updateBillCode_req.bill_code_kl = this.popupBillCodeForm2.value.popup_primary_code_kl;
-    // updateBillCode_req.primary_code_retail_kl = this.popupBillCodeForm2.value.popup_primary_code_retail_kl;
-    // updateBillCode_req.low_credit_kl = this.popupBillCodeForm2.value.popup_low_credit_kl;
-    // updateBillCode_req.high_credit_kl = this.popupBillCodeForm2.value.popup_high_credit_kl;
-    // updateBillCode_req.retail_low_credit_kl = this.popupBillCodeForm2.value.popup_retail_low_credit_kl;
-    // updateBillCode_req.retail_high_credit_kl = this.popupBillCodeForm2.value.popup_retail_high_credit_kl;
+    updateBillCode_req.bill_code_kl = this.popupBillCodeForm2.value.popup_primary_code_kl;
+    updateBillCode_req.primary_code_retail_kl = this.popupBillCodeForm2.value.popup_primary_code_retail_kl;
+    updateBillCode_req.low_credit_kl = this.popupBillCodeForm2.value.popup_low_credit_kl;
+    updateBillCode_req.high_credit_kl = this.popupBillCodeForm2.value.popup_high_credit_kl;
+    updateBillCode_req.retail_low_credit_kl = this.popupBillCodeForm2.value.popup_retail_low_credit_kl;
+    updateBillCode_req.retail_high_credit_kl = this.popupBillCodeForm2.value.popup_retail_high_credit_kl;
 
 
-    // updateBillCode_req.auto_credit = this.popupBillCodeForm2.value.popup_primary_code_auto_credit;
+    updateBillCode_req.auto_credit = this.popupBillCodeForm2.value.popup_primary_code_auto_credit;
 
-    // updateBillCode_req.server_name_740 = this.popupBillCodeForm2.value.popup_server_name_740;
-    // updateBillCode_req.pbx_threshold_limit_740 = this.popupBillCodeForm2.value.popup_pbx_threshold_limit_740;
-    // updateBillCode_req.retail_threshold_limit_740 = this.popupBillCodeForm2.value.popup_retail_threshold_limit_740;
-
-
-    // updateBillCode_req.server_name_750 = this.popupBillCodeForm2.value.popup_server_name_750;
-    // updateBillCode_req.pbx_threshold_limit_750 = this.popupBillCodeForm2.value.popup_pbx_threshold_limit_750;
-    // updateBillCode_req.retail_threshold_limit_750 = this.popupBillCodeForm2.value.popup_retail_threshold_limit_750;
+    updateBillCode_req.server_name_740 = this.popupBillCodeForm2.value.popup_server_name_740;
+    updateBillCode_req.pbx_threshold_limit_740 = this.popupBillCodeForm2.value.popup_pbx_threshold_limit_740;
+    updateBillCode_req.retail_threshold_limit_740 = this.popupBillCodeForm2.value.popup_retail_threshold_limit_740;
 
 
-    // updateBillCode_req.server_name_kl = this.popupBillCodeForm2.value.popup_server_name_kl;
-    // updateBillCode_req.pbx_threshold_limit_kl = this.popupBillCodeForm2.value.popup_pbx_threshold_limit_kl;
-    // updateBillCode_req.retail_threshold_limit_kl = this.popupBillCodeForm2.value.popup_retail_threshold_limit_kl;
+    updateBillCode_req.server_name_750 = this.popupBillCodeForm2.value.popup_server_name_750;
+    updateBillCode_req.pbx_threshold_limit_750 = this.popupBillCodeForm2.value.popup_pbx_threshold_limit_750;
+    updateBillCode_req.retail_threshold_limit_750 = this.popupBillCodeForm2.value.popup_retail_threshold_limit_750;
 
-    // updateBillCode_req.manual_credit = this.popupBillCodeForm2.value.popup_manual_credit;
+
+    updateBillCode_req.server_name_kl = this.popupBillCodeForm2.value.popup_server_name_kl;
+    updateBillCode_req.pbx_threshold_limit_kl = this.popupBillCodeForm2.value.popup_pbx_threshold_limit_kl;
+    updateBillCode_req.retail_threshold_limit_kl = this.popupBillCodeForm2.value.popup_retail_threshold_limit_kl;
+
+    updateBillCode_req.manual_credit = this.popupBillCodeForm2.value.popup_manual_credit;
 
     api_req.element_data = updateBillCode_req;
 
@@ -4377,6 +4388,7 @@ export class CustomernewallComponent implements OnInit {
           showConfirmButton: false,
           timer: 1200,
         });
+        $("#billCodeFormId").modal("hide");
 
         this.customerslist({});
       }
@@ -4387,6 +4399,7 @@ export class CustomernewallComponent implements OnInit {
           showConfirmButton: false,
           timer: 1200,
         });
+        $("#billCodeFormId").modal("hide");
       }
 
     });

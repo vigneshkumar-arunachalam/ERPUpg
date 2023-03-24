@@ -110,6 +110,9 @@ export class AddPIComponent implements OnInit {
   selectAdditionalSign:boolean=true;
   bills_logo_id:any;
 
+  terms_condition_list: boolean = false;
+
+  
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({

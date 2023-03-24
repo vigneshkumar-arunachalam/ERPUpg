@@ -387,10 +387,10 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       let api_req: any = new Object();
       let BeforeApprovalTransactionAproveViewFn_req: any = new Object();
       api_req.moduleType = "transaction_approval";
-      api_req.api_url = "transaction_approval/quotation_approved";
+      api_req.api_url = "transaction_approval/main_approved";
       api_req.api_type = "web";
       api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-      BeforeApprovalTransactionAproveViewFn_req.action = "quotation_approved";
+      BeforeApprovalTransactionAproveViewFn_req.action = "main_approved";
       BeforeApprovalTransactionAproveViewFn_req.user_id = localStorage.getItem('erp_c4c_user_id');
       BeforeApprovalTransactionAproveViewFn_req.transaction_approval_id = this.BeforeApprovalTransactionAproveView_TransactionApproveID;
       api_req.element_data = BeforeApprovalTransactionAproveViewFn_req;
@@ -402,7 +402,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           $("#BeforeApprovaltransactionApprovalViewId").modal("hide");
           this.getTransactionApprovalList({});
           iziToast.success({
-            message: "Success",
+            message: "Approved",
             position: 'topRight'
           });
         }
