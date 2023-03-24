@@ -263,6 +263,7 @@ export class CustomernewallComponent implements OnInit {
   shareCustomerPermission_EditOnLoad_Values: any;
   SharedCustomerPermission_List: any;
   typeConvertionString_Shared_Permission: any;
+  typeConvertionString_addCustomerClass:any;
   //checkbox-invoice_shared customer permission-new
   invoice_shareCustomerPermission_ID: any;
   checkbox_ID_SingleParameter_invoice_Value: any;
@@ -1824,6 +1825,29 @@ export class CustomernewallComponent implements OnInit {
   }
 
 
+  // addCustomerClassificationCHK(data: any, event: any) {
+   
+  //   this.addCustomerClassificationBillerId = data;
+  //   this.addCustomerClassificationBiller = event.target.checked;
+  //   console.log(this.addCustomerClassificationBiller)
+
+  //   if (this.addCustomerClassificationBiller) {
+
+  //     this.addCustomerClassificationBillerCheckboxID_array.push(data);
+  //     this.addCustomerClassificationBillerCheckboxID_array.join(',');
+  //     console.log("Final customer classification Checkbox After checkbox selected list", this.addCustomerClassificationBillerCheckboxID_array);
+  //   }
+  //   else {
+  //     const index = this.addCustomerClassificationBillerCheckboxID_array.findIndex((el: any) => el === data)
+  //     if (index > -1) {
+  //       this.addCustomerClassificationBillerCheckboxID_array.splice(index, 1);
+  //     }
+  //     console.log("Final customer classification Checkbox After Deselected selected list", this.addCustomerClassificationBillerCheckboxID_array)
+
+  //   }
+
+  // }
+
   addCustomerClassificationCHK(data: any, event: any) {
     // console.log("Contract File Attachment Display - CheckBox ID", data);
     this.addCustomerClassificationBillerId = data;
@@ -1834,16 +1858,26 @@ export class CustomernewallComponent implements OnInit {
 
       this.addCustomerClassificationBillerCheckboxID_array.push(data);
       this.addCustomerClassificationBillerCheckboxID_array.join(',');
+      this.addCustomerClassificationBillerCheckboxID_array.sort();
       console.log("Final customer classification Checkbox After checkbox selected list", this.addCustomerClassificationBillerCheckboxID_array);
     }
     else {
-      const index = this.addCustomerClassificationBillerCheckboxID_array.findIndex((el: any) => el === data)
-      if (index > -1) {
+      const index: number = this.addCustomerClassificationBillerCheckboxID_array.indexOf(data);
+      if (index == -1) {
+        this.addCustomerClassificationBillerCheckboxID_array.splice(index, 1);
+      } else {
         this.addCustomerClassificationBillerCheckboxID_array.splice(index, 1);
       }
-      console.log("Final customer classification Checkbox After Deselected selected list", this.addCustomerClassificationBillerCheckboxID_array)
+     
+      console.log("Final check After  de-selected list", this.addCustomerClassificationBillerCheckboxID_array)
+    
+      console.log("Final BillerName Checkbox After Deselected selected list", this.addCustomerClassificationBillerCheckboxID_array)
+      
 
     }
+    this.typeConvertionString_addCustomerClass = this.editCustomerClassificationBillerCheckboxID_array.toString();
+
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_addCustomerClass)
 
   }
 
@@ -1855,7 +1889,7 @@ export class CustomernewallComponent implements OnInit {
 
     if (this.editCustomerClassificationBiller) {
 
-      this.editCustomerClassificationBillerCheckboxID_array.push(Number(data));
+      this.editCustomerClassificationBillerCheckboxID_array.push(data);
       this.editCustomerClassificationBillerCheckboxID_array.join(',');
       this.editCustomerClassificationBillerCheckboxID_array.sort();
       console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
@@ -2193,7 +2227,7 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
 
-    add_customer_req.customerCode = this.addCustomer.value.company_Code;
+    
     if (this.addCustomer.value.company_Code === null) {
       
       iziToast.warning({
@@ -2202,8 +2236,10 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
+    }else{
+      add_customer_req.customerCode = this.addCustomer.value.company_Code;
     }
-    add_customer_req.customerName = this.searchResultTest;
+    
     if (this.searchResultTest === null || this.searchResultTest === undefined) {
 
       iziToast.warning({
@@ -2212,10 +2248,12 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
+    }else{
+      add_customer_req.customerName = this.searchResultTest;
     }
     add_customer_req.def_biller_id = this.addCustomer.value.defaultBillerName;
     add_customer_req.company_name = this.addBillerNameCheckboxID_array;
-    add_customer_req.cus_type = this.addCustomerClassificationBillerCheckboxID_array;
+   
     if (this.addCustomerClassificationBillerCheckboxID_array === null || this.addCustomerClassificationBillerCheckboxID_array == '' || this.addCustomerClassificationBillerCheckboxID_array === undefined) {
 
       iziToast.warning({
@@ -2224,9 +2262,11 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
+    }else{
+      add_customer_req.cus_type = this.addCustomerClassificationBillerCheckboxID_array;
     }
 
-    add_customer_req.bill_attn = this.addCustomer.value.billingAddress_contactPerson;
+   
     if (this.addCustomer.value.billingAddress_contactPerson === null) {
       iziToast.warning({
         message: "Contact Person(Billing Address) Missing",
@@ -2234,6 +2274,8 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
+    }else{
+      add_customer_req.bill_attn = this.addCustomer.value.billingAddress_contactPerson;
     }
    
     add_customer_req.customerAddress1 = this.addCustomer.value.billingAddress_address1;
