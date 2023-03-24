@@ -637,7 +637,7 @@ export class CustomernewallComponent implements OnInit {
     //edit
     this.editCustomerForm = new FormGroup({
 
-
+      'e_company_Code': new FormControl(null),
       'edit_company_Name': new FormControl(null),
       'edit_defaultBillerName': new FormControl(null),
       'edit_billernamelist': new FormControl(null),
@@ -2420,7 +2420,7 @@ export class CustomernewallComponent implements OnInit {
         this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
 
-
+          'e_company_Code':"D6387",
 
           'edit_company_Name': response.result.customer_details[0].customerName,
           'edit_defaultBillerName': response.result.customer_details[0].def_biller_id,

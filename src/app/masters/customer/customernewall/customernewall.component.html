@@ -1503,7 +1503,19 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="companyName " class="col-lg-12 col-form-label">Company Name*</label>
+                <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
+                    *</span></label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" [(ngModel)]="companyCodeAddCustomer" [readonly]="isReadOnly"
+                    formControlName="e_company_Code" id="companyCode" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="companyName " class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
+                  *</span></label>
                 <div class="col-lg-12">
                   <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="edit_company_Name"
                     id="companyName " />
@@ -1583,7 +1595,8 @@
 
             <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
               <div>
-                <label style="margin-bottom: 0px;"> Customer Classification*</label>
+                <label style="margin-bottom: 0px;"> Customer Classification<span class="mandatoryField">
+                  *</span></label>
               </div>
 
               <div *ngFor="let cust of customerType_listEdit;let m =index;"
@@ -1604,7 +1617,8 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Billing Address*</label>
+                <label class="ml-3" style="color: rgb(233, 13, 24)!important;">Billing Address<span class="mandatoryField">
+                  *</span></label>
               </div>
             </div>
             <div class="col-lg-6">
@@ -1612,7 +1626,8 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person*</label>
+                <label for="contactPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
+                  *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="e_billingAddress_contactPerson"
                     id="contactPerson " />
@@ -1695,7 +1710,8 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person*</label>
+                <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
+                  *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="e_ESA_cntPerson" id="cntPerson" />
                 </div>
@@ -1819,7 +1835,8 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="Email" class="col-lg-12 col-form-label">
-                  Email</label>
+                  Email<span class="mandatoryField">
+                    *</span></label>
                 <mat-form-field class="example-chip-list ml-2" appearance="outline">
                   <!-- <mat-label>Email</mat-label> -->
                   <mat-chip-list #chipListeditEmail aria-label="Email selection">
@@ -1846,7 +1863,8 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="finEmail" class="col-lg-12 col-form-label">
-                  Finance Email</label>
+                  Finance Email<span class="mandatoryField">
+                    *</span></label>
                 <mat-form-field class="example-chip-list ml-2" appearance="outline">
                   <!-- <mat-label>Finance Email</mat-label> -->
                   <mat-chip-list #chipListEditFinance aria-label="Finance Email selection">
