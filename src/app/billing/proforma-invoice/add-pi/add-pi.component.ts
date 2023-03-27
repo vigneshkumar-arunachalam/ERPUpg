@@ -1355,7 +1355,9 @@ export class AddPIComponent implements OnInit {
     this.totalCalculate();
   }
 
-
+  termConditionCheckList(){
+    this.terms_condition_list = !this.terms_condition_list
+  }
 
   calFinalDiscount() {
     $('#enablePerFinal').val('');

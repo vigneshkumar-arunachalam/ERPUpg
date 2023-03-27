@@ -781,9 +781,13 @@
                 <div class="ng-autocomplete">
                   <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
                       *</span></label>
-                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
-                    (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                  <ng-autocomplete 
+                  [data]="searchResult" 
+                  [searchKeyword]="keywordCompanyName"
+                    formControlName="company_Name" 
+                    (selected)='selectEventCustomer($event)'
+                    (inputChanged)='searchCustomerData($event)' 
+                    (inputFocused)='onFocusedCustomer($event)'
                     [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
 
