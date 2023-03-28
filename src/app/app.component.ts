@@ -24,6 +24,7 @@ export class AppComponent {
         this.uscode = params['uscode'];
         this.pageurl = params['pageurl'];
         console.log(this.code_val);
+        console.log(this.pageurl);
       }
       );
   }
@@ -100,8 +101,8 @@ export class AppComponent {
      if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
       localStorage.clear();
       this.templateAuthView == false
-        // this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode,page_url:atob(this.pageurl)}});
-        this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode}});
+        this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode,pageurl:this.pageurl}});
+        // this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode}});
       
    
     }else if (localStorage.getItem('access_token')) {

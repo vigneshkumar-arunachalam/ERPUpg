@@ -631,7 +631,7 @@
 
                                                 <input type="text" class="form-control mt-2 mb-2"
                                                     formControlName="pd_current_month_str"
-                                                    id="pd_current_month_str_{{i}}" />
+                                                    id="pd_current_month_str_{{i}}" readonly="readonly" />
 
 
                                             </div>
@@ -923,43 +923,94 @@
                         </div>
 
                         <div class="col-lg-12">
-                            <div class="form-group row">
+                            <div class="form-group row" >
 
-                                <div class="col-lg-6" style="text-align: right;">
-                                    <label>Add to Received and Authorized Signature/stamp</label>
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>Add to Received and Authorized Signature/stamp
+                                        <!-- {{checkbox_selectAdditionalSignature}} -->
+                                    </label>
                                 </div>
 
+                                <div class="col-lg-6 mt-2">
+                                    <input type="checkbox" [(ngModel)]="selectReceivedSign"
+                                        formControlName="section3_receivedAuthorizedSignature"
+                                        (change)="eventCheckSelectReceivedSignature($event)" checked="{{this.received_signature_state==1?'checked':''}}" /><br>
+                                    <!-- <div *ngIf="this.checkbox_selectAdditionalSignature==true">
+                                        <img src="{{this.quotationAddSignature_filename}}" alt="No image to display "
+                                            height="80px" width="100px">
+                                    </div> -->
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="form-group row" *ngIf="invoiceAddSignatureCHKShowState==0">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>
+                                        Add to Signature
+
+                                    </label>
+                                </div>
+                                <div class="col-lg-6" >
+                                    <input type="checkbox" 
+                                    formControlName="section3_select_additional_signature"
+                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="{{this.invoiceAddSignatureCHKShowState==1?'checked':''}}" /><br>
+                                    <div id="signature_img_id" style="display:none">
+                                        <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
+                                            height="80px" width="100px">
+                                    </div>
+                                    <div id="signature_message_id" style="display:none">
+                                        <label style="font-style: italic;color:#009688">
+                                            (Signature not available. Ask your administrator to upload your
+                                            signature if required)
+                                        </label>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row " *ngIf="(invoiceAddSignatureCHKShowState==1)">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>
+                                        Add to Signature
+
+                                    </label>
+                                </div>
                                 <div class="col-lg-6">
-                                    <input type="checkbox" formControlName="section3_receivedAuthorizedSignature"
-                                        [(ngModel)]="chkReceivedAuthorizedSignature"
-                                        (chenge)="chkReceivedAuthorizedSignatureEvent($event)" />
+                                    <input type="checkbox" [(ngModel)]="selectAdditionalSign"
+                                        formControlName="section3_select_additional_signature"
+                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="{{this.invoiceAddSignatureCHKShowState==1?'checked':''}}" /><br>
+                                    <div *ngIf="this.checkbox_selectAdditionalSignature==true">
+                                        <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
+                                            height="80px" width="100px">
+                                    </div>
+
                                 </div>
 
-
                             </div>
                         </div>
 
-                        <div class="col-lg-12">
-                            <div class="col-lg-6 mt-2" style="text-align: right;">
-                                <label style="font-style: italic;color:#009688">
-                                    (Signature not available. Ask your administrator to upload your
-                                    signature if required)
-                                </label>
 
-                            </div>
-                        </div>
+                        
 
                         <div class="col-lg-12">
                             <div class="form-group row">
 
-                                <div class="col-lg-6" style="text-align: right;">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
                                     <label>Add Logo, Address, Signature in PDF</label>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-6 mt-2">
                                     <input type="checkbox" [(ngModel)]="chklogoAddressSignature"
                                         formControlName="section3_logo"
-                                        (change)="chklogoAddressSignatureEvent($event)" />
+                                        (change)="chklogoAddressSignatureEvent($event)" checked="{{this.print_logo_state==1?'checked':''}}" />
                                 </div>
 
 
@@ -975,7 +1026,7 @@
     </form>
     <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePI()">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateInvoice()">
             Update
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="goBack()">

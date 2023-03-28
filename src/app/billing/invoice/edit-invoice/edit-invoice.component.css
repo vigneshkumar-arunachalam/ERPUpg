@@ -211,3 +211,11 @@ color: #ff5722!important;
 .discountCSS2{
 color: #b8123b!important;
 }
+
+.form-control:disabled,
+.form-control[readonly] {
+    /* background-color: #f3d2f0 !important; */
+    opacity: 0.6;
+    color: black!important;
+    cursor:  no-drop;
+}

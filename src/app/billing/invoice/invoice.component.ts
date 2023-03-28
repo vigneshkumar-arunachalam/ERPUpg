@@ -3,6 +3,7 @@ import { ServerService } from '../../services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
 declare var $: any
 declare var iziToast: any;
 import Swal from 'sweetalert2';
@@ -83,6 +84,8 @@ export class InvoiceComponent implements OnInit {
   RecurringForm: FormGroup;
   recurringState: any;
   recurring_State_value: any;
+  CBV_FixedChargeDt: any;
+  CBV_UsageChargeDt: any;
   //coupon assign
   couponAssignForm: FormGroup;
 
@@ -97,13 +100,29 @@ export class InvoiceComponent implements OnInit {
   commonAttachmentID: any;
   checkboxAdding: any = [];
 
+
+  //terms condition
+  setTermCondition: FormGroup;
+  TermDetailsList: any;
+  TermCondition_BillerID: any;
+  //recurring
+  recurringDetails: any;
+  reccuringDuration: any;
+  recurringDetails_fixed_next_dt: any;
+  recurringDetails_usage_next_dt: any;
+  recuringStatus: any;
+  recurring_BillerID: any;
+
+  datePipe: DatePipe = new DatePipe('en-US');
+    transformDate: any;
+
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
 
 
   ngOnInit(): void {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
-    this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 2, "name": "Inactive" }];
+    this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
       'toal': new FormControl(null),
@@ -148,6 +167,12 @@ export class InvoiceComponent implements OnInit {
     this.couponAssignForm = new FormGroup({
       'couponCode': new FormControl(null),
     });
+    this.setTermCondition = new FormGroup({
+      'setTerm': new FormControl(null)
+    });
+
+    var date = new Date();
+      this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
 
   }
   radio_InvoiceSendingInput(event: any) {
@@ -174,6 +199,16 @@ export class InvoiceComponent implements OnInit {
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
     console.log(this.CBV_PaymentLink);
+
+  }
+  CBF_FixedChargeDtFn(event: any) {
+    this.CBV_FixedChargeDt = event.target.checked;
+    console.log(this.CBV_FixedChargeDt);
+
+  }
+  CBF_UsageChargeDtFn(event: any) {
+    this.CBV_UsageChargeDt = event.target.checked;
+    console.log(this.CBV_UsageChargeDt);
 
   }
   InvoiceShowCHK(data: any, event: any) {
@@ -1008,4 +1043,209 @@ export class InvoiceComponent implements OnInit {
 
   }
 
+  setTermsConditionEdit(id: any) {
+    // this.setInvoiceType.reset();
+    this.spinner.show();
+    this.TermCondition_BillerID = id;
+
+    let api_req: any = new Object();
+    let api_insertProforma: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/terms_condition_get";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_insertProforma.action = "terms_condition_get";
+
+    api_insertProforma.billId = id;
+    api_insertProforma.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_insertProforma;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.TermDetailsList = response.terms_details;
+        this.setTermCondition.patchValue({
+          'setTerm': response.selected_terms
+        })
+
+
+
+      } else {
+
+        $('#settermsConditionFormId').modal("hide");
+        iziToast.warning({
+          message: "Term Condition Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  setTermsConditionUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_insertProformaUpdate: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/terms_condition_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_insertProformaUpdate.action = "terms_condition_update";
+    api_insertProformaUpdate.billId = this.TermCondition_BillerID;
+    api_insertProformaUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_insertProformaUpdate.terms_values = this.setTermCondition.value.setTerm;
+    api_req.element_data = api_insertProformaUpdate;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+
+        iziToast.success({
+          message: "Term Condition Details Updated Successfully",
+          position: 'topRight'
+
+        });
+        $('#settermsConditionFormId').modal("hide");
+      } else {
+
+        $('#settermsConditionFormId').modal("hide");
+        iziToast.warning({
+          message: "Term Condition Details not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  setTermsConditionClear() {
+    this.setTermCondition.reset();
+  }
+  RecurringEdit(id: any) {
+
+
+    this.spinner.show();
+    this.recurring_BillerID = id;
+
+    let api_req: any = new Object();
+    let api_recurring: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/reccuring_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_recurring.action = "reccuring_details";
+
+    api_recurring.billId = id;
+    api_recurring.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_recurring;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      
+      this.spinner.hide();
+      if (response.status == true) {
+        var date =response.reccuring_details.recured_date_show;
+        console.log(date)
+        $('#date123').val(date);
+        this.recurringDetails = response.reccuring_details;
+        this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
+        this.recurringDetails_usage_next_dt = response.reccuring_details.usage_next_dt;
+        this.recuringStatus = response.reccuring_details.recuring_status;
+        this.recurring_State_value= response.reccuring_details.recuring_status;
+       
+        this.reccuringDuration = response.reccuring_duration;
+        this.TermDetailsList = response.terms_details;
+        this.RecurringForm.patchValue({
+        
+          'fixedChargeDuration': response.reccuring_details.fixed_duration,
+          'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
+          'usageChargeDuration': response.reccuring_details.usage_duration,
+          'usageChargeDt_value': response.reccuring_details.usage_next_dt,
+
+        })
+
+
+
+      } else {
+
+        $('#settermsConditionFormId').modal("hide");
+        iziToast.warning({
+          message: "Term Condition Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
+  RecurringUpdate() {
+
+
+    this.spinner.show();
+
+
+    let api_req: any = new Object();
+    let api_recurringUpd: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_reccuring_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_recurringUpd.action = "update_reccuring_details";
+
+    api_recurringUpd.billId = this.recurring_BillerID;
+
+    api_recurringUpd.recured_date_new = this.RecurringForm.value.date;
+    api_recurringUpd.recuring_new_rdo = this.recurring_State_value;
+    api_recurringUpd.fixed_charge_chk = this.CBV_FixedChargeDt;
+    api_recurringUpd.fixed_charge_dt = this.RecurringForm.value.fixedChargeDt_value;
+    api_recurringUpd.rec_duration_fixed = this.RecurringForm.value.fixedChargeDuration;
+    api_recurringUpd.usage_charge_chk = this.CBV_UsageChargeDt;
+    api_recurringUpd.usage_charge_dt = this.RecurringForm.value.usageChargeDt_value;
+    api_recurringUpd.rec_duration_monthly = this.RecurringForm.value.usageChargeDuration;
+
+    api_req.element_data = api_recurringUpd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+      } else {
+
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
+
+
 }
+
+

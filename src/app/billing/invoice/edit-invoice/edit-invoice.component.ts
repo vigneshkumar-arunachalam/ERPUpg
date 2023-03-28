@@ -135,6 +135,13 @@ export class EditInvoiceComponent implements OnInit {
   input3: string;
   
 
+  checkbox_selectReceivedSignature: any;
+
+  checkbox_selectAdditionalSignature: any;
+
+  selectReceivedSign: boolean = true;
+  received_signature_state: any;
+  print_logo_state: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -161,7 +168,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
 
-        this.editPI();
+        this.editInvoice();
       }
       );
     this.loadADD();
@@ -274,7 +281,7 @@ export class EditInvoiceComponent implements OnInit {
       'section3_termCondition': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
-
+      'section3_select_additional_signature': new FormControl({ value: '', disabled: false }, Validators.required),
     });
     this.Discount1Form = new FormGroup({
       'enablePerFinal': new FormControl(null),
@@ -374,7 +381,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
   removeParticular(i: number) {
-    alert(i)
+ 
     console.log('iiii--' + i)
     console.log(this.addresses)
 
@@ -740,16 +747,6 @@ export class EditInvoiceComponent implements OnInit {
   }
 
 
-
-  PIUpdate() {
-
-    this.updatePI();
-
-  }
-
-
-
-
   getCustomerInvoiceDetails(event: any) {
     this.spinner.show();
     this.billerID = event.target.value;
@@ -791,12 +788,12 @@ export class EditInvoiceComponent implements OnInit {
     });
 
   }
-  editPI() {
+  editInvoice() {
 
     let api_req: any = new Object();
     let api_editPI_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/edit_profoma_invoice";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/edit_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_editPI_req.action = "edit_profoma_invoice";
@@ -948,8 +945,11 @@ export class EditInvoiceComponent implements OnInit {
           'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
           //row-10
           'section3_logo': response.billing_pararent_details[0].logo,
+          'section3_select_additional_signature': response.quot_signature_show_state,
         });
-
+        this.received_signature_state = response.billing_pararent_details[0].received_signature;
+        this.print_logo_state = response.billing_pararent_details[0].print_logo;
+ 
        
 
         for (let index = 0; index < response.billchild_details.length; index++) {
@@ -1115,12 +1115,12 @@ export class EditInvoiceComponent implements OnInit {
 
 
 
-  updatePI() {
+  updateInvoice() {
 
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/update_proforma_invoice";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_updatePI_req.action = "update_proforma_invoice";
@@ -1206,7 +1206,7 @@ export class EditInvoiceComponent implements OnInit {
    //other row
 
    api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
-   api_updatePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
+   api_updatePI_req.received_signature = this.checkbox_selectReceivedSignature;
    api_updatePI_req.logo = this.addPI_section3.value.section3_logo;
    api_updatePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
 
@@ -1246,11 +1246,7 @@ export class EditInvoiceComponent implements OnInit {
           title: 'Updated',
           message: 'Invoice Updated Successfully !',
         });
-
-        this.addPI_section1.reset();
-        this.addPI_section2.reset();
-        this.addPI_section3.reset();
-
+     
       }
       else {
 
@@ -1268,6 +1264,7 @@ export class EditInvoiceComponent implements OnInit {
       });
       console.log("final error", error);
     }
+    this.goBack();
   }
 
   getCurrencyValues(event: any) {
@@ -1705,7 +1702,7 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/ProformaInvoice']);
+    this.router.navigate(['/invoice']);
 
   }
 
@@ -1727,4 +1724,76 @@ export class EditInvoiceComponent implements OnInit {
     this.input3 ='';
     $("#enableFinalPercent").val('');
   }
+
+
+ 
+  
+
+  eventCheckSelectReceivedSignature(e: any) {
+    this.checkbox_selectReceivedSignature = e.target.checked
+   console.log(this.checkbox_selectAdditionalSignature);
+  }
+
+  eventCheckSelectAdditionalSignature(e: any) {
+    if (this.invoiceAddSignature_state == 1) {
+      if (e.target.checked == true) {
+        $('#signature_img_id').css("display", "block");
+      } else {
+        $('#signature_img_id').css("display", "none");
+      }
+    } else {
+      $('#signature_message_id').css("display", "block");
+    }
+    this.checkbox_selectAdditionalSignature = e.target.checked
+    console.log(this.checkbox_selectAdditionalSignature);
+  }
+
+  invoiceAddSignatureEdit(sign_val: any) {
+    //alert('sign_state'+sign_state);
+    let api_req: any = new Object();
+    let api_invoiceAddSignatureEdit_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_add_signature_edit";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invoiceAddSignatureEdit_req.action = "invoice_add_signature_edit";
+    //api_quotationAddSignatureEdit_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_invoiceAddSignatureEdit_req.user_id = this.addPI_section1.value.salesRep;
+    // api_quotationAddSignatureEdit_req.billerId = this.billerID ;
+    api_invoiceAddSignatureEdit_req.billerId = this.addPI_section1.value.companyName;
+    api_invoiceAddSignatureEdit_req.billId = this.editbillerID;
+    api_req.element_data = api_invoiceAddSignatureEdit_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-quotation_add_signature response", response)
+
+      if (response.status == true) {
+
+        this.invoiceAddSignature_state = response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        if (sign_val == 0) {
+          console.log('response.signature_filename' + response.signature_filename);
+          this.invoiceAddSignature_filename = response.signature_filename;
+        }
+
+        this.invoiceAddSignatureCHKShowState = response.invoice_signature_show_state;
+
+        this.addPI_section3.patchValue({
+          //section-3
+
+          //row-9
+          //     'section3_select_additional_signature': response.quot_signature_show_state,
+
+        });
+      }
+      else {
+
+      }
+
+
+    });
+
+
+  }
+
 }

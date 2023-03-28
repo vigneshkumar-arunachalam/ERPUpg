@@ -30,24 +30,7 @@
             "subchild": [],
             "isVisible": true,
             "value": "/ProformaInvoice"
-        },{
-            "name": "Invoice",
-            "icon": "layers",
-            "IDs": [3001, 3002, 3003, 3004, 3005],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/invoice"
-        },{
-            "name": "DID Invoice",
-            "icon": "triangle",
-            "IDs": [2036],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/didInvoice"
         }
-       
         
       
     ],
@@ -81,53 +64,7 @@
     ],
     "isVisible": true,
     "value": "/customernewall"
-}, {
-    "name": "Contract",
-    "icon": "slack",
-    "isActive": false,
-    "menuId":6,
-    "IDs": [5011, 5012, 5013, 5014, 5015],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Customer Contract",
-            "icon": "box",
-            "IDs": [5011, 5012, 5013, 5014, 5015],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contract"
-        },
-        {
-            "name": "Contract Master File",
-            "icon": "file-text",
-            "IDs": [5031, 5032, 5033, 5035],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contractmasterfile"
-        },
-        {
-            "name": "Contract Name",
-            "icon": "clipboard",
-            "IDs": [5031, 5032, 5033, 5035],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contractname"
-        },
-        {
-            "name": "Contract Classification",
-            "icon": "check-square",
-            "IDs": [5041, 5042, 5043, 5044, 5045],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/Contractclassification"
-        }
-    ],
-    "isVisible": true,
-    "value": "/contract"
-},   {
+},    {
     "name": "Settings",
     "icon":"settings",
     "isActive": false,

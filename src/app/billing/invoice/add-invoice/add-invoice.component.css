@@ -156,3 +156,11 @@ border: 0;
 border-top: 1px solid #102268;
 width:2500%;
 }
+
+.form-control:disabled,
+.form-control[readonly] {
+    /* background-color: #f3d2f0 !important; */
+    opacity: 0.6;
+    color: black!important;
+    cursor:  no-drop;
+}

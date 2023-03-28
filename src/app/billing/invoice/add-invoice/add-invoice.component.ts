@@ -122,6 +122,11 @@ export class AddInvoiceComponent implements OnInit {
     //read only fields
     isReadonly: boolean = true;
 
+    invoiceAddSignature_state:any;
+    invoiceAddSignature_filename:any;
+    checkbox_selectAdditionalSignature:any;
+    selectAdditionalSign:boolean=true;
+
   constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -239,6 +244,7 @@ export class AddInvoiceComponent implements OnInit {
       'section3_previousDue': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
+      'section3_select_additional_signature': new FormControl({ value: '', disabled: false }, Validators.required),
 
     });
 
@@ -842,7 +848,8 @@ export class AddInvoiceComponent implements OnInit {
     api_saveInvoice_req.cus_invoice_no = this.addInvoice_section1.value.cusInvoiceNo;
 
     api_saveInvoice_req.tinNo = this.addInvoice_section1.value.tin;
-    api_saveInvoice_req.BillTo_customer_ID = this.customer_ID;
+    // api_saveInvoice_req.BillTo_customer_ID = this.customer_ID;
+    api_saveInvoice_req.customer_name = this.customer_ID;
     api_saveInvoice_req.BillTo_customer_NAME = this.customer_NAME;
 
     api_saveInvoice_req.b_name = this.addInvoice_section1.value.BillTo;
@@ -964,7 +971,8 @@ export class AddInvoiceComponent implements OnInit {
     api_saveInvoice_req.netTotal = this.addPI_section3.value.section3_grand_total;
     api_saveInvoice_req.remarks = this.addPI_section3.value.section3_remarks;
     api_saveInvoice_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
-    api_saveInvoice_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
+    api_saveInvoice_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
+    api_saveInvoice_req.received_signature =  this.chkReceivedAuthorizedSignature;
     api_saveInvoice_req.logo = this.addPI_section3.value.section3_logo;
 
 
@@ -999,7 +1007,7 @@ export class AddInvoiceComponent implements OnInit {
           message: "Invoice saved successfully",
           position: 'topRight'
         });
- this.gotoInvoiceList();
+         
       }
       else if (response.status === 500) {
         alert("status == 500")
@@ -1027,6 +1035,10 @@ export class AddInvoiceComponent implements OnInit {
         });
         console.log("500",error);
       }
+
+      this.gotoInvoiceList();
+      // this.router.navigate(['/invoice']);
+      
 
   }
   getCustomerInvoiceDetails() {
@@ -1470,8 +1482,33 @@ this.spinner.show();
 
   }
 
+  eventCheckSelectAdditionalSignature(e: any) {
+    this.checkbox_selectAdditionalSignature = e.target.checked
+    console.log(this.checkbox_selectAdditionalSignature );
+  }
+  invoiceAddSignature(){
+    let api_req: any = new Object();
+    let api_invoiceAddSignature_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_add_signature";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invoiceAddSignature_req.action = "invoice_add_signature";
+    api_invoiceAddSignature_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_invoiceAddSignature_req.billerId = this.addInvoice_section1.value.companyName;
+    api_req.element_data = api_invoiceAddSignature_req;
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("invoice_add_signature response", response)
 
+      if (response.status == true) {
+      
+        this.invoiceAddSignature_state=response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        this.invoiceAddSignature_filename=response.signature_filename;
+      }
+    });
+  }
 
 }
 

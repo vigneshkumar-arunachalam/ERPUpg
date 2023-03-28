@@ -42,8 +42,10 @@ export class LoginComponent implements OnInit {
         console.log("params output value", params);
         this.code_val = params['code_val'];
         this.uscode = params['uscode'];
-        this.page_url = params['page_url'];
+        this.page_url = params['pageurl'];
         console.log(this.code_val);
+        console.log(this.uscode);
+        console.log(this.page_url);
         if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
           this.old_erp_login();
         }
@@ -182,9 +184,11 @@ export class LoginComponent implements OnInit {
           setTimeout(()=>{
             var k = '{"data":"reload_profile_data"}';
             this.serverService.reload_profile.next(k);
-            var v = btoa(this.page_url);
-            // this.router.navigate(['/'+v],{ queryParams: { ids: btoa(response.userId)}});
-            this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
+            // var v = btoa(this.page_url);
+            console.log('/'+this.page_url);
+            // return false;
+            this.router.navigate(['/'+this.page_url],{ queryParams: { ids: btoa(response.userId)}});
+            // this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
           },1000) 
         }
         if (response.userId == 'undefined' || response.userId === null || response.userId=='' ) {
