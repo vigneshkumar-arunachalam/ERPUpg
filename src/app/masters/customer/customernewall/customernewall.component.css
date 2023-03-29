@@ -781,3 +781,7 @@ th{
   left: -13px!important;
   
 }
+
+.userDatatable table td{
+  white-space: normal!important;
+}

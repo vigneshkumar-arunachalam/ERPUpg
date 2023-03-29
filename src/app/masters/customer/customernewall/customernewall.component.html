@@ -91,7 +91,7 @@
                         <span class="userDatatable-title">Customer Type</span>
                       </th>
                       <th>
-                        <span class="userDatatable-title">User Name</span>
+                        <span class="userDatatable-title">GeneratedBy</span>
                       </th>
                       <th>
                         <span class="userDatatable-title">action</span>
@@ -121,7 +121,7 @@
                       </td>
 
                       <td>
-                        <span>{{ list.customerName }}</span>
+                     {{ list.customerName }}
                       </td>
                       <td>
                         <span>{{ list.address}}</span>
@@ -1429,8 +1429,8 @@
                   <div style="margin-right:20px;">
 
 
-                    <label class="sq-radio" for="New">
-                      <input type="radio" name="addCustomerStatus" id="New" [checked]="true"
+                    <label class="sq-radio" for="N">
+                      <input type="radio" name="addCustomerStatus" id="N" [checked]="true"
                         (change)="CustomerStatus_RadioEvent($event)" />
                       <span class="checkmark"></span>
                       New
@@ -1438,8 +1438,8 @@
                   </div>
 
                   <div style="margin-right:20px;">
-                    <label class="sq-radio" for="Permanent">
-                      <input type="radio" name="addCustomerStatus" id="Permanent"
+                    <label class="sq-radio" for="P">
+                      <input type="radio" name="addCustomerStatus" id="P"
                         (change)="CustomerStatus_RadioEvent($event)" />
                       <span class="checkmark"></span>
                       Permanent

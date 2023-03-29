@@ -112,9 +112,12 @@ export class InvoiceComponent implements OnInit {
   recurringDetails_usage_next_dt: any;
   recuringStatus: any;
   recurring_BillerID: any;
+  //revenue details
+  RevenueDetailsForm:FormGroup;
+  CBV_RevenueState:any;
 
   datePipe: DatePipe = new DatePipe('en-US');
-    transformDate: any;
+  transformDate: any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
 
@@ -170,9 +173,13 @@ export class InvoiceComponent implements OnInit {
     this.setTermCondition = new FormGroup({
       'setTerm': new FormControl(null)
     });
+    this.RevenueDetailsForm=new FormGroup({
+
+
+    });
 
     var date = new Date();
-      this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
+    this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
 
   }
   radio_InvoiceSendingInput(event: any) {
@@ -209,6 +216,11 @@ export class InvoiceComponent implements OnInit {
   CBF_UsageChargeDtFn(event: any) {
     this.CBV_UsageChargeDt = event.target.checked;
     console.log(this.CBV_UsageChargeDt);
+
+  }
+  CBF_RevenueStateFn(event: any){
+    this.CBV_RevenueState=event.target.checked;
+    console.log(this.CBV_RevenueState)
 
   }
   InvoiceShowCHK(data: any, event: any) {
@@ -1154,22 +1166,22 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = api_recurring;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
       this.spinner.hide();
       if (response.status == true) {
-        var date =response.reccuring_details.recured_date_show;
+        var date = response.reccuring_details.recured_date_show;
         console.log(date)
         $('#date123').val(date);
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
         this.recurringDetails_usage_next_dt = response.reccuring_details.usage_next_dt;
         this.recuringStatus = response.reccuring_details.recuring_status;
-        this.recurring_State_value= response.reccuring_details.recuring_status;
-       
+        this.recurring_State_value = response.reccuring_details.recuring_status;
+
         this.reccuringDuration = response.reccuring_duration;
         this.TermDetailsList = response.terms_details;
         this.RecurringForm.patchValue({
-        
+
           'fixedChargeDuration': response.reccuring_details.fixed_duration,
           'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
           'usageChargeDuration': response.reccuring_details.usage_duration,
@@ -1245,6 +1257,126 @@ export class InvoiceComponent implements OnInit {
 
   }
 
+
+  setPreviousDue(id: any, Status_variable: any) {
+    Swal.fire({
+      title: 'Are you sure to change Previous Due status?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result: any) => {
+      if (result.value) {
+
+        // console.log("id", id)
+        // var status;
+        // if (Status_variable == 1) {
+        //   Status_variable = 0;
+        // } else {
+        //   Status_variable = 1;
+        // }
+        Status_variable=!Status_variable;
+        let api_req: any = new Object();
+        let api_reqPreviousDue: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/previous_due_set_details";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqPreviousDue.action = "previous_due_set_details";
+        api_reqPreviousDue.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqPreviousDue.billId = id;
+        api_reqPreviousDue.previous_due_state = Status_variable;
+        api_req.element_data = api_reqPreviousDue;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            
+
+            iziToast.success({
+              message: "Previous Due Set State changed Successfully",
+              position: 'topRight'
+            });
+            this.getInvoice({});
+          } else {
+            iziToast.warning({
+              message: "Previous Due Set State not changed. Please try again",
+              position: 'topRight'
+            });
+            this.getInvoice({});
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+      }
+    })
+
+
+  }
+  InvoiceRevenueEdit(id:any){
+
+  }
+ 
+  InvoicetoProforma(id: any) {
+    Swal.fire({
+      title: 'Are you sure to convert Invoice to Proforma?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result: any) => {
+      if (result.value) {
+
+      
+        let api_req: any = new Object();
+        let api_reqProf: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/invoice_to_proforma";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqProf.action = "invoice_to_proforma";
+        api_reqProf.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqProf.billId = id;
+      
+        api_req.element_data = api_reqProf;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            
+
+            iziToast.success({
+              message: "Invoice to Proforma converted Successfully",
+              position: 'topRight'
+            });
+            this.getInvoice({});
+          } else {
+            iziToast.warning({
+              message: "Invoice to Proforma not converted. Please try again",
+              position: 'topRight'
+            });
+            this.getInvoice({});
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+      }
+    })
+
+
+  }
 
 }
 

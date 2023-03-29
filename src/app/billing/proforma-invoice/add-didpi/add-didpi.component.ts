@@ -934,7 +934,7 @@ export class AddDidpiComponent implements OnInit {
       addr1[i].todt1 = $('#todt_1_' + i).val();
       addr1[i].md_chk1 = $('#md_chk_1_' + i).val();
       addr1[i].did_diff_date1 = $('#did_diff_date_1_' + i).val();
-      addr1[i].productDesc1 = $('#productDesc_1_' + i).val();
+      addr1[i].productDesc1 = $('#productDesc1_' + i).val();
       addr1[i].amt1 = $('#amt_1_' + i).val();
       addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
       addr1[i].sub_dis_type1 = $('#sub_discount_type_1' ).val();

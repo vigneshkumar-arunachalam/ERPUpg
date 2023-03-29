@@ -58,7 +58,7 @@ export class EditDidpiComponent implements OnInit {
   public FixedDiscountForm: FormGroup;
   public UsageDiscountForm: FormGroup;
   public OtherDiscountForm: FormGroup;
-  public FinalDiscountForm: FormGroup;
+  public DiscountForm: FormGroup;
   // DID Commission popup
   public DidCommissionForm: FormGroup;
 
@@ -123,6 +123,16 @@ export class EditDidpiComponent implements OnInit {
   chklogoAddressSignature :boolean = true;
   chkTermsandcondition :boolean = true;
   previousDue: boolean = true;
+  received_signature_state: any;
+  print_logo_state: any;
+  sign_state: number;
+
+   //read only fields
+   isReadonly: boolean = true;
+   input1: string;
+   input2: string;
+   input3: string;
+   input4: string;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
     this.route.queryParams
@@ -249,7 +259,7 @@ export class EditDidpiComponent implements OnInit {
       'section3_gross_total': new FormControl(null),
 
     });
-    this.FinalDiscountForm = new FormGroup({
+    this.DiscountForm = new FormGroup({
       'section3_grant_total_show': new FormControl(null),
       'section3_gross_total': new FormControl(null),
 
@@ -306,6 +316,10 @@ export class EditDidpiComponent implements OnInit {
     this.fixedAddresses.removeAt(i);
     var addr = this.did_Invice_fixed_charges.value.fixedAddresses;
     var list_cnt = addr.length;
+    setTimeout(() => {      
+      this.saveGrossDiscount();
+   }, 500);
+
   }
 
   // USAGE CHARGES
@@ -344,6 +358,10 @@ export class EditDidpiComponent implements OnInit {
     this.usageAddress.removeAt(i);
     var addr = this.did_Invice_usage_Charges.value.usageAddress;
     var list_cnt = addr.length;
+    setTimeout(() => {      
+      this.saveGrossDiscount();
+   }, 500);
+
   }
 
 
@@ -382,6 +400,10 @@ export class EditDidpiComponent implements OnInit {
     this.otherAddress.removeAt(i);
     var addr = this.did_Invice_other_charges.value.otherAddress;
     var list_cnt = addr.length;
+    setTimeout(() => {      
+      this.saveGrossDiscount();
+   }, 500);
+
   }
 
 
@@ -605,13 +627,11 @@ export class EditDidpiComponent implements OnInit {
           'companyName': response.defaults_biller_id,
         });
 
-        // alert('Test--00'+response.defaults_biller_id);
-        //   this.companyNameVal = response.defaults_biller_id;
+       
         this.tax_per_mod = response.percent_val;
         this.getProformaBillerDetails();
         this.TaxDropdown();
-        // this.getCustomerInvoiceDetails()
-        // this.getCustomerInvoiceDetails(response.defaults_biller_id);
+        
       }
     });
   }
@@ -732,8 +752,11 @@ export class EditDidpiComponent implements OnInit {
 
       this.grandTotal = (parseFloat(tax) + parseFloat(this.grossTotal));
     });
-    //this.gross_total();
-
+   
+    // setTimeout(() => {
+    //   this.totalCalculate();
+    // }, 1000)
+    this.saveGrossDiscount();
 
 
   }
@@ -1082,45 +1105,70 @@ export class EditDidpiComponent implements OnInit {
         this.did_Invice_other_charges.setControl('otherAddress', formArray3);
         console.log(this.otherAddress);
 
+        this.finalDiscountType = '';
+        this.finalDiscountVal='';
+        // this.finalDiscount='';
+        console.log('response.signature_filename'+response.billing_pararent_details[0].signature_filename);
+       
+        if(response.billing_pararent_details[0].signature_filename!=''){
+          this.sign_state=1;
+        }
+        this.quotationAddSignature_filename=response.billing_pararent_details[0].signature_filename;
+  
+        if(response.billing_pararent_details[0].discountPer!=''){
+          this.finalDiscountType = 'per';
+          this.finalDiscountVal=response.billing_pararent_details[0].discountPer; 
+        
+          // this.finalDiscount=response.billing_pararent_details[0].discountAmount;
+        }
+        else if(response.billing_pararent_details[0].discountAmount!=''){
+          this.finalDiscountType = 'amt';
+          this.finalDiscountVal=response.billing_pararent_details[0].discountAmount;
+          
+        }
 
 
 
 
         // section-3
         this.addDid_section3.patchValue({
-          //row-1
+           //row-1
 
-          'section3_gross_total': response.billing_pararent_details[0].grossAmount,
-          //row-2
-          'section3_discount_txtbox': this.finalDiscount,
-          'final_dis_val': this.finalDiscountVal,
-          'final_dis_type': this.finalDiscountType,
-          // +2 hidden fields
-          //taxAmt
-          //row-3
-          'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
-          'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
-          'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
-          //row-4
-          'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
-          'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
-          'banking_charge_name': response.billing_pararent_details[0].add_name,
-
-          'banking_charge_amt': response.billing_pararent_details[0].add_amt,
-          //row-5
-          'section3_grand_total': response.billing_pararent_details[0].netPayment,
-          //row-7
-          'section3_remarks': response.billing_pararent_details[0].remarks,
-
-          //row-8
-          'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
-          //row-9
-          'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
-          //row-10
-          'section3_logo': response.billing_pararent_details[0].logo,
-        });
+           'section3_gross_total': response.billing_pararent_details[0].grossAmount,
+           //row-2
+           //  'section3_discount_txtbox': this.finalDiscount,
+           'section3_discount_txtbox': response.billing_pararent_details[0].discountAmount,
+            'final_dis_val': this.finalDiscountVal,
+            'final_dis_type': this.finalDiscountType,
+           // +2 hidden fields
+           //taxAmt
+           //row-3
+           'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
+           'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
+           'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
+           //row-4
+           'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
+           'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
+           'banking_charge_name': response.billing_pararent_details[0].add_name,
+ 
+           'banking_charge_amt': response.billing_pararent_details[0].add_amt,
+           //row-5
+           'section3_grand_total': response.billing_pararent_details[0].netPayment,
+           //row-7
+           'section3_remarks': response.billing_pararent_details[0].remarks,
+ 
+           //row-8
+           'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
+           //row-9
+           'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
+           //row-10
+           'section3_logo': response.billing_pararent_details[0].logo,
+         });
+         this.received_signature_state = response.billing_pararent_details[0].received_signature;
+         this.print_logo_state = response.billing_pararent_details[0].print_logo;
       }
       this.quotationAddSignature();
+    
     });
 
   }
@@ -1701,71 +1749,87 @@ export class EditDidpiComponent implements OnInit {
 
 
 
-  finalSaveDiscount() {
-
-    var enablePerFinal_4 = $('#enablePerFinal_4').val()
-    var enablePriceFinal_4 = $('#enablePriceFinal_4').val()
-    var disType = $('input:radio[name=final_DiscountTYpe]:checked').val();
-    var final_tot = $('#section3_gross_total').val();
-    console.log('final_tot' + final_tot);
-    $('#final_discount_type').val(disType);
+  saveGrossDiscount() {
+    var enablePercentabeDiscont = $('#enableFinalPercent').val()
+    var enablePriceDiscont = $('#enableFinalDiscount').val()
+    var tax_amt = $('#tax_amt_id').val()
+    var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
+    var final_tot = this.grossTotal;
     var price: any;
+    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+    $('#final_discount_type').val(disType);
+    this.finalDiscountType = disType;
 
+    console.log('disType' + disType+'final_tot'+final_tot);
 
     if (disType == 'per') {
-
-      if (enablePerFinal_4 != '') {
-
-        price = (parseFloat(enablePerFinal_4) * parseFloat(final_tot) / 100).toFixed(2);
-        console.log('discount amount = ' + price);
-        $('#finalDiscount_amt').val(price);
-        $('#final_discount_val').val(enablePerFinal_4);
-        price = final_tot - price;
-        console.log("percentage" + price);
-        $('#section3_grand_total').val(price);
-
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      if (enablePercentabeDiscont != '') {
+        //  console.log('3333'+final_tot);
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#final_discount').val(price);
+        $('#final_discount_val').val(enablePercentabeDiscont);
+        this.finalDiscountVal = enablePercentabeDiscont;
+        //     price = final_tot - price;
       } else {
-        $('#finalDiscount_amt').val('');
+        $('#final_discount').val('');
         $('#final_discount_val').val('');
-
-        price = final_tot;
-        console.log('' + price);
+        this.finalDiscountVal = '';
+        //   console.log('222'+final_tot);
+        price = 0;
 
       }
-    }
-    else {
-      price = final_tot - enablePriceFinal_4;
-      console.log('price amount ' + price);
-      $('#section3_grand_total').val(price);
-      $('#finalDiscount_amt').val(enablePriceFinal_4);
-      $('#final_discount_val').val(enablePriceFinal_4);
-    }
-
-    $('#section3_grand_total').val(price)
-    var final_per_amt: any = 0
-    final_per_amt += parseFloat($('#finalDiscount_amt').val());
-
-    var gtotel = 0;
-    if (this.itre == 1) {
-      gtotel = price;
+      //   console.log(price);
     } else {
-      for (let k = 0; k <= this.itre; k++) {
-        gtotel += parseFloat($('#section3_grand_total' + k).val());
-
-        console.log('  this.finalDiscount......' + this.finalDiscount);
-
+      if (enablePriceDiscont == '') {
+        enablePriceDiscont = 0;
       }
+      price = enablePriceDiscont;
+      $('#final_discount').val(enablePriceDiscont);
+      $('#final_discount_val').val(enablePriceDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
+      console.log('999' + price);
     }
+
     if (this.grandTotal > 0) {
-      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax)) - parseFloat(final_per_amt)).toFixed(2);
-
+      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
     }
 
-    $('#discountFormFinal').modal('hide');
+    console.log('grandTotal' + this.grandTotal);
+    this.finalDiscount = price
+    $('#discountFormId').modal('hide');
+    this.DiscountForm.reset();
+    setTimeout(() => {
+      this.gross_total();
+    }, 1500)
+  }
+
+  
+  calFinalDiscount() {
+    $('#enableFinalPercent').val('');
+    $('#enableFinalDiscount').val('');
+    var final_dis_val = 0;
+    var disType = $('#final_discount_type').val();
+    console.log('111' + disType);
+    if (disType == 'per') {
+      $('#finaldiscountType_per').prop('checked', true);
+      final_dis_val = $('#final_discount_val').val();
+
+      $('#enableFinalPercent').val(final_dis_val);
+      console.log('22' + disType);
+    } else if (disType == 'amt') {
+      $('#finaldiscountType_amt').prop('checked', true);
+      final_dis_val = $('#finalDiscount_amt').val();
+      $('#enableFinalDiscount').val(final_dis_val);
+      console.log('33' + disType);
+    } else {
+      console.log('44' + disType);
+      $('#finaldiscountTYpe_per').prop('checked', false);
+      $('#finaldiscountTYpe_amt').prop('checked', false);
+    }
 
 
   }
-
   extraFees() {
     var fee = this.addDid_section3.value.section3_shipping_amt_txtbox;
     this.grandTotal = this.grandTotal + parseFloat(fee);
@@ -1838,5 +1902,23 @@ export class EditDidpiComponent implements OnInit {
     });
   }
 
+  clearInput1() {
+    this.input2 = '';
+    $("#enablePriceFinal").val('')
+  }
+
+  clearInput2() {
+    this.input1 = '';
+    $("#enablePerFinal").val('');
+  }
+
+  clearInput3(){
+    this.input4 = '';
+    $("#enableFinalDiscount").valueOf('');
+  }
+  clearInput4(){
+    this.input3 ='';
+    $("#enableFinalPercent").val('');
+  }
 
 }

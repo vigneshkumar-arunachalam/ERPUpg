@@ -2257,8 +2257,32 @@ export class CustomernewallComponent implements OnInit {
     }else{
       add_customer_req.customerName = this.searchResultTest;
     }
-    add_customer_req.def_biller_id = this.addCustomer.value.defaultBillerName;
-    add_customer_req.company_name = this.addBillerNameCheckboxID_array;
+    if (this.addCustomer.value.defaultBillerName === null || this.addCustomer.value.defaultBillerName == '' || this.addCustomer.value.defaultBillerName === undefined) {
+
+      iziToast.warning({
+        message: "Default Biller Missing",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+    }else{
+      add_customer_req.def_biller_id = this.addCustomer.value.defaultBillerName;
+    }
+
+    if (this.addBillerNameCheckboxID_array === null ||this.addBillerNameCheckboxID_array == '' || this.addBillerNameCheckboxID_array === undefined) {
+
+      iziToast.warning({
+        message: " Biller Name Missing",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+    }else{
+      add_customer_req.company_name = this.addBillerNameCheckboxID_array;
+    }
+
+    
+    
    
     if (this.addCustomerClassificationBillerCheckboxID_array === null || this.addCustomerClassificationBillerCheckboxID_array == '' || this.addCustomerClassificationBillerCheckboxID_array === undefined) {
 

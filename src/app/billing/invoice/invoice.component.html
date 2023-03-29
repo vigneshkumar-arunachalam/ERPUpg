@@ -171,9 +171,16 @@
                               </li>
                               <li class="dropdown__item">
                                 <a class="hover3" title="Show Permission" data-toggle="modal"
-                                  data-target="#showwPerissionFormId" 
-                                  >
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chrome"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle><line x1="21.17" y1="8" x2="12" y2="8"></line><line x1="3.95" y1="6.06" x2="8.54" y2="14"></line><line x1="10.88" y1="21.94" x2="15.46" y2="14"></line></svg>
+                                  data-target="#showwPerissionFormId">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-chrome">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
+                                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
+                                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
+                                  </svg>
                                 </a>
                               </li>
                               <li class="dropdown__item">
@@ -204,8 +211,8 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover3" title="Set Previous due" data-toggle="modal"
-                                  data-target="#showPerissimId">
+                                <a class="hover3" title="Set Previous due" data-toggle="modal" data-target=""
+                                  (click)="setPreviousDue(list.billId,list.previous_due_state)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-book-open">
@@ -225,10 +232,9 @@
                                   </svg>
                                 </a>
                               </li>
-                          
+
                               <li class="dropdown__item">
-                                <a class="hover3" title="Payment Link" data-toggle="modal"
-                                  data-target="#">
+                                <a class="hover3" title="Payment Link" data-toggle="modal" data-target="#">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-airplay">
@@ -240,25 +246,42 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover3" title="Testing Payment Link" data-toggle="modal"
-                                  data-target="#">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-cpu"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+                                <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
                                 </a>
                               </li>
-                           
+
 
                               <li class="dropdown__item">
                                 <a class="hover3" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.billId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-plus"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
-                                 
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-file-plus">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                                  </svg>
+
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
-                                  data-target="#settermsConditionFormId" 
-                                  (click)="setTermsConditionEdit(list.billId)"
-                                 >
+                                  data-target="#settermsConditionFormId" (click)="setTermsConditionEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-airplay">
@@ -269,7 +292,135 @@
                                   </svg>
                                 </a>
                               </li>
-                          
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Invoice Revenue" data-toggle="modal"
+                                  data-target="#InvoiceRevenueFormId" (click)="InvoiceRevenueEdit(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Set Reseller Commission" data-toggle="modal" data-target="#">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Set Actual Cost" data-toggle="modal" data-target="#">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Set Invoice Type Name" data-toggle="modal" data-target="#">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Notes" data-toggle="modal" data-target="#">
+                                 
+                                  
+                                  <i class='bx bxs-tv bx-tada bx-flip-horizontal bx-sm' style='color:#009688' ></i>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Email" data-toggle="modal" data-target="#">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-cpu">
+                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                                    <rect x="9" y="9" width="6" height="6"></rect>
+                                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Invoice to Proforma" data-toggle="modal" 
+                                (click)="InvoicetoProforma(list.billId)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <!-- <a class="hover3" title="Invoice to Quotation Conversion" data-toggle="modal"
+                                  data-target="#">
+                                  <i class='bx bxl-inbox bx-burst' style='color:#009688' ></i>  </a> -->
+                                  <a class="hover3" title="Invoice to Quotation Conversion" data-toggle="modal" data-target="#">
+                                    <i class='bx bxs-inbox bx-burst bx-sm' style='color:#009688' ></i>
+                                  </a>
+                                                             
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Local to Export" data-toggle="modal" data-target="#">
+                                  <i class='bx bxl-toggle-left bx-flashing bx-sm' style='color:#009688' ></i>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Delivery Order" data-toggle="modal" data-target="#">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 150, 136, 1);transform: msFilter;"><path d="m18.73 5.41-1.28 1L12 10.46 6.55 6.37l-1.28-1A2 2 0 0 0 2 7.05v11.59A1.36 1.36 0 0 0 3.36 20h3.19v-7.72L12 16.37l5.45-4.09V20h3.19A1.36 1.36 0 0 0 22 18.64V7.05a2 2 0 0 0-3.27-1.64z"></path></svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Invoice to DID Invoice" data-toggle="modal" data-target="#">
+                                  <i class='bx bxl-gmail bx-flashing bx-sm' style='color:#009688' ></i>
+                                </a>
+                              </li>
+
                             </ul>
                           </div>
                         </div>
@@ -311,6 +462,24 @@
                     href="javascript:void(0)"
                     (click)="paginationData.nexttab =='show' ? getInvoice({'offset':paginationData.end}) : false"><i
                       class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none"
+                      stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-cpu">
+                      <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                      <rect x="9" y="9" width="6" height="6"></rect>
+                      <line x1="9" y1="1" x2="9" y2="4"></line>
+                      <line x1="15" y1="1" x2="15" y2="4"></line>
+                      <line x1="9" y1="20" x2="9" y2="23"></line>
+                      <line x1="15" y1="20" x2="15" y2="23"></line>
+                      <line x1="20" y1="9" x2="23" y2="9"></line>
+                      <line x1="20" y1="14" x2="23" y2="14"></line>
+                      <line x1="1" y1="9" x2="4" y2="9"></line>
+                      <line x1="1" y1="14" x2="4" y2="14"></line>
+                    </svg>
+                  </a>
                 </li>
               </ul>
             </nav>
@@ -534,19 +703,19 @@
                 <div class="">
                   <div class="checkbox-group-wrapper">
                     <div class="checkbox-group">
-          
+
                       <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
-                      checked="{{quot.chk_val=='true' ? 'checked':''}}" class="chb chb-3"
-                      (change)="InvoiceShowCHK(quot.user_id,$event)">
+                        checked="{{quot.chk_val=='true' ? 'checked':''}}" class="chb chb-3"
+                        (change)="InvoiceShowCHK(quot.user_id,$event)">
                       <label class="mt-2" for="{{ quot.user_id }}">{{quot.firstName}}</label>
-          
+
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-     
+
         </form>
       </div>
       <div class="modal-footer">
@@ -876,7 +1045,7 @@
                 <label class="form-label">Date</label>
               </div>
               <div class="col-lg-8">
-                <input type="date" class="form-control"  formControlName="date" id="date123">
+                <input type="date" class="form-control" formControlName="date" id="date123">
               </div>
             </div>
           </div>
@@ -891,8 +1060,8 @@
               <div class="col-lg-8">
                 <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
                   <input class="form-check-input" type="radio" formControlName="recurring_state" name="recurring_state"
-                    checked="{{ity.id==recuringStatus ? 'checked':''}}"  id="{{ity.id}}" 
-                    value="{{ity.id}}"  (change)="radio_recurring($event)">
+                    checked="{{ity.id==recuringStatus ? 'checked':''}}" id="{{ity.id}}" value="{{ity.id}}"
+                    (change)="radio_recurring($event)">
                   <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
                 </div>
               </div>
@@ -922,8 +1091,8 @@
               <div class="col-lg-8">
                 <select class="form-control" formControlName="fixedChargeDuration">
                   <option *ngFor="let term of reccuringDuration" value="{{term}}">
-                                    {{term}}
-                                </option>
+                    {{term}}
+                  </option>
 
                 </select>
 
@@ -953,7 +1122,7 @@
                 <select class="form-control" formControlName="usageChargeDuration">
                   <option *ngFor="let term of reccuringDuration" value="{{term}}">
                     {{term}}
-                </option>
+                  </option>
 
                 </select>
 
@@ -1040,49 +1209,47 @@
         <form [formGroup]="FileAttachmentForm">
 
           <div class="modal-body">
-              <div>
-                  <label style="color: hsl(226, 59%, 21%)!important;">
-                      Attached Files</label>
+            <div>
+              <label style="color: hsl(226, 59%, 21%)!important;">
+                Attached Files</label>
+            </div>
+
+            <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;" style="padding-left: 30px;">
+
+              {{display1.uploadFileName}}
+              <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
+                (change)="EditCHK(display1.common_attachmentId,$event)">
+              <button type="button" class="btn btn-link"
+                (click)="fileAttachmentDelete(display1.common_attachmentId) "><span class="bi bi-trash"></span>
+
+              </button>
+
+            </div>
+
+            <div class="col-lg-12 mt-4">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label>
+                    Select New Attachment</label>
+                </div>
+                <div class="col-lg-8" style="padding-left: 30px;">
+
+                  <!-- <label for="file">File</label> -->
+
+                  <input class="col-lg-6" formControlName="file" id="file" type="file" multiple class="form-control"
+                    (change)="onFileChange($event)">
+
+                </div>
               </div>
-
-              <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;"
-                  style="padding-left: 30px;">
-
-                  {{display1.uploadFileName}}
-                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
-                      checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
-                      (change)="EditCHK(display1.common_attachmentId,$event)">
-                  <button type="button" class="btn btn-link"
-                      (click)="fileAttachmentDelete(display1.common_attachmentId) "><span
-                          class="bi bi-trash"></span>
-
-                  </button>
-
-              </div>
-
-              <div class="col-lg-12 mt-4">
-                  <div class="form-group row">
-                    <div class="col-lg-4">
-                      <label>
-                        Select New Attachment</label>
-                    </div>
-                    <div class="col-lg-8" style="padding-left: 30px;">
-    
-                      <!-- <label for="file">File</label> -->
-                 
-                      <input class="col-lg-6" formControlName="file" id="file" type="file" multiple
-                          class="form-control" (change)="onFileChange($event)">
-    
-                    </div>
-                  </div>
-              </div>
+            </div>
 
 
 
 
           </div>
 
-      </form>
+        </form>
       </div>
       <div class="modal-footer">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -1145,3 +1312,119 @@
 
 
 <!----------set Terms & Condition pop up END ------------------>
+
+
+<!----------------------Revenue Details Modal Pop Up Starts------------------------------->
+<div class="modal fade" id="InvoiceRevenueFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Invoice Revenue Details</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="RevenueDetailsForm">
+          <div class="row">
+            <div class="col-lg-12" style="display: flex;">
+              <div class="col-lg-4">
+                <label>Select Revenue </label>
+              </div>
+              <div class="col-lg-6">
+                <select class="form-control" formControlName="setTerm">
+                  <option [ngValue]="null" selected disabled>Select Revenue</option>
+
+                  <!-- <option *ngFor="let term of TermDetailsList" value="{{term}}">
+                    {{term}}
+                  </option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+          <div>
+            <input type="checkbox" formControlName="Revenuestate" (change)="CBF_RevenueStateFn($event)">
+          </div>
+          <div class="card-body" *ngIf="(CBV_RevenueState==true)">
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                
+                      <th>
+                        <span class="userDatatable-title">S.No</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Description</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Revenue Amount</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Select Revenue Type</span>
+                      </th>
+                 
+
+                   
+                    </tr>
+                  </thead>
+                  <tbody >
+                 
+                    <tr >
+                
+               
+                      <td>
+                       1
+                     
+                      </td>
+                      <td>
+                       2
+                      </td>
+                      <td>
+                        3
+                      </td>
+                      <td>
+                      4
+                      </td>
+                      <td>
+                       5
+                      </td>
+                  
+                     
+                     
+                    </tr>
+
+       
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+           
+           
+        
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!----------------------- Revenue Details Modal Pop up Ends ------------------------------>

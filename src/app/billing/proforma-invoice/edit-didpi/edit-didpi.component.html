@@ -863,9 +863,10 @@
 
 
                     <div class="col-lg-6">
-                        <!-- (click)="calFinalDiscount()" -->
-                        <button class="btn btn-primary mr-2 mt-2" data-toggle="modal" data-target="#discountFormFinal"
-                            style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
+                        <!--  -->
+                        <button class="btn btn-primary mr-2 mt-2" data-toggle="modal" 
+                        data-target="#discountFormId" (click)="calFinalDiscount()"
+                        style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
                             (-)</button>
                     </div>
                     <div class="col-lg-6">
@@ -1368,7 +1369,7 @@
 
 <!------------------------- Final Discount popup start ------------------>
 
-<div class="modal fade" id="discountFormFinal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="discountFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -1380,30 +1381,28 @@
             </div>
             <div class="modal-body">
                 <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
-                <form [formGroup]="FinalDiscountForm">
+                <form [formGroup]="DiscountForm">
                     <div class="row">
 
                         <div class="col-lg-12">
                             <div class="form-group row">
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
-                                    <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_per"
-                                        value="per">
+                                    <input type="radio" name="finaldiscountTYpe" id="finaldiscountType_per" value="per">
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePerFinal_4" />
+                                    <input type="number" class="form-control" id="enableFinalPercent" [(ngModel)]="input3" (input)="clearInput3()" />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
-                                    <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_amt"
-                                        value="amt">
+                                    <input type="radio" name="finaldiscountTYpe" id="finaldiscountType_amt" value="amt">
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="enablePriceFinal_4" />
+                                    <input type="number" class="form-control" id="enableFinalDiscount" [(ngModel)]="input4" (input)="clearInput4()" />
                                 </div>
                             </div>
                         </div>
@@ -1414,7 +1413,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="finalSaveDiscount()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>
