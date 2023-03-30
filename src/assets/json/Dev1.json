@@ -22,7 +22,15 @@
             "subchild": [],
             "isVisible": true,
             "value": "/quotationnew"
-        }, {
+        },{
+            "name": "Delivery Order",
+            "icon": "airplay",
+            "IDs": [9501, 9502, 9503, 9504, 9505],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/deliveryorder"
+        },  {
             "name": "Proforma Invoice",
             "icon": "save",
             "IDs": [3101, 3102, 3103, 3104, 3105],

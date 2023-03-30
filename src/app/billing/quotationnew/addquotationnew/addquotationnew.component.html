@@ -196,7 +196,7 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="select_resell" class="form-control"
                                 formControlName="selectReseller">
-                                <option [ngValue]="null" selected disabled>Select Reseller</option>
+                                <option [ngValue]="null" selected >Select Reseller</option>
                                 <option *ngFor="let reseller of SalesResellerList" value="{{reseller.customerId}}">
                                     {{reseller.customerName}}
                                 </option>

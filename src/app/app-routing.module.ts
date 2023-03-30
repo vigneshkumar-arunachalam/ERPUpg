@@ -43,10 +43,15 @@ import { EditDidInvoiceComponent } from './billing/didinvoice/edit-did-invoice/e
 import { LicenseCreditComponent } from './license-credit/license-credit.component';
 import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didpi.component';
 import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
+import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component'; 
+
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'deliveryorder', component: DeliveryOrderComponent
   },
   {
     path: 'EditDidPI', component: EditDidpiComponent

@@ -70,6 +70,7 @@ import { EditInvoiceComponent } from './billing/invoice/edit-invoice/edit-invoic
 import { LicenseCreditComponent } from './license-credit/license-credit.component';
 import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didpi.component';
 import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
+import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +119,10 @@ import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-d
      EditDidInvoiceComponent,
      LicenseCreditComponent,
      AddDidpiComponent,
-     EditDidpiComponent
+     EditDidpiComponent,
+     DeliveryOrderComponent,
+     
+     
     
   ],
   imports: [

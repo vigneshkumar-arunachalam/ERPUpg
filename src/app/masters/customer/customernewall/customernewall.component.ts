@@ -437,7 +437,7 @@ export class CustomernewallComponent implements OnInit {
     // this.edit_eventCheck_auto_deselect();
     this.checkbox_EditShippingAddress = true;
     this.checkbox_EdShippingAddress = true;
-    this.radio = [{ "name": "New", "values": "N" }, { "name": "Permanent", "values": "P" }];
+    this.radio = [{ "name": "New", "values1": "N" }, { "name": "Permanent", "values1": "P" }];
     this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
     this.displayDynamicData = JSON.parse(this.allData);
 
@@ -1768,11 +1768,10 @@ export class CustomernewallComponent implements OnInit {
       console.log("Final BillerName Checkbox After checkbox selected list", this.editBillerNameCheckboxID_array);
     }
     else {
-      const index: number = this.editBillerNameCheckboxID_array.indexOf(data);
-      console.log(index)
-      if (index == -1) {
-        this.editBillerNameCheckboxID_array.splice(index, 1);
-      } else {
+
+      const index = this.editBillerNameCheckboxID_array.findIndex((event:any) => {  return event == data;  });
+
+      if (index > -1) {
         this.editBillerNameCheckboxID_array.splice(index, 1);
       }
       console.log("Final check After  de-selected list", this.editBillerNameCheckboxID_array)
@@ -1796,14 +1795,20 @@ export class CustomernewallComponent implements OnInit {
 
       this.editPermissionCheckboxID_array.push(Number(data));
       this.editPermissionCheckboxID_array.join(',');
-      console.log("Final BillerName Checkbox After checkbox selected list", this.editPermissionCheckboxID_array);
+      
+      console.log("Final BillerName Checkbox After checkbox selected list--1", this.editPermissionCheckboxID_array);
     }
     else {
-      const index = this.editPermissionCheckboxID_array.findIndex((el: any) => el === data)
+
+      const index = this.editPermissionCheckboxID_array.findIndex((event:any) => {  return event == data;  });
+
+   //   const index = this.editPermissionCheckboxID_array.findIndex((el:any) => return el == data);
+      console.log("Final index", index);
+
       if (index > -1) {
         this.editPermissionCheckboxID_array.splice(index, 1);
       }
-      console.log("Final BillerName Checkbox After Deselected selected list", this.editPermissionCheckboxID_array)
+      console.log("Final BillerName Checkbox After Deselected selected list--2", this.editPermissionCheckboxID_array)
 
     }
 
@@ -1897,17 +1902,18 @@ export class CustomernewallComponent implements OnInit {
 
       this.editCustomerClassificationBillerCheckboxID_array.push(data);
       this.editCustomerClassificationBillerCheckboxID_array.join(',');
-      this.editCustomerClassificationBillerCheckboxID_array.sort();
+    //  this.editCustomerClassificationBillerCheckboxID_array.sort();
+    //  alert(this.editCustomerClassificationBillerCheckboxID_array)
       console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
     }
     else {
-      const index: number = this.editCustomerClassificationBillerCheckboxID_array.indexOf(data);
+     // const index: number = this.editCustomerClassificationBillerCheckboxID_array.indexOf(data);
 
-      if (index == -1) {
+     const index = this.editCustomerClassificationBillerCheckboxID_array.findIndex((event:any) => {  return event == data;  });
+
+      if (index > -1) {
         this.editCustomerClassificationBillerCheckboxID_array.splice(index, 1);
-      } else {
-        this.editCustomerClassificationBillerCheckboxID_array.splice(index, 1);
-      }
+      } 
       console.log("Final check After  de-selected list", this.editCustomerClassificationBillerCheckboxID_array)
     
       console.log("Final BillerName Checkbox After Deselected selected list", this.editCustomerClassificationBillerCheckboxID_array)
@@ -2484,7 +2490,7 @@ export class CustomernewallComponent implements OnInit {
         this.get_PermissionallList = response.result.cus_permission;
         this.get_PermissionEdit = response.result.cus_permission_id;
         //   this.cus_type_edit = response.result.customer_details[0].cus_type;
-        this.editCustomerClassificationBillerCheckboxID_array = response.result.customer_details[0].cus_type.split(',').map(Number);
+        this.editCustomerClassificationBillerCheckboxID_array = response.result.customer_details[0].cus_type.split(',');
         this.customerType_listEdit = response.result.cus_class_type;
         this.customerStatusEdit=response.result.customer_details[0].cust_status;
 
@@ -2671,6 +2677,10 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = this.editBillerNameCheckboxID_array;
     update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
+// alert(this.editBillerNameCheckboxID_array)
+// alert(this.typeConvertionString_editBillName)
+alert(this.editCustomerClassificationBillerCheckboxID_array)
+    update_customer_req.company_name = this.typeConvertionString_editCustomerClass;
     // update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
     update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;
     // update_customer_req.cus_banking_charge = this.editCustomerForm.value.e_billingAddress_contactPerson;

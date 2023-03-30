@@ -123,8 +123,7 @@
                       <td>
                      {{ list.customerName }}
                       </td>
-                      <td>
-                        <span>{{ list.address}}</span>
+                      <td [innerHTML]="list.address ">
                       </td>
                       <!-- <td>
                         <span>{{ list.customerAddress1 }}</span>
@@ -811,7 +810,7 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name</label>
+                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span class="mandatoryField">*</span></label>
                 <div class="col-lg-12">
                   <select name="biller_name_1" id="biller_name_1" class="form-control"
                     aria-label="Default select example" formControlName="defaultBillerName">
@@ -864,7 +863,7 @@
             </div> -->
 
             <div class="col-lg-6">
-              <label> Biller Name</label>
+              <label> Biller Name<span class="mandatoryField">*</span></label>
               <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
                 (change)="CHKAll_BillerNameSelectAll($event)">
               <div class="CheckboxScroll">
@@ -905,7 +904,7 @@
 
             <div class="col-lg-6 mt-2">
 
-              <label style="color: rgb(233, 13, 24)!important;">Billing Address*</label>
+              <label style="color: rgb(233, 13, 24)!important;">Billing Address<span class="mandatoryField">*</span></label>
 
             </div>
             <div class="col-lg-6">
@@ -2191,17 +2190,24 @@
               <div class="form-group row" style="display: flex;align-items: center;">
                 <div> <label for="e_customer_status" class="col-lg-12 col-form-label">Customer Status</label></div>
 
-                <div class="form-check form-check-inline" *ngFor="let display1 of radio;let k=index">
+                <!-- <div class="form-check form-check-inline" *ngFor="let display1 of radio;let k=index">
 
                   <label for="{{display1.values}}" class="sq-radio mt-2">
-                    <!-- <input type="radio" id="new_id2{{k}}" formControlName="e_editCustomerStatus"
-                    checked="customerStatusEdit?'Permanent':true"  value="{{display1.values}}" (change)="handleChange($event)" /> -->
-                    <input type="radio" name="e_editCustomerStatus" id="{{display1.values}}"
+
+                    <input type="radio" name="e_editCustomerStatus" id="{{display1.values1}}"
                       formControlName="e_editCustomerStatus"
-                      checked="{{display1.name==customerStatusEdit ? 'checked':''}}" value="{{display1.values}}"
+                      checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
                       (change)="handleChange($event)" />
                     <span class="checkmark"></span>
                     {{display1.name}}</label>
+                </div> -->
+
+                <div class="form-check form-check-inline" *ngFor="let display1 of radio;let k=index">
+                  <input class="form-check-input" type="radio" name="e_editCustomerStatus"
+                   id="{{display1.values1}}" formControlName="e_editCustomerStatus"
+                  value="option1"  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
+                  (change)="handleChange($event)" />
+                  <label class="form-check-label" for="{{display1.values1}}" style="color: #495057!important;">{{display1.name}}</label>
                 </div>
               </div>
             </div>

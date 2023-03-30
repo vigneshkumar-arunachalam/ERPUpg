@@ -336,7 +336,7 @@
 }
 
 tr:nth-child(even) {background:#FFF}
-tr:nth-child(odd) {background: #FFF}
+tr:nth-child(odd) {background: #eee7e7}
 
 
 /* aasiq autocomplete code below */
@@ -502,7 +502,8 @@ label {
 
 .form-control:disabled,
 .form-control[readonly] {
-    background-color: #f3d2f0 !important;
+    /* background-color: #f3d2f0 !important; */
+    background-color: #f7f1f6 !important;
     opacity: 0.6;
     color: black!important;
 }

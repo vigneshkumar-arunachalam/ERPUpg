@@ -102,7 +102,7 @@ export class InvoiceComponent implements OnInit {
 
 
   //terms condition
-  setTermCondition: FormGroup;
+  setTermConditionForm: FormGroup;
   TermDetailsList: any;
   TermCondition_BillerID: any;
   //recurring
@@ -113,9 +113,19 @@ export class InvoiceComponent implements OnInit {
   recuringStatus: any;
   recurring_BillerID: any;
   //revenue details
-  RevenueDetailsForm:FormGroup;
-  CBV_RevenueState:any;
-
+  RevenueDetailsForm: FormGroup;
+  CBV_RevenueState: any;
+  //delivery order
+  DeliveryOrderForm: FormGroup;
+  //invoice type details
+  InvoiceTypedetailsForm: FormGroup;
+  //notes
+  NotesForm: FormGroup;
+  //reseller commission details
+  ResellerCommissionForm:FormGroup;
+  CBV_PdfShow:any;
+  resellercommissiontype:any;
+  commissionType_value:any;
   datePipe: DatePipe = new DatePipe('en-US');
   transformDate: any;
 
@@ -126,6 +136,7 @@ export class InvoiceComponent implements OnInit {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
+    this.resellercommissiontype=[{"id":1,"name":"Fixed"},{"id":2,"name":"Percentage"},{"id":3,"name":"Itemwise"},{"id":4,"name":"None"}];
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
       'toal': new FormControl(null),
@@ -170,14 +181,31 @@ export class InvoiceComponent implements OnInit {
     this.couponAssignForm = new FormGroup({
       'couponCode': new FormControl(null),
     });
-    this.setTermCondition = new FormGroup({
-      'setTerm': new FormControl(null)
+    this.setTermConditionForm = new FormGroup({
+      'setTerm': new FormControl(null),
     });
-    this.RevenueDetailsForm=new FormGroup({
-
+    this.RevenueDetailsForm = new FormGroup({
+      'revenue': new FormControl(null),
 
     });
+    this.DeliveryOrderForm = new FormGroup({
+      'warranty': new FormControl(null),
+    });
 
+    this.InvoiceTypedetailsForm = new FormGroup({
+      'invoiceType': new FormControl(null),
+    });
+    this.NotesForm = new FormGroup({
+      'note': new FormControl(null),
+    });
+    this.ResellerCommissionForm=new FormGroup({
+      'ResellerName':new FormControl(null),
+      'CommissionType':new FormControl(null),
+      'CommissionValue':new FormControl(null),
+      'CommissionAmount':new FormControl(null),
+      'PdfShow':new FormControl(null),
+
+    });
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
 
@@ -190,6 +218,10 @@ export class InvoiceComponent implements OnInit {
     this.recurring_State_value = event.target.id;
     console.log(this.recurring_State_value)
 
+  }
+  radio_commissionType(event: any){
+this.commissionType_value=event.target.id;
+console.log(this.commissionType_value);
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
@@ -218,9 +250,13 @@ export class InvoiceComponent implements OnInit {
     console.log(this.CBV_UsageChargeDt);
 
   }
-  CBF_RevenueStateFn(event: any){
-    this.CBV_RevenueState=event.target.checked;
+  CBF_RevenueStateFn(event: any) {
+    this.CBV_RevenueState = event.target.checked;
     console.log(this.CBV_RevenueState)
+
+  }
+  CBF_PdfShow(event:any){
+    this.CBV_PdfShow=event.target.checked;
 
   }
   InvoiceShowCHK(data: any, event: any) {
@@ -1076,7 +1112,7 @@ export class InvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.TermDetailsList = response.terms_details;
-        this.setTermCondition.patchValue({
+        this.setTermConditionForm.patchValue({
           'setTerm': response.selected_terms
         })
 
@@ -1112,7 +1148,7 @@ export class InvoiceComponent implements OnInit {
     api_insertProformaUpdate.action = "terms_condition_update";
     api_insertProformaUpdate.billId = this.TermCondition_BillerID;
     api_insertProformaUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_insertProformaUpdate.terms_values = this.setTermCondition.value.setTerm;
+    api_insertProformaUpdate.terms_values = this.setTermConditionForm.value.setTerm;
     api_req.element_data = api_insertProformaUpdate;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1145,7 +1181,7 @@ export class InvoiceComponent implements OnInit {
 
   }
   setTermsConditionClear() {
-    this.setTermCondition.reset();
+    this.setTermConditionForm.reset();
   }
   RecurringEdit(id: any) {
 
@@ -1277,7 +1313,7 @@ export class InvoiceComponent implements OnInit {
         // } else {
         //   Status_variable = 1;
         // }
-        Status_variable=!Status_variable;
+        Status_variable = !Status_variable;
         let api_req: any = new Object();
         let api_reqPreviousDue: any = new Object();
         api_req.moduleType = "invoice";
@@ -1292,7 +1328,7 @@ export class InvoiceComponent implements OnInit {
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            
+
 
             iziToast.success({
               message: "Previous Due Set State changed Successfully",
@@ -1319,10 +1355,10 @@ export class InvoiceComponent implements OnInit {
 
 
   }
-  InvoiceRevenueEdit(id:any){
+  InvoiceRevenueEdit(id: any) {
 
   }
- 
+
   InvoicetoProforma(id: any) {
     Swal.fire({
       title: 'Are you sure to convert Invoice to Proforma?',
@@ -1335,7 +1371,7 @@ export class InvoiceComponent implements OnInit {
     }).then((result: any) => {
       if (result.value) {
 
-      
+
         let api_req: any = new Object();
         let api_reqProf: any = new Object();
         api_req.moduleType = "invoice";
@@ -1345,12 +1381,12 @@ export class InvoiceComponent implements OnInit {
         api_reqProf.action = "invoice_to_proforma";
         api_reqProf.user_id = localStorage.getItem('erp_c4c_user_id');
         api_reqProf.billId = id;
-      
+
         api_req.element_data = api_reqProf;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            
+
 
             iziToast.success({
               message: "Invoice to Proforma converted Successfully",
@@ -1375,6 +1411,15 @@ export class InvoiceComponent implements OnInit {
       }
     })
 
+
+  }
+  DeliveryOrderUpdate() {
+
+  }
+  InvoiceTypeDetailsUpdate() {
+
+  }
+  addNotes() {
 
   }
 
