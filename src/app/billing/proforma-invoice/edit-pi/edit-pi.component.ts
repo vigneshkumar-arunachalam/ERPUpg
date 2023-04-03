@@ -129,6 +129,7 @@ export class EditPIComponent implements OnInit {
   received_signature_state: any;
   print_logo_state: any;
   bankingCharge: any;
+  salesRepDropDown_Textbox_Status: any;
 
   //read only fields
   isReadonly: boolean = true;
@@ -237,6 +238,7 @@ export class EditPIComponent implements OnInit {
       'shipTo_4': new FormControl(),
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
+      'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
       'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'Attn_2': new FormControl(),
@@ -637,8 +639,24 @@ export class EditPIComponent implements OnInit {
       this.companyNameList = response.biller_details;
       this.currencyNameList = response.currency_list;
       this.ShipByList = response.ship_by;
-      this.salesRepList = response.sales_rep;
+      // this.salesRepList = response.sales_rep;
       this.paymentviaList = response.paymentvia;
+     // console.log("Status", response.sales_rep_status.dropdown_status+'---'+response.sales_rep.name+'---'+response.sales_rep.userid);
+      this.salesRepDropDown_Textbox_Status=response.sales_rep_status.dropdown_status;
+      if (response.sales_rep_status.dropdown_status == 0) {
+        this.addPI_section1.patchValue({
+          'salesRep_id': response.sales_rep.name,
+          'salesRep': response.sales_rep.userid,
+        });
+
+      } else {        
+        this.salesRepList = response.sales_rep;
+        this.addPI_section1.patchValue({
+          'salesRep': localStorage.getItem('erp_c4c_user_id'),
+        });
+
+
+      }
 
       //  this.TaxDropdown();
       console.log("response-load-pi", response)
@@ -865,7 +883,7 @@ export class EditPIComponent implements OnInit {
           'Date': response.billing_pararent_details[0].billDate,
           'PoNo': response.billing_pararent_details[0].po_no,
           'PoDate': response.billing_pararent_details[0].po_date,
-          'salesRep': response.billing_pararent_details[0].sales_rep,
+          // 'salesRep': response.billing_pararent_details[0].sales_rep,
           'ShipBy': response.billing_pararent_details[0].ship_by,
           'ShipDate': response.billing_pararent_details[0].ship_date,
           'terms': response.billing_pararent_details[0].terms,

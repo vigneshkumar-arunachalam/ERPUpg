@@ -806,7 +806,6 @@ export class QuotationnewComponent implements OnInit {
       
       if (response.status == true) {
 
-console.log("response.HttpErrorResponse.ERROR.headers.status",response.HttpErrorResponse.ERROR.headers.status)
         this.quotationSharedPerson_EditOnLoad_Values = response.access_userid;
         // setTimeout(() => {
         //   this.quotationSharedPerson_List = response.user_list;

@@ -231,3 +231,7 @@ input.form-control {
     opacity: 0.6;
     color: black!important;
 }
+
+textarea{
+  resize: both;
+}

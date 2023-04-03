@@ -102,10 +102,16 @@ i.fa.fa-bars {
   color: #fff!important;
 }
 
-tr:nth-child(even) {background: rgb(239, 241, 238)}
+tr:nth-child(even) {background: rgb(241, 238, 241)}
 tr:nth-child(odd) {background: #FFF}
 
+.add-reseller-table-section tr:nth-child(even) {background: #fff;line-height: 44px;}
+.add-reseller-table-section tr:nth-child(odd) {background:#fff;line-height: 44px;}
+.add-reseller-table-section tr th {color: #051b5a;font-weight: 500;}
 
+/* #ResellerCommissionFormId .modal-dialog{
+  max-width: 42%;
+} */
 
 .ng-autocomplete 
  ::ng-deep .autocomplete-container .input-container input{
@@ -140,6 +146,15 @@ tr:nth-child(odd) {background: #FFF}
     filter: hue-rotate(360deg);
   }
 }
+
+#ResellerCommissionFormId .modal-dialog{
+  width: 90% !important;
+}
+
+#InvoiceRevenueFormId .modal-dialog{
+  max-width: 70% !important;
+}
+
 
 
 label {
@@ -402,5 +417,8 @@ label.col-lg-2.col-form-label{text-align: right;}
 }
 
 /*   checkbox for permission pop up -ends*/
+
+/*   revenue form array table*/
+.userDatatable  table  td th {padding: 5px 10px 5px 10px;}
 
 

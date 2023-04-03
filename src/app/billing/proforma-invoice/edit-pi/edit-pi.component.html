@@ -254,13 +254,19 @@
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="sales_rep" class="col-lg-12 col-form-label">Sales Rep</label>
-                        <div class="col-lg-12">
+                        <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==1)">
                             <select id="sales_rep" class="form-control" formControlName="salesRep">
                                 <option [ngValue]="null" selected disabled>Select Sales Rep</option>
                                 <option *ngFor="let sales of salesRepList" value="{{sales.userId}}">
                                     {{sales.firstName}}
                                 </option>
                             </select>
+                        </div>
+                        <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==0)">
+                            <input type="text" class="form-control" formControlName="salesRep_id" id="saleStatus" />
+                            <input type="hidden" class="form-control" formControlName="salesRep"
+                                id="saleStatus_hd_id" />
+
                         </div>
                     </div>
                 </div>

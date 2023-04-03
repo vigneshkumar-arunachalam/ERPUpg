@@ -1002,7 +1002,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Quotation Shared Person</h2>
+                <h2 class="col-12 col-12 modal-title text-center text-center">Quotation Shared Person</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1010,7 +1010,7 @@
             </div>
             <div class="modal-body quotationsharedCSS">
                 <form [formGroup]="quotationSharedPersonForm">
-                    <div class="container mb-4">
+                    <!-- <div class="container mb-4">
 
                         <div class="row height d-flex justify-content-left align-items-center">
     
@@ -1027,47 +1027,39 @@
                           </div>
                           
                         </div>
-                    </div>
+                    </div> -->
                
                  <!-- <input type="search" placeholder="Search Shared Person"  class="form-control mb-2" (keyup)="quotationSharedPersonNameSearch($event)">
                     <p>{{values}}</p> -->
                  
      
 
-                    <div class="col-lg-12" *ngFor="let quot of quotationSharedPerson_List;let i =index">
-                        
-                        <div class="row">
-                          
-                          
-                          <div class="col-lg-8 heightCSS">
-                            <span class="col-lg-8 nameCSS mt-4">{{quot.firstName}}</span>
-                    
-                          </div>
-                         
-                          
-                          <div class="on-off-toggle">
-                            
-                            <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
-                            class="on-off-toggle__input" checked="{{quot.chk_val=='true' ? 'checked':''}}"
-                              (change)="QuotationSharedCHK(quot.user_id,$event)">
-                              <label for="{{ quot.user_id }}" class="on-off-toggle__slider"></label>
-                          </div>
-                         
-
-                    <!-- <div>
-                    
-                    <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
-                    checked="{{quot.chk_val=='true' ? 'checked':''}}"
-                        (change)="QuotationSharedCHK(quot.user_id,$event)">
-                        <label for="{{ quot.user_id }}" ></label>
-                    </div> -->
-                         
-
-                            
-                        </div>
-                    </div>
                 
-
+                    <div class="">
+                        <div class="row">
+                          <div class="d-flex col-lg-4" *ngFor="let quot of quotationSharedPerson_List;let i =index" style="margin-bottom: 10px;">
+                            <div class="d-flex">
+                              <div class="">
+                                <div class="checkbox-group-wrapper">
+                                  <div class="checkbox-group d-flex">
+                                    <div class="on-off-toggle">
+                            
+                                        <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
+                                        class="on-off-toggle__input" checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                                          (change)="QuotationSharedCHK(quot.user_id,$event)">
+                                          <label for="{{ quot.user_id }}" class="on-off-toggle__slider "></label>
+                                      </div>
+                                  </div>
+                                </div>
+                              </div>
+            
+                            </div>
+            
+                            <span class="" style="margin: 0px 15px;">{{quot.firstName}}</span>
+            
+                          </div>
+                        </div>
+                      </div>
 
                 </form>
             </div>
