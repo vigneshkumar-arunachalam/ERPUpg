@@ -1134,7 +1134,7 @@ export class AddDidpiComponent implements OnInit {
 
     }
 
-    
+    this.fixedSaveDiscount();
     this.gross_total();
   }
 
@@ -1224,7 +1224,8 @@ export class AddDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
-    // this.gross_total();
+    this.usageSaveDiscount();
+    this.gross_total();
 
   }
 
@@ -1306,6 +1307,8 @@ export class AddDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
+
+    this.otherSaveDiscount();
     this.gross_total();
   }
 

@@ -49,19 +49,32 @@
                                     </thead>
                                     <tbody *ngFor="let list of Delivery_Order;let i = index">
                                         <td>
-                                            <span> {{ list.invoice_no }} </span>
+                                            <span> {{ list.delivery_no }} </span>
                                         </td>
+                                        <!-- <td>
+                                            <span> {{ list.delivery_date }} </span>
+                                            <span><button type="button" class="buttonClass"
+                                              [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                              list.billerCode}}
+                                            </button>
+                                          </span>
+                                        </td> -->
                                         <td>
-                                            <span> {{ list.billDate }} </span>
+                                          {{ list.delivery_date}}
+                                          <span><button type="button" class="buttonClass"
+                                              [ngStyle]="{backgroundColor: list.colorCodes}">
+                                              {{list.billerCode}}
+                                            </button>
+                                          </span>
                                         </td>
                                         <td>
                                             <span> {{ list.customerName }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.billerCode }} </span>
+                                            <span> {{ list.productName }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.billGeneratedBy }} </span>
+                                            <span> {{ list.generatedBy_User }} </span>
                                         </td>
 
                                         <td>
@@ -107,7 +120,8 @@
                                                       </li>
 
                                                       <li class="dropdown__item">
-                                                        <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId">
+                                                        <a class="hover3" title="Email-Landscape" data-toggle="modal"
+                                                         data-target="#emailFormId"  (click)="getEmailDetails(list.billId)">
                                                           <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                                             fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                                             stroke-linejoin="round" class="feather feather-mail">
@@ -177,14 +191,32 @@
             </div>
             <div class="modal-body">
         <form [formGroup]="addDeliveryOrderForm">
-            <div class="col-md-12 col-12">
+           
+          
+          <div class="col-md-12 col-12">
                 <div class="form-group row">
                   <label for="customer_name" class="col-lg-2 col-form-label"><span>Customer Name</span> :</label>
-                  <div class="col-lg-10">
-                    <input type="text" id="customer_name" class="form-control" formControlName="customer_name">
-                  </div>
+               <div class="col-lg-10">
+                    <!-- <input type="text" id="customer_name" class="form-control" formControlName="customer_name"> -->
+                  
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
+                  formControlName="customer_name" (selected)='searchCustomer_selectDropdownData($event)'
+                  (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                  [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+
+                  </ng-autocomplete>
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                </ng-template>
+
+                <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                </ng-template>
+                  </div> 
                 </div>
               </div>
+
+
 
               <div class="col-md-12 col-12">
                 <div class="form-group row">
@@ -225,3 +257,195 @@
         </div>
     </div>
 </div>
+
+<!---------------------------END POP UP ---------------------------------------->
+
+<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+
+<div class="modal fade" id="emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="emailForm">
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+              <div class="col-lg-10">
+                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
+                  <option [ngValue]="null" selected disabled>Select From</option>
+                  <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                    {{ from.from_email }}
+                  </option>
+                </select>
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                  Please
+                  enter To Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+              <div class="col-md-9 col-9" style="display: flex;">
+                <div class="form-check" style="margin-right: 10px;">
+                  <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy" id="company"
+                    (change)="handle_radioChange_email($event)" />
+
+                  <label class="form-check-label" for="company"> Company
+                  </label>
+                </div>
+
+                <div class="form-check">
+                  <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy" id="finance"
+                    [checked]="true" (change)="handle_radioChange_email($event)" />
+                  <label class="form-check-label" for="finance">Finance
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+              <div class="col-lg-10">
+                <input type="email" id="emailto" class="form-control" formControlName="email_to">
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                  Please
+                  enter To Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+
+              <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+              <div class="col-lg-10 email-cc-template">
+                <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
+                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}" formControlName="email_cc"
+                    (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.group_name}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailPDFType" class="col-lg-2 col-form-label"><span> PDF Type</span> :</label>
+              <div class="col-lg-10 mt-2">
+
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                    (change)="CBF_PDFLink($event)">
+                  <label class="form-check-label" for="PDF Link">PDF Link</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                    (change)="CBF_TemplateSelection($event)">
+                  <label class="form-check-label" for="Template Selection"> Template Selection</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
+                    (change)="CBF_PaymentLink($event)">
+                  <label class="form-check-label" for="Payment Link">Payment Link</label>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+              <div class="col-lg-10">
+                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                <div
+                  *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                  Subject is Required
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12" *ngIf="(CBV_TemplateSelection==true)">
+            <div class="form-group row">
+              <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+              <div class="col-lg-10">
+                <select name="templat" id="template" class="form-control" formControlName="email_template"
+                  (change)="templateContentEmailDropdown($event)">
+                  <option [ngValue]="null" selected disabled>Select Template</option>
+                  <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
+                    {{template.crm_template_name}}
+                  </option>
+                </select>
+                <br>
+
+                <div
+                  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 ">
+                  Template is Required
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+              <div class="col-lg-10">
+                <editor id="tinyID" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+              </div>
+            </div>
+          </div>
+          
+
+        </form>
+      </div>
+      <div class="modal-footer">
+       
+        <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+          Mail
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------- Email-Landscape Pop up ends------------------------------------------>
+
+<!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                        </div>
+                    </div> -->
+
+                    

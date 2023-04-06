@@ -93,7 +93,8 @@
                               </li>
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_duplicate==1)">
-                                <a class="hover4" title="Duplicate" data-toggle="modal">
+                                <a class="hover4" title="Duplicate" data-toggle="modal"
+                                  (click)="DuplicateInvoice(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-copy">
@@ -130,7 +131,7 @@
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
                                 <a class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                  data-target="#InvoiceSendingMethodFormId"
+                                  data-target="#InvoiceSendingMethodFormId" (click)="getInvoice_Post(list.billId)"
                                   (click)="InvoiceSendingMethodEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -145,7 +146,7 @@
 
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_mail==1)">
-                                <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
+                                <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
                                   (click)="getEmailDetails(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -159,7 +160,7 @@
                               </li>
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_pdf_view==1)">
-                                <a class="hover4" title="Landscape PDF" data-toggle="modal" data-target="#pdfFormId"
+                                <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
                                   (click)="pdf(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -212,7 +213,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_prev_billing==1)">
-                                <a class="hover3" title="Set Previous due" data-toggle="modal" data-target=""
+                                <a class="hover3" title="Set Previous Due" data-toggle="modal" data-target=""
                                   (click)="setPreviousDue(list.billId,list.previous_due_state)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -235,14 +236,13 @@
                               </li> -->
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_online_pay_link==1)">
-                                <a class="hover3" title="Online Payment Link" data-toggle="modal" data-target="#">
+                                <a class="hover3" title="Payment Link" data-toggle="modal" (click)="paymentLink(list.paylink_id)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-airplay">
-                                    <path
-                                      d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1">
-                                    </path>
-                                    <polygon points="12 15 17 21 7 21 12 15"></polygon>
+                                    stroke-linejoin="round" class="feather feather-external-link">
+                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <line x1="10" y1="14" x2="21" y2="3"></line>
                                   </svg>
                                 </a>
                               </li>
@@ -308,7 +308,8 @@
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                 <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
                                   data-target="#ResellerCommissionFormId">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;"><strong>RC</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-battery-charging">
                                     <path
@@ -316,11 +317,25 @@
                                     </path>
                                     <line x1="23" y1="13" x2="23" y2="11"></line>
                                     <polyline points="11 6 7 12 13 12 9 18"></polyline>
-                                  </svg>
+                                  </svg> -->
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_actual_cost==1)">
-                                <a class="hover3" title="Set Actual Cost" data-toggle="modal" data-target="#">
+                                <a class="hover3" title="Set Actual Cost" data-toggle="modal" 
+                                  data-target="#setActualCostId" (click)="get_actualcost_details(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-hash">
+                                    <line x1="4" y1="9" x2="20" y2="9"></line>
+                                    <line x1="4" y1="15" x2="20" y2="15"></line>
+                                    <line x1="10" y1="3" x2="8" y2="21"></line>
+                                    <line x1="16" y1="3" x2="14" y2="21"></line>
+                                  </svg>
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Set Actual Cost" data-toggle="modal"
+                                  data-target="#setActualCostId" (click)="get_actualcost_details(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-hash">
@@ -333,7 +348,7 @@
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_type==1)">
                                 <a class="hover3" title="Set Invoice Type Name" data-toggle="modal"
-                                  data-target="#InvoiceTypeNameFormId">
+                                  data-target="#setInvoiceTypeNameFormId" (click)="setInvoiceTypeNameEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-minimize">
@@ -344,7 +359,8 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover3" title="Notes" data-toggle="modal" data-target="#NotesFormId" (click)="getNotes(list.billId)">
+                                <a class="hover3" title="Notes" data-toggle="modal" data-target="#NotesFormId"
+                                  (click)="getNotes(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-message-square">
@@ -368,34 +384,49 @@
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_pi==1)">
                                 <a class="hover3" title="Invoice to Proforma" data-toggle="modal"
                                   (click)="InvoicetoProforma(list.billId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;"><strong>PI</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-refresh-ccw">
                                     <polyline points="1 4 1 10 7 10"></polyline>
                                     <polyline points="23 20 23 14 17 14"></polyline>
                                     <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15">
                                     </path>
-                                  </svg>
+                                  </svg> -->
                                 </a>
+                              </li>
+                              <li class="dropdown__item" >
+
+                                <a class="hover3" title="License Details" data-toggle="modal"
+                                  data-target="#LicenseDetailsFormId" (click)="get_invoice_licence_details(list.billId)">
+                                  <span style="color: #009688;"><strong>Lic</strong></span>
+                                 
+                                </a>
+
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_quotation==1)">
 
                                 <a class="hover3" title="Invoice to Quotation Conversion" data-toggle="modal"
                                   data-target="#">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;"><strong>Q</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-repeat">
                                     <polyline points="17 1 21 5 17 9"></polyline>
                                     <path d="M3 11V9a4 4 0 0 1 4-4h14"></path>
                                     <polyline points="7 23 3 19 7 15"></polyline>
                                     <path d="M21 13v2a4 4 0 0 1-4 4H3"></path>
-                                  </svg>
+                                  </svg> -->
                                 </a>
 
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_export_billing==1)">
-                                <a class="hover3" title="Local to Export" data-toggle="modal" data-target="#">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                <a class="hover3" title="Local to Export" data-toggle="modal"
+                                  (click)="setLocaltoExport(list.billId,list.export_state)">
+                                  <span style="color: #e43e0c;" *ngIf="list.export_state==1"><strong>L</strong></span>
+                                  <span style="color: #960057;" *ngIf="list.export_state==2"><strong>E</strong></span>
+                                  <span style="color: #009688;" *ngIf="list.export_state==3"><strong>Z</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-share-2">
                                     <circle cx="18" cy="5" r="3"></circle>
@@ -403,25 +434,27 @@
                                     <circle cx="18" cy="19" r="3"></circle>
                                     <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
                                     <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                  </svg>
+                                  </svg> -->
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
                                 <a class="hover3" title="Delivery Order" data-toggle="modal"
                                   data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;"><strong>DO</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-truck">
                                     <rect x="1" y="3" width="15" height="13"></rect>
                                     <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
                                     <circle cx="5.5" cy="18.5" r="2.5"></circle>
                                     <circle cx="18.5" cy="18.5" r="2.5"></circle>
-                                  </svg>
+                                  </svg> -->
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_did==1)">
                                 <a class="hover3" title="Invoice to DID Invoice" data-toggle="modal" data-target="#">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;"><strong>DI</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-shuffle">
                                     <polyline points="16 3 21 3 21 8"></polyline>
@@ -429,7 +462,7 @@
                                     <polyline points="21 16 21 21 16 21"></polyline>
                                     <line x1="15" y1="15" x2="21" y2="21"></line>
                                     <line x1="4" y1="4" x2="9" y2="9"></line>
-                                  </svg>
+                                  </svg> -->
                                 </a>
                               </li>
 
@@ -611,7 +644,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">Invoice Sending Method
+        <h2 class="col-12 modal-title text-center">Invoice Sending Method
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -620,22 +653,27 @@
       <div class="modal-body">
         <form [formGroup]="InvoiceSendingMethodForm">
           <div class="row">
+            <div>
+              <label>Invoice Sending Method</label>
+            </div>
+            <div class="ml-4">
+              <div class="form-check form-check-inline ">
+                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                  name="InvoiceSendingInput" id="1" value="1" (change)="radio_InvoiceSendingInput($event)">
+                <label class="form-check-label" for="ByPost" style="color: #960057 !important;">By Post</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                  name="InvoiceSendingInput" id="3" value="2" (change)="radio_InvoiceSendingInput($event)">
+                <label class="form-check-label" for="ByEmail" style="color: #960057 !important;">By Email</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                  name="InvoiceSendingInput" id="0" value="0" (change)="radio_InvoiceSendingInput($event)">
+                <label class="form-check-label" for="None" style="color: #960057 !important;">None </label>
+              </div>
+            </div>
 
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-                name="InvoiceSendingInput" id="0" value="By Post" (change)="radio_InvoiceSendingInput($event)">
-              <label class="form-check-label" for="ByPost">By Post</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-                name="InvoiceSendingInput" id="1" value="By Email" (change)="radio_InvoiceSendingInput($event)">
-              <label class="form-check-label" for="ByEmail">By Email</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-                name="InvoiceSendingInput" id="2" value="None" (change)="radio_InvoiceSendingInput($event)">
-              <label class="form-check-label" for="None">None </label>
-            </div>
 
           </div>
         </form>
@@ -644,7 +682,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" class="btn btn-primary" (click)="setInvoice_Post()">Save</button>
 
 
         <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1328,10 +1366,10 @@
         <form [formGroup]="RevenueDetailsForm">
           <div class="row">
             <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4">
+              <div class="col-lg-4 mb-2">
                 <label>Select Revenue </label>
               </div>
-              <div class="col-lg-6">
+              <div class="col-lg-4">
                 <select class="form-control" formControlName="revenue">
                   <option [ngValue]="null" selected disabled>Select Revenue</option>
 
@@ -1340,11 +1378,13 @@
                   </option>
                 </select>
               </div>
+              <div class="col-lg-4 mb-2">
+                <input type="checkbox" title="Check/Uncheck Revenue Details" formControlName="Revenuestate" (change)="CBF_RevenueStateFn($event)">
+              </div>
             </div>
+          
           </div>
-          <div>
-            <input type="checkbox" formControlName="Revenuestate" (change)="CBF_RevenueStateFn($event)">
-          </div>
+         
         </form>
 
         <form [formGroup]="revenueaddressForm" *ngIf="(CBV_RevenueState==true)">
@@ -1366,16 +1406,16 @@
                     <div class="table-responsive">
                       <table class="add-contact-table-section">
                         <thead>
-                          <tr class="userDatatable-header" >
+                          <tr class="userDatatable-header">
 
                             <th> <span class="userDatatable-title">S.No</span>
                             </th>
-                            <th > <span class="userDatatable-title">Product Name</span>
+                            <th> <span class="userDatatable-title">Product Name</span>
                             </th>
                             <th><span class="userDatatable-title">Description</span></th>
 
                             <th><span class="userDatatable-title">Revenue Amt</span></th>
-                            <th ><span class="userDatatable-title">Select Revenue Type</span>
+                            <th><span class="userDatatable-title">Select Revenue Type</span>
                             </th>
 
 
@@ -1386,33 +1426,33 @@
                           <tr [formGroupName]="i" class="mt-4">
 
 
-                            <td style="text-align: center;" >
+                            <td style="text-align: center;">
                               <div class="userDatatable-content">
-                                <input type="hidden" formControlName="child_id"> 
+                                <input type="hidden" formControlName="child_id">
                                 <span>{{i+1}}</span>
                               </div>
                             </td>
-                            <td >
+                            <td>
                               <div class="userDatatable-content">
                                 <!-- <span>{{dev.productName}}</span>  -->
                                 <input type="text" formControlName="revenueProductName_child" [readonly]="isReadOnly">
                               </div>
 
                             </td>
-                            <td >
+                            <td>
                               <div class="userDatatable-content">
                                 <!-- {{dev.productDesc}} -->
                                 <input type="text" formControlName="revenueProductDesc_child" [readonly]="isReadOnly">
                               </div>
 
                             </td>
-                            <td >
+                            <td>
                               <div class="userDatatable-content">
                                 <input type="text" formControlName="revenueAmount_child">
 
                               </div>
                             </td>
-                            <td >
+                            <td>
                               <div class="userDatatable-content">
                                 <div class="col-lg-12">
                                   <select class="form-control" formControlName="revenueType_child">
@@ -1481,12 +1521,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <h2 style="text-align: center !important;">Are you sure, Whant to deliver order?
-        </h2>
+       
         <form [formGroup]="DeliveryOrderForm">
           <div class="row">
             <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4">
+              <div class="col-lg-4 mt-2">
                 <label>Warranty </label>
               </div>
               <div class="col-lg-6">
@@ -1516,11 +1555,10 @@
 
 <!----------Delivery Order END ------------------>
 
+<!---------------------- set Invoice Type Name pop up start  -------------------------->
 
-<!------------------------ Delivery Order start  ---------->
-
-<div class="modal fade" id="InvoiceTypeNameFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="setInvoiceTypeNameFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1531,19 +1569,18 @@
         </button>
       </div>
       <div class="modal-body">
-
-        <form [formGroup]="InvoiceTypedetailsForm">
+        <form [formGroup]="setInvoiceType">
           <div class="row">
             <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4">
-                <label>Select Invoice type </label>
+              <div class="col-lg-4 mt-2">
+                <label>Select Invoice Type</label>
               </div>
               <div class="col-lg-6">
-                <select class="form-control" formControlName="invoiceType">
-                  <option [ngValue]="null" selected disabled>Select Invoice Type</option>
+                <select class="form-control" formControlName="setInvoice">
+                  <option [ngValue]="null" selected disabled>Select invoice From</option>
 
-                  <option *ngFor="let term of TermDetailsList" value="{{term}}">
-                    {{term}}
+                  <option *ngFor="let invTy of InvoiceTypeList" value="{{invTy}}">
+                    {{invTy}}
                   </option>
                 </select>
               </div>
@@ -1552,8 +1589,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="InvoiceTypeDetailsUpdate()">Update</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
+        <button type="submit" class="btn btn-primary" (click)="setInvoiceTypeNameUpdate()">Update</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setInvoiceTypeClear()">
           Cancel
         </button>
 
@@ -1562,8 +1599,7 @@
   </div>
 </div>
 
-
-<!----------Delivery Order END ------------------>
+<!------------------- set Invoice Type Name pop up end ---------------->
 
 <!------------------------ Notes start  ---------->
 
@@ -1624,12 +1660,39 @@
 
         <form [formGroup]="ResellerCommissionForm">
           <div class="row">
-            <div class="col-lg-12 mt-2" style="display: flex; ">
+            <!-- <div class="col-lg-12 mt-2" style="display: flex; ">
               <div class="col-lg-4 mt-2">
                 <label>Reseller Name </label>
               </div>
               <div class="col-lg-8">
-                <input type="text" class="form-control" formControlName="ResellerName">
+                <input type="text" class="form-control" formControlName="ResellerName" (change)="getResellerName()">
+              </div>
+            </div> -->
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="ng-autocomplete">
+                  <label for="ResellerName" class="col-lg-12 col-form-label">Reseller Name</label>
+                  <ng-autocomplete 
+                  [data]="searchResult" 
+                  [searchKeyword]="keywordResellerName"
+                    formControlName="ResellerName" 
+                    (selected)='selectEventReseller($event)'
+                    (inputChanged)='searchResellerData($event)' 
+                    (inputFocused)='onFocusedReseller($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+
+                </div>
+              
+
               </div>
             </div>
             <div class="col-lg-12 mt-2" style="display: flex;">
@@ -1725,8 +1788,34 @@
                           </th>
                           <td>
 
-                            <input type="text" class="form-control" formControlName="ResellerName">
-
+                            <!-- <input type="text" class="form-control" formControlName="ResellerName"> -->
+                            <div class="col-lg-12">
+                              <div class="form-group row">
+                                <div class="ng-autocomplete">
+                                  <!-- <label for="ResellerName" class="col-lg-12 col-form-label">Reseller Name</label> -->
+                                  <ng-autocomplete 
+                                  [data]="searchResult" 
+                                  [searchKeyword]="keywordResellerName"
+                                    formControlName="ResellerName" 
+                                    (selected)='selectEventReseller($event)'
+                                    (inputChanged)='searchResellerData($event)' 
+                                    (inputFocused)='onFocusedReseller($event)'
+                                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                                  </ng-autocomplete>
+                
+                                  <ng-template #itemTemplateCustomer let-item>
+                                    <a [innerHTML]="item.customerName"></a>
+                                  </ng-template>
+                
+                                  <ng-template #notFoundTemplate let-notFound>
+                                    <div [innerHTML]="notFound"></div>
+                                  </ng-template>
+                
+                                </div>
+                              
+                
+                              </div>
+                            </div>
 
 
                           </td>
@@ -1831,3 +1920,354 @@
   </div>
 </div>
 <!-----------------Modal Pop Up (END) reseller commission--------------->
+
+
+
+<!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
+<div class="modal fade" id="setActualCostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Actual Price Update
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="setActualCostForm">
+
+
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive ">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+
+
+                    <th>
+                      <span class="userDatatable-title">S.No</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Product Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Description</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Quantity</span>
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">Unit</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Price</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Net Total</span>
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">Act Price(%)</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Act Price</span>
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">Act Net Total</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Diff Amt</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr *ngFor="let list of actualCost_ProductList ; let i = 'index+1'">
+
+
+                    <td>
+
+                      <span> {{i}}</span>
+                      <input type="hidden" id="AP_sno_{{i}}" value="{{i}}">
+                      <input type="hidden" id="quotationChildId_{{i}}" value="{{list.billChildid}}">
+
+                    </td>
+                    <td>
+                      <span>{{list.productName}}</span>
+                      <input type="hidden" id="AP_productName_{{i}}" value="{{list.productName}}">
+                    </td>
+                    <td>
+                      <span>{{list.productDesc}}</span>
+                      <input type="hidden" id="AP_productDescription_{{i}}" value="{{list.productDesc}}">
+                    </td>
+                    <td>
+                      <span>{{list.quantity}}</span>
+                      <input type="hidden" id="product_qty_{{i}}" value="{{list.quantity}}">
+
+                    </td>
+
+
+                    <td>
+                      <span> {{list.unit}}</span>
+                      <input type="hidden" id="product_unit{{i}}" value="{{list.unit}}">
+
+
+                    </td>
+                    <td *ngIf="list.productName=='Courier' || list.productName=='Other'">
+                      <!-- <input type="hidden" id="product_rate_{{i}}" value="{{list.price}}" > -->
+                      <input type="hidden" id="invisiable_state_{{i}}" value="{{list.invisiable_state}}">
+                      <input type="text" id="price_{{i}}" value="0" (keyup)="get_actual_total()" class="form-control" />
+                      <input type="hidden" name="product_rate_334837" id="product_rate_{{i}}">
+                    </td>
+
+
+                    <td *ngIf="list.productName!='Courier' && list.productName!='Other'">
+                      <input type="hidden" id="invisiable_state_{{i}}" value="{{list.invisiable_state}}">
+                      <span>{{ list.rate}}</span>
+
+                      <!-- <span>{{ list.totat_amt}}</span> just modified for net total  -->
+                      <input type="hidden" id="product_rate_{{i}}" value="{{list.rate}}">
+                    </td>
+
+                    <td>
+
+                      <span>{{list.net_amt}}</span>
+                      <input type="hidden" id="product_net_amt_{{i}}" value="{{list.net_amt}}"
+                        (keyup)="get_actual_total()" />
+                    </td>
+
+                    <td>
+                      <input type="text" style="width: 50%;margin: 5px;" id="actual_percentage_{{i}}"
+                        class="form-control" (keyup)="get_actual_total()" value="{{list.actual_percentage}}" />
+
+                    </td>
+
+                    <td>
+                      <input type="text" style="width: 50%;margin: 5px;" class="form-control" id="actual_cost_{{i}}"
+                        value="{{list.actual_cost}}" (keyup)="get_actual_total()" />
+
+                    </td>
+
+                    <td>
+                      <input type="text" style="width: 50%;margin: 5px;" class="form-control" id="actual_net_tot_{{i}}"
+                        (keyup)="get_actual_total()" value="{{ list.actual_net_tot}}" />
+
+                    </td>
+                    <td>
+                      <input type="text" style="width: 50%;margin: 5px;" class="form-control" id="act_diff_amt_{{i}}"
+                        value="{{ list.act_diff_amt}}" />
+
+                    </td>
+                  </tr>
+
+
+                </tbody>
+                <tfoot>
+                  <tr>
+
+                    <td valign="top" bgcolor="#FFFFF" colspan="6" align="left"
+                      style="border-bottom:none; border:1px solid #d0d0d0">
+                      <input type="hidden" name="quotationChildId_count" id="quotationChildId_count"
+                        value="{{this.quotationChildId_count}}">
+                      <strong>Total</strong>
+                    </td>
+
+
+
+
+                    <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
+                      <strong>0</strong></td>
+
+                    <td valign="top" bgcolor="#FFFFF"
+                      style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                      &nbsp;</td>
+
+                    <td valign="top" bgcolor="#FFFFF"
+                      style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                      <strong><span id="actual_cost_tot">0</span></strong>
+                    </td>
+
+                    <td valign="top" bgcolor="#FFFFF"
+                      style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                      <strong><span id="actual_net_tot">0</span></strong>
+
+
+                    </td>
+                    <td valign="top" bgcolor="#FFFFF"
+                      style="text-align: right;border-bottom:none; border:1px solid #d0d0d0">
+                      <strong><span id="act_diff_amt_tot">0</span></strong>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
+
+<!-----------------Modal Pop Up (BEGIN) Licence Details ------------------>
+<div class="modal fade" id="LicenseDetailsFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Licence Details
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <form [formGroup]="LicenseDetailsForm"> -->
+          <div class="card-body">
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+
+                      <th>
+                        <span class="userDatatable-title">LIC CODE	</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Pur Date	</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Issue Date	</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">License Key	</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Prim Lic	</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Key Exp	</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Email	</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">ATTC FILE		</span>
+                      </th>
+
+
+                      <!-- <th>
+                        <span class="userDatatable-title">Action</span>
+                      </th> -->
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of LicenseDetailsList; let i = index">
+                    <tr>
+
+                      <td>
+                        {{ list.license_no}}
+                        
+                      </td>
+                      <td> <span><button type="button" class="buttonClass"
+                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                        list.billerCode}}</button></span></td>
+                     
+                      <!-- <td><span>{{ list.billerCode}}</span></td> -->
+                      <td><span>{{ list.lic_pur_date}}</span></td>
+                      <td><span>{{ list.issueDate}}</span></td>
+                      <td><span>{{ list.category_name}}</span></td>
+                      <td><span>{{ list.license_product_name}}</span></td>
+                      <td><span>{{ list.license_key	}}</span></td>
+                      <td><span>{{ list.primary_license}}</span></td>
+
+                      <td><span>{{ list.key_exp_date	}}</span></td>
+                      <td><span>{{ list.activation_email}}</span></td>
+                      <td><span>{{ list.license_key_original_filename}}</span></td>
+ 
+                  <!-- <td>
+                        <div class="page">
+
+                          <div class="dropdown">
+                            <button class="btn1"><i class="fa fa-bars"></i></button>
+                            <ul class="dropdown__list">
+
+                              <li class="dropdown__item" *ngIf="(invoicePermissionList_edit==1)">
+                                <a class="hover3" title="Edit" (click)="editPIGo(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-edit">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                    </path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
+                                    </path>
+                                  </svg>
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item" *ngIf="(invoicePermissionList_delete==1)">
+                                <a class="hover4" title="Delete" data-toggle="modal"
+                                  (click)="deleteInvoice(list.billId)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-x-square">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                                  </svg>
+                                </a>
+                              </li>
+
+
+                            </ul>
+                          </div>
+                        </div>
+                      </td>   -->
+                    </tr>
+                  
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            
+            
+          </div>
+        <!-- </form> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- Licence Details Pop up ends------------------------------------------>

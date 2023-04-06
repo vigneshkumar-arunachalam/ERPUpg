@@ -229,7 +229,7 @@
     overflow: hidden;
   } */
   .userDatatable table td{padding:4px 4px 4px!important;}
-  .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
+  .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 60px; overflow: hidden;text-overflow: ellipsis; }
   /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
   .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
   .userDatatable .d-flex{justify-content: center;margin-right: 0;}
@@ -785,4 +785,44 @@ th{
 
 .userDatatable table td{
   white-space: normal!important;
+}
+
+.customerlist-section td{
+  width: 85px;
+  font-size: 12px;
+}
+.customerlist-section td span{
+  white-space: normal!important;
+  width: 100%;
+}
+.userDatatable table .customerlist-section tr td span{
+  width: 110px;
+}
+.customerlist-section td:first-child{
+  width: 35px;
+}
+.customerlist-section td:last-child{
+  width: 45px;
+}
+.customerlist-section td:nth-child(11) {
+  width: 70px;
+  /* display: block; */
+}
+.customerlist-section td:nth-child(9){
+  width: 35px;
+  /* display: inline-block; */
+  white-space: nowrap!important;
+}
+.userDatatable table .customerlist-section tr td:nth-child(9) span{
+  width: 60px;
+}
+.customerlist-section td:nth-child(12) span{
+  width: 50px!important;
+  display: block;
+  white-space: nowrap!important;
+}
+.customerlist-section td:nth-child(8) span{
+  width: 50px!important;
+  display: block;
+  white-space: nowrap!important;
 }

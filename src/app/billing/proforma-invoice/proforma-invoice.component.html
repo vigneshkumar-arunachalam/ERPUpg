@@ -149,7 +149,7 @@
                               </li> -->
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Payment" data-toggle="modal"
+                                <a class="hover3" title="Payment Process" data-toggle="modal"
                                   data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -174,7 +174,8 @@
                               <li class="dropdown__item">
                                 <a href="#" class="hover3" title="PI to Invoice Conversion" data-toggle="modal"
                                   (click)="PItoInvoiceConversion(list.billId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;" ><strong>IN</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-move">
                                     <polyline points="5 9 2 12 5 15"></polyline>
@@ -183,13 +184,13 @@
                                     <polyline points="19 9 22 12 19 15"></polyline>
                                     <line x1="2" y1="12" x2="22" y2="12"></line>
                                     <line x1="12" y1="2" x2="12" y2="22"></line>
-                                  </svg>
+                                  </svg> -->
                                 </a>
 
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
+                                <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
                                   (click)="getEmailDetails(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -231,7 +232,8 @@
                               <li class="dropdown__item">
                                 <a class="hover3" title="Convert to DID Invoice" data-toggle="modal"
                                   (click)="InvoicetoDIDConversion(list.billId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: #009688;" ><strong>DI</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-chrome">
                                     <circle cx="12" cy="12" r="10"></circle>
@@ -239,11 +241,12 @@
                                     <line x1="21.17" y1="8" x2="12" y2="8"></line>
                                     <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
                                     <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-                                  </svg>
+                                  </svg> -->
                                 </a>
                               </li>
+
                               <li class="dropdown__item">
-                                <a class="hover3" title="Payment" data-toggle="modal" (click)="paymentLink(list.paylink_id)">
+                                <a class="hover3" title="Payment Link" data-toggle="modal" (click)="paymentLink(list.paylink_id)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-eye-off">

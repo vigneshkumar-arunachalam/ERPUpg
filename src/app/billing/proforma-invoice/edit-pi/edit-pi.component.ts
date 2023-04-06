@@ -394,7 +394,7 @@ export class EditPIComponent implements OnInit {
   }
 
   removeAddress(i: number) {
-    alert(i)
+  
     this.addresses.removeAt(i);
 
 
@@ -403,7 +403,7 @@ export class EditPIComponent implements OnInit {
 
 
   removeParticular(i: number) {
-    alert(i)
+
     console.log('iiii--' + i)
     console.log(this.addresses)
 

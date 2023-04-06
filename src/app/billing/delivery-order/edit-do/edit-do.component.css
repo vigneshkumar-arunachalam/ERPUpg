@@ -136,6 +136,7 @@ select{
     background-color: #f5f5f5 !important;
     opacity: 0.6;
     color: black!important;
+    cursor: no-drop;
 }
 
 
@@ -153,15 +154,15 @@ select{
   animation: bg-hue 2s linear infinite;
 }
 
-.userDatatable-header th{
+/* .userDatatable-header th{
 
   padding: 0px 600px 0px 0px;
 
-}
+} */
 
-.marginSpace td  {
+/* .marginSpace td  {
 
   padding: 0px 600px 0px 0px;
   
-}
+} */
 

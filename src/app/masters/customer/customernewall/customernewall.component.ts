@@ -337,8 +337,8 @@ export class CustomernewallComponent implements OnInit {
     }
   ];
   addEmail(event: MatChipInputEvent): void {
-    console.log(event.value)
-    if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
+    console.log(event.value);
+    if (event.value.indexOf('@') > 0 )  {
       var value: any = (event.value || '').trim();
 
       this.emailErrMsg = true;
@@ -356,7 +356,7 @@ export class CustomernewallComponent implements OnInit {
 
   editEmail(event: MatChipInputEvent): void {
     console.log(event.value)
-    if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
+    if (event.value.indexOf('@') > 0 )  {
       var value: any = (event.value || '').trim();
 
       this.emailErrMsg = true;
@@ -373,7 +373,7 @@ export class CustomernewallComponent implements OnInit {
   addFinanceEmail(event: MatChipInputEvent): void {
 
     console.log(event.value)
-    if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
+    if (event.value.indexOf('@') > 0 )  {
       var value: any = (event.value || '').trim();
 
       this.errMsg = true;
@@ -391,9 +391,9 @@ export class CustomernewallComponent implements OnInit {
     event.chipInput!.clear();
   }
   editFinanceEmail(event: MatChipInputEvent): void {
-
+    // if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '' ||   event.value.indexOf('.co.th') > 0 ||   event.value.indexOf('.global') > 0)
     console.log(event.value)
-    if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '') {
+    if (event.value.indexOf('@') > 0 ) {
       var value: any = (event.value || '').trim();
 
       this.errMsg = true;

@@ -1448,6 +1448,7 @@ export class EditDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
+    this.fixedSaveDiscount();
     this.gross_total();
   }
 
@@ -1538,6 +1539,8 @@ export class EditDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
+
+    this.usageSaveDiscount();
     this.gross_total();
 
   }
@@ -1621,6 +1624,8 @@ export class EditDidpiComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
+
+    this.otherSaveDiscount();
     this.gross_total();
   }
 

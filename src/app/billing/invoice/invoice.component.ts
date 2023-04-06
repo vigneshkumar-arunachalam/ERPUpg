@@ -47,12 +47,18 @@ export class InvoiceComponent implements OnInit {
   user_ids: any;
   //invoice send to post
   invoiceSendingMethod_BillID: any;
+  billId_InvoicePost: any;
   //process payment
   billID_processPayment: any;
   invoiceDetails_payment: any;
   paymentType_payment: any;
   paymentDetails_payment: any;
 
+  // set-Invoice-type-name
+
+  setInvoiceType: FormGroup;
+  InvoiceType_BillerID: any
+  InvoiceTypeList: any;
   //email-landscape
 
   emailForm: FormGroup;
@@ -126,6 +132,16 @@ export class InvoiceComponent implements OnInit {
   DeliveryOrderForm: FormGroup;
   warrantyList: any;
   billerId_deliveryOrder: any;
+  //set actual cost
+  setActualCostForm: FormGroup;
+  actualCost_quotationID: any;
+  actualCost_ProductList: any;
+  quotationChildID: any;
+  quotationChildId_count: any;
+  public addresses_actualCost: FormArray;
+  setActualCost_FormGroup: FormGroup;
+  test: boolean[] = [];
+  itre = 0;
   //invoice type details
   InvoiceTypedetailsForm: FormGroup;
   //notes
@@ -136,6 +152,13 @@ export class InvoiceComponent implements OnInit {
   resellercommissiontype: any;
   commissionType_value: any;
   revenueChildListDetails: any;
+  //reseller commission
+  searchResult:any;
+  ResellerName_Customer:any;
+  //license details
+  LicenseDetailsList: any;
+
+
   //notes
   billId_notes: any;
 
@@ -197,7 +220,7 @@ export class InvoiceComponent implements OnInit {
     });
   }
 
-
+  keywordResellerName = 'customerName';
   ngOnInit(): void {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
@@ -251,6 +274,9 @@ export class InvoiceComponent implements OnInit {
     this.setTermConditionForm = new FormGroup({
       'setTerm': new FormControl(null),
     });
+    this.setInvoiceType = new FormGroup({
+      'setInvoice': new FormControl(null)
+    });
     this.RevenueDetailsForm = new FormGroup({
       'revenue': new FormControl(null),
 
@@ -264,6 +290,10 @@ export class InvoiceComponent implements OnInit {
     });
     this.NotesForm = new FormGroup({
       'note': new FormControl(null),
+    });
+    this.setActualCostForm = new FormGroup({
+      'txt_templateName': new FormControl(null),
+
     });
     this.ResellerCommissionForm = new FormGroup({
       'ResellerName': new FormControl(null),
@@ -346,7 +376,7 @@ export class InvoiceComponent implements OnInit {
   }
   createrevenueAddress(): FormGroup {
     return this.fb.group({
-      child_id:'',
+      child_id: '',
       revenueType_child: '',
       revenueAmount_child: '',
       revenueProductName_child: '',
@@ -686,6 +716,89 @@ export class InvoiceComponent implements OnInit {
           };
       }
     })
+  }
+  getInvoice_Post(id: any) {
+    this.billId_InvoicePost = id;
+    let api_req: any = new Object();
+    let api_postED: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_invoice_send_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postED.action = "get_invoice_send_details";
+    api_postED.billId = id;
+    api_postED.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_postED;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.InvoiceSendingMethodForm.patchValue({
+          'InvoiceSendingInput': response.post_send_status
+
+        })
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Invoice Send to post details not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  setInvoice_Post() {
+    let api_req: any = new Object();
+    let api_postUPd: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_send_details_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postUPd.action = "invoice_send_details_update";
+    api_postUPd.billId = this.billId_InvoicePost;
+    api_postUPd.post_send_status = this.InvoiceSendingValue;
+    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_postUPd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        iziToast.success({
+          message: "Invoice Send to post details Successful. ",
+          position: 'topRight'
+        });
+        $('#InvoiceSendingMethodFormId').modal('hide');
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Invoice Send to post details not Updated. Please try again",
+          position: 'topRight'
+        });
+        $('#InvoiceSendingMethodFormId').modal('hide');
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
   }
   InvoiceSendingMethodEdit(Id: any) {
 
@@ -1146,6 +1259,129 @@ export class InvoiceComponent implements OnInit {
     window.open(url, '_blank');
     console.log("url", url)
   }
+  get_actualcost_details(id: any) {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_invActCost: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_actualcost_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invActCost.action = "get_actualcost_details";
+    api_invActCost.billId = id;
+    api_invActCost.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_invActCost;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.actualCost_ProductList = response.billChild_details;
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Actual Cost not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+
+  get_invoice_licence_details(id: any) {
+    let api_req: any = new Object();
+    let api_invLicDet: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_invoice_licence_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invLicDet.action = "get_invoice_licence_details";
+    api_invLicDet.billId = id;
+    api_invLicDet.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_invLicDet;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.LicenseDetailsList = response.license_details;
+        iziToast.success({
+          message: "Duplicate created successfully",
+          position: 'topRight'
+
+        });
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Duplicate not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+
+  DuplicateInvoice(id: any) {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_dup: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/duplicate_invoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_dup.action = "duplicate_invoice";
+    api_dup.billId = id;
+    api_dup.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_dup;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+
+        iziToast.success({
+          message: "Duplicate created successfully",
+          position: 'topRight'
+
+        });
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Duplicate not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
   fileAttachmentEdit(ID: any) {
     this.myFiles = [];
     $("#fileAttachmentFormId").modal("show");
@@ -1164,12 +1400,14 @@ export class InvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("check  file attachment", response)
-      this.getFileAttachmentResult = response.attachment_list
+      this.getFileAttachmentResult = response.inv_attachment_details;
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
       if (response.status == true) {
         this.FileAttachmentForm.patchValue({
-          'file': response.attachment_list.uploadFileName,
+          // 'file': response.attachment_list.uploadFileName,
+          'file': response.inv_attachment_details[0].uploadFileName,
+
         });
       }
     });
@@ -1212,7 +1450,7 @@ export class InvoiceComponent implements OnInit {
       $.ajax({
         type: 'POST',
         url: 'https://laravelapi.erp1.cal4care.com/api/invoice/invoice_attachment_save',
-        
+
 
         cache: false,
         contentType: false,
@@ -1220,7 +1458,7 @@ export class InvoiceComponent implements OnInit {
         data: data,
         success: function (result: any) {
           if (result.status == true) {
-           
+
             self.getInvoice({});
             console.log(result);
             Swal.close();
@@ -1410,6 +1648,15 @@ export class InvoiceComponent implements OnInit {
   }
   setTermsConditionClear() {
     this.setTermConditionForm.reset();
+  }
+  paymentLink(paylink_id: any) {
+
+    var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
+    window.open(url, '_blank');
+    console.log("url", url)
+    // $('#pdfFormId').modal('hide');
+    // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
   }
   RecurringEdit(id: any) {
 
@@ -1620,7 +1867,7 @@ export class InvoiceComponent implements OnInit {
             "revenueType_child": response.revenue_child_details[index].revenue_type_child_id,
             "revenueProductName_child": response.revenue_child_details[index].productName,
             "revenueProductDesc_child": response.revenue_child_details[index].productDesc,
-           
+
 
           })
 
@@ -1640,7 +1887,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error",error);
+        console.log("network error", error);
         iziToast.error({
           message: "Network Error",
           position: 'topRight'
@@ -1690,7 +1937,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        console.log("network error",error);
+        console.log("network error", error);
         iziToast.error({
           message: "Network Error",
           position: 'topRight'
@@ -1849,39 +2096,143 @@ export class InvoiceComponent implements OnInit {
   DeliveryOrderEdit(id: any) {
     this.billerId_deliveryOrder = id;
   }
-  DeliveryOrderUpdate() {
-    this.spinner.show();
-    let api_req: any = new Object();
-    let api_reqDO: any = new Object();
+  // DeliveryOrderUpdate() {
+  //   this.spinner.show();
+  //   let api_req: any = new Object();
+  //   let api_reqDO: any = new Object();
 
+  //   api_req.moduleType = "invoice";
+  //   api_req.api_url = "invoice/invoice_to_delivery_order";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_reqDO.action = "invoice_to_delivery_order";
+  //   api_reqDO.user_id = localStorage.getItem('erp_c4c_user_id');
+  //   api_reqDO.billId = this.billerId_deliveryOrder;
+  //   api_reqDO.warranty_type = this.DeliveryOrderForm.value.warranty;
+  //   api_req.element_data = api_reqDO;
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     if (response.status == true) {
+  //       this.spinner.hide();
+
+  //       iziToast.success({
+  //         message: "Delivery Order Updated Successfully",
+  //         position: 'topRight'
+  //       });
+  //       $('#DeliveryOrderFormId').modal("hide");
+
+
+  //       this.getInvoice({});
+  //     } else {
+  //       iziToast.warning({
+  //         message: "Delivery Order not Updated. Please try again",
+  //         position: 'topRight'
+  //       });
+  //       $('#DeliveryOrderFormId').modal("hide");
+  //       this.getInvoice({});
+  //     }
+  //   }),
+  //     (error: any) => {
+  //       iziToast.error({
+  //         message: "Sorry, some server issue occur. Please contact admin",
+  //         position: 'topRight'
+  //       });
+  //       console.log("final error", error);
+  //     };
+  // }
+  DeliveryOrderUpdate() {
+    Swal.fire({
+      title: 'Are you sure to Change?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result: any) => {
+      if (result.value) {
+
+
+        let api_req: any = new Object();
+        let api_reqDO: any = new Object();
+
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/invoice_to_delivery_order";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqDO.action = "invoice_to_delivery_order";
+        api_reqDO.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqDO.billId = this.billerId_deliveryOrder;
+        api_reqDO.warranty_type = this.DeliveryOrderForm.value.warranty;
+        api_req.element_data = api_reqDO;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            iziToast.success({
+              message: "Delivery Order Updated Successfully",
+              position: 'topRight'
+            });
+            $('#DeliveryOrderFormId').modal("hide");
+
+
+            this.getInvoice({});
+
+          } else {
+            iziToast.warning({
+              message: "Delivery Order not Updated. Please try again",
+              position: 'topRight'
+            });
+            $('#DeliveryOrderFormId').modal("hide");
+            this.getInvoice({});
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error)
+          };
+      }
+    })
+
+
+  }
+
+  setInvoiceTypeNameEdit(id: any) {
+    this.spinner.show();
+    this.InvoiceType_BillerID = id;
+
+    let api_req: any = new Object();
+    let api_invoiceTyp: any = new Object();
     api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/invoice_to_delivery_order";
+    api_req.api_url = "invoice/invoice_type_get";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_reqDO.action = "invoice_to_delivery_order";
-    api_reqDO.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_reqDO.billId = this.billerId_deliveryOrder;
-    api_reqDO.warranty_type = this.DeliveryOrderForm.value.warranty;
-    api_req.element_data = api_reqDO;
+    api_invoiceTyp.action = "invoice_type_get";
+
+    api_invoiceTyp.billId = id;
+    api_invoiceTyp.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_invoiceTyp;
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
-        this.spinner.hide();
-
-        iziToast.success({
-          message: "Delivery Order Updated Successfully",
-          position: 'topRight'
-        });
-        $('#DeliveryOrderFormId').modal("hide");
+        this.InvoiceTypeList = response.invoice_type_det;
+        console.log("response.selected_invoice_type", response.selected_invoice_type)
+        this.setInvoiceType.patchValue({
+          'setInvoice': response.selected_invoice_type
+        })
 
 
-        this.getInvoice({});
+
       } else {
+
+        $('#setInvoiceTypeNameFormId').modal("hide");
         iziToast.warning({
-          message: "Delivery Order not Updated. Please try again",
+          message: "Invoice Type Details not displayed. Please try again",
           position: 'topRight'
         });
-        $('#DeliveryOrderFormId').modal("hide");
-        this.getInvoice({});
       }
     }),
       (error: any) => {
@@ -1892,7 +2243,163 @@ export class InvoiceComponent implements OnInit {
         console.log("final error", error);
       };
   }
+  setInvoiceTypeNameUpdate() {
 
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_invTypeUpdate: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_type_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invTypeUpdate.action = "invoice_type_update";
+    api_invTypeUpdate.billId = this.InvoiceType_BillerID;
+    api_invTypeUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
+    api_req.element_data = api_invTypeUpdate;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+
+        iziToast.success({
+          message: "Term Condition Details Updated Successfully",
+          position: 'topRight'
+
+        });
+        $('#setInvoiceTypeNameFormId').modal("hide");
+      } else {
+
+        $('#setInvoiceTypeNameFormId').modal("hide");
+        iziToast.warning({
+          message: "Term Condition Details not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  setInvoiceTypeClear() {
+    this.setInvoiceType.reset();
+  }
+  // setLocaltoExport(id:any,export_state:any){
+
+  //   let api_req:any=new Object();
+  //   let api_reqLocEx:any=new Object();
+  //   api_req.moduleType = "invoice";
+  //   api_req.api_url = "invoice/local_to_export";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_reqLocEx.action = "local_to_export";
+  //   api_reqLocEx.billId = id;
+  //   api_reqLocEx.user_id = localStorage.getItem('erp_c4c_user_id');
+  //   if(export_state==1){
+  //     api_reqLocEx.export_state =2;
+  //   }
+  //   if(export_state==2){
+  //     api_reqLocEx.export_state =3;
+  //   }
+  //   if(export_state==3){
+  //     api_reqLocEx.export_state =1;
+  //   }
+  //   api_req.element_data = api_reqLocEx;
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+  //     if (response.status == true) {
+
+
+  //       iziToast.success({
+  //         message: "Local to Export status Updated Successfully",
+  //         position: 'topRight'
+
+  //       });
+
+  //     } else {
+
+
+  //       iziToast.warning({
+  //         message: "Local to Export status not Updated. Please try again",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //   }),
+  //     (error: any) => {
+  //       iziToast.error({
+  //         message: "Sorry, some server issue occur. Please contact admin",
+  //         position: 'topRight'
+  //       });
+  //       console.log("final error", error);
+  //     };
+
+  // }
+  setLocaltoExport(id: any, export_state: any) {
+    Swal.fire({
+      title: 'Are you sure to Change?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result: any) => {
+      if (result.value) {
+
+        let api_req: any = new Object();
+        let api_reqLocEx: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/local_to_export";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqLocEx.action = "local_to_export";
+        api_reqLocEx.billId = id;
+        api_reqLocEx.user_id = localStorage.getItem('erp_c4c_user_id');
+        if (export_state == 1) {
+          api_reqLocEx.export_state = 2;
+        }
+        if (export_state == 2) {
+          api_reqLocEx.export_state = 3;
+        }
+        if (export_state == 3) {
+          api_reqLocEx.export_state = 1;
+        }
+        api_req.element_data = api_reqLocEx;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            iziToast.success({
+              message: "Local to Export status Updated Successfully",
+              position: 'topRight'
+
+            });
+            this.getInvoice({});
+
+
+          } else {
+            iziToast.warning({
+              message: "Local to Export status not Updated. Please try again",
+              position: 'topRight'
+            });
+            this.getInvoice({});
+          }
+        }),
+          (error: any) => {
+            console.log(error);
+          };
+      }
+    })
+
+
+  }
 
   InvoiceTypeDetailsUpdate() {
 
@@ -1903,6 +2410,169 @@ export class InvoiceComponent implements OnInit {
   resellerCommissionDetailsSave() {
 
   }
+  selectEventReseller(item: any) {
+    this.ResellerName_Customer = item.customerName;
+    console.log(item.customerId)
+    console.log(item.customerName)
+
+
+    // do something with selected item
+  }
+  onFocusedReseller(e: any) {
+    // do something when input is focused
+    console.log(e)
+  }
+
+  searchResellerData(data: any) {
+
+console.log("test")
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_searchReseData: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/reseller_name_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_searchReseData.action = "reseller_name_details";
+    api_searchReseData.reseller_name =data ;
+    api_searchReseData.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    // api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
+    api_req.element_data = api_searchReseData;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.searchResult = response.reseller_list;
+      
+      
+      } else {
+
+        
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  setActualCostSave() {
+
+    console.log(this.actualCost_ProductList);
+    for (let k = 0, i = 1; k < this.actualCost_ProductList.length; k++, i++) {
+      this.actualCost_ProductList[k].act_diff_amt = $('#act_diff_amt_' + i).val();
+      this.actualCost_ProductList[k].actual_cost = $('#actual_cost_' + i).val();
+      this.actualCost_ProductList[k].actual_net_tot = $('#actual_net_tot_' + i).val();
+      this.actualCost_ProductList[k].actual_percentage = $('#actual_percentage_' + i).val();
+      this.actualCost_ProductList[k].invisiable_state = $('#invisiable_state_' + i).val();
+      this.actualCost_ProductList[k].qty = $('#product_qty_' + i).val();
+
+      this.actualCost_ProductList[k].price = $('#product_rate_' + i).val();
+      this.actualCost_ProductList[k].productDesc = $('#AP_productDescription_' + i).val();
+      this.actualCost_ProductList[k].productName = $('#AP_productName_' + i).val();
+
+      this.actualCost_ProductList[k].quotationChildId = $('#quotationChildId_' + i).val();
+      if ($('#invisiable_state_' + i).val() == 0) {
+        this.actualCost_ProductList[k].totat_amt = $('#product_rate_' + i).val();
+      } else {
+        this.actualCost_ProductList[k].totat_amt = $('#price_' + i).val();
+      }
+
+      this.actualCost_ProductList[k].unit = $('#product_unit' + i).val();
+
+    }
+    console.log(this.actualCost_ProductList);
+    console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
+    let api_req: any = new Object();
+    let actualCostUpdate_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/update_actualcost_quotation_value";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    actualCostUpdate_req.action = "update_actualcost_quotation_value";
+    actualCostUpdate_req.user_id = this.user_ids;
+    actualCostUpdate_req.quotationId = this.actualCost_quotationID;
+    actualCostUpdate_req.values = this.actualCost_ProductList;
+    api_req.element_data = actualCostUpdate_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log(response);
+
+
+      console.log("set actual cost response", response);
+      if (response.status == true) {
+        iziToast.success({
+          message: "Success",
+          position: 'topRight'
+        });
+
+        $("#setActualCostId").modal("hide");
+
+
+      }
+
+    });
+
+  }
+  get_actual_total() {
+    var bill_cnt = $('#quotationChildId_count').val();
+    let actual_cost, product_qty, product_rate, actual_net_tot, actual_percentage;
+    let product_net_amt, act_diff_amt;
+    let actual_cost_tot = 0;
+    let actual_cost_net_tot = 0;
+    let act_diff_amt_tot = 0;
+
+    for (let i = 1; i < bill_cnt; i++) {
+      if ($('#invisiable_state_' + i).val() == 0) {
+        console.log('test');
+        actual_cost = $('#actual_cost_' + i).val();
+        product_qty = $('#product_qty_' + i).val();
+        product_rate = $('#product_rate_' + i).val();
+        product_net_amt = $('#product_net_amt_' + i).val();
+        actual_percentage = $('#actual_percentage_' + i).val();
+        console.log(product_rate);
+        console.log(actual_cost);
+        console.log(actual_percentage);
+        console.log(product_qty);
+        console.log(product_net_amt);
+        if (actual_cost == '') {
+          actual_cost = 0;
+        }
+        // break
+        if (actual_percentage > 0) {
+          actual_cost = (parseFloat(product_rate) * parseFloat(actual_percentage) / 100).toFixed(2);
+          $('#actual_cost_' + i).val(actual_cost);
+        }
+        actual_net_tot = (parseFloat(product_qty) * parseFloat(actual_cost)).toFixed(2);
+        console.log(actual_net_tot);
+        act_diff_amt = (parseFloat(product_net_amt) - parseFloat(actual_net_tot)).toFixed(2);
+        console.log(act_diff_amt);
+        $('#act_diff_amt_' + i).val(act_diff_amt);
+        $('#actual_net_tot_' + i).val(actual_net_tot);
+        actual_cost_tot += parseFloat(actual_cost);
+        actual_cost_net_tot += parseFloat(actual_net_tot);
+        act_diff_amt_tot += parseFloat(act_diff_amt);
+      } else {
+        act_diff_amt_tot = act_diff_amt_tot - $('#price_' + i).val();
+        $('#act_diff_amt_' + i).val(-$('#price_' + i).val());
+      }
+    }
+
+
+    $('#actual_cost_tot').text(actual_cost_tot);
+    $('#actual_net_tot').text(actual_cost_net_tot);
+    $('#act_diff_amt_tot').text(act_diff_amt_tot);
+  }
+
 
 }
 

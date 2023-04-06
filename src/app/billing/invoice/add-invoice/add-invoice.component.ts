@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
+
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -1002,11 +1003,12 @@ export class AddInvoiceComponent implements OnInit {
 
  ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
-
+        this.router.navigate(['/Invoice']);
         iziToast.success({
           message: "Invoice saved successfully",
           position: 'topRight'
         });
+        this.gotoInvoiceList();
          
       }
       else if (response.status === 500) {
@@ -1015,6 +1017,7 @@ export class AddInvoiceComponent implements OnInit {
           message: "Invoice not added Successfully",
           position: 'topRight'
         });
+        this.gotoInvoiceList();
       }
       else {
         alert("status == false")
@@ -1022,6 +1025,7 @@ export class AddInvoiceComponent implements OnInit {
           message: "Invoice not added Successfully",
           position: 'topRight'
         });
+        this.gotoInvoiceList();
       }
 
     }),

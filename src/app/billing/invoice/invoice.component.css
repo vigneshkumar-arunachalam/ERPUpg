@@ -422,3 +422,16 @@ label.col-lg-2.col-form-label{text-align: right;}
 .userDatatable  table  td th {padding: 5px 10px 5px 10px;}
 
 
+
+#setActualCostId .modal-dialog {
+  max-width: 95%;
+}
+
+#setActualCostId tr th {
+  border-right: 1px solid #ddd;
+}
+
+#LicenseDetailsFormId .modal-dialog{
+  max-width: 95%;
+}
+

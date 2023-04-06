@@ -61,10 +61,10 @@
                       </th>
 
                       <th>
-                        <span class="userDatatable-title">Customer Name</span>
+                        <span class="userDatatable-title">Company Name</span>
                       </th>
                       <th>
-                        <span class="userDatatable-title">Customer Address</span>
+                        <span class="userDatatable-title">Address</span>
                       </th>
                       <!-- <th>
                         <span class="userDatatable-title">Customer Address1</span>
@@ -73,7 +73,7 @@
                         <span class="userDatatable-title">Customer Address2</span>
                       </th> -->
                       <th>
-                        <span class="userDatatable-title">Customer Phone</span>
+                        <span class="userDatatable-title">PhoneNo</span>
                       </th>
                       <th>
                         <span class="userDatatable-title">Biller Name</span>
@@ -85,20 +85,32 @@
                         <span class="userDatatable-title"> Email</span>
                       </th>
                       <th>
-                        <span class="userDatatable-title">Finance Email</span>
+                        <span class="userDatatable-title">Fin Email</span>
                       </th>
                       <th style="display:none;">
                         <span class="userDatatable-title">Customer Type</span>
                       </th>
+                      <th style="width: 90px;">
+                        <span class="userDatatable-title">Gen By</span>
+                      </th>
+                     
+                    
                       <th>
-                        <span class="userDatatable-title">GeneratedBy</span>
+                        <span class="userDatatable-title">Created Date</span>
+                      </th>
+                     
+                      <th style="width: 70px;">
+                        <span class="userDatatable-title">Credit</span>
                       </th>
                       <th>
-                        <span class="userDatatable-title">action</span>
+                        <span class="userDatatable-title">Classify</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Action</span>
                       </th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="customerlist-section">
                     <tr *ngFor="let list of customer_list; let i = index">
                       <td>
                         <div class="d-flex">
@@ -116,14 +128,14 @@
 
                         </div>
                       </td>
-                      <td style="display:none;">
+                      <!-- <td style="display:none;">
                         {{ list.customerId }}
-                      </td>
+                      </td> -->
 
                       <td>
                      {{ list.customerName }}
                       </td>
-                      <td [innerHTML]="list.address ">
+                      <td [innerHTML]="list.address " style="width: 150px;">
                       </td>
                       <!-- <td>
                         <span>{{ list.customerAddress1 }}</span>
@@ -146,11 +158,20 @@
                       <td>
                         <span>{{ list.finance_email }}</span>
                       </td>
-                      <td style="display:none;">
+                      <!-- <td style="display:none;">
                         <span>{{ list.cus_type }}</span>
-                      </td>
+                      </td> -->
                       <td>
                         <span>{{ list.userName }}</span>
+                      </td>
+                      <td >
+                        <span >{{ list.created_dt }}</span>
+                      </td>
+                      <td>
+                        <span style="width:70px;">{{ list.credit_amt  }}</span>
+                      </td>
+                      <td>
+                        <span>{{ list.cus_type }}</span>
                       </td>
 
                       <td>
