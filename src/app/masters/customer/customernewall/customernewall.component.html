@@ -2226,7 +2226,8 @@
                 <div class="form-check form-check-inline" *ngFor="let display1 of radio;let k=index">
                   <input class="form-check-input" type="radio" name="e_editCustomerStatus"
                    id="{{display1.values1}}" formControlName="e_editCustomerStatus"
-                  value="option1"  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
+                  value="option1"  
+                  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
                   (change)="handleChange($event)" />
                   <label class="form-check-label" for="{{display1.values1}}" style="color: #495057!important;">{{display1.name}}</label>
                 </div>

@@ -931,12 +931,15 @@ export class ProformaInvoiceComponent implements OnInit {
               message: "Proforma Invoice Deleted Successfully",
               position: 'topRight'
             });
+            this.PIList({});
+
           } else {
             Swal.close();
             iziToast.warning({
               message: "Proforma Invoice Delete Failed",
               position: 'topRight'
             });
+            this.PIList({});
           }
         }),
           (error: any) => {

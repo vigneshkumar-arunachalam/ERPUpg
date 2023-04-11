@@ -2679,7 +2679,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
 // alert(this.editBillerNameCheckboxID_array)
 // alert(this.typeConvertionString_editBillName)
-alert(this.editCustomerClassificationBillerCheckboxID_array)
+
     update_customer_req.company_name = this.typeConvertionString_editCustomerClass;
     // update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
     update_customer_req.cus_type = this.editCustomerClassificationBillerCheckboxID_array;

@@ -144,6 +144,7 @@ export class AddPIComponent implements OnInit {
       { name: ' DID Sg  ', selected: false, id: 3 },
       { name: ' Callcloud  ', selected: false, id: 4 },
       { name: ' Mrvoip  ', selected: false, id: 5 },
+      { name: ' None  ', selected: false, id: 0 },
 
     ];
     this.initial_Radio = [

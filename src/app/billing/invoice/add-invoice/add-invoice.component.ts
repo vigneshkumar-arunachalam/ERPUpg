@@ -803,7 +803,7 @@ export class AddInvoiceComponent implements OnInit {
   }
   gotoInvoiceList() {
 
-    this.router.navigate(['/Invoice']);
+    this.router.navigate(['/invoice']);
   }
   save($event: MouseEvent) {
    
@@ -1003,7 +1003,7 @@ export class AddInvoiceComponent implements OnInit {
 
  ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
-        this.router.navigate(['/Invoice']);
+        this.router.navigate(['/invoice']);
         iziToast.success({
           message: "Invoice saved successfully",
           position: 'topRight'
@@ -1484,6 +1484,9 @@ this.spinner.show();
     }
 
 
+  }
+  goBackInvoice(){
+    this.router.navigate(['/invoice'])
   }
 
   eventCheckSelectAdditionalSignature(e: any) {

@@ -204,7 +204,8 @@ export class EditPIComponent implements OnInit {
       { name: 'Calncall', selected: false, id: 2 },
       { name: 'DID Sg', selected: false, id: 3 },
       { name: 'Callcloud', selected: false, id: 4 },
-      { name: 'Mrvoip', selected: false, id: 5 }
+      { name: 'Mrvoip', selected: false, id: 5 },
+      { name: 'None', selected: false, id: 0 },
     ];
     this.MSDisplayDetails = [
       { name: 'MSDisplay', selected: false, id: 1 },
@@ -343,40 +344,40 @@ export class EditPIComponent implements OnInit {
 
   }
 
-  removeAddresstest(i: number) {
+  // removeAddresstest(i: number) {
   
 
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: "You won't be able to revert this!",
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonColor: '#3085d6',
+  //     cancelButtonColor: '#d33',
+  //     confirmButtonText: 'Yes, delete it!'
+  //   }).then((result) => {
+  //     if (result.value) {
      
 
-        console.log(i)
-        console.log(this.addresses)
-        this.addresses.removeAt(i);
-        var addr = this.addPI_section2.value.addresses;
-        var list_cnt = addr.length;
-        this.totalCalculate();
-        setTimeout(() => {      
-           this.saveGrossDiscount();
-        }, 500);
+  //       console.log(i)
+  //       console.log(this.addresses)
+  //       this.addresses.removeAt(i);
+  //       var addr = this.addPI_section2.value.addresses;
+  //       var list_cnt = addr.length;
+  //       this.totalCalculate();
+  //       setTimeout(() => {      
+  //          this.saveGrossDiscount();
+  //       }, 500);
        
 
 
 
 
-      }
-    })
+  //     }
+  //   })
 
 
-  }
+  // }
   // logo......
 
   chkTermsandconditionEvent(event: any) {
@@ -393,22 +394,17 @@ export class EditPIComponent implements OnInit {
     console.log(this.chklogoAddressSignature)
   }
 
-  removeAddress(i: number) {
-  
-    this.addresses.removeAt(i);
 
-
-  }
 
 
 
   removeParticular(i: number) {
-
+   
     console.log('iiii--' + i)
     console.log(this.addresses)
 
     var pd_billchild_id = $('#pd_billchild_id_' + i).val();
-    //console.log('quotationChildId'+quotationChildId);
+    console.log('pd_billchild_id'+pd_billchild_id);
 
     Swal.fire({
       title: 'Are you sure?',
@@ -1035,8 +1031,8 @@ export class EditPIComponent implements OnInit {
         //   'section3_logo': response.billing_pararent_details[0].logo,
         // });
         // this.loadADD();
-        // this.editAddress();
-        // this.removeAddresstest(response.billchild_details.length);
+         this.editAddress();
+         this.removeAddresstest_test(response.billchild_details.length);
         // console.log(response.billchild_details.length);
         for (let index = 0; index < response.billchild_details.length; index++) {
 

@@ -307,7 +307,7 @@
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                 <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
-                                  data-target="#ResellerCommissionFormId">
+                                  data-target="#ResellerCommissionFormId" (click)="getResellerCommission(list.billId)">
                                   <span style="color: #009688;"><strong>RC</strong></span>
                                   <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -407,7 +407,7 @@
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_quotation==1)">
 
                                 <a class="hover3" title="Invoice to Quotation Conversion" data-toggle="modal"
-                                  data-target="#">
+                                  data-target="#InvoicetoQuotationFormId" (click)="invoicetoQuotationEdit(list.billId)">
                                   <span style="color: #009688;"><strong>Q</strong></span>
                                   <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -1827,10 +1827,21 @@
                           <td>
 
                             <div class="form-check form-check-inline"
-                              *ngFor="let item of resellercommissiontype;let i=index">
-                              <input class="form-check-input" type="radio" name="CommissionType"
-                                formControlName="CommissionType" (change)="radio_commissionType($event)"
-                                id="{{item.id}}" value="{{item.id}}">
+                              *ngFor="let item of resellercommissiontype;let j=index">
+                              <!-- <input class="form-check-input" type="radio" name="CommissionType"
+                                (change)="radio_commissionType($event)"
+                                [checked]="item.commission_type"
+                                id="CommissionType_{{j}}" value="{{item.id}}"> -->
+
+                                <input class="form-check-input" type="radio" name="CommissionType"
+                                id="CommissionType_{{i}}"
+                                 [checked]="radioChecked(item.id,j)" > 
+                                
+
+                                <!-- <input class="form-check-input" type="radio" name="e_editCustomerStatus"
+                                id="{{display1.values1}}" formControlName="e_editCustomerStatus"
+                                value="option1"  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
+                                (change)="handleChange($event)" /> -->
                               <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
                             </div>
 
@@ -1866,7 +1877,9 @@
                           </th>
                           <td>
 
-                            <input type="checkbox" formControlName="PdfShow" (change)="CBF_PdfShow($event)">
+                            <input type="checkbox" formControlName="PdfShow"  
+                            (change)="CBF_PdfShow($event)" id="pdfshow{{i}}">
+                            <!-- <input type="checkbox" formControlName="PdfShow"  checked="{{address.pdf_show==0 ? 'checked':''}}" (change)="CBF_PdfShow($event)" id="pdfshow{{i}}"> -->
 
                           </td>
                         </tr>
@@ -1909,7 +1922,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" (click)="resellerCommissionDetailsSave()">
+        <button type="button" class="btn btn-primary" (click)="setResellerCommission()">
           Save
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -2271,3 +2284,101 @@
   </div>
 </div>
 <!-------------- Licence Details Pop up ends------------------------------------------>
+
+
+<!-----------------Modal Pop Up (BEGIN) add new Pop Up  in customer Contract Classification------------------>
+<div class="modal fade" id="InvoicetoQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"  >&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
+                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
+                                <div class="col-lg-12">
+                                    <select name="enqFormValue" id="enq_From" class="form-control"
+                                        formControlName="enquiryFrom_addPopUP">
+                                        <option [ngValue]="null" selected>Select Enquiry From</option>
+
+                                        <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                            {{term.enquiry_from_name}}
+                                        </option>
+
+
+                                    </select>
+                                    <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    * Required *
+                                </div>
+                                </div>
+                               
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
+                                <div class="col-lg-12">
+                                    <input type="text" class="form-control" formControlName="enquirySubject_addPopUP"
+                                        id="enq_subject" />
+                                        <div *ngIf="addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].touched)"
+                                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                                     * Required *
+                                    </div>
+                                </div>
+                             
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
+                                <div class="col-lg-12">
+                                    <select name="quotValidity" id="quot_val" class="form-control"
+                                        formControlName="quotationValidity_addPopUP">
+                                        <option [ngValue]="null" selected >Select Quotation Validity</option>
+                                        <option *ngFor="let validity of quotationValidityList" value="{{validity}}">
+                                            {{validity}}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].dirty || addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].touched)"
+                                    class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    * Required *
+                                </div>
+                                </div>
+                              
+                            </div>
+                        </div>
+                  
+                    
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary" form="ngForm" (click)=" invoicetoQuotationSave()"
+                >Go>></button>
+
+
+                <button type="button" class="btn btn-dark" 
+                 data-dismiss="modal">
+                    Cancel
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------- vignesh Add New Quotation Pop up ends------------------------------------------>

@@ -153,12 +153,20 @@ export class InvoiceComponent implements OnInit {
   commissionType_value: any;
   revenueChildListDetails: any;
   //reseller commission
-  searchResult:any;
-  ResellerName_Customer:any;
+  searchResult: any;
+  ResellerName_Customer: any;
+  resellerCommissionList: any;
+  billId_ResellerCommissionId:any;
   //license details
   LicenseDetailsList: any;
-
-
+  //invoice to quotation 
+  addNewQuotationPopUpForm: FormGroup;
+  enquiryFromList: any;
+  quotationValidityList: any;
+  templateNameList: any;
+  isReadonly: boolean = true;
+  quotationVersion = '1.0';
+  billId_InvoicetoQuotation:any;
   //notes
   billId_notes: any;
 
@@ -225,7 +233,7 @@ export class InvoiceComponent implements OnInit {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
-    this.resellercommissiontype = [{ "id": 1, "name": "Fixed" }, { "id": 2, "name": "Percentage" }, { "id": 3, "name": "Itemwise" }, { "id": 4, "name": "None" }];
+    this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
     this.warrantyList = [{ "id": 1, "name": "No Warranty" }, { "id": 2, "name": "One Year Warranty" }, { "id": 3, "name": "Two Year Warranty" }]
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
@@ -297,15 +305,50 @@ export class InvoiceComponent implements OnInit {
     });
     this.ResellerCommissionForm = new FormGroup({
       'ResellerName': new FormControl(null),
-      'CommissionType': new FormControl(null),
+      // 'CommissionType': new FormControl(null),
       'CommissionValue': new FormControl(null),
       'CommissionAmount': new FormControl(null),
       'PdfShow': new FormControl(null),
 
     });
+    this.addNewQuotationPopUpForm = new FormGroup({
+      'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
+      'enquirySubject_addPopUP': new FormControl(null, [Validators.required]),
+      'quotationValidity_addPopUP': new FormControl(null, [Validators.required]),
+      'version_enqForm_addPopUP': new FormControl(null, [Validators.required]),
+      'templateName_addPopUP': new FormControl(null),
+    });
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
 
+  }
+  // this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
+
+  radioChecked(id:any, i:any){
+    // this.resellercommissiontype.forEach((item: { id: any; selected: boolean; })=>{
+    //   alert(id)
+    //   alert(item.id)
+    //   if(item.id !== id){ 
+    //      item.selected = false;
+    //   }else{
+    //      item.selected = true;
+    //   } 
+    //   if(item.id==undefined){
+    //     alert("undefined")
+    //   }
+    // })
+    if(this.resellerCommissionList!=undefined&&this.resellerCommissionList!=null&&this.resellerCommissionList!='undefined'&&this.resellerCommissionList!='null'&&this.resellerCommissionList!=''){
+      this.resellerCommissionList.forEach((element: any) => {
+        if(element.commission_type==id){
+          // $("#CommissionType_"+)
+          return true;
+        }else{
+          return false;
+        }
+        console.log(element.commission_type)
+      });
+    }
+    
   }
   radio_InvoiceSendingInput(event: any) {
     this.InvoiceSendingValue = event.target.value;
@@ -573,6 +616,7 @@ export class InvoiceComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
+ 
   addPIGo() {
     this.router.navigate(['/AddInvoice'])
   }
@@ -2400,6 +2444,88 @@ export class InvoiceComponent implements OnInit {
 
 
   }
+  invoicetoQuotationEdit(id:any) {
+    this.billId_InvoicetoQuotation=id;
+    $("#InvoicetoQuotationFormId").modal("show");
+    // this.addNewQuotationPopUpForm.value.reset();
+    let api_req: any = new Object();
+    let add_newQuotation_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/create_popup";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    add_newQuotation_req.action = "create_popup";
+    add_newQuotation_req.user_id = this.user_ids;
+    add_newQuotation_req.enquiry_from_id = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
+    add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
+    add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
+    api_req.element_data = add_newQuotation_req;
+    $("#InvoicetoQuotationFormId").attr("disabled", true);
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#InvoicetoQuotationFormId").removeAttr("disabled");
+      console.log(response);
+
+      console.log("pop up for add quotation", response);
+      if (response != '') {
+        this.enquiryFromList = response.enquiry_from;
+        this.quotationValidityList = response.quot_validity;
+        this.templateNameList = response.template_name_arr;
+        console.log("EnquiryFormList", this.enquiryFromList)
+
+        // $('#InvoicetoQuotationFormId').modal('hide');
+        //this.contactsList({});
+
+      }
+
+    });
+  } 
+
+  invoicetoQuotationSave() {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_invQuot: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_to_quotation";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invQuot.action = "invoice_to_quotation";
+    api_invQuot.user_id = this.user_ids;
+    api_invQuot.enquiry_from_id = this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP;
+    api_invQuot.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
+    api_invQuot.quot_subject = this.addNewQuotationPopUpForm.value.enquirySubject_addPopUP;
+    api_invQuot.billId = this.billId_InvoicetoQuotation;
+    api_invQuot.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_invQuot;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        iziToast.success({
+          message: "Invoice to Quotation Conversion Successful",
+          position: 'topRight'
+        });
+        $('#InvoicetoQuotationFormId').modal('hide');
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
 
   InvoiceTypeDetailsUpdate() {
 
@@ -2407,9 +2533,7 @@ export class InvoiceComponent implements OnInit {
   addNotes() {
 
   }
-  resellerCommissionDetailsSave() {
-
-  }
+ 
   selectEventReseller(item: any) {
     this.ResellerName_Customer = item.customerName;
     console.log(item.customerId)
@@ -2425,7 +2549,7 @@ export class InvoiceComponent implements OnInit {
 
   searchResellerData(data: any) {
 
-console.log("test")
+
 
     this.spinner.show();
     let api_req: any = new Object();
@@ -2435,7 +2559,7 @@ console.log("test")
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_searchReseData.action = "reseller_name_details";
-    api_searchReseData.reseller_name =data ;
+    api_searchReseData.reseller_name = data;
     api_searchReseData.user_id = localStorage.getItem('erp_c4c_user_id');
 
     // api_invTypeUpdate.invoice_type_values = this.setInvoiceType.value.setInvoice;
@@ -2446,11 +2570,11 @@ console.log("test")
       if (response.status == true) {
 
         this.searchResult = response.reseller_list;
-      
-      
+
+
       } else {
 
-        
+
         iziToast.warning({
           message: "No Match. Please try again",
           position: 'topRight'
@@ -2464,6 +2588,154 @@ console.log("test")
         });
         console.log("final error", error);
       };
+
+  }
+  getResellerCommission(id: any) {
+    this.billId_ResellerCommissionId=id;
+    let api_req: any = new Object();
+    let api_resCommEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_reseller_commission_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_resCommEdit.action = "get_reseller_commission_details";
+    api_resCommEdit.billId = id;
+    api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_resCommEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.resellerCommissionList = response.reseller_comm;
+
+        // this.addressForm.patchValue({
+
+
+        //   'ResellerName': response.reseller_comm[0].reseller_name,
+        //   'CommissionType': response.reseller_comm[0].commission_type,
+        //   'CommissionValue': response.reseller_comm[0].commission_value,
+        //   'CommissionAmount': response.reseller_comm[0].commission_amt,
+        //   'PdfShow': response.reseller_comm[0].pdf_show,
+
+
+
+        // });
+        console.log(this.addressControls.controls)
+        const formArray = new FormArray([]);
+        for (let index = 0; index < response.reseller_comm.length; index++) {
+
+          formArray.push(this.fb.group({
+            "ResellerName": response.reseller_comm[index].reseller_name,
+            // "CommissionType": response.reseller_comm[index].commission_type == 1 ? true : false,
+            "CommissionValue": response.reseller_comm[index].commission_value,
+            "CommissionAmount": response.reseller_comm[index].commission_amt,
+            "PdfShow": response.reseller_comm[index].pdf_show == 1 ? true : false,
+
+
+
+          })
+
+
+
+          );
+          for (var k = 0; k <= this.resellercommissiontype[index].length; k++) {
+            $("#CommissionType_" + k).val(response.reseller_comm[index].commission_type)
+          }
+
+
+        }
+
+
+
+        console.log(formArray)
+        this.addressForm.setControl('addresses', formArray);
+
+
+        for (let index = 0; index < response.reseller_comm.length; index++) {
+
+          if (response.reseller_comm[index].pdf_show == 1) {
+
+            $('#pdfshow' + [index]).prop('checked', true);
+
+
+
+          }
+        }
+
+
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  setResellerCommission() {
+
+    
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_resCommSave: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_reseller_commission_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_resCommSave.action = "update_reseller_commission_details";
+
+  
+    api_resCommSave.billId = this.billId_ResellerCommissionId;
+    api_resCommSave.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    var addr = this.addressForm.value.addresses;
+   
+    api_resCommSave.values = addr;
+    api_req.element_data = api_resCommSave;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+        iziToast.success({
+          message: "Reseller Commission Details updated Successful",
+          position: 'topRight'
+        });
+        $('#ResellerCommissionFormId').modal('hide');
+
+
+      } else {
+
+        this.spinner.hide();
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+        $('#ResellerCommissionFormId').modal('hide');
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        $('#ResellerCommissionFormId').modal('hide');
+        console.log("final error", error);
+      };
+
 
   }
   setActualCostSave() {
