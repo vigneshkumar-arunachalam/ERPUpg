@@ -965,6 +965,7 @@ export class AddInvoiceComponent implements OnInit {
 
     api_saveInvoice_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_saveInvoice_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
+    api_saveInvoice_req.taxPer = this.tax_per_mod;
     api_saveInvoice_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
     api_saveInvoice_req.shippingName = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
     api_saveInvoice_req.add_name = this.addPI_section3.value.section3_bankingCharge_amt_name_txtbox;

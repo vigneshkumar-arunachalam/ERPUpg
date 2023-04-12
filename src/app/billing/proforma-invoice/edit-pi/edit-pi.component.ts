@@ -1245,6 +1245,9 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.export_state = this.radio_Value_ExportState;
     api_updatePI_req.mile_discount_state = this.radio_Value_InvoiceType;
     api_updatePI_req.mile_discount_display_state = this.MSDisplay_Value;
+
+    //to check
+   
    
 
     //section-2
@@ -1265,7 +1268,9 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.discountPer = this.addPI_section3.value.final_dis_val;
     //row-3
     api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
-    api_updatePI_req.taxPer = $('#tax_per_hd_id').val();
+    // api_updatePI_req.taxPer = $('#tax_per_hd_id').val();
+
+    api_updatePI_req.taxPer = this.tax_per_mod;
 
     api_updatePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
     //row-4
@@ -1827,7 +1832,7 @@ export class EditPIComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_invoiceAddSignatureEdit_req.action = "invoice_add_signature_edit";
     //api_quotationAddSignatureEdit_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_invoiceAddSignatureEdit_req.user_id = this.addPI_section1.value.salesRep;
+    api_invoiceAddSignatureEdit_req.user_id = localStorage.getItem('erp_c4c_user_id');
     // api_quotationAddSignatureEdit_req.billerId = this.billerID ;
     api_invoiceAddSignatureEdit_req.billerId = this.addPI_section1.value.companyName;
     api_invoiceAddSignatureEdit_req.billId = this.editbillerID;

@@ -540,7 +540,7 @@
                                             <div class="userDatatable-content">
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
-                                                    (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                    (keyup)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
                                             </div>
                                         </td>
 
@@ -562,7 +562,7 @@
 
                                                 <input type="text" class="form-control" style="text-align: right;"
                                                     formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
-                                                    (keyup)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                    (keyup)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
                                             </div>
                                         </td>
 
@@ -605,7 +605,7 @@
                                         <td>
                                             <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                                 <input type="checkbox" id="pd_selectTax_{{i}}"
-                                                    formControlName="pd_selectTax" (change)="totalCalculate();saveDiscount();saveGrossDiscount()" />
+                                                    formControlName="pd_selectTax" (change)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
 
 
                                             </div>
@@ -1062,7 +1062,7 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" formControlName="enablePerFinal" id="enablePerFinal" [(ngModel)]="input1"
+                                    <input type="number" class="form-control"  id="enablePerFinal" [(ngModel)]="input1"
                                         (input)="clearInput1()" />
                                 </div>
                             </div>
@@ -1073,7 +1073,7 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" formControlName="enablePriceFinal" id="enablePriceFinal" [(ngModel)]="input2"
+                                    <input type="number" class="form-control"  id="enablePriceFinal" [(ngModel)]="input2"
                                         (input)="clearInput2()" />
                                 </div>
                             </div>

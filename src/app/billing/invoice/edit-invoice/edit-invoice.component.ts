@@ -133,7 +133,7 @@ export class EditInvoiceComponent implements OnInit {
   input2: string;
   input4: string;
   input3: string;
-  
+
 
   checkbox_selectReceivedSignature: any;
 
@@ -191,6 +191,7 @@ export class EditInvoiceComponent implements OnInit {
       { name: ' DID Sg  ', selected: false, id: 3 },
       { name: ' Callcloud  ', selected: false, id: 4 },
       { name: ' Mrvoip  ', selected: false, id: 5 },
+      { name: ' None  ', selected: false, id: 0 },
 
     ];
     this.initial_Radio = [
@@ -233,12 +234,12 @@ export class EditInvoiceComponent implements OnInit {
       'shipTo_1': new FormControl({ value: '', disabled: true }, Validators.required),
       'shipTo_2': new FormControl({ value: '', disabled: true }, Validators.required),
       'shipTo_3': new FormControl({ value: '', disabled: true }, Validators.required),
-     
+
       // 'shipTo_1': new FormControl(),
       // 'shipTo_2': new FormControl(),
       // 'shipTo_3': new FormControl(),
       // 'shipTo_4': new FormControl(),
-      
+
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'ShipBy': new FormControl(),
@@ -368,7 +369,7 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   removeAddress(i: number) {
-    
+
     this.addresses.removeAt(i);
     this.totalCalculate();
     setTimeout(() => {
@@ -381,7 +382,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
   removeParticular(i: number) {
- 
+
     console.log('iiii--' + i)
     console.log(this.addresses)
 
@@ -853,10 +854,10 @@ export class EditInvoiceComponent implements OnInit {
 
         console.log('billchild_details.length' + response.billchild_details.length);
         this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
-        
+
         this.TaxDropdown();
-        
-        
+
+
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
@@ -874,11 +875,11 @@ export class EditInvoiceComponent implements OnInit {
             "pd_sellingPrice": response.billchild_details[index].rate,
             "pd_Total": response.billchild_details[index].total_amt,
             "pd_netPrice": response.billchild_details[index].net_amt,
-            "pd_OutCall": response.billchild_details[index].out_call_state== 1 ? true : false,
+            "pd_OutCall": response.billchild_details[index].out_call_state == 1 ? true : false,
             "sub_dis_amt": response.billchild_details[index].dis_amt,
             "sub_dis_type": response.billchild_details[index].dis_type,
             "sub_dis_val": response.billchild_details[index].dis_per,
-            "pd_CMon": response.billchild_details[index].current_month== 1 ? true : false,
+            "pd_CMon": response.billchild_details[index].current_month == 1 ? true : false,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
 
           })
@@ -949,8 +950,8 @@ export class EditInvoiceComponent implements OnInit {
         });
         this.received_signature_state = response.billing_pararent_details[0].received_signature;
         this.print_logo_state = response.billing_pararent_details[0].print_logo;
- 
-       
+
+
 
         for (let index = 0; index < response.billchild_details.length; index++) {
 
@@ -1029,7 +1030,7 @@ export class EditInvoiceComponent implements OnInit {
           address_3 = response.customer_details[0].country;
         }
 
-        
+
 
 
         if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
@@ -1058,24 +1059,24 @@ export class EditInvoiceComponent implements OnInit {
           ship_address_str3 = response.customer_details[0].city;
         }
         if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
-        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;        
-        }else {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;
+        } else {
           ship_address_str3 = response.customer_details[0].ship_state;
         }
         if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
-        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;      
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;
         } else {
           ship_address_str3 = response.customer_details[0].ship_country;
         }
 
-        if(response.customer_details[0].ship_to==''){
-          ship_address_str1= response.customer_details[0].customerAddress1;
-          ship_address_str2= response.customer_details[0].customerAddress2;
-          ship_address_str3= address_3;
+        if (response.customer_details[0].ship_to == '') {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str3 = address_3;
         }
 
 
@@ -1117,6 +1118,11 @@ export class EditInvoiceComponent implements OnInit {
 
   updateInvoice() {
 
+    this.addPI_section1.get("ship_to").enable();
+    this.addPI_section1.get("shipTo_1").enable();
+    this.addPI_section1.get("shipTo_2").enable();
+    this.addPI_section1.get("shipTo_3").enable();
+    
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -1177,38 +1183,38 @@ export class EditInvoiceComponent implements OnInit {
 
     //section-3
 
-   //row-1
+    //row-1
 
-   api_updatePI_req.grossAmount = this.addPI_section3.value.section3_gross_total;
-   //row-2
-
-
-   api_updatePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
-   api_updatePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
-   api_updatePI_req.discountPer = this.addPI_section3.value.final_dis_val;
-   //row-3
-   api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
-   api_updatePI_req.taxPer = $('#tax_per_hd_id').val();
-
-   api_updatePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
-   //row-4
-   api_updatePI_req.shippingName = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
-   api_updatePI_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
-
-   api_updatePI_req.add_name = this.addPI_section3.value.banking_charge_name;
-   api_updatePI_req.add_amt = this.addPI_section3.value.banking_charge_amt;
+    api_updatePI_req.grossAmount = this.addPI_section3.value.section3_gross_total;
+    //row-2
 
 
-   //row-5
-   api_updatePI_req.netPayment = this.addPI_section3.value.section3_grand_total;
-   //row-6
-   api_updatePI_req.remarks = this.addPI_section3.value.section3_remarks;
-   //other row
+    api_updatePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
+    api_updatePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
+    api_updatePI_req.discountPer = this.addPI_section3.value.final_dis_val;
+    //row-3
+    api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
+    api_updatePI_req.taxPer = $('#tax_per_hd_id').val();
 
-   api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
-   api_updatePI_req.received_signature = this.checkbox_selectReceivedSignature;
-   api_updatePI_req.logo = this.addPI_section3.value.section3_logo;
-   api_updatePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
+    api_updatePI_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
+    //row-4
+    api_updatePI_req.shippingName = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
+    api_updatePI_req.shippingAmt = this.addPI_section3.value.section3_shipping_amt_txtbox;
+
+    api_updatePI_req.add_name = this.addPI_section3.value.banking_charge_name;
+    api_updatePI_req.add_amt = this.addPI_section3.value.banking_charge_amt;
+
+
+    //row-5
+    api_updatePI_req.netPayment = this.addPI_section3.value.section3_grand_total;
+    //row-6
+    api_updatePI_req.remarks = this.addPI_section3.value.section3_remarks;
+    //other row
+
+    api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
+    api_updatePI_req.received_signature = this.checkbox_selectReceivedSignature;
+    api_updatePI_req.logo = this.addPI_section3.value.section3_logo;
+    api_updatePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
 
 
     var addr = this.addPI_section2.value.addresses;
@@ -1246,7 +1252,7 @@ export class EditInvoiceComponent implements OnInit {
           title: 'Updated',
           message: 'Invoice Updated Successfully !',
         });
-     
+
       }
       else {
 
@@ -1337,13 +1343,13 @@ export class EditInvoiceComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-   
+
   }
   extraFees() {
     // var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;
     // this.grandTotal = this.grandTotal + parseFloat(fee);
     // this.extraCharge = parseFloat(fee);
-     // this.bankingCharge = parseFloat(bankingFee);
+    // this.bankingCharge = parseFloat(bankingFee);
     this.totalCalculate();
   }
 
@@ -1391,7 +1397,7 @@ export class EditInvoiceComponent implements OnInit {
       } else if (discount_type == 'amt') {
         // console.log('discount_type222'+discount_type);
 
-        this.sub_dis_val = $('#sub_discount_val_' + a).val();
+        this.sub_dis_val = $('#sub_discount_' + a).val();
         // console.log('sub_discount_valppp'+this.sub_dis_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
         $('#pd_netPrice_' + a).val(sub_total_amt);
@@ -1424,10 +1430,10 @@ export class EditInvoiceComponent implements OnInit {
 
     this.grossTotalTax = tax_amt_tot;
     this.grossTotal = grs_amt;
-   // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
-   if(tax_amt_tot>0){
-    tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax)-parseFloat(this.finalDiscount)) / 100);
-   }
+    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
+    if (tax_amt_tot > 0) {
+      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax) - parseFloat(this.finalDiscount)) / 100);
+    }
 
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
@@ -1445,7 +1451,7 @@ export class EditInvoiceComponent implements OnInit {
     }
 
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)+ parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
+    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
   keyPress(event: any, i: any) {
     this.invocePriceKey = i;
@@ -1549,7 +1555,7 @@ export class EditInvoiceComponent implements OnInit {
       }
     }
     this.grossTotal = gtotel;
-   
+
     $('#discountFormId').modal('hide');
     this.Discount1Form.reset();
     this.totalCalculate();
@@ -1642,6 +1648,22 @@ export class EditInvoiceComponent implements OnInit {
 
   }
 
+
+  discount_dynamic_cal() {
+    var final_discount_type = $('#final_discount_type').val();
+    var final_discount_val = $('#final_discount_val').val();
+    var finalDiscount_amt = $('#finalDiscount_amt').val();
+
+    if (final_discount_type == 'per') {
+      this.finalDiscount = (parseFloat(this.grossTotal) * parseFloat(final_discount_val) / 100).toFixed(2);
+    }
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1500);
+
+  }
+
+
   calFinalDiscount() {
     $('#enableFinalPercent').val('');
     $('#enableFinalDiscount').val('');
@@ -1667,7 +1689,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
   }
- 
+
   set_display_none(cnt: any) {
     //PN
     if ($('#pd_split_' + cnt).prop('checked') == true) {
@@ -1716,22 +1738,22 @@ export class EditInvoiceComponent implements OnInit {
     $("#enablePerFinal").val('');
   }
 
-  clearInput3(){
+  clearInput3() {
     this.input4 = '';
     $("#enableFinalDiscount").valueOf('');
   }
-  clearInput4(){
-    this.input3 ='';
+  clearInput4() {
+    this.input3 = '';
     $("#enableFinalPercent").val('');
   }
 
 
- 
-  
+
+
 
   eventCheckSelectReceivedSignature(e: any) {
     this.checkbox_selectReceivedSignature = e.target.checked
-   console.log(this.checkbox_selectAdditionalSignature);
+    console.log(this.checkbox_selectAdditionalSignature);
   }
 
   eventCheckSelectAdditionalSignature(e: any) {

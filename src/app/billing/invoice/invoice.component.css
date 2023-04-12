@@ -435,3 +435,21 @@ label.col-lg-2.col-form-label{text-align: right;}
   max-width: 95%;
 }
 
+#setActualCostId .userDatatable table thead th:first-child{
+  width: 50px;
+}
+#setActualCostId .userDatatable table thead th:nth-child(2){
+  width: 220px;
+}
+#setActualCostId .userDatatable table tr td:nth-child(2) span{
+  width: 220px;
+}
+#setActualCostId .userDatatable table tr td, #setActualCostId .userDatatable table tr th{
+  text-align: center;
+}
+#setActualCostId .userDatatable table tr td:nth-child(2) span{
+  white-space: normal!important;
+}
+#setActualCostId .userDatatable table tr td:first-child span{
+  width: 50px;
+}

@@ -156,7 +156,12 @@ export class InvoiceComponent implements OnInit {
   searchResult: any;
   ResellerName_Customer: any;
   resellerCommissionList: any;
-  billId_ResellerCommissionId:any;
+  billId_ResellerCommissionId: any;
+  CommissionType: any;
+  radioSelected:any;
+  radioSel:any;
+  //reseller commission details-without form array
+  withoutFormArrayResellerCommissionForm:FormGroup;
   //license details
   LicenseDetailsList: any;
   //invoice to quotation 
@@ -166,7 +171,7 @@ export class InvoiceComponent implements OnInit {
   templateNameList: any;
   isReadonly: boolean = true;
   quotationVersion = '1.0';
-  billId_InvoicetoQuotation:any;
+  billId_InvoicetoQuotation: any;
   //notes
   billId_notes: any;
 
@@ -233,7 +238,7 @@ export class InvoiceComponent implements OnInit {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
-    this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
+    this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 3, "name": "Itemwise", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
     this.warrantyList = [{ "id": 1, "name": "No Warranty" }, { "id": 2, "name": "One Year Warranty" }, { "id": 3, "name": "Two Year Warranty" }]
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
@@ -311,6 +316,14 @@ export class InvoiceComponent implements OnInit {
       'PdfShow': new FormControl(null),
 
     });
+    this.withoutFormArrayResellerCommissionForm=new FormGroup({
+      'ResellerName_WFA': new FormControl(null),
+      'CommissionType_WFA': new FormControl(null),
+      'CommissionValue_WFA': new FormControl(null),
+      'CommissionAmount_WFA': new FormControl(null),
+      'PdfShow_WFA': new FormControl(null),
+    });
+
     this.addNewQuotationPopUpForm = new FormGroup({
       'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
       'enquirySubject_addPopUP': new FormControl(null, [Validators.required]),
@@ -324,7 +337,7 @@ export class InvoiceComponent implements OnInit {
   }
   // this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
 
-  radioChecked(id:any, i:any){
+  radioChecked(id: any, j: any) {
     // this.resellercommissiontype.forEach((item: { id: any; selected: boolean; })=>{
     //   alert(id)
     //   alert(item.id)
@@ -337,18 +350,31 @@ export class InvoiceComponent implements OnInit {
     //     alert("undefined")
     //   }
     // })
-    if(this.resellerCommissionList!=undefined&&this.resellerCommissionList!=null&&this.resellerCommissionList!='undefined'&&this.resellerCommissionList!='null'&&this.resellerCommissionList!=''){
-      this.resellerCommissionList.forEach((element: any) => {
-        if(element.commission_type==id){
-          // $("#CommissionType_"+)
-          return true;
-        }else{
-          return false;
+    // if(this.resellerCommissionList!=undefined&&this.resellerCommissionList!=null&&this.resellerCommissionList!='undefined'&&this.resellerCommissionList!='null'&&this.resellerCommissionList!=''){
+    // this.resellerCommissionList.forEach((element: any) => {
+    //   if(element.commission_type==id){
+    //     // $("#CommissionType_"+)
+    //     return true;
+    //   }else{
+    //     return false;
+    //   }
+    //   console.log(element.commission_type)
+    // });
+    for (var i = 0; i <= this.resellerCommissionList.length; i++) {
+      for (var k = 0; k <= this.resellercommissiontype.length; k++) {
+
+        console.log(this.resellerCommissionList);
+        if (this.resellerCommissionList.commission_type == this.resellercommissiontype.id) {
+          $("#CommissionType_" + i + "_" + k).val(this.resellerCommissionList.commission_type);
         }
-        console.log(element.commission_type)
-      });
+      }
     }
-    
+    // }
+
+  }
+
+  onItemChange(){
+    this.radioSel =   this.resellercommissiontype.find((Item: { id: any; }) => Item.id === this.radioSelected);
   }
   radio_InvoiceSendingInput(event: any) {
     this.InvoiceSendingValue = event.target.value;
@@ -616,7 +642,7 @@ export class InvoiceComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
- 
+
   addPIGo() {
     this.router.navigate(['/AddInvoice'])
   }
@@ -630,7 +656,7 @@ export class InvoiceComponent implements OnInit {
       }
     });
   }
-  invoiceShowPersonEdit(Id: any) {
+  invoiceSharPersonEdit(Id: any) {
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
@@ -673,7 +699,7 @@ export class InvoiceComponent implements OnInit {
       console.log("final error", error);
     }
   }
-  invoiceShowPermissionUpdate() {
+  invoiceSharPermissionUpdate() {
     let api_req: any = new Object();
     let quot_share_update_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -688,11 +714,11 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         iziToast.success({
-          message: "Show Permission Updated successfully",
+          message: "Share Permission Updated successfully",
           position: 'topRight'
         });
 
-        $('#showPerissionFormId').modal('hide');
+        $('#sharPerissionFormId').modal('hide');
         this.typeConvertionString_invoiceShowPermission = [];
       } else {
         iziToast.warning({
@@ -911,6 +937,7 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = api_processpaymentEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         this.invoiceDetails_payment = response.invoice_details;
         this.paymentType_payment = response.payment_type;
@@ -1060,11 +1087,7 @@ export class InvoiceComponent implements OnInit {
         }
 
 
-        iziToast.success({
-          message: "Email Details displayed Successfully",
-          position: 'topRight'
 
-        });
         this.getInvoice({});
       } else {
 
@@ -1214,18 +1237,22 @@ export class InvoiceComponent implements OnInit {
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
-        this.getInvoice({});
+
         Swal.close();
         iziToast.success({
           message: "Email Notification Sent Successfully",
           position: 'topRight'
         });
 
+        $("#emailFormId").modal("hide");
+        this.getInvoice({});
+
       }
       else {
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
+        $("#emailFormId").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.getInvoice({});
@@ -1321,6 +1348,7 @@ export class InvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.actualCost_ProductList = response.billChild_details;
+        this.quotationChildId_count = this.actualCost_ProductList.length + 1;
 
 
       } else {
@@ -1359,17 +1387,13 @@ export class InvoiceComponent implements OnInit {
       if (response.status == true) {
 
         this.LicenseDetailsList = response.license_details;
-        iziToast.success({
-          message: "Duplicate created successfully",
-          position: 'topRight'
 
-        });
 
       } else {
 
 
         iziToast.warning({
-          message: "Duplicate not Updated. Please try again",
+          message: "License Details not Updated. Please try again",
           position: 'topRight'
         });
       }
@@ -1408,6 +1432,8 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
+
+        this.getInvoice({});
 
       } else {
 
@@ -1743,14 +1769,14 @@ export class InvoiceComponent implements OnInit {
           'usageChargeDt_value': response.reccuring_details.usage_next_dt,
 
         })
-
-
+        $('#RecurringFormId').modal("hide");
+        this.getInvoice({});
 
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#RecurringFormId').modal("hide");
         iziToast.warning({
-          message: "Term Condition Details not displayed. Please try again",
+          message: "Recurring Details not displayed. Please try again",
           position: 'topRight'
         });
       }
@@ -1814,6 +1840,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
+        this.getInvoice({});
         console.log("final error", error);
       };
 
@@ -2045,7 +2072,7 @@ export class InvoiceComponent implements OnInit {
       if (response.status == true) {
 
         iziToast.success({
-          message: "Delivery Order Updated Successfully",
+          message: "Invoice Notes Updated Successfully",
           position: 'topRight'
         });
         $('#NotesFormId').modal("hide");
@@ -2055,7 +2082,7 @@ export class InvoiceComponent implements OnInit {
       } else {
 
         iziToast.warning({
-          message: "Delivery Order not Updated. Check response",
+          message: "Invoice Notes not Updated. Check response",
           position: 'topRight'
         });
         $('#NotesFormId').modal("hide");
@@ -2309,7 +2336,7 @@ export class InvoiceComponent implements OnInit {
 
 
         iziToast.success({
-          message: "Term Condition Details Updated Successfully",
+          message: "Invoice Type Details Updated Successfully",
           position: 'topRight'
 
         });
@@ -2318,7 +2345,7 @@ export class InvoiceComponent implements OnInit {
 
         $('#setInvoiceTypeNameFormId').modal("hide");
         iziToast.warning({
-          message: "Term Condition Details not Updated. Please try again",
+          message: "Invoice Type Details not Updated. Please try again",
           position: 'topRight'
         });
       }
@@ -2444,8 +2471,8 @@ export class InvoiceComponent implements OnInit {
 
 
   }
-  invoicetoQuotationEdit(id:any) {
-    this.billId_InvoicetoQuotation=id;
+  invoicetoQuotationEdit(id: any) {
+    this.billId_InvoicetoQuotation = id;
     $("#InvoicetoQuotationFormId").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
@@ -2478,7 +2505,7 @@ export class InvoiceComponent implements OnInit {
       }
 
     });
-  } 
+  }
 
   invoicetoQuotationSave() {
 
@@ -2533,7 +2560,7 @@ export class InvoiceComponent implements OnInit {
   addNotes() {
 
   }
- 
+
   selectEventReseller(item: any) {
     this.ResellerName_Customer = item.customerName;
     console.log(item.customerId)
@@ -2590,8 +2617,9 @@ export class InvoiceComponent implements OnInit {
       };
 
   }
-  getResellerCommission(id: any) {
-    this.billId_ResellerCommissionId=id;
+
+  get_WFA_ResellerCommission(id: any) {
+    this.billId_ResellerCommissionId = id;
     let api_req: any = new Object();
     let api_resCommEdit: any = new Object();
     api_req.moduleType = "invoice";
@@ -2606,9 +2634,73 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
+        console.log("response-check", response.reseller_comm[0].commission_type);
 
+        this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
 
+      } else {
+
+
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  getResellerCommission(id: any) {
+    this.billId_ResellerCommissionId = id;
+    let api_req: any = new Object();
+    let api_resCommEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_reseller_commission_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_resCommEdit.action = "get_reseller_commission_details";
+    api_resCommEdit.billId = id;
+    api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_resCommEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        console.log("response-check", response.reseller_comm[0].commission_type);
+
+        this.CommissionType = response.reseller_comm[0].commission_type;
+        this.resellerCommissionList = response.reseller_comm;
+       
+
+
+        // if(this.resellerCommissionList!=undefined&&this.resellerCommissionList!=null&&this.resellerCommissionList!='undefined'&&this.resellerCommissionList!='null'&&this.resellerCommissionList!=''){
+        // this.resellerCommissionList.forEach((element: any) => {
+        //   if(element.commission_type==id){
+        //     // $("#CommissionType_"+)
+        //     return true;
+        //   }else{
+        //     return false;
+        //   }
+        //   console.log(element.commission_type)
+        // });
+
+        for (var i = 0; i <= this.resellerCommissionList.length - 1; i++) {
+          for (var k = 0; k <= this.resellercommissiontype.length - 1; k++) {
+            if (this.resellerCommissionList[i].commission_type == this.resellercommissiontype[k].id) {
+              console.log("#CommissionType_" + i + "_" + k)
+              console.log(this.resellercommissiontype[k].id)
+              $("#CommissionType_" + i + "_" + k).val(this.resellercommissiontype[k].id);
+            }
+          }
+          // }
+        }
         // this.addressForm.patchValue({
 
 
@@ -2624,9 +2716,10 @@ export class InvoiceComponent implements OnInit {
         console.log(this.addressControls.controls)
         const formArray = new FormArray([]);
         for (let index = 0; index < response.reseller_comm.length; index++) {
-
+          this.radioSelected = response.reseller_comm[index].commission_value;
           formArray.push(this.fb.group({
             "ResellerName": response.reseller_comm[index].reseller_name,
+            "CommissionType": response.reseller_comm[index].commission_type,
             // "CommissionType": response.reseller_comm[index].commission_type == 1 ? true : false,
             "CommissionValue": response.reseller_comm[index].commission_value,
             "CommissionAmount": response.reseller_comm[index].commission_amt,
@@ -2686,7 +2779,7 @@ export class InvoiceComponent implements OnInit {
   }
   setResellerCommission() {
 
-    
+
     this.spinner.show();
     let api_req: any = new Object();
     let api_resCommSave: any = new Object();
@@ -2696,12 +2789,12 @@ export class InvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_resCommSave.action = "update_reseller_commission_details";
 
-  
+
     api_resCommSave.billId = this.billId_ResellerCommissionId;
     api_resCommSave.user_id = localStorage.getItem('erp_c4c_user_id');
 
     var addr = this.addressForm.value.addresses;
-   
+
     api_resCommSave.values = addr;
     api_req.element_data = api_resCommSave;
 
@@ -2797,6 +2890,7 @@ export class InvoiceComponent implements OnInit {
   }
   get_actual_total() {
     var bill_cnt = $('#quotationChildId_count').val();
+    console.log("bill_cnt", bill_cnt)
     let actual_cost, product_qty, product_rate, actual_net_tot, actual_percentage;
     let product_net_amt, act_diff_amt;
     let actual_cost_tot = 0;
@@ -2811,11 +2905,11 @@ export class InvoiceComponent implements OnInit {
         product_rate = $('#product_rate_' + i).val();
         product_net_amt = $('#product_net_amt_' + i).val();
         actual_percentage = $('#actual_percentage_' + i).val();
-        console.log(product_rate);
-        console.log(actual_cost);
-        console.log(actual_percentage);
-        console.log(product_qty);
-        console.log(product_net_amt);
+        console.log("product_rate", product_rate);
+        console.log("actual_cost", actual_cost);
+        console.log("actual_percentage", actual_percentage);
+        console.log("product_qty", product_qty);
+        console.log("product_net_amt", product_net_amt);
         if (actual_cost == '') {
           actual_cost = 0;
         }
@@ -2825,9 +2919,9 @@ export class InvoiceComponent implements OnInit {
           $('#actual_cost_' + i).val(actual_cost);
         }
         actual_net_tot = (parseFloat(product_qty) * parseFloat(actual_cost)).toFixed(2);
-        console.log(actual_net_tot);
+        console.log("actual_net_tot", actual_net_tot);
         act_diff_amt = (parseFloat(product_net_amt) - parseFloat(actual_net_tot)).toFixed(2);
-        console.log(act_diff_amt);
+        console.log("act_diff_amt", act_diff_amt);
         $('#act_diff_amt_' + i).val(act_diff_amt);
         $('#actual_net_tot_' + i).val(actual_net_tot);
         actual_cost_tot += parseFloat(actual_cost);
