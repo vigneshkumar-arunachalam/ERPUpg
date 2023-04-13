@@ -925,30 +925,8 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
-        <div class="col-lg-3">
-          <div class="form-group row">
-              <div class="ng-autocomplete">
-                  <label for="companyName" class="col-lg-12 ">Search Text</label>
-                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                      formControlName="company_Name" (selected)='selectEventCustomer($event)'
-                      (inputChanged)='searchCustomerData($event)'
-                      
-                      (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
-                      [notFoundTemplate]="notFoundTemplate">
-                  </ng-autocomplete>
-
-                  <ng-template #itemTemplateCustomer let-item>
-                      <a [innerHTML]="item.customerName"></a>
-                  </ng-template>
-
-                  <ng-template #notFoundTemplate let-notFound>
-                      <div [innerHTML]="notFound"></div>
-                  </ng-template>
-              </div>
-
-          </div>
-      </div>
+        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced search</h2>
+      
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -957,24 +935,45 @@
       <div class="modal-body">
         <form [formGroup]="searchPIForm">
           <div class="row">
-            <div class="col-lg-3 searchScrollCss">
+            <div class="col-lg-6 searchScrollCss">
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Biller Name</label>
-                <div class="col-lg-12 " *ngFor="let biller of billList;let i =index">
+                <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
                   <input type="checkbox">
-                  <!-- <input type="checkbox" value="{{biller.billId}}"
-                                        (change)="QuotationSearchCHK(biller.billId,$event)"> -->
+                  
                   {{biller.billerName}}
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 searchScrollCss">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                  <div class="ng-autocomplete">
+                      <label for="companyName" class="col-lg-12 ">Search Text</label>
+                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                          formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                          (inputChanged)='searchCustomerData($event)'
+                          
+                          (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                          [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+    
+                      <ng-template #itemTemplateCustomer let-item>
+                          <a [innerHTML]="item.customerName"></a>
+                      </ng-template>
+    
+                      <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                  </div>
+    
+              </div>
+            </div>
+            <!-- <div class="col-lg-3 searchScrollCss">
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Years</label>
                 <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
                   <input type="checkbox">
-                  <!-- <input type="checkbox" value="{{biller.billId}}"
-                                      (change)="QuotationSearchCHK(biller.billId,$event)"> -->
+               
                   {{yrs}}
                 </div>
               </div>
@@ -997,12 +996,11 @@
                 <label for="temp1" class="col-lg-12 ">Others</label>
                 <div class="col-lg-12 " *ngFor="let srs of searchOthers;let i =index">
                   <input type="checkbox">
-                  <!-- <input type="checkbox" value="{{biller.billId}}"
-                                  (change)="QuotationSearchCHK(biller.billId,$event)"> -->
+                  
                   {{srs}}
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 

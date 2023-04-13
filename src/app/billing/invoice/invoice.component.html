@@ -324,7 +324,7 @@
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                 <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
                                   data-target="#withoutFormArrayResellerCommissionFormId" (click)="get_WFA_ResellerCommission(list.billId)">
-                                  <span style="color: #009688;"><strong>RC</strong></span>
+                                  <span style="color: #960032;"><strong>RC</strong></span>
                               
                                 </a>
                               </li>
@@ -1670,18 +1670,14 @@
 
         <form [formGroup]="withoutFormArrayResellerCommissionForm">
           <div class="row">
-            <!-- <div class="col-lg-12 mt-2" style="display: flex; ">
+            <div class="col-lg-12 mt-2" style="display: flex; ">
               <div class="col-lg-4 mt-2">
                 <label>Reseller Name </label>
               </div>
               <div class="col-lg-8">
-                <input type="text" class="form-control" formControlName="ResellerName" (change)="getResellerName()">
-              </div>
-            </div> -->
-            <div class="col-lg-6">
               <div class="form-group row">
                 <div class="ng-autocomplete">
-                  <label for="ResellerName_WFA" class="col-lg-12 col-form-label">Reseller Name</label>
+                 
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
                     formControlName="ResellerName_WFA" (selected)='selectEventReseller($event)'
                     (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
@@ -1701,6 +1697,8 @@
 
               </div>
             </div>
+            </div>
+           
             <div class="col-lg-12 mt-2" style="display: flex;">
               <div class="col-lg-4">
                 <label>Commission Type </label>
@@ -1710,7 +1708,13 @@
                 <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let i=index">
                   <input class="form-check-input" type="radio" name="CommissionType_WFA" 
                   formControlName="CommissionType_WFA"
+                  checked="{{item.id==CommissionType ? 'checked':''}}"
                     (change)="radio_commissionType($event)" id="{{item.id}}" value="{{item.id}}">
+
+                    <!-- <input class="form-check-input" type="radio" name="e_editCustomerStatus"
+                    id="{{display1.values1}}" formControlName="e_editCustomerStatus"
+                    value="option1"  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
+                    (change)="handleChange($event)" /> -->
                   <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
                 </div>
               </div>
@@ -1744,7 +1748,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="addNotes()">Save</button>
+        <button type="submit" class="btn btn-primary" (click)="set_WFA_ResellerCommission()">Save</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>

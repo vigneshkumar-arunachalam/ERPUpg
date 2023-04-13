@@ -1421,6 +1421,9 @@ export class EditPIComponent implements OnInit {
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
         console.log('discount_type1111' + this.sub_dis_val);
+        if(this.sub_dis_val==''){
+          this.sub_dis_val=0;
+        }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
         console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
@@ -1431,6 +1434,9 @@ export class EditPIComponent implements OnInit {
 
         this.sub_dis_val = $('#sub_discount_' + a).val();
          console.log('sub_discount_valppp'+this.sub_dis_val);
+         if(this.sub_dis_val==''){
+          this.sub_dis_val=0;
+        }
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
         $('#pd_netPrice_' + a).val(sub_total_amt);
       } else {

@@ -234,7 +234,7 @@ border-radius: 50%;
 
 
 #searchPIFormId .modal-dialog {
-  max-width: 95%;
+  max-width: 55%;
 }
 #emailFormId .modal-dialog {
   max-width: 65%;

@@ -95,7 +95,7 @@ export class InvoiceComponent implements OnInit {
   CBV_UsageChargeDt: any;
   //coupon assign
   couponAssignForm: FormGroup;
-
+  ResellerId_Customer:any;
   //file attachment
   fileAttach_quotationID: any;
   FileAttachmentForm: FormGroup;
@@ -1751,8 +1751,8 @@ export class InvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         var date = response.reccuring_details.recured_date_show;
-        console.log(date)
-        $('#date123').val(date);
+        console.log("date check",date)
+        // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
         this.recurringDetails_usage_next_dt = response.reccuring_details.usage_next_dt;
@@ -1763,22 +1763,26 @@ export class InvoiceComponent implements OnInit {
         this.TermDetailsList = response.terms_details;
         this.RecurringForm.patchValue({
 
+          'date': response.reccuring_details.fixed_next_dt,
           'fixedChargeDuration': response.reccuring_details.fixed_duration,
           'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
+      
           'usageChargeDuration': response.reccuring_details.usage_duration,
           'usageChargeDt_value': response.reccuring_details.usage_next_dt,
 
         })
-        $('#RecurringFormId').modal("hide");
+       
+        // $('#RecurringFormId').modal("hide");
         this.getInvoice({});
 
       } else {
 
-        $('#RecurringFormId').modal("hide");
+       
         iziToast.warning({
           message: "Recurring Details not displayed. Please try again",
           position: 'topRight'
         });
+        $('#RecurringFormId').modal("hide");
       }
     }),
       (error: any) => {
@@ -2559,10 +2563,12 @@ export class InvoiceComponent implements OnInit {
   }
   addNotes() {
 
+
   }
 
   selectEventReseller(item: any) {
     this.ResellerName_Customer = item.customerName;
+    this.ResellerId_Customer=item.customerId
     console.log(item.customerId)
     console.log(item.customerName)
 
@@ -2638,6 +2644,15 @@ export class InvoiceComponent implements OnInit {
 
         this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
+   //  
+        this.withoutFormArrayResellerCommissionForm.patchValue({
+          'ResellerName_WFA': response.reseller_comm[0].reseller_name,
+          'CommissionType_WFA': response.reseller_comm[0].commission_type,
+          'CommissionValue_WFA': response.reseller_comm[0].commission_value,
+          'CommissionAmount_WFA': response.reseller_comm[0].commission_amt,
+          'PdfShow_WFA': response.reseller_comm[0].pdf_show,
+
+        });
 
       } else {
 
@@ -2777,6 +2792,65 @@ export class InvoiceComponent implements OnInit {
       };
 
   }
+  set_WFA_ResellerCommission() {
+alert(this.ResellerId_Customer)
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_resCommSave: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_reseller_commission_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_resCommSave.action = "update_reseller_commission_details";
+
+
+    api_resCommSave.billId = this.billId_ResellerCommissionId;
+    api_resCommSave.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    api_resCommSave.reseller_name=this.ResellerName_Customer;
+    api_resCommSave.reseller_id=this.ResellerId_Customer;
+    api_resCommSave.commission_type=this.withoutFormArrayResellerCommissionForm.value.CommissionType_WFA;
+    api_resCommSave.commission_value=this.withoutFormArrayResellerCommissionForm.value.CommissionValue_WFA;
+    api_resCommSave.commission_amt=this.withoutFormArrayResellerCommissionForm.value.CommissionAmount_WFA
+    api_resCommSave.pdf_show=this.withoutFormArrayResellerCommissionForm.value.PdfShow_WFA;
+
+  
+    api_req.element_data = api_resCommSave;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+        iziToast.success({
+          message: "Reseller Commission Details updated Successful",
+          position: 'topRight'
+        });
+        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+
+
+      } else {
+
+        this.spinner.hide();
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        console.log("final error", error);
+      };
+
+
+  }
   setResellerCommission() {
 
 
@@ -2860,11 +2934,11 @@ export class InvoiceComponent implements OnInit {
     console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
     let api_req: any = new Object();
     let actualCostUpdate_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/update_actualcost_quotation_value";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_actualcost_quotation_value";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    actualCostUpdate_req.action = "update_actualcost_quotation_value";
+    actualCostUpdate_req.action = "update_actualcost_invoice_value";
     actualCostUpdate_req.user_id = this.user_ids;
     actualCostUpdate_req.quotationId = this.actualCost_quotationID;
     actualCostUpdate_req.values = this.actualCost_ProductList;
