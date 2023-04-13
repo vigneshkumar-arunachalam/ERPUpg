@@ -162,6 +162,7 @@ export class InvoiceComponent implements OnInit {
   radioSel:any;
   //reseller commission details-without form array
   withoutFormArrayResellerCommissionForm:FormGroup;
+  commissionGrossAmount:any;
   //license details
   LicenseDetailsList: any;
   //invoice to quotation 
@@ -238,7 +239,7 @@ export class InvoiceComponent implements OnInit {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
-    this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 3, "name": "Itemwise", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
+    this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
     this.warrantyList = [{ "id": 1, "name": "No Warranty" }, { "id": 2, "name": "One Year Warranty" }, { "id": 3, "name": "Two Year Warranty" }]
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
@@ -387,7 +388,30 @@ export class InvoiceComponent implements OnInit {
   }
   radio_commissionType(event: any) {
     this.commissionType_value = event.target.id;
-    console.log(this.commissionType_value);
+    console.log("this.commissionType_value",this.commissionType_value);
+    if(this.commissionType_value==1){
+      var commvalue= $('#CommissionValue_WFA_ID').val();
+      $('#CommissionAmount_WFA_ID').val(commvalue);
+    }
+    if(this.commissionType_value==2){
+      var commvalue= $('#CommissionValue_WFA_ID').val();
+      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
+     
+      $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
+    }
+  }
+  commissionValueAutoFill(){
+    if(this.commissionType_value==1){
+      var commvalue= $('#CommissionValue_WFA_ID').val();
+      $('#CommissionAmount_WFA_ID').val(commvalue);
+    }
+    if(this.commissionType_value==2){
+      var commvalue= $('#CommissionValue_WFA_ID').val();
+      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
+     
+      $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
+    }
+
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
@@ -2644,6 +2668,7 @@ export class InvoiceComponent implements OnInit {
 
         this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
+        this.commissionGrossAmount=response.grossAmount;
    //  
         this.withoutFormArrayResellerCommissionForm.patchValue({
           'ResellerName_WFA': response.reseller_comm[0].reseller_name,

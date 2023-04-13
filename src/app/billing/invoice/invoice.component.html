@@ -1724,7 +1724,8 @@
                 <label>Commission Value </label>
               </div>
               <div class="col-lg-8">
-                <input type="text" class="form-control" formControlName="CommissionValue_WFA">
+                <input type="number" class="form-control" formControlName="CommissionValue_WFA" 
+                id="CommissionValue_WFA_ID" (keyup)="commissionValueAutoFill()">
               </div>
             </div>
             <div class="col-lg-12 mt-2" style="display: flex;">
@@ -1732,7 +1733,7 @@
                 <label>Commission Amount </label>
               </div>
               <div class="col-lg-8">
-                <input type="number" class="form-control" formControlName="CommissionAmount_WFA">
+                <input type="number" class="form-control" formControlName="CommissionAmount_WFA" id="CommissionAmount_WFA_ID">
               </div>
             </div>
             <div class="col-lg-12 mt-2" style="display: flex;">
