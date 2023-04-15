@@ -1317,55 +1317,61 @@ this.spinner.show();
 
   }
 
+ finalDiscountCalc(){
+  var enablePercentabeDiscont = $('#enablePerFinal').val()
+  var enablePriceDiscont = $('#enablePriceFinal').val()
+  var tax_amt = $('#tax_amt_id').val()
+  var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
+  var final_tot = this.grossTotal;
+  var price: any;
+  // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+  $('#final_discount_type').val(disType);
+  this.finalDiscountType = disType;
+
+  if (disType == 'per') {
+    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+    if (enablePercentabeDiscont != '') {
+      //  console.log('3333'+final_tot);
+      price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+      $('#final_discount').val(price);
+      $('#final_discount_val').val(enablePercentabeDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
+      //     price = final_tot - price;
+    } else {
+      $('#final_discount').val('');
+      $('#final_discount_val').val('');
+      this.finalDiscountVal = '';
+      //   console.log('222'+final_tot);
+      price = 0;
+
+    }
+    //   console.log(price);
+  } else {
+    if (enablePriceDiscont == '') {
+      enablePriceDiscont = 0;
+    }
+    price = enablePriceDiscont;
+    $('#final_discount').val(enablePriceDiscont);
+    $('#final_discount_val').val(enablePriceDiscont);
+    this.finalDiscountVal = enablePercentabeDiscont;
+    console.log('999' + price);
+  }
+
+  if (this.grandTotal > 0) {
+    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
+  }
+  this.finalDiscount = price
+  
+  setTimeout(() => {
+    this.totalCalculate();
+  }, 1500)
+  
+ }
 
   saveGrossDiscount() {
-    var enablePercentabeDiscont = $('#enablePerFinal').val()
-    var enablePriceDiscont = $('#enablePriceFinal').val()
-    var tax_amt = $('#tax_amt_id').val()
-    var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-    var final_tot = this.grossTotal;
-    var price: any;
-    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
-    $('#final_discount_type').val(disType);
-    this.finalDiscountType = disType;
-
-    if (disType == 'per') {
-      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-      if (enablePercentabeDiscont != '') {
-        //  console.log('3333'+final_tot);
-        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
-        $('#final_discount').val(price);
-        $('#final_discount_val').val(enablePercentabeDiscont);
-        this.finalDiscountVal = enablePercentabeDiscont;
-        //     price = final_tot - price;
-      } else {
-        $('#final_discount').val('');
-        $('#final_discount_val').val('');
-        this.finalDiscountVal = '';
-        //   console.log('222'+final_tot);
-        price = 0;
-
-      }
-      //   console.log(price);
-    } else {
-      if (enablePriceDiscont == '') {
-        enablePriceDiscont = 0;
-      }
-      price = enablePriceDiscont;
-      $('#final_discount').val(enablePriceDiscont);
-      $('#final_discount_val').val(enablePriceDiscont);
-      this.finalDiscountVal = enablePercentabeDiscont;
-      console.log('999' + price);
-    }
-
-    if (this.grandTotal > 0) {
-      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
-    }
-    this.finalDiscount = price
+    this.finalDiscountCalc();
     $('#discountFormFinal').modal('hide');
-    setTimeout(() => {
-      this.totalCalculate();
-    }, 1500)
+    
   }
 
   CommissionFormOpen() {
@@ -1452,7 +1458,8 @@ this.spinner.show();
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-    this.saveGrossDiscount();
+   
+    this.finalDiscountCalc();
 
   }
   extraFees() {

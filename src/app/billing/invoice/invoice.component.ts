@@ -95,7 +95,7 @@ export class InvoiceComponent implements OnInit {
   CBV_UsageChargeDt: any;
   //coupon assign
   couponAssignForm: FormGroup;
-  ResellerId_Customer:any;
+  ResellerId_Customer: any;
   //file attachment
   fileAttach_quotationID: any;
   FileAttachmentForm: FormGroup;
@@ -158,11 +158,11 @@ export class InvoiceComponent implements OnInit {
   resellerCommissionList: any;
   billId_ResellerCommissionId: any;
   CommissionType: any;
-  radioSelected:any;
-  radioSel:any;
+  radioSelected: any;
+  radioSel: any;
   //reseller commission details-without form array
-  withoutFormArrayResellerCommissionForm:FormGroup;
-  commissionGrossAmount:any;
+  withoutFormArrayResellerCommissionForm: FormGroup;
+  commissionGrossAmount: any;
   //license details
   LicenseDetailsList: any;
   //invoice to quotation 
@@ -224,6 +224,14 @@ export class InvoiceComponent implements OnInit {
   invoicePermissionList_ten_day_per_billing: any;
   invoicePermissionList_inv_to_did: any;
   invoicePermissionList_set_actual_cost: any;
+  //colors
+  recurring_Status: any;
+  revenue_color: any;
+  revenue_type_id: any;
+  revenue_individual_state: any;
+  share_access_state:any;
+  postal_send_color:any;
+  post_send_status:any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
@@ -317,7 +325,7 @@ export class InvoiceComponent implements OnInit {
       'PdfShow': new FormControl(null),
 
     });
-    this.withoutFormArrayResellerCommissionForm=new FormGroup({
+    this.withoutFormArrayResellerCommissionForm = new FormGroup({
       'ResellerName_WFA': new FormControl(null),
       'CommissionType_WFA': new FormControl(null),
       'CommissionValue_WFA': new FormControl(null),
@@ -374,8 +382,8 @@ export class InvoiceComponent implements OnInit {
 
   }
 
-  onItemChange(){
-    this.radioSel =   this.resellercommissiontype.find((Item: { id: any; }) => Item.id === this.radioSelected);
+  onItemChange() {
+    this.radioSel = this.resellercommissiontype.find((Item: { id: any; }) => Item.id === this.radioSelected);
   }
   radio_InvoiceSendingInput(event: any) {
     this.InvoiceSendingValue = event.target.value;
@@ -388,27 +396,27 @@ export class InvoiceComponent implements OnInit {
   }
   radio_commissionType(event: any) {
     this.commissionType_value = event.target.id;
-    console.log("this.commissionType_value",this.commissionType_value);
-    if(this.commissionType_value==1){
-      var commvalue= $('#CommissionValue_WFA_ID').val();
+    console.log("this.commissionType_value", this.commissionType_value);
+    if (this.commissionType_value == 1) {
+      var commvalue = $('#CommissionValue_WFA_ID').val();
       $('#CommissionAmount_WFA_ID').val(commvalue);
     }
-    if(this.commissionType_value==2){
-      var commvalue= $('#CommissionValue_WFA_ID').val();
+    if (this.commissionType_value == 2) {
+      var commvalue = $('#CommissionValue_WFA_ID').val();
       var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
-     
+
       $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
     }
   }
-  commissionValueAutoFill(){
-    if(this.commissionType_value==1){
-      var commvalue= $('#CommissionValue_WFA_ID').val();
+  commissionValueAutoFill() {
+    if (this.commissionType_value == 1) {
+      var commvalue = $('#CommissionValue_WFA_ID').val();
       $('#CommissionAmount_WFA_ID').val(commvalue);
     }
-    if(this.commissionType_value==2){
-      var commvalue= $('#CommissionValue_WFA_ID').val();
+    if (this.commissionType_value == 2) {
+      var commvalue = $('#CommissionValue_WFA_ID').val();
       var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
-     
+
       $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
     }
 
@@ -601,7 +609,13 @@ export class InvoiceComponent implements OnInit {
       console.log("PI list", response);
       if (response) {
         this.PI_list = response.proforma_details;
-
+        this.recurring_Status = response.proforma_details[0].recuring_status;
+        this.revenue_type_id = response.proforma_details[0].revenue_type_id;
+        this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+        this.revenue_color = response.proforma_details[0].revenue_color;
+        this.share_access_state= response.proforma_details[0].share_access_state;
+        this.postal_send_color= response.proforma_details[0].postal_send_color;
+        this.post_send_status= response.proforma_details[0].post_send_status;
         this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
@@ -681,6 +695,7 @@ export class InvoiceComponent implements OnInit {
     });
   }
   invoiceSharPersonEdit(Id: any) {
+    this.getInvoice({});
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
@@ -813,6 +828,7 @@ export class InvoiceComponent implements OnInit {
   }
   getInvoice_Post(id: any) {
     this.billId_InvoicePost = id;
+    this.getInvoice({});
     let api_req: any = new Object();
     let api_postED: any = new Object();
     api_req.moduleType = "invoice";
@@ -1754,10 +1770,10 @@ export class InvoiceComponent implements OnInit {
   }
   RecurringEdit(id: any) {
 
-
+   
     this.spinner.show();
     this.recurring_BillerID = id;
-
+    this.getInvoice({});
     let api_req: any = new Object();
     let api_recurring: any = new Object();
     api_req.moduleType = "invoice";
@@ -1775,7 +1791,7 @@ export class InvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         var date = response.reccuring_details.recured_date_show;
-        console.log("date check",date)
+        console.log("date check", date)
         // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
@@ -1790,18 +1806,18 @@ export class InvoiceComponent implements OnInit {
           'date': response.reccuring_details.fixed_next_dt,
           'fixedChargeDuration': response.reccuring_details.fixed_duration,
           'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
-      
+
           'usageChargeDuration': response.reccuring_details.usage_duration,
           'usageChargeDt_value': response.reccuring_details.usage_next_dt,
 
         })
-       
+
         // $('#RecurringFormId').modal("hide");
         this.getInvoice({});
 
       } else {
 
-       
+
         iziToast.warning({
           message: "Recurring Details not displayed. Please try again",
           position: 'topRight'
@@ -2451,7 +2467,7 @@ export class InvoiceComponent implements OnInit {
       confirmButtonText: 'Yes, Change it!'
     }).then((result: any) => {
       if (result.value) {
-
+        this.getInvoice({});
         let api_req: any = new Object();
         let api_reqLocEx: any = new Object();
         api_req.moduleType = "invoice";
@@ -2592,7 +2608,7 @@ export class InvoiceComponent implements OnInit {
 
   selectEventReseller(item: any) {
     this.ResellerName_Customer = item.customerName;
-    this.ResellerId_Customer=item.customerId
+    this.ResellerId_Customer = item.customerId
     console.log(item.customerId)
     console.log(item.customerName)
 
@@ -2668,8 +2684,8 @@ export class InvoiceComponent implements OnInit {
 
         this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
-        this.commissionGrossAmount=response.grossAmount;
-   //  
+        this.commissionGrossAmount = response.grossAmount;
+        //  
         this.withoutFormArrayResellerCommissionForm.patchValue({
           'ResellerName_WFA': response.reseller_comm[0].reseller_name,
           'CommissionType_WFA': response.reseller_comm[0].commission_type,
@@ -2717,7 +2733,7 @@ export class InvoiceComponent implements OnInit {
 
         this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
-       
+
 
 
         // if(this.resellerCommissionList!=undefined&&this.resellerCommissionList!=null&&this.resellerCommissionList!='undefined'&&this.resellerCommissionList!='null'&&this.resellerCommissionList!=''){
@@ -2818,7 +2834,7 @@ export class InvoiceComponent implements OnInit {
 
   }
   set_WFA_ResellerCommission() {
-alert(this.ResellerId_Customer)
+    alert(this.ResellerId_Customer)
 
     this.spinner.show();
     let api_req: any = new Object();
@@ -2833,14 +2849,14 @@ alert(this.ResellerId_Customer)
     api_resCommSave.billId = this.billId_ResellerCommissionId;
     api_resCommSave.user_id = localStorage.getItem('erp_c4c_user_id');
 
-    api_resCommSave.reseller_name=this.ResellerName_Customer;
-    api_resCommSave.reseller_id=this.ResellerId_Customer;
-    api_resCommSave.commission_type=this.withoutFormArrayResellerCommissionForm.value.CommissionType_WFA;
-    api_resCommSave.commission_value=this.withoutFormArrayResellerCommissionForm.value.CommissionValue_WFA;
-    api_resCommSave.commission_amt=this.withoutFormArrayResellerCommissionForm.value.CommissionAmount_WFA
-    api_resCommSave.pdf_show=this.withoutFormArrayResellerCommissionForm.value.PdfShow_WFA;
+    api_resCommSave.reseller_name = this.ResellerName_Customer;
+    api_resCommSave.reseller_id = this.ResellerId_Customer;
+    api_resCommSave.commission_type = this.withoutFormArrayResellerCommissionForm.value.CommissionType_WFA;
+    api_resCommSave.commission_value = this.withoutFormArrayResellerCommissionForm.value.CommissionValue_WFA;
+    api_resCommSave.commission_amt = this.withoutFormArrayResellerCommissionForm.value.CommissionAmount_WFA
+    api_resCommSave.pdf_show = this.withoutFormArrayResellerCommissionForm.value.PdfShow_WFA;
 
-  
+
     api_req.element_data = api_resCommSave;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {

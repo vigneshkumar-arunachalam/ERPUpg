@@ -1179,6 +1179,7 @@ export class AddPIComponent implements OnInit {
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
+    this.finalDiscountCalc();
     console.log('grs_amt' + grs_amt);
     console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
@@ -1255,7 +1256,11 @@ export class AddPIComponent implements OnInit {
 
 
   saveGrossDiscount() {
-   
+    $('#discountFormFinal').modal('hide');
+    this.finalDiscountCalc();
+  }
+
+  finalDiscountCalc(){
     var enablePercentabeDiscont = $('#enablePerFinal').val()
     var enablePriceDiscont = $('#enablePriceFinal').val()
     var tax_amt = $('#tax_amt_id').val()
@@ -1303,12 +1308,14 @@ export class AddPIComponent implements OnInit {
 
     console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
-    $('#discountFormFinal').modal('hide');
+    
     setTimeout(() => {
       this.totalCalculate();
     }, 1500)
-  }
 
+
+
+  }
 
 
   getTaxCals() {
@@ -1350,7 +1357,7 @@ export class AddPIComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-    this.saveGrossDiscount();
+    this.finalDiscountCalc();
 
   }
   extraFees() {

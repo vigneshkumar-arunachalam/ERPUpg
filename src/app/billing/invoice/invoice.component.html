@@ -54,7 +54,13 @@
                     </tr>
                   </thead>
                   <tbody *ngFor="let list of PI_list; let i = index">
-                    <tr>
+                    <tr *ngIf="(list.biller_color_state=='1')">
+                      <td class="PIlistlabel" colspan="10"
+                        [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'4px!important'}">
+                        {{list.billerCode}}</td>
+                    </tr>
+                    <tr *ngIf="(list.billerId)"
+                    [ngStyle]="{'background-color':(list.billStatus=='1') ? ('#ffb8b8') : ( (list.billStatus=='2') ? ('#fffeb3') : ( (list.suspend=='1') ? ('#ff0000') : ('#d0ffc3') ) )}">
 
                       <td>
                         <span>{{ list.invoice_no}}</span>
@@ -62,14 +68,25 @@
                             [ngStyle]="{backgroundColor: list.colorCodes}">{{
                             list.billerCode}}</button></span>
                       </td>
-                      <td><span>{{ list.customerName}}</span></td>
+                      <td><span>{{ list.cus_invoice_no}}</span></td>
                       <td><span>{{ list.billDate}}</span></td>
                       <td><span>{{ list.customerName}}</span></td>
                       <td><span>{{ list.netPayment}}</span></td>
-                      <td><span>{{ list.currency_name}}</span></td>
+                      <td>
+                        <span>{{ list.currency_name}}</span>
+                        <span><button type="button" class="buttonClass" style="width: 40px;border-radius: 3px;"
+                          [ngStyle]="{'backgroundColor': 'Khaki'}">{{
+                          list.conversionRate}}</button></span>
+                      
+                      </td>
 
 
-                      <td><span>{{ list.export_type}}</span></td>
+                      <td>
+                        <span>{{ list.export_type}}</span>
+                        <span ><button type="button" class="buttonClass" style="width: 40px;border-radius: 3px;"
+                          [ngStyle]="{'backgroundColor':'PowderBlue' }">{{
+                          list.days}}</button></span>
+                      </td>
                       <td><span>{{ list.billGeneratedBy}}</span></td>
 
                       <td>
@@ -130,7 +147,7 @@
                               </li>
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
-                                <a class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                                <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post" data-toggle="modal"
                                   data-target="#InvoiceSendingMethodFormId" (click)="getInvoice_Post(list.billId)"
                                   (click)="InvoiceSendingMethodEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -142,6 +159,19 @@
                                     </polyline>
                                   </svg>
                                 </a>
+
+                                <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )" class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                                data-target="#InvoiceSendingMethodFormId" (click)="getInvoice_Post(list.billId)"
+                                (click)="InvoiceSendingMethodEdit(list.billId)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                  stroke-linejoin="round" class="feather feather-check-circle">
+                                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
+                                  </path>
+                                  <polyline points="22 4 12 14.01 9 11.01">
+                                  </polyline>
+                                </svg>
+                              </a>
                               </li>
 
 
@@ -186,7 +216,7 @@
                                 </a>
                               </li> -->
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_share==1)">
-                                <a class="hover3" title="Share permission" data-toggle="modal"
+                                <a *ngIf="(share_access_state==0)" class="hover3" title="Share permission" data-toggle="modal"
                                   data-target="#sharPerissionFormId" (click)="invoiceSharPersonEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -197,10 +227,22 @@
                                   </svg>
 
                                 </a>
+                                <a *ngIf="(share_access_state==1)" class="hover3" title="Share permission" data-toggle="modal"
+                                data-target="#sharPerissionFormId" (click)="invoiceSharPersonEdit(list.billId)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                  stroke-linejoin="round" class="feather feather-info">
+                                  <circle cx="12" cy="12" r="10"></circle>
+                                  <line x1="12" y1="16" x2="12" y2="12"></line>
+                                  <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                </svg>
+
+                              </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
-                                <a href="#" class="hover3" title="Recurring" data-toggle="modal"
+                                <a  *ngIf="(this.recurring_Status==1)" href="#" class="hover3" title="Recurring" data-toggle="modal" 
                                   data-target="#RecurringFormId" (click)="RecurringEdit(list.billId)">
+                                 
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-crosshair">
@@ -211,6 +253,19 @@
                                     <line x1="12" y1="22" x2="12" y2="18"></line>
                                   </svg>
                                 </a>
+                                <a  *ngIf="(this.recurring_Status==0)" href="#" class="hover3" title="Un-Recurring" data-toggle="modal" 
+                                data-target="#RecurringFormId" (click)="RecurringEdit(list.billId)">
+                               
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                  stroke-linejoin="round" class="feather feather-crosshair">
+                                  <circle cx="12" cy="12" r="10"></circle>
+                                  <line x1="22" y1="12" x2="18" y2="12"></line>
+                                  <line x1="6" y1="12" x2="2" y2="12"></line>
+                                  <line x1="12" y1="6" x2="12" y2="2"></line>
+                                  <line x1="12" y1="22" x2="12" y2="18"></line>
+                                </svg>
+                              </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_prev_billing==1)">
                                 <a class="hover3" title="Set Previous Due" data-toggle="modal" data-target=""
@@ -295,36 +350,39 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_revenue==1)">
-                                <a class="hover3" title="Invoice Revenue" data-toggle="modal"
+                                <a  class="hover3" title="Invoice Revenue" data-toggle="modal"
                                   data-target="#InvoiceRevenueFormId" (click)="InvoiceRevenueEdit(list.billId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  <span style="color: revenue_color;"><strong>R</strong></span>
+                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-archive">
                                     <polyline points="21 8 21 21 3 21 3 8"></polyline>
                                     <rect x="1" y="3" width="22" height="5"></rect>
                                     <line x1="10" y1="12" x2="14" y2="12"></line>
-                                  </svg>
-                                </a>
-                              </li>
-                              <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
-                                <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
-                                  data-target="#ResellerCommissionFormId" (click)="getResellerCommission(list.billId)">
-                                  <span style="color: #009688;"><strong>RC</strong></span>
-                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-battery-charging">
-                                    <path
-                                      d="M5 18H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.19M15 6h2a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-3.19">
-                                    </path>
-                                    <line x1="23" y1="13" x2="23" y2="11"></line>
-                                    <polyline points="11 6 7 12 13 12 9 18"></polyline>
                                   </svg> -->
                                 </a>
+                                <!-- <a  class="hover3" title="Invoice Revenue" data-toggle="modal"
+                                data-target="#InvoiceRevenueFormId" (click)="InvoiceRevenueEdit(list.billId)">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                  fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
+                                  stroke-linejoin="round" class="feather feather-archive">
+                                  <polyline points="21 8 21 21 3 21 3 8"></polyline>
+                                  <rect x="1" y="3" width="22" height="5"></rect>
+                                  <line x1="10" y1="12" x2="14" y2="12"></line>
+                                </svg>
+                              </a> -->
                               </li>
+                              <!-- <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
+                                <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
+                                  data-target="#ResellerCommissionFormId" (click)="getResellerCommission(list.billId)">
+                                  <span style="color: #009688;"><strong>C</strong></span>
+                              
+                                </a>
+                              </li> -->
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                 <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
                                   data-target="#withoutFormArrayResellerCommissionFormId" (click)="get_WFA_ResellerCommission(list.billId)">
-                                  <span style="color: #960032;"><strong>RC</strong></span>
+                                  <span style="color: #009688;"><strong>C</strong></span>
                               
                                 </a>
                               </li>

@@ -373,7 +373,8 @@ export class EditInvoiceComponent implements OnInit {
     this.addresses.removeAt(i);
     this.totalCalculate();
     setTimeout(() => {
-      this.saveGrossDiscount();
+     
+      this.finalDiscountCalc()
     }, 500);
 
 
@@ -1599,7 +1600,7 @@ export class EditInvoiceComponent implements OnInit {
     }
   }
 
-  saveGrossDiscount() {
+  finalDiscountCalc(){
     var enablePercentabeDiscont = $('#enableFinalPercent').val()
     var enablePriceDiscont = $('#enableFinalDiscount').val()
     var tax_amt = $('#tax_amt_id').val()
@@ -1647,11 +1648,18 @@ export class EditInvoiceComponent implements OnInit {
 
     console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
-    $('#discountFormFinal').modal('hide');
+    
     setTimeout(() => {
       this.totalCalculate();
     }, 1500)
 
+    
+  }
+
+
+  saveGrossDiscount() {
+    $('#discountFormFinal').modal('hide');
+    this.finalDiscountCalc();
   }
 
 

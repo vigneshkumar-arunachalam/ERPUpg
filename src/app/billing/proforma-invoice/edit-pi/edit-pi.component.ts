@@ -1488,6 +1488,8 @@ export class EditPIComponent implements OnInit {
       this.bankingCharge = 0;
     }
 
+    this.finalDiscountCalc();
+
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)+ parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
@@ -1649,7 +1651,7 @@ export class EditPIComponent implements OnInit {
     }
   }
 
-  saveGrossDiscount() {
+  finalDiscountCalc(){
     var enablePercentabeDiscont = $('#enableFinalPercent').val()
     var enablePriceDiscont = $('#enableFinalDiscount').val()
     var tax_amt = $('#tax_amt_id').val()
@@ -1697,12 +1699,16 @@ export class EditPIComponent implements OnInit {
 
     console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
-    $('#discountFormFinal').modal('hide');
+    
     setTimeout(() => {
       this.totalCalculate();
     }, 1500)
 
+  }
 
+  saveGrossDiscount() {
+    $('#discountFormFinal').modal('hide');
+    this.finalDiscountCalc();
   }
 
   discount_dynamic_cal(){
@@ -1780,7 +1786,7 @@ export class EditPIComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-    this.saveGrossDiscount();
+    this.finalDiscountCalc();
   }
   extraFees() {
     var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;

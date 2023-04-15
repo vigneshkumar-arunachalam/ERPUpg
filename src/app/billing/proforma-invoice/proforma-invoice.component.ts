@@ -18,6 +18,10 @@ export class ProformaInvoiceComponent implements OnInit {
   PI_list: any;
   biller_list: any;
   biller_temp: any;
+  //advance search biller checkbox
+  edit_array_SearchBiller_Checkbox: any = [];
+  CBV_BillerName_All:any;
+ 
   //list-checkbox all
   checkbox_value: any;
   edit_array: any = [];
@@ -35,7 +39,7 @@ export class ProformaInvoiceComponent implements OnInit {
   paymentType_payment: any;
   paymentDetails_payment: any;
   billID_processPayment: any;
-  payLink:any;
+  payLink: any;
   //invoice type details
   invoiceTypeDetailsForm: FormGroup;
   //coupon assign
@@ -95,43 +99,44 @@ export class ProformaInvoiceComponent implements OnInit {
   user_ids: any;
 
   //advance search
-  searchPIForm:FormGroup;
-  searchBillerResult:any;
+  searchPIForm: FormGroup;
+  searchBillerResult: any;
   groupSelect_searchId: any;
   quotationSearchCheckboxID_array: any = [];
   searchBillerNameList: any;
+  searchBILLERID: any;
   //search-others
-  allData:any;
-  displayDynamicData:any;
-  billList:any;
-  yearsList:any;
-  exportState_Radio:any;
-  searchOthers:any;
+  allData: any;
+  displayDynamicData: any;
+  billList: any;
+  yearsList: any;
+  exportState_Radio: any;
+  searchOthers: any;
   //auto complete search
   searchResult: any;
   searchResult_CustomerID: any;
   quotationId_new: any;
   searchResult_CustomerName: any;
 
-  constructor(private serverService: ServerService, private router: Router,private spinner: NgxSpinnerService) { }
+  constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.PIList({});
     this.search_BillerList();
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
 
-      this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
+    this.allData = '[{ "bill_details": [ { "billerId": 3, "billerName": "Cal4Care Pte Ltd" }, { "billerId": 5, "billerName": "Marshal System Consultancy" }, { "billerId": 6, "billerName": "Cal4Care" }, { "billerId": 8, "billerName": "Dcare Technologies Pte Ltd" }, { "billerId": 9, "billerName": "DCARE Technologies India Pvt Ltd." }, { "billerId": 10, "billerName": "Cal4care Sdn.Bhd." }, { "billerId": 11, "billerName": "CalnCall" }, { "billerId": 12, "billerName": "IT Care - IT Solutions" }, { "billerId": 13, "billerName": "SeaTech Solutions International (S) Pte Ltd" }, { "billerId": 14, "billerName": "Cal4Care Japan Co., Ltd" }, { "billerId": 16, "billerName": "Callacloud" }, { "billerId": 17, "billerName": "HelpDesk.Guru" }, { "billerId": 18, "billerName": "Cal4care (Thailand) Co., Ltd." }, { "billerId": 19, "billerName": "1Msb IT Care Sdn. Bhd." }, { "billerId": 20, "billerName": "Mr VOIP" }, { "billerId": 21, "billerName": "Mconnects" }, { "billerId": 22, "billerName": "CloudNippon" }, { "billerId": 23, "billerName": "Callnclear" }, { "billerId": 24, "billerName": "Call4tel" }, { "billerId": 25, "billerName": "Cal4Care USA LLC" }, { "billerId": 26, "billerName": "Virdi" }, { "billerId": 27, "billerName": "Cal4care Telecommunication Services (I) PVT LTD" } ], "country_details": [ "Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Cook Islands", "Costa Rica", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France, Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic", "Taiwan", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "United States minor outlying islands", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City State", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Zaire", "Zambia", "Zimbabwe" ], "terms_det": [ "100% Advance", "100% PT", "14 Days", "180 Days", "21 Days", "270 Days", "30 Days", "45 Days", "7 Days", "90 Days", "COD" ], "currency_det": [ { "currencyId": 11, "currency_name": "AUD" }, { "currencyId": 10, "currency_name": "BAHT" }, { "currencyId": 5, "currency_name": "EUR" }, { "currencyId": 4, "currency_name": "INR" }, { "currencyId": 9, "currency_name": "JPY" }, { "currencyId": 3, "currency_name": "MYR" }, { "currencyId": 8, "currency_name": "MYR-Marshal" }, { "currencyId": 1, "currency_name": "SGD" }, { "currencyId": 7, "currency_name": "SGD-Dcare" }, { "currencyId": 2, "currency_name": "USD" }, { "currencyId": 6, "currency_name": "USD-Paypal" } ], "payment_det": [ { "paymentvia_id": 1, "paymentvia_name": "SGD" }, { "paymentvia_id": 2, "paymentvia_name": "USD" }, { "paymentvia_id": 3, "paymentvia_name": "MYR" }, { "paymentvia_id": 4, "paymentvia_name": "INR" }, { "paymentvia_id": 5, "paymentvia_name": "EUR" }, { "paymentvia_id": 6, "paymentvia_name": "MYR-Marshal" }, { "paymentvia_id": 7, "paymentvia_name": "PayPal" }, { "paymentvia_id": 8, "paymentvia_name": "PayPal" }, { "paymentvia_id": 10, "paymentvia_name": "USD.I" }, { "paymentvia_id": 11, "paymentvia_name": "1MSB-MY" }, { "paymentvia_id": 12, "paymentvia_name": "BAHT" }, { "paymentvia_id": 13, "paymentvia_name": "SGD-DC" }, { "paymentvia_id": 14, "paymentvia_name": "USD-TH" }, { "paymentvia_id": 15, "paymentvia_name": "JPY" }, { "paymentvia_id": 16, "paymentvia_name": "TRANSFERWISE(USD)" }, { "paymentvia_id": 22, "paymentvia_name": "TRANSFERWISE(EUR)" }, { "paymentvia_id": 23, "paymentvia_name": "USD-u" } ] }]';
     this.displayDynamicData = JSON.parse(this.allData);
 
     this.billList = this.displayDynamicData[0].bill_details;
-    this.yearsList=["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023"]
+    this.yearsList = ["2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]
     this.exportState_Radio = [
       { name: 'Local', selected: true, id: 1 },
       { name: 'Export', selected: false, id: 2 },
       { name: 'Zero Valid', selected: false, id: 3 },
 
     ];
-    this.searchOthers=["Remove Show All","Deleted Invoice Show Regular","Select Recuring Only","	Select Previous Amt Show","Don't Select DID Invoice","	Revenue Type Wise Show"];
+    this.searchOthers = ["Remove Show All", "Deleted Invoice Show Regular", "Select Recuring Only", "	Select Previous Amt Show", "Don't Select DID Invoice", "	Revenue Type Wise Show"];
 
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
@@ -172,7 +177,8 @@ export class ProformaInvoiceComponent implements OnInit {
     this.setTermCondition = new FormGroup({
       'setTerm': new FormControl(null)
     });
-    this.searchPIForm=new FormGroup({
+    this.searchPIForm = new FormGroup({
+      'search_billerName': new FormControl(null)
 
     });
   }
@@ -207,6 +213,25 @@ export class ProformaInvoiceComponent implements OnInit {
     this.CBV_PaymentLink = event.target.checked;
     console.log(this.CBV_PaymentLink);
 
+  } searchBillerNameCHK(data: any, event: any) {
+    this.searchBILLERID = data;
+    console.log("this.searchBILLERID", this.searchBILLERID);
+    this.CBV_BillerName_All = event.target.checked;
+    if (this.CBV_BillerName_All) {
+
+      this.edit_array_SearchBiller_Checkbox.push(data);
+      this.edit_array_SearchBiller_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+    }
+    else {
+      const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_SearchBiller_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+
+    }
+    
   }
   EditCHK_emailCC(data: any, event: any) {
     console.log("List - CheckBox ID", data);
@@ -288,7 +313,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_SearchBiller_req.user_id = this.user_ids;
     api_req.element_data = api_SearchBiller_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
 
       console.log("vignesh-customer_status response", response);
 
@@ -364,7 +389,7 @@ export class ProformaInvoiceComponent implements OnInit {
         }
 
 
-        
+
       } else {
 
         $('#processPaymentFormId').modal("hide");
@@ -422,7 +447,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
     });
   }
-  PItoInvoiceConversion(Id: any){
+  PItoInvoiceConversion(Id: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -469,7 +494,7 @@ export class ProformaInvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-         
+
             $('#PItoInvoiceConversionFormId').modal('hide');
             iziToast.error({
               message: "Sorry, some server issue occur. Please contact admin",
@@ -481,7 +506,7 @@ export class ProformaInvoiceComponent implements OnInit {
       }
     })
   }
-  InvoicetoDIDConversion(Id: any){
+  InvoicetoDIDConversion(Id: any) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -491,7 +516,7 @@ export class ProformaInvoiceComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, convert it!'
     }).then((result) => {
-     
+
       if (result.value) {
 
         this.spinner.show();
@@ -512,7 +537,7 @@ export class ProformaInvoiceComponent implements OnInit {
           if (response.status == true) {
 
             this.spinner.hide();
-           
+
             iziToast.success({
               message: "Successfully Converted from Proforma to Invoice",
               position: 'topRight'
@@ -520,7 +545,7 @@ export class ProformaInvoiceComponent implements OnInit {
             this.PIList({});
           } else {
             this.spinner.hide();
-           
+
             iziToast.warning({
               message: "Converted from Proforma to Invoice Failed",
               position: 'topRight'
@@ -529,8 +554,8 @@ export class ProformaInvoiceComponent implements OnInit {
           }
         }),
           (error: any) => {
-         
-           
+
+
             iziToast.error({
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
@@ -580,7 +605,7 @@ export class ProformaInvoiceComponent implements OnInit {
         message: "Choose From Email Value",
         position: 'topRight'
       });
-      
+
       return false;
 
     }
@@ -629,7 +654,7 @@ export class ProformaInvoiceComponent implements OnInit {
         $('#emailto').val('');
         $("#emailFormId").modal("hide");
         tinymce.activeEditor.setContent("");
-        
+
         Swal.close();
         iziToast.success({
           message: "Email Notification Sent Successfully",
@@ -719,6 +744,12 @@ export class ProformaInvoiceComponent implements OnInit {
     this.PIList({});
     tinymce.activeEditor.setContent("");
   }
+  clearSearch(){
+    this.edit_array_SearchBiller_Checkbox=[];
+    this.searchResult_CustomerName='';
+    this.searchPIForm.get('company_Name').setValue('');
+
+  }
   PIList(data: any) {
     this.spinner.show();
 
@@ -735,6 +766,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.search_txt = this.searchResult_CustomerName;
+    api_quotationList.search_biller_str=this.edit_array_SearchBiller_Checkbox;
     api_quotationList.current_page = "";
 
     api_req.element_data = api_quotationList;
@@ -746,14 +778,14 @@ export class ProformaInvoiceComponent implements OnInit {
       $("#searchPIFormId").modal("hide");
       console.log("PI list", response);
       if (response) {
-        
+
         this.PI_list = response.proforma_details;
 
         this.biller_list = response.biller_details;
-       // this.payLink=response.proforma_details[0].payment_link;
+        // this.payLink=response.proforma_details[0].payment_link;
 
-        
-        
+       
+
 
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
@@ -778,9 +810,9 @@ export class ProformaInvoiceComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  paymentLink(paylink_id:any) {
-    
-    var url =  "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment="+paylink_id;
+  paymentLink(paylink_id: any) {
+
+    var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
     console.log("url", url)
     // $('#pdfFormId').modal('hide');
@@ -839,9 +871,9 @@ export class ProformaInvoiceComponent implements OnInit {
     });
   }
 
- 
+
   editDidPIGo(id: any) {
-    
+
     var editbillID = id;
     this.router.navigate(['/EditDidPI'])
 
@@ -852,7 +884,7 @@ export class ProformaInvoiceComponent implements OnInit {
     });
   }
 
- 
+
   addDidPIGo() {
     this.router.navigate(['/AddDidPI'])
   }
@@ -1040,16 +1072,16 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
 
-  pdf(billId: any,did_invoice_state:any) {
+  pdf(billId: any, did_invoice_state: any) {
 
-    if(did_invoice_state==1){
+    if (did_invoice_state == 1) {
       var url = "https://erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
-    }else{
+    } else {
       var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
 
 
     }
-      
+
     window.open(url, '_blank');
     console.log("url", url)
   }
@@ -1097,7 +1129,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
         })
         this.spinner.hide();
-      
+
         this.PIList({});
       } else {
 
@@ -1117,7 +1149,7 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
   processPaymentUpdate() {
-   this.spinner.show();
+    this.spinner.show();
 
     let api_req: any = new Object();
     let api_processpaymentUpdate: any = new Object();
@@ -1177,7 +1209,7 @@ export class ProformaInvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
-        
+
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -1212,7 +1244,7 @@ export class ProformaInvoiceComponent implements OnInit {
           'setInvoice': response.selected_invoice_type
         })
 
-       
+
 
       } else {
 
@@ -1304,7 +1336,7 @@ export class ProformaInvoiceComponent implements OnInit {
           'setTerm': response.selected_terms
         })
 
-     
+
 
       } else {
 
