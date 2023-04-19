@@ -19,11 +19,37 @@ export class InvoiceComponent implements OnInit {
   biller_list: any;
   biller_temp: any;
   invoicePermissionList: any
+  invType_Search: any;
   //pagination
   recordNotFound = false;
   pageLimit = 50;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
+  //advanced search
+  searchInvoiceForm: FormGroup;
+  searchBillerResult: any;
+  groupSelect_searchId: any;
+  quotationSearchCheckboxID_array: any = [];
+  searchBillerNameList: any;
+  searchBILLERID: any;
+  edit_array_SearchBiller_Checkbox: any = [];
+  edit_array_Years_Checkbox: any = [];
+  CBV_Years_All: any;
+  yearsList: any;
+  exportState_Radio: any;
+  searchOthers: any;
+  CBV_BillerName_All: any;
+  CBV_others_All: any;
+  edit_array_others_Checkbox: any = [];
+  CBV_recurring_only: any;
+  CBV_dont_select_did_invoice: any;
+  CBV_RevenueTypeWiseShow: any;
+  revenueTypeWiseDropDownValue:any;
+  //auto complete search
+  searchResult: any;
+  searchResult_CustomerID: any;
+  quotationId_new: any;
+  searchResult_CustomerName: any;
   //payment process
   processPaymentForm: FormGroup;
   isReadOnly: boolean = true;
@@ -120,7 +146,7 @@ export class InvoiceComponent implements OnInit {
   recuringStatus: any;
   recurring_BillerID: any;
   //revenue details
-  RevenueDetailsForm: FormGroup;
+  RevenueDetails1Form: FormGroup;
   CBV_RevenueState: any;
   billId_invoiceRevenue: any;
   RevenuebillDetails: any;
@@ -153,7 +179,7 @@ export class InvoiceComponent implements OnInit {
   commissionType_value: any;
   revenueChildListDetails: any;
   //reseller commission
-  searchResult: any;
+  // searchResult: any;
   ResellerName_Customer: any;
   resellerCommissionList: any;
   billId_ResellerCommissionId: any;
@@ -229,9 +255,9 @@ export class InvoiceComponent implements OnInit {
   revenue_color: any;
   revenue_type_id: any;
   revenue_individual_state: any;
-  share_access_state:any;
-  postal_send_color:any;
-  post_send_status:any;
+  share_access_state: any;
+  postal_send_color: any;
+  post_send_status: any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
@@ -243,12 +269,23 @@ export class InvoiceComponent implements OnInit {
   }
 
   keywordResellerName = 'customerName';
+  keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.getInvoice({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
     this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
     this.warrantyList = [{ "id": 1, "name": "No Warranty" }, { "id": 2, "name": "One Year Warranty" }, { "id": 3, "name": "Two Year Warranty" }]
+    this.yearsList = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]
+    this.exportState_Radio = [
+      { name: 'Local', selected: true, id: 1 },
+      { name: 'Export', selected: false, id: 2 },
+      { name: 'Zero Valid', selected: false, id: 3 },
+
+    ];
+    // this.searchOthers = ["Remove Show All", "Deleted Invoice Show Regular", "Select Recuring Only", "	Select Previous Amt Show", "Don't Select DID Invoice", "	Revenue Type Wise Show"];
+    this.searchOthers = ["Select Recuring Only", "Don't Select DID Invoice", "	Revenue Type Wise Show"];
+
     this.processPaymentForm = new FormGroup({
       'invoiceID': new FormControl(null),
       'toal': new FormControl(null),
@@ -261,6 +298,18 @@ export class InvoiceComponent implements OnInit {
       'paymenttype': new FormControl(null),
       'note': new FormControl(null),
       'paymentDetails': new FormControl(null),
+
+    });
+    this.searchInvoiceForm = new FormGroup({
+      'search_billerName': new FormControl(null),
+      'company_Name': new FormControl(null),
+      'years': new FormControl(null),
+      'InvType': new FormControl(null),
+      'others': new FormControl(null),
+      'recurring_only': new FormControl(null),
+      'dont_select_did_invoice': new FormControl(null),
+      'RevenueTypeWiseShow': new FormControl(null),
+      'revenueTypewiseCBKshow': new FormControl(null)
 
     });
     this.InvoiceSendingMethodForm = new FormGroup({
@@ -299,8 +348,9 @@ export class InvoiceComponent implements OnInit {
     this.setInvoiceType = new FormGroup({
       'setInvoice': new FormControl(null)
     });
-    this.RevenueDetailsForm = new FormGroup({
+    this.RevenueDetails1Form = new FormGroup({
       'revenue': new FormControl(null),
+      'Revenuestate': new FormControl(null)
 
     });
     this.DeliveryOrderForm = new FormGroup({
@@ -457,6 +507,111 @@ export class InvoiceComponent implements OnInit {
     this.CBV_PdfShow = event.target.checked;
 
   }
+  recurring_onlyCHK(event: any) {
+    this.CBV_recurring_only = event.target.checked;
+
+  }
+  dont_select_did_invoiceCHK(event: any) {
+    this.CBV_dont_select_did_invoice = event.target.checked;
+
+  }
+  RevenueTypeWiseShowCHK(event: any) {
+    this.CBV_RevenueTypeWiseShow = event.target.checked;
+    console.log(" this.CBV_RevenueTypeWiseShow",  this.CBV_RevenueTypeWiseShow)
+  }
+  handleChange_RevenueTypeWiseShow(event: any){
+    this.revenueTypeWiseDropDownValue = event.target.value;
+    console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
+ 
+  }
+  selectEventCustomer(item: any) {
+    console.log(item)
+    this.searchResult_CustomerID = item.customerId;
+    this.searchResult_CustomerName = item.customerName;
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+
+  }
+  searchCustomerData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/customer_name_search";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "customer_name_search";
+    api_Search_req.user_id = this.user_ids;
+    api_Search_req.customerName = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_status response", response);
+
+      this.searchResult = response.customer_names;
+      console.log("vignesh-advanced search result", this.searchResult);
+      if (response.status = true) {
+      }
+    });
+  }
+  onFocusedCustomer(e: any) {
+    // do something when input is focused
+  }
+  searchBillerNameCHK(data: any, event: any) {
+    this.searchBILLERID = data;
+    console.log("this.searchBILLERID", this.searchBILLERID);
+    this.CBV_BillerName_All = event.target.checked;
+    if (this.CBV_BillerName_All) {
+
+      this.edit_array_SearchBiller_Checkbox.push(data);
+      this.edit_array_SearchBiller_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+    }
+    else {
+      const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_SearchBiller_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+
+    }
+
+  }
+  yearsCHK(data: any, event: any) {
+    this.CBV_Years_All = event.target.checked;
+    if (this.CBV_Years_All) {
+
+      this.edit_array_Years_Checkbox.push(data);
+      this.edit_array_Years_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
+    }
+    else {
+      const index = this.edit_array_Years_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_Years_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+
+    }
+
+  }
+  SearchOtherCheckAllCHK(data: any, event: any) {
+    this.CBV_others_All = event.target.checked;
+    if (this.CBV_others_All) {
+
+      this.edit_array_others_Checkbox.push(data);
+      this.edit_array_others_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_others_Checkbox);
+    }
+    else {
+      const index = this.edit_array_others_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_others_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_others_Checkbox)
+
+    }
+
+  }
   addAddress(): void {
     this.addresses = this.addressForm.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
@@ -579,6 +734,13 @@ export class InvoiceComponent implements OnInit {
     }
   }
 
+  dynamicChange(event: any) {
+    alert("hi")
+    console.log("event", event)
+
+    this.invType_Search = event.target.value;
+    console.log("invoice type search", this.invType_Search);
+  }
 
   getInvoice(data: any) {
     var list_data = this.listDataInfo(data);
@@ -593,6 +755,15 @@ export class InvoiceComponent implements OnInit {
     api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
+    api_quotationList.search_txt = this.searchResult_CustomerName;
+    api_quotationList.years = this.edit_array_Years_Checkbox;
+    api_quotationList.invoiceType = this.invType_Search;
+
+    api_quotationList.recurring_only = this.CBV_recurring_only;
+    api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
+    api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
+    api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+
     api_quotationList.current_page = "";
 
     api_req.element_data = api_quotationList;
@@ -613,9 +784,9 @@ export class InvoiceComponent implements OnInit {
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
         this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
         this.revenue_color = response.proforma_details[0].revenue_color;
-        this.share_access_state= response.proforma_details[0].share_access_state;
-        this.postal_send_color= response.proforma_details[0].postal_send_color;
-        this.post_send_status= response.proforma_details[0].post_send_status;
+        this.share_access_state = response.proforma_details[0].share_access_state;
+        this.postal_send_color = response.proforma_details[0].postal_send_color;
+        this.post_send_status = response.proforma_details[0].post_send_status;
         this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
@@ -652,13 +823,16 @@ export class InvoiceComponent implements OnInit {
         this.invoicePermissionList_set_terms_condition = response.invoice_permission_arr.set_terms_condition;
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
-
+        this.revenueTypeList = response.revenue_list;
         this.invoicePermissionList_inv_to_did
         this.invoicePermissionList_set_actual_cost
 
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        
+
+        $("#searchInvoiceFormId").modal("hide");
       }
       else {
         Swal.fire({
@@ -693,6 +867,9 @@ export class InvoiceComponent implements OnInit {
         e_editBillID: editbillID,
       }
     });
+  }
+  clearSearch() {
+
   }
   invoiceSharPersonEdit(Id: any) {
     this.getInvoice({});
@@ -804,13 +981,13 @@ export class InvoiceComponent implements OnInit {
 
             Swal.close();
             iziToast.success({
-              message: "Proforma Invoice Deleted Successfully",
+              message: "Invoice Deleted Successfully",
               position: 'topRight'
             });
           } else {
             Swal.close();
             iziToast.warning({
-              message: "Proforma Invoice Delete Failed",
+              message: "Invoice Delete Failed",
               position: 'topRight'
             });
           }
@@ -1770,7 +1947,7 @@ export class InvoiceComponent implements OnInit {
   }
   RecurringEdit(id: any) {
 
-   
+
     this.spinner.show();
     this.recurring_BillerID = id;
     this.getInvoice({});
@@ -1965,14 +2142,17 @@ export class InvoiceComponent implements OnInit {
     api_reqInvRe.billId = id;
     api_req.element_data = api_reqInvRe;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log(response)
       if (response.status == true) {
+        // alert(response.bill_details[0].revenue_type_id)
         this.RevenuebillDetails = response.bill_details;
-        this.revenueTypeList = response.revenue_list;
+        // this.revenueTypeList = response.revenue_list;
+        
         this.revenueChildListDetails = response.revenue_child_details;
         this.billChildid_revenueChildListDetails = response.revenue_child_details[0].billChildid;
-        this.RevenueDetailsForm.patchValue({
-          'revenue': response.bill_details.revenue_type_id,
-          'Revenuestate': response.bill_details.revenue_individual_state,
+        this.RevenueDetails1Form.patchValue({
+          'revenue': response.bill_details[0].revenue_type_id,
+          // 'Revenuestate': response.bill_details.revenue_individual_state,
         })
         const formArray = new FormArray([]);
         for (let index = 0; index < response.revenue_child_details.length; index++) {
@@ -2022,12 +2202,13 @@ export class InvoiceComponent implements OnInit {
     api_reqInvReUPD.user_id = localStorage.getItem('erp_c4c_user_id');
     api_reqInvReUPD.billId = this.billId_invoiceRevenue;
     // api_reqInvReUPD.billChildid = this.billChildid_revenueChildListDetails;
-    api_reqInvReUPD.revenue_type_id = this.RevenueDetailsForm.value.revenue;
+    api_reqInvReUPD.revenue_type_id = this.RevenueDetails1Form.value.revenue;
     api_reqInvReUPD.revenue_individual_state = this.CBV_RevenueState;
     api_reqInvReUPD.values = this.revenueaddressForm.value.revenueaddresses;
 
     api_req.element_data = api_reqInvReUPD;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+     
       if (response.status == true) {
 
         iziToast.success({

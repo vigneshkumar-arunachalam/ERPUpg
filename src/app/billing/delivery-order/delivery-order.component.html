@@ -18,9 +18,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="header">
-                        <h3 style="text-align: center;">List of Records</h3>
-                    </div>
+                 
                     <div class="card-body">
                         <div class="userDatatable global-shadow border-0 bg-white w-100">
                             <div class="table-responsive">
@@ -60,12 +58,13 @@
                                           </span>
                                         </td> -->
                                         <td>
-                                          {{ list.delivery_date}}
+                                         
                                           <span><button type="button" class="buttonClass"
                                               [ngStyle]="{backgroundColor: list.colorCodes}">
                                               {{list.billerCode}}
                                             </button>
                                           </span>
+                                          {{ list.delivery_date}}
                                         </td>
                                         <td>
                                             <span> {{ list.customerName }} </span>
@@ -223,7 +222,7 @@
                   <label for="invoice_number" class="col-lg-2 col-form-label"><span>Invoice Number</span> :</label>
                   <div class="col-lg-10">
                     <select name="templat" id="invoice_number" class="form-control" formControlName="invoice_number">
-                      <option [ngValue]="null" selected disabled>Select From</option>
+                      <option [ngValue]="null" selected >Select From</option>
                       <option *ngFor="let list of invoice_numberList" value="{{ list.invoice_number_id }}">
                         {{ list.invoice_number }}
                       </option>
@@ -237,7 +236,7 @@
                   <label for="emailFrom" class="col-lg-2 col-form-label"><span>Warranty</span> :</label>
                   <div class="col-lg-10">
                     <select name="warranty_type_cbo" id="warranty_type_cbo" class="form-control" formControlName="warranty_type_cbo">
-                      <option [ngValue]="null" selected disabled>Select From</option>
+                      <option [ngValue]="null" selected >Select From</option>
                       <option *ngFor="let list of warrantyList" value="{{ list.warranty_id }}">
                         {{ list.warranty }}
                       </option>

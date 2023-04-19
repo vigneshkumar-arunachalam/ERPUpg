@@ -767,6 +767,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.search_txt = this.searchResult_CustomerName;
     api_quotationList.search_biller_str=this.edit_array_SearchBiller_Checkbox;
+   
     api_quotationList.current_page = "";
 
     api_req.element_data = api_quotationList;

@@ -10,7 +10,7 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="cmp_name" class="form-control" formControlName="companyName"
                                 (change)="getProformaBillerDetails();getCustomerInvoiceDetails();TaxDropdown();invoiceAddSignature()">
-                                <option [ngValue]="null" selected disabled>Select Company Name</option>
+                                <option [ngValue]="null" selected >Select Company Name</option>
                                 <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                     {{comp_name.billerName}}
                                 </option>
@@ -350,7 +350,7 @@
                         <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==1)">
                             <select name="enqFormValue" id="sales_r" class="form-control" formControlName="salesRep">
-                                <option [ngValue]="null" selected disabled>Sales Rep</option>
+                                <option [ngValue]="null" selected >Sales Rep</option>
                                 <option *ngFor="let rep of SalesRepList" value="{{rep.userId}}">
                                     {{rep.firstName}}
                                 </option>
@@ -369,7 +369,7 @@
                         <label for="Ship_By" class="col-lg-12 col-form-label">Ship By</label>
                         <div class="col-lg-12">
                             <select id="Ship_By" class="form-control" formControlName="ShipBy">
-                                <option [ngValue]="null" selected disabled>Default Ship By</option>
+                                <option [ngValue]="null" selected >Default Ship By</option>
                                 <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
                                     {{ship.ship_name}}
                                 </option>
@@ -403,7 +403,7 @@
                         <div class="col-lg-12">
                             <select id="curren" class="form-control" formControlName="Currency"
                                 (change)="getCurrencyValues($event)">
-                                <option [ngValue]="null" selected disabled>Select Currency</option>
+                                <option [ngValue]="null" selected >Select Currency</option>
                                 <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
                                     {{comp_name.currency_name}}
                                 </option>
@@ -426,7 +426,7 @@
                         <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
                         <div class="col-lg-12">
                             <select id="Payment" class="form-control" formControlName="PaymentVia">
-                                <option [ngValue]="null" selected disabled>Select Payment Via</option>
+                                <option [ngValue]="null" selected >Select Payment Via</option>
                                 <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
                                     {{payment.paymentvia_name}}
                                 </option>
@@ -760,7 +760,7 @@
                                 <select name="billerID" id="billerIDs" class="form-control"
                                     aria-label="Default select example" formControlName="section3_gst_dropdown"
                                     (change)="getTaxCals()">
-                                    <option [ngValue]="null" selected disabled>Select Tax</option>
+                                    <option [ngValue]="null" selected >Select Tax</option>
 
 
 

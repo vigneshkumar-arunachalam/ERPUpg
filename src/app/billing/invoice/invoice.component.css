@@ -1,4 +1,4 @@
-.userDatatable table td{padding:4px 0px 4px!important;}
+/* .userDatatable table td{padding:4px 0px 4px!important;} */
 .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
 /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
 .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
@@ -434,6 +434,9 @@ label.col-lg-2.col-form-label{text-align: right;}
 #LicenseDetailsFormId .modal-dialog{
   max-width: 95%;
 }
+#searchInvoiceFormId .modal-dialog{
+  max-width: 95%;
+}
 
 #setActualCostId .userDatatable table thead th:first-child{
   width: 50px;
@@ -452,4 +455,14 @@ label.col-lg-2.col-form-label{text-align: right;}
 }
 #setActualCostId .userDatatable table tr td:first-child span{
   width: 50px;
+}
+.buttonClass{border:none}
+.userDatatable table td{padding:10px 4px;}
+.userDatatable table td:first-child{text-align: center;}
+.userDatatable table td:first-child button.buttonClass{
+ border-radius: 25px;
+ padding: 2px 10px;
+}
+.border-section td{
+  height: 1px;border-bottom:2px solid #00C;padding:0px 0px!important;
 }

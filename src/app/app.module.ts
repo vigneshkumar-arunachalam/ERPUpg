@@ -72,6 +72,7 @@ import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didp
 import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
 import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component'; 
 import { EditDoComponent } from './billing/delivery-order/edit-do/edit-do.component'; 
+import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component'; 
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,6 +124,7 @@ import { EditDoComponent } from './billing/delivery-order/edit-do/edit-do.compon
      EditDidpiComponent,
      DeliveryOrderComponent,
      EditDoComponent,
+     AddDoComponent
      
     
   ],

@@ -46,10 +46,14 @@ import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-d
 
 import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component'; 
 import { EditDoComponent } from './billing/delivery-order/edit-do/edit-do.component'; 
+import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component'; 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'addDo', component: AddDoComponent
   },
   {
     path: 'editDo', component: EditDoComponent
