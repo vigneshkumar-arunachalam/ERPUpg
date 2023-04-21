@@ -67,7 +67,7 @@
                   <tbody *ngFor="let list of PI_list; let i = index">
                     <tr *ngIf="(list.biller_color_state=='1')">
                       <td class="PIlistlabel" colspan="10"
-                        [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'4px!important'}">
+                        [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
                         {{list.billerCode}}</td>
                     </tr>
                     <tr *ngIf="(list.billerId)"

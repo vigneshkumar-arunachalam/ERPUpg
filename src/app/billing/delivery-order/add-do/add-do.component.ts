@@ -16,12 +16,14 @@ export class AddDoComponent implements OnInit {
 
   public editDo_section1 :FormGroup;
   public editDo_section2 :FormGroup;
-
+  public editDo_section3 :FormGroup;
   // company name list
 
   companyNameList:any;
 
   editQuotationID: any;
+  //get add quotation
+  billerList:any;
   // select footer 
 
   FooterDetails:any;
@@ -65,6 +67,13 @@ export class AddDoComponent implements OnInit {
   itre = 0;
   test: boolean[] = [];
 
+  //add pop up query params value
+  
+customerID_Add_DO:any;
+customerName_Add_DO:any;
+invoice_Add_DO:any;
+warranty_Add_DO:any;
+
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) 
   {
     this.editDo_section2 = this.fb.group({
@@ -77,7 +86,23 @@ export class AddDoComponent implements OnInit {
 
     this.loadADD();
     this.editDo();
+    this.Get_add_delivery_order();
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);
+      this.customerID_Add_DO = params['customerID_P'];
+      this.customerName_Add_DO = params['customerName_P'];
+      this.invoice_Add_DO = params['invoice_p'];
+      this.warranty_Add_DO = params['warranty_p'];
 
+      console.log("this.customerID_Add_DO", this.customerID_Add_DO);
+      console.log(" this.customerName_Add_DO",  this.customerName_Add_DO);
+      console.log(" this.invoice_Add_DO",  this.invoice_Add_DO);
+      console.log(" this.warranty_Add_DO",  this.warranty_Add_DO);
+
+  
+    }
+    );
     this.bills_logo_id_radio = [
       { name: 'IT Care', selected: false, id: 1 },
       { name: 'Calncall', selected: false, id: 2 },
@@ -107,7 +132,11 @@ export class AddDoComponent implements OnInit {
       'warranty_id' : new FormControl(null),
       'description_details_show_state' : new FormControl(null),
       'description_details' : new FormControl(null),
-    })
+    });
+    this.editDo_section3 = new FormGroup({
+      'remarks' : new FormControl(null),
+   
+    });
 
   }
 
@@ -232,7 +261,46 @@ console.log( $('#description_details').val());
 
   }
   
+  Get_add_delivery_order(){
+   
+   
+    let api_req: any = new Object();
+    let quot_getDeliOrder_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "deliveryorder/add_delivery_order";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    quot_getDeliOrder_req.action = "add_delivery_order";
 
+    quot_getDeliOrder_req.user_id = localStorage.getItem('erp_c4c_user_id');
+ 
+    api_req.element_data = quot_getDeliOrder_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+
+        this.billerList = response.biller_details;
+        
+
+      }
+      else {
+        $("#showPerissionFormId").modal("hide");
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+
+
+  }
 
 
   // SELECT FOOTER

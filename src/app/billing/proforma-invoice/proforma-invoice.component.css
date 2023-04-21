@@ -1,4 +1,4 @@
-.userDatatable table td{padding:4px 0px 4px!important;}
+.userDatatable table td{padding:8px 4px}
 .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
 /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
 .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
@@ -289,3 +289,14 @@ border-radius: 50%;
 label.col-lg-2.col-form-label{text-align: right;}
 
 
+/* .userDatatable th:nth-child(4), .userDatatable table tr td:nth-child(4) span,
+.userDatatable th:nth-child(6), .userDatatable table tr td:nth-child(6) span,
+.userDatatable th:nth-child(7), .userDatatable table tr td:nth-child(7) span,
+.userDatatable th:nth-child(8), .userDatatable table tr td:nth-child(8) span{width: 120px;} */
+
+.userDatatable th:nth-child(3), 
+.userDatatable table tr td:nth-child(3) span{
+  width: 270px;
+  white-space: normal;
+}
+.userDatatable th:nth-child(2), .userDatatable table tr td:nth-child(2) span{width: 120px;}

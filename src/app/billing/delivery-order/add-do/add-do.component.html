@@ -48,9 +48,9 @@
                         <div class="col-lg-9">
                             <select name="enqFormValue" id="cmp_name" class="form-control"
                                 formControlName="companyName">
-                                 <!-- (change)="getCustomerInvoiceDetails($event)" (change)="getProformaBillerDetails()" -->
+                                <!-- (change)="getCustomerInvoiceDetails($event)" (change)="getProformaBillerDetails()" -->
 
-                                <option [ngValue]="null" selected disabled>Select Company Name</option>
+                                <option [ngValue]="null" selected>Select Company Name</option>
                                 <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                     {{comp_name.billerName}}
                                 </option>
@@ -61,15 +61,15 @@
 
                 <div class="col-lg-6">
                     <div class="form-group row">
-                        <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span style="color: red;font-size:larger;"> *</span></label>
+                        <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12" style="display: flex;">
                             <div class="form-check" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
-                                <input class="form-check-input" type="radio" 
-                                    formControlName="e_selectFooter" id="footer_{{display.pdf_footer_id}}"
-                                    value="{{display.pdf_footer_id}}" (change)="handleChange($event)"
-                                    style="margin-top: revert;" />
+                                <input class="form-check-input" type="radio" formControlName="e_selectFooter"
+                                    id="footer_{{display.pdf_footer_id}}" value="{{display.pdf_footer_id}}"
+                                    (change)="handleChange($event)" style="margin-top: revert;" />
                                 {{display.footer_name}}
-                            
+
                             </div>
                             <div class="alert alert-danger alertdangerCustomCSS1"
                                 *ngIf="editDo_section1.controls['e_selectFooter'].invalid && editDo_section1.controls['e_selectFooter'].touched">
@@ -117,18 +117,18 @@
                         <div class="col-lg-9">
                             <!-- <input type="text" id="customer_name" class="form-control" formControlName="customer_name"> -->
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
-                            formControlName="customer_name" (selected)='searchCustomer_selectDropdownData($event)'
-                            (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-          
+                                formControlName="customer_name" (selected)='searchCustomer_selectDropdownData($event)'
+                                (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+
                             </ng-autocomplete>
                             <ng-template #itemTemplateCustomer let-item>
-                              <a [innerHTML]="item.customerName"></a>
-                          </ng-template>
-          
-                          <ng-template #notFoundTemplate let-notFound>
-                              <div [innerHTML]="notFound"></div>
-                          </ng-template>
+                                <a [innerHTML]="item.customerName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
                         </div>
                     </div>
                 </div>
@@ -227,26 +227,41 @@
                         <table class="add-contact-table-section">
                             <thead class="col-lg-6">
                                 <tr class="userDatatable-header" style="display: flex;">
-                                  
+
                                     <th> <span class="userDatatable-title">Product Name</span>
                                     </th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
                                     <th><span class="userDatatable-title">Quantity</span></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    <th></th><th></th>
-                                    
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+
                                 </tr>
                             </thead>
                             <tbody style="border-bottom: 1px solid #ddd;" formArrayName="addresses"
@@ -255,20 +270,18 @@
                                     <td colspan="12">
                                         <table>
                                             <tr class="marginSpace">
-                                                <td >
+                                                <td>
                                                     <div class="userDatatable-content">
                                                         <input type="text" class="form-control mt-2 mb-2"
-                                                            formControlName="prodName"
-                                                            id="prodName_{{i}}" />
+                                                            formControlName="prodName" id="prodName_{{i}}" />
                                                     </div>
                                                 </td>
-                                            
-                                                
+
+
                                                 <td>
-                                                    <div class="userDatatable-content" >
+                                                    <div class="userDatatable-content">
                                                         <input type="number" class="form-control"
-                                                            formControlName="quantity" id="quantity_{{i}}"
-                                                            />
+                                                            formControlName="quantity" id="quantity_{{i}}" />
                                                     </div>
                                                 </td>
 
@@ -282,18 +295,17 @@
 
                                             </tr>
 
-                                                <tr>
-                                                   
+                                            <tr>
+
                                                 <td colspan="2">
                                                     <div class="userDatatable-content">
                                                         <textarea
                                                             style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
                                                             class="form-control mt-2 mb-2" row="2"
-                                                            formControlName="desc"
-                                                            id="desc_{{i}}"></textarea>
+                                                            formControlName="desc" id="desc_{{i}}"></textarea>
                                                     </div>
                                                 </td>
-                                            
+
                                             </tr>
                                         </table>
                                     </td>
@@ -311,21 +323,26 @@
 
                 </div>
 
-                <div class="userDatatable-content">
-                    <label for="remark" style="float: right;"> remarks </label>
-                    <textarea
-                        style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
-                        class="form-control mt-2 mb-2" row="2"
-                        formControlName="remarks"
-                        id="remarks"></textarea>
-                </div>
-                <div id="signature_message_id" style="float: right;">
-                    <label style="font-style: italic;color:#009688">
-                        (Signature not available. Ask your administrator to upload your
-                        signature if required)
-                    </label>
 
-                </div>
+
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="editDo_section3">
+        <div class="col-12">
+
+
+            <div class="userDatatable-content">
+
+                <label for="remark" style="float: right;"> remarks </label>
+                <textarea style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                    class="form-control mt-2 mb-2" row="2" formControlName="remarks" id="remarks"></textarea>
+            </div>
+            <div id="signature_message_id" style="float: right;">
+                <label style="font-style: italic;color:#009688">
+                    (Signature not available. Ask your administrator to upload your
+                    signature if required)
+                </label>
 
             </div>
         </div>

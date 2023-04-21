@@ -78,7 +78,7 @@
                       <td><span>{{ list.netPayment}}</span></td>
                       <td>
                         <span>{{ list.currency_name}}</span>
-                        <span><button type="button" class="buttonClass" style="width: 40px;border-radius: 3px;"
+                        <span><button type="button" class="buttonClass" style="width: auto;border-radius: 3px;"
                           [ngStyle]="{'backgroundColor': 'Khaki'}">{{
                           list.conversionRate}}</button></span>
                       
@@ -967,7 +967,7 @@
               <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
               <div class="col-lg-10">
                 <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
-                  <option [ngValue]="null" selected >Select From</option>
+                  <option [ngValue]="null" selected disabled >Select From</option>
                   <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                     {{ from.from_email }}
                   </option>
@@ -975,7 +975,7 @@
                 <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
                   *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
                   Please
-                  enter To Address
+                  enter From Address
                 </div>
               </div>
             </div>
@@ -1044,7 +1044,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
-                    (change)="CBF_TemplateSelection($event)">
+                    (change)="CBF_TemplateSelection($event)" id="temp">
                   <label class="form-check-label" for="Template Selection"> Template Selection</label>
                 </div>
                 <div class="form-check form-check-inline">
@@ -1438,7 +1438,7 @@
         <form [formGroup]="RevenueDetails1Form">
           <div class="row">
             <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4 mb-2">
+              <div class="col-lg-4 mt-2" style="padding-left: 150px;">
                 <label>Select Revenue </label>
               </div>
               <div class="col-lg-4">
@@ -2042,13 +2042,13 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Actual Price Update
+        <h2 class=" col-12 modal-title text-center" id="invoiceAttachModalLongTitle">Actual Price Update
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body quotationsharedCSS">
         <form [formGroup]="setActualCostForm">
 
 
@@ -2237,7 +2237,7 @@
 <!-----------------Modal Pop Up (BEGIN) Licence Details ------------------>
 <div class="modal fade" id="LicenseDetailsFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="col-12 modal-title text-center">Licence Details
@@ -2246,7 +2246,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body quotationsharedCSS">
         <!-- <form [formGroup]="LicenseDetailsForm"> -->
         <div class="card-body">
           <div class="userDatatable global-shadow border-0 bg-white w-100">
@@ -2389,13 +2389,13 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcontractmastercss">
       <div class="modal-header">
-        <h2 class="modal-title" id="addModalLongTitle">Enquiry From Details</h2>
+        <h2 class="col-12 modal-title text-center" id="addModalLongTitle">Enquiry From Details</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2> -->
         <form [formGroup]="addNewQuotationPopUpForm" id="ngForm">
           <div class="row">
             <div class="col-lg-6">
@@ -2466,7 +2466,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="submit" class="btn btn-primary" form="ngForm" (click)=" invoicetoQuotationSave()">Go>></button>
+        <button type="submit" class="btn btn-primary" form="ngForm" (click)=" invoicetoQuotationSave()">Inv->Quot</button>
 
 
         <button type="button" class="btn btn-dark" data-dismiss="modal">

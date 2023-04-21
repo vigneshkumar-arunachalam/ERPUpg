@@ -1258,6 +1258,7 @@ this.spinner.show();
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
+    this.finalDiscountCalc();
     console.log('grs_amt' + grs_amt);
     console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);

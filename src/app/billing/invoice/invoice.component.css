@@ -466,3 +466,31 @@ label.col-lg-2.col-form-label{text-align: right;}
 .border-section td{
   height: 1px;border-bottom:2px solid #00C;padding:0px 0px!important;
 }
+
+#InvoiceRevenueFormId tbody:nth-child(odd) {
+  background: rgb(239, 241, 238);
+}
+#InvoiceRevenueFormId tbody:nth-child(even) {
+  background: rgb(255, 255, 228);
+}
+#InvoiceRevenueFormId tbody  tr:nth-child(odd) {
+   background: transparent    
+}
+#InvoiceRevenueFormId .userDatatable table td:first-child span{
+  display: inline-block;
+  width: 60px;
+}
+#InvoiceRevenueFormId input  {
+  border-color: #ddd;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px 10px;
+}
+#InvoiceRevenueFormId .form-control {
+  border: 1px solid #e1e1e1;
+  background: #fff;
+}
+#InvoiceRevenueFormId input:read-only {
+  background-color: #ffefef;
+  cursor: not-allowed;
+}

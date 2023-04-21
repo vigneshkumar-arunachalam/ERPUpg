@@ -232,7 +232,9 @@ border-radius: 50%;
     color: black!important;
 }
 
-
+#searchDeliveryOrderFormId .modal-dialog {
+  max-width: 60%;
+}
 #searchPIFormId .modal-dialog {
   max-width: 95%;
 }
@@ -289,3 +291,17 @@ border-radius: 50%;
 label.col-lg-2.col-form-label{text-align: right;}
 
 
+#delivery-order-section .userDatatable table td, #delivery-order-section .userDatatable table th {
+  padding: 4px 0px 4px!important;
+  white-space: normal;
+  width: 25%;
+}
+
+#delivery-order-section .userDatatable table td:nth-child(5), #delivery-order-section .userDatatable table th:nth-child(5),
+#delivery-order-section .userDatatable table td:last-child, #delivery-order-section .userDatatable table th:last-child {
+  width: 12%;
+}
+#delivery-order-section .userDatatable table td:nth-child(2), #delivery-order-section .userDatatable table th:nth-child(2),
+#delivery-order-section .userDatatable table td:first-child, #delivery-order-section .userDatatable table th:first-child {
+  width: 16%;
+}

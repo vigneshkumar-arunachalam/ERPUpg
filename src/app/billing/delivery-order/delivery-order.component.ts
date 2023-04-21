@@ -16,28 +16,40 @@ export class DeliveryOrderComponent implements OnInit {
 
   // List 
 
-  Delivery_Order:any;
+  Delivery_Order: any;
 
-  // add delivery order
+  // add delivery order-pop up
 
-  public addDeliveryOrderForm:FormGroup;
+  public addDeliveryOrderForm: FormGroup;
 
 
-  invoice_numberList:any;
-  warrantyList:any;
+  invoice_numberList: any;
+  warrantyList: any;
+  searchResult_popUp: any;
+  searchResult_PopUp_CustomerID: any;
+  searchResult_PopUp_CustomerName: any;
+  InvoiceList_PopUp: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 200;
+  pageLimit = 50;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
 
   // auto complete search
   searchResult_CustomerName: any;
-  searchResult:any;
+  searchResult: any;
   customer_ID: any;
   customer_NAME: any;
   customerName_Data: any;
-
+  // advance search
+  searchDeliveryOrderForm: FormGroup;
+  biller_list: any;
+  searchBILLERID: any;
+  CBV_BillerName_All: any;
+  edit_array_SearchBiller_Checkbox: any = [];
+  searchResult1_CustomerID: any;
+  searchResult1_CustomerName: any;
+  AdvanceSearchResult: any;
   // EMAIL 
   emailForm: FormGroup;
   EmailQuotationID: any;
@@ -61,21 +73,25 @@ export class DeliveryOrderComponent implements OnInit {
   CBV_PDFLink: any;
   CBV_PaymentLink: any;
 
-   //email-checkbox
-   email_array_emailCC_Checkbox: any = [];
-   groupSelect_emailCCId: any;
-   email_checkbox_value: any;
-   checkbox_value: any;
+  //email-checkbox
+  email_array_emailCC_Checkbox: any = [];
+  groupSelect_emailCCId: any;
+  email_checkbox_value: any;
+  checkbox_value: any;
+  //popup to add DI
+  warrantyLisT: any;
+  invoiceValue_PopUp: any;
+  WarrantyValue_PopUp: any;
 
-  constructor(private serverService: ServerService, private router: Router,private spinner: NgxSpinnerService) { }
-
+  constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
+  keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.DOList({});
-    
+    this.warrantyLisT = [{ "id": "no", "name": "No Warranty" }, { "id": "one", "name": "One Year Warranty" }, { "id": "two", "name": "Two Year Warranty" }];
 
 
 
-    this.addDeliveryOrderForm =new FormGroup({
+    this.addDeliveryOrderForm = new FormGroup({
       'customer_name': new FormControl(null),
       'invoice_number': new FormControl(null),
       'warranty_type_cbo': new FormControl(null),
@@ -92,18 +108,53 @@ export class DeliveryOrderComponent implements OnInit {
       'email_cc': new FormControl(null, Validators.required),
 
     });
+    this.searchDeliveryOrderForm = new FormGroup({
+      'search_billerName': new FormControl(null),
+      'company_Name': new FormControl(null),
+    });
   }
 
+  clearSearch() {
 
 
-  DOList(data:any){
+  }
+  searchBillerNameCHK(data: any, event: any) {
+    this.searchBILLERID = data;
+    console.log("this.searchBILLERID", this.searchBILLERID);
+    this.CBV_BillerName_All = event.target.checked;
+    if (this.CBV_BillerName_All) {
 
-    
+      this.edit_array_SearchBiller_Checkbox.push(data);
+      this.edit_array_SearchBiller_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+    }
+    else {
+      const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_SearchBiller_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+
+    }
+
+  }
+  selectEventCustomer(item: any) {
+    console.log(item)
+    this.searchResult1_CustomerID = item.customerId;
+    this.searchResult1_CustomerName = item.customerName;
+    console.log("AutoComplete-customer ID", this.searchResult1_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult1_CustomerName)
+
+  }
+
+  DOList(data: any) {
+
+
     this.spinner.show();
     var list_data = this.listDataInfo(data);
 
-    let api_req: any =new Object();
-    let api_deliveryOrder : any = new Object();
+    let api_req: any = new Object();
+    let api_deliveryOrder: any = new Object();
     api_req.moduleType = "deliveryorder";
     api_req.api_url = "deliveryorder/delivery_order_list"
     api_req.api_type = "web";
@@ -113,17 +164,22 @@ export class DeliveryOrderComponent implements OnInit {
     api_deliveryOrder.off_set = list_data.offset;
     api_deliveryOrder.limit_val = list_data.limit;
     api_deliveryOrder.search_txt = this.searchResult_CustomerName;
+    api_deliveryOrder.billerID = this.edit_array_SearchBiller_Checkbox;
     api_deliveryOrder.current_page = "";
 
     api_req.element_data = api_deliveryOrder;
 
-    this.serverService.sendServer(api_req).subscribe((response : any) => {
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-    
-      if (response){
+
+      if (response) {
+        this.biller_list = response.biller_details;
         this.Delivery_Order = response.dc_details;
-        console.log("deliver order = " +  this.Delivery_Order );
-        
+     
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        $('#searchDeliveryOrderFormId').modal("hide");
+        this.searchDeliveryOrderForm.reset();
+
       }
     });
   }
@@ -159,7 +215,7 @@ export class DeliveryOrderComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       console.log("customer_address_details---response", response)
-        if (response.status == true) {
+      if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
 
@@ -170,17 +226,17 @@ export class DeliveryOrderComponent implements OnInit {
           address_3 = response.customer_details[0].city;
         }
         if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;        
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;
         } else {
           address_3 = response.customer_details[0].state;
         }
         if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;      
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;
         } else {
           address_3 = response.customer_details[0].country;
         }
 
-        
+
 
 
         if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
@@ -209,24 +265,24 @@ export class DeliveryOrderComponent implements OnInit {
           ship_address_str3 = response.customer_details[0].city;
         }
         if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
-        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;        
-        }else {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;
+        } else {
           ship_address_str3 = response.customer_details[0].ship_state;
         }
         if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
-        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;      
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;
         } else {
           ship_address_str3 = response.customer_details[0].ship_country;
         }
 
-        if(response.customer_details[0].ship_to==''){
-          ship_address_str1= response.customer_details[0].customerAddress1;
-          ship_address_str2= response.customer_details[0].customerAddress2;
-          ship_address_str3= address_3;
+        if (response.customer_details[0].ship_to == '') {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str3 = address_3;
         }
 
 
@@ -261,6 +317,96 @@ export class DeliveryOrderComponent implements OnInit {
 
     });
   }
+  AdvanceSearchCustomerData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quot_customer_name";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "quot_customer_name";
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_Search_req.billerId = this.addDeliveryOrderForm.value.companyName;
+    api_Search_req.key_word = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_name response", response);
+      this.AdvanceSearchResult = response.customer_list;
+
+      if (response.status = true) {
+
+      }
+
+    });
+
+  }
+  searchCustomerData_popUp(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "deliveryorder/delivery_order_customername";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "delivery_order_customername";
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_Search_req.customerName = data;
+    api_req.element_data = api_Search_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("vignesh-customer_name response", response);
+      this.searchResult_popUp = response.customer_list;
+
+      if (response.status = true) {
+
+      }
+
+    });
+
+  }
+  get_InvoiceNumber_PopUp() {
+
+
+    let api_req: any = new Object();
+    let api_invPopUpDetails: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "deliveryorder/get_customer_invoice";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invPopUpDetails.action = "get_customer_invoice";
+    api_invPopUpDetails.customerId = this.searchResult_PopUp_CustomerID;
+    api_invPopUpDetails.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_invPopUpDetails;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.InvoiceList_PopUp = response.invoice_det;
+
+
+      } else {
+
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  searchCustomer_selectDropdownData_PopUp(item: any) {
+    console.log(item)
+    this.searchResult_PopUp_CustomerID = item.customerId;
+    this.searchResult_PopUp_CustomerName = item.customerName;
+    console.log("AutoComplete-customer ID", this.searchResult_PopUp_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_PopUp_CustomerName);
+    this.get_InvoiceNumber_PopUp();
+
+  }
 
   searchCustomerData(data: any) {
 
@@ -291,11 +437,11 @@ export class DeliveryOrderComponent implements OnInit {
     // do something when input is focused
   }
 
-  addDo(){
-    
+  addDo() {
+
   }
 
-  editDo(){
+  editDo() {
     this.router.navigate(['/editDo'])
   }
 
@@ -308,7 +454,14 @@ export class DeliveryOrderComponent implements OnInit {
     this.Select_To_Type_radiobox_Value = event.target.id;
     console.log(this.Select_To_Type_radiobox_Value);
   }
-
+  handle_invoice(event: any) {
+    this.invoiceValue_PopUp = event.target.value;
+    console.log("this.invoiceValue_PopUp",this.invoiceValue_PopUp);
+  }
+  handle_warranty(event: any) {
+    this.WarrantyValue_PopUp = event.target.value;
+    console.log("this.WarrantyValue_PopUp",this.WarrantyValue_PopUp);
+  }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
     console.log(this.CBV_PDFLink);
@@ -577,6 +730,20 @@ export class DeliveryOrderComponent implements OnInit {
       });
       console.log("final error", error);
     }
+  }
+
+  goAddDeliveryOrder() {
+
+  
+    this.searchResult_PopUp_CustomerID 
+    this.searchResult_PopUp_CustomerName 
+    this.invoiceValue_PopUp
+    this.WarrantyValue_PopUp
+
+
+    this.router.navigate(['/addDeliveryOrder'], { queryParams: { customerID_P: this.searchResult_PopUp_CustomerID , customerName_P: this.searchResult_PopUp_CustomerName, invoice_p: this.invoiceValue_PopUp, warranty_p: this.WarrantyValue_PopUp } });
+
+    $('#addDoFormId').modal('hide');
   }
 
 

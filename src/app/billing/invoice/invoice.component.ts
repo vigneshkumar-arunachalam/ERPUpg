@@ -1025,7 +1025,7 @@ export class InvoiceComponent implements OnInit {
           'InvoiceSendingInput': response.post_send_status
 
         })
-
+        this.getInvoice({});
 
       } else {
 
@@ -1034,6 +1034,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice Send to post details not Updated. Please try again",
           position: 'topRight'
         });
+        this.getInvoice({});
       }
     }),
       (error: any) => {
@@ -1259,6 +1260,8 @@ export class InvoiceComponent implements OnInit {
       };
   }
   getEmailDetails(id: any) {
+    $('temp').val('');
+    this.emailForm.reset();
     this.spinner.show();
     this.Email_BillId = id;
     let api_req: any = new Object();
@@ -1409,8 +1412,9 @@ export class InvoiceComponent implements OnInit {
         message: "Choose From Email Value",
         position: 'topRight'
       });
+      Swal.close();
       return false;
-
+     
     }
     api_email_req.toEmailId = this.emailTo;
     if (this.emailTo === null) {
@@ -1419,8 +1423,9 @@ export class InvoiceComponent implements OnInit {
         message: "Choose To Email Value",
         position: 'topRight'
       });
+      Swal.close();
       return false;
-
+      
     }
     // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.pdf_state = pdf_state;
@@ -1431,6 +1436,7 @@ export class InvoiceComponent implements OnInit {
         message: "Choose Subject",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -1441,6 +1447,7 @@ export class InvoiceComponent implements OnInit {
         message: "Choose Message",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }

@@ -53,10 +53,10 @@ const routes: Routes = [
     path: '', component: QuotationnewComponent
   },
   {
-    path: 'addDo', component: AddDoComponent
+    path: 'addDeliveryOrder', component: AddDoComponent
   },
   {
-    path: 'editDo', component: EditDoComponent
+    path: 'editDeliveryOrder', component: EditDoComponent
   },
   {
     path: 'deliveryorder', component: DeliveryOrderComponent

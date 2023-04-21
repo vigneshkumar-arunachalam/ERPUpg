@@ -1153,6 +1153,7 @@ export class EditInvoiceComponent implements OnInit {
       api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2,
       api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
       api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
+      
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
     api_updatePI_req.ship_by = this.addPI_section1.value.ShipBy;
