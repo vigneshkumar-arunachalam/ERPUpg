@@ -16,14 +16,15 @@ export class EditDoComponent implements OnInit {
 
   public editDo_section1 :FormGroup;
   public editDo_section2 :FormGroup;
+  public editDo_section3 :FormGroup;
 
   // company name list
 
   companyNameList:any;
-
+  editDeliveryID:any;
   editQuotationID: any;
   // select footer 
-
+  billerChangeID:any;
   FooterDetails:any;
   radioSelectFooterChecked: boolean = false;
   billerID: any;
@@ -76,8 +77,22 @@ export class EditDoComponent implements OnInit {
   ngOnInit(): void {
 
     this.loadADD();
-    this.editDo();
+ 
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);
 
+      this.editDeliveryID = params['e_editBillID'];
+
+
+
+      console.log("edit biller id", this.editDeliveryID);
+
+
+
+      this.editDo();
+    }
+    );
     this.bills_logo_id_radio = [
       { name: 'IT Care', selected: false, id: 1 },
       { name: 'Calncall', selected: false, id: 2 },
@@ -107,9 +122,14 @@ export class EditDoComponent implements OnInit {
       'warranty_id' : new FormControl(null),
       'description_details_show_state' : new FormControl(null),
       'description_details' : new FormControl(null),
+    });
+    
+    this.editDo_section3 = new FormGroup({
+      'remarks' : new FormControl(null),
     })
 
   }
+  
 
   handleChange_EXTRALogo(data: any, evt: any) {
 
@@ -522,41 +542,70 @@ console.log( $('#description_details').val());
 
   editDo(){
     let api_req: any = new Object();
-    let edit_Quotation_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/edit_quotation";
+    let edit_DO_req: any = new Object();
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/edit_delivery_order";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    edit_Quotation_req.action = "edit_quotation";
-    edit_Quotation_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    edit_Quotation_req.quotation_id = this.editQuotationID;
-    api_req.element_data = edit_Quotation_req;
+    edit_DO_req.action = "edit_delivery_order";
+    edit_DO_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    edit_DO_req.deliveryId = this.editDeliveryID;
+    api_req.element_data = edit_DO_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
-        // this.dynamicChange1(response.quotation_details[0].billerId);
+        // this.dynamicChange1(response.delivery_pararent_details[0].billerId);
 
 
         this.editDo_section1.patchValue({
 
-          'companyName': response.quotation_details[0].billerId,
-          'e_quotationNumber': response.quotation_details[0].quotation_no,
-          //       'e_selectFooter': response.quotation_details[0].pdf_footer_id,
-          'dcNo': response.quotation_details[0].quotation_date,
-          'dcDate': response.quotation_details[0].customer_id,
-          'customer_name': response.quotation_details[0].customerName,
-          'customerAddress1': response.quotation_details[0].customerAddress1,
-          'customerAddress2': response.quotation_details[0].customerAddress2,
-          'customerAddress3': response.quotation_details[0].customerAddress3,
-          'kind_Attention': response.quotation_details[0].kind_Attention,
-          'bills_logo_id': response.quotation_details[0].billGeneratedBy,
-          'warranty_id': response.quotation_details[0].billGeneratedBy,
-          'description_details_show_state': response.quotation_details[0].billGeneratedBy,
-          'description_details': response.quotation_details[0].billGeneratedBy,
+          'companyName': response.delivery_pararent_details[0].billerId,
+      
+          //       'e_selectFooter': response.delivery_pararent_details[0].pdf_footer_id,
+          'dcNo': response.delivery_pararent_details[0].delivery_no,
+          'dcDate': response.delivery_pararent_details[0].delivery_date,
+          'customer_name': response.delivery_pararent_details[0].customerName,
+          'customerAddress1': response.delivery_pararent_details[0].customerAddress1,
+          'customerAddress2': response.delivery_pararent_details[0].customerAddress2,
+          'customerAddress3': response.delivery_pararent_details[0].customerAddress3,
+          'kind_Attention': response.delivery_pararent_details[0].kind_Attention,
+          'bills_logo_id': response.delivery_pararent_details[0].bills_logo_id,
+          'warranty_id': response.delivery_pararent_details[0].warranty_type,
+          'description_details_show_state': response.delivery_pararent_details[0].description_details_show_state,
+          'description_details': response.delivery_pararent_details[0].description_details,
+          'remarks': response.delivery_pararent_details[0].remarks,
 
 
         });
-        this.selected_pdf_footer = response.quotation_details[0].pdf_footer_id;
+        this.editDo_section3.patchValue({
+          'remarks': response.delivery_pararent_details[0].remarks,
+
+
+        });
+        // this.selected_pdf_footer = response.delivery_pararent_details[0].pdf_footer_id;
+
+
+
+        const formArray = new FormArray([]);
+        for (let index = 0; index < response.delivery_details.length; index++) {
+
+          console.log('delivery_details++index' + index);
+
+
+          formArray.push(this.fb.group({
+            "prodName": response.delivery_details[index].productName,
+            "quantity": response.delivery_details[index].qty,
+            "desc": response.delivery_details[index].productDesc,
+
+          })
+
+          );
+        }
+
+
+        console.log(formArray)
+        this.editDo_section2.setControl('addresses', formArray);
+        console.log(this.addresses)
 
       }
     });
@@ -577,9 +626,109 @@ console.log( $('#description_details').val());
     }
 
   }
-  
+  billerChangeDetails(event:any){
+    this.billerChangeID=event.target.value;
+    
+       let api_req: any = new Object();
+       let addBillerChangeAPI: any = new Object();
+   
+       api_req.moduleType = "deliveryorder";
+       api_req.api_url = "deliveryorder/biller_change_details";
+       api_req.api_type = "web";
+       api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+       addBillerChangeAPI.action = "biller_change_details";
+       addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+       addBillerChangeAPI.billerId = this.billerChangeID;
+       api_req.element_data = addBillerChangeAPI;
+       this.serverService.sendServer(api_req).subscribe((response: any) => {
+         // this.companyNameList = response.biller_details;
+         this.FooterDetails= response.footer_list_details;
+         console.log("response-load-pi", response)
+         this.editDo_section1.patchValue({
+           'dcNo':response.delivery_no,
+         });
+       });
+   
+   
+     }
   updateDO(){
 
+    let api_req: any = new Object();
+    let api_updateDO_req: any = new Object();
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/update_delivery_order";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_updateDO_req.action = "update_delivery_order";
+    api_updateDO_req.user_id = localStorage.getItem('erp_c4c_user_id');
+
+
+    api_updateDO_req.company = this.editDo_section1.value.companyName;
+    api_updateDO_req.do_no = this.editDo_section1.value.dcNo;
+    api_updateDO_req.pdf_footer_id = this.editDo_section1.value.e_selectFooter;
+    api_updateDO_req.dcDate = this.editDo_section1.value.dcDate;
+
+
+    api_updateDO_req.customer_name = this.customer_NAME;
+    api_updateDO_req.customer_id=this.customer_ID;
+    api_updateDO_req.BillTo_customer_NAME = this.customer_NAME;
+    api_updateDO_req.customerAddress1 = this.editDo_section1.value.customerAddress1;
+    api_updateDO_req.customerAddress2 = this.editDo_section1.value.customerAddress2;
+    api_updateDO_req.customerAddress3 = this.editDo_section1.value.customerAddress3;
+    api_updateDO_req.kind_Attention = this.editDo_section1.value.kind_Attention;
+
+
+    api_updateDO_req.bills_logo_id = this.radio_Value_Export_logo;
+    // api_updateDO_req.warranty_type = this.radioSelectWarranty;
+
+    api_updateDO_req.description_details = this.editDo_section1.value.description_details;
+    api_updateDO_req.description_details_show_state=this.description_details_show_state;
+    //section 2
+    var addr = this.editDo_section2.value.addresses;
+    for (let i = 0; i < addr.length; i++) {
+      
+     
+      addr[i].productName = $('#prodName_' + i).val();
+      addr[i].qty = $('#quantity_' + i).val();
+      addr[i].productDesc = $('#desc_' + i).val();
+     
+    }
+    api_updateDO_req.deliverychild_values = addr;
+//section 3
+    api_updateDO_req.remarks = this.editDo_section1.value.remarks;
+
+   
+
+
+    api_req.element_data = api_updateDO_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      console.log("add quotation new save", response);
+      if (response.status == true) {
+
+        iziToast.success({
+          title: 'Updated',
+          message: 'Delivery Order Updated Successfully !',
+        });
+
+      }
+      else {
+
+
+        iziToast.warning({
+          message: "Delivery Order Not Saved Successfully",
+          position: 'topRight'
+        });
+
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+    this.goBack();
   }
 
 

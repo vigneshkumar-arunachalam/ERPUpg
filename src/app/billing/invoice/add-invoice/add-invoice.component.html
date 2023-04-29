@@ -514,7 +514,7 @@
                                 <tbody formArrayName="addresses"
                                     *ngFor="let address of addressControls.controls; let i = index;">
 
-
+                                    <!-- <tr [formGroup]="addressControls.controls[i]" class="marginSpace"> -->
                                     <tr [formGroupName]="i" class="marginSpace">
                                 
                                         <td style="width: 300px;">
@@ -614,8 +614,9 @@
 
 
 
-                                                <input type="text" class="form-control ml-2 mt-2 mb-2"
-                                                    formControlName="pd_current_month_str"
+                                                <input type="text" 
+                                                formControlName="pd_current_month_str"
+                                                class="form-control ml-2 mt-2 mb-2"
                                                     id="pd_current_month_str_{{i}}" readonly="readonly" />
 
 

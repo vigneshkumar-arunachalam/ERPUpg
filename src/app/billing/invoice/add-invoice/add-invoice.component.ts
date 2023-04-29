@@ -55,7 +55,8 @@ export class AddInvoiceComponent implements OnInit {
   groupSelectCommonId_MileDiscount: any;
   checkbox_value_MileDiscount: any;
   edit_array_MileDiscount: any = [];
-
+//warranty
+warrantyValue:any;
   //checkbox group select-logo
   groupSelectCommonId_ExtraLogo: any;
   checkbox_value_ExtraLogo: any;
@@ -159,6 +160,7 @@ export class AddInvoiceComponent implements OnInit {
       { name: ' Mrvoip  ', selected: false, id: 5 },
 
     ];
+ 
     this.initial_Radio = [
       { name: 'Proforma ', selected: false, id: 1 },
       { name: 'Quotation', selected: false, id: 2 },

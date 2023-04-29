@@ -109,6 +109,8 @@ export class AddDidInvoiceComponent implements OnInit {
   quotationAddSignature_state: any;
   quotationAddSignature_filename: any;
   selectAdditionalSign: boolean = true;
+  //dropdown
+  CustomerBillCodeArray:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router) {
 
@@ -782,7 +784,7 @@ export class AddDidInvoiceComponent implements OnInit {
           ship_address_str2 = response.customer_details[0].customerAddress2;
         }
 
-
+this.CustomerBillCodeArray=response.customer_billcode_arr;
 
         this.addDid_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,

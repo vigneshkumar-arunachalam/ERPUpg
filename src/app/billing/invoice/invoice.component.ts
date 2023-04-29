@@ -318,6 +318,10 @@ export class InvoiceComponent implements OnInit {
     this.showPerissionForm = new FormGroup({
       'InvoiceSendingInput': new FormControl(null),
     });
+    
+    this.FileAttachmentForm = new FormGroup({
+      'file': new FormControl(null),
+    });
     this.emailForm = new FormGroup({
       'Subject_Content': new FormControl(null, Validators.required),
       'email_to': new FormControl(null, Validators.required),
@@ -3022,7 +3026,7 @@ export class InvoiceComponent implements OnInit {
 
   }
   set_WFA_ResellerCommission() {
-    alert(this.ResellerId_Customer)
+   
 
     this.spinner.show();
     let api_req: any = new Object();

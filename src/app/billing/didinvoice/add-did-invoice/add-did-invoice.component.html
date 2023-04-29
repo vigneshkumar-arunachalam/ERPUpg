@@ -147,9 +147,9 @@
                         <div class="col-lg-12">
 
                             <select id="billCode" class="form-control" formControlName="billCode">
-                                <option [ngValue]="null" selected disabled>Select Bill Code</option>
-                                <option *ngFor="let bill of BillCodeList" value="{{bill.billCode}}">
-                                    {{bill.billCode}}
+                                <option [ngValue]="null" selected >Select Bill Code</option>
+                                <option *ngFor="let bill of CustomerBillCodeArray" value="{{bill.bill_code}}">
+                                    {{bill.bill_code}}
                                 </option> 
                             </select>
                         </div>
@@ -626,9 +626,9 @@
                                                 <div class="col-lg-12">
                         
                                                     <select id="billCode" class="form-control"  formControlName="billCode" >
-                                                        <option [ngValue]="null" selected disabled>Select Bill Code</option>
-                                                        <option *ngFor="let bill of BillCodeList" value="{{bill.billCode}}">
-                                                            {{bill.billCode}}
+                                                        <option [ngValue]="null" selected >Select Bill Code</option>
+                                                        <option *ngFor="let bill of CustomerBillCodeArray" value="{{bill.bill_code}}">
+                                                            {{bill.bill_code}}
                                                         </option> 
                                                     </select>
                                                 </div>

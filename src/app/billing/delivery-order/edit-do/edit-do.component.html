@@ -14,7 +14,7 @@
                         <label for="cmp_name" class="col-lg-2 col-form-label">Company Name </label>
                         <div class="col-lg-10">
                             <select name="enqFormValue" id="cmp_name" class="form-control"
-                                formControlName="companyName">
+                            (change)="billerChangeDetails($event)"   formControlName="companyName">
                                  <!-- (change)="getCustomerInvoiceDetails($event)" (change)="getProformaBillerDetails()" -->
 
                                 <option [ngValue]="null" selected disabled>Select Company Name</option>
@@ -278,23 +278,26 @@
 
                 </div>
 
-                <div class="userDatatable-content">
-                    <label for="remark" style="float: right;"> remarks </label>
-                    <textarea
-                        style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
-                        class="form-control mt-2 mb-2" row="2"
-                        formControlName="remarks"
-                        id="remarks"></textarea>
-                </div>
-                <div id="signature_message_id" style="float: right;">
-                    <label style="font-style: italic;color:#009688">
-                        (Signature not available. Ask your administrator to upload your
-                        signature if required)
-                    </label>
-
-                </div>
+              
 
             </div>
+        </div>
+    </form>
+    <form [formGroup]="editDo_section3">
+        <div class="userDatatable-content">
+            <label for="remark" style="float: right;"> remarks </label>
+            <textarea
+                style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                class="form-control mt-2 mb-2" row="2"
+                formControlName="remarks"
+                id="remarks"></textarea>
+        </div>
+        <div id="signature_message_id" style="float: right;">
+            <label style="font-style: italic;color:#009688">
+                (Signature not available. Ask your administrator to upload your
+                signature if required)
+            </label>
+
         </div>
     </form>
 

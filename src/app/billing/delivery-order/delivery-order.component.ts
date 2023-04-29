@@ -441,8 +441,17 @@ export class DeliveryOrderComponent implements OnInit {
 
   }
 
-  editDo() {
-    this.router.navigate(['/editDo'])
+  editDo(id:any) {
+
+    var editbillID = id;
+    this.router.navigate(['/editDeliveryOrder'])
+
+    this.router.navigate(['/editDeliveryOrder'], {
+      queryParams: {
+        e_editBillID: editbillID,
+      }
+    });
+    
   }
 
 
@@ -497,7 +506,63 @@ export class DeliveryOrderComponent implements OnInit {
     }
   }
 
+  
 
+  deleteDeliveryOrder(id: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+
+        Swal.fire('Deleting');
+        Swal.showLoading();
+        let api_req: any = new Object();
+        let del_req: any = new Object();
+        api_req.moduleType = "deliveryorder";
+        api_req.api_url = "deliveryorder/delete_delivery";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        del_req.action = "delete_delivery";
+        del_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        del_req.deliveryId = id;
+        api_req.element_data = del_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            Swal.close();
+            iziToast.success({
+              message: "Delivery Order Deleted Successfully",
+              position: 'topRight'
+            });
+            this.DOList({});
+
+          } else {
+            Swal.close();
+            iziToast.warning({
+              message: "Delivery Order Delete Failed",
+              position: 'topRight'
+            });
+            this.DOList({});
+          }
+        }),
+          (error: any) => {
+            Swal.close();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+      }
+    })
+  }
   getEmailDetails(id: any) {
     this.spinner.show();
     this.Email_BillId = id;

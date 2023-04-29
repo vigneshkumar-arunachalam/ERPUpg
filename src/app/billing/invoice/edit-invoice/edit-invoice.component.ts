@@ -586,8 +586,8 @@ export class EditInvoiceComponent implements OnInit {
         this.addPI_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
-          'Currency': response.def_currency_id,
-          'PaymentVia': response.def_paymentvia_id,
+          // 'Currency': response.def_currency_id,
+          // 'PaymentVia': response.def_paymentvia_id,
 
         });
 
@@ -804,7 +804,7 @@ export class EditInvoiceComponent implements OnInit {
     api_editPI_req.billId = this.editbillerID;
     api_req.element_data = api_editPI_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      
       if (response != '') {
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
         this.exportState_value = response.billing_pararent_details[0].export_state;
@@ -814,8 +814,8 @@ export class EditInvoiceComponent implements OnInit {
         this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
         this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
         this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
-
-
+console.log(response.billing_pararent_details[0].currency)
+        $('#curren').val(response.billing_pararent_details[0].currency)
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
@@ -1162,8 +1162,9 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.ref = this.addPI_section1.value.Ref;
     api_updatePI_req.terms = this.addPI_section1.value.terms;
     api_updatePI_req.currency = this.addPI_section1.value.Currency;
-    api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
+    api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
+   
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
 
     api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;

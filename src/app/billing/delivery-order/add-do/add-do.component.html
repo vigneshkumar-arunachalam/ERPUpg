@@ -37,7 +37,7 @@
 <div class="contents-section">
 
     <h2 style="text-align: center;">Enter Delivery Order Details</h2>
-    <form [formGroup]="editDo_section1">
+    <form [formGroup]="addDo_section1">
         <div class="row">
 
             <div class="col-lg-6">
@@ -45,9 +45,9 @@
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="cmp_name" class="col-lg-3 col-form-label">Company Name </label>
-                        <div class="col-lg-9">
+                        <div class="col-lg-9" >
                             <select name="enqFormValue" id="cmp_name" class="form-control"
-                                formControlName="companyName">
+                            (change)="billerChangeDetails($event)"    formControlName="companyName">
                                 <!-- (change)="getCustomerInvoiceDetails($event)" (change)="getProformaBillerDetails()" -->
 
                                 <option [ngValue]="null" selected>Select Company Name</option>
@@ -72,7 +72,7 @@
 
                             </div>
                             <div class="alert alert-danger alertdangerCustomCSS1"
-                                *ngIf="editDo_section1.controls['e_selectFooter'].invalid && editDo_section1.controls['e_selectFooter'].touched">
+                                *ngIf="addDo_section1.controls['e_selectFooter'].invalid && addDo_section1.controls['e_selectFooter'].touched">
                                 Please
                                 Select Footer
                             </div>
@@ -175,21 +175,48 @@
                 </div>
 
 
-                <div class="col-lg-12 col-12">
-                    <div class="form-group">
-                        <label for="Payment" class="col-lg-3 col-form-label mt-4">Warranty</label>
+             
 
-                        <div class="form-check form-check-inline ml-2"
-                            *ngFor="let display1 of warranty_id_radio;let k=index">
-                            <input class="form-check-input mt-4" type="radio" name="warranty_id" [value]="display1.id"
-                                checked="{{display1.id==warranty_value ? 'checked':''}}"
-                                (change)="handleChange_warranty(display1.billerId,$event)" />
-                            <label class="form-check-label mt-4" for="exampleRadios{{k}}">
-                                <span style="color:#009688 !important;">{{display1.name}}</span>
+
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="Payment" class="form-label">Warranty</label>
+
+
+                        <div class="form-check form-check-inline ml-4 mt-2">
+
+                            <input class="form-check-input" type="radio" name="export_state" 
+                            (change)="handleChange_warrantyImp($event)"
+                            id="exampleRadios1" value="warranty_type_no" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                                <span style="color:#009688 !important;">No Warranty</span>
+
                             </label>
                         </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="export_state"
+                                (change)="handleChange_warrantyImp($event)" id="exampleRadios2" value="warranty_type_one">
+                               
+                            <label class="form-check-label" for="exampleRadios2">
+                                <span style="color:#009688 !important;">One Warranty</span>
+
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="export_state" 
+                            (change)="handleChange_warrantyImp($event)"
+                            id="exampleRadios3" value="warranty_type_two">
+                                 
+                            <label class="form-check-label" for="exampleRadios3">
+                                <span style="color:#009688 !important;">Two Warranty</span>
+
+                            </label>
+                        </div>
+
                     </div>
                 </div>
+
+
 
                 <div class="col-md-12">
                     <div class="form-group row">
@@ -214,7 +241,7 @@
         </div>
     </form>
 
-    <form [formGroup]="editDo_section2">
+    <form [formGroup]="addDo_section2">
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group row">
@@ -328,7 +355,7 @@
             </div>
         </div>
     </form>
-    <form [formGroup]="editDo_section3">
+    <form [formGroup]="addDo_section3">
         <div class="col-12">
 
 
@@ -350,7 +377,7 @@
 
 
     <div class="footerButton">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateDO()">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="AddDO($event)">
             Update
         </button>
         <button type="button" class="btn btn-dark ml-4" data-dismiss="modal" (click)="goBack()">
