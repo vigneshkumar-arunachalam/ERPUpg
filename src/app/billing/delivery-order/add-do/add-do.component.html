@@ -36,7 +36,7 @@
 
 <div class="contents-section">
 
-    <h2 style="text-align: center;">Enter Delivery Order Details</h2>
+    <h2 style="text-align: center;">Add Delivery Order Details</h2>
     <form [formGroup]="addDo_section1">
         <div class="row">
 
@@ -159,10 +159,13 @@
 
 
                 <div class="col-lg-12 col-12">
-                    <div class="form-group row">
-                        <label for="Payment" class="col-lg-3 col-form-label mt-4">Select Extra Logo </label>
+                    <div class="form-group row" style="align-items: center">
+                        <div class="col-lg-3">
+                            <label for="Payment" class=" col-form-label mt-4">Select Extra Logo </label>
 
-                        <div class="form-check form-check-inline ml-2"
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="form-check form-check-inline "
                             *ngFor="let display1 of bills_logo_id_radio;let k=index">
                             <input class="form-check-input mt-4" type="radio" name="bills_logo_id" [value]="display1.id"
                                 checked="{{display1.id==billsLogo_value ? 'checked':''}}"
@@ -171,6 +174,8 @@
                                 <span style="color:#009688 !important;">{{display1.name}}</span>
                             </label>
                         </div>
+                        </div>
+                       
                     </div>
                 </div>
 
@@ -179,39 +184,49 @@
 
 
                 <div class="col-lg-12">
-                    <div class="form-group">
-                        <label for="Payment" class="form-label">Warranty</label>
-
-
-                        <div class="form-check form-check-inline ml-4 mt-2">
-
-                            <input class="form-check-input" type="radio" name="export_state" 
-                            (change)="handleChange_warrantyImp($event)"
-                            id="exampleRadios1" value="warranty_type_no" checked>
-                            <label class="form-check-label" for="exampleRadios1">
-                                <span style="color:#009688 !important;">No Warranty</span>
-
-                            </label>
+                    <div class="form-group row" style="align-items: center">
+                        <div class="col-lg-3">
+                            <label for="Payment" class="form-label">Warranty</label>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="export_state"
-                                (change)="handleChange_warrantyImp($event)" id="exampleRadios2" value="warranty_type_one">
-                               
-                            <label class="form-check-label" for="exampleRadios2">
-                                <span style="color:#009688 !important;">One Warranty</span>
+                        <div class="col-lg-9" >
 
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="export_state" 
-                            (change)="handleChange_warrantyImp($event)"
-                            id="exampleRadios3" value="warranty_type_two">
-                                 
-                            <label class="form-check-label" for="exampleRadios3">
-                                <span style="color:#009688 !important;">Two Warranty</span>
+                            <div class="form-check form-check-inline ">
 
-                            </label>
+                                <input class="form-check-input" type="radio" name="export_state" 
+                                (change)="handleChange_warrantyImp($event)"
+                                id="exampleRadios1" value="warranty_type_no" checked>
+                                <label class="form-check-label" for="exampleRadios1">
+                                    <span style="color:#009688 !important;">No Warranty</span>
+    
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="export_state"
+                                    (change)="handleChange_warrantyImp($event)" id="exampleRadios2" value="warranty_type_one">
+                                   
+                                <label class="form-check-label" for="exampleRadios2">
+                                    <span style="color:#009688 !important;">One Warranty</span>
+    
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="export_state" 
+                                (change)="handleChange_warrantyImp($event)"
+                                id="exampleRadios3" value="warranty_type_two">
+                                     
+                                <label class="form-check-label" for="exampleRadios3">
+                                    <span style="color:#009688 !important;">Two Warranty</span>
+    
+                                </label>
+                            </div>
+
+
+
                         </div>
+                       
+
+
+                   
 
                     </div>
                 </div>
@@ -219,7 +234,7 @@
 
 
                 <div class="col-md-12">
-                    <div class="form-group row">
+                    <div class="form-group row" style="align-items: center">
                         <label for="kind_Attention" class="col-lg-5 col-form-label">Description Details (Don't Show)
                         </label>
                         <div class="col-lg-6">
@@ -251,43 +266,16 @@
 
                 <div class="col-12">
                     <div class="table-responsive">
-                        <table class="add-contact-table-section">
-                            <thead class="col-lg-6">
-                                <tr class="userDatatable-header" style="display: flex;">
+                        <table class="add-contact-table-section" style="width: 100%;">
+                            <thead >
+                                <tr class="userDatatable-header" >
 
-                                    <th> <span class="userDatatable-title">Product Name</span>
+                                    <th style="width:48%"> <span class="userDatatable-title">Product Name</span>
                                     </th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th><span class="userDatatable-title">Quantity</span></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
-                                    <th></th>
+                               
+                                    <th style="width:48%"><span class="userDatatable-title">Quantity</span></th>
+                                    <th style="width: 45px;"></th>
+                             
 
                                 </tr>
                             </thead>
@@ -295,36 +283,13 @@
                                 *ngFor="let address of addressControls.controls; let i = index;">
                                 <tr [formGroupName]="i">
                                     <td colspan="12">
-                                        <table>
+                                        <table style="width: 100%;">
                                             <tr class="marginSpace">
                                                 <td>
                                                     <div class="userDatatable-content">
                                                         <input type="text" class="form-control mt-2 mb-2"
                                                             formControlName="prodName" id="prodName_{{i}}" />
                                                     </div>
-                                                </td>
-
-
-                                                <td>
-                                                    <div class="userDatatable-content">
-                                                        <input type="number" class="form-control"
-                                                            formControlName="quantity" id="quantity_{{i}}" />
-                                                    </div>
-                                                </td>
-
-                                                <td *ngIf="i>0">
-                                                    <div class="userDatatable-content d-inline-block"
-                                                        style="margin-left: 15px;">
-                                                        <button type="button" class="btn btn-danger btn-sm"
-                                                            (click)="removeParticular(i)">X</button>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-
-                                            <tr>
-
-                                                <td colspan="2">
                                                     <div class="userDatatable-content">
                                                         <textarea
                                                             style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
@@ -333,7 +298,24 @@
                                                     </div>
                                                 </td>
 
+
+                                                <td valign="top">
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control  mt-2 mb-2"
+                                                            formControlName="quantity" id="quantity_{{i}}" />
+                                                    </div>
+                                                </td>
+
+                                                <td  valign="top" style="width: 45px;">
+                                                    <div *ngIf="i>0" class="userDatatable-content d-inline-block "
+                                                        style="margin-left: 15px;">
+                                                        <button type="button" class="btn btn-danger btn-sm  mt-2 mb-2"
+                                                            (click)="removeParticular(i)">X</button>
+                                                    </div>
+                                                </td>
+
                                             </tr>
+
                                         </table>
                                     </td>
                                 </tr>

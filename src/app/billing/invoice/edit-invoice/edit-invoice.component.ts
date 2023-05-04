@@ -350,7 +350,9 @@ export class EditInvoiceComponent implements OnInit {
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     this.totalCalculate();
-
+    setTimeout(() => {      
+      this.saveGrossDiscount();
+   }, 500);
   }
   // logo......
 
@@ -952,7 +954,8 @@ console.log(response.billing_pararent_details[0].currency)
         this.received_signature_state = response.billing_pararent_details[0].received_signature;
         this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
-
+        this.editAddress();
+        this.removeAddresstest(response.billchild_details.length);
 
         for (let index = 0; index < response.billchild_details.length; index++) {
 

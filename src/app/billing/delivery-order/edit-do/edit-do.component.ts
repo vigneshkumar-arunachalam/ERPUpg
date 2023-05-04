@@ -41,6 +41,7 @@ export class EditDoComponent implements OnInit {
   radioID_Logo: any;
   radio_Value_Export_logo:any;
   selected_pdf_footer: any;
+ 
 
   // warranty
 
@@ -76,8 +77,9 @@ export class EditDoComponent implements OnInit {
 
   ngOnInit(): void {
 
+    
+    this.ADDLoadDO();
     this.loadADD();
- 
     this.route.queryParams
     .subscribe(params => {
       console.log("params output value", params);
@@ -98,7 +100,8 @@ export class EditDoComponent implements OnInit {
       { name: 'Calncall', selected: false, id: 2 },
       { name: 'DID Sg', selected: false, id: 3 },
       { name: 'Callcloud', selected: false, id: 4 },
-      { name: 'Mrvoip', selected: false, id: 5 }
+      { name: 'Mrvoip', selected: false, id: 5 },
+      { name: 'None', selected: false, id: 0 },
     ];
 
     this.warranty_id_radio = [
@@ -152,7 +155,7 @@ export class EditDoComponent implements OnInit {
     // this.radio_Value_warranty = evt.target.value;
    
     // console.log("radio button value", this.radio_Value_warranty);
-  var Nowarranty = "NO WARRANTY";
+  var Nowarranty = "No Warranty";
   var Onewarranty = "Above items are One year warranty from the date of delivery";
   var Twowarranty = "Above items are Two year warranty from the date of delivery";
     this.radioID_Logo = data;
@@ -252,7 +255,27 @@ console.log( $('#description_details').val());
 
   }
   
+  ADDLoadDO(){
+    let api_req: any = new Object();
+    let addLoadAPI: any = new Object();
 
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/add_delivery_order";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addLoadAPI.action = "add_delivery_order";
+    addLoadAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = addLoadAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.companyNameList = response.biller_details;
+      this.FooterDetails= response.footer_list_details;
+      console.log("response-load-pi", response)
+      this.editDo_section1.patchValue({
+        'dcNo':response.delivery_no,
+      });
+    });
+
+  }
 
 
   // SELECT FOOTER
@@ -555,7 +578,8 @@ console.log( $('#description_details').val());
 
       if (response != '') {
         // this.dynamicChange1(response.delivery_pararent_details[0].billerId);
-
+this.billsLogo_value=response.delivery_pararent_details[0].bills_logo_id;
+this.warranty_value=response.delivery_pararent_details[0].warranty_type;
 
         this.editDo_section1.patchValue({
 
@@ -652,7 +676,7 @@ console.log( $('#description_details').val());
    
      }
   updateDO(){
-
+    this.editDo_section1.get('description_details')?.enable();
     let api_req: any = new Object();
     let api_updateDO_req: any = new Object();
     api_req.moduleType = "deliveryorder";
@@ -677,9 +701,9 @@ console.log( $('#description_details').val());
     api_updateDO_req.customerAddress3 = this.editDo_section1.value.customerAddress3;
     api_updateDO_req.kind_Attention = this.editDo_section1.value.kind_Attention;
 
-
+ 
     api_updateDO_req.bills_logo_id = this.radio_Value_Export_logo;
-    // api_updateDO_req.warranty_type = this.radioSelectWarranty;
+    api_updateDO_req.warranty_type = this.radio_Value_warranty;
 
     api_updateDO_req.description_details = this.editDo_section1.value.description_details;
     api_updateDO_req.description_details_show_state=this.description_details_show_state;
@@ -695,7 +719,7 @@ console.log( $('#description_details').val());
     }
     api_updateDO_req.deliverychild_values = addr;
 //section 3
-    api_updateDO_req.remarks = this.editDo_section1.value.remarks;
+    api_updateDO_req.remarks = this.editDo_section3.value.remarks;
 
    
 
