@@ -79,7 +79,7 @@
                       <td>
                         <span>{{ list.currency_name}}</span>
                         <span><button type="button" class="buttonClass" style="width: auto;border-radius: 3px;"
-                          [ngStyle]="{'backgroundColor': 'Khaki'}">{{
+                          [ngStyle]="{'backgroundColor': ' #FCF3CF '}">{{
                           list.conversionRate}}</button></span>
                       
                       </td>
@@ -88,7 +88,7 @@
                       <td>
                         <span>{{ list.export_type}}</span>
                         <span ><button type="button" class="buttonClass" style="width: 40px;border-radius: 3px;"
-                          [ngStyle]="{'backgroundColor':'PowderBlue' }">{{
+                          [ngStyle]="{'backgroundColor':'#FEF5E7' }">{{
                           list.days}}</button></span>
                       </td>
                       <td><span>{{ list.billGeneratedBy}}</span></td>
@@ -1044,7 +1044,7 @@
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
-                    (change)="CBF_TemplateSelection($event)" id="temp">
+                  [(ngModel)]="email_TemplateSelection"   (change)="CBF_TemplateSelection($event)" id="temp">
                   <label class="form-check-label" for="Template Selection"> Template Selection</label>
                 </div>
                 <div class="form-check form-check-inline">

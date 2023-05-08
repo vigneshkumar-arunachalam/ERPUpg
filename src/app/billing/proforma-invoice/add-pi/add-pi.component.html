@@ -1,5 +1,12 @@
 <div class="contents-section">
-    <h2 style="text-align: center;" class="mt-4 mb-4">Enter Proforma Invoice Details</h2>
+    <div class="col-lg-12 mb-30">
+        <div class="card">
+            <div class="card-header color-dark fw-500" style="padding: 5px 500px;    background-color: #d9515147">
+                <h1>Add Proforma Invoice </h1>
+            </div>
+        </div>
+    </div>
+    <!-- <h2 style="text-align: center;" class="mt-4 mb-4">Enter Proforma Invoice Details</h2> -->
     <form [formGroup]="addPI_section1">
         <div class="row">
             <div class="col-lg-6">
@@ -8,12 +15,10 @@
                     <div class="form-group row">
                         <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
                         <div class="col-lg-12">
-                            <select name="enqFormValue" id="cmp_name" class="form-control" 
-                            formControlName="companyName"
+                            <select name="enqFormValue" id="cmp_name" class="form-control" formControlName="companyName"
                                 (change)="getProformaBillerDetails();getCustomerInvoiceDetails();TaxDropdown();invoiceAddSignature()">
                                 <option [ngValue]="null" selected disabled>Select Company Name</option>
-                                <option *ngFor="let comp_name of companyNameList" 
-                                value="{{comp_name.billerId}}">
+                                <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                     {{comp_name.billerName}}
                                 </option>
                             </select>
@@ -24,7 +29,7 @@
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="customerName" class="col-lg-12 col-form-label">Bill To<span
-                            style="color: red;font-size:larger;"> *</span></label>
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="ng-autocomplete">
 
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
@@ -79,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-               
+
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="attn2" class="col-lg-12 col-form-label">Attn</label>
@@ -161,7 +166,7 @@
 
                     </div>
                 </div>
-               
+
                 <div class="col-lg-12">
                     <div class="form-group">
                         <label for="Payment" class="form-label">Export State</label>
@@ -260,7 +265,7 @@
                 <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="datee" class="col-lg-12 col-form-label">Date<span
-                            style="color: red;font-size:larger;"> *</span></label>
+                                style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12">
                             <input type="date" class="form-control" formControlName="Date" id="datee" />
                         </div>
@@ -553,7 +558,8 @@
                                         </td>
                                         <td colspan="1">
                                             <input type="number" class="form-control" style="text-align: right;"
-                                            [attr.readonly]="isReadOnly"   formControlName="sub_discount" id="sub_discount_{{i}}" />
+                                                [attr.readonly]="isReadOnly" formControlName="sub_discount"
+                                                id="sub_discount_{{i}}" />
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -611,7 +617,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                    [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
+                                        [attr.readonly]="isReadOnly" formControlName="section3_gross_total" />
                                 </div>
                             </div>
                         </div>
@@ -629,7 +635,8 @@
 
 
                                 <input type="number" class="form-control  mt-2" [(ngModel)]="finalDiscount"
-                                [attr.readonly]="isReadOnly"   formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
+                                    [attr.readonly]="isReadOnly" formControlName="section3_discount_txtbox"
+                                    id="finalDiscount_amt" />
                                 <input type="hidden" class="form-control" style="text-align: right;"
                                     formControlName="final_dis_type" id="final_discount_type"
                                     [(ngModel)]="finalDiscountType" />
@@ -663,7 +670,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="number" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
-                                [attr.readonly]="isReadOnly"    [(ngModel)]="finalTax" class="form-control mt-2" />
+                                    [attr.readonly]="isReadOnly" [(ngModel)]="finalTax" class="form-control mt-2" />
 
                             </div>
                         </div>
@@ -678,8 +685,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="form-group">
-                                <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
-                                    id="shipping_amt_id" class="form-control mt-2" />
+                                <input type="number" formControlName="section3_shipping_amt_txtbox"
+                                    (keyup)="extraFees()" id="shipping_amt_id" class="form-control mt-2" />
                             </div>
                         </div>
 
@@ -708,7 +715,8 @@
 
                                 <div class="col-lg-6">
                                     <input type="number" class="form-control" [(ngModel)]="grandTotal"
-                                    [attr.readonly]="isReadOnly"    [readonly]="isReadonly" formControlName="section3_grand_total" />
+                                        [attr.readonly]="isReadOnly" [readonly]="isReadonly"
+                                        formControlName="section3_grand_total" />
                                 </div>
 
 
@@ -744,51 +752,51 @@
 
                                 <div class="col-lg-6">
                                     <input type="checkbox" [(ngModel)]="chkTermsandcondition"
-                                        formControlName="section3_termCondition"
-                                        (click)="termConditionCheckList()" />
+                                        formControlName="section3_termCondition" (click)="termConditionCheckList()" />
                                 </div>
 
                                 <div class="col-lg-12">
                                     <div class="terms_con">
 
-                                    <table *ngIf="terms_condition_list">
-                                        <tbody>
-                                            <tr style="margin-left: 600px;">
-                                                <td> 
-                                                    1. <input type="text" class="form-control" name="terms_cond1" id="terms_cond1"
-                                                     value="Price Term: EXW SINGAPORE">
-                                                </td>
-                                            </tr>
-                                            
-                                            <tr >
-                                                <td>
-                                                   2. <input type="text" class="form-control" name="terms_cond2" id="terms_cond2"
-                                                     value="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T">
-                                                </td>
-                                            </tr>
-                                            
-                                            <tr >
-                                                <td>
-                                                   3. <input type="text" class="form-control"  name="terms_cond3" id="terms_cond3"
-                                                     value="Port of Discharge:">
-                                                </td>
-                                            </tr>
+                                        <table *ngIf="terms_condition_list">
+                                            <tbody>
+                                                <tr style="margin-left: 600px;">
+                                                    <td>
+                                                        1. <input type="text" class="form-control" name="terms_cond1"
+                                                            id="terms_cond1" value="Price Term: EXW SINGAPORE">
+                                                    </td>
+                                                </tr>
 
-                                            <tr >
-                                                <td>
-                                                   4. <input type="text" class="form-control" name="terms_cond4" id="terms_cond4"
-                                                     value="Port of Loading: SINGAPORE">
-                                                </td>
-                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                        2. <input type="text" class="form-control" name="terms_cond2"
+                                                            id="terms_cond2"
+                                                            value="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T">
+                                                    </td>
+                                                </tr>
 
-                                            <tr >
-                                                <td>
-                                                   5. <input type="text" class="form-control" name="terms_cond5" id="terms_cond5"
-                                                     value="Lead Time: 21 - 30 DAYS">
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                <tr>
+                                                    <td>
+                                                        3. <input type="text" class="form-control" name="terms_cond3"
+                                                            id="terms_cond3" value="Port of Discharge:">
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        4. <input type="text" class="form-control" name="terms_cond4"
+                                                            id="terms_cond4" value="Port of Loading: SINGAPORE">
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>
+                                                        5. <input type="text" class="form-control" name="terms_cond5"
+                                                            id="terms_cond5" value="Lead Time: 21 - 30 DAYS">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
 
@@ -831,10 +839,11 @@
                                 <div class="col-lg-6">
                                     <input type="checkbox" [(ngModel)]="selectAdditionalSign"
                                         formControlName="section3_select_additional_signature"
-                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="invoiceAddSignature_state==1?'checked':''" /><br>
+                                        (change)="eventCheckSelectAdditionalSignature($event)"
+                                        checked="invoiceAddSignature_state==1?'checked':''" /><br>
                                     <div *ngIf="this.checkbox_selectAdditionalSignature==true">
-                                        <img src="{{this.invoiceAddSignature_filename}}"
-                                            alt="No image to display " height="80px" width="100px">
+                                        <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
+                                            height="80px" width="100px">
                                     </div>
 
                                 </div>

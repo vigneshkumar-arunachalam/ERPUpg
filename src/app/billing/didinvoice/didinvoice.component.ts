@@ -102,6 +102,7 @@ export class DidinvoiceComponent implements OnInit {
 
         console.log("proforma_details list", this.DID_list)
         console.log("this.biller_list", this.biller_list)
+
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
       else {

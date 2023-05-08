@@ -7499,7 +7499,8 @@ ul {
         text-transform: capitalize;
         padding-top: 0;
         padding-bottom: 0;
-        background-color: #31394947;
+        /* background-color: #31394947; */
+         background-color: ghostwhite;
         min-height: 60px;
     }
 

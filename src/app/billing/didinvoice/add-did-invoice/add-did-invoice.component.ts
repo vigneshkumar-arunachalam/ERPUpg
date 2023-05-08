@@ -98,6 +98,8 @@ export class AddDidInvoiceComponent implements OnInit {
   export_state_Export: any;
   export_state_ZeroValid: boolean = true;
   MSDisplay_Value: boolean = true;
+  //section-3
+  chklogoAddressSignature: boolean = true;
 
   //extra logo
   ExtralogoValue: any;
@@ -391,6 +393,10 @@ export class AddDidInvoiceComponent implements OnInit {
   radioSelectCommissionType(event: any) {
     $('#CommissionValue').val('');
     $('#CommissionAmount').val('');
+  }
+  chklogoAddressSignatureEvent(event: any) {
+    this.chklogoAddressSignature = event.target.checked;
+    console.log(this.chklogoAddressSignature)
   }
 
   checkbox_selectAdditionalSignature: any;

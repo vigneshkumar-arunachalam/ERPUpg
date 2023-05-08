@@ -350,9 +350,9 @@ export class EditInvoiceComponent implements OnInit {
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     this.totalCalculate();
-    setTimeout(() => {      
+    setTimeout(() => {
       this.saveGrossDiscount();
-   }, 500);
+    }, 500);
   }
   // logo......
 
@@ -375,7 +375,7 @@ export class EditInvoiceComponent implements OnInit {
     this.addresses.removeAt(i);
     this.totalCalculate();
     setTimeout(() => {
-     
+
       this.finalDiscountCalc()
     }, 500);
 
@@ -793,7 +793,7 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   editInvoice() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let api_editPI_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -806,8 +806,9 @@ export class EditInvoiceComponent implements OnInit {
     api_editPI_req.billId = this.editbillerID;
     api_req.element_data = api_editPI_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
       if (response != '') {
+        this.spinner.hide();
         // this.getCustomerInvoiceDetails(response.billing_pararent_details[0].billerId);
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
@@ -816,7 +817,7 @@ export class EditInvoiceComponent implements OnInit {
         this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
         this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
         this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
-console.log(response.billing_pararent_details[0].currency)
+        console.log(response.billing_pararent_details[0].currency)
         $('#curren').val(response.billing_pararent_details[0].currency)
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -973,7 +974,7 @@ console.log(response.billing_pararent_details[0].currency)
         this.getProformaBillerDetails();
       }
       else {
-
+        this.spinner.hide();
         iziToast.warning({
           message: "Quotation not updated. Please try again",
           position: 'topRight'
@@ -982,6 +983,7 @@ console.log(response.billing_pararent_details[0].currency)
       }
     }),
       (error: any) => {
+        this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -1122,11 +1124,12 @@ console.log(response.billing_pararent_details[0].currency)
 
   updateInvoice() {
 
+    this.spinner.show();
     this.addPI_section1.get("ship_to").enable();
     this.addPI_section1.get("shipTo_1").enable();
     this.addPI_section1.get("shipTo_2").enable();
     this.addPI_section1.get("shipTo_3").enable();
-    
+
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -1156,7 +1159,7 @@ console.log(response.billing_pararent_details[0].currency)
       api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2,
       api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
       api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
-      
+
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
     api_updatePI_req.ship_by = this.addPI_section1.value.ShipBy;
@@ -1167,7 +1170,7 @@ console.log(response.billing_pararent_details[0].currency)
     api_updatePI_req.currency = this.addPI_section1.value.Currency;
     api_updatePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
     api_updatePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
-   
+
     api_updatePI_req.reference_reseller_name = this.addPI_section1.value.ReferenceResellerName;
 
     api_updatePI_req.bills_logo_id = this.addPI_section1.value.ExtraLogo;
@@ -1250,18 +1253,19 @@ console.log(response.billing_pararent_details[0].currency)
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       console.log("add quotation new save", response);
       if (response.status == true) {
-
+        this.spinner.hide();
         iziToast.success({
           title: 'Updated',
+          position: 'topRight',
           message: 'Invoice Updated Successfully !',
         });
 
       }
       else {
-
+        this.spinner.hide();
 
         iziToast.warning({
           message: "Invoice Not Saved Successfully",
@@ -1270,6 +1274,7 @@ console.log(response.billing_pararent_details[0].currency)
 
       }
     }), (error: any) => {
+      this.spinner.hide();
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
@@ -1395,8 +1400,8 @@ console.log(response.billing_pararent_details[0].currency)
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
         console.log('discount_type1111' + this.sub_dis_val);
-        if(this.sub_dis_val==''){
-          this.sub_dis_val=0;
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
         console.log('dis_amt_val' + dis_amt_val);
@@ -1407,8 +1412,8 @@ console.log(response.billing_pararent_details[0].currency)
         // console.log('discount_type222'+discount_type);
 
         this.sub_dis_val = $('#sub_discount_' + a).val();
-        if(this.sub_dis_val==''){
-          this.sub_dis_val=0;
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
         }
         // console.log('sub_discount_valppp'+this.sub_dis_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
@@ -1605,7 +1610,7 @@ console.log(response.billing_pararent_details[0].currency)
     }
   }
 
-  finalDiscountCalc(){
+  finalDiscountCalc() {
     var enablePercentabeDiscont = $('#enableFinalPercent').val()
     var enablePriceDiscont = $('#enableFinalDiscount').val()
     var tax_amt = $('#tax_amt_id').val()
@@ -1653,12 +1658,12 @@ console.log(response.billing_pararent_details[0].currency)
 
     console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
-    
+
     setTimeout(() => {
       this.totalCalculate();
     }, 1500)
 
-    
+
   }
 
 

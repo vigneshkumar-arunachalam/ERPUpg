@@ -56,15 +56,28 @@
                     <tbody *ngFor="let list of DID_list; let i = index">
                      
                         
-                        <td><span>{{ list.invoice_no}}</span></td>
+                        <td><span>{{ list.invoice_no}}</span>
+                          <span><button type="button" class="buttonClass" [ngStyle]="{backgroundColor: list.colorCodes}">
+                            {{list.billerCode}}
+                          </button>
+                        </span></td>
                         <td><span>{{ list.customerName}}</span></td>
                         <td><span>{{ list.billDate}}</span></td>
                         <td><span>{{ list.customerName}}</span></td>
                         <td><span>{{ list.netPayment}}</span></td>
-                        <td><span>{{ list.currency_name}}</span></td>
+                        <td><span>{{ list.currency_name}}</span>
+                          <span><button type="button" class="buttonClass" [ngStyle]="{'background-color':'#FAFAD2'}">
+                            {{list.conversionRate}}
+                          </button>
+                        </span>
+                      </td>
                        
                         
-                        <td><span>{{ list.export_type}}</span></td>
+                        <td><span>{{ list.export_type}}</span>
+                          <span><button type="button" class="buttonClass" [ngStyle]="{'background-color':'#FDEDEC'}">
+                            {{list.days}}
+                          </button>
+                        </span></td>
                         <td><span>{{ list.billGeneratedBy}}</span></td>
                         
                         <td>
@@ -268,7 +281,39 @@
               </div>
               <br>
               <nav class="atbd-page">
-              
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? getInvoice({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="getInvoice({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? getInvoice({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="getInvoice({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? getInvoice({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                  <li class="dropdown__item">
+                    <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+  
+                    </a>
+                  </li>
+                </ul>
               </nav>
               <br>
               <br>

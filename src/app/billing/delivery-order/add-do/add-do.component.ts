@@ -20,7 +20,7 @@ export class AddDoComponent implements OnInit {
   // company name list
 
   companyNameList: any;
-  billerChangeID:any;
+  billerChangeID: any;
   editQuotationID: any;
   //get add quotation
   billerList: any;
@@ -90,7 +90,7 @@ export class AddDoComponent implements OnInit {
 
     this.loadADD();
     this.ADDLoadDO();
-    
+
     this.Get_add_delivery_order();
     this.route.queryParams
       .subscribe(params => {
@@ -128,7 +128,7 @@ export class AddDoComponent implements OnInit {
       'companyName': new FormControl(null),
       'e_selectFooter': new FormControl(null),
       'dcNo': new FormControl(null),
-     
+
       'dcDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'customer_name': new FormControl(null),
       'customerAddress1': new FormControl(null),
@@ -159,9 +159,34 @@ export class AddDoComponent implements OnInit {
     // console.log("radio button id value", xyz);
   }
   handleChange_warrantyImp(evt: any) {
+
     this.radioSelectWarranty = evt.target.value;
-    // var xyz = id;
     console.log("radio button value", this.radioSelectWarranty);
+
+    var Nowarranty = "No Warranty";
+    var Onewarranty = "Above items are One year warranty from the date of delivery";
+    var Twowarranty = "Above items are Two year warranty from the date of delivery";
+
+    if (this.radioSelectWarranty == 'no') {
+
+      $('#description_details').val(Nowarranty);
+      console.log($('#description_details').val());
+
+    }
+    if (this.radioSelectWarranty == 'one') {
+
+      $('#description_details').val(Onewarranty);
+      console.log($('#description_details').val());
+
+    }
+    if (this.radioSelectWarranty == 'two') {
+
+      $('#description_details').val(Twowarranty);
+      console.log($('#description_details').val());
+
+    }
+
+
   }
 
 
@@ -239,7 +264,7 @@ export class AddDoComponent implements OnInit {
     });
 
   }
-  ADDLoadDO(){
+  ADDLoadDO() {
     let api_req: any = new Object();
     let addLoadAPI: any = new Object();
 
@@ -252,17 +277,17 @@ export class AddDoComponent implements OnInit {
     api_req.element_data = addLoadAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
-      this.FooterDetails= response.footer_list_details;
+      this.FooterDetails = response.footer_list_details;
       console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
-        'dcNo':response.delivery_no,
+        'dcNo': response.delivery_no,
       });
     });
 
   }
-  billerChangeDetails(event:any){
- this.billerChangeID=event.target.value;
- 
+  billerChangeDetails(event: any) {
+    this.billerChangeID = event.target.value;
+
     let api_req: any = new Object();
     let addBillerChangeAPI: any = new Object();
 
@@ -276,10 +301,10 @@ export class AddDoComponent implements OnInit {
     api_req.element_data = addBillerChangeAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.companyNameList = response.biller_details;
-      this.FooterDetails= response.footer_list_details;
+      this.FooterDetails = response.footer_list_details;
       console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
-        'dcNo':response.delivery_no,
+        'dcNo': response.delivery_no,
       });
     });
 
@@ -550,10 +575,10 @@ export class AddDoComponent implements OnInit {
 
 
         this.addDo_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
+          'customerAddress1': response.customer_details[0].customerAddress1,
+          'customerAddress2': response.customer_details[0].customerAddress2,
+          'customerAddress3': address_3,
+          'kind_Attention': response.customer_details[0].bill_attn,
           'ship_to': ship_to_str,
           'ship_address_1': ship_address_str1,
           'ship_address_2': ship_address_str2,
@@ -564,10 +589,10 @@ export class AddDoComponent implements OnInit {
       }
       else {
         this.addDo_section1.patchValue({
-          'address_1': '',
-          'address_2': '',
-          'address_3': '',
-          'Attn_1': '',
+          'customerAddress1': '',
+          'customerAddress2': '',
+          'customerAddress3': '',
+          'kind_Attention': '',
           'ship_to': '',
           'ship_address_1': '',
           'ship_address_2': '',
@@ -598,6 +623,7 @@ export class AddDoComponent implements OnInit {
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
+       
 
       }
 
@@ -673,7 +699,7 @@ export class AddDoComponent implements OnInit {
 
     // api_saveDO_req.BillTo_customer_ID = this.customer_ID;
     api_saveDO_req.customer_name = this.customer_NAME;
-    api_saveDO_req.customer_id=this.customer_ID;
+    api_saveDO_req.customer_id = this.customer_ID;
     api_saveDO_req.BillTo_customer_NAME = this.customer_NAME;
     api_saveDO_req.customerAddress1 = this.addDo_section1.value.customerAddress1;
     api_saveDO_req.customerAddress2 = this.addDo_section1.value.customerAddress2;
@@ -684,7 +710,7 @@ export class AddDoComponent implements OnInit {
     api_saveDO_req.warranty_type = this.radioSelectWarranty;
 
     api_saveDO_req.description_details = this.addDo_section1.value.description_details;
-    api_saveDO_req.description_details_show_state=this.description_details_show_state;
+    api_saveDO_req.description_details_show_state = this.description_details_show_state;
 
 
 
@@ -710,7 +736,7 @@ export class AddDoComponent implements OnInit {
       addr[i].prodName = $('#prodName_' + i).val();
       addr[i].quantity = $('#quantity_' + i).val();
       addr[i].desc = $('#desc_' + i).val();
-  
+
 
     }
 
@@ -773,9 +799,9 @@ export class AddDoComponent implements OnInit {
 
 
   goBack() {
-    this.router.navigate(['/deliveryOrder']);
+    this.router.navigate(['/deliveryorder']);
   }
   gotoDOList() {
-    this.router.navigate(['/deliveryOrder']);
+    this.router.navigate(['/deliveryorder']);
   }
 }

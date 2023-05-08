@@ -72,7 +72,8 @@ export class DeliveryOrderComponent implements OnInit {
   CBV_TemplateSelection: any;
   CBV_PDFLink: any;
   CBV_PaymentLink: any;
-
+  //employee status
+  doView_SharePermission: boolean = false;
   //email-checkbox
   email_array_emailCC_Checkbox: any = [];
   groupSelect_emailCCId: any;
@@ -175,6 +176,7 @@ export class DeliveryOrderComponent implements OnInit {
       if (response) {
         this.biller_list = response.biller_details;
         this.Delivery_Order = response.dc_details;
+       
      
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchDeliveryOrderFormId').modal("hide");
@@ -506,7 +508,12 @@ export class DeliveryOrderComponent implements OnInit {
     }
   }
 
-  
+  pdf(deliveryId: any) {
+
+    var url = "https://laravelapi.erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + deliveryId + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+  } 
 
   deleteDeliveryOrder(id: any) {
     Swal.fire({
@@ -639,6 +646,81 @@ export class DeliveryOrderComponent implements OnInit {
     this.msg_id = '';
     this.DOList({});
     tinymce.activeEditor.setContent("");
+  }
+  // sharePermission(deliveryId:any,doView:any){
+  //   let api_req:any=new Object();
+  //   let api_reqSharePerm:any=new Object();
+  //   api_req.moduleType="deliveryorder";
+  //   api_req.api_url="deliveryorder/shared_delivery";
+  //   api_req.api_type="web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_reqSharePerm.action="shared_delivery";
+  //   api_reqSharePerm.user_id=localStorage.getItem('erp_c4c_user_id');
+  //   api_reqSharePerm.deliveryId=deliveryId;
+  //   api_reqSharePerm.do_view=!doView;
+  //   api_req.element_data=api_reqSharePerm;
+
+  //   this.serverService.sendServer(api_req).subscribe((response:any)=>{
+  //     if(response.status==true){
+        
+     
+  //       this.doView_SharePermission=!doView;
+  //       this.DOList({});
+  //     }
+  //   })
+
+  // }
+  sharePermission(deliveryId:any,doView:any) {
+    Swal.fire({
+      title: 'Are you sure to change Permission Status?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result: any) => {
+      if (result.value) {
+
+        let api_req:any=new Object();
+        let api_reqSharePerm:any=new Object();
+        api_req.moduleType="deliveryorder";
+        api_req.api_url="deliveryorder/shared_delivery";
+        api_req.api_type="web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqSharePerm.action="shared_delivery";
+        api_reqSharePerm.user_id=localStorage.getItem('erp_c4c_user_id');
+        api_reqSharePerm.deliveryId=deliveryId;
+        api_reqSharePerm.do_view=!doView;
+        api_req.element_data=api_reqSharePerm;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.doView_SharePermission=!doView;
+      
+            iziToast.success({
+              message: "Permission Status changed successfully",
+              position: 'topRight'
+            });
+            this.DOList({});
+          } else {
+            iziToast.warning({
+              message: "Permission Status not changed. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error);
+          };
+      }
+    })
+
+
   }
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;

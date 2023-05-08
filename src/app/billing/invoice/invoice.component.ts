@@ -258,6 +258,9 @@ export class InvoiceComponent implements OnInit {
   share_access_state: any;
   postal_send_color: any;
   post_send_status: any;
+  //email
+ 
+  email_TemplateSelection: boolean = false;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
@@ -747,6 +750,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice(data: any) {
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -772,17 +776,11 @@ export class InvoiceComponent implements OnInit {
 
     api_req.element_data = api_quotationList;
 
-    // this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //   if (response != '') {
-
-    //     this.PI_list = response;
-
-    //   }
-
-    // });
+  
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("PI list", response);
       if (response) {
+        this.spinner.hide();
         this.PI_list = response.proforma_details;
         this.recurring_Status = response.proforma_details[0].recuring_status;
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
@@ -1264,7 +1262,10 @@ export class InvoiceComponent implements OnInit {
       };
   }
   getEmailDetails(id: any) {
-    $('temp').val('');
+    this.email_TemplateSelection= false;
+    $('#temp').val('');
+  
+    $('input:checkbox').removeAttr('checked');
     this.emailForm.reset();
     this.spinner.show();
     this.Email_BillId = id;
