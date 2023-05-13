@@ -72,7 +72,11 @@ import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didp
 import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
 import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component'; 
 import { EditDoComponent } from './billing/delivery-order/edit-do/edit-do.component'; 
-import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component'; 
+import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component';
+import { PurchaseOrderComponent } from './billing/purchase-order/purchase-order.component';
+import { AddPurchaseOrderComponent } from './billing/purchase-order/add-purchase-order/add-purchase-order.component';
+import { EditPurchaseOrderComponent } from './billing/purchase-order/edit-purchase-order/edit-purchase-order.component'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -124,7 +128,10 @@ import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component';
      EditDidpiComponent,
      DeliveryOrderComponent,
      EditDoComponent,
-     AddDoComponent
+     AddDoComponent,
+     PurchaseOrderComponent,
+     AddPurchaseOrderComponent,
+     EditPurchaseOrderComponent
      
     
   ],

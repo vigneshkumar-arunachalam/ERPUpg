@@ -628,7 +628,7 @@
                                     [attr.readonly]="isReadOnly"   formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
                                     <input type="hidden" class="form-control" style="text-align: right;"
                                         formControlName="final_dis_type" id="final_discount_type"
-                                        [(ngModel)]="finalDiscountType" />
+                                        [(ngModel)]="finalDiscountType_model" />
                                     <input type="hidden" class="form-control" style="text-align: right;"
                                         formControlName="final_dis_val" id="final_discount_val"
                                         [(ngModel)]="finalDiscountVal" />
@@ -693,7 +693,7 @@
 
                                     <div class="col-lg-6">
                                         <input type="number" class="form-control" [(ngModel)]="grandTotal"
-                                        [attr.readonly]="isReadOnly"    formControlName="section3_grand_total" (change)="totalCalculate();" />
+                                        [attr.readonly]="isReadOnly" id="grandTotal_id"   formControlName="section3_grand_total" (change)="totalCalculate();" />
                                     </div>
 
                                 </div>

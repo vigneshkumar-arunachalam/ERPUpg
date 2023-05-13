@@ -9,6 +9,10 @@
                 <button type="button" title="Add New Proforma Invoice" class="btn btn-primary btn-default btn-squared"
                 (click)="addDidGo()" style="margin-right: 30px;"><i class="fas fa-plus" style="margin-right:0;"></i>
                 </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+                data-target="#searchInvoiceFormId">
+                <i class="fas fa-search" style="margin-right:0;"></i>
+              </button>
               </div>
             </div>
             <div class="card-body">
@@ -542,3 +546,123 @@
   </div>
 </div>
 <!-------------------------------------------- end Share permission -------------------------->
+
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchInvoiceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced search</h2>
+      
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="searchInvoiceForm">
+          <div class="row">
+            <div class="col-lg-3 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Biller Name</label>
+                <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
+                  <input type="checkbox" id="{{biller.billerId}}"
+                  formControlName="search_billerName" (change)="searchBillerNameCHK(biller.billerId,$event)">
+                  
+                  {{biller.billerName}}
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <div class="form-group row">
+                  <div class="ng-autocomplete">
+                      <label for="companyName" class="col-lg-12 ">Search Text</label>
+                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                          formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                          (inputChanged)='searchCustomerData($event)'
+                          
+                          (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                          [notFoundTemplate]="notFoundTemplate">
+                      </ng-autocomplete>
+    
+                      <ng-template #itemTemplateCustomer let-item>
+                          <a [innerHTML]="item.customerName"></a>
+                      </ng-template>
+    
+                      <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                      </ng-template>
+                  </div>
+    
+              </div>
+            </div>
+            <div class="col-lg-2 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Years</label>
+                <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
+                  <input type="checkbox" id="{{yrs}}"
+                  formControlName="years" (change)="yearsCHK(yrs,$event)">
+                  <!-- <input type="checkbox"> -->
+               
+                  {{yrs}}
+                </div>
+              </div>
+            </div>
+           
+            <div class="col-lg-4 searchScrollCss">
+              <div class="form-group">
+                <label for="temp1" class="col-lg-12 ">Others</label>
+                <!-- <div class="col-lg-12 " *ngFor="let srs of searchOthers;let i =index">
+                  
+                  <input type="checkbox" id="{{srs}}"
+                  formControlName="others"  (change)="SearchOtherCheckAllCHK(srs,$event)">
+                  {{srs}}
+                </div> -->
+                <div class="col-lg-12 ">
+                  
+                  <input type="checkbox" 
+                  formControlName="recurring_only"  (change)="recurring_onlyCHK($event)">
+                  Select Recuring Only
+                  <br>
+                  <input type="checkbox" 
+                  formControlName="dont_select_did_invoice"  (change)="dont_select_did_invoiceCHK($event)">
+                  Don't Select DID Invoice <br>
+                  <input type="checkbox" 
+                  formControlName="RevenueTypeWiseShow"  (change)="RevenueTypeWiseShowCHK($event)">
+                  Revenue Type Wise Show  
+                </div>
+                <div class="col-lg-12" *ngIf="(CBV_RevenueTypeWiseShow==true)">
+                  <select id="revenueType" class="form-control" 
+                  (change)="handleChange_RevenueTypeWiseShow($event)" formControlName="revenueTypewiseCBKshow">
+                    <option [ngValue]="null" selected >Select Invoice Type</option>
+                    <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
+                      {{rev.revenue_type_name}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+        </form>
+
+      </div> 
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary"  (click)="getInvoice({})">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>

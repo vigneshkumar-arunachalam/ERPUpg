@@ -59,6 +59,7 @@ export class EditquotationnewComponent implements OnInit {
 
   finalDiscount: any;
   finalDiscountType: any;
+  finalDiscountType_model: any;
   finalDiscountVal: any;
   // net_amt = $('#pd_netPrice_' + a).val();
   grandTotal: any;
@@ -1239,8 +1240,23 @@ this.spinner.show();
       this.finalTax = 0;
     }
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
+    this.grossTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
+
+     if(this.finalDiscountType_model=='per'){
+      
+      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
+      
+ 
+     }else if(this.finalDiscountType_model=='amt'){
+       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
+     }
+
+
+    
   }
+
+  
+  
   keyPress(event: any, i: any) {
     this.quotationPriceKey = i;
     var key = event.target.value;
@@ -1391,7 +1407,7 @@ this.spinner.show();
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
     var price: any;
-    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+     console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 

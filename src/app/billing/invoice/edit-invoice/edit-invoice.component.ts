@@ -101,6 +101,7 @@ export class EditInvoiceComponent implements OnInit {
   //calculation
   finalDiscount: any;
   finalDiscountType: any;
+  finalDiscountType_model: any;
   finalDiscountVal: any;
   sub_dis_val: any;
   sub_dis_type: any;
@@ -349,10 +350,8 @@ export class EditInvoiceComponent implements OnInit {
     this.addresses.removeAt(i);
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
-    this.totalCalculate();
-    setTimeout(() => {
-      this.saveGrossDiscount();
-    }, 500);
+   // this.totalCalculate();
+   
   }
   // logo......
 
@@ -374,10 +373,10 @@ export class EditInvoiceComponent implements OnInit {
 
     this.addresses.removeAt(i);
     this.totalCalculate();
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      this.finalDiscountCalc()
-    }, 500);
+    //   this.finalDiscountCalc()
+    // }, 500);
 
 
   }
@@ -952,6 +951,7 @@ export class EditInvoiceComponent implements OnInit {
           'section3_logo': response.billing_pararent_details[0].logo,
           'section3_select_additional_signature': response.quot_signature_show_state,
         });
+        console.log('==finalDiscountVal=='+this.finalDiscountVal);
         this.received_signature_state = response.billing_pararent_details[0].received_signature;
         this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
@@ -972,6 +972,12 @@ export class EditInvoiceComponent implements OnInit {
         }
 
         this.getProformaBillerDetails();
+        
+        setTimeout(() => {
+          this.totalCalculate()
+        }, 1500);
+
+
       }
       else {
         this.spinner.hide();
@@ -1199,7 +1205,8 @@ export class EditInvoiceComponent implements OnInit {
 
 
     api_updatePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
-    api_updatePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
+    api_updatePI_req.final_dis_type = $('#final_discount_type').val();
+    // this.addPI_section3.value.final_dis_type;
     api_updatePI_req.discountPer = this.addPI_section3.value.final_dis_val;
     //row-3
     api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
@@ -1354,6 +1361,7 @@ export class EditInvoiceComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
+   // this.finalDiscountCalc();
 
   }
   extraFees() {
@@ -1467,8 +1475,19 @@ export class EditInvoiceComponent implements OnInit {
       this.bankingCharge = 0;
     }
 
+    if(this.finalDiscountType_model=='per'){
+      
+      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
+      
+ 
+     }else if(this.finalDiscountType_model=='amt'){
+       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
+     }
+
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
+
+    
   }
   keyPress(event: any, i: any) {
     this.invocePriceKey = i;

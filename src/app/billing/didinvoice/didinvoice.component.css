@@ -215,3 +215,6 @@ border-radius: 50%;
   font-weight: 400!important;
 }
 
+#searchInvoiceFormId .modal-dialog{
+  max-width: 95%;
+}

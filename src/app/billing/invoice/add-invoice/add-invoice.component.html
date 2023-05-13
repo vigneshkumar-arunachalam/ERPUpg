@@ -707,263 +707,263 @@
         </div>
     </form>
     <form [formGroup]="addPI_section3">
-        <section class="overall">
-            <section class="left_section">
+<section class="overall">
+<section class="left_section">
 
-            </section>
+</section>
 
-            <section class="right_section">
-
-
-                <div class="col-lg-12">
+<section class="right_section">
 
 
-                    <div class="row">
+    <div class="col-lg-12">
+
+
+        <div class="row">
 
 
 
-                        <div class="col-lg-12">
+            <div class="col-lg-12">
 
-                            <div class="row d-flex">
-                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                <div class="row d-flex">
+                    <div class="col-lg-6 mt-2" style="text-align: right;">
 
-                                    <span> <label class="col-form-label">Gross
-                                            Total(Rs.)</label></span>
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                    [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
-                                </div>
-                            </div>
+                        <span> <label class="col-form-label">Gross
+                                Total(Rs.)</label></span>
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
+                        [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="col-lg-6">
+                <button class="btn btn-primary mr-2 mt-2" data-toggle="modal"
+                    data-target="#discountFormFinal" (click)="calFinalDiscount()"
+                    style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
+                    (-)</button>
+            </div>
+            <div class="col-lg-6">
+                <div class="d-flex justify-content-center">
+
+
+                    <input type="number" class="form-control  mt-2" [(ngModel)]="finalDiscount"
+                    [attr.readonly]="isReadOnly"     formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
+                    <input type="hidden" class="form-control" style="text-align: right;"
+                        formControlName="final_dis_type" id="final_discount_type"
+                        [(ngModel)]="finalDiscountType" />
+                    <input type="hidden" class="form-control" style="text-align: right;"
+                        formControlName="final_dis_val" id="final_discount_val"
+                        [(ngModel)]="finalDiscountVal" />
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="form-group ml-2 mt-2">
+
+
+                    <select name="billerID" id="billerIDs" class="form-control"
+                        aria-label="Default select example" formControlName="section3_gst_dropdown"
+                        (change)="getTaxCals()">
+                        <option [ngValue]="null" selected >Select Tax</option>
+
+
+
+                        <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
+                            {{tax.combine_val}}
+                        </option>
+                    </select>
+                    <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id" />
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <input type="number" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
+                    [attr.readonly]="isReadOnly"     [(ngModel)]="finalTax" class="form-control mt-2" />
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="d-flex justify-content-center">
+                    <input type="text" class="form-control ml-2 mt-2" placeholder="Shipping"
+                        formControlName="section3_shipping_amt_name_txtbox" />
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
+                        id="shipping_amt_id" class="form-control mt-2" />
+                </div>
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="d-flex justify-content-center">
+                    <input type="text" class="form-control ml-2 mt-2" placeholder="Banking Charge"
+                        formControlName="section3_bankingCharge_amt_name_txtbox" />
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <input type="number" formControlName="section3_bankingCharge_amt_txtbox"
+                        (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+                    <div class="col-lg-6 mt-2" style="text-align: right;">
+                        <label>Net Total (Rs.)</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <input type="number" class="form-control" [(ngModel)]="grandTotal"
+                        [attr.readonly]="isReadOnly"    [readonly]="isReadonly" formControlName="section3_grand_total" />
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+                    <div class="col-lg-6 mt-2" style="text-align: right;">
+                        <label>Remarks</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" formControlName="section3_remarks" />
+                    </div>
+
+
+                </div>
+            </div>
+
+
+
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <div class="col-lg-6 " style="text-align: right;">
+                        <label>Previous Due</label>
+                    </div>
+                    
+
+                    <div class="col-lg-6">
+                        <input type="checkbox" [(ngModel)]="previousDue"
+                            formControlName="section3_previousDue" (change)="cbk_fn_previousDue($event)" />
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+                    <div class="col-lg-6 " style="text-align: right;">
+                        <label>Add to terms and condition</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <input type="checkbox" [(ngModel)]="chkTermsandcondition"
+                            formControlName="section3_termCondition"
+                            (change)="chkTermsandconditionEvent($event)" />
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+                    <div class="col-lg-6 " style="text-align: right;">
+                        <label>Add to Received and Authorized Signature/stamp</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <input type="checkbox" [(ngModel)]="chkReceivedAuthorizedSignature"
+                            formControlName="section3_receivedAuthorizedSignature"
+                            (change)="chkReceivedAuthorizedSignatureEvent($event)" />
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-6 mt-2" style="text-align: right;">
+                    <label style="font-style: italic;">
+                        (Signature not available. Ask your administrator to upload your
+                        signature if required)
+                    </label>
+
+                </div>
+            </div>
+
+            <!-- 
+                *ngIf="invoiceAddSignature_state==0"
+                    *ngIf="(invoiceAddSignature_state==1)"
+                -->
+            <div class="col-lg-12">
+                <div class="form-group row ">
+                    <div class="col-lg-6 mt-2" style="text-align: right;">
+                        <label>
+                            Add to Signature
+                        </label>
+
+                    </div>
+                    <div class="col-lg-6">
+                        <input type="checkbox" [(ngModel)]="selectAdditionalSign"
+                            formControlName="section3_select_additional_signature"
+                            (change)="eventCheckSelectAdditionalSignature($event)" checked="invoiceAddSignature_state==1?'checked':''" /><br>
+                        <div *ngIf="this.checkbox_selectAdditionalSignature==true">
+                            <img src="{{this.invoiceAddSignature_filename}}"
+                                alt="No image to display " height="80px" width="100px">
                         </div>
-
-
-
-                        <div class="col-lg-6">
-                            <button class="btn btn-primary mr-2 mt-2" data-toggle="modal"
-                                data-target="#discountFormFinal" (click)="calFinalDiscount()"
-                                style="padding: 0px;width:120px;margin-right: 0px!important;float: right;height: 42px;">Discount
-                                (-)</button>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="d-flex justify-content-center">
-
-
-                                <input type="number" class="form-control  mt-2" [(ngModel)]="finalDiscount"
-                                [attr.readonly]="isReadOnly"     formControlName="section3_discount_txtbox" id="finalDiscount_amt" />
-                                <input type="hidden" class="form-control" style="text-align: right;"
-                                    formControlName="final_dis_type" id="final_discount_type"
-                                    [(ngModel)]="finalDiscountType" />
-                                <input type="hidden" class="form-control" style="text-align: right;"
-                                    formControlName="final_dis_val" id="final_discount_val"
-                                    [(ngModel)]="finalDiscountVal" />
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="form-group ml-2 mt-2">
-
-
-                                <select name="billerID" id="billerIDs" class="form-control"
-                                    aria-label="Default select example" formControlName="section3_gst_dropdown"
-                                    (change)="getTaxCals()">
-                                    <option [ngValue]="null" selected >Select Tax</option>
-
-
-
-                                    <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
-                                        {{tax.combine_val}}
-                                    </option>
-                                </select>
-                                <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id" />
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="number" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
-                                [attr.readonly]="isReadOnly"     [(ngModel)]="finalTax" class="form-control mt-2" />
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control ml-2 mt-2" placeholder="Shipping"
-                                    formControlName="section3_shipping_amt_name_txtbox" />
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
-                                    id="shipping_amt_id" class="form-control mt-2" />
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-6">
-                            <div class="d-flex justify-content-center">
-                                <input type="text" class="form-control ml-2 mt-2" placeholder="Banking Charge"
-                                    formControlName="section3_bankingCharge_amt_name_txtbox" />
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group">
-                                <input type="number" formControlName="section3_bankingCharge_amt_txtbox"
-                                    (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-
-                                <div class="col-lg-6 mt-2" style="text-align: right;">
-                                    <label>Net Total (Rs.)</label>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <input type="number" class="form-control" [(ngModel)]="grandTotal"
-                                    [attr.readonly]="isReadOnly"    [readonly]="isReadonly" formControlName="section3_grand_total" />
-                                </div>
-
-
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-
-                                <div class="col-lg-6 mt-2" style="text-align: right;">
-                                    <label>Remarks</label>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" formControlName="section3_remarks" />
-                                </div>
-
-
-                            </div>
-                        </div>
-
-
-
-
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-                                <div class="col-lg-6 " style="text-align: right;">
-                                    <label>Previous Due</label>
-                                </div>
-                              
-
-                                <div class="col-lg-6">
-                                    <input type="checkbox" [(ngModel)]="previousDue"
-                                        formControlName="section3_previousDue" (change)="cbk_fn_previousDue($event)" />
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-
-                                <div class="col-lg-6 " style="text-align: right;">
-                                    <label>Add to terms and condition</label>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <input type="checkbox" [(ngModel)]="chkTermsandcondition"
-                                        formControlName="section3_termCondition"
-                                        (change)="chkTermsandconditionEvent($event)" />
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-
-                                <div class="col-lg-6 " style="text-align: right;">
-                                    <label>Add to Received and Authorized Signature/stamp</label>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <input type="checkbox" [(ngModel)]="chkReceivedAuthorizedSignature"
-                                        formControlName="section3_receivedAuthorizedSignature"
-                                        (change)="chkReceivedAuthorizedSignatureEvent($event)" />
-                                </div>
-
-
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="col-lg-6 mt-2" style="text-align: right;">
-                                <label style="font-style: italic;">
-                                    (Signature not available. Ask your administrator to upload your
-                                    signature if required)
-                                </label>
-
-                            </div>
-                        </div>
-
-                        <!-- 
-                            *ngIf="invoiceAddSignature_state==0"
-                             *ngIf="(invoiceAddSignature_state==1)"
-                         -->
-                        <div class="col-lg-12">
-                            <div class="form-group row ">
-                                <div class="col-lg-6 mt-2" style="text-align: right;">
-                                    <label>
-                                        Add to Signature
-                                    </label>
-
-                                </div>
-                                <div class="col-lg-6">
-                                    <input type="checkbox" [(ngModel)]="selectAdditionalSign"
-                                        formControlName="section3_select_additional_signature"
-                                        (change)="eventCheckSelectAdditionalSignature($event)" checked="invoiceAddSignature_state==1?'checked':''" /><br>
-                                    <div *ngIf="this.checkbox_selectAdditionalSignature==true">
-                                        <img src="{{this.invoiceAddSignature_filename}}"
-                                            alt="No image to display " height="80px" width="100px">
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-
-                                <div class="col-lg-6 " style="text-align: right;">
-                                    <label>Add Logo, Address, Signature in PDF</label>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <input type="checkbox" [(ngModel)]="chklogoAddressSignature"
-                                        formControlName="section3_logo"
-                                        (change)="chklogoAddressSignatureEvent($event)" />
-                                </div>
-
-
-                            </div>
-                        </div>
-                     
-
-
-
 
                     </div>
                 </div>
-            </section>
-        </section>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+
+                    <div class="col-lg-6 " style="text-align: right;">
+                        <label>Add Logo, Address, Signature in PDF</label>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <input type="checkbox" [(ngModel)]="chklogoAddressSignature"
+                            formControlName="section3_logo"
+                            (change)="chklogoAddressSignatureEvent($event)" />
+                    </div>
+
+
+                </div>
+            </div>
+            
+
+
+
+
+        </div>
+    </div>
+</section>
+</section>
     </form>
 
     <div class="modal-footer">

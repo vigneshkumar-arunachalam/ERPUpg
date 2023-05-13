@@ -1,0 +1,627 @@
+<div class="contents-section">
+    <div class="col-lg-12 mb-30">
+        <div class="card">
+            <div class="card-header color-dark fw-500" style="padding: 5px 440px;    background-color: #d9515147">
+                <h1>Update Purchase Order Details</h1>
+            </div>
+        </div>
+    </div>
+    
+    <form [formGroup]="addDo_section1">
+        <div class="row">
+
+            <div class="col-lg-6">
+
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="cmp_name" class="col-lg-3 col-form-label">Company Name </label>
+                        <div class="col-lg-9">
+                            <select name="enqFormValue" id="cmp_name" class="form-control"
+                                (change)="billerChangeDetails($event)" formControlName="e_companyName">
+
+
+                                <option [ngValue]="null" selected>Select Company Name</option>
+                                <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
+                                    {{comp_name.billerName}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+              
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="PONo" class="col-lg-3 col-form-label">PO No</label>
+                        <div div class="col-lg-9">
+                            <input type="text" id="PONo" class="form-control" formControlName="e_PONo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="PODate" class="col-lg-3 col-form-label">PO Date </label>
+                        <div class="col-lg-9">
+                            <input type="date" id="PODate" class="form-control" formControlName="e_PODate">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 mb-30">
+                <div class="card">
+                    <div class="card-header color-dark fw-500">
+                        Vendor Details
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <!-- <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="customer_name" class="col-lg-3 col-form-label"><span>Customer Name</span></label>
+                        <div class="col-lg-9">
+                            <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
+                                formControlName="e_customer_name" (selected)='searchCustomer_selectDropdownData($event)'
+                                (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+
+                            </ng-autocomplete>
+                            <ng-template #itemTemplateCustomer let-item>
+                                <a [innerHTML]="item.customerName"></a>
+                            </ng-template>
+
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="customer_name" class="col-lg-3 col-form-label"><span>Vendor Name</span></label>
+                        <div class="col-lg-9">
+                            <ng-autocomplete [data]="searchResult_vendor" [searchKeyword]="keywordvendorName"
+                                formControlName="e_vendor_name" (selected)='searchVendor_selectDropdownData($event)'
+                                (inputChanged)='searchVendorData($event)' (inputFocused)='onFocusedVendor($event)'
+                                [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate">
+    
+                            </ng-autocomplete>
+                            <ng-template #itemTemplateVendor let-item>
+                                <a [innerHTML]="item.vendorName"></a>
+                            </ng-template>
+    
+                            <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+
+       
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="vendorComp" class="col-lg-3 col-form-label">Vendor Company</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_vendorCompany">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="address" class="col-lg-3 col-form-label">Address</label>
+                        <div class="col-lg-9">
+                            <textarea class="form-control" rows="4" cols="50" id="address" formControlName="e_customerAddress1"></textarea>
+                            <!-- <input type="text" id="customerAddress1" class="form-control mt-2"
+                                formControlName="customerAddress1">
+                            <input type="text" id="customerAddress2" class="form-control mt-2"
+                                formControlName="customerAddress2">
+                            <input type="text" id="customerAddress3" class="form-control mt-2"
+                                formControlName="customerAddress3"> -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="kind_Attention" class="col-lg-3 col-form-label">Kind Attention</label>
+                        <div class="col-lg-9">
+                            <input type="text" id="kind_Attention" class="form-control"
+                                formControlName="e_kind_Attention">
+                        </div>
+                    </div>
+                </div> -->
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="curr" class="col-lg-3 col-form-label">Currency</label>
+                        <div class="col-lg-9">
+                            <select name="curr" class="form-control" formControlName="e_currency">
+                                <option *ngFor="let currenc of currencyList" value="{{currenc.currencyId}}">
+                                    {{currenc.currency_name}}
+                                </option>
+                            </select>
+                        </div>
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="despatch" class="col-lg-3 col-form-label">Despatch Through</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_despatchThrough">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="payment" class="col-lg-3 col-form-label">Payment</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_payment">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="excRate" class="col-lg-3 col-form-label">Exchange Rate</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_exchangeRate">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="dept" class="col-lg-3 col-form-label">Department</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_department">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="loc" class="col-lg-3 col-form-label">Location</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_location">
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="PGSubsidiary" class="col-lg-3 col-form-label">PG Subsidiary</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_pgsubsidiary">
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+                <div class="col-md-12 col-12" *ngIf="(this.purchaseorder_tinName!='')">
+                    <div class="form-group row">
+                        <label for="regg" class="col-lg-3 col-form-label">{{this.purchaseorder_tinName}}</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_tin" [attr.readonly]="isReadOnly"
+                            id="regg" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12" *ngIf="(this.purchaseorder_cstName!='')">
+                    <div class="form-group row">
+                        <label for="cst" class="col-lg-3 col-form-label">{{this.purchaseorder_cstName}}</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_cst" [attr.readonly]="isReadOnly"
+                            id="cst" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label style="color: #313949 !important;">Billing Address</label>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+
+                    <div class="form-group row">
+                        <label for="attn_name_bill" class="col-lg-3 col-form-label">Attn:Name</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_attn_name_bill">
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="companyName_bill" class="col-lg-3 col-form-label">Company Name</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_companyName_bill">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="address_bill" class="col-lg-3 col-form-label">Address</label>
+                        <div class="col-lg-9">
+
+                            <textarea class="form-control" rows="4" cols="50" formControlName="e_address_bill"></textarea>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-lg-12">
+                        <label style="color: #313949 !important;">shipping Address</label>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="attn_name_ship" class="col-lg-3 col-form-label">Attn:Name</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_attn_name_ship">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="companyName_ship" class="col-lg-3 col-form-label">Company Name</label>
+                        <div class="col-lg-9">
+                            <input type="text" class="form-control" formControlName="e_companyName_ship">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="address_ship" class="col-lg-3 col-form-label">Address</label>
+                        <div class="col-lg-9">
+
+                            <textarea class="form-control" rows="4" cols="50" formControlName="e_address_ship"></textarea>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+                <div class="card-header color-dark fw-500">
+                    Commercial Information
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12">
+            <div class="form-group row">
+
+                <div class="col-lg-4">
+                    <label>Left</label>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_left_1">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_left_2">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_left_3">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_left_4">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_left_5">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <label>Right</label>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_right_1">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_right_2">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_right_3">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_right_4">
+                    </div>
+                    <div class="col-md-12 col-12 mb-2">
+                        <input type="text" class="form-control" formControlName="e_comm_inform_right_5">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+
+    <form [formGroup]="addPI_section2">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
+                        class="col-lg-12 col-form-label">Product Details</h2>
+                </div>
+
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table class="add-contact-table-section" style="width: 100%;">
+                            <thead >
+                                <tr class="userDatatable-header" >
+
+                                    <th style="width:30%"> <span class="userDatatable-title">Product Name</span>
+                                    </th>
+                               
+                                    <th style="width:20%"><span class="userDatatable-title">Quantity</span></th>
+                                    <th style="width:25%"><span class="userDatatable-title">Price</span></th>
+                                    <th style="width:20%"><span class="userDatatable-title">Total</span></th>
+                                    <th style="width: 45px;"></th>
+                             
+
+                                </tr>
+                            </thead>
+                            <tbody style="border-bottom: 1px solid #ddd;" formArrayName="addresses"
+                                *ngFor="let address of addressControls.controls; let i = index;">
+                                <tr [formGroupName]="i">
+                                    <td colspan="12">
+                                        <table style="width: 100%;">
+                                            <tr class="marginSpace">
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="text" class="form-control mt-2 mb-2"
+                                                            formControlName="prodName" id="prodName_{{i}}" />
+                                                    </div>
+                                                    <div class="userDatatable-content">
+                                                        <textarea
+                                                            style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                            class="form-control mt-2 mb-2" row="2"
+                                                            formControlName="desc" id="desc_{{i}}"></textarea>
+                                                    </div>
+                                                </td>
+
+
+                                                <td valign="top">
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control  mt-2 mb-2"
+                                                            formControlName="quantity" id="quantity_{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <td valign="top">
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control  mt-2 mb-2"
+                                                            formControlName="price" id="price_{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <td valign="top">
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control  mt-2 mb-2"
+                                                            formControlName="total" id="total_{{i}}" />
+                                                    </div>
+                                                </td>
+
+                                                <td  valign="top" style="width: 45px;">
+                                                    <div *ngIf="i>0" class="userDatatable-content d-inline-block "
+                                                        style="margin-left: 15px;">
+                                                        <button type="button" class="btn btn-danger btn-sm  mt-2 mb-2"
+                                                            (click)="removeAddress(i)">X</button>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-right">
+                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2"
+                            (click)="editAddress" style="margin-right: 10px;"><i class="fas fa-plus"
+                                style="margin-right:0;"> Add Product</i>
+                        </button>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+        </div>
+    </form>
+    <form [formGroup]="addPI_section3">
+        <section class="overall">
+            <section class="left_section">
+            </section>
+            <section class="right_section">
+                <div class="col-lg-12">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+
+                            <div class="row d-flex">
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+
+                                    <span> <label class="col-form-label">Gross
+                                            Total(Rs.)</label></span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
+                                    [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group ml-2 mt-2">
+
+
+                                <select name="billerID" id="billerIDs" class="form-control"
+                                    aria-label="Default select example" formControlName="section3_gst_dropdown"
+                                    (change)="getTaxCals()">
+                                    <option [ngValue]="null" selected >Select Tax</option>
+
+
+
+                                    <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
+                                        {{tax.tax_name}}
+                                    </option>
+                                </select>
+                                <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="number" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
+                                [attr.readonly]="isReadOnly"     [(ngModel)]="finalTax" class="form-control mt-2" />
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-center">
+                                <input type="text" class="form-control ml-2 mt-2" placeholder="S & H"
+                                    formControlName="section3_shipping_amt_name_txtbox" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
+                                    id="shipping_amt_id" class="form-control mt-2" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="d-flex justify-content-center">
+                                <input type="text" class="form-control ml-2 mt-2" placeholder="Others"
+                                    formControlName="section3_bankingCharge_amt_name_txtbox" />
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <input type="number" formControlName="section3_bankingCharge_amt_txtbox"
+                                    (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>Net Total (Rs.)</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="number" class="form-control" [(ngModel)]="grandTotal"
+                                    [attr.readonly]="isReadOnly"    [readonly]="isReadonly" formControlName="section3_grand_total" />
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12">
+                            <div class="form-group row">
+
+                                <div class="col-lg-6 mt-2" style="text-align: right;">
+                                    <label>Remarks</label>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_remarks" />
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-6 mt-2" style="text-align: right;">
+                                <label style="font-style: italic;">
+                                    (Signature not available. Ask your administrator to upload your
+                                    signature if required)
+                                </label>
+
+                            </div>
+                        </div>
+
+                        
+
+                    </div>
+                </div>
+            </section>
+        </section>
+    </form>
+
+
+    <div class="footerButton">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePurchaseOrder()">
+            Update
+        </button>
+        <button type="button" class="btn btn-dark ml-4" data-dismiss="modal" (click)="gotoPurchaseOrderList()">
+            Cancel
+        </button>
+    </div>
+</div>

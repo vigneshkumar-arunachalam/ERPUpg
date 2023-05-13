@@ -101,6 +101,7 @@ export class EditPIComponent implements OnInit {
   //calculation
   finalDiscount: any;
   finalDiscountType: any;
+  finalDiscountType_model: any;
   finalDiscountVal: any;
   sub_dis_val: any;
   sub_dis_type: any;
@@ -337,10 +338,10 @@ export class EditPIComponent implements OnInit {
     this.addresses.removeAt(i);
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
-    this.totalCalculate();
-    setTimeout(() => {      
-       this.saveGrossDiscount();
-    }, 500);
+   // this.totalCalculate();
+    // setTimeout(() => {      
+    //    this.saveGrossDiscount();
+    // }, 500);
 
   }
 
@@ -1002,37 +1003,11 @@ export class EditPIComponent implements OnInit {
        this.received_signature_state = response.billing_pararent_details[0].received_signature;
        this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
-        // this.addPI_section3.patchValue({
-        //   //row-1
-
-        //   'section3_gross_total': response.quotation_details[0].gross_total,
-        //   //row-2
-        //   //  'section3_discount_txtbox': this.finalDiscount,
-        //   //  'final_dis_val': this.finalDiscountVal,
-        //   //  'final_dis_type': this.finalDiscountType,
-        //   // +2 hidden fields
-        //   //row-3
-        //   'section3_gst_dropdown': response.billing_pararent_details[0].tax_id1,
-        //   'section3_taxAmt_txtbox': response.billing_pararent_details[0].tax_amt1,
-        //   'section3_tax_per_hd': response.billing_pararent_details[0].tax_per1,
-        //   //row-4
-        //   'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
-        //   'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shipping_amt,
-        //   //row-5
-        //   'section3_grand_total': response.billing_pararent_details[0].grand_total,
-        //   //row-7
-        //   'section3_remarks': response.billing_pararent_details[0].remarks,
-
-        //   //row-8
-        //   'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
-        //   //row-9
-        //   'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
-        //   //row-10
-        //   'section3_logo': response.billing_pararent_details[0].logo,
-        // });
-        // this.loadADD();
+       
+        
          this.editAddress();
          this.removeAddresstest_test(response.billchild_details.length);
+        
         // console.log(response.billchild_details.length);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
@@ -1046,9 +1021,13 @@ export class EditPIComponent implements OnInit {
 
           }
         }
+
+       
         this.getProformaBillerDetails();
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signtureId);
-
+        setTimeout(() => {
+          this.totalCalculate()
+        }, 1500);
     
        
       }
@@ -1447,7 +1426,7 @@ export class EditPIComponent implements OnInit {
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
         netAmt = parseFloat($('#pd_netPrice_' + a).val());
-        console.log('-this.finalDiscount---'+this.finalDiscount);
+        console.log('-this.finalDiscount---'+netAmt+'===='+this.finalDiscount);
        // tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
       //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
       //  tax_amt_tot += tax_amt;
@@ -1488,7 +1467,14 @@ export class EditPIComponent implements OnInit {
       this.bankingCharge = 0;
     }
 
-    this.finalDiscountCalc();
+    if(this.finalDiscountType_model=='per'){
+      
+      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
+      
+ 
+     }else if(this.finalDiscountType_model=='amt'){
+       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
+     }
 
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)+ parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
@@ -1741,7 +1727,7 @@ export class EditPIComponent implements OnInit {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#finalDiscount_amt').val();
       $('#enableFinalDiscount').val(final_dis_val);
-      console.log('33' + disType);
+      console.log('33' + final_dis_val);
     } else {
       console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
@@ -1786,7 +1772,7 @@ export class EditPIComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-    this.finalDiscountCalc();
+    //this.finalDiscountCalc();
   }
   extraFees() {
     var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;
