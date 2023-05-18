@@ -814,7 +814,7 @@ export class EditPurchaseOrderComponent implements OnInit {
   }
 
   keyPress(event: any, i: any) {
-    alert("hi")
+    
     this.invoicePriceKey = i;
     this.row_cnt_mod = i;
     var key = event.target.value;
@@ -826,7 +826,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     }
 
     var v = $('#quantity_' + i) * $('#price_' + i);
-    alert(v)
+   
     $('#pd_Total_' + i).val(v);
     $('#pd_netPrice_' + i).val(v);
     var gtotel = 0;

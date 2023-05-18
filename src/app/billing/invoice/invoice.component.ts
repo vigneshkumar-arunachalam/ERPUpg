@@ -761,6 +761,7 @@ export class InvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "quotation_list";
     api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_quotationList.Search_BillerId=this.edit_array_SearchBiller_Checkbox;
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.search_txt = this.searchResult_CustomerName;
@@ -867,6 +868,17 @@ export class InvoiceComponent implements OnInit {
     this.router.navigate(['/EditInvoice'], {
       queryParams: {
         e_editBillID: editbillID,
+      }
+    });
+  }
+
+  duplicatePIGo(id: any) {
+    var editDuplicateID = id;
+    this.router.navigate(['/EditInvoice'])
+
+    this.router.navigate(['/EditInvoice'], {
+      queryParams: {
+        e_editDuplicateID: editDuplicateID,
       }
     });
   }
@@ -1147,16 +1159,17 @@ export class InvoiceComponent implements OnInit {
     let api_req: any = new Object();
     let api_processpaymentEdit: any = new Object();
     api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/proforma_invoice_payment_details";
+    api_req.api_url = "invoice/invoice_payment_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_processpaymentEdit.action = "proforma_invoice_payment_details";
+    api_processpaymentEdit.action = "invoice_payment_details";
 
     api_processpaymentEdit.billId = id;
     api_processpaymentEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_processpaymentEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      alert(response.owing_amount)
       this.spinner.hide();
       if (response.status == true) {
         this.invoiceDetails_payment = response.invoice_details;
@@ -1555,7 +1568,7 @@ export class InvoiceComponent implements OnInit {
   }
   pdf(billId: any) {
 
-    var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
   }
@@ -1682,6 +1695,9 @@ export class InvoiceComponent implements OnInit {
       };
   }
   fileAttachmentEdit(ID: any) {
+    $('#file').val();
+    $('#file').val('');
+
     this.myFiles = [];
     $("#fileAttachmentFormId").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
@@ -2053,6 +2069,8 @@ export class InvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
+      $('#RecurringFormId').modal('hide');
+    
       if (response.status == true) {
         iziToast.success({
           message: "Recurring Details Updated Successfully",
@@ -2069,6 +2087,7 @@ export class InvoiceComponent implements OnInit {
       }
     }),
       (error: any) => {
+        this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -3245,6 +3264,12 @@ export class InvoiceComponent implements OnInit {
     $('#actual_cost_tot').text(actual_cost_tot);
     $('#actual_net_tot').text(actual_cost_net_tot);
     $('#act_diff_amt_tot').text(act_diff_amt_tot);
+  }
+
+  clearFile(){
+    $('#file').val();
+    $('#file').val('');
+
   }
 
 

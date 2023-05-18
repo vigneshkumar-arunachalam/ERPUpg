@@ -619,7 +619,7 @@ export class QuotationnewComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       console.log("qoutation list", response);
       if (response) {
         // Swal.close();
@@ -677,7 +677,7 @@ export class QuotationnewComponent implements OnInit {
     // $("#temp_name").val('');
     // }, 2000);
 
-
+    this.spinner.show();
     $("#addNewQuotationFormId").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
@@ -694,6 +694,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = add_newQuotation_req;
     $("#addNewQuotationFormId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       $("#addNewQuotationFormId").removeAttr("disabled");
       console.log(response);
 
@@ -803,7 +804,7 @@ export class QuotationnewComponent implements OnInit {
     quot_share_req.user_id = this.user_ids;
     api_req.element_data = quot_share_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
       if (response.status == true) {
 
         this.quotationSharedPerson_EditOnLoad_Values = response.access_userid;
@@ -840,6 +841,7 @@ export class QuotationnewComponent implements OnInit {
   }
 
   quotationSharedPersonUpdate() {
+    this.spinner.show();
     let api_req: any = new Object();
     let quot_share_update_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -852,6 +854,7 @@ export class QuotationnewComponent implements OnInit {
     quot_share_update_req.follower_user_id = this.typeConvertionString_quotation_Shared_Permission;
     api_req.element_data = quot_share_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         iziToast.success({
           message: "Share Customer Permission Updated successfully",
@@ -1135,6 +1138,7 @@ export class QuotationnewComponent implements OnInit {
     if (this.quotationApprovedBy == undefined || this.quotationApprovedBy == 'undefined' || this.quotationApprovedBy == '') {
       this.quotationApprovedBy = '';
     }
+    this.spinner.show();
     let api_req: any = new Object();
     let quot_approvalUpdate_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1163,6 +1167,7 @@ export class QuotationnewComponent implements OnInit {
 
     $("#quotationApprovalId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       $("#quotationApprovalId").removeAttr("disabled");
       console.log("response status", response.status);
       if (response.status == true) {
@@ -1209,7 +1214,7 @@ export class QuotationnewComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-
+        this.spinner.show();
         let api_req: any = new Object();
         let delete_quotation_req: any = new Object();
         api_req.moduleType = "quotation";
@@ -1221,6 +1226,7 @@ export class QuotationnewComponent implements OnInit {
         delete_quotation_req.user_id = this.user_ids;
         api_req.element_data = delete_quotation_req;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
             window.location.reload();
             this.quotationList({})
@@ -1269,6 +1275,7 @@ export class QuotationnewComponent implements OnInit {
 
   }
   templateNameUpdate() {
+    this.spinner.show();
 
     let api_req: any = new Object();
     let templateNameUpdate_req: any = new Object();
@@ -1282,7 +1289,7 @@ export class QuotationnewComponent implements OnInit {
     templateNameUpdate_req.template_name = this.setTemplateNameForm.value.txt_templateName;
     api_req.element_data = templateNameUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
 
       console.log("set template name update", response);
       if (response != '') {
@@ -1319,6 +1326,7 @@ export class QuotationnewComponent implements OnInit {
 
   }
   setActualCostSave() {
+    this.spinner.show();
 
     console.log(this.actualCost_ProductList);
     for (let k = 0, i = 1; k < this.actualCost_ProductList.length; k++, i++) {
@@ -1357,6 +1365,7 @@ export class QuotationnewComponent implements OnInit {
     actualCostUpdate_req.values = this.actualCost_ProductList;
     api_req.element_data = actualCostUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log(response);
 
 
@@ -1874,6 +1883,7 @@ export class QuotationnewComponent implements OnInit {
 
   }
   quotationCommentsSave() {
+    this.spinner.show();
 
     let api_req: any = new Object();
     let transactionCommentSave_req: any = new Object();
@@ -1889,7 +1899,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = transactionCommentSave_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         $('#quotationCommentsId').modal('hide');
         iziToast.success({
@@ -1962,7 +1972,7 @@ export class QuotationnewComponent implements OnInit {
     }
   }
   quotationConvertPI() {
-
+this.spinner.show();
     let api_req: any = new Object();
     let api_quotConvertPI_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1977,6 +1987,7 @@ export class QuotationnewComponent implements OnInit {
 
     $("#PIId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       $("#PIId").removeAttr("disabled");
       console.log("response-quotation convert pi", response)
       if (response.status == true) {
@@ -2013,6 +2024,7 @@ export class QuotationnewComponent implements OnInit {
 
   }
   quotationExcelExport(quotationId: any) {
+    this.spinner.show();
     let api_req: any = new Object();
     let api_quotExcel_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -2026,6 +2038,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = api_quotExcel_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       this.ExcelReportResult = response.web_excel_path;
       window.open(this.ExcelReportResult, '_blank')
       console.log("response-quotation convert pi", response)

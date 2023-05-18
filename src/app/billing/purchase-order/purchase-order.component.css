@@ -1,4 +1,4 @@
-.userDatatable table td{padding:4px 0px 4px!important;}
+.userDatatable table td{padding:4px 10px 4px!important;}
 .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
 /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
 .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
@@ -291,7 +291,7 @@ border-radius: 50%;
 label.col-lg-2.col-form-label{text-align: right;}
 
 
-#delivery-order-section .userDatatable table td, #delivery-order-section .userDatatable table th {
+/* #delivery-order-section .userDatatable table td, #delivery-order-section .userDatatable table th {
   padding: 4px 0px 4px!important;
   white-space: normal;
   width: 25%;
@@ -304,7 +304,7 @@ label.col-lg-2.col-form-label{text-align: right;}
 #delivery-order-section .userDatatable table td:nth-child(2), #delivery-order-section .userDatatable table th:nth-child(2),
 #delivery-order-section .userDatatable table td:first-child, #delivery-order-section .userDatatable table th:first-child {
   width: 16%;
-}
+} */
 
 
 

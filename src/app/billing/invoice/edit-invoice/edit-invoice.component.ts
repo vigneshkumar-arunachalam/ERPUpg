@@ -31,6 +31,7 @@ export class EditInvoiceComponent implements OnInit {
   salesRepList: any;
   paymentviaList: any;
   billerID: any;
+  edit_Duplicate_ID:any;
   //edit
   editbillerID: any;
   editResult: any;
@@ -172,6 +173,22 @@ export class EditInvoiceComponent implements OnInit {
         this.editInvoice();
       }
       );
+      
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);
+
+      this.edit_Duplicate_ID = params['e_editDuplicateID'];
+
+
+
+      console.log("edit duplicate id", this.edit_Duplicate_ID);
+
+
+
+      this.editInvoice();
+    }
+    );
     this.loadADD();
 
     this.addressControls.controls.forEach((elt, index) => {
@@ -259,6 +276,8 @@ export class EditInvoiceComponent implements OnInit {
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
       'CASJomPAYLogo_Cbk_Cbk': new FormControl(),
+      'CAS_Cbk': new FormControl(),
+      'DWT_Cbk': new FormControl(),
 
     });
 
@@ -404,7 +423,10 @@ export class EditInvoiceComponent implements OnInit {
         this.addresses.removeAt(i);
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
-        this.totalCalculate();
+        
+     
+              
+        
 
 
         let api_req: any = new Object();
@@ -423,11 +445,233 @@ export class EditInvoiceComponent implements OnInit {
 
         });
 
+        setTimeout(() => {
+          this.calFinalDiscountCalc();
+        }, 1500);
+        
+
+        setTimeout(() => {
+        this.totalCalculate();
+      }, 1500);
+
 
       }
     })
 
 
+    
+
+
+  }
+
+
+  calFinalDiscountCalc() {
+
+    var final_tot = this.grossTotal;
+    var price;
+    var fin_disType = $('#final_discount_type').val();
+    var fin_dis_val = $('#final_discount_val').val();
+    if (fin_disType == 'per') {
+        price = (parseFloat(fin_dis_val) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#finalDiscount_amt').val(price);      
+      
+    } else if (fin_disType == 'amt') {
+       price = fin_dis_val;
+    } 
+
+
+  }
+  finalDiscountCalc() {
+   
+    var enablePercentabeDiscont = $('#enableFinalPercent').val()
+    var enablePriceDiscont = $('#enableFinalDiscount').val()
+    var tax_amt = $('#tax_amt_id').val()
+    var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
+    var final_tot = this.grossTotal;
+    var price: any;
+    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+    $('#final_discount_type').val(disType);
+    this.finalDiscountType = disType;
+
+    console.log('disType' + disType + 'final_tot' + final_tot);
+
+    if (disType == 'per') {
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      if (enablePercentabeDiscont != '') {
+        //  console.log('3333'+final_tot);
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#final_discount').val(price);
+        $('#final_discount_val').val(enablePercentabeDiscont);
+        this.finalDiscountVal = enablePercentabeDiscont;
+        //     price = final_tot - price;
+      } else {
+        $('#final_discount').val('');
+        $('#final_discount_val').val('');
+        this.finalDiscountVal = '';
+        //   console.log('222'+final_tot);
+        price = 0;
+
+      }
+      //   console.log(price);
+    } else {
+      if (enablePriceDiscont == '') {
+        enablePriceDiscont = 0;
+      }
+      price = enablePriceDiscont;
+      $('#final_discount').val(enablePriceDiscont);
+      $('#final_discount_val').val(enablePriceDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
+      console.log('999' + price);
+    }
+
+    if (this.grandTotal > 0) {
+      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
+    }
+
+    console.log('grandTotal' + this.grandTotal);
+    this.finalDiscount = price
+
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1500)
+
+
+  }
+
+
+  saveGrossDiscount() {
+    $('#discountFormFinal').modal('hide');  
+    this.finalDiscountCalc();
+  }
+
+  totalCalculate() {
+
+    // var grs_amt=0;
+    // var net_amt =0;
+    var tax_amt = 0;
+    var tax_amt_tot = 0;
+    var grs_amt = 0;
+    var sub_total_amt = 0;
+
+    let discount_type: any;
+    var total_amt: any;
+    var dis_amt_val: any;
+    var price;
+    var total_amt: any;
+    var addr = this.addPI_section2.value.addresses;
+    var list_cnt = addr.length;
+    //  alert(list_cnt);
+    // var tax_per = $('#tax_per_hd_id').val();
+    //var tax_per = $('#tax_per_hd_id').val();
+    this.finalDiscount = $('#finalDiscount_amt').val();
+    this.shipping_amt = $('#shipping_amt_id').val();
+    this.bankingCharge = $('#bankingCharge_amt_id').val();
+    this.finalTax = 0;
+    var netAmt = 0;
+    // alert(tax_per);
+    for (let a = 0; a < list_cnt; a++) {
+
+      total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
+      $('#pd_Total_' + a).val(total_amt);
+
+
+      discount_type = $('#sub_discount_type_' + a).val();
+      console.log('discount_type' + discount_type);
+      if (discount_type == 'per') {
+        this.sub_dis_val = $('#sub_discount_val_' + a).val();
+        console.log('discount_type1111' + this.sub_dis_val);
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
+        }
+        dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
+        console.log('dis_amt_val' + dis_amt_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
+        $('#pd_netPrice_' + a).val(sub_total_amt);
+        $('#sub_discount_' + a).val(dis_amt_val);
+      } else if (discount_type == 'amt') {
+        // console.log('discount_type222'+discount_type);
+
+        this.sub_dis_val = $('#sub_discount_' + a).val();
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
+        }
+        // console.log('sub_discount_valppp'+this.sub_dis_val);
+        sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
+        $('#pd_netPrice_' + a).val(sub_total_amt);
+      } else {
+        $('#pd_netPrice_' + a).val(total_amt);
+        sub_total_amt = total_amt;
+      }
+
+      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
+        this.net_amt = $('#pd_netPrice_' + a).val();
+        netAmt = parseFloat($('#pd_netPrice_' + a).val());
+        console.log('-this.finalDiscount---' + this.finalDiscount);
+        // tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
+        //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
+        //  tax_amt_tot += tax_amt;
+        tax_amt_tot += netAmt;
+
+      }
+
+
+      // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
+      // $('#pd_netPrice_' + a).val(sub_total_amt);
+      //  alert('total_amt'+total_amt);
+      grs_amt += sub_total_amt;
+
+
+      //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
+      //   alert(grs_amt);
+    }
+
+    this.grossTotalTax = tax_amt_tot;
+    this.grossTotal = grs_amt;
+
+    var fin_disType = $('#final_discount_type').val();
+    var fin_dis_val = $('#final_discount_val').val();
+    if (fin_disType == 'per') {
+        this.finalDiscount = (parseFloat(fin_dis_val) * parseFloat(this.grossTotalTax) / 100).toFixed(2);
+      //  $('#finalDiscount_amt').val(price);      
+      
+    } else if (fin_disType == 'amt') {
+      this.finalDiscount = fin_dis_val;
+    } 
+
+    
+    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
+    if (tax_amt_tot > 0) {
+      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax) - parseFloat(this.finalDiscount)) / 100);
+    }
+
+    this.finalTax = tax_amt_tot.toFixed(2);
+    if (this.shipping_amt == '') {
+      this.shipping_amt = 0;
+    }
+    if (this.finalDiscount == '') {
+      this.finalDiscount = 0;
+    }
+    if (this.finalTax == '' || isNaN(this.finalTax)) {
+      this.finalTax = 0;
+    }
+
+    if (this.bankingCharge == '') {
+      this.bankingCharge = 0;
+    }
+
+    if(this.finalDiscountType_model=='per'){
+      
+      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
+      
+ 
+     }else if(this.finalDiscountType_model=='amt'){
+       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
+     }
+
+    //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
+    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
+
+    
   }
 
 
@@ -792,6 +1036,8 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   editInvoice() {
+    // alert(this.editbillerID)
+    // alert(this.edit_Duplicate_ID)
     this.spinner.show();
     let api_req: any = new Object();
     let api_editPI_req: any = new Object();
@@ -802,7 +1048,20 @@ export class EditInvoiceComponent implements OnInit {
     api_editPI_req.action = "edit_profoma_invoice";
     api_editPI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-    api_editPI_req.billId = this.editbillerID;
+   
+    if(this.edit_Duplicate_ID=='undefined' || this.edit_Duplicate_ID==undefined  ){
+
+      api_editPI_req.duplicateState=0;
+
+      api_editPI_req.billId = this.editbillerID;
+
+    }else{
+      
+
+      api_editPI_req.duplicateState=1;
+      api_editPI_req.billId=this.edit_Duplicate_ID;
+    }
+    
     api_req.element_data = api_editPI_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -884,6 +1143,7 @@ export class EditInvoiceComponent implements OnInit {
             "sub_dis_val": response.billchild_details[index].dis_per,
             "pd_CMon": response.billchild_details[index].current_month == 1 ? true : false,
             "pd_selectTax": response.billchild_details[index].exc_tax_state == 1 ? true : false,
+            
 
           })
 
@@ -974,6 +1234,7 @@ export class EditInvoiceComponent implements OnInit {
         this.getProformaBillerDetails();
         
         setTimeout(() => {
+          
           this.totalCalculate()
         }, 1500);
 
@@ -1139,7 +1400,17 @@ export class EditInvoiceComponent implements OnInit {
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
     api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/update_invoice";
+    if(this.edit_Duplicate_ID=='undefined'  ){
+
+      api_req.api_url = "invoice/update_invoice";
+
+    }else{
+      
+      api_req.api_url = "invoice/insert_invoice";
+    
+    }
+    
+
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_updatePI_req.action = "update_proforma_invoice";
@@ -1359,136 +1630,15 @@ export class EditInvoiceComponent implements OnInit {
 
     // this.totalCalculate();
     setTimeout(() => {
+     
       this.totalCalculate();
     }, 1000)
    // this.finalDiscountCalc();
 
   }
-  extraFees() {
-    // var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;
-    // this.grandTotal = this.grandTotal + parseFloat(fee);
-    // this.extraCharge = parseFloat(fee);
-    // this.bankingCharge = parseFloat(bankingFee);
-    this.totalCalculate();
-  }
+  
 
-  totalCalculate() {
-
-    // var grs_amt=0;
-    // var net_amt =0;
-    var tax_amt = 0;
-    var tax_amt_tot = 0;
-    var grs_amt = 0;
-    var sub_total_amt = 0;
-
-    let discount_type: any;
-    var total_amt: any;
-    var dis_amt_val: any;
-
-    var total_amt: any;
-    var addr = this.addPI_section2.value.addresses;
-    var list_cnt = addr.length;
-    //  alert(list_cnt);
-    // var tax_per = $('#tax_per_hd_id').val();
-    //var tax_per = $('#tax_per_hd_id').val();
-    this.finalDiscount = $('#finalDiscount_amt').val();
-    this.shipping_amt = $('#shipping_amt_id').val();
-    this.bankingCharge = $('#bankingCharge_amt_id').val();
-    this.finalTax = 0;
-    var netAmt = 0;
-    // alert(tax_per);
-    for (let a = 0; a < list_cnt; a++) {
-
-      total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
-      $('#pd_Total_' + a).val(total_amt);
-
-
-      discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
-      if (discount_type == 'per') {
-        this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
-        if (this.sub_dis_val == '') {
-          this.sub_dis_val = 0;
-        }
-        dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
-        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
-        $('#pd_netPrice_' + a).val(sub_total_amt);
-        $('#sub_discount_' + a).val(dis_amt_val);
-      } else if (discount_type == 'amt') {
-        // console.log('discount_type222'+discount_type);
-
-        this.sub_dis_val = $('#sub_discount_' + a).val();
-        if (this.sub_dis_val == '') {
-          this.sub_dis_val = 0;
-        }
-        // console.log('sub_discount_valppp'+this.sub_dis_val);
-        sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
-        $('#pd_netPrice_' + a).val(sub_total_amt);
-      } else {
-        $('#pd_netPrice_' + a).val(total_amt);
-        sub_total_amt = total_amt;
-      }
-
-      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
-        this.net_amt = $('#pd_netPrice_' + a).val();
-        netAmt = parseFloat($('#pd_netPrice_' + a).val());
-        console.log('-this.finalDiscount---' + this.finalDiscount);
-        // tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-        //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
-        //  tax_amt_tot += tax_amt;
-        tax_amt_tot += netAmt;
-
-      }
-
-
-      // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
-      // $('#pd_netPrice_' + a).val(sub_total_amt);
-      //  alert('total_amt'+total_amt);
-      grs_amt += sub_total_amt;
-
-
-      //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
-      //   alert(grs_amt);
-    }
-
-    this.grossTotalTax = tax_amt_tot;
-    this.grossTotal = grs_amt;
-    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
-    if (tax_amt_tot > 0) {
-      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax) - parseFloat(this.finalDiscount)) / 100);
-    }
-
-    this.finalTax = tax_amt_tot.toFixed(2);
-    if (this.shipping_amt == '') {
-      this.shipping_amt = 0;
-    }
-    if (this.finalDiscount == '') {
-      this.finalDiscount = 0;
-    }
-    if (this.finalTax == '' || isNaN(this.finalTax)) {
-      this.finalTax = 0;
-    }
-
-    if (this.bankingCharge == '') {
-      this.bankingCharge = 0;
-    }
-
-    if(this.finalDiscountType_model=='per'){
-      
-      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
-      
- 
-     }else if(this.finalDiscountType_model=='amt'){
-       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
-     }
-
-    //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
-
-    
-  }
+  
   keyPress(event: any, i: any) {
     this.invocePriceKey = i;
     var key = event.target.value;
@@ -1594,6 +1744,7 @@ export class EditInvoiceComponent implements OnInit {
 
     $('#discountFormId').modal('hide');
     this.Discount1Form.reset();
+    
     this.totalCalculate();
 
   }
@@ -1629,67 +1780,6 @@ export class EditInvoiceComponent implements OnInit {
     }
   }
 
-  finalDiscountCalc() {
-    var enablePercentabeDiscont = $('#enableFinalPercent').val()
-    var enablePriceDiscont = $('#enableFinalDiscount').val()
-    var tax_amt = $('#tax_amt_id').val()
-    var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-    var final_tot = this.grossTotal;
-    var price: any;
-    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
-    $('#final_discount_type').val(disType);
-    this.finalDiscountType = disType;
-
-    console.log('disType' + disType + 'final_tot' + final_tot);
-
-    if (disType == 'per') {
-      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-      if (enablePercentabeDiscont != '') {
-        //  console.log('3333'+final_tot);
-        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
-        $('#final_discount').val(price);
-        $('#final_discount_val').val(enablePercentabeDiscont);
-        this.finalDiscountVal = enablePercentabeDiscont;
-        //     price = final_tot - price;
-      } else {
-        $('#final_discount').val('');
-        $('#final_discount_val').val('');
-        this.finalDiscountVal = '';
-        //   console.log('222'+final_tot);
-        price = 0;
-
-      }
-      //   console.log(price);
-    } else {
-      if (enablePriceDiscont == '') {
-        enablePriceDiscont = 0;
-      }
-      price = enablePriceDiscont;
-      $('#final_discount').val(enablePriceDiscont);
-      $('#final_discount_val').val(enablePriceDiscont);
-      this.finalDiscountVal = enablePercentabeDiscont;
-      console.log('999' + price);
-    }
-
-    if (this.grandTotal > 0) {
-      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
-    }
-
-    console.log('grandTotal' + this.grandTotal);
-    this.finalDiscount = price
-
-    setTimeout(() => {
-      this.totalCalculate();
-    }, 1500)
-
-
-  }
-
-
-  saveGrossDiscount() {
-    $('#discountFormFinal').modal('hide');
-    this.finalDiscountCalc();
-  }
 
 
   discount_dynamic_cal() {
@@ -1732,6 +1822,9 @@ export class EditInvoiceComponent implements OnInit {
 
 
   }
+
+
+  
 
   set_display_none(cnt: any) {
     //PN

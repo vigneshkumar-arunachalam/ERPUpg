@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -25,7 +26,7 @@ export class ProfiledetailsComponent implements OnInit {
   signature_billerid: any = [];
   files_Signature: any  = [];
     
-  constructor(private serverService: ServerService, private fb: FormBuilder) { }
+  constructor(private serverService: ServerService, private fb: FormBuilder,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.ProfileDetails();
@@ -39,7 +40,7 @@ export class ProfiledetailsComponent implements OnInit {
     });
   }
   ProfileDetails(){
-
+    this.spinner.show();
     let api_req: any = new Object();
     let api_profDetails: any = new Object();
     api_req.moduleType = "common";
@@ -51,6 +52,7 @@ export class ProfiledetailsComponent implements OnInit {
     api_req.element_data = api_profDetails;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         
        this.firstName=response.user_details[0].firstName;
@@ -72,15 +74,15 @@ export class ProfiledetailsComponent implements OnInit {
           // 'a_selectLogo_mconnect': response[0].mconnect_company_logo,
         });
        
-        iziToast.success({
-          message: "Mconnect Partner Details displayed successfully",
-          position: 'topRight'
+        // iziToast.success({
+        //   message: "Profile Details displayed successfully",
+        //   position: 'topRight'
 
-        });
+        // });
 
       } else {
         iziToast.warning({
-          message: "Mconnect Partner details not available for this Customer. Please try again",
+          message: "Profile details not available for this Customer. Please try again",
           position: 'topRight'
         });
       }

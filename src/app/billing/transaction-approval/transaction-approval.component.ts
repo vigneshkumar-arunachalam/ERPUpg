@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 // import { QuotationnewComponent } from '../quotationnew/quotationnew.component';
@@ -28,7 +28,7 @@ export class TransactionApprovalComponent implements OnInit {
   checkboxCB_BeforeApprovalToggleStatus: any;
   TransactionApprovalID: any;
   commentDisplayResult: any;
-  tabValue:any;
+  tabValue: any;
   //pagination
   recordNotFound = false;
   pageLimit = 10;
@@ -53,16 +53,16 @@ export class TransactionApprovalComponent implements OnInit {
   date: any;
   //count
   quotationApprovalPendingCount: any;
-  mainApprovalPendingCount:any;
+  mainApprovalPendingCount: any;
   //other
-  BeforeApprovalTransactionAproveView_TransactionApproveID:any;
+  BeforeApprovalTransactionAproveView_TransactionApproveID: any;
 
-  constructor(public serverService: ServerService, private fb: FormBuilder, private router: Router) { }
+  constructor(public serverService: ServerService, private fb: FormBuilder, private router: Router, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.getMainList({})
     // this.getTransactionApprovalList({});
-   
+
     this.transactionApprovalViewForm = new FormGroup({
       'billerName': new FormControl(null),
       'Date': new FormControl(null),
@@ -158,7 +158,8 @@ export class TransactionApprovalComponent implements OnInit {
   getSampleCSV() {
     console.log("test");
   }
-  getMainList(data:any){
+  getMainList(data: any) {
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let api_transactionList: any = new Object();
@@ -173,14 +174,14 @@ export class TransactionApprovalComponent implements OnInit {
     api_transactionList.current_page = "";
     api_req.element_data = api_transactionList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response) {
         //  if(=='on'){
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList_Main = response.trans_approve_list;
-        this.tabValue=response.tab_name;
-      
+        this.tabValue = response.tab_name;
+
         this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
         // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
@@ -193,7 +194,8 @@ export class TransactionApprovalComponent implements OnInit {
       }
     });
   }
-  getMainList1(data:any){
+  getMainList1(data: any) {
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let api_transactionList: any = new Object();
@@ -208,13 +210,13 @@ export class TransactionApprovalComponent implements OnInit {
     api_transactionList.current_page = "";
     api_req.element_data = api_transactionList;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response) {
         //  if(=='on'){
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList_Main = response.trans_approve_list;
-        this.tabValue=response.tab_name;
+        this.tabValue = response.tab_name;
         this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
         // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit, 'approval_status': 'on' });
@@ -229,7 +231,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   getTransactionApprovalList(data: any) {
 
-   
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let api_transactionList: any = new Object();
@@ -246,13 +248,13 @@ export class TransactionApprovalComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response) {
         //  if(=='on'){
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList = response.trans_approve_list;
-        this.tabValue=response.tab_name;
+        this.tabValue = response.tab_name;
         this.quotationID = response.link_approval_id;
         this.FromID = response.enquiry_from_id;
         this.Subject = response.enquiry_product_description;
@@ -279,7 +281,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   getTransactionApprovalList1(data: any) {
 
-   
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let api_transactionList: any = new Object();
@@ -296,13 +298,13 @@ export class TransactionApprovalComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response) {
         //  if(=='on'){
         //   this.transApprovalList = response.trans_approve_list;
         //  }
         this.transApprovalList = response.trans_approve_list;
-        this.tabValue=response.tab_name;
+        this.tabValue = response.tab_name;
         this.quotationID = response.link_approval_id;
         this.FromID = response.enquiry_from_id;
         this.Subject = response.enquiry_product_description;
@@ -328,8 +330,8 @@ export class TransactionApprovalComponent implements OnInit {
 
   }
   listDataInfo(list_data: any) {
-   
-    
+
+
     list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
     list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
@@ -337,7 +339,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   BeforeApprovaltransactionApprovalView(billerName: any, transaction_date: any, priority: any) {
 
-   
+
     this.BeforeApprovaltransactionApprovalViewForm.setValue({
       'BeforeApprovalbillerName': billerName,
       'BeforeApprovalDate': transaction_date,
@@ -348,7 +350,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   BeforeApprovaltransactionApprovalView_Main(billerName: any, transaction_date: any, priority: any) {
 
-   
+
     this.BeforeApprovaltransactionApprovalViewForm.setValue({
       'BeforeApprovalbillerName': billerName,
       'BeforeApprovalDate': transaction_date,
@@ -379,44 +381,46 @@ export class TransactionApprovalComponent implements OnInit {
     });
 
   }
-  before( id:any){
-this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
+  before(id: any) {
+    this.BeforeApprovalTransactionAproveView_TransactionApproveID = id;
   }
-  BeforeApprovalTransactionAproveViewFn(){
-   
-      let api_req: any = new Object();
-      let BeforeApprovalTransactionAproveViewFn_req: any = new Object();
-      api_req.moduleType = "transaction_approval";
-      api_req.api_url = "transaction_approval/main_approved";
-      api_req.api_type = "web";
-      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-      BeforeApprovalTransactionAproveViewFn_req.action = "main_approved";
-      BeforeApprovalTransactionAproveViewFn_req.user_id = localStorage.getItem('erp_c4c_user_id');
-      BeforeApprovalTransactionAproveViewFn_req.transaction_approval_id = this.BeforeApprovalTransactionAproveView_TransactionApproveID;
-      api_req.element_data = BeforeApprovalTransactionAproveViewFn_req;
-  
-      this.serverService.sendServer(api_req).subscribe((response: any) => {
-  
-        if (response.status == true) {
-          
-          $("#BeforeApprovaltransactionApprovalViewId").modal("hide");
-          this.getTransactionApprovalList({});
-          iziToast.success({
-            message: "Approved",
-            position: 'topRight'
-          });
-        }
-        else {
-          iziToast.warning({
-            message: "Not Ok",
-            position: 'topRight'
-          });
-        }
-      });
-  
-    
+  BeforeApprovalTransactionAproveViewFn() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let BeforeApprovalTransactionAproveViewFn_req: any = new Object();
+    api_req.moduleType = "transaction_approval";
+    api_req.api_url = "transaction_approval/main_approved";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    BeforeApprovalTransactionAproveViewFn_req.action = "main_approved";
+    BeforeApprovalTransactionAproveViewFn_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    BeforeApprovalTransactionAproveViewFn_req.transaction_approval_id = this.BeforeApprovalTransactionAproveView_TransactionApproveID;
+    api_req.element_data = BeforeApprovalTransactionAproveViewFn_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        $("#BeforeApprovaltransactionApprovalViewId").modal("hide");
+        this.getTransactionApprovalList({});
+        iziToast.success({
+          message: "Approved",
+          position: 'topRight'
+        });
+      }
+      else {
+        iziToast.warning({
+          message: "Not Ok",
+          position: 'topRight'
+        });
+      }
+    });
+
+
   }
   transactionApprovalCommentEdit(id: any) {
+    this.spinner.show();
     this.TransactionApprovalID = id;
 
     let api_req: any = new Object();
@@ -431,7 +435,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     api_req.element_data = transAproveComment_edit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
 
         this.commentDisplayResult = response.comments;
@@ -458,6 +462,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
 
   }
   transactionApprovalCommentEdit_Main(id: any) {
+ 
     this.TransactionApprovalID = id;
 
     let api_req: any = new Object();
@@ -472,6 +477,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     api_req.element_data = transAproveComment_edit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
 
       if (response.status == true) {
 
@@ -490,6 +496,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
         // this.contractList();
       }
     }), (error: any) => {
+      this.spinner.hide();
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
@@ -500,7 +507,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
   }
   transactionApprovalCommentsUpdate($event: MouseEvent) {
 
-
+this.spinner.show();
     let api_req: any = new Object();
     let transAproveComment_update_req: any = new Object();
     api_req.moduleType = "transaction_approval";
@@ -516,6 +523,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
         // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
@@ -539,7 +547,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
   }
   transactionApprovalCommentsUpdate_Main(event: any) {
 
-
+this.spinner.show();
     let api_req: any = new Object();
     let transAproveComment_update_req: any = new Object();
     api_req.moduleType = "transaction_approval";
@@ -552,9 +560,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     transAproveComment_update_req.comments = this.BeforeApprovaltransactionApprovalCommentsForm_main.value.BeforeApprovalComments;
     api_req.element_data = transAproveComment_update_req;
 
-   
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
+this.spinner.hide();
       if (response.status == true) {
         // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
         $("#BeforeApprovaltransactionApprovalCommentsForm_main").modal("hide");
@@ -576,6 +584,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
 
   }
   transactionApprovalCommentsUpdateAfterApproval($event: MouseEvent) {
+    this.spinner.show();
 
     let api_req: any = new Object();
     let transAproveCommentAP_update_req: any = new Object();
@@ -592,6 +601,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
 
     ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
 
@@ -610,6 +620,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
     });
   }
   transactionApprovalCommentsUpdateAfterApproval_Main($event: MouseEvent) {
+    this.spinner.show();
     let api_req: any = new Object();
     let transAproveCommentAP_update_req: any = new Object();
     api_req.moduleType = "transaction_approval";
@@ -625,6 +636,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
 
     ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
 
@@ -642,7 +654,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       }
     });
   }
-  
+
   transactionApprovalQuotationApproved(id: any) {
     Swal.fire({
       title: 'Are you sure?',
@@ -652,9 +664,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Approve it!'
-    }).then((result:any) => {
+    }).then((result: any) => {
       if (result.value) {
-
+this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotAprove_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -667,13 +679,14 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
         api_req.element_data = transAproveQuotAprove_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
             this.getTransactionApprovalList({});
             iziToast.success({
               message: "Approval Success",
               position: 'topRight'
             });
-          }   else {
+          } else {
             iziToast.warning({
               message: "Not Ok",
               position: 'topRight'
@@ -697,9 +710,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Approve it!'
-    }).then((result:any) => {
+    }).then((result: any) => {
       if (result.value) {
-
+this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotAprove_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -712,13 +725,14 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
         api_req.element_data = transAproveQuotAprove_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
             this.getMainList({});
             iziToast.success({
               message: "Approval Success",
               position: 'topRight'
             });
-          }   else {
+          } else {
             iziToast.warning({
               message: "Not Ok",
               position: 'topRight'
@@ -733,7 +747,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
 
 
   }
- 
+
 
   transactionApprovalReject(id: any) {
     Swal.fire({
@@ -746,7 +760,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       confirmButtonText: 'Yes, delete it!'
     }).then((result: any) => {
       if (result.value) {
-  
+this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotReject_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -757,8 +771,9 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
         transAproveQuotReject_req.user_id = localStorage.getItem('erp_c4c_user_id');
         transAproveQuotReject_req.transaction_approval_id = id;
         api_req.element_data = transAproveQuotReject_req;
-  
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
             this.getTransactionApprovalList({});
             iziToast.success({
@@ -777,8 +792,8 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           };
       }
     })
-  
-  
+
+
   }
   transactionApprovalReject_Main(id: any) {
     Swal.fire({
@@ -791,7 +806,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       confirmButtonText: 'Yes, delete it!'
     }).then((result: any) => {
       if (result.value) {
-  
+this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotReject_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -802,8 +817,10 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
         transAproveQuotReject_req.user_id = localStorage.getItem('erp_c4c_user_id');
         transAproveQuotReject_req.transaction_approval_id = id;
         api_req.element_data = transAproveQuotReject_req;
-  
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
+
           if (response.status == true) {
             this.getMainList({});
             iziToast.success({
@@ -822,10 +839,10 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           };
       }
     })
-  
-  
+
+
   }
-  transactionApprovalMainApprovalList(data:any){
+  transactionApprovalMainApprovalList(data: any) {
     var list_data = this.listDataInfo(data);
     Swal.fire({
       title: 'Are you sure?',
@@ -837,7 +854,7 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
       confirmButtonText: 'Yes, delete it!'
     }).then((result: any) => {
       if (result.value) {
-  
+this.spinner.show();
         let api_req: any = new Object();
         let mainappr: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -846,13 +863,14 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         mainappr.action = "main_approval";
         mainappr.user_id = localStorage.getItem('erp_c4c_user_id');
-  
+
         mainappr.off_set = list_data.offset;
-        mainappr.current_page ="";
+        mainappr.current_page = "";
         mainappr.limit_val = list_data.limit;
         api_req.element_data = mainappr;
-  
+
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
             this.getTransactionApprovalList({});
             iziToast.success({
@@ -871,12 +889,12 @@ this.BeforeApprovalTransactionAproveView_TransactionApproveID=id;
           };
       }
     })
-  
+
   }
   transactionApprovalPDF(Id: any) {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + Id + "";
     window.open(url, '_blank');
-  
+
   }
 
   transactionApprovalQuotationEdit(link_approval_id: any, enquiry_from_id: any, enquiry_product_description: any, quotation_valid_day: any, duplicate_version: any) {

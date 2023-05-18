@@ -63,7 +63,7 @@ export class CustomernewallComponent implements OnInit {
   specialEditCustomerValue: any;
   specialEditCustomerRaw: any;
   radioDynamic: any;
-  radioDynamic_Call4tel:any;
+  radioDynamic_Call4tel: any;
   countryList: any;
   currencyList: any;
   billerName: any;
@@ -76,7 +76,7 @@ export class CustomernewallComponent implements OnInit {
   isDisabled: boolean = true;
   customerStatus_radiobox_Value: any = '';
   primary_billcode_array: any = [];
-  customerStatusEdit:any;
+  customerStatusEdit: any;
   // customerStatus_radiobox_Value: any = 'New';
 
   checkbox_EditShippingAddress: boolean = false;
@@ -98,8 +98,8 @@ export class CustomernewallComponent implements OnInit {
   editBillerNameBillerId: any;
   editBillerNameBiller: any;
   editBillerNameCheckboxID_array: any = [];
-  typeConvertionString_editBillName:any;
-  typeConvertionString_editCustomerClass:any;
+  typeConvertionString_editBillName: any;
+  typeConvertionString_editCustomerClass: any;
   //checkbox-add -permission
   addPermissionId: any;
   addPermission: any;
@@ -253,6 +253,7 @@ export class CustomernewallComponent implements OnInit {
   googleAuthentication_status: any;
   googleAuthentication_customerName: any;
   googleAuthentication_userDetails: any;
+  googleAuthentication_customerCode: any;
   googleAuthentication_password: any;
 
   //radio-mconnect,mrvoip,cal4tel
@@ -264,7 +265,7 @@ export class CustomernewallComponent implements OnInit {
   shareCustomerPermission_EditOnLoad_Values: any;
   SharedCustomerPermission_List: any;
   typeConvertionString_Shared_Permission: any;
-  typeConvertionString_addCustomerClass:any;
+  typeConvertionString_addCustomerClass: any;
   //checkbox-invoice_shared customer permission-new
   invoice_shareCustomerPermission_ID: any;
   checkbox_ID_SingleParameter_invoice_Value: any;
@@ -277,7 +278,7 @@ export class CustomernewallComponent implements OnInit {
   selectedValues: any;
 
 
-  constructor(private serverService: ServerService, private fb: FormBuilder,private spinner: NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
     this.billCodeEditForm3 = this.fb.group({
       addresses: this.fb.array([this.editBillCode_FormControl()])
@@ -338,7 +339,7 @@ export class CustomernewallComponent implements OnInit {
   ];
   addEmail(event: MatChipInputEvent): void {
     console.log(event.value);
-    if (event.value.indexOf('@') > 0 )  {
+    if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
       this.emailErrMsg = true;
@@ -347,7 +348,7 @@ export class CustomernewallComponent implements OnInit {
       this.emailErrMsg = false;
     }
     if (value) {
-    
+
       this.emailList.push({ emailParameterName: value });
     }
 
@@ -356,7 +357,7 @@ export class CustomernewallComponent implements OnInit {
 
   editEmail(event: MatChipInputEvent): void {
     console.log(event.value)
-    if (event.value.indexOf('@') > 0 )  {
+    if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
       this.emailErrMsg = true;
@@ -373,7 +374,7 @@ export class CustomernewallComponent implements OnInit {
   addFinanceEmail(event: MatChipInputEvent): void {
 
     console.log(event.value)
-    if (event.value.indexOf('@') > 0 )  {
+    if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
       this.errMsg = true;
@@ -393,7 +394,7 @@ export class CustomernewallComponent implements OnInit {
   editFinanceEmail(event: MatChipInputEvent): void {
     // if (event.value.indexOf('@') > 0 && event.value.indexOf('.com') > 0 && event.value != '' || event.value == '' ||   event.value.indexOf('.co.th') > 0 ||   event.value.indexOf('.global') > 0)
     console.log(event.value)
-    if (event.value.indexOf('@') > 0 ) {
+    if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
       this.errMsg = true;
@@ -457,7 +458,7 @@ export class CustomernewallComponent implements OnInit {
     this.specialEditCustomerRaw = ['[ { "email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "finance_email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "system_discount_3cx": 1, "stripe_recurring_state": 0, "licence_buy_override": 0 }, { "previous_invoice_bill": 7692.75 }, { "pending_bill_days": 20 } ]'];
     this.specialEditCustomerValue = JSON.parse(this.specialEditCustomerRaw);
     this.radioDynamic = [{ "name": "Reseller", "values": "prem" }, { "name": "Distributor", "values": "affi" }];
-    this.radioDynamic_Call4tel = [{ "nameCT": "Reseller", "valuesCT": "prem" },{ "nameCT": "Distributor", "valuesCT": "affi" }];
+    this.radioDynamic_Call4tel = [{ "nameCT": "Reseller", "valuesCT": "prem" }, { "nameCT": "Distributor", "valuesCT": "affi" }];
     this.dropdownSettings_billerName = {
       singleSelection: false,
       idField: 'billerId',
@@ -1391,12 +1392,12 @@ export class CustomernewallComponent implements OnInit {
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   handleChange(evt: any) {
-    if(evt.target.id=='N'){
+    if (evt.target.id == 'N') {
       this.customerStatus_radiobox_Value = "New";
-    }else{
+    } else {
       this.customerStatus_radiobox_Value = "Permanent";
     }
-   
+
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   Radio_Partnertype_C4T(evt: any) {
@@ -1515,7 +1516,7 @@ export class CustomernewallComponent implements OnInit {
     }
 
   }
-  
+
   pageEditLoad() {
     this.checkbox_EdShippingAddress = true;
     if (this.checkbox_EdShippingAddress) {
@@ -1528,7 +1529,7 @@ export class CustomernewallComponent implements OnInit {
       this.editCustomerForm.get("e_ESA_shipto").disable();
       this.editCustomerForm.get("e_ESA_zipcode").disable();
       this.editCustomerForm.get("e_ESA_countryname").disable();
-    
+
     }
     else {
 
@@ -1580,8 +1581,8 @@ export class CustomernewallComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.spinner.hide();
-     
-      if(response.total_cnt==0){
+
+      if (response.total_cnt == 0) {
         iziToast.warning({
           message: "No Matching Records",
           position: 'topRight'
@@ -1624,10 +1625,10 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = get_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
       this.spinner.hide();
-    
-      if(response.total_cnt==0){
+
+      if (response.total_cnt == 0) {
         iziToast.warning({
           message: "No Matching Records",
           position: 'topRight'
@@ -1680,8 +1681,8 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
-     
+
+
       if (response != '') {
         this.searchResult = response.customer_names;
         console.log(" this.searchResult", this.searchResult)
@@ -1769,13 +1770,13 @@ export class CustomernewallComponent implements OnInit {
     }
     else {
 
-      const index = this.editBillerNameCheckboxID_array.findIndex((event:any) => {  return event == data;  });
+      const index = this.editBillerNameCheckboxID_array.findIndex((event: any) => { return event == data; });
 
       if (index > -1) {
         this.editBillerNameCheckboxID_array.splice(index, 1);
       }
       console.log("Final check After  de-selected list", this.editBillerNameCheckboxID_array)
-      
+
       console.log("Final BillerName Checkbox After Deselected selected list", this.editBillerNameCheckboxID_array)
 
     }
@@ -1795,14 +1796,14 @@ export class CustomernewallComponent implements OnInit {
 
       this.editPermissionCheckboxID_array.push(Number(data));
       this.editPermissionCheckboxID_array.join(',');
-      
+
       console.log("Final BillerName Checkbox After checkbox selected list--1", this.editPermissionCheckboxID_array);
     }
     else {
 
-      const index = this.editPermissionCheckboxID_array.findIndex((event:any) => {  return event == data;  });
+      const index = this.editPermissionCheckboxID_array.findIndex((event: any) => { return event == data; });
 
-   //   const index = this.editPermissionCheckboxID_array.findIndex((el:any) => return el == data);
+      //   const index = this.editPermissionCheckboxID_array.findIndex((el:any) => return el == data);
       console.log("Final index", index);
 
       if (index > -1) {
@@ -1837,7 +1838,7 @@ export class CustomernewallComponent implements OnInit {
 
 
   // addCustomerClassificationCHK(data: any, event: any) {
-   
+
   //   this.addCustomerClassificationBillerId = data;
   //   this.addCustomerClassificationBiller = event.target.checked;
   //   console.log(this.addCustomerClassificationBiller)
@@ -1879,11 +1880,11 @@ export class CustomernewallComponent implements OnInit {
       } else {
         this.addCustomerClassificationBillerCheckboxID_array.splice(index, 1);
       }
-     
+
       console.log("Final check After  de-selected list", this.addCustomerClassificationBillerCheckboxID_array)
-    
+
       console.log("Final BillerName Checkbox After Deselected selected list", this.addCustomerClassificationBillerCheckboxID_array)
-      
+
 
     }
     this.typeConvertionString_addCustomerClass = this.editCustomerClassificationBillerCheckboxID_array.toString();
@@ -1902,27 +1903,27 @@ export class CustomernewallComponent implements OnInit {
 
       this.editCustomerClassificationBillerCheckboxID_array.push(data);
       this.editCustomerClassificationBillerCheckboxID_array.join(',');
-    //  this.editCustomerClassificationBillerCheckboxID_array.sort();
-    //  alert(this.editCustomerClassificationBillerCheckboxID_array)
+      //  this.editCustomerClassificationBillerCheckboxID_array.sort();
+      //  alert(this.editCustomerClassificationBillerCheckboxID_array)
       console.log("Final customer classification(edit) Checkbox After checkbox selected list", this.editCustomerClassificationBillerCheckboxID_array);
     }
     else {
-     // const index: number = this.editCustomerClassificationBillerCheckboxID_array.indexOf(data);
+      // const index: number = this.editCustomerClassificationBillerCheckboxID_array.indexOf(data);
 
-     const index = this.editCustomerClassificationBillerCheckboxID_array.findIndex((event:any) => {  return event == data;  });
+      const index = this.editCustomerClassificationBillerCheckboxID_array.findIndex((event: any) => { return event == data; });
 
       if (index > -1) {
         this.editCustomerClassificationBillerCheckboxID_array.splice(index, 1);
-      } 
+      }
       console.log("Final check After  de-selected list", this.editCustomerClassificationBillerCheckboxID_array)
-    
+
       console.log("Final BillerName Checkbox After Deselected selected list", this.editCustomerClassificationBillerCheckboxID_array)
-      
+
 
     }
     this.typeConvertionString_editCustomerClass = this.editCustomerClassificationBillerCheckboxID_array.toString();
 
-  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editCustomerClass)
+    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editCustomerClass)
 
   }
   handle_radioChange_AccountManager(event: any) {
@@ -2015,7 +2016,7 @@ export class CustomernewallComponent implements OnInit {
   }
   CHKAll_CustomerClassifSelectAll(event: any) {
 
-  
+
     if (event.target.checked == true) {
       var checkAllCC_ID: any = [];
       console.log("CHKAll_CustomerClassifSelectAll", this.customerType_list)
@@ -2159,7 +2160,7 @@ export class CustomernewallComponent implements OnInit {
   // }
 
   viewCustomer(id: any) {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let view_customer_req: any = new Object();
     api_req.moduleType = "customer";
@@ -2172,6 +2173,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = view_customer_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         this.viewCustomerForm.patchValue({
           'view_company_Name': response.result.customer_details[0].customerName,
@@ -2239,19 +2241,19 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
 
-    
+
     if (this.addCustomer.value.company_Code === null) {
-      
+
       iziToast.warning({
         message: "Company Code Missing",
         position: 'topRight'
       });
       Swal.close();
       return false;
-    }else{
+    } else {
       add_customer_req.customerCode = this.addCustomer.value.company_Code;
     }
-    
+
     if (this.searchResultTest === null || this.searchResultTest === undefined) {
 
       iziToast.warning({
@@ -2260,7 +2262,7 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
-    }else{
+    } else {
       add_customer_req.customerName = this.searchResultTest;
     }
     if (this.addCustomer.value.defaultBillerName === null || this.addCustomer.value.defaultBillerName == '' || this.addCustomer.value.defaultBillerName === undefined) {
@@ -2271,11 +2273,11 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
-    }else{
+    } else {
       add_customer_req.def_biller_id = this.addCustomer.value.defaultBillerName;
     }
 
-    if (this.addBillerNameCheckboxID_array === null ||this.addBillerNameCheckboxID_array == '' || this.addBillerNameCheckboxID_array === undefined) {
+    if (this.addBillerNameCheckboxID_array === null || this.addBillerNameCheckboxID_array == '' || this.addBillerNameCheckboxID_array === undefined) {
 
       iziToast.warning({
         message: " Biller Name Missing",
@@ -2283,13 +2285,13 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
-    }else{
+    } else {
       add_customer_req.company_name = this.addBillerNameCheckboxID_array;
     }
 
-    
-    
-   
+
+
+
     if (this.addCustomerClassificationBillerCheckboxID_array === null || this.addCustomerClassificationBillerCheckboxID_array == '' || this.addCustomerClassificationBillerCheckboxID_array === undefined) {
 
       iziToast.warning({
@@ -2298,11 +2300,11 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
-    }else{
+    } else {
       add_customer_req.cus_type = this.addCustomerClassificationBillerCheckboxID_array;
     }
 
-   
+
     if (this.addCustomer.value.billingAddress_contactPerson === null) {
       iziToast.warning({
         message: "Contact Person(Billing Address) Missing",
@@ -2310,10 +2312,10 @@ export class CustomernewallComponent implements OnInit {
       });
       Swal.close();
       return false;
-    }else{
+    } else {
       add_customer_req.bill_attn = this.addCustomer.value.billingAddress_contactPerson;
     }
-   
+
     add_customer_req.customerAddress1 = this.addCustomer.value.billingAddress_address1;
     add_customer_req.customerAddress2 = this.addCustomer.value.billingAddress_address2;
     add_customer_req.city = this.addCustomer.value.billingAddress_city;
@@ -2322,26 +2324,26 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.country = this.addCustomer.value.BA_countryname;
 
     // add_customer_req.e_shippping = this.addCustomer.value.edit_ship_address;
- 
+
 
     // add_customer_req.ship_attn = this.addCustomer.value.ESA_cntPerson;
-    if (this.checkbox_EditShippingAddress==false && this.addCustomer.value.ESA_cntPerson===null ) {
-     
-     
+    if (this.checkbox_EditShippingAddress == false && this.addCustomer.value.ESA_cntPerson === null) {
+
+
       iziToast.warning({
         message: "Contact Person(Edit Shipping Address) Missing",
         position: 'topRight'
       });
       Swal.close();
       return false;
-    }else{
-      
+    } else {
+
       add_customer_req.ship_attn = this.addCustomer.value.ESA_cntPerson;
     }
 
-    if(this.checkbox_EditShippingAddress==true){
+    if (this.checkbox_EditShippingAddress == true) {
       add_customer_req.ship_attn = this.checkbox_EditShippingAddress;
-         
+
     }
     add_customer_req.ship_to = this.addCustomer.value.ESA_shipto;
     add_customer_req.ship_customerAddress1 = this.addCustomer.value.ESA_address1;
@@ -2395,13 +2397,18 @@ export class CustomernewallComponent implements OnInit {
     add_customer_req.reseller_state = this.addCustomer.value.reseller_status;
     add_customer_req.vs_credit = this.addCustomer.value.voip_switch_credit;
     add_customer_req.def_payment_via = this.addCustomer.value.payment_way;
-    this.searchResultTest='';
+    this.searchResultTest = '';
     api_req.element_data = add_customer_req;
 
     $("#addCustomerSave").attr("disabled", true);
 
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
 
+    })
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log(response)
+    })
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       var add_result = response;
@@ -2420,7 +2427,7 @@ export class CustomernewallComponent implements OnInit {
 
         this.clear();
         this.customerslist({});
-       
+
 
       } else {
         Swal.close();
@@ -2467,10 +2474,10 @@ export class CustomernewallComponent implements OnInit {
         var newArray = this.b_id.map(function (item: any) {
           return { 'id': item }
         })
-      
+
         this.emailList = response.result.customer_email;
         console.log(this.emailList)
-        this.financeemailList=response.result.customer_finance_email;
+        this.financeemailList = response.result.customer_finance_email;
         console.log("just", newArray)
         console.log(response);
         console.log("cus classification", response.result.customer_details[0].cus_type);
@@ -2492,7 +2499,7 @@ export class CustomernewallComponent implements OnInit {
         //   this.cus_type_edit = response.result.customer_details[0].cus_type;
         this.editCustomerClassificationBillerCheckboxID_array = response.result.customer_details[0].cus_type.split(',');
         this.customerType_listEdit = response.result.cus_class_type;
-        this.customerStatusEdit=response.result.customer_details[0].cust_status;
+        this.customerStatusEdit = response.result.customer_details[0].cust_status;
 
         // console.log('selected_biller', response.result.billerId_det);
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
@@ -2500,7 +2507,7 @@ export class CustomernewallComponent implements OnInit {
         this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
 
-          'e_company_Code':"D6387",
+          'e_company_Code': "D6387",
 
           'edit_company_Name': response.result.customer_details[0].customerName,
           'edit_defaultBillerName': response.result.customer_details[0].def_biller_id,
@@ -2525,7 +2532,7 @@ export class CustomernewallComponent implements OnInit {
           'e_ESA_state': response.result.customer_details[0].ship_state,
           'e_ESA_zipcode': response.result.customer_details[0].ship_zipCode,
           'e_ESA_countryname': response.result.customer_details[0].ship_country,
-          
+
 
           'e_ESA_premium': response.result.customer_details[0].premium_id,
           'e_ESA_premiumStatus': response.result.customer_details[0].premium_status,
@@ -2655,7 +2662,7 @@ export class CustomernewallComponent implements OnInit {
       };
   }
   update(id: any) {
-    
+
     // let Update_billerNameCheckListDisplay = this.editCustomerForm.value.edit_billernamelist.map((data: any) => data.billerId).join(',');
     // console.log("billerName-in update", Update_billerNameCheckListDisplay);
     // console.log("billerName-in update", this.editBillerNameCheckboxID_array);
@@ -2677,8 +2684,8 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.customerName = this.editCustomerForm.value.edit_company_Name;
     update_customer_req.billerId = this.editBillerNameCheckboxID_array;
     update_customer_req.def_biller_id = this.editCustomerForm.value.edit_defaultBillerName;
-// alert(this.editBillerNameCheckboxID_array)
-// alert(this.typeConvertionString_editBillName)
+    // alert(this.editBillerNameCheckboxID_array)
+    // alert(this.typeConvertionString_editBillName)
 
     update_customer_req.company_name = this.typeConvertionString_editCustomerClass;
     // update_customer_req.cus_type = this.editCustomerForm.value.editCustomerClassification;
@@ -2698,7 +2705,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.ship_city = this.editCustomerForm.value.e_ESA_city;
     update_customer_req.ship_state = this.editCustomerForm.value.e_ESA_state;
     update_customer_req.ship_zipCode = this.editCustomerForm.value.e_ESA_zipcode;
-    
+
     update_customer_req.ship_country = this.editCustomerForm.value.e_ESA_countryname;
     update_customer_req.cus_permission = this.editPermissionCheckboxID_array;
 
@@ -2986,7 +2993,7 @@ export class CustomernewallComponent implements OnInit {
 
   specialUpdate(id: any) {
 
-
+    this.spinner.show();
     let api_req: any = new Object();
     let specialUpdate_customer_req: any = new Object();
     api_req.moduleType = "customer";
@@ -3011,6 +3018,7 @@ export class CustomernewallComponent implements OnInit {
     console.log(this.specialEditCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       console.log(response);
       var update_result = response;
       console.log("special update", update_result);
@@ -3046,7 +3054,7 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonText: 'Yes, Delete it!'
     }).then((result: any) => {
       if (result.value) {
-
+        this.spinner.show();
         let api_req: any = new Object();
         let delete_customer_req: any = new Object();
         api_req.moduleType = "customer";
@@ -3059,6 +3067,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.element_data = delete_customer_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
 
             iziToast.success({
@@ -3133,7 +3142,7 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonText: 'Yes, Delete it!'
     }).then((result: any) => {
       if (result.value) {
-
+        this.spinner.show();
         this.credit_attachment_id = credit_attament_id;
         let api_req: any = new Object();
         let fileattachDelete_req: any = new Object();
@@ -3148,6 +3157,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.element_data = fileattachDelete_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
 
             iziToast.success({
@@ -3715,7 +3725,7 @@ export class CustomernewallComponent implements OnInit {
   // }
 
   invoiceShare_update() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let invoiceShare_update_req: any = new Object();
     api_req.moduleType = "customer";
@@ -3729,6 +3739,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = invoiceShare_update_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         iziToast.success({
           message: "Share Customer Permission Updated successfully",
@@ -3893,6 +3904,7 @@ export class CustomernewallComponent implements OnInit {
 
   }
   shareCustomerPermission_update(id: any) {
+    this.spinner.show();
     this.shareCustomerPermissionParameter = id;
 
     let api_req: any = new Object();
@@ -3907,7 +3919,7 @@ export class CustomernewallComponent implements OnInit {
     shareCustomerPermission_update_req.access_userid = this.CheckBox_DynamicArrayList_shareCustomerPermission;
     api_req.element_data = shareCustomerPermission_update_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response.status == true) {
         iziToast.success({
           message: "Share Customer Permission Updated successfully",
@@ -3946,6 +3958,7 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonText: 'Yes, Change it!'
     }).then((result: any) => {
       if (result.value) {
+        this.spinner.show();
 
         console.log("id", id)
         var status;
@@ -3967,6 +3980,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.element_data = api_customerStatus_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
             console.log("before change", this.isCustomerStatus)
             this.isCustomerStatus = !this.isCustomerStatus;
@@ -4007,7 +4021,7 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonText: 'Yes, Change it!'
     }).then((result: any) => {
       if (result.value) {
-
+        this.spinner.show();
         let api_req: any = new Object();
         let api_empStatus_req: any = new Object();
         api_req.moduleType = "customer";
@@ -4020,6 +4034,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.element_data = api_empStatus_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
 
             console.log("before change-employee status", this.isEmployeeStatus)
@@ -4060,7 +4075,7 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonText: 'Yes, Change it!'
     }).then((result: any) => {
       if (result.value) {
-
+        this.spinner.show();
         let api_req: any = new Object();
         let api_resellerStatus_req: any = new Object();
         api_req.moduleType = "customer";
@@ -4073,6 +4088,7 @@ export class CustomernewallComponent implements OnInit {
         api_req.element_data = api_resellerStatus_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
 
             console.log("before change-reseller status", this.isResllerStatus)
@@ -4151,6 +4167,7 @@ export class CustomernewallComponent implements OnInit {
   }
 
   customer_NX32PermissionUpdate(id: any) {
+    this.spinner.show();
     let api_req: any = new Object();
     let api_nx32PermissionUpdate_req: any = new Object();
     api_req.moduleType = "customer";
@@ -4165,7 +4182,7 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_nx32PermissionUpdate_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       this.checkbox_status_nx32Permission = response.status;
       console.log("customer nx32 permission response.status", response.status);
       if (response.status == true) {
@@ -4303,6 +4320,7 @@ export class CustomernewallComponent implements OnInit {
     // console.log(this.editContractGroupForm.value)
     // console.log(this.billCodeEditForm1.value.billCodeGroupRow);
     // console.log(this.edit_a);
+    this.spinner.show();
     let api_req: any = new Object();
     let updateBillCode_req: any = new Object();
     api_req.moduleType = "customer";
@@ -4409,6 +4427,7 @@ export class CustomernewallComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
 
       console.log("update response", response);
       var updateBillCode = response;
@@ -4719,12 +4738,12 @@ export class CustomernewallComponent implements OnInit {
 
     this.googleAuthent_CustomerId = id;
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       $("#showhide").hide();
-  });
+    });
   }
   GoogleAuthenticationValidation() {
-  
+this.spinner.show();
     // this.GoogleAuthenticationForm.reset();
     let api_req: any = new Object();
     let api_googleAuthVali: any = new Object();
@@ -4739,12 +4758,14 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = api_googleAuthVali;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
-        $(document).ready(function() {
+        $(document).ready(function () {
           $("#showhide").show();
-      });
+        });
         this.googleAuthentication_status = response.status;
         this.googleAuthentication_customerName = response.customer_details.customerName;
+        this.googleAuthentication_customerCode = response.customer_details.customerCode
         this.googleAuthentication_userDetails = response.customer_details.user_details;
         this.googleAuthentication_password = response.customer_details.user_password;
 

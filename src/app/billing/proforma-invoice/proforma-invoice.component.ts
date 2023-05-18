@@ -474,6 +474,7 @@ export class ProformaInvoiceComponent implements OnInit {
         api_req.element_data = PItoInv_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
+          this.spinner.hide();
           if (response.status == true) {
 
             this.spinner.hide();
@@ -1116,6 +1117,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_processpaymentEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
         this.invoiceDetails_payment = response.invoice_details;
         this.paymentType_payment = response.payment_type;
@@ -1187,6 +1189,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_processpaymentUpdate;
     $("#processPaymentFormId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       $("#processPaymentFormId").removeAttr("disabled");
       if (response.status == true) {
 

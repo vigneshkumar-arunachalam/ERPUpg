@@ -840,7 +840,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="number" formControlName="section3_shipping_amt_txtbox" id="shipping_amt_id"
-                                    (keyup)="extraFees()" class="form-control mt-2" />
+                                    (keyup)="totalCalculate()" class="form-control mt-2" />
                             </div>
                         </div>
 
@@ -855,7 +855,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <input type="number" formControlName="banking_charge_amt" id="bankingCharge_amt_id"
-                                (keyup)="extraFees()"   class="form-control mt-2" />
+                                (keyup)="totalCalculate()"   class="form-control mt-2" />
                             </div>
                         </div>
 
@@ -1158,7 +1158,7 @@
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary" (click)="saveGrossDiscount()">Save</button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="goBack()">
+                <button type="button" class="btn btn-dark" data-dismiss="modal" >
                     Cancel
                 </button>
 

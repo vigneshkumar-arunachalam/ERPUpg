@@ -250,6 +250,54 @@ export class AddPurchaseOrderComponent implements OnInit {
       });
     });
   }
+  billerChangeDetails1(id: any) {
+    
+
+    let api_req: any = new Object();
+    let addBillerChangeAPI: any = new Object();
+
+    api_req.moduleType = "purchaseorder";
+    api_req.api_url = "purchaseorder/biller_change_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addBillerChangeAPI.action = "biller_change_details";
+    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    addBillerChangeAPI.billerId = id;
+    api_req.element_data = addBillerChangeAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      // this.companyNameList = response.biller_details;
+      this.FooterDetails = response.addres_arr;
+      this.purchaseorder_tinName = response.addres_arr.tinName;
+      this.purchaseorder_tinNo = response.addres_arr.tinNo;
+      this.purchaseorder_cstName = response.addres_arr.cstName;
+      this.purchaseorder_cstNo = response.addres_arr.cstNo;
+
+      var address1_company = response.addres_arr.address1;
+      var address2_company = response.addres_arr.address2;
+      var city_company = response.addres_arr.city;
+      var country_company = response.addres_arr.country;
+
+      var arr = [address1_company, address2_company, city_company, country_company];
+
+      var companyAddress = arr.join(" ");
+
+
+      this.addDo_section1.patchValue({
+        'PONo': response.poNo,
+        'tin': response.addres_arr.tinNo,
+        'cst': response.addres_arr.cstNo,
+        'kind_Attention': response.addres_arr.abc,
+        'attn_name_bill': response.kind_attn,
+        'companyName_bill': response.addres_arr.billerName,
+        'address_bill': companyAddress,
+        'attn_name_ship': response.kind_attn,
+        'companyName_ship': response.addres_arr.billerName,
+        'address_ship': companyAddress,
+
+
+      });
+    });
+  }
   ADDLoadDO() {
     let api_req: any = new Object();
     let addLoadAPI: any = new Object();
@@ -269,7 +317,10 @@ export class AddPurchaseOrderComponent implements OnInit {
       console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
         'PONo': response.delivery_no,
+        'companyName':response.defaults_biller_id,
+
       });
+      this.billerChangeDetails1(response.defaults_biller_id);
     });
   }
   searchCustomer_selectDropdownData(data: any) {
