@@ -363,3 +363,81 @@ box-shadow: 1px 1px 10px #ededed
 ng-autocomplete .ng-autocomplete.ng-pristine.ng-valid.ng-touched, .ng-autocomplete{
   padding: 0!important;
 }
+
+
+
+/* quick search */
+
+
+.search-bar-section {
+  width: 250px;
+  height: 40px;
+  background-color: #313949;
+  border-radius: 4rem;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.search__box {
+  float: left;
+  width: 0;
+  /* height: 4rem; */
+  background: none;
+  color: #f7f7f7;
+  
+  font-size: 14px;
+  border-radius: 2rem;
+  outline: none;
+  border: none;
+  position: relative;
+  opacity: 1;
+  transition: all .75s ease-in;
+  cursor: pointer;
+
+}
+
+.search__icon {
+  box-sizing: border-box;
+  float: left;
+  display: inline-block;
+  margin-top: 0;
+  cursor: pointer;
+  /* position: absolute; */
+  top: 23px;
+  /* color: #fa983a; */
+  /* color: #5f63f2; */
+  color:#009688;
+  transition: all .25s ease-in;
+  border-radius: 50%;
+}
+
+.search-bar-section:hover > .search__box {
+  width: 85%;
+  padding: 0 1rem;
+}
+
+.search-bar-section:hover > .search__icon {
+  background-color: #eee;
+  
+  padding: 8px;
+  /* position: absolute;
+  top: 13px; */
+  margin-left: .8rem;
+}
+
+.quotation-btn-section{
+  display: flex;
+  align-items: center;
+}
+th{
+  padding: 10px 0px;
+}
+
+.on-off-toggle {
+  width: 36px;
+  height: 24px;
+  position: relative;
+  display: inline-block;
+}

@@ -470,7 +470,7 @@
                                                 </td>
                                                 <td style="width: 70px;">
                                                     <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
-                                                        <input type="checkbox"  id="pd_selectTax_{{i}}"
+                                                        <input type="checkbox"  id="pd_selectTax_{{i}}" [ngModel]="test[i]"
                                                             formControlName="pd_selectTax" (change)="totalCalculate();" />
                                                 
                                                 

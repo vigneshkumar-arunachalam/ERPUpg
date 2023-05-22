@@ -494,3 +494,21 @@ label.col-lg-2.col-form-label{text-align: right;}
   background-color: #ffefef;
   cursor: not-allowed;
 }
+
+.userDatatable table tr td span{
+  white-space: normal;
+}
+.userDatatable table tr td:nth-child(4) {
+  width: 25%;
+}
+.userDatatable table tr td:nth-child(4) span{
+  width: 90%;
+}
+.userDatatable table tr td:nth-child(5) span,.userDatatable table tr td:nth-child(6) span,
+.userDatatable table tr td:nth-child(7) span,.userDatatable table tr td:nth-child(3) span,
+.userDatatable table tr td:nth-child(8) span{
+  width: 100%;
+}
+.userDatatable table tr td:nth-child(5),.userDatatable table tr td:nth-child(6){
+  width: 10%;
+}

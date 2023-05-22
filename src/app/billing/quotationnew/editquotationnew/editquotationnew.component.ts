@@ -1240,19 +1240,7 @@ this.spinner.show();
       this.finalTax = 0;
     }
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
-    this.grossTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
-
-     if(this.finalDiscountType_model=='per'){
-      
-      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
-      
- 
-     }else if(this.finalDiscountType_model=='amt'){
-       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
-     }
-
-
-    
+    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
 
   

@@ -2402,13 +2402,6 @@ export class CustomernewallComponent implements OnInit {
 
     $("#addCustomerSave").attr("disabled", true);
 
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-    })
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response)
-    })
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
       var add_result = response;
