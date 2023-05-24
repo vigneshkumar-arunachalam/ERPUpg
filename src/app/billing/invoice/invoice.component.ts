@@ -215,6 +215,7 @@ export class InvoiceComponent implements OnInit {
 
   //permission-invoice
   invoicePermissionList_add: any;
+  invoicePermissionList_Search:any;
   invoicePermissionList_all_invoice_show: any;
   invoicePermissionList_all_tax_billing: any;
   invoicePermissionList_comm_per: any;
@@ -793,6 +794,7 @@ export class InvoiceComponent implements OnInit {
         this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
+        this.invoicePermissionList_Search = response.invoice_permission_arr.search;
         this.invoicePermissionList_all_invoice_show = response.invoice_permission_arr.all_invoice_show;
         this.invoicePermissionList_all_tax_billing = response.invoice_permission_arr.all_tax_billing;
         this.invoicePermissionList_comm_per = response.invoice_permission_arr.comm_per;

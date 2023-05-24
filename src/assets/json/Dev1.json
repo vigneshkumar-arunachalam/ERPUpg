@@ -1,4 +1,25 @@
-[
+[{
+    "name": "Ledger",
+    "icon":"package",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Transaction New",
+            "icon": "credit-card",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/transactionnew"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/ledger"
+},
     {
     "name": "Billing",
     "icon": "aperture",

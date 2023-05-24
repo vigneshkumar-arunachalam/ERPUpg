@@ -50,11 +50,20 @@ import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component';
 import { PurchaseOrderComponent } from './billing/purchase-order/purchase-order.component'; 
 import { AddPurchaseOrderComponent } from './billing/purchase-order/add-purchase-order/add-purchase-order.component'; 
 import { EditPurchaseOrderComponent } from './billing/purchase-order/edit-purchase-order/edit-purchase-order.component'; 
+import { LedgerComponent } from './ledger/ledger.component'; 
+import { TransactionnewComponent } from './ledger/transactionnew/transactionnew.component';
+import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component'; 
 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'AddTransactionNew', component: AddTransactionNewComponent
+  },
+  {
+    path: 'transactionnew', component: TransactionnewComponent
   },
   {
     path: 'editPurchaseOrder', component: EditPurchaseOrderComponent

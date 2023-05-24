@@ -6,11 +6,11 @@
           <div class="card-header color-dark fw-500">
             Invoice and Payment Process
 
-            <div class="quotation-btn-section" *ngIf="(invoicePermissionList_add==1)">
-              <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
+            <div class="quotation-btn-section" >
+              <button type="button" *ngIf="(invoicePermissionList_add==1)" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
                 (click)="addPIGo()" style="margin-right: 30px;"><i class="fas fa-plus" style="margin-right:0;"></i>
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+              <button type="button" *ngIf="(invoicePermissionList_Search==1)" class="btn btn-primary" data-toggle="modal" title="Search"
               data-target="#searchInvoiceFormId" (click)="clearSearch()">
               <i class="fas fa-search" style="margin-right:0;"></i>
             </button>
@@ -138,7 +138,7 @@
                                 </a>
                               </li> -->
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_delete==1)">
-                                <a class="hover4" title="Delete" data-toggle="modal"
+                                <a class="hover3" title="Delete" data-toggle="modal"
                                   (click)="deleteInvoice(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -151,7 +151,7 @@
                               </li>
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_payment_process==1)">
-                                <a class="hover3" title="Payment Process" data-toggle="modal"
+                                <a class="hover4" title="Payment Process" data-toggle="modal"
                                   data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -221,7 +221,7 @@
 
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_mail==1)">
-                                <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
+                                <a class="hover4" title="Email" data-toggle="modal" data-target="#emailFormId"
                                   (click)="getEmailDetails(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -235,7 +235,7 @@
                               </li>
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_pdf_view==1)">
-                                <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
+                                <a class="hover3" title="PDF" data-toggle="modal" data-target="#pdfFormId"
                                   (click)="pdf(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -261,7 +261,7 @@
                                 </a>
                               </li> -->
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_share==1)">
-                                <a *ngIf="(share_access_state==0)" class="hover3" title="Share permission" data-toggle="modal"
+                                <a *ngIf="(share_access_state==0)" class="hover4" title="Share permission" data-toggle="modal"
                                   data-target="#sharPerissionFormId" (click)="invoiceSharPersonEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -272,7 +272,7 @@
                                   </svg>
 
                                 </a>
-                                <a *ngIf="(share_access_state==1)" class="hover3" title="Share permission" data-toggle="modal"
+                                <a *ngIf="(share_access_state==1)" class="hover4" title="Share permission" data-toggle="modal"
                                 data-target="#sharPerissionFormId" (click)="invoiceSharPersonEdit(list.billId)">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                   fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
@@ -313,7 +313,7 @@
                               </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_prev_billing==1)">
-                                <a class="hover3" title="Set Previous Due" data-toggle="modal" data-target=""
+                                <a class="hover4" title="Set Previous Due" data-toggle="modal" data-target=""
                                   (click)="setPreviousDue(list.billId,list.previous_due_state)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -368,7 +368,7 @@
 
 
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_file_attach==1)">
-                                <a class="hover3" title="File Attachment" data-toggle="modal"
+                                <a class="hover4" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -395,7 +395,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_revenue==1)">
-                                <a  class="hover3" title="Invoice Revenue" data-toggle="modal"
+                                <a  class="hover4" title="Invoice Revenue" data-toggle="modal"
                                   data-target="#InvoiceRevenueFormId" (click)="InvoiceRevenueEdit(list.billId)">
                                   <span style="color: revenue_color;"><strong>R</strong></span>
                                   <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -432,7 +432,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_actual_cost==1)">
-                                <a class="hover3" title="Set Actual Cost" data-toggle="modal"
+                                <a class="hover4" title="Set Actual Cost" data-toggle="modal"
                                   data-target="#setActualCostId" (click)="get_actualcost_details(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -458,7 +458,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_type==1)">
-                                <a class="hover3" title="Set Invoice Type Name" data-toggle="modal"
+                                <a class="hover4" title="Set Invoice Type Name" data-toggle="modal"
                                   data-target="#setInvoiceTypeNameFormId" (click)="setInvoiceTypeNameEdit(list.billId)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
@@ -493,7 +493,7 @@
                                 </a>
                               </li> -->
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_pi==1)">
-                                <a class="hover3" title="Invoice to Proforma" data-toggle="modal"
+                                <a class="hover4" title="Invoice to Proforma" data-toggle="modal"
                                   (click)="InvoicetoProforma(list.billId)">
                                   <span style="color: #009688;"><strong>PI</strong></span>
                                   <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -518,7 +518,7 @@
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_quotation==1)">
 
-                                <a class="hover3" title="Invoice to Quotation Conversion" data-toggle="modal"
+                                <a class="hover4" title="Invoice to Quotation Conversion" data-toggle="modal"
                                   data-target="#InvoicetoQuotationFormId" (click)="invoicetoQuotationEdit(list.billId)">
                                   <span style="color: #009688;"><strong>Q</strong></span>
                                   <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
@@ -550,7 +550,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
-                                <a class="hover3" title="Delivery Order" data-toggle="modal"
+                                <a class="hover4" title="Delivery Order" data-toggle="modal"
                                   data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId)">
                                   <span style="color: #009688;"><strong>DO</strong></span>
                                   <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"

@@ -1,0 +1,745 @@
+<div class="contents-section">
+    <div class="col-lg-12 mb-30">
+        <div class="card">
+            <div class="card-header color-dark fw-500" style="padding: 5px 500px;    background-color: #d9515147">
+                <h1>Add Transaction Details</h1>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="addTransaction_section1">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="biller_name" class="col-lg-12 col-form-label">Biller Name</label>
+                    <div class="col-lg-12">
+                        <select id="biller_name" class="form-control" formControlName="billerName">
+                            <option [ngValue]="null" selected>Select Biller Name</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="trans_Date" class="col-lg-12 col-form-label">Date</label>
+                    <div class="col-lg-12">
+                        <input type="date" class="form-control" formControlName="trans_Date" id="trans_Date" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="priority" class="col-lg-12 col-form-label">Priority</label>
+                    <div class="col-lg-12">
+                        <select id="priority" class="form-control" formControlName="priority">
+                            <option [ngValue]="null" selected>Select Priority</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- purchase entry sub menu starts -->
+
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="purchaseEntryNo" class="col-lg-12 col-form-label">Purchase Entry No</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_purchaseEntryNo" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="vendorName" class="col-lg-12 col-form-label">Vendor Name</label>
+                    <div class="col-lg-12">
+                        <select id="vendorName" class="form-control" formControlName="PE_vendorName">
+                            <option [ngValue]="null" selected>Select Vendor</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="purchaseType" class="col-lg-12 col-form-label">Purchase Type</label>
+                    <div class="col-lg-12">
+                        <select id="purchaseType" class="form-control" formControlName="PE_purchaseType">
+                            <option [ngValue]="null" selected>Select Vendor</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="invoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_invoiceNo" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="invoice_Date" class="col-lg-12 col-form-label">Invoice Date</label>
+                    <div class="col-lg-12">
+                        <input type="date" class="form-control" formControlName="PE_invoice_Date" id="invoice_Date" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="contentofPurchase" class="col-lg-12 col-form-label">Content of Purchase</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_contentofPurchase" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="poNumber" class="col-lg-12 col-form-label">PO Number</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_poNumber" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="Currency" class="col-lg-12 col-form-label">Currency</label>
+                    <div class="col-lg-12">
+                        <select id="Currency" class="form-control" formControlName="PE_Currency">
+                            <option [ngValue]="null" selected>Select Currency</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="currencyConversionRate" class="col-lg-12 col-form-label">Currency Conversion
+                        Rate</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_currencyConversionRate" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="taxAmount" class="col-lg-12 col-form-label">Tax Amount</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_taxAmount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="TaxProvider" class="col-lg-12 col-form-label">Tax Provider</label>
+                    <div class="col-lg-12">
+                        <select id="TaxProvider" class="form-control" formControlName="PE_TaxProvider">
+                            <option [ngValue]="null" selected>Select Tax Provider</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="FreightProvider" class="col-lg-12 col-form-label">Freight Provider</label>
+                    <div class="col-lg-12">
+                        <select id="FreightProvider" class="form-control" formControlName="PE_FreightProvider">
+                            <option [ngValue]="null" selected>Select Freight Provider</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="FreightAmount" class="col-lg-12 col-form-label">Freight Amount</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_FreightAmount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="invoiceAmount" class="col-lg-12 col-form-label">Invoice Amount</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PE_invoiceAmount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <div class="form-check form-check-inline">
+                        <input class="ml-3 form-check-input" type="checkbox" checked name="CB_AttachMobile" id="convamt"
+                            formControlName="CB_PE_AttachMobile" (change)="CB_Fn_PE_AttachMobile($event)">
+                        <label class="form-check-label" for="convamt"> Attach Mobile</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="PE_FileAttachment" class="col-lg-12 col-form-label">File Attachment</label>
+                    <div class="col-lg-12">
+                        <input required type="file" name="PE_FileAttachment" id="PE_FileAttachment"
+                            class="form-control" formControlName="PE_FileAttachment"
+                            (change)="fileAttachmentEvent($event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- purchase entry sub menu ends -->
+
+            <!-- petty cash entry sub menu ends -->
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="refResellerDetails" class="form-label">Description</label>
+                    <textarea class="form-control" formControlName="PC_Description" style="height: 70px;"
+                        row="2"></textarea>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="PC_Type" class="col-lg-12 col-form-label">Type</label>
+                    <div class="col-lg-12">
+                        <select id="PC_Type" class="form-control" formControlName="PC_Type">
+                            <option [ngValue]="null" selected>Select Type</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="PC_Amount" class="col-lg-12 col-form-label">Amount</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="PC_Amount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <div class="form-check form-check-inline">
+                        <input class="ml-3 form-check-input" type="checkbox" checked name="CB_PC_AttachMobile"
+                            id="convamt" formControlName="CB_PC_AttachMobile" (change)="CB_Fn_PC_AttachMobile($event)">
+                        <label class="form-check-label" for="CB_PC_AttachMobile"> Attach Mobile</label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="PC_FileAttachment" class="col-lg-12 col-form-label">File Attachment</label>
+                    <div class="col-lg-12">
+                        <input required type="file" name="PC_FileAttachment" id="PC_FileAttachment"
+                            class="form-control" formControlName="PC_FileAttachment"
+                            (change)="fileAttachmentEvent($event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- petty cash entry sub menu ends -->
+
+
+            <!-- Logistics entry sub menu ends -->
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="Log_Description" class="form-label">Description</label>
+                    <textarea class="form-control" formControlName="Log_Description" style="height: 70px;"
+                        row="2"></textarea>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="Log_Type" class="col-lg-12 col-form-label">Type</label>
+                    <div class="col-lg-12">
+                        <select id="Log_Type" class="form-control" formControlName="Log_Type">
+                            <option [ngValue]="null" selected>Select Type</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="Log_Amount" class="col-lg-12 col-form-label">Amount</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="Log_Amount" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <div class="form-check form-check-inline">
+                        <input class="ml-3 form-check-input" type="checkbox" checked name="CB_PC_AttachMobile"
+                            id="CB_Log_AttachMobile" formControlName="CB_Log_AttachMobile"
+                            (change)="CB_Fn_Log_AttachMobile($event)">
+                        <label class="form-check-label" for="CB_Log_AttachMobile"> Attach Mobile</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="Log_FileAttachment" class="col-lg-12 col-form-label">File Attachment</label>
+                    <div class="col-lg-12">
+                        <input required type="file" name="Log_FileAttachment" id="Log_FileAttachment"
+                            class="form-control" formControlName="Log_FileAttachment"
+                            (change)="fileAttachmentEvent($event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logistics entry sub menu ends -->
+            <!-- Vendor Order sub menu starts -->
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="VendorOrder_Description" class="form-label">Description</label>
+                    <textarea class="form-control" formControlName="VendorOrder_Description" style="height: 70px;"
+                        row="2"></textarea>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="VendorOrder_FileAttachment" class="col-lg-12 col-form-label">File Attachment</label>
+                    <div class="col-lg-12">
+                        <input required type="file" name="VendorOrder_FileAttachment" id="VendorOrder_FileAttachment"
+                            class="form-control" formControlName="VendorOrder_FileAttachment"
+                            (change)="fileAttachmentEvent($event)">
+                    </div>
+                </div>
+            </div>
+            <!-- Vendor Order sub menu ends -->
+
+            <!-- Invoice Payment sub menu starts -->
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_InvoiceNumber" class="col-lg-12 col-form-label">Invoice No</label>
+                    <div class="col-lg-12">
+                        <select id="InvPayment_InvoiceNumber" class="form-control"
+                            formControlName="InvPayment_InvoiceNumber">
+                            <option [ngValue]="null" selected>Select Invoice</option>
+                            <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                    {{ship.ship_name}}
+                                </option> -->
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_Biller" class="col-lg-12 col-form-label">Biller</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="InvPayment_Biller" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_Customer" class="col-lg-12 col-form-label">Customer</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="InvPayment_Customer" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_Total" class="col-lg-12 col-form-label">Total</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="InvPayment_Total" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_Paid" class="col-lg-12 col-form-label">Paid</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="InvPayment_Paid" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_Owing" class="col-lg-12 col-form-label">Owing</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="InvPayment_Owing" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="InvPayment_Notes" class="form-label">Note</label>
+                    <textarea class="form-control" formControlName="InvPayment_Notes" style="height: 70px;"
+                        row="2"></textarea>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_Paid" class="col-lg-12 col-form-label">Payment Details</label>
+                    <div class="col-lg-12">
+                        <input type="text" class="form-control" formControlName="InvPayment_Paid" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="InvPayment_FileAttachment" class="col-lg-12 col-form-label">File Attachment</label>
+                    <div class="col-lg-12">
+                        <input required type="file" name="InvPayment_FileAttachment" id="InvPayment_FileAttachment"
+                            class="form-control" formControlName="InvPayment_FileAttachment"
+                            (change)="fileAttachmentEvent($event)">
+                    </div>
+                </div>
+            </div>
+            <!-- Invoice Payment sub menu ends -->
+            <!-- Add New Stock sub menu ends -->
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                    <table class="table mb-0 table-borderless">
+                        <thead>
+                            <tr class="userDatatable-header">
+                                <th>Vendor Name</th>
+                                <th>Pur Date</th>
+                                <th>Category Name</th>
+                                <th>Product Name Serial/MAC No</th>
+                                <th>Qty</th>
+                                <th>S.No</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="userDatatable-header">
+                                <td>
+                                    <select id="AddNewStock_vendorName" class="form-control"
+                                        formControlName="AddNewStock_vendorName">
+                                        <option [ngValue]="null" selected>Select Invoice</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="date" class="form-control" formControlName="AddNewStock_PurDate"
+                                        id="AddNewStock_PurDate" />
+
+                                </td>
+                                <td>
+                                    <select id="AddNewStock_CategoryName" class="form-control"
+                                        formControlName="AddNewStock_CategoryName">
+                                        <option [ngValue]="null" selected>Select Invoice</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="AddNewStock_ProductName" class="form-control"
+                                        formControlName="AddNewStock_ProductName">
+                                        <option [ngValue]="null" selected>Product Name</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="AddNewStock_Qty" />
+                                </td>
+                                <td>
+                                    <input type="checkbox" formControlName="AddNewStock_SNo" />
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Add New Stock  sub menu ends -->
+
+
+            <!-- Stock Issued  sub menu ends -->
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                    <table class="table mb-0 table-borderless">
+                        <thead>
+                            <tr class="userDatatable-header">
+                                <th>Category Name</th>
+                                <th>Product Name</th>
+                                <th>Serial/MAC No</th>
+                                <th>Issue Customer</th>
+                                <th>Number Type</th>
+                                <th>Invoice Number</th>
+                                <th>Demo</th>
+                                <th>Qty</th>
+                                <th>A.Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="userDatatable-header">
+                                <td>
+                                    <select id="StockIssued_categoryName" class="form-control"
+                                        formControlName="StockIssued_categoryName">
+                                        <option [ngValue]="null" selected>Select Category</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="StockIssued_ProductName" class="form-control"
+                                        formControlName="StockIssued_ProductName">
+                                        <option [ngValue]="null" selected>Product Name</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="StockIssued_serialMACNo" />
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <select id="StockIssued_InvoiceNo" class="form-control"
+                                        formControlName="StockIssued_InvoiceNo">
+                                        <option [ngValue]="null" selected>Select Invoice No</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="checkbox" formControlName="StockIssued_Demo" />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="StockIssued_Qty" />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="StockIssued_AQty" />
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Stock Issued sub menu ends -->
+
+
+            <!-- Stock Transfer  sub menu ends -->
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                    <table class="table mb-0 table-borderless">
+                        <thead>
+                            <tr class="userDatatable-header">
+                                <th>Category Name</th>
+                                <th>Product Name</th>
+                                <th>Serial/MAC No</th>
+                                <th>Transfer Biller</th>
+                                <th>Qty</th>
+                                <th>A.Qty</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="userDatatable-header">
+                                <td>
+                                    <select id="StockTransfer_categoryName" class="form-control"
+                                        formControlName="StockTransfer_categoryName">
+                                        <option [ngValue]="null" selected>Select Category</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+                                <td>
+                                    <select id="StockTransfer_ProductName" class="form-control"
+                                        formControlName="StockTransfer_ProductName">
+                                        <option [ngValue]="null" selected>Product Name</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control"
+                                        formControlName="StockTransfer_serialMACNo" />
+
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                    <select id="StockTransfer_Biller" class="form-control"
+                                        formControlName="StockTransfer_Biller">
+                                        <option [ngValue]="null" selected>Select Biller</option>
+                                        <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
+                                        {{ship.ship_name}}
+                                    </option> -->
+                                    </select>
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control" formControlName="StockTransfer_Qty" />
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" formControlName="StockTransfer_AQty" />
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <!-- Stock Transfer sub menu ends -->
+            <div class="container mt-3">
+               
+               
+                <!-- Nav pills -->
+                <ul class="nav nav-pills" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="pill" href="#home">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="pill" href="#menu1">Menu 1</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="pill" href="#menu2">Menu 2</a>
+                  </li>
+                </ul>
+              
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div id="home" class="container tab-pane active"><br>
+                    <h3>HOME</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  </div>
+                  <div id="menu1" class="container tab-pane fade"><br>
+                    <h3>Menu 1</h3>
+                    <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  </div>
+                  <div id="menu2" class="container tab-pane fade"><br>
+                    <h3>Menu 2</h3>
+                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                  </div>
+                </div>
+              </div>
+            
+
+
+            <!-- Others sub menu starts -->
+
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label for="others_Description" class="form-label">Description</label>
+                    <textarea class="form-control" formControlName="others_Description" style="height: 70px;"
+                        row="2"></textarea>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <div class="form-group row">
+                    <label for="others_FileAttachment" class="col-lg-12 col-form-label">File Attachment</label>
+                    <div class="col-lg-12">
+                        <input required type="file" name="others_FileAttachment" id="others_FileAttachment"
+                            class="form-control" formControlName="others_FileAttachment"
+                            (change)="fileAttachmentEvent($event)">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Others sub menu ends -->
+
+
+        </div>
+
+        <div class="m-4">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-bs-toggle="tab">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#profile" class="nav-link" data-bs-toggle="tab">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#messages" class="nav-link" data-bs-toggle="tab">Messages</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="home">
+                    <h4 class="mt-2">Home tab content</h4>
+                    <p>Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui. Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                </div>
+                <div class="tab-pane fade" id="profile">
+                    <h4 class="mt-2">Profile tab content</h4>
+                    <p>Vestibulum nec erat eu nulla rhoncus fringilla ut non neque. Vivamus nibh urna, ornare id gravida ut, mollis a magna. Aliquam porttitor condimentum nisi, eu viverra ipsum porta ut. Nam hendrerit bibendum turpis, sed molestie mi fermentum id. Aenean volutpat velit sem. Sed consequat ante in rutrum convallis. Nunc facilisis leo at faucibus adipiscing.</p>
+                </div>
+                <div class="tab-pane fade" id="messages">
+                    <h4 class="mt-2">Messages tab content</h4>
+                    <p>Donec vel placerat quam, ut euismod risus. Sed a mi suscipit, elementum sem a, hendrerit velit. Donec at erat magna. Sed dignissim orci nec eleifend egestas. Donec eget mi consequat massa vestibulum laoreet. Mauris et ultrices nulla, malesuada volutpat ante. Fusce ut orci lorem. Donec molestie libero in tempus imperdiet. Cum sociis natoque penatibus et magnis.</p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
