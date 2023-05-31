@@ -68,9 +68,12 @@
 
                       <td>
                         <span>{{ list.invoice_no}}</span>
-                        <span><button type="button" class="buttonClass"
+                        <!-- <span><button type="button" class="buttonClass"
                             [ngStyle]="{backgroundColor: list.colorCodes}">{{
-                            list.billerCode}}</button></span>
+                            list.billerCode}}</button></span> -->
+                            <span><button type="button" class="btn_new buttonClass {{
+                              list.billerCode}}">{{
+                          list.billerCode}}</button></span>
                       </td>
                       <td><span>{{ list.cus_invoice_no}}</span></td>
                       <td><span>{{ list.billDate}}</span></td>

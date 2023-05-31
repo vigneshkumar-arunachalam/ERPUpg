@@ -913,7 +913,8 @@ export class EditPIComponent implements OnInit {
 
           formArray.push(this.fb.group({
             "pd_billchild_id": response.billchild_details[index].billChildid,
-            "pd_nextPage_checkbox": response.billchild_details[index].to_next_page,
+            "pd_nextPage_checkbox": response.billchild_details[index].to_next_page== 1 ? true : false,
+    
             "pd_productName_txtbox1": response.billchild_details[index].productName,
             "pd_productName_txtArea": response.billchild_details[index].productDesc,
             "pd_quantity_txtbox1": response.billchild_details[index].quantity,

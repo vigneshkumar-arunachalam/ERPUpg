@@ -58,10 +58,13 @@
                                         </td> -->
                     <td>
 
-                      <span><button type="button" class="buttonClass" [ngStyle]="{backgroundColor: list.colorCodes}">
+                      <!-- <span><button type="button" class="buttonClass" [ngStyle]="{backgroundColor: list.colorCodes}">
                           {{list.billerCode}}
                         </button>
-                      </span>
+                      </span> -->
+                      <span><button type="button" class="buttonClass {{
+                        list.billerCode}}">{{
+                    list.billerCode}}</button></span>
                       {{ list.delivery_date}}
                     </td>
                     <td>

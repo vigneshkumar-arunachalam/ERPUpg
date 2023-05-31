@@ -41,7 +41,7 @@
                         <div class="col-lg-9">
                             <select id="priority" class="form-control" formControlName="priority">
                                 <option [ngValue]="null" selected>Select Priority</option>
-                                <option *ngFor="let prior of priorityList" value="{{prior.id}}">
+                                <option *ngFor="let prior of priorityList" value="{{prior.name}}">
                                         {{prior.name}}
                                     </option>
                             </select>
@@ -53,7 +53,8 @@
 
             <div class="col-lg-12">
                 <div class="form-group row">
-                <div class="col-lg-3">  <label for="trans_typee" class=" col-form-label ml-3">Type of Transaction</label></div>
+                <div class="col-lg-3">  
+                    <label for="trans_typee" class=" col-form-label ml-3">Type of Transaction</label></div>
                   
                     <div class="col-lg-12">
 
@@ -227,7 +228,7 @@
                                             <div class="col-lg-2"> <label for="taxAmount" class="col-form-label">Tax Amount</label></div>
                                            
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
                                                     formControlName="PE_taxAmount" />
                                             </div>
                                         </div>
@@ -276,7 +277,7 @@
                                                 Amount</label></div>
                                            
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
                                                     formControlName="PE_FreightAmount" />
                                             </div>
                                         </div>
@@ -288,7 +289,7 @@
                                                 Amount</label></div>
                                           
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
+                                                <input type="number" class="form-control"
                                                     formControlName="PE_invoiceAmount" />
                                             </div>
                                         </div>
@@ -392,10 +393,10 @@
                                                 Attachment</label></div>
                                      
                                             <div class="col-lg-4">
-                                                <input required type="file" name="PC_FileAttachment"
+                                                <input required type="file" name="PC_FileAttachment" multiple
                                                     id="PC_FileAttachment" class="form-control"
                                                     formControlName="PC_FileAttachment"
-                                                    (change)="fileAttachmentEvent($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -464,10 +465,10 @@
                                                 Attachment</label></div>
                                            
                                             <div class="col-lg-4">
-                                                <input required type="file" name="Log_FileAttachment"
+                                                <input required type="file" name="Log_FileAttachment" multiple
                                                     id="Log_FileAttachment" class="form-control"
                                                     formControlName="Log_FileAttachment"
-                                                    (change)="fileAttachmentEvent($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -495,10 +496,10 @@
                                                 class="col-form-label">File Attachment</label></div>
                                      
                                             <div class="col-lg-4">
-                                                <input required type="file" name="VendorOrder_FileAttachment"
+                                                <input required type="file" name="VendorOrder_FileAttachment" multiple
                                                     id="VendorOrder_FileAttachment" class="form-control"
                                                     formControlName="VendorOrder_FileAttachment"
-                                                    (change)="fileAttachmentEvent($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -513,12 +514,12 @@
                                                 class=" col-form-label">Invoice No</label></div>
                                             
                                             <div class="col-lg-4">
-                                                <select id="InvPayment_InvoiceNumber" class="form-control"
+                                                <select id="InvPayment_InvoiceNumber" class="form-control" (change)="InvoiceChangeValue($event)"
                                                     formControlName="InvPayment_InvoiceNumber">
                                                     <option [ngValue]="null" selected>Select Invoice</option>
-                                                    <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
-                                    {{ship.ship_name}}
-                                </option> -->
+                                                    <option *ngFor="let inv of InvoicePaymentList" value="{{inv.billId}}">
+                                                    {{inv.invoice_no }} {{'| '}}{{inv.b_name }} {{' |'}}{{inv.netPayment}}
+                                </option>
                                                 </select>
                                             </div>
                                         </div>
@@ -529,8 +530,9 @@
                                                 class=" col-form-label">Biller</label></div>
                                            
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Biller" />
+                                                <!-- <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Biller" /> -->
+                                                    {{this.billerName}}
                                             </div>
                                         </div>
                                     </div>
@@ -541,8 +543,9 @@
                                                 class=" col-form-label">Customer</label></div>
                                            
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Customer" />
+                                                <!-- <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Customer" /> -->
+                                                    {{this.customerName}}
                                             </div>
                                         </div>
                                     </div>
@@ -552,8 +555,9 @@
                                             <div class="col-lg-2"><label for="InvPayment_Total" class=" col-form-label">Total</label></div>
                                             
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Total" />
+                                                <!-- <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Total" /> -->
+                                                    {{this.netPayment}}
                                             </div>
                                         </div>
                                     </div>
@@ -562,8 +566,9 @@
                                             <div class="col-lg-2"><label for="InvPayment_Paid" class=" col-form-label">Paid</label></div>
                                             
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Paid" />
+                                                <!-- <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Paid" /> -->
+                                                    {{this.amountPaid}}
                                             </div>
                                         </div>
                                     </div>
@@ -573,8 +578,9 @@
                                                 <label for="InvPayment_Owing" class=" col-form-label">Owing</label></div>
                                            
                                             <div class="col-lg-4">
-                                                <input type="text" class="form-control"
-                                                    formControlName="InvPayment_Owing" />
+                                                <!-- <input type="text" class="form-control"
+                                                    formControlName="InvPayment_Owing" /> -->
+                                                    {{this.balance}}
                                             </div>
                                         </div>
                                     </div>
@@ -586,6 +592,7 @@
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
                                                     formControlName="InvPayment_Amount" />
+                                                    
                                             </div>
                                         </div>
                                     </div>
@@ -638,10 +645,10 @@
                                                 Attachment</label></div>
                                             
                                             <div class="col-lg-4">
-                                                <input required type="file" name="InvPayment_FileAttachment"
+                                                <input required type="file" name="InvPayment_FileAttachment" multiple
                                                     id="InvPayment_FileAttachment" class="form-control"
                                                     formControlName="InvPayment_FileAttachment"
-                                                    (change)="fileAttachmentEvent($event)">
+                                                    (change)="fileAttachmentEventPE1($event)">
                                             </div>
                                         </div>
                                     </div>
@@ -775,6 +782,7 @@
                                                                 <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
                                         {{ship.ship_name}}
                                     </option> -->
+                                                   
                                                             </select>
                                                         </td>
                                                         <td>

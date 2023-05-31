@@ -78,7 +78,8 @@ import { AddPurchaseOrderComponent } from './billing/purchase-order/add-purchase
 import { EditPurchaseOrderComponent } from './billing/purchase-order/edit-purchase-order/edit-purchase-order.component';
 import { TransactionnewComponent } from './ledger/transactionnew/transactionnew.component';
 import { LedgerComponent } from './ledger/ledger.component';
-import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component'; 
+import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component';
+import { EditTransactionNewComponent } from './ledger/transactionnew/edit-transaction-new/edit-transaction-new.component'; 
 
 @NgModule({
   declarations: [
@@ -137,7 +138,8 @@ import { AddTransactionNewComponent } from './ledger/transactionnew/add-transact
      EditPurchaseOrderComponent,
      TransactionnewComponent,
      LedgerComponent,
-     AddTransactionNewComponent
+     AddTransactionNewComponent,
+     EditTransactionNewComponent
      
     
   ],

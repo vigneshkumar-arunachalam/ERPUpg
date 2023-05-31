@@ -3333,7 +3333,7 @@ export class CustomernewallComponent implements OnInit {
       success: function (result: any) {
         if (result.status == true) {
           Swal.close();
-          self.customerslist({});
+          
           console.log(result);
           $("#mconnectPartnerDetailsFormId").modal("hide")
 
@@ -3341,6 +3341,8 @@ export class CustomernewallComponent implements OnInit {
             message: "mconnect details Saved successfully",
             position: 'topRight'
           });
+
+          self.customerslist({});
         }
         else {
           Swal.close();
@@ -3355,7 +3357,7 @@ export class CustomernewallComponent implements OnInit {
 
         console.log("err", err)
         iziToast.error({
-          message: "Server Side Error",
+          message: "500 Error",
           position: 'topRight'
         });
         Swal.close();
@@ -3448,7 +3450,7 @@ export class CustomernewallComponent implements OnInit {
       success: function (result: any) {
         if (result.status == true) {
           Swal.close();
-          self.customerslist({});
+         
           console.log(result);
           $("#MrvoipPartnerDetailsFormId").modal("hide")
 
@@ -3456,6 +3458,8 @@ export class CustomernewallComponent implements OnInit {
             message: "MrVoip details Saved successfully",
             position: 'topRight'
           });
+
+          self.customerslist({});
         }
         else {
           Swal.close();
@@ -3470,7 +3474,7 @@ export class CustomernewallComponent implements OnInit {
 
         console.log("err", err)
         iziToast.error({
-          message: "Server Side Error",
+          message: "500 Error",
           position: 'topRight'
         });
         Swal.close();
@@ -3544,7 +3548,7 @@ export class CustomernewallComponent implements OnInit {
     data.append('customerId', id);
     data.append('call4tel_partner_type', this.Call4telCustomerForm.value.a_C4TPartnerType);
     data.append('call4tel_company_logo', $("#uploaded-C4T")[0].files[0]);
-    data.append('action', "Cal4Tel_address_save");
+    data.append('action', "call4tel_address_save");
 
     var self = this;
     $.ajax({
@@ -3557,7 +3561,7 @@ export class CustomernewallComponent implements OnInit {
       success: function (result: any) {
         if (result.status == true) {
           Swal.close();
-          self.customerslist({});
+         
           console.log(result);
           $("#call4tellPartnerDetailsFormId").modal("hide")
 
@@ -3565,6 +3569,7 @@ export class CustomernewallComponent implements OnInit {
             message: "call4tell details Saved successfully",
             position: 'topRight'
           });
+          self.customerslist({});
         }
         else {
           Swal.close();
@@ -3579,7 +3584,7 @@ export class CustomernewallComponent implements OnInit {
 
         console.log("err", err)
         iziToast.error({
-          message: "Server Side Error",
+          message: "500 Error",
           position: 'topRight'
         });
         Swal.close();

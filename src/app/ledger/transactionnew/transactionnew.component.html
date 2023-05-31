@@ -11,10 +11,10 @@
                 (click)="addtransactionGo()" style="margin-right: 30px;"><i class="fas fa-plus"
                   style="margin-right:0;"></i>
               </button>
-              <!-- <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                data-target="#searchInvoiceFormId" (click)="clearSearch()">
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+                data-target="#searchTransactionFormId" (click)="clearSearch()">
                 <i class="fas fa-search" style="margin-right:0;"></i>
-              </button> -->
+              </button>
             </div>
           </div>
           <div class="card-body">
@@ -125,7 +125,7 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Edit">
+                                <a class="hover3" title="Edit"  (click)=" edittransactionGo(list.transaction_approval_id,list.type_of_trans)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-edit">
@@ -135,10 +135,12 @@
                                     </path>
                                   </svg>
                                 </a>
+                               
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Delete" data-toggle="modal">
+                                <a class="hover3" title="Delete" data-toggle="modal"
+                                  (click)="deleteTransaction(list.transaction_approval_id)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-x-square">
@@ -149,15 +151,16 @@
                                 </a>
                               </li>
 
-
                               <li class="dropdown__item">
-                                <a class="hover4" title="Comments Entry" data-toggle="modal"
-                                  data-target="#CommentsEntryFormId">
+                                <a class="hover1" title="Comments Entry" data-toggle="modal"
+                                  data-target="#TransactionCommentsId">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
                                     fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-dollar-sign">
-                                    <line x1="12" y1="1" x2="12" y2="23"></line>
-                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    stroke-linejoin="round" class="feather feather-book-open">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z">
+                                    </path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z">
+                                    </path>
                                   </svg>
                                 </a>
                               </li>
@@ -357,7 +360,7 @@
 
 
 
-              
+
               <div class="col-lg-12">
                 <div class="form-group row">
                   <div class="col-lg-4">
@@ -373,7 +376,8 @@
               <div class="col-lg-12">
                 <div class="form-group row">
                   <div class="col-lg-4">
-                    <label for="view_CurrencyConversionRate" class="col-lg-12 col-form-label">Currency Conversion Rate</label>
+                    <label for="view_CurrencyConversionRate" class="col-lg-12 col-form-label">Currency Conversion
+                      Rate</label>
                   </div>
                   <div class="col-lg-8">
 
@@ -430,3 +434,124 @@
 </div>
 
 <!-------------------------- ------Modal-view ends-------------------------------------- -->
+
+
+
+<!-- -----------------------Modal-Quotation Comments begins-------------------------------- -->
+<div class="modal fade" id="TransactionCommentsId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle">
+          Comments Entry </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="TransactionCommentsForm">
+          <div class="row ">
+            <div class="col-lg-12">
+              <div class="form-group row">
+                  <div class="col-lg-3"><label for="transaction_comments" class="col-form-label"> Comments</label></div>
+                  
+                  <div class="col-lg-9">
+                     <textarea class="form-control" formControlName="transaction_comments"></textarea>
+                  </div>
+              </div>
+          </div>
+
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="TransactionCommentsSave()">
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="TransactionCommentsClear()">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation Comments ends-------------------------------------- -->
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchTransactionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content searchQuotationCSS">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchTransactionForm">
+                    <div class="row">
+                      
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="temp11" class="col-lg-12 ">Transaction Name</label>
+                          <div class="col-lg-12 " *ngFor="let biller12 of Transaction_Type_List;let i =index">
+                            <input type="checkbox" id="{{biller12.id}}" formControlName="search_billerName"
+                              (change)="searchBillerNameCHK(biller12.id,$event)">
+          
+                            {{biller12.name}}
+                          </div>
+                        </div>
+                      </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <div class="ng-autocomplete">
+                                    <label for="companyName" class="col-lg-12 ">Search Text</label>
+                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                        formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                                        (inputChanged)='searchCustomerData($event)'
+                                        (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                        [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplateCustomer let-item>
+                                        <a [innerHTML]="item.customerName"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="getTransactionNewList({})">
+                    Search
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>

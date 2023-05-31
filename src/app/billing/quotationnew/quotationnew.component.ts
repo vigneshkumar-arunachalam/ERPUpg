@@ -1246,6 +1246,10 @@ export class QuotationnewComponent implements OnInit {
 
 
   }
+  colorFunction(colorcode:any){
+
+
+  }
   setTemplateName(quotationId: any) {
 
     this.template_quotationID = quotationId;
@@ -1971,7 +1975,7 @@ export class QuotationnewComponent implements OnInit {
       console.log("final error", error);
     }
   }
-  quotationConvertPI() {
+  quotationConvertPI($event: MouseEvent) {
 this.spinner.show();
     let api_req: any = new Object();
     let api_quotConvertPI_req: any = new Object();
@@ -1986,8 +1990,10 @@ this.spinner.show();
     api_req.element_data = api_quotConvertPI_req;
 
     $("#PIId").attr("disabled", true);
+    ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
+      ($event.target as HTMLButtonElement).disabled = false;
       $("#PIId").removeAttr("disabled");
       console.log("response-quotation convert pi", response)
       if (response.status == true) {

@@ -447,7 +447,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
     });
   }
-  PItoInvoiceConversion(Id: any) {
+  PItoInvoiceConversion(Id: any,$event: MouseEvent) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -473,8 +473,10 @@ export class ProformaInvoiceComponent implements OnInit {
         PItoInv_req.billId = Id;
         api_req.element_data = PItoInv_req;
 
+        ($event.target as HTMLButtonElement).disabled = true;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           this.spinner.hide();
+          ($event.target as HTMLButtonElement).disabled = false;
           if (response.status == true) {
 
             this.spinner.hide();

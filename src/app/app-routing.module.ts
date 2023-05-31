@@ -53,11 +53,14 @@ import { EditPurchaseOrderComponent } from './billing/purchase-order/edit-purcha
 import { LedgerComponent } from './ledger/ledger.component'; 
 import { TransactionnewComponent } from './ledger/transactionnew/transactionnew.component';
 import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component'; 
-
+import { EditTransactionNewComponent } from './ledger/transactionnew/edit-transaction-new/edit-transaction-new.component'; 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'EditTransactionNew', component: EditTransactionNewComponent
   },
   {
     path: 'AddTransactionNew', component: AddTransactionNewComponent

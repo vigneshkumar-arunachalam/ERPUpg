@@ -7,7 +7,7 @@
     "Type": "Main Menu",
     "children": [{
             "name": "Transaction New",
-            "icon": "credit-card",
+            "icon": "folder-plus",
             "IDs": [5001, 5002, 5003, 5004, 5005],
             "Type": "Sub Menu",
             "subchild": [],

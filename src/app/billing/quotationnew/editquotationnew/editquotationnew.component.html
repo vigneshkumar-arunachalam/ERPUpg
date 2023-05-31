@@ -1,11 +1,13 @@
-<div class="contents-section">
-    <div class="col-lg-12 mb-30">
+<div class="contents-section editquotation-section">
+     
         <div class="card">
-            <div class="card-header color-dark fw-500" style="padding: 5px 500px;    background-color: #d9515147">
-                <h1>Update Quotation Details</h1>
+            <div class="card-header color-dark fw-500">
+                <!-- <h1>Update Quotation Details</h1> -->
+                <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                    <span class="breadcrumb-item active">Update Quotation</span></h3>
             </div>
         </div>
-    </div>
+    
     <div class="container-fluid">
         <!-- <h2 style="text-align:center;color:black;background-color: #fafafa;">Enter Quotation Details</h2> -->
 
@@ -42,14 +44,15 @@
                     <div class="form-group row">
                         <label for="select_footer" class="col-lg-12 col-form-label">Select Footer<span style="color: red;font-size:larger;"> *</span></label>
                         <div class="col-lg-12" style="display: flex;">
-                            <div class="form-check" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
-                                <input class="form-check-input" type="radio" 
+                            <div class="radio-css" *ngFor="let display of FooterDetails" style="margin-right: 20px;">
+                                <input type="radio" 
                                     formControlName="e_selectFooter" id="footer_{{display.pdf_footer_id}}"
                                     value="{{display.pdf_footer_id}}" (change)="handleChange($event)"
                                     style="margin-top: revert;" />
-                                {{display.footer_name}}
+                                    <label for="footer_{{display.pdf_footer_id}}"> {{display.footer_name}}</label>
                             
                             </div>
+                            
                             <div class="alert alert-danger alertdangerCustomCSS1"
                                 *ngIf="editQuotationInvoice_section1.controls['e_selectFooter'].invalid && editQuotationInvoice_section1.controls['e_selectFooter'].touched">
                                 Please
@@ -331,28 +334,28 @@
                             <div class="table-responsive">
                                 <table class="add-contact-table-section">
                                     <thead>
-                                        <tr class="userDatatable-header" style="display: flex;">
-                                            <th style="width: 50px;"> <span class="userDatatable-title">To New Pge</span>
+                                        <tr class="userDatatable-header">
+                                            <th > <span class="userDatatable-title">To New Pge</span>
                                             </th>
-                                            <th style="width: 60px;"> <span class="userDatatable-title">S.No</span>
+                                            <th> <span class="userDatatable-title">S.No</span>
                                             </th>
-                                            <th style="width:300px"> <span class="userDatatable-title">Product Name</span>
+                                            <th > <span class="userDatatable-title">Product Name</span>
                                             </th>
-                                            <th style="width: 98px;"><span class="userDatatable-title">Quantity</span></th>
+                                            <th ><span class="userDatatable-title">Quantity</span></th>
                                             <!-- <th>Product Name</th>
                                                     <th>Quantity</th> -->
-                                            <th style="width: 98px;"><span class="userDatatable-title">Unit</span></th>
-                                            <th style="width: 140px;"><span class="userDatatable-title">Selling Price</span>
+                                            <th><span class="userDatatable-title">Unit</span></th>
+                                            <th><span class="userDatatable-title">Selling Price</span>
                                             </th>
-                                            <th style="width: 140px;"><span class="userDatatable-title">Total</span></th>
-                                            <th style="width: 100px;"><span class="userDatatable-title">Net Price</span></th>
-                                            <th style="width:50px"><span class="userDatatable-title">Split</span></th>
-                                            <th style="width:55px"><span class="userDatatable-title">Gp Total</span>
+                                            <th><span class="userDatatable-title">Total</span></th>
+                                            <th><span class="userDatatable-title">Net Price</span></th>
+                                            <th><span class="userDatatable-title">Split</span></th>
+                                            <th><span class="userDatatable-title">Gp Total</span>
                                             </th>
-                                            <th style="width:60px"><span class="userDatatable-title">Select Tax</span>
+                                            <th><span class="userDatatable-title">Select Tax</span>
                                             </th>
 
-                                            <th  style="width:60px">
+                                            <th>
                                                 <span class="userDatatable-title">Action</span>
                                             </th>
                                         </tr>
@@ -360,7 +363,7 @@
                                     <tbody cdkDrag cdkDragLockAxis="y" formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
                                     <tr [formGroupName]="i" class="mt-4">
                                         <td colspan="12">
-                                            <table>
+                                            <!-- <table> -->
                                                 <tr class="marginSpace">
                                                     <td >
                                                         <div class="userDatatable-content">
@@ -368,14 +371,14 @@
                                                                 formControlName="to_next_page" id="to_next_page_{{i}}" />
                                                         </div>
                                                     </td>
-                                                    <td style="width: 50px;">
+                                                    <td >
                                                         <div class="userDatatable-content">
                                                         <span style="text-align: center;display: block;    font-family: sans-serif;
                                                         font-size: 14px;
                                                         font-weight: 400;"> {{i+1}}</span>  
                                                         </div>
                                                     </td>
-                                                    <td style="width:300px;display:block;">
+                                                    <td >
                                                         <div class="userDatatable-content" style="top:0">
                                                             <div class="alignFormArray" style="display:block;text-align: left;">
                                                 
@@ -461,14 +464,14 @@
                                                 
                                                         </div>
                                                     </td>
-                                                    <td style="width: 35px;">
+                                                    <td >
                                                         <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
                                                             <input type="checkbox" formControlName="pd_GPTotal" id="pd_GPTotal_{{i}}"
                                                                 (change)="totalCalculate();" />
                                                 
                                                     </div>
                                                 </td>
-                                                <td style="width: 70px;">
+                                                <td >
                                                     <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
                                                         <input type="checkbox"  id="pd_selectTax_{{i}}" [ngModel]="test[i]"
                                                             formControlName="pd_selectTax" (change)="totalCalculate();" />
@@ -476,8 +479,8 @@
                                                 
                                                         </div>
                                                     </td>
-                                                    <td *ngIf="i>0" style="width: 100px;text-align: center;">
-                                                        <div class="userDatatable-content d-inline-block">
+                                                    <td >
+                                                        <div class="userDatatable-content d-inline-block" *ngIf="i>0" >
                                                             <button type="button" class="btn btn-danger btn-sm"
                                                                 (click)=" removeAddress(i)" title="Delete">X</button>
                                                 
@@ -541,7 +544,7 @@
                                                 
                                                 </tr>
                                             <hr>
-                                            </table>
+                                            <!-- </table> -->
                                         </td>
                                     </tr>
                                 </tbody>

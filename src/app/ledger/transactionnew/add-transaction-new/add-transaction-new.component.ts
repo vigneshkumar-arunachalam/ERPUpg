@@ -32,19 +32,64 @@ export class AddTransactionNewComponent implements OnInit {
   //others
   priorityList: any;
   cashTypeList: any;
+  DefaultBillerIDValue: any;
+  InvoicePaymentList: any;
+  amountPaid:any;
+  balance:any;
+  billerName:any;
+  customerName:any;
+  netPayment:any;
+  paymentNote:any;
+
   //tab
-  Select_Transaction_Type = 'PurchaseEntry';
+  Select_Transaction_Type: any = 3;
   //pe file
   PE_FileLength: any;
   //currency change
   getCurrencyCode: any
   billerID: any
+  userID: any;
+  Transaction_Type_List: any;
+  saveVariable:any;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.addLoad();
+
+    this.Transaction_Type_List = [
+      { name: 'Deposit', selected: true, id: 1 },
+      { name: 'Withdrawal', selected: true, id: 2 },
+      { name: 'Purchase Entry', selected: true, id: 3 },
+      { name: 'Salary', selected: true, id: 4 },
+      { name: 'Pettycash', selected: true, id: 5 },
+      { name: 'Logistics', selected: true, id: 51 },
+      { name: 'Vendor Order', selected: true, id: 6 },
+      { name: 'Invoice Payment', selected: true, id: 7 },
+      { name: 'Others', selected: true, id: 8 },
+      { name: 'Commission', selected: true, id: 9 },
+      { name: 'Quotation Approval', selected: true, id: 10 },
+      { name: 'Task Report', selected: true, id: 11 },
+      { name: 'Phone Package', selected: true, id: 12 },
+      { name: 'Product Issues', selected: true, id: 13 },
+      { name: 'Product Entry/Add New Stack', selected: true, id: 15 },
+      { name: 'DID Number Entry', selected: true, id: 21 },
+      { name: 'DID Number Issues', selected: true, id: 22 },
+      { name: 'Demo DID Number Issues', selected: true, id: 23 },
+      { name: 'Issued DID Number Reverse', selected: true, id: 24 },
+      { name: 'Demo DID Number Reverse', selected: true, id: 25 },
+      { name: 'DID Number Issues', selected: true, id: 26 },
+      { name: 'DID (NRS) Number Reverse', selected: true, id: 27 },
+      { name: 'Offline - Reseller Shopping', selected: true, id: 41 },
+      { name: 'Purchase Order', selected: true, id: 35 },
+      { name: 'Purchase Entry Waiting', selected: true, id: 36 },
+      { name: 'Yearly Product Entry', selected: true, id: 55 },
+      { name: 'Product Issues - Waiting for Pre Approval', selected: true, id: 56 },
+      { name: ' Demo Product Issues - Waiting for Pre Approval', selected: true, id: 57 },
+      { name: 'Product Transfer - Waiting for Pre Approval', selected: true, id: 58 },
+    ];
+
     this.priorityList = [
       { name: 'Low', selected: true, id: 1 },
       { name: 'High', selected: true, id: 2 },
@@ -53,95 +98,96 @@ export class AddTransactionNewComponent implements OnInit {
       { name: 'Debit', selected: true, id: 1 },
       { name: 'Credit', selected: true, id: 2 },
     ];
+    this.userID = localStorage.getItem('erp_c4c_user_id');
 
     this.addTransaction_section1 = new FormGroup({
-      'billerName': new FormControl(),
-      'trans_Date': new FormControl(),
-      'priority': new FormControl(),
-      'PE_purchaseEntryNo': new FormControl(),
-      'PE_vendorName': new FormControl(),
-      'PE_purchaseType': new FormControl(),
-      'PE_invoiceNo': new FormControl(),
-      'PE_invoice_Date': new FormControl(),
-      'PE_contentofPurchase': new FormControl(),
-      'PE_poNumber': new FormControl(),
-      'PE_Currency': new FormControl(),
-      'PE_currencyConversionRate': new FormControl(),
-      'PE_taxAmount': new FormControl(),
-      'PE_TaxProvider': new FormControl(),
-      'PE_FreightProvider': new FormControl(),
-      'PE_FreightAmount': new FormControl(),
-      'PE_invoiceAmount': new FormControl(),
-      'CB_PE_AttachMobile': new FormControl(),
-      'PE_FileAttachment': new FormControl(),
-      'PC_Description': new FormControl(),
-      'PC_Type': new FormControl(),
-      'PC_Amount': new FormControl(),
-      'CB_PC_AttachMobile': new FormControl(),
-      'PC_FileAttachment': new FormControl(),
+      'billerName': new FormControl(null),
+      'trans_Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'priority': new FormControl(null),
+      'PE_purchaseEntryNo': new FormControl(null),
+      'PE_vendorName': new FormControl(null),
+      'PE_purchaseType': new FormControl(null),
+      'PE_invoiceNo': new FormControl(null),
+      'PE_invoice_Date': new FormControl(null),
+      'PE_contentofPurchase': new FormControl(null),
+      'PE_poNumber': new FormControl(null),
+      'PE_Currency': new FormControl(null),
+      'PE_currencyConversionRate': new FormControl(null),
+      'PE_taxAmount': new FormControl(null),
+      'PE_TaxProvider': new FormControl(null),
+      'PE_FreightProvider': new FormControl(null),
+      'PE_FreightAmount': new FormControl(null),
+      'PE_invoiceAmount': new FormControl(null),
+      'CB_PE_AttachMobile': new FormControl(null),
+      'PE_FileAttachment': new FormControl(null),
+      'PC_Description': new FormControl(null),
+      'PC_Type': new FormControl(null),
+      'PC_Amount': new FormControl(null),
+      'CB_PC_AttachMobile': new FormControl(null),
+      'PC_FileAttachment': new FormControl(null),
 
-      'Log_Description': new FormControl(),
-      'Log_Type': new FormControl(),
-      'Log_Amount': new FormControl(),
-      'CB_Log_AttachMobile': new FormControl(),
-      'Log_FileAttachment': new FormControl(),
-      'VendorOrder_Description': new FormControl(),
-      'VendorOrder_FileAttachment': new FormControl(),
-      'InvPayment_InvoiceNumber': new FormControl(),
-      'InvPayment_Biller': new FormControl(),
-      'InvPayment_Customer': new FormControl(),
-      'InvPayment_Total': new FormControl(),
-      'InvPayment_Paid': new FormControl(),
-      'InvPayment_Owing': new FormControl(),
-      'InvPayment_PaymentMethod': new FormControl(),
-      'InvPayment_Amount': new FormControl(),
-      'InvPayment_date': new FormControl(),
-      'InvPayment_Notes': new FormControl(),
-      'InvPayment_Details': new FormControl(),
-      'InvPayment_FileAttachment': new FormControl(),
+      'Log_Description': new FormControl(null),
+      'Log_Type': new FormControl(null),
+      'Log_Amount': new FormControl(null),
+      'CB_Log_AttachMobile': new FormControl(null),
+      'Log_FileAttachment': new FormControl(null),
+      'VendorOrder_Description': new FormControl(null),
+      'VendorOrder_FileAttachment': new FormControl(null),
+      'InvPayment_InvoiceNumber': new FormControl(null),
+      'InvPayment_Biller': new FormControl(null),
+      'InvPayment_Customer': new FormControl(null),
+      'InvPayment_Total': new FormControl(null),
+      'InvPayment_Paid': new FormControl(null),
+      'InvPayment_Owing': new FormControl(null),
+      'InvPayment_PaymentMethod': new FormControl(null),
+      'InvPayment_Amount': new FormControl(null),
+      'InvPayment_date': new FormControl(null),
+      'InvPayment_Notes': new FormControl(null),
+      'InvPayment_Details': new FormControl(null),
+      'InvPayment_FileAttachment': new FormControl(null),
 
 
-      'AddNewStock_vendorName': new FormControl(),
-      'AddNewStock_PurDate': new FormControl(),
-      'AddNewStock_CategoryName': new FormControl(),
-      'AddNewStock_ProductName': new FormControl(),
-      'AddNewStock_Qty': new FormControl(),
-      'AddNewStock_SNo': new FormControl(),
+      'AddNewStock_vendorName': new FormControl(null),
+      'AddNewStock_PurDate': new FormControl(null),
+      'AddNewStock_CategoryName': new FormControl(null),
+      'AddNewStock_ProductName': new FormControl(null),
+      'AddNewStock_Qty': new FormControl(null),
+      'AddNewStock_SNo': new FormControl(null),
 
-      'StockIssued_categoryName': new FormControl(),
-      'StockIssued_ProductName': new FormControl(),
-      'StockIssued_serialMACNo': new FormControl(),
-      'StockIssued_InvoiceNo': new FormControl(),
-      'StockIssued_Demo': new FormControl(),
-      'StockIssued_Qty': new FormControl(),
-      'StockIssued_AQty': new FormControl(),
+      'StockIssued_categoryName': new FormControl(null),
+      'StockIssued_ProductName': new FormControl(null),
+      'StockIssued_serialMACNo': new FormControl(null),
+      'StockIssued_InvoiceNo': new FormControl(null),
+      'StockIssued_Demo': new FormControl(null),
+      'StockIssued_Qty': new FormControl(null),
+      'StockIssued_AQty': new FormControl(null),
 
-      'StockTransfer_categoryName': new FormControl(),
-      'StockTransfer_ProductName': new FormControl(),
-      'StockTransfer_serialMACNo': new FormControl(),
-      'StockTransfer_Biller': new FormControl(),
-      'StockTransfer_Qty': new FormControl(),
-      'StockTransfer_AQty': new FormControl(),
+      'StockTransfer_categoryName': new FormControl(null),
+      'StockTransfer_ProductName': new FormControl(null),
+      'StockTransfer_serialMACNo': new FormControl(null),
+      'StockTransfer_Biller': new FormControl(null),
+      'StockTransfer_Qty': new FormControl(null),
+      'StockTransfer_AQty': new FormControl(null),
 
-      'others_Description': new FormControl(),
-      'others_FileAttachment': new FormControl(),
+      'others_Description': new FormControl(null),
+      'others_FileAttachment': new FormControl(null),
     });
 
-    this.VendorManagementForm=new FormGroup({
+    this.VendorManagementForm = new FormGroup({
 
-      'VM_CompanyCode': new FormControl(),
-      'VM_CompanyName' : new FormControl(),
-      'VM_VendorName': new FormControl(),
-      'VM_Address1': new FormControl(),
-      'VM_Address2': new FormControl(),
-      'VM_City': new FormControl(),
-      'VM_State': new FormControl(),
-      'VM_Country': new FormControl(),
-      'VM_Phone': new FormControl(),
-      'VM_MobilePhone': new FormControl(),
-      'VM_Fax': new FormControl(),
-      'VM_Email': new FormControl(),
-     
+      'VM_CompanyCode': new FormControl(null),
+      'VM_CompanyName': new FormControl(null),
+      'VM_VendorName': new FormControl(null),
+      'VM_Address1': new FormControl(null),
+      'VM_Address2': new FormControl(null),
+      'VM_City': new FormControl(null),
+      'VM_State': new FormControl(null),
+      'VM_Country': new FormControl(null),
+      'VM_Phone': new FormControl(null),
+      'VM_MobilePhone': new FormControl(null),
+      'VM_Fax': new FormControl(null),
+      'VM_Email': new FormControl(null),
+
 
     });
   }
@@ -218,10 +264,12 @@ export class AddTransactionNewComponent implements OnInit {
         this.vendorDetails = response.vendor_det;
         this.purchaseTypeDetails = response.purchase_type_det;
         this.taxProviderDetails = response.tax_provider_det;
-
+        this.DefaultBillerIDValue = response.defaults_biller_id;
+        this.getPaymentInvoice();
         this.addTransaction_section1.patchValue({
-          // 'setInvoice': response.selected_invoice_type
-        })
+          'billerName': this.DefaultBillerIDValue,
+
+        });
 
 
 
@@ -242,11 +290,18 @@ export class AddTransactionNewComponent implements OnInit {
         console.log("final error", error);
       };
   }
+  BillerChange(event: any) {
+    // alert(event.target.value)
+    console.log("event", event)
+
+    this.DefaultBillerIDValue = event.target.value;
+  }
 
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+    // alert(this.DefaultBillerIDValue)
+    console.log("event.target;", event);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -255,7 +310,7 @@ export class AddTransactionNewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
-    api_getInvoiceDetails_req.billerId = this.billerID;
+    api_getInvoiceDetails_req.billerId = this.DefaultBillerIDValue;
     api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -275,144 +330,227 @@ export class AddTransactionNewComponent implements OnInit {
 
     });
   }
-  addVendorNameGo(){
+
+  getPaymentInvoice() {
+
+    let api_req: any = new Object();
+    let api_getPaymentDetails_req: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/payment_entry_invoice_no";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getPaymentDetails_req.action = "payment_entry_invoice_no";
+    api_getPaymentDetails_req.billerId = this.DefaultBillerIDValue;
+    api_req.element_data = api_getPaymentDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+
+        this.InvoicePaymentList = response.invoice_list;
+
+        this.addTransaction_section1.patchValue({
+          // 'PE_currencyConversionRate': response.currency_live_val,
+
+        });
+
+      }
+      else {
+
+      }
+
+    });
+  }
+  InvoiceChangeValue(event:any) {
+    var id_b=event.target.value;
+
+    let api_req: any = new Object();
+    let api_getPaymentDetails_req: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/payment_entry_payment_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getPaymentDetails_req.action = "payment_entry_payment_details";
+    api_getPaymentDetails_req.billId = id_b;
+    api_req.element_data = api_getPaymentDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+
+       this.amountPaid=response.amountPaid;
+       this.balance=response.balance;
+       this.billerName=response.billerName;
+       this.customerName=response.customerName;
+       this.netPayment=response.netPayment;
+       this.paymentNote=response.paymentNote;
+
+        this.addTransaction_section1.patchValue({
+          // 'PE_currencyConversionRate': response.currency_live_val,
+
+        });
+
+      }
+      else {
+
+      }
+
+    });
+  }
+
+  addVendorNameGo() {
     $('#VendorManagementId').modal('show');
   }
-  BillerChange(event: any){
-    this.billerID=event.target.value;;
-  }
 
-  saveVendorManagement(){
+
+  saveVendorManagement() {
 
   }
-  // saveTransaction() {
 
-  //   let api_req: any = new Object();
-  //   let api_saveTransaction_req: any = new Object();
-  //   api_req.moduleType = "transaction_entry";
-  //   api_req.api_url = "transaction_entry/insert_transaction";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   api_saveTransaction_req.action = "insert_transaction";
-  //   api_saveTransaction_req.user_id = localStorage.getItem('erp_c4c_user_id');
-
-
-  //   //section-1
-
-  //   api_saveTransaction_req.cus_invoice_no = this.addTransaction_section1.value.cusInvoiceNo;
-
-  //   api_saveTransaction_req.tinNo = this.addTransaction_section1.value.tin;
-
-
-
-  //   api_saveTransaction_req.b_name = this.addTransaction_section1.value.BillTo;
-  //   api_saveTransaction_req.b_address1 = this.addTransaction_section1.value.address_1;
-  //   api_saveTransaction_req.b_address2 = this.addTransaction_section1.value.address_2;
-  //   api_saveTransaction_req.b_address3 = this.addTransaction_section1.value.address_3;
-
-  //   api_req.element_data = api_saveTransaction_req;
-
-
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-
-  //     if (response.status == true) {
-  //       this.router.navigate(['/invoice']);
-  //       iziToast.success({
-  //         message: "Invoice saved successfully",
-  //         position: 'topRight'
-  //       });
-  //       this.goBackTransaction();
-
-  //     }
-
-  //     else {
-  //       alert("status == false")
-  //       iziToast.warning({
-  //         message: "Invoice not added Successfully",
-  //         position: 'topRight'
-  //       });
-  //       this.goBackTransaction();
-  //     }
-
-  //   }),
-  //     (error: any) => {
-  //       ($event.target as HTMLButtonElement).disabled = false;
-  //       alert(error)
-
-  //       iziToast.error({
-  //         message: "Sorry, some server issue occur. Please contact admin",
-  //         position: 'topRight'
-  //       });
-  //       console.log("500",error);
-  //     }
-
-  //     this.goBackTransaction();
-  //     // this.router.navigate(['/invoice']);
-
-
-  // }
   saveTransaction() {
-    alert("hi")
-
+    this.spinner.show();
     var data = new FormData();
+    if (this.addTransaction_section1.value.billerName === null) {
 
-    data.append('company', this.addTransaction_section1.value.billerName);
-    data.append('transaction_date', this.addTransaction_section1.value.trans_Date);
-    data.append('priority', this.addTransaction_section1.value.priority);
-    data.append('type_of_trans', this.Select_Transaction_Type);
-    //purchase entry
-    if(this.Select_Transaction_Type=='PurchaseEntry'){
-          data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
-          data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
-          data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
-          data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
-          data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
-          data.append('content_purchase', this.addTransaction_section1.value.PE_contentofPurchase);
-          data.append('poNo', this.addTransaction_section1.value.PE_poNumber);
-          data.append('currency', this.addTransaction_section1.value.PE_Currency);
-          data.append('conversionRate', this.addTransaction_section1.value.PE_currencyConversionRate);
-          data.append('taxAmount', this.addTransaction_section1.value.PE_taxAmount);
-          data.append('tax_provider', this.addTransaction_section1.value.PE_TaxProvider);
-          data.append('freight_provider', this.addTransaction_section1.value.PE_FreightProvider);
-          data.append('freight_amt', this.addTransaction_section1.value.PE_FreightAmount);
-          data.append('invoiceAmount', this.addTransaction_section1.value.PE_invoiceAmount);
-          //data.append('pur_attach_mobile', this.addTransaction_section1.value.CB_PE_AttachMobile);
-          // for(let i=0;i<this.PE_FileLength;i++){
-          //   data.append('file_attachment_name[i]', $("#PE_FileAttachment")[i].files[i]);
-          // }
-      
-          if (this.myFiles.length < 4) {
-            for (var i = 0; i < this.myFiles.length; i++) {
-      
-              data.append("file[]", this.myFiles[i]);
-            }
-      
-          }
+      iziToast.error({
+        message: "Select Biller",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
     }
-    if(this.Select_Transaction_Type=='PettyCash'){
+    else {
+      data.append('company', this.addTransaction_section1.value.billerName);
+    }
+
+    if (this.addTransaction_section1.value.trans_Date === null) {
+
+      iziToast.error({
+        message: "Select Date",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    }
+    else {
+      data.append('transaction_date', this.addTransaction_section1.value.trans_Date);
+    }
+
+    if (this.addTransaction_section1.value.priority === null) {
+
+      iziToast.error({
+        message: "Select Priority",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    }
+    else {
+      data.append('priority', this.addTransaction_section1.value.priority);
+    }
+
+    if (this.Select_Transaction_Type === null) {
+
+      iziToast.error({
+        message: "Select Type of Transaction ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    }
+    else {
+      data.append('type_of_trans', this.Select_Transaction_Type);
+    }
+
+
+    data.append('user_id', this.userID);
+    //purchase entry
+    if (this.Select_Transaction_Type == 3) {
+      this.saveVariable="purchase_entry_save";
+      data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
+      data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
+      data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
+      data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
+      data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
+      data.append('content_purchase', this.addTransaction_section1.value.PE_contentofPurchase);
+      data.append('poNo', this.addTransaction_section1.value.PE_poNumber);
+      data.append('currency', this.addTransaction_section1.value.PE_Currency);
+      data.append('conversionRate', this.addTransaction_section1.value.PE_currencyConversionRate);
+      data.append('taxAmount', this.addTransaction_section1.value.PE_taxAmount);
+      data.append('tax_provider', this.addTransaction_section1.value.PE_TaxProvider);
+      data.append('freight_provider', this.addTransaction_section1.value.PE_FreightProvider);
+      data.append('freight_amt', this.addTransaction_section1.value.PE_FreightAmount);
+      data.append('invoiceAmount', this.addTransaction_section1.value.PE_invoiceAmount);
+      //data.append('pur_attach_mobile', this.addTransaction_section1.value.CB_PE_AttachMobile);
+      // for(let i=0;i<this.PE_FileLength;i++){
+      //   data.append('file_attachment_name[i]', $("#PE_FileAttachment")[i].files[i]);
+      // }
+
+      if (this.myFiles.length < 4) {
+        for (var i = 0; i < this.myFiles.length; i++) {
+
+          data.append("trans_file[]", this.myFiles[i]);
+        }
+
+      }
+      // data.append('action', "purchase_entry_save");
+    }
+    if (this.Select_Transaction_Type == 5) {
+      this.saveVariable="petty_cash_save";
       data.append('petty_description', this.addTransaction_section1.value.PC_Description);
       data.append('petty_type', this.addTransaction_section1.value.PC_Type);
       data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
       data.append('petty_attach_mobile', this.addTransaction_section1.value.CB_PC_AttachMobile);
-      data.append('file_attachment_name', this.addTransaction_section1.value.PC_FileAttachment);
+      // data.append('file_attachment_name', this.addTransaction_section1.value.PC_FileAttachment);
+      if (this.myFiles.length < 4) {
+        for (var i = 0; i < this.myFiles.length; i++) {
+
+          data.append("trans_file[]", this.myFiles[i]);
+        }
+
+      }
+      // data.append('action', "petty_cash_save");
 
     }
 
-    if(this.Select_Transaction_Type=='Logistics'){
+    if (this.Select_Transaction_Type == 51) {
+      this.saveVariable="logistics_save";
       data.append('logistics_description', this.addTransaction_section1.value.Log_Description);
       data.append('logistics_type', this.addTransaction_section1.value.Log_Type);
-      data.append('logistics_attach_mobile', this.addTransaction_section1.value.Log_Amount);
-      data.append('logistics_amount', this.addTransaction_section1.value.CB_Log_AttachMobile);
-      data.append('file_attachment_name', this.addTransaction_section1.value.Log_FileAttachment);
+      data.append('logistics_amount',this.addTransaction_section1.value.Log_Amount);
+      data.append('logistics_attach_mobile', this.addTransaction_section1.value.CB_Log_AttachMobile);
+      
+      // data.append('file_attachment_name', this.addTransaction_section1.value.Log_FileAttachment);
+      if (this.myFiles.length < 4) {
+        for (var i = 0; i < this.myFiles.length; i++) {
+
+          data.append("trans_file[]" + i, this.myFiles[i]);
+        }
+
+      }
 
     }
-    if(this.Select_Transaction_Type=='VendorOrder'){
+    if (this.Select_Transaction_Type == 6) {
+      this.saveVariable="vendor_order_save";
       data.append('other_description', this.addTransaction_section1.value.VendorOrder_Description);
-      data.append('file_attachment_name', this.addTransaction_section1.value.VendorOrder_FileAttachment);
+      // data.append('file_attachment_name', this.addTransaction_section1.value.VendorOrder_FileAttachment);
+      if (this.myFiles.length < 4) {
+        for (var i = 0; i < this.myFiles.length; i++) {
+
+          data.append("trans_file[]", this.myFiles[i]);
+        }
+
+      }
     }
 
-    if(this.Select_Transaction_Type=='InvoicePayment'){
+    if (this.Select_Transaction_Type == 7) {
+      this.saveVariable="invoice_payment_save";
       data.append('invoice_no', this.addTransaction_section1.value.InvPayment_InvoiceNumber);
       data.append('payment_nettotal', this.addTransaction_section1.value.InvPayment_Total);
       data.append('payment_billerName', this.addTransaction_section1.value.InvPayment_Biller);
@@ -424,28 +562,40 @@ export class AddTransactionNewComponent implements OnInit {
       data.append('payment_method', this.addTransaction_section1.value.InvPayment_PaymentMethod);
       data.append('note', this.addTransaction_section1.value.InvPayment_Notes);
       data.append('payment_paymentNote', this.addTransaction_section1.value.InvPayment_Details);
-      data.append('file_attachment_name', this.addTransaction_section1.value.InvPayment_FileAttachment);
+      // data.append('file_attachment_name', this.addTransaction_section1.value.InvPayment_FileAttachment);
+      if (this.myFiles.length < 4) {
+        for (var i = 0; i < this.myFiles.length; i++) {
+
+          data.append("trans_file[]", this.myFiles[i]);
+        }
+
+      }
     }
 
-    if(this.Select_Transaction_Type=='InvoicePayment'){
+    if (this.Select_Transaction_Type == 8) {
+      this.saveVariable="others_save";
       data.append('other_description', this.addTransaction_section1.value.others_Description);
       data.append('file_attachment_name', this.addTransaction_section1.value.others_FileAttachment);
     }
- 
 
-    data.append('action', "insert_transaction");
+
+
+    // data.append('action', "purchase_entry_save");
 
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/transaction_entry/insert_transaction',
+
+      url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/'+this.saveVariable+'',
       cache: false,
       contentType: false,
       processData: false,
       data: data,
       success: function (result: any) {
+        this.spinner.hide();
+        self.goBackTransaction();
         if (result.status == true) {
-
+          this.spinner.hide();
           self.goBackTransaction();
           console.log(result);
 
@@ -456,7 +606,7 @@ export class AddTransactionNewComponent implements OnInit {
           });
         }
         else {
-
+          this.spinner.hide();
 
           iziToast.warning({
             message: "Transaction details not Saved",
@@ -465,7 +615,7 @@ export class AddTransactionNewComponent implements OnInit {
         }
       },
       error: function (err: any) {
-
+        this.spinner.hide();
         console.log("err", err)
         iziToast.error({
           message: "Server Side Error",
@@ -478,38 +628,38 @@ export class AddTransactionNewComponent implements OnInit {
 
   }
   SelectTransactionType_PE() {
-    this.Select_Transaction_Type = 'PurchaseEntry'
+    this.Select_Transaction_Type = 3;
   }
   SelectTransactionType_PC() {
-    this.Select_Transaction_Type = 'PettyCash'
+    this.Select_Transaction_Type = 5;
   }
   SelectTransactionType_Log() {
-    this.Select_Transaction_Type = 'Logistics'
+    this.Select_Transaction_Type = 51;
   }
   SelectTransactionType_VO() {
-    this.Select_Transaction_Type = 'VendorOrder'
+    this.Select_Transaction_Type = 6;
   }
   SelectTransactionType_IP() {
-    this.Select_Transaction_Type = 'InvoicePayment'
+    this.Select_Transaction_Type = 7;
   }
   SelectTransactionType_ANS() {
-    this.Select_Transaction_Type = 'AddNewStock'
+    this.Select_Transaction_Type = 15;
   }
   SelectTransactionType_SI() {
-    this.Select_Transaction_Type = 'StockIssued'
+    this.Select_Transaction_Type = 56;
   }
   SelectTransactionType_ST() {
-    this.Select_Transaction_Type = 'StockTransfer'
+    this.Select_Transaction_Type = 58;
   }
   SelectTransactionType_Others() {
-    this.Select_Transaction_Type = 'Others'
+    this.Select_Transaction_Type = 8;
   }
   goBackTransaction() {
     this.router.navigate(['/transactionnew']);
   }
-  goBackADDTransaction(){
-       this.router.navigate(['/AddTransactionNew']);
-       window.location.reload();
+  goBackADDTransaction() {
+    this.router.navigate(['/AddTransactionNew']);
+    window.location.reload();
   }
 
 }
