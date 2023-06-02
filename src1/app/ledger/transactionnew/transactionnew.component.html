@@ -1,0 +1,557 @@
+<div class="contents-section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 mb-30">
+        <div class="card">
+          <div class="card-header color-dark fw-500">
+            Transaction Management
+
+            <div class="quotation-btn-section">
+              <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
+                (click)="addtransactionGo()" style="margin-right: 30px;"><i class="fas fa-plus"
+                  style="margin-right:0;"></i>
+              </button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+                data-target="#searchTransactionFormId" (click)="clearSearch()">
+                <i class="fas fa-search" style="margin-right:0;"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+
+                      <th>
+                        <span class="userDatatable-title">Tic No</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Customer/Vendor</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Transaction Type</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Priority</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Requestor Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Description</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Amt/Qty</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of Transaction_list; let i = index">
+
+                    <tr
+                      [ngStyle]="{'background-color':(list.approval_staus=='1') ? ('#84FD88 ') : ( (list.approval_staus=='2') ? ('#d0ffc3') : ( (list.approval_staus=='3') ? ('#FF3333') : ('#FFF') ) )}">
+
+                      <td>
+                        <span>{{ list.tic_no}}</span>
+                      </td>
+                      <td>
+                        <span>{{ list.transaction_date}}</span>
+                      </td>
+
+
+                      <td>
+                        <span><button type="button" class="buttonClass"
+                            [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                            list.billerCode}}</button></span>
+
+                      </td>
+                      <td>
+                        <span>{{ list.customerName}}</span>
+                      </td>
+                      <td>
+                        <span [innerHTML]="list.type_of_trans_name"></span>
+                      </td>
+
+                      <td>
+                        <span>{{ list.priority}}</span>
+                      </td>
+
+
+                      <td>
+                        <span>{{ list.requester_name}}</span>
+                      </td>
+                      <td>
+                        <span [innerHTML]="list.description">{{ list.description}}</span>
+                      </td>
+                      <td [innerHTML]="list.amount">
+
+                        <!-- <span>{{ list.amount}}</span> -->
+                      </td>
+                      <td>
+                        <div class="page">
+
+                          <div class="dropdown">
+                            <button class="btn1"><i class="fa fa-bars"></i></button>
+                            <ul class="dropdown__list">
+
+
+
+
+                              <li class="dropdown__item">
+                                <a class="hover4" title="View" data-toggle="modal"
+                                  data-target="#TransactionManagementViewId">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-search">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                  </svg>
+
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Edit"  (click)=" edittransactionGo(list.transaction_approval_id,list.type_of_trans)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-edit">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7">
+                                    </path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z">
+                                    </path>
+                                  </svg>
+                                </a>
+                               
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover3" title="Delete" data-toggle="modal"
+                                  (click)="deleteTransaction(list.transaction_approval_id)">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-x-square">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="9" y1="9" x2="15" y2="15"></line>
+                                    <line x1="15" y1="9" x2="9" y2="15"></line>
+                                  </svg>
+                                </a>
+                              </li>
+
+                              <li class="dropdown__item">
+                                <a class="hover1" title="Comments Entry" data-toggle="modal"
+                                  data-target="#TransactionCommentsId">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
+                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" class="feather feather-book-open">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z">
+                                    </path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z">
+                                    </path>
+                                  </svg>
+                                </a>
+                              </li>
+
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+            <nav class="atbd-page">
+              <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.backtab=='show' ? getTransactionNewList({'offset':paginationData.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="getTransactionNewList({'offset':paginationData.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? getTransactionNewList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="getTransactionNewList({'offset':paginationData.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.nexttab =='show' ? getTransactionNewList({'offset':paginationData.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+            <br>
+            <br>
+            <table border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td width="20" bgcolor="#FFF" style="border:1px solid #d0d0d0">&nbsp;</td>
+                  <td width="160" style="padding-left:10px">Waiting for approval </td>
+                  <td width="20" bgcolor="#84FD88">&nbsp;</td>
+                  <td width="100" style="padding-left:10px">Approved</td>
+                  <td width="20" bgcolor="#FF3333">&nbsp;</td>
+                  <td width="20" style="padding-left:10px">Rejected</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- -----------------------Modal-view begins-------------------------------- -->
+<div class="modal fade" id="TransactionManagementViewId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header modelHeaderCSS">
+        <h2 class="modal-title" id="exampleModalLongTitle">
+          Transaction Approval Management </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="TransactionManagementViewForm">
+
+          <div class="modal-body commentCSS">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_billerName" class="col-lg-12 col-form-label">Biller Name</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_billerName"
+                                        [attr.readonly]= "isReadOnly" id="view_billerName" />{{this.BillerName}} -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_Date" class="col-lg-12 col-form-label">Date</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_Date"
+                                        [attr.readonly]= "isReadOnly" id="view_Date" />{{ this.date}} -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_priority" class="col-lg-12 col-form-label">Priority</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_priority"
+                                        [attr.readonly]= "isReadOnly"  id="view_priority" />{{ this.Priority}} -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_PurchaseEntryNo" class="col-lg-12 col-form-label">Purchase Entry No</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_PurchaseEntryNo"
+                                      [attr.readonly]= "isReadOnly"  id="view_PurchaseEntryNo" />{{ this.Purchase Entry No}} -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_VendorName"
+                                      [attr.readonly]= "isReadOnly"  id="view_VendorName" />{{ this.Vendor Name}} -->
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_InvoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_InvoiceNo"
+                                      [attr.readonly]= "isReadOnly"  id="view_InvoiceNo" />{{ this.Invoice No}} -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_ContentofPurchase" class="col-lg-12 col-form-label">Content of Purchase</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_ContentofPurchase"
+                                      [attr.readonly]= "isReadOnly"  id="view_ContentofPurchase" />{{ this.Content of Purchase}} -->
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_PONumber" class="col-lg-12 col-form-label">PO Number</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_PONumber"
+                                      [attr.readonly]= "isReadOnly"  id="view_PONumber" />{{ this.PO Number}} -->
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_Currency" class="col-lg-12 col-form-label">Currency</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_Currency"
+                                      [attr.readonly]= "isReadOnly"  id="view_Currency" />{{ this.Currency}} -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_CurrencyConversionRate" class="col-lg-12 col-form-label">Currency Conversion
+                      Rate</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_CurrencyConversionRate"
+                                      [attr.readonly]= "isReadOnly"  id="view_CurrencyConversionRate" />{{ this.CurrencyConversionRate}} -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_TaxAmount" class="col-lg-12 col-form-label">Tax Amount</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_TaxAmount"
+                                      [attr.readonly]= "isReadOnly"  id="view_TaxAmount" />{{ this.TaxAmount}} -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_InvoiceAmount" class="col-lg-12 col-form-label">Invoice Amount</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_InvoiceAmount"
+                                      [attr.readonly]= "isReadOnly"  id="view_InvoiceAmount" />{{ this.InvoiceAmount}} -->
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label for="view_Comments" class="col-lg-12 col-form-label">Comments</label>
+                  </div>
+                  <div class="col-lg-8">
+
+                    <!-- <input type="text" class="form-control" formControlName="view_Comments"
+                                      [attr.readonly]= "isReadOnly"  id="view_Comments" />{{ this.Comments}} -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-view ends-------------------------------------- -->
+
+
+
+<!-- -----------------------Modal-Quotation Comments begins-------------------------------- -->
+<div class="modal fade" id="TransactionCommentsId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="exampleModalLongTitle">
+          Comments Entry </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="TransactionCommentsForm">
+          <div class="row ">
+            <div class="col-lg-12">
+              <div class="form-group row">
+                  <div class="col-lg-3"><label for="transaction_comments" class="col-form-label"> Comments</label></div>
+                  
+                  <div class="col-lg-9">
+                     <textarea class="form-control" formControlName="transaction_comments"></textarea>
+                  </div>
+              </div>
+          </div>
+
+          </div>
+
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="TransactionCommentsSave()">
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="TransactionCommentsClear()">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-Quotation Comments ends-------------------------------------- -->
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchTransactionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content searchQuotationCSS">
+            <div class="modal-header">
+                <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="searchTransactionForm">
+                    <div class="row">
+                      
+                      <div class="col-lg-6">
+                        <div class="form-group">
+                          <label for="temp11" class="col-lg-12 ">Transaction Name</label>
+                          <div class="col-lg-12 " *ngFor="let biller12 of Transaction_Type_List;let i =index">
+                            <input type="checkbox" id="{{biller12.id}}" formControlName="search_billerName"
+                              (change)="searchBillerNameCHK(biller12.id,$event)">
+          
+                            {{biller12.name}}
+                          </div>
+                        </div>
+                      </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group row">
+                                <div class="ng-autocomplete">
+                                    <label for="companyName" class="col-lg-12 ">Search Text</label>
+                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                                        formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                                        (inputChanged)='searchCustomerData($event)'
+                                        (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                                        [notFoundTemplate]="notFoundTemplate">
+                                    </ng-autocomplete>
+
+                                    <ng-template #itemTemplateCustomer let-item>
+                                        <a [innerHTML]="item.customerName"></a>
+                                    </ng-template>
+
+                                    <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                    </ng-template>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" (click)="getTransactionNewList({})">
+                    Search
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>

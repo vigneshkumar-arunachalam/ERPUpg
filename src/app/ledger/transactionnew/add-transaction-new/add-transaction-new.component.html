@@ -59,42 +59,42 @@
                     <div class="col-lg-12">
 
                         <div class="container mt-3 ml-0">
-
+                        
                             <!-- Nav pills -->
                             <ul class="nav nav-pills" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" data-bs-toggle="pill" href="#PurchaseEntry"  (click)="SelectTransactionType_PE()"> Purchase
+                                    <a class="nav-link active" data-toggle="tab" href="#PurchaseEntry" role="tab" aria-controls="PurchaseEntry" aria-selected="true" (click)="SelectTransactionType_PE()"> Purchase
                                         Entry</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#PettyCash" (click)="SelectTransactionType_PC()">Petty Cash</a>
+                                    <a class="nav-link" data-toggle="tab" href="#PettyCash" role="tab" aria-controls="PettyCash" aria-selected="false" (click)="SelectTransactionType_PC()">Petty Cash</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#Logistics" (click)="SelectTransactionType_Log()">Logistics</a>
+                                    <a class="nav-link" data-toggle="tab" href="#Logistics" role="tab" aria-controls="Logistics" aria-selected="false" (click)="SelectTransactionType_Log()">Logistics</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#VendorOrder" (click)="SelectTransactionType_VO()">Vendor Order</a>
+                                    <a class="nav-link" data-toggle="tab" href="#VendorOrder" role="tab" aria-controls="VendorOrder" aria-selected="false" (click)="SelectTransactionType_VO()">Vendor Order</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#InvoicePayment" (click)="SelectTransactionType_IP()">Invoice Payment</a>
+                                    <a class="nav-link" data-toggle="tab" href="#InvoicePayment" role="tab" aria-controls="InvoicePayment" aria-selected="false" (click)="SelectTransactionType_IP()">Invoice Payment</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#AddNewStock" (click)="SelectTransactionType_ANS()">Add New Stock</a>
+                                    <a class="nav-link" data-toggle="tab" href="#AddNewStock" role="tab" aria-controls="AddNewStock" aria-selected="false" (click)="SelectTransactionType_ANS()">Add New Stock</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#StockIssued" (click)="SelectTransactionType_SI()">Stock Issued</a>
+                                    <a class="nav-link" data-toggle="tab" href="#StockIssued" role="tab" aria-controls="StockIssued" aria-selected="false" (click)="SelectTransactionType_SI()">Stock Issued</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#StockTransfer" (click)="SelectTransactionType_ST()">Stock Transfer</a>
+                                    <a class="nav-link" data-toggle="tab" href="#StockTransfer" role="tab" aria-controls="StockTransfer" aria-selected="false" (click)="SelectTransactionType_ST()">Stock Transfer</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#Others" (click)="SelectTransactionType_Others()">Others</a>
+                                    <a class="nav-link" data-toggle="tab" href="#Others" role="tab" aria-controls="Others" aria-selected="false" (click)="SelectTransactionType_Others()">Others</a>
                                 </li>
                             </ul>
 
                             <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div id="PurchaseEntry" class="container tab-pane active"><br>
+                            <div class="tab-content" id="myTabContent">
+                                <div id="PurchaseEntry" class="tab-pane fade show active"  role="tabpanel" aria-labelledby="PurchaseEntry-tab"><br>
                                     <!-- purchase entry sub menu starts -->
 
 
@@ -295,7 +295,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2">  <label for="invoiceAmount" class=" col-form-label">
                                                 Attach Mobile</label></div>
@@ -307,7 +307,7 @@
                                                 (change)="CB_Fn_PE_AttachMobile($event)">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
   
                                     <div class="col-lg-12">
@@ -334,7 +334,7 @@
                                     <!-- purchase entry sub menu ends -->
 
                                 </div>
-                                <div id="PettyCash" class="container tab-pane fade"><br>
+                                <div id="PettyCash" class="tab-pane fade"  role="tabpanel" aria-labelledby="PettyCash-tab"><br>
                                     <!-- petty cash entry sub menu ends -->
                                     <div class="col-lg-12">
                                         <div class="form-group row">
@@ -370,7 +370,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2">  <label for="CB_PC_AttachMobile" class=" col-form-label">
                                                 Attach Mobile</label></div>
@@ -382,7 +382,7 @@
                                                 (change)="CB_Fn_PC_AttachMobile($event)">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
        
@@ -405,7 +405,7 @@
 
 
                                 </div>
-                                <div id="Logistics" class="container tab-pane fade"><br>
+                                <div id="Logistics" class="tab-pane fade"  role="tabpanel" aria-labelledby="Logistics-tab"><br>
                                     <!-- Logistics entry sub menu ends -->
                                     <div class="col-lg-12">
                                        
@@ -443,7 +443,7 @@
                                     </div>
 
 
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2">  <label for="CB_Log_AttachMobile" class=" col-form-label">
                                                 Attach Mobile</label></div>
@@ -455,7 +455,7 @@
                                                 (change)="CB_Fn_Log_AttachMobile($event)">
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
 
 
                         
@@ -476,7 +476,7 @@
                                     <!-- Logistics entry sub menu ends -->
                                 </div>
 
-                                <div id="VendorOrder" class="container tab-pane fade"><br>
+                                <div id="VendorOrder" class="tab-pane fade"  role="tabpanel" aria-labelledby="VendorOrder-tab"><br>
                                     <!-- Vendor Order sub menu starts -->
 
                                     <div class="col-lg-12">
@@ -506,7 +506,7 @@
                                     <!-- Vendor Order sub menu ends -->
                                 </div>
 
-                                <div id="InvoicePayment" class="container tab-pane fade"><br>
+                                <div id="InvoicePayment" class="tab-pane fade"  role="tabpanel" aria-labelledby="InvoicePayment-tab"><br>
                                     <!-- Invoice Payment sub menu starts -->
                                     <div class="col-lg-12">
                                         <div class="form-group row">
@@ -655,7 +655,7 @@
                                     <!-- Invoice Payment sub menu ends -->
                                 </div>
 
-                                <div id="AddNewStock" class="container tab-pane fade"><br>
+                                <div id="AddNewStock" class="tab-pane fade"  role="tabpanel" aria-labelledby="AddNewStock-tab"><br>
 
                                     <!-- Add New Stock sub menu ends -->
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
@@ -726,7 +726,7 @@
                                     <!-- Add New Stock  sub menu ends -->
                                 </div>
 
-                                <div id="StockIssued" class="container tab-pane fade"><br>
+                                <div id="StockIssued" class="tab-pane fade" role="tabpanel" aria-labelledby="StockIssued-tab"><br>
                                     <!-- Stock Issued  sub menu ends -->
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                                         <div class="table-responsive">
@@ -808,7 +808,7 @@
 
                                 </div>
 
-                                <div id="StockTransfer" class="container tab-pane fade"><br>
+                                <div id="StockTransfer" class="tab-pane fade" role="tabpanel" aria-labelledby="StockTransfer-tab"><br>
                                     <!-- Stock Transfer  sub menu ends -->
                                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                                         <div class="table-responsive">
@@ -882,7 +882,7 @@
                                     <!-- Stock Transfer sub menu ends -->
                                 </div>
 
-                                <div id="Others" class="container tab-pane fade"><br>
+                                <div id="Others" class="tab-pane fade" role="tabpanel" aria-labelledby="Others-tab"><br>
                                     <!-- Others sub menu starts -->
 
                                     <div class="col-lg-12">

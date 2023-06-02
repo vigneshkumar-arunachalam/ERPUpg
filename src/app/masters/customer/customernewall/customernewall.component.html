@@ -801,13 +801,9 @@
                 <div class="ng-autocomplete">
                   <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
                       *</span></label>
-                  <ng-autocomplete 
-                  [data]="searchResult" 
-                  [searchKeyword]="keywordCompanyName"
-                    formControlName="company_Name" 
-                    (selected)='selectEventCustomer($event)'
-                    (inputChanged)='searchCustomerData($event)' 
-                    (inputFocused)='onFocusedCustomer($event)'
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                    (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
                     [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
 
@@ -831,7 +827,8 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span class="mandatoryField">*</span></label>
+                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span
+                    class="mandatoryField">*</span></label>
                 <div class="col-lg-12">
                   <select name="biller_name_1" id="biller_name_1" class="form-control"
                     aria-label="Default select example" formControlName="defaultBillerName">
@@ -925,7 +922,8 @@
 
             <div class="col-lg-6 mt-2">
 
-              <label style="color: rgb(233, 13, 24)!important;">Billing Address<span class="mandatoryField">*</span></label>
+              <label style="color: rgb(233, 13, 24)!important;">Billing Address<span
+                  class="mandatoryField">*</span></label>
 
             </div>
             <div class="col-lg-6">
@@ -2224,12 +2222,12 @@
                 </div> -->
 
                 <div class="form-check form-check-inline" *ngFor="let display1 of radio;let k=index">
-                  <input class="form-check-input" type="radio" name="e_editCustomerStatus"
-                   id="{{display1.values1}}" formControlName="e_editCustomerStatus"
-                  value="option1"  
-                  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
-                  (change)="handleChange($event)" />
-                  <label class="form-check-label" for="{{display1.values1}}" style="color: #495057!important;">{{display1.name}}</label>
+                  <input class="form-check-input" type="radio" name="e_editCustomerStatus" id="{{display1.values1}}"
+                    formControlName="e_editCustomerStatus" value="option1"
+                    checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
+                    (change)="handleChange($event)" />
+                  <label class="form-check-label" for="{{display1.values1}}"
+                    style="color: #495057!important;">{{display1.name}}</label>
                 </div>
               </div>
             </div>
@@ -2859,7 +2857,7 @@
                   <div class="form-check form-check-inline" *ngFor='let item of radioDynamic;let i=index'>
                     <input type="radio" id="{{item.values}}" formControlName="a_mconnectPartnerType"
                       value="{{item.values}}" (change)="partnerTypehandleChange($event)" />
-                    <label for="mconnect_partnerType_{{i}}" class="col-lg-6 col-form-label">{{item.name}}</label>
+                    <label for="mconnect_partnerType_{{i}}" class="col-lg-6 col-form-label">{{item.alicename}}</label>
                   </div>
                 </div>
 
@@ -2975,7 +2973,7 @@
               </div>
             </div> -->
 
-            <div class="col-lg-12">
+            <!-- <div class="col-lg-12">
               <div class="form-group row" style="display: flex;align-items: center;">
                 <div class="col-lg-6">
                   <label for="customer_status2" class="col-form-label">Mrvoip Partner
@@ -2987,7 +2985,28 @@
                       <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType"
                         value="{{item.values}}" (change)="handleChange($event)" name="radio" />
                       <span class="checkmark"></span>
-                      {{item.name}}</label>
+                      {{item.alicename}}</label>
+                  </div>
+                </div>
+
+              </div>
+            </div> -->
+
+            <div class="col-lg-12">
+              <div class="form-group row" style="display: flex;align-items: center;">
+                <div class="col-lg-6">
+                  <label for="customer_status2" class="col-form-label">Mrvoip Partner
+                    Type</label>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-check form-check-inline" *ngFor='let item of radioDynamic;let c=index'>
+                   
+                      <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType"
+                        value="{{item.values}}" (change)="handleChange($event)" />
+                      <label for="premiumPartner_id{{c}}" class="col-lg-6 col-form-label">
+                        {{item.alicename}}
+                      </label>
+
                   </div>
                 </div>
 
@@ -4102,7 +4121,8 @@
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label style="color:crimson !important;">{{googleAuthentication_customerName}}{{"- ["}}{{googleAuthentication_customerCode}}{{"]"}}</label>
+                    <label style="color:crimson !important;">{{googleAuthentication_customerName}}{{"-
+                      ["}}{{googleAuthentication_customerCode}}{{"]"}}</label>
                     <!-- <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="GA_customerName" /> -->
                   </div>
 

@@ -52,7 +52,6 @@
                                     <label for="footer_{{display.pdf_footer_id}}"> {{display.footer_name}}</label>
                             
                             </div>
-                            
                             <div class="alert alert-danger alertdangerCustomCSS1"
                                 *ngIf="editQuotationInvoice_section1.controls['e_selectFooter'].invalid && editQuotationInvoice_section1.controls['e_selectFooter'].touched">
                                 Please
@@ -414,7 +413,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        <input type="number" class="form-control" style="text-align: right;width: 100px;"
+                                                        <input type="number" class="form-control" style="text-align: right;"
                                                             formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
                                                             (change)="totalCalculate();saveDiscount()"
                                                             (blur)="totalCalculate();saveDiscount()"
@@ -425,14 +424,14 @@
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        <input type="text" class="form-control" style="text-align: left;width: 100px;"
+                                                        <input type="text" class="form-control" style="text-align: left;"
                                                             formControlName="pd_unit" id="pd_unit_{{i}}" />
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
                                                 
-                                                        <input type="number" class="form-control" style="text-align: right;width: 130px;"
+                                                        <input type="number" class="form-control" style="text-align: right;"
                                                             formControlName="pd_sellingPrice" id="pd_SP_{{i}}"
                                                             onfocus="assignRowVal(i)"
                                                             (change)="totalCalculate();saveDiscount()"
@@ -446,33 +445,33 @@
                                                 <td>
                                                     <div class="userDatatable-content">
                                                         <input type="number" class="form-control" formControlName="pd_Total"
-                                                        [attr.readonly]="isReadOnly"        style="text-align: right;width: 130px;" id="pd_Total_{{i}}" />
+                                                        [attr.readonly]="isReadOnly"        style="text-align: right;" id="pd_Total_{{i}}" />
                                                 
                                                         
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        <input type="number" class="form-control" style="text-align: right;width: 130px;"
+                                                        <input type="number" class="form-control" style="text-align: right;"
                                                         [attr.readonly]="isReadOnly"        formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
                                                     </div>
                                                 </td>
                                                 <td >
-                                                    <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
+                                                    <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                                         <input type="checkbox" formControlName="pd_split" id="pd_split_{{i}}"
                                                             (change)="totalCalculate();set_display_none(i);" />
                                                 
                                                         </div>
                                                     </td>
                                                     <td >
-                                                        <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
+                                                        <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                                             <input type="checkbox" formControlName="pd_GPTotal" id="pd_GPTotal_{{i}}"
                                                                 (change)="totalCalculate();" />
                                                 
                                                     </div>
                                                 </td>
                                                 <td >
-                                                    <div class="userDatatable-content" style="top:-35px;text-align: center;width: 50px;">
+                                                    <div class="userDatatable-content" style="top:-35px;text-align: center;">
                                                         <input type="checkbox"  id="pd_selectTax_{{i}}" [ngModel]="test[i]"
                                                             formControlName="pd_selectTax" (change)="totalCalculate();" />
                                                 
@@ -500,7 +499,7 @@
                                                 <td></td>
                                                 <td>
                                                     <div class="userDatatable-content">
-                                                        <button type="button" style="width: 130px;"
+                                                        <button type="button" style="display: block;height: 42px;width:100%"
                                                         class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
                                                         data-toggle="modal" (click)="calculateDiscount(i)"
                                                         data-target="#discountFormId" id="discount_btn_{{i}}" >Discount(-) 
@@ -511,11 +510,11 @@
                                                 <td>
                                                     <div class="userDatatable-content">
                                                     <input type="number" class="form-control" [attr.readonly]="isReadOnly"
-                                                    style="text-align: right;width: 130px;" formControlName="sub_dis_amt"
+                                                    style="text-align: right;" formControlName="sub_dis_amt"
                                                             id="sub_discount_{{i}}" />
-                                                    <input type="hidden" class="form-control" style="text-align: right;width: 130px;"
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
                                                         formControlName="sub_dis_type" id="sub_discount_type_{{i}}" />
-                                                    <input type="hidden" class="form-control" style="text-align: right;width: 130px;"
+                                                    <input type="hidden" class="form-control" style="text-align: right;"
                                                             formControlName="sub_dis_val" id="sub_discount_val_{{i}}" />
                                                     </div>
                                                 </td>

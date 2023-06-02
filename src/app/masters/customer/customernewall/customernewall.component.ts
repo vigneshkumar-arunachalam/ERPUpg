@@ -457,7 +457,7 @@ export class CustomernewallComponent implements OnInit {
     this.editCustomerValue = JSON.parse(this.editCustomerRaw);
     this.specialEditCustomerRaw = ['[ { "email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "finance_email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "system_discount_3cx": 1, "stripe_recurring_state": 0, "licence_buy_override": 0 }, { "previous_invoice_bill": 7692.75 }, { "pending_bill_days": 20 } ]'];
     this.specialEditCustomerValue = JSON.parse(this.specialEditCustomerRaw);
-    this.radioDynamic = [{ "name": "Reseller", "values": "prem" }, { "name": "Distributor", "values": "affi" }];
+    this.radioDynamic = [{ "name": "Distributor","alicename":"PremiumPartner", "values": "prem" }, { "name": "Reseller","alicename":"AffiliatePartner", "values": "affi" }];
     this.radioDynamic_Call4tel = [{ "nameCT": "Reseller", "valuesCT": "prem" }, { "nameCT": "Distributor", "valuesCT": "affi" }];
     this.dropdownSettings_billerName = {
       singleSelection: false,
@@ -1546,9 +1546,10 @@ export class CustomernewallComponent implements OnInit {
 
   }
   searchCustomerList() {
+    $('#searchCustomerFormId').modal('hide');
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
 
-    $('#searchCustomerFormId').modal('hide');
+    
   }
   CustomerListQuickSearch(data: any) {
     // Swal.fire('Searching');
@@ -1581,7 +1582,8 @@ export class CustomernewallComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.spinner.hide();
-
+      console.log('12345678')
+      $('#searchCustomerFormId').modal('hide');
       if (response.total_cnt == 0) {
         iziToast.warning({
           message: "No Matching Records",
@@ -1595,7 +1597,8 @@ export class CustomernewallComponent implements OnInit {
         this.customer_list = response.customer_details;
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
-
+        $('#searchCustomerFormId').modal('hide');
+       
 
       }
       else {
@@ -1625,7 +1628,8 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = get_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      console.log('hgyrdrrd')
+      $('#searchCustomerFormId').modal('hide');
       this.spinner.hide();
 
       if (response.total_cnt == 0) {
@@ -1638,6 +1642,7 @@ export class CustomernewallComponent implements OnInit {
         this.customer_list = response.customer_details;
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+       
       }
 
       else {
@@ -3295,7 +3300,7 @@ export class CustomernewallComponent implements OnInit {
 
       } else {
         iziToast.warning({
-          message: "Mconnect Partner details not available for this Customer. Please try again",
+          message: "Mconnect Partner details not available for this Customer",
           position: 'topRight'
         });
       }
@@ -3413,7 +3418,7 @@ export class CustomernewallComponent implements OnInit {
 
       } else {
         iziToast.warning({
-          message: "Mrvoip Partner details not available for this Customer. Please try again",
+          message: "Mrvoip Partner details not available for this Customer",
           position: 'topRight'
         });
       }
@@ -3523,7 +3528,7 @@ export class CustomernewallComponent implements OnInit {
 
       } else {
         iziToast.warning({
-          message: "Call4tel Partner details not available for this Customer. Please try again",
+          message: "Call4tel Partner details not available for this Customer",
           position: 'topRight'
         });
       }

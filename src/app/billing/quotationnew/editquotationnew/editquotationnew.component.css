@@ -2,23 +2,26 @@
     font-weight: 500;
 }
 .yettocode {
-    padding-top: 10px;
-    align-items: center;
-    display: inline-flex;
-  
-  }
-  
-  .left_section {
-    border: 1px solid white;
-    width: 30%;
-  
-  }
-  
-  .right_section {
-    border: 1px solid #5a5f7d;
-    width: 70%;
-  }
-  
+  padding-top: 10px;
+  align-items: center;
+  display: inline-flex;
+
+}
+
+.left_section {
+  /* border: 1px solid white; */
+  width: 30%;
+
+}
+
+.right_section {
+  /* border: 1px solid #5a5f7d; */
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  width: 70%;
+  border-radius: 10px;
+}
+section.right_section{ padding: 20px;}
   
   .overall {
     display: flex;
@@ -196,10 +199,10 @@ input.form-control {
     border-top: 1px solid #102268;
     width:2500%;
   }
-
+/* 
   .marginSpace{
     margin-top:2rem !important;
-  }
+  } */
 
   
 
@@ -288,18 +291,16 @@ textarea{
 .add-contact-table-section td:nth-child(9),.add-contact-table-section td:nth-child(10),
 .add-contact-table-section td:nth-child(11){width: 5%;}
 .add-contact-table-section th:last-child, .add-contact-table-section td:last-child{width: 9%;}
+.add-contact-table-section tbody tr:nth-child(2) td:last-child{width: 10%;}
 .add-contact-table-section tr td table tr td {padding: 0px 10px;}
-.add-contact-table-section tr td tr{display: flex;margin-top: 0;}
+.add-contact-table-section tr td tr{display: flex;margin-top: 10px;}
 /* --------------------KS--CSS------------------------------------------ */
 
-
-.radio-css,
-.checkbox-css {
+.radio-css {
   position: relative;
   /* change the border colour to a non-white colour to see how the magic works */
 }
-.radio-css input,
-.checkbox-css input {
+.radio-css input {
   opacity: 0;
   position: absolute;
   width: 30px;
@@ -307,9 +308,7 @@ textarea{
 }
  
 .radio-css label:before,
-.checkbox-css label:before,
-.radio-css label:after,
-.checkbox-css label:after {
+.radio-css label:after {
   content: '';
   position: absolute;
   top: 0;
@@ -317,81 +316,49 @@ textarea{
   transition: border-width 0.3s 0s ease;
   border-radius: 50%;
 }
-.radio-css label:before,
-.checkbox-css label:before {
+.radio-css label:before{
   border: 2px solid #01285f;
   background: transparent;
   width: 30px;
   height: 30px;
 }
-.radio-css label:after,
-.checkbox-css label:after {
+.radio-css label:after {
   width: 22px;
   height: 22px;
   margin: 4px;
   border: 8px solid #FFF;
   background: transparent;
 }
-.radio-css input:checked + label:after,
-.checkbox-css input:checked + label:after {
+.radio-css input:checked + label:after {
   border-width: 5px;
 }
-.radio-css input:checked + label:before,
-.checkbox-css input:checked + label:before {
+.radio-css input:checked + label:before {
   background-color: #6d5dfc;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='104' height='104' viewBox='0 0 104 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2384b53a' d='M0 0h104v104H0z' /%3E%3Cpath fill='%234a8c31' d='M104 21C70 24 29 37 0 52v49h104V21z' /%3E%3Cpath fill='%237bb5de' d='M0 73c34-13 70-18 104-18v49H0V73z' /%3E%3Cpath fill='%23297bb5' d='M0 91c39-8 73-8 104-3v16H0V91z' /%3E%3C/svg%3E");
   background-size: cover;
   background-origin: border-box;
 }
-.checkbox-css label:before {
-  border-radius: 0 20%;
-  border-width: 2px;
-}
-.checkbox-css label:after {
-  border-radius: 0 18%;
-  border-width: 2px 20px 2px 2px;
-  /* to enable faux tick draw animation effect */
-  margin: 4px;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23fff' d='M0 0v32h32V0H0zm24 9l2 2-12 12-6-6 2-2 4 4z'/%3E%3C/svg%3E");
-  background-size: cover;
-  background-origin: border-box;
-}
-.checkbox-css input:checked + label:after {
-  border-width: 2px;
-}
+
 @media (min-width: 768px) {
-  .radio-css input,
-  .checkbox-css input {
+  .radio-css input {
     width: 40px;
     height: 40px;
   }
-  .radio-css label,
-  .checkbox-css label {
+  .radio-css label {
     padding: 0 0 0 50px;
   }
-  .radio-css label:before,
-  .checkbox-css label:before {
+  .radio-css label:before {
     width: 20px;
     height: 20px;
     border-width: 3px;
   }
-  .radio-css label:after,
-  .checkbox-css label:after {
+  .radio-css label:after {
     width: 16px;
     height: 16px;
     margin: 2px;
   }
-  .radio-css input:checked + label:after,
-  .checkbox-css input:checked + label:after {
+  .radio-css input:checked + label:after {
     border-width: 4px;
   }
-  .checkbox-css label:after {
-    width: 15px;
-    height: 15px;
-    margin: 2px;
-    border-width: 2px 12px 2px 2px;
-  }
-  .checkbox-css input:checked + label:after {
-    border-width: 2px;
-  }
+  
 }

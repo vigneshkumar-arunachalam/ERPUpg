@@ -37,6 +37,7 @@ export class EditTransactionNewComponent implements OnInit {
   cashTypeList: any;
   //tab
   Select_Transaction_Type = 'PurchaseEntry';
+  updateVariable:any;
   //pe file
   PE_FileLength: any;
   //currency change
@@ -52,6 +53,8 @@ export class EditTransactionNewComponent implements OnInit {
   Transaction_Type_Variable: any;
   fileIterationVariable:any;
   edit_TransactionTpeID:any;
+  //petty cash
+  PC_edit_TypeValue:any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -67,57 +70,74 @@ export class EditTransactionNewComponent implements OnInit {
 
 
         console.log("Transactional approval ID", this.TransactionApprovalID);
-        console.log("e_Transaction_Type_id", this.edit_TransactionTpeID);
-
-       
-alert(this.edit_TransactionTpeID)
-        switch (this.edit_TransactionTpeID) {
-
-          case 7:
-           
-            // this.editPurchaseEntry();
-            break;
-          case 5:
-        
-            $('#PettyCash_link').addClass('active');
-            this.editPettyCash();
-     
-            break;
-          case 7:
-            // this.editInvoicePayment();
-   
-            break;
-          case 8:
-            // this.editOthers();
-            
-            break;
-          case 15:
-            // this.editOthers();
-  
-            break;
-          case 51:
-            // this.editLogistics();
-           
-            break;
-          case 56:
-            // this.editStockIssued();
-            
-            break;
-          case 58:
-            // this.editStockTransfer();
-           
-            break;
-
-
-          default:
-            // this.editPurchaseEntry();
-            $('#PurchaseEntry_link').addClass('active');
-            break;
-        }
-
+        console.log("e_Transaction_Type_id", this.edit_TransactionTpeID);       
       }
       );
-      this.editPettyCash();
+
+      // if(this.edit_TransactionTpeID==5){
+      //   $('#PurchaseEntry').removeClass('active');
+      //   $('#PurchaseEntry').addClass('fade');
+      //   $('#PettyCash').removeClass('fade');
+      
+      //   $('#PettyCash').addClass('active');
+      //     this.editPettyCash();
+      // }
+      // if(this.edit_TransactionTpeID==7){
+      //   $('#PurchaseEntry').removeClass('active');
+      
+      //   $('#InvoicePayment').addClass('active');
+      //     this.Logistics();
+      // }
+      this.editPurchaseEntry();
+      $('#PurchaseEntry_link').removeClass('active');
+      switch (this.edit_TransactionTpeID) {
+      
+
+        case '3':
+          $('#PurchaseEntry_link').addClass('active');
+          this.editPurchaseEntry();
+          break;
+        case '5':
+          $('#PurchaseEntry').addClass('fade');
+          $('#PurchaseEntry').removeClass('active');
+          $('#PettyCash_link').addClass('active');
+          $('#PettyCash').removeClass('fade');
+          $('#PettyCash').addClass('active');
+          this.editPettyCash();
+          break;
+
+        case '6':
+          $('#VendorOrder_link').addClass('active');
+          break;
+        case '7':
+          $('#PurchaseEntry').removeClass('active');
+          $('#PurchaseEntry').addClass('fade');
+          $('#InvoicePayment_link').addClass('active');
+          $('#InvoicePayment').removeClass('fade');
+          $('#InvoicePayment').addClass('active');
+          break;
+        case 8:
+          $('#Others_link').addClass('active');
+          break;
+        case 15:
+          $('#AddNewStock_link').addClass('active');
+          break;
+        case 51:
+          $('#Logistics_link').addClass('active');
+          break;
+        case 56:
+          $('#StockIssued_link').addClass('active');
+          break;
+        case 58:
+          $('#StockTransfer_link').addClass('active');
+          break;
+
+
+        default:
+          $('#PurchaseEntry_link').addClass('active');
+          break;
+      }
+      
 
 
     this.Transaction_Type_List = [
@@ -161,8 +181,8 @@ alert(this.edit_TransactionTpeID)
       { name: 'High', selected: true, id: 2 },
     ];
     this.cashTypeList = [
-      { name: 'Debit', selected: true, id: 1 },
-      { name: 'Credit', selected: true, id: 2 },
+      { name: 'Debit', selected: true, id: 'D' ,aliasname:'D'},
+      { name: 'Credit', selected: true, id: 'C' ,aliasname:'C'},
     ];
     this.userID = localStorage.getItem('erp_c4c_user_id');
 
@@ -391,121 +411,122 @@ alert(this.edit_TransactionTpeID)
   }
 
 
-  // editPurchaseEntry() {
+  editPurchaseEntry() {
 
 
-  //   let api_req: any = new Object();
-  //   let api_loadEdit: any = new Object();
-  //   api_req.moduleType = "transaction_entry";
-  //   api_req.api_url = "transaction_entry/purchase_entry_edit";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   api_loadEdit.action = "purchase_entry_edit";
-  //   api_loadEdit.transaction_approval_id = this.TransactionApprovalID
-  //   api_req.element_data = api_loadEdit;
+    let api_req: any = new Object();
+    let api_loadEdit: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/purchase_entry_edit";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_loadEdit.action = "purchase_entry_edit";
+    api_loadEdit.transaction_approval_id = this.TransactionApprovalID
+    api_req.element_data = api_loadEdit;
 
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-  //     this.spinner.hide();
-  //     if (response != '') {
-
-
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
 
 
 
-  //       this.addTransaction_section1.patchValue({
-  //         'billerName': response.transaction_details[0].billerId,
-  //         'trans_Date': response.transaction_details[0].transaction_date,
-  //         'priority': response.transaction_details[0].priority,
-  //         'PE_purchaseEntryNo': response.purchaseentry_details[0].purchaseEntryNo,
-  //         'PE_vendorName': response.purchaseentry_details[0].vendorId,
-  //         'PE_purchaseType': response.purchaseentry_details[0].purchase_type_id,
-  //         'PE_invoiceNo': response.purchaseentry_details[0].invoiceNo,
-  //         'PE_invoice_Date': response.purchaseentry_details[0].invoiceDate,
-  //         'PE_contentofPurchase': response.purchaseentry_details[0].content_purchase,
-  //         'PE_poNumber': response.purchaseentry_details[0].poNo,
-  //         'PE_Currency': response.purchaseentry_details[0].currencyId,
-  //         'PE_currencyConversionRate': response.purchaseentry_details[0].conversionRate,
-  //         'PE_taxAmount': response.purchaseentry_details[0].taxAmount,
-  //         'PE_TaxProvider': response.purchaseentry_details[0].tax_provider,
-  //         'PE_FreightProvider': response.purchaseentry_details[0].freight_provider,
-  //         'PE_FreightAmount': response.purchaseentry_details[0].freight_amt,
-  //         'PE_invoiceAmount': response.purchaseentry_details[0].invoiceAmount,
-  //         'PE_FileAttachment': response.transaction_details[0].trans_attachment_filename,
-  //         //  'e_VendorName': response.purchaseentry_details[0].billerId,
-  //         //  'e_purchase_Date': response.purchaseentry_details[0].billerId,
-  //         //  'e_CategoryName': response.purchaseentry_details[0].billerId,
-  //         //  'e_ProductName': response.purchaseentry_details[0].billerId,
-  //         //  'e_Quantity': response.purchaseentry_details[0].billerId,
-
-  //       })
 
 
-  //       this.getFileAttachmentResult = response.trans_file;
+        this.addTransaction_section1.patchValue({
+          'billerName': response.transaction_details[0].billerId,
+          'trans_Date': response.transaction_details[0].transaction_date,
+          'priority': response.transaction_details[0].priority,
+          'PE_purchaseEntryNo': response.purchaseentry_details[0].purchaseEntryNo,
+          'PE_vendorName': response.purchaseentry_details[0].vendorId,
+          'PE_purchaseType': response.purchaseentry_details[0].purchase_type_id,
+          'PE_invoiceNo': response.purchaseentry_details[0].invoiceNo,
+          'PE_invoice_Date': response.purchaseentry_details[0].invoiceDate,
+          'PE_contentofPurchase': response.purchaseentry_details[0].content_purchase,
+          'PE_poNumber': response.purchaseentry_details[0].poNo,
+          'PE_Currency': response.purchaseentry_details[0].currencyId,
+          'PE_currencyConversionRate': response.purchaseentry_details[0].conversionRate,
+          'PE_taxAmount': response.purchaseentry_details[0].taxAmount,
+          'PE_TaxProvider': response.purchaseentry_details[0].tax_provider,
+          'PE_FreightProvider': response.purchaseentry_details[0].freight_provider,
+          'PE_FreightAmount': response.purchaseentry_details[0].freight_amt,
+          'PE_invoiceAmount': response.purchaseentry_details[0].invoiceAmount,
+          'PE_FileAttachment': response.transaction_details[0].trans_attachment_filename,
+          //  'e_VendorName': response.purchaseentry_details[0].billerId,
+          //  'e_purchase_Date': response.purchaseentry_details[0].billerId,
+          //  'e_CategoryName': response.purchaseentry_details[0].billerId,
+          //  'e_ProductName': response.purchaseentry_details[0].billerId,
+          //  'e_Quantity': response.purchaseentry_details[0].billerId,
+
+        })
+
+
+        this.getFileAttachmentResult = response.trans_file;
      
 
-  //       //  switching between tabs
+        //  switching between tabs
 
-  //       $('#PurchaseEntry_link').removeClass('active');
-  //       this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans
+        $('#PurchaseEntry_link').removeClass('active');
+        this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans;
+        console.log(" this.Transaction_Type_Variable - purchase entry", this.Transaction_Type_Variable)
 
-  //       switch (this.Transaction_Type_Variable) {
+        switch (this.Transaction_Type_Variable) {
 
-  //         case 3:
-  //           $('#PurchaseEntry_link').addClass('active');
-  //           break;
-  //         case 5:
-  //           $('#PettyCash_link').addClass('active');
-  //           break;
+          case 3:
+            $('#PurchaseEntry_link').addClass('active');
+            break;
+          case 5:
+            $('#PettyCash_link').addClass('active');
+            break;
 
-  //         case 6:
-  //           $('#VendorOrder_link').addClass('active');
-  //           break;
-  //         case 7:
-  //           $('#InvoicePayment_link').addClass('active');
-  //           break;
-  //         case 8:
-  //           $('#Others_link').addClass('active');
-  //           break;
-  //         case 15:
-  //           $('#AddNewStock_link').addClass('active');
-  //           break;
-  //         case 51:
-  //           $('#Logistics_link').addClass('active');
-  //           break;
-  //         case 56:
-  //           $('#StockIssued_link').addClass('active');
-  //           break;
-  //         case 58:
-  //           $('#StockTransfer_link').addClass('active');
-  //           break;
-
-
-  //         default:
-  //           $('#PurchaseEntry_link').addClass('active');
-  //           break;
-  //       }
+          case 6:
+            $('#VendorOrder_link').addClass('active');
+            break;
+          case 7:
+            $('#InvoicePayment_link').addClass('active');
+            break;
+          case 8:
+            $('#Others_link').addClass('active');
+            break;
+          case 15:
+            $('#AddNewStock_link').addClass('active');
+            break;
+          case 51:
+            $('#Logistics_link').addClass('active');
+            break;
+          case 56:
+            $('#StockIssued_link').addClass('active');
+            break;
+          case 58:
+            $('#StockTransfer_link').addClass('active');
+            break;
 
 
-  //     } else {
+          default:
+            $('#PurchaseEntry_link').addClass('active');
+            break;
+        }
 
 
-  //       iziToast.warning({
-  //         message: "Edit Value of Transaction entry not displayed. Please try again",
-  //         position: 'topRight'
-  //       });
-  //     }
-  //   }),
-  //     (error: any) => {
-  //       iziToast.error({
-  //         message: "Sorry, some server issue occur. Please contact admin",
-  //         position: 'topRight'
-  //       });
-  //       console.log("final error", error);
-  //     };
-  // }
+      } else {
+
+
+        iziToast.warning({
+          message: "Edit Value of Transaction entry not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
   editPettyCash() {
-alert("hi")
-alert(this.TransactionApprovalID)
+// alert("hi")
+// alert(this.TransactionApprovalID)
     let api_req: any = new Object();
     let api_loadEdit: any = new Object();
     api_req.moduleType = "transaction_entry";
@@ -520,30 +541,20 @@ alert(this.TransactionApprovalID)
       this.spinner.hide();
       if (response != '') {
 
-
-
-
+        this.PC_edit_TypeValue=response.pettycash_details[0].type,
 
         this.addTransaction_section1.patchValue({
-          // 'billerName': response.transaction_details[0].billerId,
-          // 'trans_Date': response.transaction_details[0].transaction_date,
-          // 'priority': response.transaction_details[0].priority,
-          // 'PE_purchaseEntryNo': response.purchaseentry_details[0].purchaseEntryNo,
-          // 'PE_vendorName': response.purchaseentry_details[0].vendorId,
-          // 'PE_purchaseType': response.purchaseentry_details[0].purchase_type_id,
-          // 'PE_invoiceNo': response.purchaseentry_details[0].invoiceNo,
-          // 'PE_invoice_Date': response.purchaseentry_details[0].invoiceDate,
-          // 'PE_contentofPurchase': response.purchaseentry_details[0].content_purchase,
-          // 'PE_poNumber': response.purchaseentry_details[0].poNo,
-          // 'PE_Currency': response.purchaseentry_details[0].currencyId,
-          // 'PE_currencyConversionRate': response.purchaseentry_details[0].conversionRate,
-          // 'PE_taxAmount': response.purchaseentry_details[0].taxAmount,
-          // 'PE_TaxProvider': response.purchaseentry_details[0].tax_provider,
-          // 'PE_FreightProvider': response.purchaseentry_details[0].freight_provider,
-          // 'PE_FreightAmount': response.purchaseentry_details[0].freight_amt,
-          // 'PE_invoiceAmount': response.purchaseentry_details[0].invoiceAmount,
-          // 'PE_FileAttachment': response.transaction_details[0].trans_attachment_filename,
-       
+          'billerName': response.transaction_details[0].billerId,
+          'trans_Date': response.transaction_details[0].transaction_date,
+          'priority': response.transaction_details[0].priority,
+
+
+          'PC_Description': response.pettycash_details[0].description,
+          'PC_Type': response.pettycash_details[0].type,
+          'PC_Amount': response.pettycash_details[0].amount,
+          'CB_PC_AttachMobile': response.pettycash_details[0].mobile_type,
+          
+
 
         })
 
@@ -554,7 +565,9 @@ alert(this.TransactionApprovalID)
         //  switching between tabs
 
         $('#PurchaseEntry_link').removeClass('active');
-        this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans
+        this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans;
+
+        console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
 
         switch (this.Transaction_Type_Variable) {
 
@@ -729,6 +742,7 @@ alert(this.TransactionApprovalID)
     data.append('user_id', this.userID);
     //purchase entry
     if (this.Transaction_Type_Variable == 3) {
+      this.updateVariable="purchase_entry_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
       data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
@@ -749,7 +763,9 @@ alert(this.TransactionApprovalID)
       //   data.append('file_attachment_name[i]', $("#PE_FileAttachment")[i].files[i]);
       // }
       console.log("this.getFileAttachmentResult",this.getFileAttachmentResult);
-      if (this.myFilesUpdate.length < 4) {
+      console.log("this.getFileAttachmentResult",this.myFilesUpdate.length);
+      if (this.myFilesUpdate.length < 4 && this.myFilesUpdate.length!=0) {
+       
         if (this.getFileAttachmentResult.length > 0) {
           // alert(this.myFilesUpdate.length)
           console.log(this.myFilesUpdate)
@@ -765,55 +781,91 @@ alert(this.TransactionApprovalID)
             
             
           }
-          // for (var i = 0; i < this.myFilesUpdate.length; i++) {
-          //   if (this.getFileAttachmentResult[0] != '' && this.getFileAttachmentResult[0] != undefined && this.getFileAttachmentResult[0] != 'undefined' && this.getFileAttachmentResult[0] != 'null' && this.getFileAttachmentResult[0] != null) {
-          //     alert("a")
-          //     data.append("trans_file[]", this.getFileAttachmentResult[0].file_name);
-          //   } else {
-          //     alert("b")
-          //     data.append("trans_file[]", this.myFilesUpdate[i]);
-          //   }
-
-          //   if (this.getFileAttachmentResult[1] != '' && this.getFileAttachmentResult[1] != undefined && this.getFileAttachmentResult[1] != 'undefined' && this.getFileAttachmentResult[1] != null && this.getFileAttachmentResult[1] != 'null') {
-          //     alert("c")
-          //     data.append("trans_file[]", this.getFileAttachmentResult[1].file_name);
-          //   } else {
-          //     alert("d")
-          //     data.append("trans_file[]", this.myFilesUpdate[i]);
-          //   }
-
-          //   if (this.getFileAttachmentResult[2] != '' && this.getFileAttachmentResult[2] != undefined && this.getFileAttachmentResult[2] != 'undefined' && this.getFileAttachmentResult[2] != null && this.getFileAttachmentResult[2] != 'null') {
-          //     alert("e")
-          //     data.append("trans_file[]", this.getFileAttachmentResult[2].file_name);
-          //   } else {
-          //     alert("f")
-          //     data.append("trans_file[]", this.myFilesUpdate[i]);
-          //   }
-
-          //   // data.append("trans_file[]", this.myFilesUpdate[i]);
-          // }
+       
         } else {
-          for (var i = 0; i < this.myFilesUpdate.length; i++) {
-            alert("j")
-            data.append("trans_file[]", this.myFilesUpdate[i]);
-          }
+            if (this.getFileAttachmentResult.length > 0) {
+              for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
+                data.append("trans_file[]", this.getFileAttachmentResult[i].file_name);
+              }
+            }else{
+              for (var i = 0; i < this.myFilesUpdate.length; i++) {
+                data.append("trans_file[]", this.myFilesUpdate[i]);
+              }
+            }
         }
 
 
+      }else{
+      
+        if (this.getFileAttachmentResult.length > 0) {
+          for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
+            data.append("trans_file[]", this.getFileAttachmentResult[i].file_name);
+          }
+        }else{
+          for (var i = 0; i < this.myFilesUpdate.length; i++) {
+            data.append("trans_file[]", this.myFilesUpdate[i]);
+          }
+        }
       }
 
     }
     if (this.Transaction_Type_Variable == 5) {
+       this.updateVariable="purchase_cash_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('petty_description', this.addTransaction_section1.value.PC_Description);
       data.append('petty_type', this.addTransaction_section1.value.PC_Type);
       data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
-      data.append('petty_attach_mobile', this.addTransaction_section1.value.CB_PC_AttachMobile);
-      data.append('file_attachment_name', this.addTransaction_section1.value.PC_FileAttachment);
+     
+      console.log("this.getFileAttachmentResult",this.getFileAttachmentResult);
+      console.log("this.getFileAttachmentResult",this.myFilesUpdate.length);
+      if (this.myFilesUpdate.length < 4 && this.myFilesUpdate.length!=0) {
+       
+        if (this.getFileAttachmentResult.length > 0) {
+          // alert(this.myFilesUpdate.length)
+          console.log(this.myFilesUpdate)
+          for (var i=0;i<=this.fileIterationVariable-1;i++) {
+            if( this.myFilesUpdate[i] !=undefined  && this.myFilesUpdate[i] !=null){
+              console.log(this.myFilesUpdate[i])
+              data.append("trans_file[]", this.myFilesUpdate[i]);
+            }
+            if(this.getFileAttachmentResult[i] != '' && this.getFileAttachmentResult[i] != undefined && this.getFileAttachmentResult[i] != 'undefined' && this.getFileAttachmentResult[i] != 'null' && this.getFileAttachmentResult[i] != null) {
+              data.append("trans_file[]", this.getFileAttachmentResult[i].file_name);
+            }
+              
+            
+            
+          }
+       
+        } else {
+            if (this.getFileAttachmentResult.length > 0) {
+              for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
+                data.append("trans_file[]", this.getFileAttachmentResult[i].file_name);
+              }
+            }else{
+              for (var i = 0; i < this.myFilesUpdate.length; i++) {
+                data.append("trans_file[]", this.myFilesUpdate[i]);
+              }
+            }
+        }
+
+
+      }else{
+      
+        if (this.getFileAttachmentResult.length > 0) {
+          for (var i = 0; i < this.getFileAttachmentResult.length; i++) {
+            data.append("trans_file[]", this.getFileAttachmentResult[i].file_name);
+          }
+        }else{
+          for (var i = 0; i < this.myFilesUpdate.length; i++) {
+            data.append("trans_file[]", this.myFilesUpdate[i]);
+          }
+        }
+      }
 
     }
 
     if (this.Transaction_Type_Variable == 51) {
+        this.updateVariable="Logistics_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('logistics_description', this.addTransaction_section1.value.Log_Description);
       data.append('logistics_type', this.addTransaction_section1.value.Log_Type);
@@ -823,12 +875,14 @@ alert(this.TransactionApprovalID)
 
     }
     if (this.Transaction_Type_Variable == 6) {
+        this.updateVariable="VendorOrder_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('other_description', this.addTransaction_section1.value.VendorOrder_Description);
       data.append('file_attachment_name', this.addTransaction_section1.value.VendorOrder_FileAttachment);
     }
 
     if (this.Transaction_Type_Variable == 7) {
+       this.updateVariable="InvoicePayment_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('invoice_no', this.addTransaction_section1.value.InvPayment_InvoiceNumber);
       data.append('payment_nettotal', this.addTransaction_section1.value.InvPayment_Total);
@@ -845,6 +899,7 @@ alert(this.TransactionApprovalID)
     }
 
     if (this.Transaction_Type_Variable == 8) {
+         this.updateVariable="Others_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('other_description', this.addTransaction_section1.value.others_Description);
       data.append('file_attachment_name', this.addTransaction_section1.value.others_FileAttachment);
@@ -852,11 +907,11 @@ alert(this.TransactionApprovalID)
 
 
     data.append('action', "update_transaction");
-
+   
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/transaction_entry/update_transaction',
+      url: 'https://erp1.cal4care.com/api/transaction_entry/'+this.updateVariable+'',
       cache: false,
       contentType: false,
       processData: false,
@@ -896,6 +951,7 @@ alert(this.TransactionApprovalID)
   }
   SelectTransactionType_PE() {
     this.Select_Transaction_Type = 'PurchaseEntry'
+   
   }
   SelectTransactionType_PC() {
     this.Select_Transaction_Type = 'PettyCash'
@@ -927,6 +983,9 @@ alert(this.TransactionApprovalID)
   goBackADDTransaction() {
     this.router.navigate(['/AddTransactionNew']);
     window.location.reload();
+  }
+  Logistics(){
+    alert("hello");
   }
 
 }
