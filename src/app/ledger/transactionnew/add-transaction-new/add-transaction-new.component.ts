@@ -606,6 +606,7 @@ export class AddTransactionNewComponent implements OnInit {
             message: "Transaction details Saved successfully",
             position: 'topRight'
           });
+          this.spinner.hide();
         }
         else {
           this.spinner.hide();
@@ -627,6 +628,7 @@ export class AddTransactionNewComponent implements OnInit {
       }
 
     })
+    this.spinner.hide();
 
   }
   SelectTransactionType_PE() {

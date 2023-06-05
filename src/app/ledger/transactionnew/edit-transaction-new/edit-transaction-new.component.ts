@@ -88,7 +88,7 @@ export class EditTransactionNewComponent implements OnInit {
       //   $('#InvoicePayment').addClass('active');
       //     this.Logistics();
       // }
-      this.editPurchaseEntry();
+      // this.editPurchaseEntry();
       $('#PurchaseEntry_link').removeClass('active');
       switch (this.edit_TransactionTpeID) {
       
@@ -123,7 +123,12 @@ export class EditTransactionNewComponent implements OnInit {
           $('#AddNewStock_link').addClass('active');
           break;
         case 51:
+          $('#PurchaseEntry').removeClass('active');
+          $('#PurchaseEntry').addClass('fade');
           $('#Logistics_link').addClass('active');
+          $('#Logistics_link').removeClass('fade');
+          $('#Logistics_link').addClass('active');
+
           break;
         case 56:
           $('#StockIssued_link').addClass('active');
@@ -810,7 +815,8 @@ export class EditTransactionNewComponent implements OnInit {
 
     }
     if (this.Transaction_Type_Variable == 5) {
-       this.updateVariable="purchase_cash_update";
+      
+       this.updateVariable="petty_cash_update";
       data.append('transaction_approval_id',  this.TransactionApprovalID);
       data.append('petty_description', this.addTransaction_section1.value.PC_Description);
       data.append('petty_type', this.addTransaction_section1.value.PC_Type);
@@ -906,7 +912,7 @@ export class EditTransactionNewComponent implements OnInit {
     }
 
 
-    data.append('action', "update_transaction");
+    data.append('action', this.updateVariable);
    
     var self = this;
     $.ajax({

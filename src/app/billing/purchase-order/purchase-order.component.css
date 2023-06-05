@@ -79,32 +79,45 @@ border-radius: 50%;
   /* changes made by aashiq ends */
 
 
-.button {
-  padding: 0.6em 1.5em;
+  .button {
+    padding: 0.6em 1.5em;
+  
+  }
+  
+  .btn1 {
+    background-color: #007cbc;
+    border: none;
+    color: white;
+    padding: 0;
+    font-size: 16px;
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .btn1:hover {
+    background-color: rgb(221, 109, 152);
+  }
 
+  .dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+
+.userDatatable .page .dropdown button {
+    border-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
-.btn1 {
-  background-color: 	 #20c997;
-  border: none;
-  color: white;
-  padding: 0;
-  font-size: 16px;
-  width: 30px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30px;
-  border-radius: 50%;
-}
-.btn1:hover {
-  background-color: rgb(221, 109, 152);
-}
+  
 i.fa.fa-bars {
   color: #fff!important;
 }
 
-tr:nth-child(even) {background: rgb(239, 241, 238)}
+tr:nth-child(even) {background: rgb(241, 238, 241)}
 tr:nth-child(odd) {background: #FFF}
 
 
@@ -145,8 +158,8 @@ tr:nth-child(odd) {background: #FFF}
 
 
 label {
-    font-weight: 600;
-    color: #009688!important;
+  font-weight: 500;
+  color: #051b5a!important;
 }
 input.form-control {
   padding: 4px 8px !important;
@@ -440,4 +453,27 @@ th{
   height: 24px;
   position: relative;
   display: inline-block;
+}
+.buttonClass{border:none}
+.userDatatable table td{padding:10px 4px;}
+.userDatatable table td:first-child{text-align: center;}
+.userDatatable table td:first-child button.buttonClass{
+ border-radius: 25px;
+ padding: 2px 10px;
+}
+.border-section td{
+  height: 1px;border-bottom:2px solid #00C;padding:0px 0px!important;
+}
+
+
+.userDatatable-header th{
+  background: #6d5dfc;
+}
+.userDatatable-header th span{
+  color: #e4ebf5;
+}
+td{border-bottom: 1px solid #c91a71!important;}
+.userDatatable .buttonClass{
+  border: 1px solid #ddd;
+  border-radius: 5px!important;
 }

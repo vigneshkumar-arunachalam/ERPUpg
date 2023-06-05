@@ -743,7 +743,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   dynamicChange(event: any) {
-    alert("hi")
+   
     console.log("event", event)
 
     this.invType_Search = event.target.value;
@@ -1171,7 +1171,7 @@ export class InvoiceComponent implements OnInit {
     api_req.element_data = api_processpaymentEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      alert(response.owing_amount)
+      
       this.spinner.hide();
       if (response.status == true) {
         this.invoiceDetails_payment = response.invoice_details;

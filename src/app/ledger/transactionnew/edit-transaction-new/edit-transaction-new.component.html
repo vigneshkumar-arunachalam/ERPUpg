@@ -509,25 +509,7 @@
                                         </div>
                                     </div>
   
-  
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="CB_Log_AttachMobile"
-                                                    class=" col-form-label">
-                                                    Attach Mobile</label></div>
-  
-                                            <div class="col-lg-4">
-                                                <input class="ml-3 form-check-input" type="checkbox" checked
-                                                    name="CB_PC_AttachMobile" id="CB_Log_AttachMobile"
-                                                    formControlName="CB_Log_AttachMobile"
-                                                    (change)="CB_Fn_Log_AttachMobile($event)">
-                                            </div>
-                                        </div>
-                                    </div>
-  
-  
-  
-                                    <div class="col-lg-12">
+                                    <!-- <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="Log_FileAttachment"
                                                     class=" col-form-label">File
@@ -540,7 +522,23 @@
                                                     (change)="fileAttachmentEvent($event)">
                                             </div>
                                         </div>
+                                    </div> -->
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="PC_FileAttachment"
+                                                    class=" col-form-label">File
+                                                    Attachment</label></div>
+
+                                            <div class="col-lg-4">
+                                                <input required type="file" name="Log_FileAttachment" multiple
+                                                    id="Log_FileAttachment" class="form-control"
+                                                   
+                                                    (change)="fileAttachmentEventUpdate($event)">
+                                            </div>
+                                        </div>
                                     </div>
+
   
                                     <!-- Logistics entry sub menu ends -->
                                 </div>
