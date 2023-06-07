@@ -468,6 +468,7 @@ th{
 
 .userDatatable-header th{
   background: #6d5dfc;
+  padding: 10px;
 }
 .userDatatable-header th span{
   color: #e4ebf5;
@@ -477,3 +478,8 @@ td{border-bottom: 1px solid #c91a71!important;}
   border: 1px solid #ddd;
   border-radius: 5px!important;
 }
+
+ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+  padding: 0px 0px!important;
+}
+

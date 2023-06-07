@@ -362,13 +362,15 @@ label.col-lg-2.col-form-label {
 }
 
 
-#delivery-order-section .userDatatable table td,
-#delivery-order-section .userDatatable table th {
+#delivery-order-section .userDatatable table td
+{
   padding: 4px 0px 4px !important;
   white-space: normal;
   width: 25%;
 }
-
+#delivery-order-section .userDatatable table th {
+  padding: 10px
+}
 #delivery-order-section .userDatatable table td:nth-child(5),
 #delivery-order-section .userDatatable table th:nth-child(5),
 #delivery-order-section .userDatatable table td:last-child,
@@ -504,6 +506,7 @@ td {
 #addDoFormId .modal-content label,
 #editDoFormId .modal-content label {
   color: #5f63f2;
+  padding: 10px;
 }
 
 
@@ -535,4 +538,8 @@ td {
   cursor: pointer;
   color: #9baacf;
   transition: all 0.5s ease;
+}
+
+ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+  padding: 0px 0px!important;
 }

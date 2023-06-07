@@ -466,7 +466,7 @@ export class EditquotationnewComponent implements OnInit {
 
       console.log("edit quotation response", response);
       if (response != '') {
-        this.dynamicChange_edit(response.quotation_details[0].billerId);
+        // this.dynamicChange_edit(response.quotation_details[0].billerId);
         this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
         //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
         this.SalesRepList = response.sales_rep;

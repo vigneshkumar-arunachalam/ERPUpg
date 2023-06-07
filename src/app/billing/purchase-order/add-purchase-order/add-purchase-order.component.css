@@ -686,3 +686,7 @@ line-height: 3.42857 !important;
     border-width: 2px;
   }
 }
+
+ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+  padding: 0px 0px!important;
+}
