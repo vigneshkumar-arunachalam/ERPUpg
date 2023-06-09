@@ -51,6 +51,7 @@ export class AddTransactionNewComponent implements OnInit {
   userID: any;
   Transaction_Type_List: any;
   saveVariable:any;
+  paymentTypeDetails:any;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
@@ -388,6 +389,8 @@ export class AddTransactionNewComponent implements OnInit {
        this.customerName=response.customerName;
        this.netPayment=response.netPayment;
        this.paymentNote=response.paymentNote;
+       this.paymentTypeDetails=response.payment_type_det;
+
 
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
@@ -554,11 +557,11 @@ export class AddTransactionNewComponent implements OnInit {
     if (this.Select_Transaction_Type == 7) {
       this.saveVariable="invoice_payment_save";
       data.append('invoice_no', this.addTransaction_section1.value.InvPayment_InvoiceNumber);
-      data.append('payment_nettotal', this.addTransaction_section1.value.InvPayment_Total);
-      data.append('payment_billerName', this.addTransaction_section1.value.InvPayment_Biller);
-      data.append('payment_amountPaid', this.addTransaction_section1.value.InvPayment_Paid);
-      data.append('payment_customerName', this.addTransaction_section1.value.InvPayment_Customer);
-      data.append('payment_owing', this.addTransaction_section1.value.InvPayment_Owing);
+      data.append('payment_nettotal', this.netPayment);
+      data.append('payment_billerName', this.billerName);
+      data.append('payment_amountPaid', this.amountPaid);
+      data.append('payment_customerName', this.customerName);
+      data.append('payment_owing', this.balance);
       data.append('paidAmount', this.addTransaction_section1.value.InvPayment_Amount);
       data.append('paymentDate', this.addTransaction_section1.value.InvPayment_date);
       data.append('payment_method', this.addTransaction_section1.value.InvPayment_PaymentMethod);
@@ -572,6 +575,7 @@ export class AddTransactionNewComponent implements OnInit {
         }
 
       }
+  
     }
 
     if (this.Select_Transaction_Type == 8) {

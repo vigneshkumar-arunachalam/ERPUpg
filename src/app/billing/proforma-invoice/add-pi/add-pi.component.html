@@ -1,9 +1,8 @@
 <div class="contents-section">
-    <div class="col-lg-12 mb-30">
-        <div class="card">
-            <div class="card-header color-dark fw-500" style="padding: 5px 500px;    background-color: #d9515147">
-                <h1>Add Proforma Invoice </h1>
-            </div>
+    <div class="card">
+        <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">Add Proforma Invoice</span></h3>
         </div>
     </div>
     <!-- <h2 style="text-align: center;" class="mt-4 mb-4">Enter Proforma Invoice Details</h2> -->
@@ -113,53 +112,53 @@
                     <div class="form-group">
                         <label for="Payment" class="form-label">Select Extra Logo</label>
 
-                        <div class="form-check form-check-inline ml-4 mt-4">
+                        <div class="form-check form-check-inline ml-4 mt-4 radio-css">
 
                             <input class="form-check-input radioType" type="radio" formControlName="extraLogo"
                                 name="extraLogo" (change)="handleChangeExtraLogo($event)" id="extraLogoRadios1"
                                 value="1">
                             <label class="form-check-label" for="extraLogoRadios1">
-                                <span style="color:#009688 !important;">IT Care</span>
+                                <span >IT Care</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
                                 (change)="handleChangeExtraLogo($event)" id="extraLogoRadios2" value="2">
                             <label class="form-check-label" for="extraLogoRadios2">
-                                <span style="color:#009688 !important;"> Calncall</span>
+                                <span > Calncall</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
                                 (change)="handleChangeExtraLogo($event)" id="extraLogoRadios3" value="3">
                             <label class="form-check-label" for="extraLogoRadios3">
-                                <span style="color:#009688 !important;">DID Sg</span>
+                                <span >DID Sg</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
                                 (change)="handleChangeExtraLogo($event)" id="extraLogoRadios4" value="4">
                             <label class="form-check-label" for="extraLogoRadios4">
-                                <span style="color:#009688 !important;">Callcloud</span>
+                                <span >Callcloud</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
                                 (change)="handleChangeExtraLogo($event)" id="extraLogoRadios5" value="5">
                             <label class="form-check-label" for="extraLogoRadios5">
-                                <span style="color:#009688 !important;">Mrvoip</span>
+                                <span >Mrvoip</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="extraLogo" formControlName="extraLogo"
                                 (change)="handleChangeExtraLogo($event)" id="extraLogoRadios0" value="0">
                             <label class="form-check-label" for="extraLogoRadios0">
-                                <span style="color:#009688 !important;">None</span>
+                                <span >None</span>
 
                             </label>
                         </div>
@@ -172,28 +171,28 @@
                         <label for="Payment" class="form-label">Export State</label>
 
 
-                        <div class="form-check form-check-inline ml-4 mt-2">
+                        <div class="form-check form-check-inline ml-4 mt-2 radio-css">
 
                             <input class="form-check-input" type="radio" name="export_state"
                                 (change)="handleChange($event)" id="exampleRadios1" value="1" checked>
                             <label class="form-check-label" for="exampleRadios1">
-                                <span style="color:#009688 !important;">Local</span>
+                                <span >Local</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="export_state"
                                 (change)="handleChange($event)" id="exampleRadios2" value="2">
                             <label class="form-check-label" for="exampleRadios2">
-                                <span style="color:#009688 !important;">Export</span>
+                                <span >Export</span>
 
                             </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="export_state"
                                 (change)="handleChange($event)" id="exampleRadios3" value="3">
                             <label class="form-check-label" for="exampleRadios3">
-                                <span style="color:#009688 !important;">Zero Valid</span>
+                                <span >Zero Valid</span>
 
                             </label>
                         </div>
@@ -205,23 +204,23 @@
                     <div class="form-group">
                         <label for="Payment" class="form-label">Invoice Type</label>
 
-                        <div class="form-check form-check-inline ml-4 mt-2">
+                        <div class="form-check form-check-inline ml-4 mt-2 radio-css">
                             <input class="form-check-input" type="radio" checked name="select" id="inlineCheckbox21"
                                 value="1" (change)="mile($event)">
                             <label class="form-check-label" for="inlineCheckbox21"><span
-                                    style="color:#009688 !important;">Mile Discount</span> </label>
+                                    >Mile Discount</span> </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline radio-css">
                             <input class="form-check-input" type="radio" name="select" id="inlineCheckbox22" value="2"
                                 (change)="mile($event)">
                             <label class="form-check-label" for="inlineCheckbox22"><span
-                                    style="color:#009688 !important;">Mile Stone</span> </label>
+                                    >Mile Stone</span> </label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline ">
                             <input class="form-check-input" type="checkbox" id="inlineCheckbox33" checked
                                 (change)="handleChange_MSDisplay($event)">
                             <label class="form-check-label" for="inlineCheckbox33"><span
-                                    style="color:#009688 !important;">M S Display</span> </label>
+                                    >M S Display</span> </label>
                         </div>
 
 

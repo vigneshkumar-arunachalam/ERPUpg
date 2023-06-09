@@ -77,6 +77,7 @@ export class AddPurchaseOrderComponent implements OnInit {
   bankingCharge: any;
   tax_per_mod: any;
   net_amt: any;
+  total_amt:any;
   sub_dis_val: any;
   edit_array_ExtraLogo: any = [];
   dynamicChangeText: any;
@@ -202,6 +203,32 @@ export class AddPurchaseOrderComponent implements OnInit {
 
     console.log("radio button value", radioSelectFooter);
   }
+
+  tax_details_cbo(){
+    this.billerChangeID = this.addDo_section1.value.companyName;
+
+    let api_req: any = new Object();
+    let addBillerChangeAPI: any = new Object();
+
+    api_req.moduleType = "purchaseorder";
+    api_req.api_url = "purchaseorder/tax_details_cbo";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addBillerChangeAPI.action = "tax_details_cbo";
+    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    addBillerChangeAPI.billerId = this.billerChangeID;
+    api_req.element_data = addBillerChangeAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      // this.companyNameList = response.biller_details;
+      this.addPI_section3.patchValue({
+        'section3_gst_dropdown': response.default_tax_id,
+        'section3_tax_per_hd':response.percent_val,
+      });
+      
+    });
+
+    this.totalCalculate();
+  }
   billerChangeDetails(event: any) {
     this.billerChangeID = event.target.value;
 
@@ -318,9 +345,9 @@ export class AddPurchaseOrderComponent implements OnInit {
       this.addDo_section1.patchValue({
         'PONo': response.delivery_no,
         'companyName':response.defaults_biller_id,
-
       });
       this.billerChangeDetails1(response.defaults_biller_id);
+      this.tax_details_cbo();
     });
   }
   searchCustomer_selectDropdownData(data: any) {
@@ -795,10 +822,10 @@ alert("hi")
     var sub_total_amt = 0;
 
     let discount_type: any;
-    var total_amt: any;
+ 
     var dis_amt_val: any;
 
-    var total_amt: any;
+ 
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     //  alert(list_cnt);
@@ -815,51 +842,25 @@ alert("hi")
 
     for (let a = 0; a < list_cnt; a++) {
 
-      var  total_amt1 = $('#quantity_' + a).val() * $('#price_' + a).val();
-      $('#total_' + a).val(total_amt1);
+      var  total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
+      $('#total_' + a).val(total_amt);
 
-
+      tax_amt_tot += total_amt;
    
-      
-
-      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
-        this.net_amt = $('#pd_netPrice_' + a).val();
-
-        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-        tax_amt_tot += tax_amt;
-
-      }
-
-      grs_amt += sub_total_amt;
-
     }
 
-    this.grossTotal = grs_amt;
+    var tax_val = this.addPI_section3.value.section3_tax_per_hd;
+    var tax_amount = tax_amt_tot * tax_val/100;
+    this.finalTax = tax_amount;
+    this.grossTotal = tax_amt_tot;
+    this.grandTotal = tax_amt_tot+tax_amount;
 
-    if (tax_amt_tot > 0) {
-      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal) - parseFloat(this.finalDiscount)) / 100);
-    }
-
-
-    this.finalTax = tax_amt_tot.toFixed(2);
-    if (this.shipping_amt == '') {
-      this.shipping_amt = 0;
-    }
-    if (this.finalDiscount == '') {
-      this.finalDiscount = 0;
-    }
-    if (this.finalTax == '') {
-      this.finalTax = 0;
-    }
-    if (this.bankingCharge == '') {
-      this.bankingCharge = 0;
-    }
     
-    console.log('grs_amt' + grs_amt);
-    console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
 
+
+
+  
 
 
 

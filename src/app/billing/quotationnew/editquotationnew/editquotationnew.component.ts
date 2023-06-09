@@ -418,7 +418,7 @@ export class EditquotationnewComponent implements OnInit {
           this.editQuotationInvoice_section1.patchValue({
             // 'e_quotationNumber': response.quotation_no,
             'e_selectFooter': this.selected_pdf_footer,
-            'e_selectCurrency': response.currency_id,
+      //      'e_selectCurrency': response.currency_id,
      //       'e_termConditionContentChange': response.quotation_terms_cond,
             // 'e_DescriptionText': response.quotation_desp_det,
           });
@@ -466,7 +466,7 @@ export class EditquotationnewComponent implements OnInit {
 
       console.log("edit quotation response", response);
       if (response != '') {
-        // this.dynamicChange_edit(response.quotation_details[0].billerId);
+        this.dynamicChange_edit(response.quotation_details[0].billerId);
         this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
         //  console.log("test dynamic change", this.dynamicChange_edit(response.quotation_details[0].billerId))
         this.SalesRepList = response.sales_rep;
@@ -489,6 +489,8 @@ export class EditquotationnewComponent implements OnInit {
 
         }
 
+        
+
         this.editQuotationInvoice_section1.patchValue({
 
           'e_companyName': response.quotation_details[0].billerId,
@@ -504,7 +506,6 @@ export class EditquotationnewComponent implements OnInit {
           'e_salesRep': response.quotation_details[0].billGeneratedBy,
           'e_selectTemplate': response.quotation_details[0].quotation_template_id,
           'e_selectReseller': response.quotation_details[0].reseller_id,
-          'e_selectCurrency': response.quotation_details[0].currencyId,
           'e_extraLogo': response.quotation_details[0].bills_logo_id,
           'e_selectPDFTemplate': response.quotation_details[0].default_quotation_pdf_temp,
 
@@ -517,6 +518,9 @@ export class EditquotationnewComponent implements OnInit {
 
 
         });
+
+
+        
 
         //$('#test_'+response.quotation_details[0].pdf_footer_id).prop('checked', true);
         this.selected_pdf_footer = response.quotation_details[0].pdf_footer_id;
@@ -557,12 +561,14 @@ export class EditquotationnewComponent implements OnInit {
 
           })
 
-
+          
 
           );
 
 
         }
+
+      
 
         console.log(formArray)
         this.addQuotationInvoice_section2.setControl('addresses', formArray);
@@ -644,9 +650,14 @@ export class EditquotationnewComponent implements OnInit {
           }
         }
 
+        
         setTimeout(() => {
           this.totalCalculate()
         }, 1500);
+
+          this.editQuotationInvoice_section1.patchValue({
+          'e_selectCurrency': response.quotation_details[0].currencyId,
+        });
 
         //         setTimeout(()=>{
         //   // this.set_display_none(1);

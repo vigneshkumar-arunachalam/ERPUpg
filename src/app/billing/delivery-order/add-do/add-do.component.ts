@@ -90,6 +90,8 @@ export class AddDoComponent implements OnInit {
 
     this.loadADD();
     this.ADDLoadDO();
+    this.radioSelectWarranty == 'no';
+    $('#description_details').val("No Warranty");
 
     this.Get_add_delivery_order();
     this.route.queryParams
@@ -120,6 +122,7 @@ export class AddDoComponent implements OnInit {
       { name: 'No Warranty', selected: false, id: 1 },
       { name: 'One Warranty ', selected: false, id: 2 },
       { name: 'Two Warranty', selected: false, id: 3 },
+      { name: 'None', selected: false, id: 4 },
 
     ];
 
@@ -166,10 +169,12 @@ export class AddDoComponent implements OnInit {
     var Nowarranty = "No Warranty";
     var Onewarranty = "Above items are One year warranty from the date of delivery";
     var Twowarranty = "Above items are Two year warranty from the date of delivery";
+    var nonewarranty='';
 
     if (this.radioSelectWarranty == 'no') {
 
       $('#description_details').val(Nowarranty);
+     
       console.log($('#description_details').val());
 
     }
@@ -182,6 +187,12 @@ export class AddDoComponent implements OnInit {
     if (this.radioSelectWarranty == 'two') {
 
       $('#description_details').val(Twowarranty);
+      console.log($('#description_details').val());
+
+    }
+    if (this.radioSelectWarranty == 'none') {
+
+      $('#description_details').val(nonewarranty);
       console.log($('#description_details').val());
 
     }
@@ -247,7 +258,7 @@ export class AddDoComponent implements OnInit {
 
   loadADD() {
 
-
+    $('#description_details').val('None');
     let api_req: any = new Object();
     let addAPI: any = new Object();
 
@@ -656,7 +667,7 @@ export class AddDoComponent implements OnInit {
 
 
   AddDO($event: MouseEvent) {
-
+alert(this.radioSelectWarranty)
     let api_req: any = new Object();
     let api_saveDO_req: any = new Object();
     api_req.moduleType = "deliveryorder";
@@ -707,7 +718,21 @@ export class AddDoComponent implements OnInit {
     api_saveDO_req.kind_Attention = this.addDo_section1.value.kind_Attention;
 
     api_saveDO_req.bills_logo_id = this.radio_Value_Export_logo;
-    api_saveDO_req.warranty_type = this.radioSelectWarranty;
+
+    if (this.radioSelectWarranty === null || this.radioSelectWarranty === undefined || this.radioSelectWarranty === 'undefined') {
+
+      iziToast.error({
+        message: "Select Warranty",
+        position: 'topRight'
+      });
+      return false;
+
+    } else {
+      api_saveDO_req.warranty_type = this.radioSelectWarranty;
+    }
+
+   
+    
 
     api_saveDO_req.description_details = this.addDo_section1.value.description_details;
     api_saveDO_req.description_details_show_state = this.description_details_show_state;

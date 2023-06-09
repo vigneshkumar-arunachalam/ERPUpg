@@ -591,8 +591,8 @@ export class EditPIComponent implements OnInit {
         this.addPI_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
-          'Currency': response.def_currency_id,
-          'PaymentVia': response.def_paymentvia_id,
+          // 'Currency': response.def_currency_id,
+          // 'PaymentVia': response.def_paymentvia_id,
 
         });
 
@@ -620,8 +620,6 @@ export class EditPIComponent implements OnInit {
 
   }
   loadADD() {
-
-
     let api_req: any = new Object();
     let addAPI: any = new Object();
 
@@ -654,6 +652,7 @@ export class EditPIComponent implements OnInit {
 
 
       }
+      
 
       //  this.TaxDropdown();
       console.log("response-load-pi", response)

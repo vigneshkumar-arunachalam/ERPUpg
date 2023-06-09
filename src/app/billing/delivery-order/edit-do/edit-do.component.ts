@@ -561,8 +561,66 @@ export class EditDoComponent implements OnInit {
     // do something when input is focused
   }
 
+  
+  dynamicChange_footer(val: any) {
+    this.spinner.show();
+    this.billerID = val;
+    console.log("billerID check", this.billerID);
+  
+    let api_req: any = new Object();
+    let api_dynamicDropdown_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/get_customercbo_quat_no";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_dynamicDropdown_req.action = "get_customercbo_quat_no";
+    api_dynamicDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_dynamicDropdown_req.billerId = this.billerID;
+    api_req.element_data = api_dynamicDropdown_req;
 
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      this.FooterDetails = response.footer_details;
+      console.log("dynamic Dropdown change response", response)
+      console.log("dynamic term condition change response", response.quotation_terms_cond)
+      // this.FooterDetails = response.footer_details;
+      this.currencyOld_RadioValue = response.currency_id;
+      this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
+      for (let index = 0; index < response.footer_details.length; index++) {
+        this.billerIDUpdate = response.footer_details[index].billerId;
+        if (response.status == true) {
+          this.editDo_section1.patchValue({
+            // 'e_quotationNumber': response.quotation_no,
+            'e_selectFooter': this.selected_pdf_footer,
+      //      'e_selectCurrency': response.currency_id,
+     //       'e_termConditionContentChange': response.quotation_terms_cond,
+            // 'e_DescriptionText': response.quotation_desp_det,
+          });
+
+
+        }
+        else {
+          this.editDo_section1.patchValue({
+            'e_quotationNumber': '',
+            //      'e_selectFooter': '',
+            'e_selectCurrency': '',
+      //      'e_termConditionContentChange': '',
+            // 'e_DescriptionText': '',
+
+          });
+        }
+      }
+
+      setTimeout(() => {
+        this.selectFooter(this.selected_pdf_footer);
+      }, 1000)
+
+    });
+  }
+  selectFooter(selval: any) {
+    $('#footer_' + selval).prop('checked', true);
+  }
 
   editDo() {
     let api_req: any = new Object();
@@ -578,9 +636,10 @@ export class EditDoComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
-        // this.dynamicChange1(response.delivery_pararent_details[0].billerId);
+        this.dynamicChange_footer(response.delivery_pararent_details[0].billerId);
         this.billsLogo_value = response.delivery_pararent_details[0].bills_logo_id;
         this.warranty_value = response.delivery_pararent_details[0].warranty_type;
+        this.customer_ID = response.delivery_pararent_details[0].customer_id;
 
         this.editDo_section1.patchValue({
 
@@ -607,7 +666,7 @@ export class EditDoComponent implements OnInit {
 
 
         });
-        // this.selected_pdf_footer = response.delivery_pararent_details[0].pdf_footer_id;
+        this.selected_pdf_footer = response.delivery_pararent_details[0].pdf_footer_id;
 
 
 
@@ -688,7 +747,7 @@ export class EditDoComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_updateDO_req.action = "update_delivery_order";
     api_updateDO_req.user_id = localStorage.getItem('erp_c4c_user_id');
-
+    api_updateDO_req.deliveryId = this.editDeliveryID;
 
     api_updateDO_req.company = this.editDo_section1.value.companyName;
     api_updateDO_req.do_no = this.editDo_section1.value.dcNo;
@@ -749,6 +808,7 @@ export class EditDoComponent implements OnInit {
         });
 
       }
+      
     }), (error: any) => {
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
@@ -763,4 +823,5 @@ export class EditDoComponent implements OnInit {
   goBack() {
     this.router.navigate(['/deliveryorder']);
   }
+  
 }
