@@ -98,7 +98,7 @@ export class PurchaseOrderComponent implements OnInit {
     api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
     api_deliveryOrder.off_set = list_data.offset;
     api_deliveryOrder.limit_val = list_data.limit;
-    api_deliveryOrder.search_txt = this.searchResult_CustomerName;
+    api_deliveryOrder.search_txt = this.searchResult1_CustomerName;
     api_deliveryOrder.billerID = this.edit_array_SearchBiller_Checkbox;
     api_deliveryOrder.current_page = "";
 
@@ -114,6 +114,7 @@ export class PurchaseOrderComponent implements OnInit {
 
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchDeliveryOrderFormId').modal("hide");
+        $('#searchPurchaseOrderFormId').modal("hide");
         // this.searchDeliveryOrderForm.reset();
 
       }

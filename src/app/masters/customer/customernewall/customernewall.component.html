@@ -1,10 +1,12 @@
 <div class="contents-section">
-  <div class="container-fluid">
-    <div class="row">
+  <div class="row no-gutters">
+    
       <div class="col-lg-12 mb-30">
         <div class="card">
           <div class="card-header color-dark fw-500">
-            <h3 style="margin-bottom: 0;"> Customer Details</h3>
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+              <span class="breadcrumb-item active">Customer Details</span></h3>
+           
 
 
             <!-- <input type="search" class="form-control searchTop" placeholder="Quick Search"
@@ -23,12 +25,12 @@
 
               <button type="button" title="Add New Customer" class="btn btn-primary btn-default btn-squared"
                 data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()"
-                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i>
+                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i> Add
               </button>
 
               <button type="button" class="btn btn-primary" data-toggle="modal" title="Advanced Search"
                 data-target="#searchCustomerFormId">
-                <i class="fas fa-search" style="margin-right:0;"></i>
+                <i class="fas fa-search" style="margin-right:0;"></i> Search
               </button>
             </div>
             <!-- <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
@@ -185,81 +187,46 @@
                                 <a class="remove" title="View" data-toggle="modal" data-target="#viewCustomerFormId"
                                   (click)="viewCustomer(list.customerId)">
 
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-alert-circle">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="8" x2="12" y2="12"></line>
-                                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/eye-yellow.png">
+                                  <img class="hide" src="assets/img/icon2/eye-black1.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
                                   (click)="editCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-edit">
-                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/edit-blue.png">
+                                  <img class="hide" src="assets/img/icon2/edit-black.png">
                                 </a>
                               </li>
 
 
                               <li class="dropdown__item">
                                 <a class="remove" title="Delete" (click)="deleteCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-trash-2">
-                                    <polyline points="3 6 5 6 21 6"></polyline>
-                                    <path
-                                      d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
-                                    </path>
-                                    <line x1="10" y1="11" x2="10" y2="17"></line>
-                                    <line x1="14" y1="11" x2="14" y2="17"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/delete-blue.png">
+                                  <img class="hide" src="assets/img/icon2/delete-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Landscape Email" data-toggle="modal"
                                   data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-mail">
-                                    <path
-                                      d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                                    </path>
-                                    <polyline points="22,6 12,13 2,6"></polyline>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                  <img class="hide" src="assets/img/icon2/gmail-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Customer Status" data-toggle="modal"
                                   (click)="customer_status(list.customerId,list.cust_status)"
                                   *ngIf="list.cust_status =='P'">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-user-plus">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="20" y1="8" x2="20" y2="14"></line>
-                                    <line x1="23" y1="11" x2="17" y2="11"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/customer-blue.png">
+                                  <img class="hide" src="assets/img/icon2/customer-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Customer Status" data-toggle="modal"
                                   (click)="customer_status(list.customerId,list.cust_status)"
                                   *ngIf="list.cust_status == 'N'">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-user-x">
-                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                    <circle cx="8.5" cy="7" r="4"></circle>
-                                    <line x1="18" y1="8" x2="23" y2="13"></line>
-                                    <line x1="23" y1="8" x2="18" y2="13"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/customer-red.png">
+                                  <img class="hide" src="assets/img/icon2/customer-black.png">
                                 </a>
                               </li>
 
@@ -268,130 +235,77 @@
                               <li class="dropdown__item">
                                 <a class="view" title="Reseller Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-minus-circle">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/reseller-red.png">
+                                  <img class="hide" src="assets/img/icon2/reseller-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Reseller Status" data-toggle="modal"
                                   (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==true">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-plus-circle">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="8" x2="12" y2="16"></line>
-                                    <line x1="8" y1="12" x2="16" y2="12"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/reseller-blue.png">
+                                  <img class="hide" src="assets/img/icon2/reseller-black.png">
 
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==true">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-eye">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                    <circle cx="12" cy="12" r="3"></circle>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/employee-blue.png">
+                                  <img class="hide" src="assets/img/icon2/employee-black.png">
 
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Employee Status" data-toggle="modal"
                                   (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==false">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-eye-off">
-                                    <path
-                                      d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
-                                    </path>
-                                    <line x1="1" y1="1" x2="23" y2="23"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/employee-red.png">
+                                  <img class="hide" src="assets/img/icon2/employee-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Share Customer Permission" data-toggle="modal"
                                   data-target="#SharedCustomerPermissionFormId"
                                   (click)="shareCustomerPermission_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-check-circle">
-                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/customer-service.png">
+                                  <img class="hide" src="assets/img/icon2/customer-service.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Assign Account Manager" data-toggle="modal"
                                   data-target="#AssignAccountManager"
                                   (click)="AssignAccountManager_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-crosshair">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="22" y1="12" x2="18" y2="12"></line>
-                                    <line x1="6" y1="12" x2="2" y2="12"></line>
-                                    <line x1="12" y1="6" x2="12" y2="2"></line>
-                                    <line x1="12" y1="22" x2="12" y2="18"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/accountant.png">
+                                  <img class="hide" src="assets/img/icon2/accountant.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Quick Mail" (click)="quickMail(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-at-sign">
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/Atsign-blue.png">
+                                  <img class="hide" src="assets/img/icon2/Atsign-black.png">
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a class="remove" title="Google Authentication" data-toggle="modal"
                                   data-target="#GoogleAuthentication" (click)="GoogleAuthenticationId(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-airplay">
-                                    <path
-                                      d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1">
-                                    </path>
-                                    <polygon points="12 15 17 21 7 21 12 15"></polygon>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/google.png">
+                                  <img class="hide" src="assets/img/icon2/google.png">
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a class="view" title="File Attachment" data-toggle="modal"
                                   data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-file-plus">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                    <polyline points="14 2 14 8 20 8"></polyline>
-                                    <line x1="12" y1="18" x2="12" y2="12"></line>
-                                    <line x1="9" y1="15" x2="15" y2="15"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/fileAttach-blue.png">
+                                  <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
                                 </a>
                               </li>
 
                               <li class="dropdown__item">
                                 <a class="remove" title="Create a Call4Tel Customer"
                                   (click)="nx32CustomerCreate(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-box">
-                                    <path
-                                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                                    </path>
-                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/add-user-blue.png">
+                                  <img class="hide" src="assets/img/icon2/add-user-black.png">
                                 </a>
                               </li>
 
@@ -399,114 +313,63 @@
                                 <a class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
                                   (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-plus">
-                                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                                  </svg>
-
+                                  <img class="show" src="assets/img/icon2/permis-blue.png">
+                                  <img class="hide" src="assets/img/icon2/permis-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="list.nx32_state==0">
                                 <a class="view" title="NX32 Permission Status" data-toggle="modal"
                                   data-target="#customer_NX32PermissionFormId"
                                   (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="red" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-x">
-                                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/permis-red.png">
+                                  <img class="hide" src="assets/img/icon2/userLock-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Special Edit" data-toggle="modal"
                                   data-target="#specialEditCustomerFormId"
                                   (click)="specialEditCustomer(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-edit-3">
-                                    <path d="M12 20h9"></path>
-                                    <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/specialEdit-blue.png">
+                                  <img class="hide" src="assets/img/icon2/specialEdit-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="Invoice Share" data-toggle="modal"
                                   data-target="#invoiceSharedCustomerFormId"
                                   (click)="invoiceShare_edit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-share-2">
-                                    <circle cx="18" cy="5" r="3"></circle>
-                                    <circle cx="6" cy="12" r="3"></circle>
-                                    <circle cx="18" cy="19" r="3"></circle>
-                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/share-square-blue.png">
+                                  <img class="hide" src="assets/img/icon2/share-square-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId"
                                   (click)="billCodeAttachmentEdit(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-book-open">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/digital-blue.png">
+                                  <img class="hide" src="assets/img/icon2/digital-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="C4T Partner Details" data-toggle="modal"
                                   data-target="#call4tellPartnerDetailsFormId"
                                   (click)="call4tel_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-move">
-                                    <polyline points="5 9 2 12 5 15"></polyline>
-                                    <polyline points="9 5 12 2 15 5"></polyline>
-                                    <polyline points="15 19 12 22 9 19"></polyline>
-                                    <polyline points="19 9 22 12 19 15"></polyline>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <line x1="12" y1="2" x2="12" y2="22"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/call4tell-blue.png">
+                                  <img class="hide" src="assets/img/icon2/call4tell-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="remove" title="MrVoip" data-toggle="modal"
                                   data-target="#MrvoipPartnerDetailsFormId"
                                   (click)="mrvoip_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-chrome">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
-                                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
-                                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/mrVoip-blue.png">
+                                  <img class="hide" src="assets/img/icon2/mrVoip-black.png">
                                 </a>
                               </li>
                               <li class="dropdown__item">
                                 <a class="view" title="MConnect" data-toggle="modal"
                                   data-target="#mconnectPartnerDetailsFormId"
                                   (click)="mconnect_address_getList(list.customerId)">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-cpu">
-                                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                                    <rect x="9" y="9" width="6" height="6"></rect>
-                                    <line x1="9" y1="1" x2="9" y2="4"></line>
-                                    <line x1="15" y1="1" x2="15" y2="4"></line>
-                                    <line x1="9" y1="20" x2="9" y2="23"></line>
-                                    <line x1="15" y1="20" x2="15" y2="23"></line>
-                                    <line x1="20" y1="9" x2="23" y2="9"></line>
-                                    <line x1="20" y1="14" x2="23" y2="14"></line>
-                                    <line x1="1" y1="9" x2="4" y2="9"></line>
-                                    <line x1="1" y1="14" x2="4" y2="14"></line>
-                                  </svg>
+                                  <img class="show" src="assets/img/icon2/bird-blue.png">
+                                  <img class="hide" src="assets/img/icon2/bird-black.png">
                                 </a>
                               </li>
 
@@ -587,7 +450,7 @@
           </div>
         </div>
       </div>
-    </div>
+   
   </div>
 </div>
 
@@ -1228,6 +1091,21 @@
               <label>Permission</label>
               <!-- <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-7"
                 (change)="CHKAll_PermissionSelectAll($event)"> -->
+              <div class="CheckboxScroll">
+                <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
+
+                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check-grpPerm-{{k}}"
+                    checked="{{cu.select_state =='true'? 'checked' : ''}}" (change)="addPermissionCHK(cu.id,$event)">
+                  {{cu.name}}
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <label>CMS Options</label>
+              
               <div class="CheckboxScroll">
                 <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
 

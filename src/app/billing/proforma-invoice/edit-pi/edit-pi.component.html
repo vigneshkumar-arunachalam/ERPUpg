@@ -1,11 +1,10 @@
 <div class="contents-section">
-    <div class="col-lg-12 mb-30">
         <div class="card">
-            <div class="card-header color-dark fw-500" style="padding: 5px 500px;    background-color: #d9515147">
-                <h1>Update Proforma Invoice</h1>
+            <div class="card-header color-dark fw-500">
+                <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active">Update Proforma Invoice</span></h3>
             </div>
         </div>
-    </div>
     <!-- <h2 style="text-align: center;" class="mt-4 mb-4">Update Proforma Invoice Details</h2> -->
     <form [formGroup]="addPI_section1">
         <div class="row">
@@ -121,12 +120,12 @@
                     <div class="form-group">
                         <label for="Payment" class="form-label">Select Extra Logo </label>
 
-                        <div class="form-check form-check-inline ml-2"
+                        <div class="form-check form-check-inline ml-2 radio-css"
                             *ngFor="let display1 of bills_logo_id_radio;let k=index">
                             <input class="form-check-input mt-4" type="radio" name="bills_logo_id" [value]="display1.id"
                                 checked="{{display1.id==billsLogo_value ? 'checked':''}}"
-                                (change)="handleChange_EXTRALogo(display1.billerId,$event)" />
-                            <label class="form-check-label mt-4" for="exampleRadios{{k}}">
+                                (change)="handleChange_EXTRALogo(display1.billerId,$event)" id="exampleRadios{{k}}"/>
+                            <label class="form-check-label " for="exampleRadios{{k}}">
                                 <span style="color:#009688 !important;">{{display1.name}}</span>
 
                             </label>
@@ -140,12 +139,12 @@
                     <div class="form-group">
                         <label for="Payment" class="form-label">Export State</label>
 
-                        <div class="form-check form-check-inline ml-2"
+                        <div class="form-check form-check-inline ml-2 radio-css"
                             *ngFor="let display1 of exportState_Radio;let k=index">
                             <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
                                 checked="{{display1.id==exportState_value ? 'checked':''}}"
-                                (change)="handleChange_ExportState(display1.billerId,$event)" />
-                            <label class="form-check-label" for="exampleRadios{{k}}">
+                                (change)="handleChange_ExportState(display1.billerId,$event)" id="exportstate{{k}}"/>
+                            <label class="form-check-label" for="exportstate{{k}}">
                                 <span style="color:#009688 !important;">{{display1.name}}</span>
                             </label>
                         </div>
@@ -157,12 +156,12 @@
                     <div class="form-group">
                         <label for="Payment" class="form-label">Invoice Type</label>
 
-                        <div class="form-check form-check-inline ml-2"
+                        <div class="form-check form-check-inline ml-2 radio-css"
                             *ngFor="let display1 of mile_discount_state_radio;let k=index">
                             <input class="form-check-input" type="radio" name="mile_discount_state"
                                 [value]="display1.id" checked="{{display1.id==mileDiscountState_value ? 'checked':''}}"
-                                (change)="handleChange_mileSate_InvoiceType(display1.billerId,$event)" />
-                            <label class="form-check-label" for="exampleRadios{{k}}">
+                                (change)="handleChange_mileSate_InvoiceType(display1.billerId,$event)" id="invoicetype{{k}}"/>
+                            <label class="form-check-label" for="invoicetype{{k}}">
                                 <span style="color:#009688 !important;">{{display1.name}}</span>
                             </label>
                         </div>
@@ -399,27 +398,27 @@
                     <div class="table-responsive">
                         <table class="add-contact-table-section">
                             <thead>
-                                <tr class="userDatatable-header" style="display: flex;">
-                                    <th style="width: 50px;"> <span class="userDatatable-title">
+                                <tr class="userDatatable-header">
+                                    <th> <span class="userDatatable-title">
                                             Next Page</span>
                                     </th>
-                                    <th style="width: 250px;"><span class="userDatatable-title">Product
+                                    <th><span class="userDatatable-title">Product
                                             Name</span></th>
-                                    <th style="width: 120px;"><span class="userDatatable-title">Quantity</span>
+                                    <th><span class="userDatatable-title">Quantity</span>
                                     </th>
-                                    <th style="width: 100px;"><span class="userDatatable-title">Unit</span></th>
-                                    <th style="width: 150px;"><span class="userDatatable-title"> Price</span></th>
-                                    <th style="width: 150px;"> <span class="userDatatable-title"> Total</span>
+                                    <th><span class="userDatatable-title">Unit</span></th>
+                                    <th><span class="userDatatable-title"> Price</span></th>
+                                    <th> <span class="userDatatable-title"> Total</span>
                                     </th>
-                                    <th style="width: 150px;"><span class="userDatatable-title">Net Total</span>
+                                    <th><span class="userDatatable-title">Net Total</span>
                                     </th>
-                                    <th style="width: 60px;"><span class="userDatatable-title">Out Call</span>
+                                    <th><span class="userDatatable-title">Out Call</span>
                                     </th>
-                                    <th style="width: 65px;"><span class="userDatatable-title"> C Mon</span>
+                                    <th><span class="userDatatable-title"> C Mon</span>
                                     </th>
-                                    <th style="width: 61px;"><span class="userDatatable-title"> Select Tax</span>
+                                    <th><span class="userDatatable-title"> Select Tax</span>
                                     </th>
-                                    <th style="width: 15px;">
+                                    <th>
                                         <span class="userDatatable-title">Action</span>
                                     </th>
                                 </tr>
@@ -431,10 +430,10 @@
                                 <tr [formGroupName]="i">
 
                                     <td colspan="12">
-                                        <table>
+                                     
                                             <tr class="marginSpace">
                                                 <!-- NEXT PAGE -->
-                                                <td style="   width: 50px;text-align: center;">
+                                                <td style="text-align: center;">
                                                     <div class="userDatatable-content lalign"
                                                         style="   width: 50px;text-align: center!important;;">
                                                         <input type="checkbox" formControlName="pd_nextPage_checkbox"
@@ -448,8 +447,8 @@
                                                 <!-- PRODUCT NAME -->
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="width: 250px;text-align: center;">
-                                                        <input type="text" class="form-control mt-2 mb-2"
+                                                        style="text-align: center;">
+                                                        <input type="text" class="form-control"
                                                             formControlName="pd_productName_txtbox1"
                                                             id="pd_productName_txtbox_{{i}}" />
                                                     </div>
@@ -460,7 +459,7 @@
                                                 <!-- QUANTITY -->
 
                                                 <td>
-                                                    <div class="userDatatable-content" style="width: 120px;">
+                                                    <div class="userDatatable-content">
                                                         <input type="number" class="form-control"
                                                             style="text-align: right;"
                                                             formControlName="pd_quantity_txtbox1" id="pd_qty_{{i}}"
@@ -471,7 +470,7 @@
                                                 <!-- UNIT.... -->
 
                                                 <td>
-                                                    <div class="userDatatable-content" style="width: 100px;">
+                                                    <div class="userDatatable-content">
 
                                                         <input type="text" class="form-control"
                                                             style="text-align: left;" formControlName="pd_unit"
@@ -483,7 +482,7 @@
                                                 <!-- PRICE..... -->
 
                                                 <td>
-                                                    <div class="userDatatable-content" style="width: 150px;">
+                                                    <div class="userDatatable-content">
 
                                                         <input type="number" class="form-control"
                                                             style="text-align: right;" formControlName="pd_sellingPrice"
@@ -493,16 +492,16 @@
                                                 </td>
 
 
-                                                <td style="width: 150px;">
-                                                    <div class="userDatatable-content" style="width: 150px;">
+                                                <td>
+                                                    <div class="userDatatable-content">
                                                         <input type="number" class="form-control"
                                                             [attr.readonly]="isReadOnly" formControlName="pd_Total"
                                                             style="text-align: right;" id="pd_Total_{{i}}" />
                                                     </div>
                                                 </td>
 
-                                                <td style="width: 150px;">
-                                                    <div class="userDatatable-content" style="width: 150px;">
+                                                <td>
+                                                    <div class="userDatatable-content">
                                                         <input type="number" class="form-control"
                                                             [attr.readonly]="isReadOnly" style="text-align: right;"
                                                             formControlName="pd_netPrice" id="pd_netPrice_{{i}}" />
@@ -521,7 +520,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="width: 65px;text-align: center;">
+                                                        style="text-align: center;">
 
                                                         <input type="checkbox" style="text-align: right;"
                                                             formControlName="pd_CMon" id="pd_CMon_{{i}}">
@@ -532,7 +531,7 @@
 
                                                 <td>
                                                     <div class="userDatatable-content"
-                                                        style="top:-35px;text-align: center;width: 61px;margin-left: -8px">
+                                                        style="top:-35px;text-align: center;margin-left: -8px">
                                                         <input type="checkbox" id="pd_selectTax_{{i}}"
                                                             formControlName="pd_selectTax"
                                                             (change)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
@@ -541,8 +540,8 @@
                                                     </div>
                                                 </td>
 
-                                                <td *ngIf="i>0">
-                                                    <div class="userDatatable-content d-inline-block"
+                                                <td>
+                                                    <div  *ngIf="i>0" class="userDatatable-content d-inline-block"
                                                         style="margin-left: 15px;">
                                                         <button type="button" class="btn btn-danger btn-sm"
                                                             (click)="removeParticular(i)">X</button>
@@ -559,7 +558,7 @@
                                                 <td colspan="2">
                                                     <div class="userDatatable-content">
                                                         <textarea
-                                                            style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
+                                                            style="height: 120px;text-align: left;padding-left: 8px"
                                                             class="form-control mt-2 mb-2" row="2"
                                                             formControlName="pd_productName_txtArea"
                                                             id="pd_productName_txtArea_{{i}}"></textarea>
@@ -603,8 +602,7 @@
                                                 <td></td>
                                                 <td></td>
                                             </tr>
-
-                                        </table>
+                                        
                                     </td>
                                 </tr>
                             </tbody>

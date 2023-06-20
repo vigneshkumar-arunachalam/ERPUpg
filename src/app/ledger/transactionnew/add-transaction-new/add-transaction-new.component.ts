@@ -16,6 +16,8 @@ declare var iziToast: any;
 export class AddTransactionNewComponent implements OnInit {
   addTransaction_section1: FormGroup;
   VendorManagementForm: FormGroup;
+  addStock_section2: FormGroup;
+  public addresses: FormArray;
 
   //file attachment
   file: File;
@@ -34,12 +36,12 @@ export class AddTransactionNewComponent implements OnInit {
   cashTypeList: any;
   DefaultBillerIDValue: any;
   InvoicePaymentList: any;
-  amountPaid:any;
-  balance:any;
-  billerName:any;
-  customerName:any;
-  netPayment:any;
-  paymentNote:any;
+  amountPaid: any;
+  balance: any;
+  billerName: any;
+  customerName: any;
+  netPayment: any;
+  paymentNote: any;
 
   //tab
   Select_Transaction_Type: any = 3;
@@ -50,11 +52,23 @@ export class AddTransactionNewComponent implements OnInit {
   billerID: any
   userID: any;
   Transaction_Type_List: any;
-  saveVariable:any;
-  paymentTypeDetails:any;
+  saveVariable: any;
+  paymentTypeDetails: any;
+  categoryDetails: any;
+  //add stock -form array
+  itre = 0;
+  test: boolean[] = [];
+  productDetails:any;
+  valuw:any;
+  serial_no_state:any;
+  payment_details:any;
 
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
+    this.addStock_section2 = this.fb.group({
+      addresses: this.fb.array([this.createAddress()]),
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
+    });
+  }
 
   ngOnInit(): void {
     this.addLoad();
@@ -97,8 +111,8 @@ export class AddTransactionNewComponent implements OnInit {
     ];
 
     this.cashTypeList = [
-      { name: 'Debit', selected: true, id: 'D' ,aliasname:'D'},
-      { name: 'Credit', selected: true, id: 'C' ,aliasname:'C'},
+      { name: 'Debit', selected: true, id: 'D', aliasname: 'D' },
+      { name: 'Credit', selected: true, id: 'C', aliasname: 'C' },
     ];
     this.userID = localStorage.getItem('erp_c4c_user_id');
 
@@ -154,7 +168,7 @@ export class AddTransactionNewComponent implements OnInit {
       'AddNewStock_CategoryName': new FormControl(null),
       'AddNewStock_ProductName': new FormControl(null),
       'AddNewStock_Qty': new FormControl(null),
-      'AddNewStock_SNo': new FormControl(null),
+      'AddNewStock_SNo_CBK': new FormControl(null),
 
       'StockIssued_categoryName': new FormControl(null),
       'StockIssued_ProductName': new FormControl(null),
@@ -193,16 +207,75 @@ export class AddTransactionNewComponent implements OnInit {
 
     });
   }
+  get addressControls() {
+    return this.addStock_section2.get('addresses') as FormArray
+  }
+
+
+  addAddress(): void {
+    this.addresses = this.addStock_section2.get('addresses') as FormArray;
+    this.addresses.push(this.createAddress());
+
+    this.itre = this.itre + 1;
+    this.addressControls.controls.forEach((elt, index) => {
+      this.test[index] = true;
+
+    });
+  }
+
+  createAddress(): FormGroup {
+    return this.fb.group({
+
+      AddNewStock_vendorName: '',
+      AddNewStock_PurDate: '',
+      AddNewStock_CategoryName: '',
+      AddNewStock_ProductName: '',
+      AddNewStock_Qty: '',
+      AddNewStock_SNo_CBK: '',
+
+
+
+    });
+
+  }
+
+  removeAddress(i: number) {
+    this.addresses.removeAt(i);
+
+  }
+  addTextBox(k:any) {
+
+    $("#acx").html('');
+    var val = $("#AddNewStock_Qty"+k).val();
+//this.valuw=val;
+    var ser_str='';
+    var addr = this.addStock_section2.value.addresses;
+    console.log("total addr",addr)
+    // console.log(addr)
+    for (let i = 0; i < val; i++) {
+
+      // $("#acx"+i).append('<input type="text " name="text">');
+    
+     //$("#acx"+k).append('<input type="text" name="Quantity" id="acx'+i+'" /><br>');
+
+     ser_str=ser_str+'<input type="text" name="Quantity" class="form-control" id="qty'+i+'" /><br>';
+
+    }
+    
+    $('#acx'+k).html(ser_str);
+
+  }
   CB_Fn_PE_AttachMobile(event: any) {
 
   }
   CB_Fn_PC_AttachMobile(event: any) {
-  
+
 
   }
   CB_Fn_Log_AttachMobile(event: any) {
 
   }
+
   fileAttachmentEvent(event: any) {
     this.PE_FileLength = event.target.files.length
     // alert(event.target.files.length);
@@ -267,6 +340,7 @@ export class AddTransactionNewComponent implements OnInit {
         this.vendorDetails = response.vendor_det;
         this.purchaseTypeDetails = response.purchase_type_det;
         this.taxProviderDetails = response.tax_provider_det;
+        this.categoryDetails = response.category_det;
         this.DefaultBillerIDValue = response.defaults_biller_id;
         this.getPaymentInvoice();
         this.addTransaction_section1.patchValue({
@@ -292,6 +366,37 @@ export class AddTransactionNewComponent implements OnInit {
         });
         console.log("final error", error);
       };
+  }
+  changeCategory(id:any){
+
+    let api_req: any = new Object();
+    let api_getInvoiceDetails_req: any = new Object();
+    api_req.moduleType = "get_prodoct_entry_stock_name";
+    api_req.api_url = "addproduct_stock/get_prodoct_entry_stock_name";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getInvoiceDetails_req.action = "get_prodoct_entry_stock_name";
+    api_getInvoiceDetails_req.category_id =id;
+
+    api_req.element_data = api_getInvoiceDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        this.productDetails=response.product_det;
+        this.addTransaction_section1.patchValue({
+          // 'PE_currencyConversionRate': response.currency_live_val,
+
+        });
+
+      }
+      else {
+
+      }
+
+    });
+
   }
   BillerChange(event: any) {
     // alert(event.target.value)
@@ -365,8 +470,42 @@ export class AddTransactionNewComponent implements OnInit {
 
     });
   }
-  InvoiceChangeValue(event:any) {
-    var id_b=event.target.value;
+  getProductserialState(event:any) {
+    var productID=event.target.value;
+
+    let api_req: any = new Object();
+    let api_getPaymentDetails_req: any = new Object();
+    api_req.moduleType = "get_product_serial_state";
+    api_req.api_url = "product_stock/get_product_serial_state";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getPaymentDetails_req.action = "get_product_serial_state";
+    api_getPaymentDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_getPaymentDetails_req.product_id =productID;
+    api_req.element_data = api_getPaymentDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+
+        this.serial_no_state = response.serial_state[0].serial_no_state;
+       // alert(this.serial_no_state)
+
+        this.addTransaction_section1.patchValue({
+          // 'PE_currencyConversionRate': response.currency_live_val,
+
+        });
+
+      }
+      else {
+
+      }
+
+    });
+  }
+  InvoiceChangeValue(event: any) {
+    var id_b = event.target.value;
 
     let api_req: any = new Object();
     let api_getPaymentDetails_req: any = new Object();
@@ -383,15 +522,16 @@ export class AddTransactionNewComponent implements OnInit {
 
       if (response != '') {
 
-       this.amountPaid=response.amountPaid;
-       this.balance=response.balance;
-       this.billerName=response.billerName;
-       this.customerName=response.customerName;
-       this.netPayment=response.netPayment;
-       this.paymentNote=response.paymentNote;
-       this.paymentTypeDetails=response.payment_type_det;
+        this.amountPaid = response.amountPaid;
+        this.balance = response.balance;
+        this.billerName = response.billerName;
+        this.customerName = response.customerName;
+        this.netPayment = response.netPayment;
+        this.paymentNote = response.paymentNote;
+        this.paymentTypeDetails = response.payment_type_det;
+        this.payment_details= response.payment_details;
 
-
+alert( this.payment_details)
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
 
@@ -477,7 +617,7 @@ export class AddTransactionNewComponent implements OnInit {
     data.append('user_id', this.userID);
     //purchase entry
     if (this.Select_Transaction_Type == 3) {
-      this.saveVariable="purchase_entry_save";
+      this.saveVariable = "purchase_entry_save";
       data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
       data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
       data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
@@ -507,7 +647,7 @@ export class AddTransactionNewComponent implements OnInit {
       // data.append('action', "purchase_entry_save");
     }
     if (this.Select_Transaction_Type == 5) {
-      this.saveVariable="petty_cash_save";
+      this.saveVariable = "petty_cash_save";
       data.append('petty_description', this.addTransaction_section1.value.PC_Description);
       data.append('petty_type', this.addTransaction_section1.value.PC_Type);
       data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
@@ -525,12 +665,12 @@ export class AddTransactionNewComponent implements OnInit {
     }
 
     if (this.Select_Transaction_Type == 51) {
-      this.saveVariable="logistics_save";
+      this.saveVariable = "logistics_save";
       data.append('logistics_description', this.addTransaction_section1.value.Log_Description);
       data.append('logistics_type', this.addTransaction_section1.value.Log_Type);
-      data.append('logistics_amount',this.addTransaction_section1.value.Log_Amount);
+      data.append('logistics_amount', this.addTransaction_section1.value.Log_Amount);
       // data.append('logistics_attach_mobile', this.addTransaction_section1.value.CB_Log_AttachMobile);
-      
+
       // data.append('file_attachment_name', this.addTransaction_section1.value.Log_FileAttachment);
       if (this.myFiles.length < 4) {
         for (var i = 0; i < this.myFiles.length; i++) {
@@ -542,7 +682,7 @@ export class AddTransactionNewComponent implements OnInit {
 
     }
     if (this.Select_Transaction_Type == 6) {
-      this.saveVariable="vendor_order_save";
+      this.saveVariable = "vendor_order_save";
       data.append('other_description', this.addTransaction_section1.value.VendorOrder_Description);
       // data.append('file_attachment_name', this.addTransaction_section1.value.VendorOrder_FileAttachment);
       if (this.myFiles.length < 4) {
@@ -555,7 +695,7 @@ export class AddTransactionNewComponent implements OnInit {
     }
 
     if (this.Select_Transaction_Type == 7) {
-      this.saveVariable="invoice_payment_save";
+      this.saveVariable = "invoice_payment_save";
       data.append('invoice_no', this.addTransaction_section1.value.InvPayment_InvoiceNumber);
       data.append('payment_nettotal', this.netPayment);
       data.append('payment_billerName', this.billerName);
@@ -575,13 +715,31 @@ export class AddTransactionNewComponent implements OnInit {
         }
 
       }
-  
+
     }
 
     if (this.Select_Transaction_Type == 8) {
-      this.saveVariable="others_save";
+      this.saveVariable = "others_save";
       data.append('other_description', this.addTransaction_section1.value.others_Description);
       data.append('file_attachment_name', this.addTransaction_section1.value.others_FileAttachment);
+    }
+    if (this.Select_Transaction_Type == 15) {
+      this.saveVariable = "PurchaseEntry_save";
+     
+      var addr = this.addStock_section2.value.addresses;
+   
+      for (let i = 0; i < addr.length; i++) {
+        addr[i].AddNewStock_vendorName = $('#AddNewStock_vendorName' + i).val();
+        addr[i].AddNewStock_PurDate = $('#AddNewStock_PurDate' + i).val();
+        addr[i].AddNewStock_CategoryName = $('#AddNewStock_CategoryName' + i).val();
+        addr[i].AddNewStock_ProductName = $('#AddNewStock_ProductName' + i).val();
+        addr[i].AddNewStock_Qty = $('#AddNewStock_Qty' + i).val();
+        addr[i].AddNewStock_SNo_CBK = $('#AddNewStock_SNo_CBK' + i).val();
+          
+      }
+  
+      data.append('purchaseentry_allValue', addr);
+    
     }
 
 
@@ -592,7 +750,7 @@ export class AddTransactionNewComponent implements OnInit {
     $.ajax({
       type: 'POST',
 
-      url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/'+this.saveVariable+'',
+      url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
       cache: false,
       contentType: false,
       processData: false,

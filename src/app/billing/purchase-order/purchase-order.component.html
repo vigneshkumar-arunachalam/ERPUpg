@@ -11,12 +11,12 @@
             <!-- <div>
              <input type="text" placeholder="Quick Search">
             </div> -->
-            <div class="search-bar-section">
+            <!-- <div class="search-bar-section">
               <input type="search" id="box" placeholder="Quick Search anything..." title="Quick Search"
                 (mouseleave)="CustomerListQuickSearch($event)" (keyup)="CustomerListQuickSearch($event)"
                 class="search__box">
               <i class="fas fa-search search__icon" id="icon" onclick="toggleShow()"></i>
-            </div>
+            </div> -->
 
             <div class="quotation-btn-section">
               <button type="button" title="Add New Purchase Order" class="btn btn-primary btn-default btn-squared"
@@ -24,7 +24,7 @@
                   style="margin-right:0;"></i>Add
               </button>
               <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                data-target="#searchQuotationFormId">
+                data-target="#searchPurchaseOrderFormId">
                 <i class="fas fa-search" style="margin-right:0;"></i>Search
               </button>
 
@@ -216,7 +216,7 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
-<div class="modal fade" id="searchQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="searchPurchaseOrderFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">

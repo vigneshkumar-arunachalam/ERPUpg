@@ -1728,6 +1728,7 @@ export class CustomernewallComponent implements OnInit {
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
         this.customerPermissionList = response.cus_permission;
+        
         this.addPermissionCheckboxID_array = response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
 

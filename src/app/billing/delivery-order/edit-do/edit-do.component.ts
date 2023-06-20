@@ -749,6 +749,8 @@ export class EditDoComponent implements OnInit {
     api_updateDO_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_updateDO_req.deliveryId = this.editDeliveryID;
 
+    // api_updateDO_req.deliveryId = this.vendor_Name;
+
     api_updateDO_req.company = this.editDo_section1.value.companyName;
     api_updateDO_req.do_no = this.editDo_section1.value.dcNo;
     api_updateDO_req.pdf_footer_id = this.editDo_section1.value.e_selectFooter;

@@ -25,8 +25,8 @@ export class EditPurchaseOrderComponent implements OnInit {
   purchaseorder_cstNo: any;
   companyNameList: any;
 
-  isReadOnly: boolean;
-  isReadonly: boolean;
+  
+  isReadonly: boolean=true;
   // auto complete search
   searchResult_CustomerName: any;
   searchResult: any;
@@ -35,6 +35,7 @@ export class EditPurchaseOrderComponent implements OnInit {
   customerName_Data: any;
   //others
   vendor_ID: any;
+  e_vendor_name: any;
   vendor_Name: any;
   searchResult_vendor: any;
   currencyList: any;
@@ -88,8 +89,14 @@ export class EditPurchaseOrderComponent implements OnInit {
         console.log("edit purchase order id", this.edit_purchaseOrderID);
 
 
+        setTimeout(() => {
+          this.editPurchaseOrder();
 
-        this.editPurchaseOrder();
+        }, 1000);
+       
+
+        
+
       }
       );
 
@@ -132,8 +139,11 @@ export class EditPurchaseOrderComponent implements OnInit {
     });
 
     this.addPI_section3 = new FormGroup({
+      'poId': new FormControl(null),
       'section3_gross_total': new FormControl(null),
+      'section3_gst_dropdown': new FormControl(null),
       'section3_taxAmt_txtbox': new FormControl(null),
+      'section3_tax_per_hd': new FormControl(null),
       'section3_shipping_amt_name_txtbox': new FormControl(null),
       'section3_shipping_amt_txtbox': new FormControl(null),
       'section3_bankingCharge_amt_name_txtbox': new FormControl(null),
@@ -325,6 +335,8 @@ export class EditPurchaseOrderComponent implements OnInit {
 
     this.vendor_ID = data.vendorId;
     this.vendor_Name = data.vendorName;
+
+    this.e_vendor_name = data.vendorName;
     console.log("search data in dropdown", data)
     console.log("search data-vendor Id", data.vendorId)
     console.log("search data- vendor name", data.vendorName)
@@ -347,10 +359,10 @@ export class EditPurchaseOrderComponent implements OnInit {
         this.spinner.hide();
 
 
-        this.vendor_Name = response.vendorName;
+        this.e_vendor_name = response.vendorName;
         this.addDo_section1.patchValue({
 
-          'vendorCompany': response.vendorName,
+          'e_vendorCompany': response.vendorName,
           'customerAddress1': response.vendor_address,
 
         });
@@ -569,8 +581,7 @@ export class EditPurchaseOrderComponent implements OnInit {
         console.log("  this.customernameID", this.customernameID)
 
 
-        this.addDo_section1.patchValue({
-
+        this.addDo_section1.patchValue({          
           'e_companyName': response.purchaseorderparent_details[0].billerId,
           'e_PONo': response.purchaseorderparent_details[0].poNo,
           'e_PODate': response.purchaseorderparent_details[0].poDate,
@@ -600,11 +611,14 @@ export class EditPurchaseOrderComponent implements OnInit {
           'e_comm_inform_right_2': response.purchaseorderparent_details[0].comm_inform_right_2,
           'e_comm_inform_right_3': response.purchaseorderparent_details[0].comm_inform_right_3,
           'e_comm_inform_right_4': response.purchaseorderparent_details[0].comm_inform_right_4,
-          'e_comm_inform_right_5': response.purchaseorderparent_details[0].comm_inform_right_5,
+          'e_comm_inform_right_5': response.purchaseorderparent_details[0].comm_inform_right_5,          
 
         });
         this.addPI_section3.patchValue({
+          'poId':response.purchaseorderparent_details[0].poId,
           'section3_gross_total': response.purchaseorderparent_details[0].grsTotal,
+          'section3_gst_dropdown': response.purchaseorderparent_details[0].taxId,
+          'section3_tax_per_hd': response.purchaseorderparent_details[0].taxPer,
           'section3_taxAmt_txtbox': response.purchaseorderparent_details[0].taxAmt,
           'section3_shipping_amt_name_txtbox': response.purchaseorderparent_details[0].addName1,
           'section3_shipping_amt_txtbox': response.purchaseorderparent_details[0].addAmount1,
@@ -614,6 +628,8 @@ export class EditPurchaseOrderComponent implements OnInit {
           'section3_remarks': response.purchaseorderparent_details[0].remarks,
 
         });
+       
+        
         const formArray = new FormArray([]);
         for (let index = 0; index < response.purchaseorderchild_details.length; index++) {
 
@@ -661,7 +677,9 @@ export class EditPurchaseOrderComponent implements OnInit {
     this.router.navigate(['/purchaseorder'])
 
   }
-
+  keyUpText(event: any){
+    this.e_vendor_name=event.target.value;
+  }
 
 
   updatePurchaseOrder() {
@@ -686,11 +704,18 @@ export class EditPurchaseOrderComponent implements OnInit {
 
 
               //section 1
+    api_updatePO_req.poId = this.addPI_section3.value.poId;
     api_updatePO_req.company = this.addDo_section1.value.e_companyName;
     api_updatePO_req.poNo = this.addDo_section1.value.e_PONo;
     api_updatePO_req.poDate = this.addDo_section1.value.e_PODate;
     // api_updatePO_req.vendorID =  this.vendor_ID ;
-    api_updatePO_req.vendorName = this.vendor_Name;
+    if(this.e_vendor_name!=''){
+      api_updatePO_req.vendorName = this.e_vendor_name;
+    }else{
+      this.e_vendor_name=this.addDo_section1.value.e_vendor_name
+      api_updatePO_req.vendorName = this.e_vendor_name;      
+    }
+    
 
     api_updatePO_req.vendorCompany = this.addDo_section1.value.e_vendorCompany;
     api_updatePO_req.vendorAddress1 = this.addDo_section1.value.e_customerAddress1;
@@ -727,18 +752,28 @@ export class EditPurchaseOrderComponent implements OnInit {
     //section 2
     var addr = this.addPI_section2.value.addresses;
 
+    for (let i = 0; i < addr.length; i++) {
+
+      addr[i].prodName = $('#prodName_' + i).val();
+      addr[i].quantity = $('#quantity_' + i).val();
+      addr[i].desc = $('#desc_' + i).val();
+      addr[i].price = $('#price_' + i).val();
+      addr[i].total = $('#total_' + i).val();
+    }
+
     api_updatePO_req.purchaseorderchild_details = addr;
     //section 3
     
 
      //section3
      api_updatePO_req.grossTotal = this.addPI_section3.value.section3_gross_total;
-     api_updatePO_req.taxAmt = this.addPI_section3.value.section3_tax_per_hd;
-     api_updatePO_req.addAmount1 = this.addPI_section3.value.section3_taxAmt_txtbox;
+     api_updatePO_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
+     api_updatePO_req.taxPer = this.addPI_section3.value.section3_tax_per_hd;
+     api_updatePO_req.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
      api_updatePO_req.addName1 = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
-     api_updatePO_req.addAmount2 = this.addPI_section3.value.section3_shipping_amt_txtbox;
+     api_updatePO_req.addAmount1 = this.addPI_section3.value.section3_shipping_amt_txtbox;
      api_updatePO_req.addName2 = this.addPI_section3.value.section3_bankingCharge_amt_name_txtbox;
-     api_updatePO_req.grossTotal = this.addPI_section3.value.section3_shipping_amt_txtbox;
+     api_updatePO_req.addAmount2 = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
      api_updatePO_req.netTotal = this.addPI_section3.value.section3_grand_total;
      api_updatePO_req.remarks = this.addPI_section3.value.section3_remarks;
 
@@ -773,7 +808,7 @@ export class EditPurchaseOrderComponent implements OnInit {
       });
       console.log("final error", error);
     }
-    this.gotoPurchaseOrderList();
+    // this.gotoPurchaseOrderList();
   }
 
   TaxDropdown() {
@@ -793,14 +828,15 @@ export class EditPurchaseOrderComponent implements OnInit {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
-        this.tax_per_mod = response.percent_val;
-        $('#tax_per_hd_id').val(response.percent_val);
-        setTimeout(() => {
-          this.addPI_section3.patchValue({
-            'section3_gst_dropdown': response.default_tax_id,
-          });
+        this.addPI_section3.patchValue({         
+          'section3_tax_per_hd':response.percent_val,
+        });
+        // setTimeout(() => {
+        //   this.addPI_section3.patchValue({
+        //     'section3_gst_dropdown': response.default_tax_id,
+        //   });
 
-        }, 500);
+        // }, 500);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         console.log('response.default_tax_id' + response.default_tax_id);
 
@@ -820,7 +856,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     var key = event.target.value;
     var addr = this.addPI_section2.value.addresses;
     for (let a = 0; a < addr.length; a++) {
-      alert("h")
+      // alert("h")
       var total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
       $('#total_' + a).val(total_amt);
     }
@@ -862,7 +898,8 @@ export class EditPurchaseOrderComponent implements OnInit {
   }
 
   totalCalculate() {
-
+      
+    
     // var grs_amt=0;
     // var net_amt =0;
     var tax_amt = 0;
@@ -871,65 +908,45 @@ export class EditPurchaseOrderComponent implements OnInit {
     var sub_total_amt = 0;
 
     let discount_type: any;
-    var total_amt: any;
+ 
     var dis_amt_val: any;
 
-    var total_amt: any;
+ 
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     //  alert(list_cnt);
     // var tax_per = $('#tax_per_hd_id').val();
     //var tax_per = $('#tax_per_hd_id').val();
-
+   
     this.shipping_amt = $('#shipping_amt_id').val();
     this.bankingCharge = $('#bankingCharge_amt_id').val();
     this.finalTax = 0;
 
     var addr = this.addPI_section2.value.addresses;
-    for (let a = 0; a < addr.length; a++) {
+    for (let a = 0; a < addr.length; a++) {   
     }
 
     for (let a = 0; a < list_cnt; a++) {
 
-      var total_amt1 = $('#quantity_' + a).val() * $('#price_' + a).val();
-      $('#total_' + a).val(total_amt1);
+      var  total_amt = $('#quantity_' + a).val() * $('#price_' + a).val();
+      $('#total_' + a).val(total_amt);
 
-      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
-        this.net_amt = $('#pd_netPrice_' + a).val();
-
-        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-        tax_amt_tot += tax_amt;
-
-      }
-
-      grs_amt += sub_total_amt;
-
+      tax_amt_tot += total_amt;
+   
     }
+//  alert(tax_amt_tot);
+    var tax_val = this.addPI_section3.value.section3_tax_per_hd;
+    // alert(tax_val);
+    var tax_amount = tax_amt_tot * tax_val/100;
 
-    this.grossTotal = grs_amt;
+   // alert(tax_amount);
+    this.finalTax = tax_amount;
+    this.grossTotal = tax_amt_tot;
+    this.grandTotal = tax_amt_tot+tax_amount;
 
-    if (tax_amt_tot > 0) {
-      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal) - parseFloat(this.finalDiscount)) / 100);
-    }
-
-    this.finalTax = tax_amt_tot.toFixed(2);
-    if (this.shipping_amt == '') {
-      this.shipping_amt = 0;
-    }
-    if (this.finalDiscount == '') {
-      this.finalDiscount = 0;
-    }
-    if (this.finalTax == '') {
-      this.finalTax = 0;
-    }
-    if (this.bankingCharge == '') {
-      this.bankingCharge = 0;
-    }
-
-    console.log('grs_amt' + grs_amt);
-    console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
+    
   }
+
 
   getTaxCals() {
     var tax_id = this.addPI_section3.value.section3_gst_dropdown;
@@ -953,15 +970,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.tax_per_mod = response.percent_val;
       $('#tax_per_hd_id').val(response.percent_val);
-
-      tax = response.percent_val;
-      tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
-
-      this.finalTax = parseFloat(tax);
-      // if (this.grossTotal > 0) {
-      //   this.grandTotal = (this.grossTotal + this.finalTax + this.finalDiscount + this.extraCharge).toFixed(2);
-      // }
-      this.finalTax = parseFloat(tax).toFixed(2);
+      this.addPI_section3.value.section3_tax_per_hd=response.percent_val;
 
     });
     setTimeout(() => {

@@ -112,6 +112,15 @@
             }],
             "isVisible": true,
             "value": "/customernewall"
+        },
+        {
+            "name": "Reseller Management",
+            "icon": "printer",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/ResellerManagement"
         }
        
 

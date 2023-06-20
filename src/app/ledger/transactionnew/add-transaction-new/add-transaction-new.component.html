@@ -713,10 +713,11 @@
                                                     class=" col-form-label">Payment
                                                     Details</label></div>
 
-                                            <div class="col-lg-4">
+                                            <!-- <div class="col-lg-4">
                                                 <input type="text" class="form-control"
                                                     formControlName="InvPayment_Details" />
-                                            </div>
+                                            </div> -->
+                                            {{payment_details}}
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -726,7 +727,7 @@
                                                     Attachment</label></div>
 
                                             <div class="col-lg-4">
-                                                
+
 
                                                 <input required type="file" name="InvPayment_FileAttachment" multiple
                                                     id="InvPayment_FileAttachment" class="form-control"
@@ -742,71 +743,177 @@
                                     aria-labelledby="AddNewStock-tab"><br>
 
                                     <!-- Add New Stock sub menu ends -->
-                                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                                        <div class="table-responsive">
-                                            <table class="table mb-0 table-borderless">
-                                                <thead>
-                                                    <tr class="userDatatable-header">
-                                                        <th>Vendor Name</th>
-                                                        <th>Pur Date</th>
-                                                        <th>Category Name</th>
-                                                        <th>Product Name Serial/MAC No</th>
-                                                        <th>Qty</th>
-                                                        <th>S.No</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr class="userDatatable-header">
-                                                        <td>
-                                                            <select id="AddNewStock_vendorName" class="form-control"
-                                                                formControlName="AddNewStock_vendorName">
-                                                                <option [ngValue]="null" selected>Select Vendor
-                                                                </option>
-                                                                <option *ngFor="let vendor of vendorDetails"
-                                                                    value="{{vendor.vendorId}}">
-                                                                    {{vendor.vendorName}}
-                                                                </option>
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <input type="date" class="form-control"
-                                                                formControlName="AddNewStock_PurDate"
-                                                                id="AddNewStock_PurDate" />
 
-                                                        </td>
-                                                        <td>
-                                                            <select id="AddNewStock_CategoryName" class="form-control"
-                                                                formControlName="AddNewStock_CategoryName">
-                                                                <option [ngValue]="null" selected>Select Category Name
-                                                                </option>
-                                                                <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
-                                        {{ship.ship_name}}
-                                    </option> -->
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <select id="AddNewStock_ProductName" class="form-control"
-                                                                formControlName="AddNewStock_ProductName">
-                                                                <option [ngValue]="null" selected>Product Name</option>
-                                                                <!-- <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
-                                        {{ship.ship_name}}
-                                    </option> -->
-                                                            </select>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="form-control"
-                                                                formControlName="AddNewStock_Qty" />
-                                                        </td>
-                                                        <td>
-                                                            <input type="checkbox" formControlName="AddNewStock_SNo" />
-                                                        </td>
+                                    <form [formGroup]="addStock_section2">
+                                        <div class="row">
 
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                            <div class="col-12">
+
+                                                <section>
+
+                                                    <div>
+
+                                                        <div class="table-responsive">
+                                                            <table class="add-contact-table-section">
+                                                                <thead>
+                                                                    <tr class="userDatatable-header">
+                                                                        <th>Vendor Name</th>
+                                                                        <th>Pur Date</th>
+                                                                        <th>Category Name</th>
+                                                                        <th>Product Name Serial / MAC No</th>
+                                                                        <th>Qty</th>
+                                                                        <th *ngIf="this.serial_no_state==1">S.No</th>
+                                                                        <th>Action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody formArrayName="addresses"
+                                                                    *ngFor="let address of addressControls.controls; let i = index;">
+
+
+                                                                    <tr [formGroupName]="i" class="changeBackground">
+
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                <select id="AddNewStock_vendorName"
+                                                                                    class="form-control"
+                                                                                    formControlName="AddNewStock_vendorName">
+                                                                                    <option [ngValue]="null" selected>
+                                                                                        Select Vendor
+                                                                                    </option>
+                                                                                    <option
+                                                                                        *ngFor="let vendor of vendorDetails"
+                                                                                        value="{{vendor.vendorId}}">
+                                                                                        {{vendor.vendorName}}
+                                                                                    </option>
+                                                                                </select>
+
+                                                                            </div>
+
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                <input type="date" class="form-control"
+                                                                                    formControlName="AddNewStock_PurDate"
+                                                                                    id="AddNewStock_PurDate" />
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+
+                                                                                <select id="AddNewStock_CategoryName"
+                                                                                    class="form-control"
+                                                                                    (change)="changeCategory($event)"
+                                                                                    formControlName="AddNewStock_CategoryName">
+                                                                                    <option [ngValue]="null" selected>
+                                                                                        Select Category Name
+                                                                                    </option>
+                                                                                    <option
+                                                                                        *ngFor="let category of categoryDetails"
+                                                                                        value="{{category.product_category_id}}">
+                                                                                        {{category.product_category_name}}
+                                                                                    </option>
+                                                                                </select>
+
+
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                <select id="AddNewStock_ProductName"
+                                                                                    class="form-control" (change)="getProductserialState($event)"
+                                                                                    formControlName="AddNewStock_ProductName">
+                                                                                    <option [ngValue]="null" selected>
+                                                                                        Product Name</option>
+                                                                                    <option
+                                                                                        *ngFor="let product of productDetails"
+                                                                                        value="{{product.productId}}">
+                                                                                        {{product.productName}}
+                                                                                    </option>
+                                                                                </select>
+
+
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content">
+                                                                                <input type="text" class="form-control"
+                                                                                    (keyup)="addTextBox(i)"
+                                                                                    id="AddNewStock_Qty{{i}}"
+                                                                                    formControlName="AddNewStock_Qty" />
+                                                                            </div>
+                                                                            <!-- <div >
+                                                                                <input type="text" class="form-control" id="product">
+                                                                            </div> -->
+                                                                            <div id="acx{{i}}">
+                                                                                <!-- <div *ngIf="i <= item">
+                                                                                  <input type="text"  class="form-control" id="product[i]">
+                                                                                </div> -->
+                                                                            </div>
+
+
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="userDatatable-content" *ngIf="this.serial_no_state==1">
+                                                                                <input type="checkbox" [ngModel]="test[i]"
+                                                                                 id="AddNewStock_SNo_CBK{{i}}"   formControlName="AddNewStock_SNo_CBK" />
+
+                                                                            </div>
+                                                                        </td>
+
+                                                                        <td>
+                                                                            <div *ngIf="i>0"
+                                                                                class="userDatatable-content d-inline-block">
+                                                                                <button type="button"
+                                                                                    class="btn btn-danger btn-sm"
+                                                                                    (click)=" removeAddress(i)">X</button>
+
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td></td>
+                                                                        <td>
+                                                                            <div *ngFor="let product of valuw">
+                                                                                <input type="text" class="form-control" id="product">
+                                                                            </div>
+                                                                        </td>
+                                                                        <td></td>
+                                                                        <td></td>
+
+                                                                    </tr>
+
+
+                                                                    <hr>
+                                                                </tbody>
+
+                                                            </table>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                </section>
+
+                                                <div class="text-right">
+
+                                                    <!-- <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                                                        (click)="addAddress()">Add Product </button> -->
+                                                    <button type="button"
+                                                        class="btn btn-dark btn-default btn-squared mt-4"
+                                                        (click)="addAddress()" style="margin-right: 10px;"><i
+                                                            class="fas fa-plus" style="margin-right:0;"> Add Product</i>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+
+
                                         </div>
-                                    </div>
-
+                                    </form>
 
                                     <!-- Add New Stock  sub menu ends -->
                                 </div>

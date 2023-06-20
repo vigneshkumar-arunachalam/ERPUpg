@@ -42,7 +42,7 @@ export class AddDoComponent implements OnInit {
   radioID_Logo: any;
   radio_Value_Export_logo: any;
   selected_pdf_footer: any;
-
+isReadonly:boolean=true;
   //shipping address
   shipAddress1: any;
   shipAddress2: any;

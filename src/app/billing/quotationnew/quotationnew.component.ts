@@ -816,7 +816,7 @@ export class QuotationnewComponent implements OnInit {
         this.quotationSharedResult = response.user_list;
         this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',').map(Number);
         console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
-
+     
       }
       else {
         $("#quotationSharedPersonId").modal("hide");
@@ -862,7 +862,9 @@ export class QuotationnewComponent implements OnInit {
         });
 
         $('#quotationSharedPersonId').modal('hide');
+
         this.typeConvertionString_quotation_Shared_Permission = [];
+        this.quotationList({});
       } else {
         iziToast.warning({
           message: "Response Failed",

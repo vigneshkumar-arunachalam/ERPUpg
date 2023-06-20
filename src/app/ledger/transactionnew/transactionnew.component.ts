@@ -153,6 +153,7 @@ export class TransactionnewComponent implements OnInit {
 
   }
   getTransactionNewList(data: any){
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req:any=new Object();
     let TNapi_req:any=new Object();
@@ -170,6 +171,7 @@ export class TransactionnewComponent implements OnInit {
     api_req.element_data = TNapi_req;
 
     this.serverService.sendServer(api_req).subscribe((response:any)=>{
+      this.spinner.hide();
       if(response!=''){
         this.Transaction_list=response.trans_details;
         console.log(this.Transaction_list);

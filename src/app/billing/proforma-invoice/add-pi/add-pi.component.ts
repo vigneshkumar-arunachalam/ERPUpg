@@ -137,6 +137,7 @@ export class AddPIComponent implements OnInit {
 
 
     ];
+    
     this.SelectExtraLogoCheckboxwithKey = [
 
       { name: 'IT Care', selected: false, id: 1 },
@@ -205,6 +206,7 @@ export class AddPIComponent implements OnInit {
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
     });
+
 
     this.addPI_section3 = new FormGroup({
 
@@ -281,6 +283,7 @@ export class AddPIComponent implements OnInit {
     setTimeout(() => {      
        this.saveGrossDiscount();
     }, 500);
+
    
    
     
@@ -1063,6 +1066,7 @@ export class AddPIComponent implements OnInit {
     api_req.element_data = api_getInvoiceDetails_req;
 
 
+
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
@@ -1146,6 +1150,9 @@ export class AddPIComponent implements OnInit {
         netAmt = parseFloat($('#pd_netPrice_' + a).val());
       //  alert(this.finalDiscount);
        //setTimeout(() => { }, 1500);
+
+
+       
        console.log('-this.finalDiscount---'+this.finalDiscount);
       //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
         tax_amt_tot += netAmt;

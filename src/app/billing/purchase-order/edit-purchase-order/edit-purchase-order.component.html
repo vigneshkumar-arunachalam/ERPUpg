@@ -38,7 +38,8 @@
                         <div class="form-group row">
                             <label for="PONo" class="col-lg-3 col-form-label">PO No</label>
                             <div div class="col-lg-9">
-                                <input type="text" id="PONo" class="form-control" formControlName="e_PONo">
+                                <input type="text" id="PONo" class="form-control" 
+                                [readonly]="isReadonly" formControlName="e_PONo">
                             </div>
                         </div>
                     </div>
@@ -89,7 +90,7 @@
                                 <ng-autocomplete [data]="searchResult_vendor" [searchKeyword]="keywordvendorName"
                                     formControlName="e_vendor_name" (selected)='searchVendor_selectDropdownData($event)'
                                     (inputChanged)='searchVendorData($event)' (inputFocused)='onFocusedVendor($event)'
-                                    [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate">
+                                    [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate" (keyup)="keyUpText($event)">
         
                                 </ng-autocomplete>
                                 <ng-template #itemTemplateVendor let-item>
@@ -227,7 +228,7 @@
                         <div class="form-group row">
                             <label for="regg" class="col-lg-3 col-form-label">{{this.purchaseorder_tinName}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" formControlName="e_tin" [attr.readonly]="isReadOnly"
+                                <input type="text" class="form-control" formControlName="e_tin"  [readonly]="isReadonly"
                                 id="regg" />
     
                             </div>
@@ -239,7 +240,7 @@
                         <div class="form-group row">
                             <label for="cst" class="col-lg-3 col-form-label">{{this.purchaseorder_cstName}}</label>
                             <div class="col-lg-9">
-                                <input type="text" class="form-control" formControlName="e_cst" [attr.readonly]="isReadOnly"
+                                <input type="text" class="form-control" formControlName="e_cst"  [readonly]="isReadonly"
                                 id="cst" />
     
                             </div>
@@ -439,18 +440,18 @@
                                                     <td valign="top">
                                                         <div class="userDatatable-content">
                                                             <input type="number" class="form-control  mt-2 mb-2"
-                                                                formControlName="quantity" id="quantity_{{i}}" />
+                                                            (keyup)="totalCalculate()"   formControlName="quantity" id="quantity_{{i}}" />
                                                         </div>
                                                     </td>
                                                     <td valign="top">
                                                         <div class="userDatatable-content">
                                                             <input type="number" class="form-control  mt-2 mb-2"
-                                                                formControlName="price" id="price_{{i}}" />
+                                                            (keyup)="totalCalculate()"  formControlName="price" id="price_{{i}}" />
                                                         </div>
                                                     </td>
                                                     <td valign="top">
                                                         <div class="userDatatable-content">
-                                                            <input type="number" class="form-control  mt-2 mb-2"
+                                                            <input type="number" class="form-control  mt-2 mb-2"  [readonly]="isReadonly"
                                                                 formControlName="total" id="total_{{i}}" />
                                                         </div>
                                                     </td>
@@ -504,7 +505,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                        [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
+                                        [readonly]="isReadonly"    formControlName="section3_gross_total" />
                                     </div>
                                 </div>
                             </div>
@@ -515,13 +516,13 @@
     
                                     <select name="billerID" id="billerIDs" class="form-control"
                                         aria-label="Default select example" formControlName="section3_gst_dropdown"
-                                        (change)="getTaxCals()">
+                                        (change)="getTaxCals();">
                                         <option [ngValue]="null" selected >Select Tax</option>
     
     
     
                                         <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
-                                            {{tax.tax_name}}
+                                            {{tax.combine_val}}
                                         </option>
                                     </select>
                                     <input type="hidden" formControlName="section3_tax_per_hd" id="tax_per_hd_id" />
@@ -532,7 +533,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <input type="number" formControlName="section3_taxAmt_txtbox" id="tax_amt_id"
-                                    [attr.readonly]="isReadOnly"     [(ngModel)]="finalTax" class="form-control mt-2" />
+                                    [readonly]="isReadonly"    [(ngModel)]="finalTax" class="form-control mt-2" />
     
                                 </div>
                             </div>
@@ -577,7 +578,7 @@
     
                                     <div class="col-lg-6">
                                         <input type="number" class="form-control" [(ngModel)]="grandTotal"
-                                        [attr.readonly]="isReadOnly"    [readonly]="isReadonly" formControlName="section3_grand_total" />
+                                           [readonly]="isReadonly" formControlName="section3_grand_total" />
                                     </div>
     
     
@@ -594,6 +595,7 @@
     
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" formControlName="section3_remarks" />
+                                        <input type="hidden" class="form-control" formControlName="poId" />
                                     </div>
     
     

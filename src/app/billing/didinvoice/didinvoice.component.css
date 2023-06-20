@@ -82,7 +82,7 @@ border-radius: 50%;
 
 }
 .btn1 {
-  background-color: 	 #20c997;
+  background-color: 	 #007cbc;
   border: none;
   color: white;
   padding: 0;
@@ -218,3 +218,22 @@ border-radius: 50%;
 #searchInvoiceFormId .modal-dialog{
   max-width: 95%;
 }
+
+.userDatatable button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+/* ---------------------------------KS-CODE--------------------------------- */
+
+.userDatatable-header th { background: #6d5dfc;}
+.userDatatable-header th span { color: #e4ebf5;}
+.userDatatable .page .dropdown button {
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+.userDatatable table td {border-bottom: 1px solid #ddd;}
+/* ---------------------------------KS-CODE--------------------------------- */

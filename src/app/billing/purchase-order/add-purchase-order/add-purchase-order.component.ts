@@ -660,12 +660,13 @@ export class AddPurchaseOrderComponent implements OnInit {
 
     //section3
     api_req_addPO.grossTotal = this.addPI_section3.value.section3_gross_total;
-    api_req_addPO.taxAmt = this.addPI_section3.value.section3_tax_per_hd;
-    api_req_addPO.addAmount1 = this.addPI_section3.value.section3_taxAmt_txtbox;
+    api_req_addPO.taxId = this.addPI_section3.value.section3_gst_dropdown;
+    api_req_addPO.taxPer = this.addPI_section3.value.section3_tax_per_hd;
+    api_req_addPO.taxAmt = this.addPI_section3.value.section3_taxAmt_txtbox;
     api_req_addPO.addName1 = this.addPI_section3.value.section3_shipping_amt_name_txtbox;
-    api_req_addPO.addAmount2 = this.addPI_section3.value.section3_shipping_amt_txtbox;
+    api_req_addPO.addAmount1 = this.addPI_section3.value.section3_shipping_amt_txtbox;
     api_req_addPO.addName2 = this.addPI_section3.value.section3_bankingCharge_amt_name_txtbox;
-    api_req_addPO.grossTotal = this.addPI_section3.value.section3_shipping_amt_txtbox;
+    api_req_addPO.addAmount2 = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
     api_req_addPO.netTotal = this.addPI_section3.value.section3_grand_total;
     api_req_addPO.remarks = this.addPI_section3.value.section3_remarks;
 

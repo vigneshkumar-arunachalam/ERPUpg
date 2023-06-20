@@ -1,6 +1,6 @@
 .userDatatable table td {
   padding: 4px 0px 0px !important;
- 
+
 }
 
 .userDatatable table tr td span {
@@ -131,7 +131,10 @@ i.fa.fa-bars {
  
   background-color: #fff;
 } */
-table.add-contact-table-section{background-color: #fff;}
+table.add-contact-table-section {
+  background-color: #fff;
+}
+
 /* tr:nth-child(odd) {
   background: #FFF
 } */
@@ -148,18 +151,20 @@ table.add-contact-table-section{background-color: #fff;}
   max-width: 95%;
 }
 
- label {
+label {
   font-weight: 500;
   /* color: black; */
-  color: #182679!important;
+  color: #182679 !important;
 
 }
-#AddQuotationPopUpFormId tr th{
+
+#AddQuotationPopUpFormId tr th {
   width: 200px;
   margin: 0px 10px;
 }
-.alignFormArray{
-  display:flex;
+
+.alignFormArray {
+  display: flex;
   /* margin-left: 2px !important; */
 }
 
@@ -189,6 +194,7 @@ table.add-contact-table-section{background-color: #fff;}
   display: flex;
   width: 100%;
 }
+
 /* .ng-autocomplete 
   ::ng-deep .autocomplete-container {
     margin-left: 15px;
@@ -235,54 +241,91 @@ table.add-contact-table-section{background-color: #fff;}
   }
   */
 
-  table.add-contact-table-section {
-    width: 100%;
+table.add-contact-table-section {
+  width: 100%;
 }
 
-#AddQuotationPopUpFormId tr th{border-right: 1px solid #ddd;}
-.userDatatable-content .form-control{ width: 100%;}
-.userDatatable-content, .userDatatable-inline-title h6{padding: 5px 10px;}
-.userDatatable-title{text-align: right;display: block;padding-right: 10px;}
-.add-contact-table-section tr{height: 50px; border: 1px solid #ddd;}
+#AddQuotationPopUpFormId tr th {
+  border-right: 1px solid #ddd;
+}
+
+.userDatatable-content .form-control {
+  width: 100%;
+}
+
+.userDatatable-content,
+.userDatatable-inline-title h6 {
+  padding: 5px 10px;
+}
+
+.userDatatable-title {
+  text-align: right;
+  display: block;
+  padding-right: 10px;
+}
+
+.add-contact-table-section tr {
+  height: 50px;
+  border: 1px solid #ddd;
+}
 
 label.col-form-label {
   padding-right: 10px;
 }
-.col-form-label{width: 120px;}
-section.right_section{ padding: 20px;}
 
-.add-contact-table-section tr th{padding:0px 15px;}
+.col-form-label {
+  width: 120px;
+}
+
+section.right_section {
+  padding: 20px;
+}
+
+.add-contact-table-section tr th {
+  padding: 0px 15px;
+}
+
 table.add-contact-table-section {
   margin-bottom: 25px;
 }
+
 input.form-control {
   padding: 4px 8px;
 }
-#AddQuotationPopUpFormId .modal-content.addcontractmastercss{overflow-y: scroll;
-  height: 500px;}
-  .contents label{
-    font-weight: 500;
-    
-  }
-  .form-control{border:1px solid #e1e1e1;}
-  /* .userDatatable-content{position: relative;top:-25px;} */
 
-  .userDatatable-content button.btn.btn-danger.btn-sm{
-    height: 35px;
-    width: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-  }
-  /* .add-contact-table-section tr td {
+#AddQuotationPopUpFormId .modal-content.addcontractmastercss {
+  overflow-y: scroll;
+  height: 500px;
+}
+
+.contents label {
+  font-weight: 500;
+
+}
+
+.form-control {
+  border: 1px solid #e1e1e1;
+}
+
+/* .userDatatable-content{position: relative;top:-25px;} */
+
+.userDatatable-content button.btn.btn-danger.btn-sm {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+/* .add-contact-table-section tr td {
     vertical-align: top;
   } */
-  .add-contact-table-section tr td:nth-child(2){
-    width: 100px;
-  }
- 
-  /* .sortTableCSS responsive-table {
+.add-contact-table-section tr td:nth-child(2) {
+  width: 100px;
+}
+
+/* .sortTableCSS responsive-table {
     overflow: auto;
   }
   
@@ -326,52 +369,48 @@ input.form-control {
   padding: 0px;
 } */
 
-  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input {
- 
-    text-align: left;
-    display: block;
-    width: 100%;
-    height: 2.625rem;
-    padding: 0.375rem 1.2rem;
-    padding-left: 4px!important;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.5;
-    background-color: #fff;
-    background-clip: padding-box;
-    /* border: 1px solid #f1f2f6; */
-    border: 1px solid #beeaca;
-    border-radius: 5px;
-    box-shadow: 0 0;
-    color: #495057;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+
+  text-align: left;
+  display: block;
+  width: 100%;
+  height: 2.625rem;
+  padding: 0.375rem 1.2rem;
+  padding-left: 4px !important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  /* border: 1px solid #f1f2f6; */
+  border: 1px solid #beeaca;
+  border-radius: 5px;
+  box-shadow: 0 0;
+  color: #495057;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
 }
 
 
 
-.ng-autocomplete 
-::ng-deep .autocomplete-container .input-container input:focus {
-   border: 1px solid  #3d0096;
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input:focus {
+  border: 1px solid #3d0096;
   /* border: 1px solid #009688; */
   box-shadow: 1px 1px 10px #ededed
 }
 
 
-  .ng-autocomplete 
-  ::ng-deep .autocomplete-container  .input-container input{
-    color: #495057;
-      
-  }
-  .ng-autocomplete 
-  ::ng-deep .autocomplete-container  .input-container {
-    border-width: 0px;
-  }
- 
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+  color: #495057;
 
-  .abc
-::ng-deep .autocomplete-container .input-container input {
+}
+
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container {
+  border-width: 0px;
+}
+
+
+.abc::ng-deep .autocomplete-container .input-container input {
 
   text-align: left;
   display: block;
@@ -381,7 +420,7 @@ input.form-control {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-color: #495057;
+  color: #495057;
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #f1f2f6;
@@ -389,34 +428,38 @@ color: #495057;
   border-radius: 5px;
   /* box-shadow: 0 0;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
-  
+
 }
-.abc
-  ::ng-deep .autocomplete-container  .input-container {
-    border-width: 0px;
-  }
- 
-  .abc ng-autocomplete ::ng-deep{
-    padding: 4px 8px;
+
+.abc ::ng-deep .autocomplete-container .input-container {
+  border-width: 0px;
 }
-.add-contact-table-section .ng-autocomplete{
+
+.abc ng-autocomplete ::ng-deep {
+  padding: 4px 8px;
+}
+
+.add-contact-table-section .ng-autocomplete {
   padding: 0px 0px;
 }
-.ng-autocomplete 
-::ng-deep .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+
+.ng-autocomplete::ng-deep .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched {
   padding: 0px 5px;
   border: 1px solid #f1f2f6;
   width: 100%;
   display: block;
 }
-.buttoncssDiscount{
+
+.buttoncssDiscount {
   width: -webkit-fill-available;
 }
-.userDatatable-title{
+
+.userDatatable-title {
   text-align: left !important;
   color: #e4ebf5 !important;
   font-weight: bold;
 }
+
 /* .contents{
   background-color: #d4f1eb!important;
 } */
@@ -430,49 +473,52 @@ color: #495057;
   padding-left: 4px !important;
 } */
 
-select{
+select {
   /* padding: 0 !important; */
   padding-left: 4px !important;
 }
 
-.add-contact-table-section .ng-autocomplete .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
- padding: 0;
- border: none;
+.add-contact-table-section .ng-autocomplete .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched {
+  padding: 0;
+  border: none;
 }
 
-.add-contact-table-section  .autocomplete-container .input-container input:focus{
-  border-color:   #3d0096!important;
- }
- .cdk-drop-list{
-  cursor:move !important;
- }
- .discountCSS1{
-  color: #ff5722!important;
- }
- .discountCSS2{
-  color: #b8123b!important;
- }
+.add-contact-table-section .autocomplete-container .input-container input:focus {
+  border-color: #3d0096 !important;
+}
+
+.cdk-drop-list {
+  cursor: move !important;
+}
+
+.discountCSS1 {
+  color: #ff5722 !important;
+}
+
+.discountCSS2 {
+  color: #b8123b !important;
+}
 
 
- .ng-autocomplete 
- ::ng-deep .autocomplete-container .input-container input{
-   background: transparent;
- }
- .ng-autocomplete 
- ::ng-deep .autocomplete-container .input-container input:focus {
-   outline: none;
-   border: 2px solid transparent!important;
-   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-   background-origin: border-box;
-   background-clip: padding-box, border-box;
-   animation: bg-hue 2s linear infinite;
- }
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+  background: transparent;
+}
 
- .form-control{
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input:focus {
+  outline: none;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.form-control {
   border: 1px solid #e1e1e1;
   background: transparent;
 }
- .form-control:focus {
+
+.form-control:focus {
   outline: none;
   border: 2px solid transparent;
   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
@@ -487,14 +533,15 @@ select{
     filter: hue-rotate(360deg);
   }
 }
-.contents-section{
+
+.contents-section {
   background-color: hsl(215.29deg 45.95% 92.75%)
 }
 
 
 .alertdangerCustomCSS1 {
 
-  color: white!important;
+  color: white !important;
   background-color: #ffe5e5;
   border-color: #ffe5e5;
 
@@ -506,77 +553,84 @@ select{
   animation: bg-hue 2s linear infinite;
 }
 
- /* form array css for space */
+/* form array css for space */
 
- hr{
+hr {
   margin-top: 0;
   margin-bottom: 0;
   border: 0;
   border-top: 1px solid #102268;
-  width:465%;
+  width: 465%;
 }
 
-.marginSpace{
-  margin-top:2rem !important;
+.marginSpace {
+  margin-top: 2rem !important;
 }
 
 
 
-.userDatatable-content{
-line-height: 3.42857 !important;
+.userDatatable-content {
+  line-height: 3.42857 !important;
 }
 
 /* form array css for space #fcf6fc */
 
-.add-contact-table-section tbody:nth-child(even) {background: #fafffd}
+.add-contact-table-section tbody:nth-child(even) {
+  background: #fafffd
+}
 
-.add-contact-table-section tbody:nth-child(odd) {background: #fcf9f9}
+.add-contact-table-section tbody:nth-child(odd) {
+  background: #fcf9f9
+}
 
-.scrollcontrol{
-  overflow:scroll;
+.scrollcontrol {
+  overflow: scroll;
 }
 
 .form-control:disabled,
 .form-control[readonly] {
-    background-color: #f5f5f5 !important;
-    opacity: 0.6;
-    color: black!important;
+  background-color: #f3d2f0 !important;
+  opacity: 0.6;
+  color: black !important;
 }
 
 
 /* --------------------KS--CSS------------------------------------------ */
 
-.addquotation-section label{
+.addquotation-section label {
   color: #5f63f2;
 }
 
 
-.addquotation-section .form-control,  .ng-autocomplete 
-::ng-deep .autocomplete-container .input-container input {
+.addquotation-section .form-control,
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input {
   border: none;
   padding-left: 1.4rem;
   box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
   background: none;
   font-family: inherit;
   color: #252525;
-} 
-.addquotation-section .form-control:focus,  .ng-autocomplete 
-::ng-deep .autocomplete-container .input-container input:focus{
+}
+
+.addquotation-section .form-control:focus,
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input:focus {
   outline: none;
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
-  border: 2px solid transparent!important;
-    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
 }
-.addquotation-section button.btn.btn-primary{
+
+.addquotation-section button.btn.btn-primary {
   grid-column: 1/2;
   grid-row: 4/5;
   background: #6d5dfc;
   box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
   color: #e4ebf5;
 }
+
 .add-contact-table-section th {
   background: #6d5dfc;
 }
@@ -589,6 +643,7 @@ line-height: 3.42857 !important;
   position: relative;
   /* change the border colour to a non-white colour to see how the magic works */
 }
+
 .radio-css input,
 .checkbox-css input {
   opacity: 0;
@@ -596,7 +651,7 @@ line-height: 3.42857 !important;
   width: 30px;
   height: 30px;
 }
- 
+
 .radio-css label:before,
 .checkbox-css label:before,
 .radio-css label:after,
@@ -608,6 +663,7 @@ line-height: 3.42857 !important;
   transition: border-width 0.3s 0s ease;
   border-radius: 50%;
 }
+
 .radio-css label:before,
 .checkbox-css label:before {
   border: 2px solid #01285f;
@@ -615,6 +671,7 @@ line-height: 3.42857 !important;
   width: 30px;
   height: 30px;
 }
+
 .radio-css label:after,
 .checkbox-css label:after {
   width: 22px;
@@ -623,21 +680,25 @@ line-height: 3.42857 !important;
   border: 8px solid #FFF;
   background: transparent;
 }
-.radio-css input:checked + label:after,
-.checkbox-css input:checked + label:after {
+
+.radio-css input:checked+label:after,
+.checkbox-css input:checked+label:after {
   border-width: 5px;
 }
-.radio-css input:checked + label:before,
-.checkbox-css input:checked + label:before {
+
+.radio-css input:checked+label:before,
+.checkbox-css input:checked+label:before {
   background-color: #6d5dfc;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='104' height='104' viewBox='0 0 104 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2384b53a' d='M0 0h104v104H0z' /%3E%3Cpath fill='%234a8c31' d='M104 21C70 24 29 37 0 52v49h104V21z' /%3E%3Cpath fill='%237bb5de' d='M0 73c34-13 70-18 104-18v49H0V73z' /%3E%3Cpath fill='%23297bb5' d='M0 91c39-8 73-8 104-3v16H0V91z' /%3E%3C/svg%3E");
   background-size: cover;
   background-origin: border-box;
 }
+
 .checkbox-css label:before {
   border-radius: 0 20%;
   border-width: 2px;
 }
+
 .checkbox-css label:after {
   border-radius: 0 18%;
   border-width: 2px 20px 2px 2px;
@@ -647,46 +708,81 @@ line-height: 3.42857 !important;
   background-size: cover;
   background-origin: border-box;
 }
-.checkbox-css input:checked + label:after {
+
+.checkbox-css input:checked+label:after {
   border-width: 2px;
 }
+
 @media (min-width: 768px) {
+
   .radio-css input,
   .checkbox-css input {
     width: 40px;
     height: 40px;
   }
+
   .radio-css label,
   .checkbox-css label {
     padding: 0 0 0 50px;
   }
+
   .radio-css label:before,
   .checkbox-css label:before {
     width: 20px;
     height: 20px;
     border-width: 3px;
   }
+
   .radio-css label:after,
   .checkbox-css label:after {
     width: 16px;
     height: 16px;
     margin: 2px;
   }
-  .radio-css input:checked + label:after,
-  .checkbox-css input:checked + label:after {
+
+  .radio-css input:checked+label:after,
+  .checkbox-css input:checked+label:after {
     border-width: 4px;
   }
+
   .checkbox-css label:after {
     width: 15px;
     height: 15px;
     margin: 2px;
     border-width: 2px 12px 2px 2px;
   }
-  .checkbox-css input:checked + label:after {
+
+  .checkbox-css input:checked+label:after {
     border-width: 2px;
   }
 }
 
-ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
-  padding: 0px 0px!important;
+ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched {
+  padding: 0px 0px !important;
 }
+
+
+
+.ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input {
+
+  text-align: left;
+  display: block;
+  width: 100%;
+  height: 2.625rem;
+  padding: 0.375rem 1.2rem;
+  padding-left: 4px!important;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  background-color: #fff;
+  background-clip: padding-box;
+  /* border: 1px solid #f1f2f6; */
+  border: 1px solid #beeaca;
+  border-radius: 5px;
+  box-shadow: 0 0;
+  color: #495057;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  
+}
+

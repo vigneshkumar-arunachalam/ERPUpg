@@ -323,7 +323,7 @@
   
   }
   .btn1 {
-    background-color: 	 #20c997;
+    background-color: #007cbc;
     border: none;
     color: white;
     padding: 0;
@@ -342,6 +342,10 @@
   i.fa.fa-bars {
     color: #fff!important;
 }
+
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
 
 tr:nth-child(even) {background:#FFF}
 tr:nth-child(odd) {background: #eee7e7}
@@ -833,4 +837,11 @@ th{
   width: 50px!important;
   display: block;
   white-space: nowrap!important;
+}
+
+
+.userDatatable .page .dropdown button {
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }

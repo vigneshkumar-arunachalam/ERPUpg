@@ -1,0 +1,62 @@
+<div>
+    Today's date :- {{presentDate}}
+</div>
+
+<div>
+    Today's date :- {{presentDate | date }}
+</div>
+
+<div>
+    short date :- {{presentDate | date:'shortDate' }} <br />
+    Full date :- {{presentDate | date:'fullDate' }} <br />
+    Formatted date:- {{presentDate | date:'M/dd/yyyy'}} <br />
+    Formatted date2:- {{presentDate | date:'dd/m/yyyy'}} <br />
+    Hours and minutes:- {{presentDate | date:'h:mm'}}
+</div>
+
+<div>
+    Date with uppercase :- {{presentDate | date:'fullDate' | uppercase}} <br />
+    Date with lowercase :- {{presentDate | date:'medium' | lowercase}} <br />
+</div>
+
+<div style="text-align:center">
+    <h3> Currency Pipe</h3>
+    <p>{{ price | currency:'EUR':true}}</p>
+    <p>{{ price | currency:'INR' }}</p>
+</div>
+
+<div style="text-align:right">
+    <h3>Start index:- {{Fruits | slice:2}}</h3>
+    <h4>Start and end index:- {{Fruits | slice:1:4}}</h4>
+    <h5>Negative index:- {{Fruits | slice:-2}}</h5>
+    <h6>Negative start and end index:- {{Fruits | slice:-4:-2}}</h6>
+</div>
+
+<div style="text-align:center">
+    <h3>Decimal Pipe</h3>
+    <p> {{decimalNum1 | number}} </p>
+    <p> {{decimalNum2 | number}} </p>
+</div>
+
+<div style="text-align:left">
+    <h3>Decimal Pipe</h3>
+    <p> {{decimalNum3 | percent:'2.2'}} </p>
+</div>
+
+
+<div style="text-align:center">
+    <!-- <p ngNonBindable>{{ jsonData }}</p> (1) 
+      <p>{{ jsonData }}</p> 
+      <p ngNonBindable>{{ jsonData | json }}</p>  -->
+    <p>{{ jsonData | json }}</p>
+</div>
+
+<div>
+    <p>{{ 'Makesh' | uppercase }}</p>
+    <p>{{ 'Kumar' | lowercase }}</p>
+    <p>{{ { name: 'makesh' } | json }}</p>
+
+    <p>{{ 100 | currency: 'INR' }}</p>
+    <p>{{ 100 | currency: 'EUR' }}</p>
+    <p>{{ currentDate | date: 'dd/MM/yyyy' }}</p>
+</div>

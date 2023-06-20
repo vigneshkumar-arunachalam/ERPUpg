@@ -64,7 +64,8 @@
                         <div class="form-group row">
                             <label for="dcNo" class="col-lg-2 col-form-label">DO No</label>
                             <div class="col-lg-10">
-                                <input type="text" id="dcNo" class="form-control" formControlName="dcNo">
+                                <input type="text" id="dcNo" class="form-control" 
+                                [readonly]="isReadonly" formControlName="dcNo">
                             </div>
                         </div>
                     </div>

@@ -486,6 +486,10 @@ td {
 
 
 /* modal pop up */
+.modal-content label{
+  color: #5f63f2;
+  font-weight: 600;
+}
 
 
 #addDoFormId .btn-primary,
@@ -505,7 +509,7 @@ td {
 
 #addDoFormId .modal-content label,
 #editDoFormId .modal-content label {
-  color: #5f63f2;
+  color: #5f63f2!important;
   padding: 10px;
 }
 

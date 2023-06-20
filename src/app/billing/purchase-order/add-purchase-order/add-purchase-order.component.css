@@ -538,7 +538,7 @@ line-height: 3.42857 !important;
 
 .form-control:disabled,
 .form-control[readonly] {
-    background-color: #f5f5f5 !important;
+    background-color: #f3d2f0 !important;
     opacity: 0.6;
     color: black!important;
 }

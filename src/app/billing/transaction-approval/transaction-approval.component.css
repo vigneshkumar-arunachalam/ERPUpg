@@ -156,7 +156,7 @@ p {
   
   }
   .btn1 {
-    background-color: 	 #20c997;
+    background-color: #007cbc;
     border: none;
     color: white;
     padding: 0;
@@ -175,6 +175,9 @@ p {
   i.fa.fa-bars {
     color: #fff!important;
 }
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
 
 tr:nth-child(even) {background: rgb(239, 241, 238)}
 tr:nth-child(odd) {background: #FFF}
