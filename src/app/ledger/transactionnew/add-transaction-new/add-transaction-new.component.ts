@@ -245,24 +245,24 @@ export class AddTransactionNewComponent implements OnInit {
   }
   addTextBox(k:any) {
 
-    $("#acx").html('');
+    $("#serial_mac_no").html('');
     var val = $("#AddNewStock_Qty"+k).val();
 //this.valuw=val;
     var ser_str='';
     var addr = this.addStock_section2.value.addresses;
     console.log("total addr",addr)
     // console.log(addr)
-    for (let i = 0; i < val; i++) {
+    for (let i= 0; i < val; i++) {
 
-      // $("#acx"+i).append('<input type="text " name="text">');
+      // $("#serial_mac_no"+i).append('<input type="text " name="text">');
     
-     //$("#acx"+k).append('<input type="text" name="Quantity" id="acx'+i+'" /><br>');
+     //$("#serial_mac_no"+k).append('<input type="text" name="Quantity" id="serial_mac_no'+i+'" /><br>');
 
      ser_str=ser_str+'<input type="text" name="Quantity" class="form-control" id="qty'+i+'" /><br>';
 
     }
     
-    $('#acx'+k).html(ser_str);
+    $('#serial_mac_no'+k).html(ser_str);
 
   }
   CB_Fn_PE_AttachMobile(event: any) {
@@ -715,7 +715,6 @@ alert( this.payment_details)
         }
 
       }
-
     }
 
     if (this.Select_Transaction_Type == 8) {
@@ -724,21 +723,25 @@ alert( this.payment_details)
       data.append('file_attachment_name', this.addTransaction_section1.value.others_FileAttachment);
     }
     if (this.Select_Transaction_Type == 15) {
-      this.saveVariable = "PurchaseEntry_save";
+      this.saveVariable = "add_new_stock_save";
      
       var addr = this.addStock_section2.value.addresses;
+     
    
-      for (let i = 0; i < addr.length; i++) {
-        addr[i].AddNewStock_vendorName = $('#AddNewStock_vendorName' + i).val();
-        addr[i].AddNewStock_PurDate = $('#AddNewStock_PurDate' + i).val();
-        addr[i].AddNewStock_CategoryName = $('#AddNewStock_CategoryName' + i).val();
-        addr[i].AddNewStock_ProductName = $('#AddNewStock_ProductName' + i).val();
-        addr[i].AddNewStock_Qty = $('#AddNewStock_Qty' + i).val();
-        addr[i].AddNewStock_SNo_CBK = $('#AddNewStock_SNo_CBK' + i).val();
+      // for (let i = 0; i < addr.length; i++) {
+       
+      //  var x=JSON.stringify(addr);
+      //   addr[i].AddNewStock_vendorName = $('#AddNewStock_vendorName' + i).val();
+      //   addr[i].AddNewStock_PurDate = $('#AddNewStock_PurDate' + i).val();
+      //   addr[i].AddNewStock_CategoryName = $('#AddNewStock_CategoryName' + i).val();
+      //   addr[i].AddNewStock_ProductName = $('#AddNewStock_ProductName' + i).val();
+      //   addr[i].AddNewStock_Qty = $('#AddNewStock_Qty' + i).val();
+      //   addr[i].AddNewStock_SNo_CBK = $('#AddNewStock_SNo_CBK' + i).val();
+      
           
-      }
+      // }
   
-      data.append('purchaseentry_allValue', addr);
+      data.append('purchaseentry_allValue',JSON.stringify(addr)); 
     
     }
 

@@ -320,6 +320,7 @@ tr:nth-child(odd) {background: #FFF}
 }
 .userDatatable table tr td:nth-child(2) span{
   width: 70px;
+  
 }
 
 

@@ -201,6 +201,7 @@ export class InvoiceComponent implements OnInit {
   billId_InvoicetoQuotation: any;
   //notes
   billId_notes: any;
+  selected_billerId:any;
 
   datePipe: DatePipe = new DatePipe('en-US');
   transformDate: any;
@@ -829,6 +830,8 @@ export class InvoiceComponent implements OnInit {
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
         this.revenueTypeList = response.revenue_list;
+
+        this.selected_billerId=response.selected_billerId;
         this.invoicePermissionList_inv_to_did
         this.invoicePermissionList_set_actual_cost
 
