@@ -776,7 +776,7 @@
                                                                             <div class="userDatatable-content">
                                                                                 <select id="AddNewStock_vendorName"
                                                                                     class="form-control"
-                                                                                    formControlName="AddNewStock_vendorName">
+                                                                                    formControlName="vendorId">
                                                                                     <option [ngValue]="null" selected>
                                                                                         Select Vendor
                                                                                     </option>
@@ -793,7 +793,7 @@
                                                                         <td style="width: 10%;">
                                                                             <div class="userDatatable-content">
                                                                                 <input type="date" class="form-control"
-                                                                                    formControlName="AddNewStock_PurDate"
+                                                                                    formControlName="lic_pur_date"
                                                                                     id="AddNewStock_PurDate" />
                                                                             </div>
                                                                         </td>
@@ -803,7 +803,7 @@
                                                                                 <select id="AddNewStock_CategoryName"
                                                                                     class="form-control"
                                                                                     (change)="changeCategory($event)"
-                                                                                    formControlName="AddNewStock_CategoryName">
+                                                                                    formControlName="entry_product_category_id">
                                                                                     <option [ngValue]="null" selected>
                                                                                         Select Category Name
                                                                                     </option>
@@ -822,7 +822,7 @@
                                                                             <div class="userDatatable-content">
                                                                                 <select id="AddNewStock_ProductName"
                                                                                     class="form-control" (change)="getProductserialState($event)"
-                                                                                    formControlName="AddNewStock_ProductName">
+                                                                                    formControlName="entry_product_id">
                                                                                     <option [ngValue]="null" selected>
                                                                                         Product Name</option>
                                                                                     <option
@@ -844,7 +844,7 @@
                                                                                 <input type="text" class="form-control"
                                                                                     (keyup)="addTextBox(i)"
                                                                                     id="AddNewStock_Qty{{i}}"
-                                                                                    formControlName="AddNewStock_Qty" />
+                                                                                    formControlName="entry_quantity" />
                                                                             </div>
                                                                             <!-- <div >
                                                                                 <input type="text" class="form-control" id="product">
@@ -856,7 +856,7 @@
                                                                         <td style="width: 10%;">
                                                                             <div class="userDatatable-content" *ngIf="this.serial_no_state==1">
                                                                                 <input type="checkbox" [ngModel]="test[i]"
-                                                                                 id="AddNewStock_SNo_CBK{{i}}"   formControlName="AddNewStock_SNo_CBK" />
+                                                                                 id="AddNewStock_SNo_CBK{{i}}"   formControlName="entry_serail_no_str" />
 
                                                                             </div>
                                                                         </td>
@@ -887,10 +887,7 @@
                                                                         <td>
                                             
                                                                             <div id="serial_mac_no{{i}}" class="mt-4">
-                                                                              
-                                                                                <!-- <div *ngIf="i <= item">
-                                                                                  <input type="text"  class="form-control" id="product[i]">
-                                                                                </div> -->
+                                                                             <input type="hidden" formControlName="mac_no">
                                                                             </div>
                                                                         </td>
                                                                         <td>

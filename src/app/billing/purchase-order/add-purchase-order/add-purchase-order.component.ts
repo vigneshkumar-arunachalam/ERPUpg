@@ -180,12 +180,28 @@ export class AddPurchaseOrderComponent implements OnInit {
     });
 
   }
+
   removeAddress(i: number) {
-    this.addresses.removeAt(i);
-    var addr = this.addPI_section2.value.addresses;
-    var list_cnt = addr.length;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
 
 
+        console.log(i)
+        console.log(this.addresses)
+        this.addresses.removeAt(i);
+        var addr = this.addPI_section2.value.addresses;
+        var list_cnt = addr.length;
+     
+      }
+    });
 
   }
 
@@ -579,8 +595,8 @@ export class AddPurchaseOrderComponent implements OnInit {
     // do something when input is focused
     console.log(e);
   }
-  AddPurchaseOrder() {
-    alert("hi")
+  AddPurchaseOrder($event: MouseEvent) {
+   
     let api_req: any = new Object();
     let api_req_addPO: any = new Object();
     api_req.moduleType = "purchaseorder";
@@ -590,11 +606,35 @@ export class AddPurchaseOrderComponent implements OnInit {
     api_req_addPO.action = "insert_purchaseorder";
     api_req_addPO.user_id = localStorage.getItem('erp_c4c_user_id');
     //section 1
-    api_req_addPO.company = this.addDo_section1.value.companyName;
+    if(this.addDo_section1.value.companyName===null ||  this.addDo_section1.value.companyName===undefined){
+     
+      iziToast.warning({
+        message: "Fill Customer Name",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+    else{
+      api_req_addPO.company = this.addDo_section1.value.companyName;
+    }
+   
     api_req_addPO.poNo = this.addDo_section1.value.PONo;
     api_req_addPO.poDate = this.addDo_section1.value.PODate;
     // api_req_addPO.vendorID =  this.vendor_ID ;
-    api_req_addPO.vendorName = this.vendor_Name;
+    if(this.vendor_Name===null ||  this.vendor_Name===undefined ){
+     
+      iziToast.warning({
+        message: "Fill Vendor Name",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+    else{
+      api_req_addPO.vendorName = this.vendor_Name;
+    }
+   
 
     api_req_addPO.vendorCompany = this.addDo_section1.value.vendorCompany;
     api_req_addPO.vendorAddress1 = this.addDo_section1.value.customerAddress1;
@@ -671,11 +711,11 @@ export class AddPurchaseOrderComponent implements OnInit {
     api_req_addPO.remarks = this.addPI_section3.value.section3_remarks;
 
     api_req.element_data = api_req_addPO;
-    //  ($event.target as HTMLButtonElement).disabled = true;
+    ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      //  ($event.target as HTMLButtonElement).disabled = false;
+       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
         this.router.navigate(['/invoice']);
         iziToast.success({

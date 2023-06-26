@@ -845,7 +845,7 @@ export class DeliveryOrderComponent implements OnInit {
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
+        $("#emailFormId").modal("hide");
         tinymce.activeEditor.setContent("");
         this.DOList({});
         Swal.close();
@@ -871,6 +871,7 @@ export class DeliveryOrderComponent implements OnInit {
       }
       Swal.close();
     }), (error: any) => {
+      Swal.close();
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'

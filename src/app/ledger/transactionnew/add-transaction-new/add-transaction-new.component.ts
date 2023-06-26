@@ -163,12 +163,12 @@ export class AddTransactionNewComponent implements OnInit {
       'InvPayment_FileAttachment': new FormControl(null),
 
 
-      'AddNewStock_vendorName': new FormControl(null),
-      'AddNewStock_PurDate': new FormControl(null),
-      'AddNewStock_CategoryName': new FormControl(null),
-      'AddNewStock_ProductName': new FormControl(null),
-      'AddNewStock_Qty': new FormControl(null),
-      'AddNewStock_SNo_CBK': new FormControl(null),
+      'vendorId': new FormControl(null),
+      'lic_pur_date': new FormControl(null),
+      'entry_product_category_id': new FormControl(null),
+      'entry_product_id': new FormControl(null),
+      'entry_quantity': new FormControl(null),
+      'entry_serail_no_str': new FormControl(null),
 
       'StockIssued_categoryName': new FormControl(null),
       'StockIssued_ProductName': new FormControl(null),
@@ -226,12 +226,13 @@ export class AddTransactionNewComponent implements OnInit {
   createAddress(): FormGroup {
     return this.fb.group({
 
-      AddNewStock_vendorName: '',
-      AddNewStock_PurDate: '',
-      AddNewStock_CategoryName: '',
-      AddNewStock_ProductName: '',
-      AddNewStock_Qty: '',
-      AddNewStock_SNo_CBK: '',
+      vendorId: '',
+      lic_pur_date: '',
+      entry_product_category_id: '',
+      entry_product_id: '',
+      entry_quantity: '',
+      entry_serail_no_str: '',
+      mac_no:'',
 
 
 
@@ -731,17 +732,17 @@ alert( this.payment_details)
       // for (let i = 0; i < addr.length; i++) {
        
       //  var x=JSON.stringify(addr);
-      //   addr[i].AddNewStock_vendorName = $('#AddNewStock_vendorName' + i).val();
-      //   addr[i].AddNewStock_PurDate = $('#AddNewStock_PurDate' + i).val();
-      //   addr[i].AddNewStock_CategoryName = $('#AddNewStock_CategoryName' + i).val();
-      //   addr[i].AddNewStock_ProductName = $('#AddNewStock_ProductName' + i).val();
-      //   addr[i].AddNewStock_Qty = $('#AddNewStock_Qty' + i).val();
-      //   addr[i].AddNewStock_SNo_CBK = $('#AddNewStock_SNo_CBK' + i).val();
+      //   addr[i].vendorId = $('#vendorId' + i).val();
+      //   addr[i].lic_pur_date = $('#lic_pur_date' + i).val();
+      //   addr[i].entry_product_category_id = $('#entry_product_category_id' + i).val();
+      //   addr[i].entry_product_id = $('#entry_product_id' + i).val();
+      //   addr[i].entry_quantity = $('#entry_quantity' + i).val();
+      //   addr[i].entry_serail_no_str = $('#entry_serail_no_str' + i).val();
       
           
       // }
   
-      data.append('purchaseentry_allValue',JSON.stringify(addr)); 
+      data.append('values',JSON.stringify(addr)); 
     
     }
 

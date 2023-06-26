@@ -474,6 +474,10 @@ th{
   color: #e4ebf5;
 }
 td{border-bottom: 1px solid #c91a71!important;}
+
+.userDatatable table tr:nth-child(even) {background: rgb(241, 238, 241)}
+.userDatatable table tr:nth-child(odd) {background: #FFF}
+
 .userDatatable .buttonClass{
   border: 1px solid #ddd;
   border-radius: 5px!important;

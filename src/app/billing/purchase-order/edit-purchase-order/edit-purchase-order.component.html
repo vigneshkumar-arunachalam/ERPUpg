@@ -433,7 +433,9 @@
                                                                 style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
                                                                 class="form-control mt-2 mb-2" row="2"
                                                                 formControlName="desc" id="desc_{{i}}"></textarea>
+                                                                <input type="hidden"  formControlName="pd_PurchaseOrderChildId" id="pd_purchaseOrderChildId_{{i}}" /> 
                                                         </div>
+                                                        
                                                     </td>
     
     
@@ -548,7 +550,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
+                                    <input type="number" formControlName="section3_shipping_amt_txtbox" (keyup)=" totalCalculate()"
                                         id="shipping_amt_id" class="form-control mt-2" />
                                 </div>
                             </div>
@@ -564,7 +566,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <input type="number" formControlName="section3_bankingCharge_amt_txtbox"
-                                        (keyup)="extraFees()" id="bankingCharge_amt_id" class="form-control mt-2" />
+                                    (keyup)=" totalCalculate()" id="bankingCharge_amt_id" class="form-control mt-2" />
                                 </div>
                             </div>
     

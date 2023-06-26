@@ -184,7 +184,22 @@ export class EditPurchaseOrderComponent implements OnInit {
 
     });
   }
+
+  addAddress(): void {
+    this.addresses = this.addPI_section2.get('addresses') as FormArray;
+    this.addresses.push(this.editAddress_FormControl());
+
+    this.itre = this.itre + 1;
+    this.addressControls.controls.forEach((elt, index) => {
+      this.test[index] = true;
+
+    });
+  }
+
   removeAddress(i: number) {
+    console.log(i)
+    console.log(this.addresses)
+    var purchaseOrderChildId = $('#pd_purchaseOrderChildId_' + i).val();
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -202,6 +217,26 @@ export class EditPurchaseOrderComponent implements OnInit {
         this.addresses.removeAt(i);
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
+	
+	 this.totalCalculate();
+
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "purchaseorder";
+        api_req.api_url = "purchaseorder/delete_purchase_order_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_purchase_order_child";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.quotationChildId = purchaseOrderChildId;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response)
+
+
+        });
+
       }
     });
 
@@ -611,7 +646,8 @@ export class EditPurchaseOrderComponent implements OnInit {
           'e_comm_inform_right_2': response.purchaseorderparent_details[0].comm_inform_right_2,
           'e_comm_inform_right_3': response.purchaseorderparent_details[0].comm_inform_right_3,
           'e_comm_inform_right_4': response.purchaseorderparent_details[0].comm_inform_right_4,
-          'e_comm_inform_right_5': response.purchaseorderparent_details[0].comm_inform_right_5,          
+          'e_comm_inform_right_5': response.purchaseorderparent_details[0].comm_inform_right_5,   
+                 
 
         });
         this.addPI_section3.patchValue({
@@ -628,7 +664,7 @@ export class EditPurchaseOrderComponent implements OnInit {
           'section3_remarks': response.purchaseorderparent_details[0].remarks,
 
         });
-       
+        this.vendor_Name = response.purchaseorderparent_details[0].vendorName;
         
         const formArray = new FormArray([]);
         for (let index = 0; index < response.purchaseorderchild_details.length; index++) {
@@ -653,7 +689,8 @@ export class EditPurchaseOrderComponent implements OnInit {
         console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
         console.log(this.addresses)
-
+        this.editAddress();
+        this.removeAddresstest(response.purchaseorderchild_details.length);
         this.billerChangeDetails1(this.customernameID);
         // this.getInvoice({});
       } else {
@@ -672,6 +709,13 @@ export class EditPurchaseOrderComponent implements OnInit {
         });
         console.log("final error", error);
       };
+  }
+  removeAddresstest(i: number) {
+    console.log(i)
+    console.log(this.addresses)
+    this.addresses.removeAt(i);
+   
+
   }
   gotoPurchaseOrderList() {
     this.router.navigate(['/purchaseorder'])
@@ -790,6 +834,7 @@ export class EditPurchaseOrderComponent implements OnInit {
           title: 'Updated',
           message: 'Purchase Order Updated Successfully !',
         });
+        this.gotoPurchaseOrderList();
 
       }
       else {
@@ -799,6 +844,7 @@ export class EditPurchaseOrderComponent implements OnInit {
           message: "Purchase Order Not Saved Successfully",
           position: 'topRight'
         });
+        this.gotoPurchaseOrderList();
 
       }
     }), (error: any) => {
@@ -810,6 +856,7 @@ export class EditPurchaseOrderComponent implements OnInit {
     }
     // this.gotoPurchaseOrderList();
   }
+
 
   TaxDropdown() {
 
@@ -828,6 +875,7 @@ export class EditPurchaseOrderComponent implements OnInit {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
+        this.tax_per_mod = response.percent_val;
         this.addPI_section3.patchValue({         
           'section3_tax_per_hd':response.percent_val,
         });
@@ -942,7 +990,8 @@ export class EditPurchaseOrderComponent implements OnInit {
    // alert(tax_amount);
     this.finalTax = tax_amount;
     this.grossTotal = tax_amt_tot;
-    this.grandTotal = tax_amt_tot+tax_amount;
+    this.grandTotal = tax_amt_tot+tax_amount+this.addPI_section3.value.section3_bankingCharge_amt_txtbox+this.addPI_section3.value.section3_shipping_amt_txtbox;
+ 
 
     
   }
