@@ -63,7 +63,7 @@ export class EditTransactionNewComponent implements OnInit {
   InvPayment_customer: any;
   InvPayment_total: any;
   InvPayment_owing: any;
-  InvPayment_paid:any;
+  InvPayment_paid: any;
 
   amountPaid: any;
   balance: any;
@@ -71,8 +71,11 @@ export class EditTransactionNewComponent implements OnInit {
   customerName: any;
   netPayment: any;
   paymentNote: any;
-  paymentTypeDetails:any;
-  purchaseType:any;
+  paymentTypeDetails: any;
+  purchaseType: any;
+  categoryDetails: any;
+  productDetails: any;
+  prodResult:any;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
@@ -140,8 +143,16 @@ export class EditTransactionNewComponent implements OnInit {
       case 8:
         $('#Others_link').addClass('active');
         break;
-      case 15:
+      case '15':
+
+
+        $('#PurchaseEntry').addClass('fade');
+        $('#PurchaseEntry').removeClass('active');
         $('#AddNewStock_link').addClass('active');
+        $('#AddNewStock').removeClass('fade');
+        $('#AddNewStock').addClass('active');
+        this.editNewStock();
+
         break;
       case 51:
         $('#PurchaseEntry').removeClass('active');
@@ -412,6 +423,7 @@ export class EditTransactionNewComponent implements OnInit {
         this.purchaseTypeDetails = response.purchase_type_det;
         this.taxProviderDetails = response.tax_provider_det;
         this.DefaultBillerIDValue = response.defaults_biller_id;
+        this.categoryDetails = response.category_det;
         this.getPaymentInvoice();
         this.addTransaction_section1.patchValue({
           // 'setInvoice': response.selected_invoice_type
@@ -508,7 +520,6 @@ export class EditTransactionNewComponent implements OnInit {
   }
 
   editPurchaseEntry() {
-
 
     let api_req: any = new Object();
     let api_loadEdit: any = new Object();
@@ -731,9 +742,9 @@ export class EditTransactionNewComponent implements OnInit {
     api_req.element_data = api_loadEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
+
       if (response != '') {
-  this.amountPaid = response.amountPaid;
+        this.amountPaid = response.amountPaid;
         this.balance = response.balance;
         this.billerName = response.billerName;
         this.customerName = response.customerName;
@@ -746,11 +757,11 @@ export class EditTransactionNewComponent implements OnInit {
         // this.PC_edit_TypeValue=response.pettycash_details[0].type,
         this.processDate = response.paymentprocess_details[0].processDate;
         this.billerName = response.paymentprocess_details[0].billerName;
-        this.customerName  = response.paymentprocess_details[0].customerName;
+        this.customerName = response.paymentprocess_details[0].customerName;
         this.netPayment = response.paymentprocess_details[0].netPayment;
         this.paymentNote = response.paymentprocess_details[0].netPayment;
         this.balance = response.paymentprocess_details[0].netPayment;
-        this.purchaseType=response.purchase_type;
+        this.purchaseType = response.purchase_type;
 
         this.addTransaction_section1.patchValue({
           'billerName': response.transaction_details[0].billerId,
@@ -770,7 +781,7 @@ export class EditTransactionNewComponent implements OnInit {
           'InvPayment_PaymentMethod': response.paymentprocess_details[0].paymentMode,
           'InvPayment_Notes': response.paymentprocess_details[0].notes,
           'InvPayment_Details': response.paymentprocess_details[0].mobile_type,
-       
+
           'InvPayment_FileAttachment': response.transaction_details[0].trans_attachment_filename,
 
           // 'PE_FileAttachment': response.transaction_details[0].trans_attachment_filename,
@@ -847,6 +858,141 @@ export class EditTransactionNewComponent implements OnInit {
   }
 
 
+  editNewStock() {
+
+    let api_req: any = new Object();
+    let api_loadEdit: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/editNewStock";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_loadEdit.action = "editNewStock";
+    api_loadEdit.transaction_approval_id = this.TransactionApprovalID;
+    api_req.element_data = api_loadEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        console.log("response.editData.product_category_id",response.editData.product_category_id)
+
+        alert(response.editData.product_category_id)
+        this.changeCategory(response.editData.product_category_id);
+        setTimeout(() => {                           // <<<---using ()=> syntax
+          this.changeCategory(response.editData.product_category_id);
+        }, 3000);
+
+        this.addTransaction_section1.patchValue({
+          'billerName': response.editData.billerId,
+          'trans_Date': response.editData.date,
+          'priority': response.editData.priority,
+
+          'AddNewStock_vendorName': response.editData.vendorId_edit,
+          'AddNewStock_PurDate': response.editData.lic_pur_date,
+          'AddNewStock_CategoryName': response.editData.product_category_id,
+          'AddNewStock_ProductName': response.editData.productId,
+          'AddNewStock_Qty': response.editData.qty,
+
+        });
+
+
+        this.getFileAttachmentResult = response.trans_file;
+        this.prodResult=response.editData.productList;
+
+
+        //  switching between tabs
+
+        $('#PurchaseEntry_link').removeClass('active');
+        this.Transaction_Type_Variable = response.editData.type_of_trans;
+
+        console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
+
+        switch (this.Transaction_Type_Variable) {
+
+          case 3:
+            $('#PurchaseEntry_link').addClass('active');
+            break;
+          case 5:
+            $('#PettyCash_link').addClass('active');
+            break;
+
+          case 6:
+            $('#VendorOrder_link').addClass('active');
+            break;
+          case 7:
+            $('#InvoicePayment_link').addClass('active');
+            break;
+          case 8:
+            $('#Others_link').addClass('active');
+            break;
+          case 15:
+            $('#AddNewStock_link').addClass('active');
+            break;
+          case 51:
+            $('#Logistics_link').addClass('active');
+            break;
+          case 56:
+            $('#StockIssued_link').addClass('active');
+            break;
+          case 58:
+            $('#StockTransfer_link').addClass('active');
+            break;
+
+
+          default:
+            $('#PurchaseEntry_link').addClass('active');
+            break;
+        }
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Edit Value of Transaction entry not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+
+  changeCategory(id: any) {
+
+    let api_req: any = new Object();
+    let api_getInvoiceDetails_req: any = new Object();
+    api_req.moduleType = "get_prodoct_entry_stock_name";
+    api_req.api_url = "addproduct_stock/get_prodoct_entry_stock_name";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getInvoiceDetails_req.action = "get_prodoct_entry_stock_name";
+    api_getInvoiceDetails_req.category_id = id;
+
+    api_req.element_data = api_getInvoiceDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        this.productDetails = response.product_det;
+        this.addTransaction_section1.patchValue({
+          // 'AddNewStock_ProductName': response.product_det,
+
+        });
+
+      }
+      else {
+
+      }
+
+    });
+
+  }
   fileAttachmentDelete(file_id: any, file_index: any) {
     Swal.fire({
       title: 'Are you sure to Delete?',
@@ -1127,12 +1273,13 @@ export class EditTransactionNewComponent implements OnInit {
       data.append('file_attachment_name', this.addTransaction_section1.value.others_FileAttachment);
     }
     if (this.Transaction_Type_Variable == 15) {
-      this.updateVariable = "Others_update";
-      data.append('transaction_approval_id', this.TransactionApprovalID);
-      data.append('other_description', this.addTransaction_section1.value.others_Description);
-      data.append('file_attachment_name', this.addTransaction_section1.value.others_FileAttachment);
+      this.updateVariable = "product_entry_update";
+      data.append('vendorId', this.addTransaction_section1.value.AddNewStock_vendorName);
+      data.append('lic_pur_date', this.addTransaction_section1.value.AddNewStock_PurDate);
+      data.append('entry_product_category_id', this.addTransaction_section1.value.AddNewStock_CategoryName);
+      data.append('entry_product_id', this.addTransaction_section1.value.AddNewStock_ProductName);
+      data.append('entry_quantity', this.addTransaction_section1.value.AddNewStock_Qty);
 
-     
     }
 
 

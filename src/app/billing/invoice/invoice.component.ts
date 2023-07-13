@@ -276,7 +276,7 @@ export class InvoiceComponent implements OnInit {
   keywordResellerName = 'customerName';
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    this.getInvoice({});
+    this.getInvoice1({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
     this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
@@ -542,7 +542,9 @@ export class InvoiceComponent implements OnInit {
 
   }
   searchCustomerData(data: any) {
-
+  
+   if(data.length>3){
+    // this.spinner.show();
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
     api_req.moduleType = "customer";
@@ -554,13 +556,27 @@ export class InvoiceComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+     
       console.log("vignesh-customer_status response", response);
-
-      this.searchResult = response.customer_names;
+      // this.searchResult = response[0];
+     
       console.log("vignesh-advanced search result", this.searchResult);
-      if (response.status = true) {
+      if (response ! = null) {
+        this.searchResult = response.customer_names;
+        this.spinner.hide();
+      }
+      else{
+        iziToast.warning({
+          message: "Sorry, No Matching Data",
+          position: 'topRight'
+        });
+
       }
     });
+
+   }
+
+    
   }
   onFocusedCustomer(e: any) {
     // do something when input is focused
@@ -662,6 +678,9 @@ export class InvoiceComponent implements OnInit {
   removerevenueAddress(i: number) {
     this.revenueaddresses.removeAt(i);
   }
+  keysearch(event:any){
+    this.searchResult_CustomerName=event.target.value
+  }
   InvoiceShowCHK(data: any, event: any) {
     console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
@@ -751,7 +770,7 @@ export class InvoiceComponent implements OnInit {
     console.log("invoice type search", this.invType_Search);
   }
 
-  getInvoice(data: any) {
+  getInvoice1(data: any) {
     this.spinner.show();
     var list_data = this.listDataInfo(data);
 
@@ -782,6 +801,14 @@ export class InvoiceComponent implements OnInit {
   
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("PI list", response);
+      if(response.total_cnt==0){
+        iziToast.warning({
+          message: "Sorry, No Matching Data",
+          position: 'topRight'
+        });
+        $("#searchInvoiceFormId").modal("hide");
+
+      }
       if (response) {
         this.spinner.hide();
         this.PI_list = response.proforma_details;
@@ -831,12 +858,126 @@ export class InvoiceComponent implements OnInit {
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
         this.revenueTypeList = response.revenue_list;
 
+        this.edit_array_SearchBiller_Checkbox=response.selected_billerId;
+
         this.selected_billerId=response.selected_billerId;
         this.invoicePermissionList_inv_to_did
         this.invoicePermissionList_set_actual_cost
 
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        
+
+        $("#searchInvoiceFormId").modal("hide");
+      }
+      else {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    });
+  }
+  getInvoice(data: any) {
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+
+    let api_req: any = new Object();
+    let api_quotationList: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_list"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationList.action = "quotation_list";
+    api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_quotationList.Search_BillerId=this.edit_array_SearchBiller_Checkbox;
+    api_quotationList.off_set = list_data.offset;
+    api_quotationList.limit_val = list_data.limit;
+    api_quotationList.search_txt = this.searchResult_CustomerName;
+    api_quotationList.years = this.edit_array_Years_Checkbox;
+    api_quotationList.invoiceType = this.invType_Search;
+
+    api_quotationList.recurring_only = this.CBV_recurring_only;
+    api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
+    api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
+    api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+
+    api_quotationList.current_page = "";
+
+    api_req.element_data = api_quotationList;
+
+  
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("PI list", response);
+      if(response.total_cnt==0){
+        iziToast.warning({
+          message: "Sorry, No Matching Data",
+          position: 'topRight'
+        });
+        $("#searchInvoiceFormId").modal("hide");
+
+      }
+      if (response) {
+        this.spinner.hide();
+        this.PI_list = response.proforma_details;
+        this.recurring_Status = response.proforma_details[0].recuring_status;
+        this.revenue_type_id = response.proforma_details[0].revenue_type_id;
+        this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+        this.revenue_color = response.proforma_details[0].revenue_color;
+        this.share_access_state = response.proforma_details[0].share_access_state;
+        this.postal_send_color = response.proforma_details[0].postal_send_color;
+        this.post_send_status = response.proforma_details[0].post_send_status;
+        // this.biller_list = response.biller_details;
+        this.invoicePermissionList = response.invoice_permission_arr;
+        this.invoicePermissionList_add = response.invoice_permission_arr.add;
+        this.invoicePermissionList_Search = response.invoice_permission_arr.search;
+        this.invoicePermissionList_all_invoice_show = response.invoice_permission_arr.all_invoice_show;
+        this.invoicePermissionList_all_tax_billing = response.invoice_permission_arr.all_tax_billing;
+        this.invoicePermissionList_comm_per = response.invoice_permission_arr.comm_per;
+        this.invoicePermissionList_date_filter_billing = response.invoice_permission_arr.date_filter_billing;
+        this.invoicePermissionList_delete = response.invoice_permission_arr.delete;
+        this.invoicePermissionList_did_to_inv = response.invoice_permission_arr.did_to_inv;
+        this.invoicePermissionList_duplicate = response.invoice_permission_arr.duplicate;
+        this.invoicePermissionList_edit = response.invoice_permission_arr.edit;
+        this.invoicePermissionList_export_billing = response.invoice_permission_arr.export_billing;
+        this.invoicePermissionList_file_attach = response.invoice_permission_arr.file_attach;
+        this.invoicePermissionList_inv_recurring = response.invoice_permission_arr.inv_recurring;
+        this.invoicePermissionList_inv_to_do = response.invoice_permission_arr.inv_to_do;
+        this.invoicePermissionList_inv_to_pi = response.invoice_permission_arr.inv_to_pi;
+        this.invoicePermissionList_inv_to_quotation = response.invoice_permission_arr.inv_to_quotation;
+        this.invoicePermissionList_inv_to_share = response.invoice_permission_arr.inv_to_share;
+        this.invoicePermissionList_invoice_alert = response.invoice_permission_arr.invoice_alert;
+
+        this.invoicePermissionList_list = response.invoice_permission_arr.list;
+        this.invoicePermissionList_mail = response.invoice_permission_arr.mail;
+        this.invoicePermissionList_monthly_turn = response.invoice_permission_arr.monthly_turn;
+        this.invoicePermissionList_online_pay_link = response.invoice_permission_arr.online_pay_link;
+        this.invoicePermissionList_payment_process = response.invoice_permission_arr.payment_process;
+        this.invoicePermissionList_pdf_view = response.invoice_permission_arr.pdf_view;
+        this.invoicePermissionList_sale_rep = response.invoice_permission_arr.sale_rep;
+        this.invoicePermissionList_search = response.invoice_permission_arr.search;
+
+        this.invoicePermissionList_sent_to_post = response.invoice_permission_arr.sent_to_post;
+        this.invoicePermissionList_set_invoice_revenue = response.invoice_permission_arr.set_invoice_revenue;
+        this.invoicePermissionList_set_invoice_type = response.invoice_permission_arr.set_invoice_type;
+        this.invoicePermissionList_set_prev_billing = response.invoice_permission_arr.set_prev_billing;
+        this.invoicePermissionList_set_terms_condition = response.invoice_permission_arr.set_terms_condition;
+        this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
+        this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
+        this.revenueTypeList = response.revenue_list;
+
+        this.edit_array_SearchBiller_Checkbox=response.selected_billerId;
+
+        this.selected_billerId=response.selected_billerId;
+        this.invoicePermissionList_inv_to_did
+        this.invoicePermissionList_set_actual_cost
+
+        console.log("proforma_details list", this.PI_list)
+        // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         
 
@@ -888,10 +1029,10 @@ export class InvoiceComponent implements OnInit {
     });
   }
   clearSearch() {
-
+    $("#searchInvoiceFormId").modal("show");
   }
   invoiceSharPersonEdit(Id: any) {
-    this.getInvoice({});
+    this.getInvoice1({});
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
@@ -1024,7 +1165,7 @@ export class InvoiceComponent implements OnInit {
   }
   getInvoice_Post(id: any) {
     this.billId_InvoicePost = id;
-    this.getInvoice({});
+    this.getInvoice1({});
     let api_req: any = new Object();
     let api_postED: any = new Object();
     api_req.moduleType = "invoice";
@@ -1044,7 +1185,7 @@ export class InvoiceComponent implements OnInit {
           'InvoiceSendingInput': response.post_send_status
 
         })
-        this.getInvoice({});
+        this.getInvoice1({});
 
       } else {
 
@@ -1053,7 +1194,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice Send to post details not Updated. Please try again",
           position: 'topRight'
         });
-        this.getInvoice({});
+        this.getInvoice1({});
       }
     }),
       (error: any) => {
@@ -1191,7 +1332,7 @@ export class InvoiceComponent implements OnInit {
         })
         this.spinner.hide();
 
-        this.getInvoice({});
+        this.getInvoice1({});
       } else {
 
         $('#processPaymentFormId').modal("hide");
@@ -1257,7 +1398,7 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        this.getInvoice({});
+        this.getInvoice1({});
 
       } else {
         this.spinner.hide();
@@ -1331,7 +1472,7 @@ export class InvoiceComponent implements OnInit {
 
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
       } else {
 
         $('#processPaymentFormId').modal("hide");
@@ -1352,7 +1493,7 @@ export class InvoiceComponent implements OnInit {
   PIEmailClear() {
     this.emailForm.reset();
     this.msg_id = '';
-    this.getInvoice({});
+    this.getInvoice1({});
     tinymce.activeEditor.setContent("");
   }
   templateContentEmailDropdown(event: any) {
@@ -1492,7 +1633,7 @@ export class InvoiceComponent implements OnInit {
         });
 
         $("#emailFormId").modal("hide");
-        this.getInvoice({});
+        this.getInvoice1({});
 
       }
       else {
@@ -1502,12 +1643,12 @@ export class InvoiceComponent implements OnInit {
         $("#emailFormId").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
-        this.getInvoice({});
+        this.getInvoice1({});
         iziToast.success({
           message: "Email Notification Sent !!!!",
           position: 'topRight'
         });
-        this.getInvoice({});
+        this.getInvoice1({});
 
       }
       Swal.close();
@@ -1680,7 +1821,7 @@ export class InvoiceComponent implements OnInit {
 
         });
 
-        this.getInvoice({});
+        this.getInvoice1({});
 
       } else {
 
@@ -1779,7 +1920,7 @@ export class InvoiceComponent implements OnInit {
         success: function (result: any) {
           if (result.status == true) {
 
-            self.getInvoice({});
+            self.getInvoice1({});
             console.log(result);
             Swal.close();
             $("#fileAttachmentFormId").modal("hide");
@@ -1813,7 +1954,7 @@ export class InvoiceComponent implements OnInit {
 
       })
 
-
+      
     }
   }
   onFileChange(event: any) {
@@ -1983,7 +2124,7 @@ export class InvoiceComponent implements OnInit {
 
     this.spinner.show();
     this.recurring_BillerID = id;
-    this.getInvoice({});
+    this.getInvoice1({});
     let api_req: any = new Object();
     let api_recurring: any = new Object();
     api_req.moduleType = "invoice";
@@ -2023,7 +2164,7 @@ export class InvoiceComponent implements OnInit {
         })
 
         // $('#RecurringFormId').modal("hide");
-        this.getInvoice({});
+        this.getInvoice1({});
 
       } else {
 
@@ -2081,13 +2222,13 @@ export class InvoiceComponent implements OnInit {
           message: "Recurring Details Updated Successfully",
           position: 'topRight'
         });
-        this.getInvoice({});
+        this.getInvoice1({});
       } else {
         iziToast.warning({
           message: "Check Response",
           position: 'topRight'
         });
-        this.getInvoice({});
+        this.getInvoice1({});
 
       }
     }),
@@ -2097,7 +2238,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        this.getInvoice({});
+        this.getInvoice1({});
         console.log("final error", error);
       };
 
@@ -2145,13 +2286,13 @@ export class InvoiceComponent implements OnInit {
               message: "Previous Due Set State changed Successfully",
               position: 'topRight'
             });
-            this.getInvoice({});
+            this.getInvoice1({});
           } else {
             iziToast.warning({
               message: "Previous Due Set State not changed. Please try again",
               position: 'topRight'
             });
-            this.getInvoice({});
+            this.getInvoice1({});
           }
         }),
           (error: any) => {
@@ -2254,7 +2395,7 @@ export class InvoiceComponent implements OnInit {
         $('#InvoiceRevenueFormId').modal("hide");
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
       }
       else {
         iziToast.warning({
@@ -2264,7 +2405,7 @@ export class InvoiceComponent implements OnInit {
         $('#InvoiceRevenueFormId').modal("hide");
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
 
       }
     }),
@@ -2277,7 +2418,7 @@ export class InvoiceComponent implements OnInit {
         $('#InvoiceRevenueFormId').modal("hide");
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
 
       };
 
@@ -2339,7 +2480,7 @@ export class InvoiceComponent implements OnInit {
         $('#NotesFormId').modal("hide");
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
       } else {
 
         iziToast.warning({
@@ -2349,7 +2490,7 @@ export class InvoiceComponent implements OnInit {
         $('#NotesFormId').modal("hide");
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
 
       }
     }),
@@ -2362,7 +2503,7 @@ export class InvoiceComponent implements OnInit {
         $('#NotesFormId').modal("hide");
 
 
-        this.getInvoice({});
+        this.getInvoice1({});
 
       };
 
@@ -2404,13 +2545,13 @@ export class InvoiceComponent implements OnInit {
               message: "Invoice to Proforma converted Successfully",
               position: 'topRight'
             });
-            this.getInvoice({});
+            this.getInvoice1({});
           } else {
             iziToast.warning({
               message: "Invoice to Proforma not converted. Please try again",
               position: 'topRight'
             });
-            this.getInvoice({});
+            this.getInvoice1({});
           }
         }),
           (error: any) => {
@@ -2453,14 +2594,14 @@ export class InvoiceComponent implements OnInit {
   //       $('#DeliveryOrderFormId').modal("hide");
 
 
-  //       this.getInvoice({});
+  //       this.getInvoice1({});
   //     } else {
   //       iziToast.warning({
   //         message: "Delivery Order not Updated. Please try again",
   //         position: 'topRight'
   //       });
   //       $('#DeliveryOrderFormId').modal("hide");
-  //       this.getInvoice({});
+  //       this.getInvoice1({});
   //     }
   //   }),
   //     (error: any) => {
@@ -2507,7 +2648,7 @@ export class InvoiceComponent implements OnInit {
             $('#DeliveryOrderFormId').modal("hide");
 
 
-            this.getInvoice({});
+            this.getInvoice1({});
 
           } else {
             iziToast.warning({
@@ -2515,7 +2656,7 @@ export class InvoiceComponent implements OnInit {
               position: 'topRight'
             });
             $('#DeliveryOrderFormId').modal("hide");
-            this.getInvoice({});
+            this.getInvoice1({});
           }
         }),
           (error: any) => {
@@ -2684,7 +2825,7 @@ export class InvoiceComponent implements OnInit {
       confirmButtonText: 'Yes, Change it!'
     }).then((result: any) => {
       if (result.value) {
-        this.getInvoice({});
+        this.getInvoice1({});
         let api_req: any = new Object();
         let api_reqLocEx: any = new Object();
         api_req.moduleType = "invoice";
@@ -2713,7 +2854,7 @@ export class InvoiceComponent implements OnInit {
               position: 'topRight'
 
             });
-            this.getInvoice({});
+            this.getInvoice1({});
 
 
           } else {
@@ -2721,7 +2862,7 @@ export class InvoiceComponent implements OnInit {
               message: "Local to Export status not Updated. Please try again",
               position: 'topRight'
             });
-            this.getInvoice({});
+            this.getInvoice1({});
           }
         }),
           (error: any) => {

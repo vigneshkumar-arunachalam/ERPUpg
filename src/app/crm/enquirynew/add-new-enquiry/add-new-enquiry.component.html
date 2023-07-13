@@ -1,0 +1,175 @@
+<div class="contents-section addquotation-section" style="cursor:pointer;" id="abc">
+    <div class="col-lg-12 mb-30">
+        <div class="card">
+            <div class="card-header color-dark fw-500" style="   background-color: #d9515147">
+                <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                    <span class="breadcrumb-item active">Add New Enquiry</span></h3>
+              
+                   
+            </div>
+        </div>
+    </div>
+   <div class="container-fluid">
+    <form [formGroup]="addEnquiry_section1">
+        <div class="row">
+
+           
+
+            <div class="col-lg-6">
+
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="enquiryDate" class="col-lg-3 col-form-label">Enquiry
+                            Date</label>
+                        <div class="col-lg-9">
+                            <input type="date" id="enquiryDate" class="form-control"
+                                formControlName="enquiryDate">
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="curr" class="col-lg-3 col-form-label">Biller Name</label>
+                        <div class="col-lg-9" >
+                            <select name="bilerName" class="form-control" formControlName="billerName">
+                                <!-- <option *ngFor="let biller of billerlist" value="{{currenc.currencyId}}">
+                                    {{currenc.currency_name}}
+                                </option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="contactInfo" class="col-lg-3 col-form-label">Contact info<span style="color: red;font-size:larger;"> *</span></label>
+                        <div class="col-lg-9">
+                            <input type="text" id="contactInfo" class="form-control" formControlName="contactInfo">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="email" class="col-lg-3 col-form-label">Email<span style="color: red;font-size:larger;"> *</span></label>
+                        <div class="col-lg-9">
+                            <input type="email" id="email" class="form-control" formControlName="email">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="phoneNumber" class="col-lg-3 col-form-label">Phone Number</label>
+                        <div class="col-lg-9">
+                            <input type="text" id="phoneNumber" class="form-control" formControlName="phoneNumber">
+
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="company" class="col-lg-3 col-form-label">Company<span style="color: red;font-size:larger;"> *</span></label>
+                        <div class="col-lg-9">
+                            <input type="text" id="company" class="form-control" formControlName="company">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="country" class="col-lg-3 col-form-label">Country</label>
+                        <div class="col-lg-9">
+                            <input type="text" id="country" class="form-control" formControlName="country">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="salesCode" class="col-lg-3 col-form-label">Sales Code</label>
+                        <div class="col-lg-9">
+                            <input type="text" id="salesCode" class="form-control" formControlName="salesCode">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="salesCode" class="col-lg-3 col-form-label">Product Name</label>
+                        <div class="col-lg-9">
+                            <textarea rows="5" class="form-control" formControlName="productName"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="quantity" class="col-lg-3 col-form-label">Quantity</label>
+                        <div class="col-lg-9">
+                            <input type="text" id="quantity" class="form-control" formControlName="quantity">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="curr" class="col-lg-3 col-form-label">Follow-up Status</label>
+                        <div class="col-lg-9" >
+                            <select name="followUpStatus" class="form-control" formControlName="followUpStatus">
+                                <!-- <option *ngFor="let biller of billerlist" value="{{currenc.currencyId}}">
+                                    {{currenc.currency_name}}
+                                </option> -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="toDoDate" class="col-lg-3 col-form-label">To Do Date</label>
+                        <div class="col-lg-9">
+                            <input type="date" id="toDoDate" class="form-control" formControlName="toDoDate">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-12">
+                    <div class="form-group row">
+                        <label for="comments" class="col-lg-3 col-form-label">Comments</label>
+                        <div class="col-lg-9">
+                            <textarea rows="5" class="form-control" formControlName="comments"></textarea>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" >
+           Save
+        </button>
+        <button type="button" class="btn btn-dark ml-4" data-dismiss="modal" >
+            Cancel
+        </button>
+    </div>
+
+   </div>
+   
+
+
+</div>

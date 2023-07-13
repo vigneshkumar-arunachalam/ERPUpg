@@ -58,13 +58,14 @@ export class LoginComponent implements OnInit {
       console.log('socket connected');
     };
     this.websocket.onmessage = function (event: any) {
+      console.log(event)
       s.getdatas = JSON.parse(event.data);
       console.log('socket detail' + localStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
-        // if (localStorage.getItem('erp_c4c_user_id') == null) {
-          // s.qrLogin();
-        // }
-        this.websocket.onclose;
+        if (localStorage.getItem('erp_c4c_user_id') == null) {
+          s.qrLogin();
+        }
+        // this.websocket.onclose;
       }
       if(s.getdatas.login_status=="login_successful"){
         s.qrLogin();

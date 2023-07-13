@@ -220,11 +220,11 @@
                                 <thead>
                                     <tr class="userDatatable-header">
 
-                                        <th style="width:48%"> <span class="userDatatable-title">Product Name</span>
+                                        <th style="width:55%"> <span class="userDatatable-title">Product Name</span>
                                         </th>
 
-                                        <th style="width:48%"><span class="userDatatable-title">Quantity</span></th>
-                                        <th style="width: 45px;"></th>
+                                        <th style="width:30%"><span class="userDatatable-title">Quantity</span></th>
+                                        <th style="width: 15%;"></th>
 
                                     </tr>
                                 </thead>
@@ -234,7 +234,7 @@
                                         <td colspan="12">
                                             <table style="width: 100%;">
                                                 <tr class="marginSpace">
-                                                    <td>
+                                                    <td style="width:55%">
                                                         <div class="userDatatable-content">
                                                             <input type="text" class="form-control mt-2 mb-2"
                                                                 formControlName="prodName" id="prodName_{{i}}" />
@@ -251,15 +251,15 @@
                                                     </td>
 
 
-                                                    <td valign="top">
+                                                    <td valign="top" style="width:30%">
                                                         <div class="userDatatable-content">
                                                             <input type="number" class="form-control mt-2 mb-2"
                                                                 formControlName="quantity" id="quantity_{{i}}" />
                                                         </div>
                                                     </td>
 
-                                                    <td *ngIf="i>0" valign="top" style="width: 45px;">
-                                                        <div class="userDatatable-content d-inline-block  mt-2 mb-2"
+                                                    <td  valign="top" style="width:15%">
+                                                        <div *ngIf="i>0" class="userDatatable-content d-inline-block  mt-2 mb-2"
                                                             style="margin-left: 15px;">
                                                             <button type="button" class="btn btn-danger btn-sm"
                                                                 (click)="removeParticular(i)">X</button>
@@ -296,7 +296,7 @@
                 <textarea style="height: 120px;width: 100%;text-align: left;padding-left: 8px"
                     class="form-control mt-2 mb-2" row="2" formControlName="remarks" id="remarks"></textarea>
             </div>
-            <div id="signature_message_id" style="float: right;">
+            <div id="signature_message_id" style="text-align: right;">
                 <label style="font-style: italic;color:#252525">
                     (Signature not available. Ask your administrator to upload your
                     signature if required)

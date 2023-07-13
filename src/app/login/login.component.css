@@ -239,3 +239,7 @@ input#refresh_btn{
   border: none  ;
 }
 #Login form.ng-dirty.ng-touched.ng-valid{padding: 30px 0px;}
+
+#Login .inputBox .form-group input{
+  padding: 10px 10px 10px 40px!important;
+}

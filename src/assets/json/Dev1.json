@@ -90,6 +90,27 @@
     ],
     "isVisible": true,
     "value": "/bing"
+}, {
+    "name": "CRM",
+    "icon":"settings",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Enquiry New",
+            "icon": "grid",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/enquirynew"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/crm"
 },   {
     "name": "Masters",
     "icon":"sunrise",

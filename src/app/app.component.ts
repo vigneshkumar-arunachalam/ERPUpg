@@ -32,11 +32,12 @@ export class AppComponent {
     //60 = 1 minute
     //900 = 15 minute
     //3600= 1 hour
-    this.bnIdle.startWatching(3600).subscribe((res) => {
+    //1800= 30 minutes
+    this.bnIdle.startWatching(86400).subscribe((res) => {
       if (res) {
         localStorage.clear();
         this.templateAuthView = true;
-        console.log('session expired after half an hour 900 seconds');
+        console.log('session expired after half an hour 24 hours');
         let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
         console.log(currentDateTime);
         // this.router.navigateByUrl('/logout');

@@ -44,7 +44,8 @@
     ],
     "isVisible": true,
     "value": "/bing"
-},   {
+}, 
+ {
     "name": "Masters",
     "icon":"sunrise",
     "isActive": false,

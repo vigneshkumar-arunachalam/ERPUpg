@@ -91,14 +91,18 @@ export class EditPurchaseOrderComponent implements OnInit {
 
         setTimeout(() => {
           this.editPurchaseOrder();
+         
+          
 
         }, 1000);
+       
        
 
         
 
       }
       );
+      
 
     this.addDo_section1 = new FormGroup({
       'e_companyName': new FormControl(null),
@@ -261,6 +265,32 @@ export class EditPurchaseOrderComponent implements OnInit {
       //   'PONo': response.delivery_no,
       // });
     });
+    // this.tax_details_cbo();
+  }
+  tax_details_cbo(){
+    this.billerChangeID = this.addDo_section1.value.companyName;
+
+    let api_req: any = new Object();
+    let addBillerChangeAPI: any = new Object();
+
+    api_req.moduleType = "purchaseorder";
+    api_req.api_url = "purchaseorder/tax_details_cbo";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addBillerChangeAPI.action = "tax_details_cbo";
+    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    addBillerChangeAPI.billerId = this.billerChangeID;
+    api_req.element_data = addBillerChangeAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      // this.companyNameList = response.biller_details;
+      this.addPI_section3.patchValue({
+        'section3_gst_dropdown': response.default_tax_id,
+        'section3_tax_per_hd':response.percent_val,
+      });
+      this.tax_per_mod = response.percent_val;
+    });
+
+    this.totalCalculate();
   }
 
   billerChangeDetails(event: any) {
@@ -293,19 +323,19 @@ export class EditPurchaseOrderComponent implements OnInit {
       var arr = [address1_company, address2_company, city_company, country_company];
 
       var companyAddress = arr.join(" ");
-
+   
 
       this.addDo_section1.patchValue({
-        'PONo': response.poNo,
+        'e_PONo': response.poNo,
         'e_tin': response.addres_arr.tinNo,
         'e_cst': response.addres_arr.cstNo,
-        'kind_Attention': response.addres_arr.abc,
-        'attn_name_bill': response.addres_arr.abc,
-        'companyName_bill': response.addres_arr.billerName,
-        'address_bill': companyAddress,
-        'attn_name_ship': response.addres_arr.abc,
-        'companyName_ship': response.addres_arr.billerName,
-        'address_ship': companyAddress,
+        'kind_Attention': response.kind_attn,
+        'e_attn_name_bill': response.kind_attn,
+        'e_companyName_bill': response.addres_arr.billerName,
+        'e_address_bill': companyAddress,
+        'e_attn_name_ship': response.kind_attn,
+        'e_companyName_ship': response.addres_arr.billerName,
+        'e_address_ship': companyAddress,
 
 
       });
@@ -347,13 +377,13 @@ export class EditPurchaseOrderComponent implements OnInit {
         'PONo': response.poNo,
         'e_tin': response.addres_arr.tinNo,
         'e_cst': response.addres_arr.cstNo,
-        'kind_Attention': response.addres_arr.abc,
-        'attn_name_bill': response.addres_arr.abc,
-        'companyName_bill': response.addres_arr.billerName,
-        'address_bill': companyAddress,
-        'attn_name_ship': response.addres_arr.abc,
-        'companyName_ship': response.addres_arr.billerName,
-        'address_ship': companyAddress,
+        // 'kind_Attention': response.kind_attn,
+        'e_attn_name_bill': response.kind_attn,
+        'e_companyName_bill': response.addres_arr.billerName,
+        'e_address_bill': companyAddress,
+        'e_attn_name_ship': response.kind_attn,
+        'e_companyName_ship': response.addres_arr.billerName,
+        'e_address_ship': companyAddress,
 
 
       });
@@ -876,15 +906,13 @@ export class EditPurchaseOrderComponent implements OnInit {
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
         this.tax_per_mod = response.percent_val;
-        this.addPI_section3.patchValue({         
-          'section3_tax_per_hd':response.percent_val,
-        });
-        // setTimeout(() => {
-        //   this.addPI_section3.patchValue({
-        //     'section3_gst_dropdown': response.default_tax_id,
-        //   });
+        $('#tax_per_hd_id').val(response.percent_val);
+        setTimeout(() => {
+          this.addPI_section3.patchValue({
+            'section3_gst_dropdown': response.default_tax_id,
+          });
 
-        // }, 500);
+        }, 500);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         console.log('response.default_tax_id' + response.default_tax_id);
 
@@ -945,9 +973,9 @@ export class EditPurchaseOrderComponent implements OnInit {
     }
   }
 
+  
   totalCalculate() {
-      
-    
+
     // var grs_amt=0;
     // var net_amt =0;
     var tax_amt = 0;
@@ -982,20 +1010,15 @@ export class EditPurchaseOrderComponent implements OnInit {
       tax_amt_tot += total_amt;
    
     }
-//  alert(tax_amt_tot);
-    var tax_val = this.addPI_section3.value.section3_tax_per_hd;
-    // alert(tax_val);
-    var tax_amount = tax_amt_tot * tax_val/100;
 
-   // alert(tax_amount);
+    var tax_val = this.tax_per_mod;
+    var tax_amount = tax_amt_tot * tax_val/100;
     this.finalTax = tax_amount;
     this.grossTotal = tax_amt_tot;
     this.grandTotal = tax_amt_tot+tax_amount+this.addPI_section3.value.section3_bankingCharge_amt_txtbox+this.addPI_section3.value.section3_shipping_amt_txtbox;
- 
 
     
   }
-
 
   getTaxCals() {
     var tax_id = this.addPI_section3.value.section3_gst_dropdown;
@@ -1019,12 +1042,25 @@ export class EditPurchaseOrderComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.tax_per_mod = response.percent_val;
       $('#tax_per_hd_id').val(response.percent_val);
-      this.addPI_section3.value.section3_tax_per_hd=response.percent_val;
+
+      tax = response.percent_val;
+      tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
+
+      this.finalTax = parseFloat(tax);
+      // if (this.grossTotal > 0) {
+      //   this.grandTotal = (this.grossTotal + this.finalTax + this.finalDiscount + this.extraCharge).toFixed(2);
+      // }
+      this.finalTax = parseFloat(tax).toFixed(2);
 
     });
+
+
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
+
+    
+
   }
   extraFees() {
     // var fee = this.addPI_section3.value.section3_shipping_amt_txtbox;

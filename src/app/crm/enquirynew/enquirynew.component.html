@@ -1,0 +1,645 @@
+<div class="contents-section">
+
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active"> Enquiry Management</span>
+          </h3>
+
+          <div class="quotation-btn-section">
+            <button type="button" title="Add New Purchase Order" class="btn btn-primary btn-default btn-squared"
+              (click)="goAddNewEnquiry()" style="margin-right: 30px;"><i class="fas fa-plus"
+                style="margin-right:0;"></i>Add
+            </button>
+            <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+              data-target="#searchPurchaseOrderFormId">
+              <i class="fas fa-search" style="margin-right:0;"></i>Search
+            </button>
+
+          </div>
+
+
+
+        </div>
+        <div class="container mt-3 ml-0">
+
+          <!-- Nav pills -->
+          <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#PurchaseEntry" role="tab"
+                aria-controls="PurchaseEntry" aria-selected="true" (click)="SelectTransactionType_PE()"> Purchase
+                Entry</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#PettyCash" role="tab" aria-controls="PettyCash"
+                aria-selected="false" (click)="SelectTransactionType_PC()">Petty Cash</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#Logistics" role="tab" aria-controls="Logistics"
+                aria-selected="false" (click)="SelectTransactionType_Log()">Logistics</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#VendorOrder" role="tab" aria-controls="VendorOrder"
+                aria-selected="false" (click)="SelectTransactionType_VO()">Vendor Order</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#InvoicePayment" role="tab" aria-controls="InvoicePayment"
+                aria-selected="false" (click)="SelectTransactionType_IP()">Invoice Payment</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#AddNewStock" role="tab" aria-controls="AddNewStock"
+                aria-selected="false" (click)="SelectTransactionType_ANS()">Add New Stock</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#StockIssued" role="tab" aria-controls="StockIssued"
+                aria-selected="false" (click)="SelectTransactionType_SI()">Stock Issued</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#StockTransfer" role="tab" aria-controls="StockTransfer"
+                aria-selected="false" (click)="SelectTransactionType_ST()">Stock Transfer</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#Others" role="tab" aria-controls="Others"
+                aria-selected="false" (click)="SelectTransactionType_Others()">Others</a>
+            </li>
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content" id="myTabContent">
+            <div id="PurchaseEntry" class="tab-pane fade show active" role="tabpanel"
+              aria-labelledby="PurchaseEntry-tab"><br>
+              <!-- purchase entry sub menu starts -->
+
+
+              <!-- purchase entry sub menu ends -->
+
+            </div>
+            <div id="PettyCash" class="tab-pane fade" role="tabpanel" aria-labelledby="PettyCash-tab"><br>
+              <!-- petty cash entry sub menu ends -->
+
+
+              <!-- petty cash entry sub menu ends -->
+
+
+            </div>
+            <div id="Logistics" class="tab-pane fade" role="tabpanel" aria-labelledby="Logistics-tab"><br>
+              <!-- Logistics entry sub menu ends -->
+
+
+              <!-- Logistics entry sub menu ends -->
+            </div>
+
+            <div id="VendorOrder" class="tab-pane fade" role="tabpanel" aria-labelledby="VendorOrder-tab"><br>
+              <!-- Vendor Order sub menu starts -->
+
+
+
+
+              <!-- Vendor Order sub menu ends -->
+            </div>
+
+            <div id="InvoicePayment" class="tab-pane fade" role="tabpanel" aria-labelledby="InvoicePayment-tab"><br>
+              <!-- Invoice Payment sub menu starts -->
+
+
+
+              <!-- Invoice Payment sub menu ends -->
+            </div>
+
+            <div id="AddNewStock" class="tab-pane fade" role="tabpanel" aria-labelledby="AddNewStock-tab"><br>
+
+
+            </div>
+
+            <div id="StockIssued" class="tab-pane fade" role="tabpanel" aria-labelledby="StockIssued-tab"><br>
+              <!-- Stock Issued  sub menu ends -->
+
+
+            </div>
+
+            <div id="StockTransfer" class="tab-pane fade" role="tabpanel" aria-labelledby="StockTransfer-tab"><br>
+              <!-- Stock Transfer  sub menu ends -->
+
+
+
+              <!-- Stock Transfer sub menu ends -->
+            </div>
+
+            <div id="Others" class="tab-pane fade" role="tabpanel" aria-labelledby="Others-tab"><br>
+              <!-- Others sub menu starts -->
+
+
+              <!-- Others sub menu ends -->
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-body" id="delivery-order-section">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+                    <th>
+                      <span class="userDatatable-title">ENQ No</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">ENQ Date</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Contact Info</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Email</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Phone Number</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Company</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Sales Code</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Product Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Country</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Qty</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Enq Flw</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Tic-ID</span>
+                    </th>
+
+
+                    <th>
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let list of Purchase_Order;let i = index">
+                  <td>
+                    <span> {{ list.enquiry_id }} </span>
+                  </td>
+                  <!-- <td>
+                                              <span> {{ list.delivery_date }} </span>
+                                              <span><button type="button" class="buttonClass"
+                                                [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                list.billerCode}}
+                                              </button>
+                                            </span>
+                                          </td> -->
+                  <td>
+
+
+                    {{ list.enquiry_date}}
+                  </td>
+                  <td>
+                    <span> {{ list.contact_info }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.email_id }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.phone_no_1 }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.company_name }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.sales_code }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.product_name }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.country_name }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.product_qty }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.product_qty }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.ticket_id }} </span>
+                  </td>
+
+
+
+                  <td>
+                    <div class="page">
+
+                      <div class="dropdown">
+                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                        <ul class="dropdown__list">
+
+                          <li class="dropdown__item">
+                            <a class="remove" title="View" data-toggle="modal" data-target="#viewEnquiryFormId"
+                              (click)="viewEnquiry(list.customerId)">
+
+                              <img class="show" src="assets/img/icon2/eye-yellow.png">
+                              <img class="hide" src="assets/img/icon2/eye-black1.png">
+                            </a>
+                          </li>
+
+
+
+                          <li class="dropdown__item">
+                            <a class="hover3" title="Edit">
+                              <img class="show" src="assets/img/icon2/edit-blue.png">
+                              <img class="hide" src="assets/img/icon2/edit-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice">
+                              <img class="show" src="assets/img/icon2/delete-blue.png">
+                              <img class="hide" src="assets/img/icon2/delete-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Enquiry Comments Entry" data-toggle="modal"
+                              data-target="#EnquiryCommentsEntryFormId">
+                              <img class="show" src="assets/img/icon2/commentsEntrty-blue.png">
+                              <img class="hide" src="assets/img/icon2/commentsEntrty-black.png">
+                            </a>
+                          </li>
+                          <li class="dropdown__item">
+                            <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId">
+                              <img class="show" src="assets/img/icon2/gmail-blue.png">
+                              <img class="hide" src="assets/img/icon2/gmail-black.png">
+                            </a>
+                          </li>
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Enquiry Follow" data-toggle="modal" data-target="#EnquiryFollowFormId">
+                              <img class="show" src="assets/img/icon2/EnquiryFollow-blue.png">
+                              <img class="hide" src="assets/img/icon2/EnquiryFollow-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Ticket Assign" data-toggle="modal" data-target="#TicketAssignFormId">
+                              <img class="show" src="assets/img/icon2/ticket-1-blue.png">
+                              <img class="hide" src="assets/img/icon2/ticket-1-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Multiple Ticket Assign" data-toggle="modal"
+                              data-target="#MultipleTicketAssign">
+                              <img class="show" src="assets/img/icon2/ticket-blue.png">
+                              <img class="hide" src="assets/img/icon2/ticket-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId">
+                              <img class="show" src="assets/img/icon2/pdf-blue.png">
+                              <img class="hide" src="assets/img/icon2/pdf-black.png">
+                            </a>
+                          </li>
+
+
+
+
+
+
+
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br>
+          <nav class="atbd-page">
+            <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+              <li class="page-item">
+                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                  href="javascript:void(0)"
+                  (click)="paginationData.backtab=='show' ? PurchaseOrderList({'offset':paginationData.start}) : false"><i
+                    class="fas fa-angle-left"></i></a>
+              </li>
+              <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)="PurchaseOrderList({'offset':paginationData.back})"><i
+                    class="fas fa-angle-double-left"></i></a>
+              </li>
+              <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                *ngFor="let pagination of paginationData.data;let i=index">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)=" pagination.load ==true ? PurchaseOrderList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                  <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+              </li>
+              <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)="PurchaseOrderList({'offset':paginationData.next})"><i
+                    class="fas fa-angle-double-right"></i></a>
+              </li>
+              <li class="page-item">
+                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                  href="javascript:void(0)"
+                  (click)="paginationData.nexttab =='show' ? PurchaseOrderList({'offset':paginationData.end}) : false"><i
+                    class="fas fa-angle-right"></i></a>
+              </li>
+              <li class="dropdown__item">
+                <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+<!-- -----------------------Modal-View Customer begins-------------------------------- -->
+<div class="modal fade" id="viewEnquiryFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Enquiry
+          Details </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2 style="text-align:center;color:rgb(97, 72, 9)">View Enquiry Details</h2>
+        <form [formGroup]="viewEnquiryForm">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_ContactInfo" class="col-lg-12  col-form-label">Contact Info</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_ContactInfo"
+                    id="view_ML_ContactInfo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Email" class="col-lg-12 col-form-label">Email</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_Email"
+                    id="view_ML_Email" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_PhoneNumber" class="col-lg-12 col-form-label">Phone Number</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_PhoneNumber"
+                    id="view_ML_PhoneNumber" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Company" class="col-lg-12 col-form-label">Company</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_Company"
+                    id="view_ML_Company" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Country</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_Country"
+                    id="view_ML_Country" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_SalesCloud" class="col-lg-12 col-form-label">Sales Code</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_SalesCloud"
+                    id="view_ML_SalesCloud" />
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_ProductName" class="col-lg-12 col-form-label">Product Name</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_ProductName"
+                    id="view_ML_ProductName" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Comments" class="col-lg-12 col-form-label">Comments</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_ML_Comments"
+                    id="view_ML_Comments" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_EnquiryFollowers " class="col-lg-12 col-form-label">Enquiry Followers</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_ML_EnquiryFollowers" id="view_ML_EnquiryFollowers" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-------------------------- ------Modal-View Customer ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Enquiry Comments Entry begins-------------------------------- -->
+<div class="modal fade" id="EnquiryCommentsEntryFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Enquiry
+          Details </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry Comments Entry</h2>
+        <form [formGroup]="EnquiryCommentsEntryForm">
+
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="ML_CE_followUpStatus" class="col-lg-3 col-form-label">Follow-up Status</label>
+                <div class="col-lg-9">
+                  <select name="ML_CE_followUpStatus" class="form-control" formControlName="ML_CE_followUpStatus">
+                    <!-- <option *ngFor="let biller of billerlist" value="{{currenc.currencyId}}">
+                              {{currenc.currency_name}}
+                          </option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="ML_CE_toDoDate" class="col-lg-3 col-form-label">To Do Date</label>
+                <div class="col-lg-9">
+                  <input type="date" id="ML_CE_toDoDate" class="form-control" formControlName="ML_CE_toDoDate">
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="ML_CE_comments" class="col-lg-3 col-form-label">Comments</label>
+                <div class="col-lg-9">
+                  <textarea rows="5" class="form-control" formControlName="ML_CE_comments"></textarea>
+
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="ML_CE_followUpPerson" class="col-lg-3 col-form-label">Follow-up Person</label>
+                <div class="col-lg-9">
+                  <select name="ML_CE_followUpPerson" class="form-control" formControlName="ML_CE_followUpPerson">
+                    <!-- <option *ngFor="let biller of billerlist" value="{{currenc.currencyId}}">
+                              {{currenc.currency_name}}
+                          </option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" >
+          Save
+       </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-------------------------- ------Modal-Enquiry Comments Entry ends-------------------------------------- -->
+<!-- -----------------------Modal-Enquiry Follow begins-------------------------------- -->
+<div class="modal fade" id="EnquiryFollowFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Enquiry
+          Follow </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry Follow</h2>
+        <form [formGroup]="EnquiryFollowForm">
+
+          <div class="row">
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="ML_CE_followUpStatus" class="col-lg-3 col-form-label">Select Reseller</label>
+                <div class="col-lg-9">
+                  <select name="ML_CE_followUpStatusSelectReseller" class="form-control" formControlName="ML_CE_followUpStatus">
+                    <!-- <option *ngFor="let biller of billerlist" value="{{currenc.currencyId}}">
+                              {{currenc.currency_name}}
+                          </option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+           
+          
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="ML_CE_followUpPerson" class="col-lg-3 col-form-label">Select Template	</label>
+                <div class="col-lg-9">
+                  <select name="ML_CE_followUpPerson" class="form-control" formControlName="ML_CE_followUpPerson">
+                    <!-- <option *ngFor="let biller of billerlist" value="{{currenc.currencyId}}">
+                              {{currenc.currency_name}}
+                          </option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" >
+          Save
+       </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-------------------------- ------Modal-Enquiry Follow ends-------------------------------------- -->

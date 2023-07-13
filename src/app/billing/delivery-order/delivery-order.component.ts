@@ -87,7 +87,7 @@ export class DeliveryOrderComponent implements OnInit {
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    this.DOList({});
+    this.DOList1({});
     this.warrantyLisT = [{ "id": "no", "name": "No Warranty" }, { "id": "one", "name": "One Year Warranty" }, { "id": "two", "name": "Two Year Warranty" }];
 
 
@@ -172,12 +172,19 @@ export class DeliveryOrderComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
+      if(response.total_cnt==0){
+        iziToast.warning({
+          message: "Sorry,No Matching Data",
+          position: 'topRight'
+        });
+
+      }
 
       if (response) {
-        this.biller_list = response.biller_details;
+        // this.biller_list = response.biller_details;
         this.Delivery_Order = response.dc_details;
-       
-     
+
+
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchDeliveryOrderFormId').modal("hide");
         this.searchDeliveryOrderForm.reset();
@@ -193,7 +200,50 @@ export class DeliveryOrderComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
+  DOList1(data: any) {
 
+
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+
+    let api_req: any = new Object();
+    let api_deliveryOrder: any = new Object();
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/delivery_order_list"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_deliveryOrder.action = "delivery_order_list";
+    api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_deliveryOrder.off_set = list_data.offset;
+    api_deliveryOrder.limit_val = list_data.limit;
+    api_deliveryOrder.search_txt = this.searchResult1_CustomerName;
+    api_deliveryOrder.billerID = this.edit_array_SearchBiller_Checkbox;
+    api_deliveryOrder.current_page = "";
+
+    api_req.element_data = api_deliveryOrder;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if(response.total_cnt==0){
+        iziToast.warning({
+          message: "Sorry,No Matching Data",
+          position: 'topRight'
+        });
+
+      }
+
+      if (response) {
+        this.biller_list = response.biller_details;
+        this.Delivery_Order = response.dc_details;
+
+
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        $('#searchDeliveryOrderFormId').modal("hide");
+        this.searchDeliveryOrderForm.reset();
+
+      }
+    });
+  }
 
   // add DO 
 
@@ -344,26 +394,36 @@ export class DeliveryOrderComponent implements OnInit {
 
   }
   searchCustomerData_popUp(data: any) {
+    // alert(data)
+console.log(data)
+    if (data != '') {
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "invoice";
+      api_req.api_url = "deliveryorder/delivery_order_customername";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "delivery_order_customername";
+      api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_Search_req.customerName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        console.log("vignesh-customer_name response", response);
+        this.searchResult_popUp = response.customer_list;
 
-    let api_req: any = new Object();
-    let api_Search_req: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "deliveryorder/delivery_order_customername";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_Search_req.action = "delivery_order_customername";
-    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_Search_req.customerName = data;
-    api_req.element_data = api_Search_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
-      this.searchResult_popUp = response.customer_list;
+        if (response.status = true) {
 
-      if (response.status = true) {
+        }
 
-      }
+      });
 
-    });
+    } else {
+      console.log('khdbf')
+      this.InvoiceList_PopUp = [];
+    // this.searchResult_PopUp_CustomerName = [];
+    // console.log
+    }
+
 
   }
   get_InvoiceNumber_PopUp() {
@@ -443,7 +503,7 @@ export class DeliveryOrderComponent implements OnInit {
 
   }
 
-  editDo(id:any) {
+  editDo(id: any) {
 
     var editbillID = id;
     this.router.navigate(['/editDeliveryOrder'])
@@ -453,7 +513,7 @@ export class DeliveryOrderComponent implements OnInit {
         e_editBillID: editbillID,
       }
     });
-    
+
   }
 
 
@@ -467,11 +527,11 @@ export class DeliveryOrderComponent implements OnInit {
   }
   handle_invoice(event: any) {
     this.invoiceValue_PopUp = event.target.value;
-    console.log("this.invoiceValue_PopUp",this.invoiceValue_PopUp);
+    console.log("this.invoiceValue_PopUp", this.invoiceValue_PopUp);
   }
   handle_warranty(event: any) {
     this.WarrantyValue_PopUp = event.target.value;
-    console.log("this.WarrantyValue_PopUp",this.WarrantyValue_PopUp);
+    console.log("this.WarrantyValue_PopUp", this.WarrantyValue_PopUp);
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
@@ -513,7 +573,7 @@ export class DeliveryOrderComponent implements OnInit {
     var url = "https://laravelapi.erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + deliveryId + "";
     window.open(url, '_blank');
     console.log("url", url)
-  } 
+  }
 
   deleteDeliveryOrder(id: any) {
     Swal.fire({
@@ -570,7 +630,9 @@ export class DeliveryOrderComponent implements OnInit {
       }
     })
   }
+
   getEmailDetails(id: any) {
+
     this.spinner.show();
     this.Email_BillId = id;
     let api_req: any = new Object();
@@ -616,11 +678,11 @@ export class DeliveryOrderComponent implements OnInit {
         }
 
 
-        iziToast.success({
-          message: "Email Details displayed Successfully",
-          position: 'topRight'
+        // iziToast.success({
+        //   message: "Email Details displayed Successfully",
+        //   position: 'topRight'
 
-        });
+        // });
         this.DOList({});
       } else {
 
@@ -662,15 +724,15 @@ export class DeliveryOrderComponent implements OnInit {
 
   //   this.serverService.sendServer(api_req).subscribe((response:any)=>{
   //     if(response.status==true){
-        
-     
+
+
   //       this.doView_SharePermission=!doView;
   //       this.DOList({});
   //     }
   //   })
 
   // }
-  sharePermission(deliveryId:any,doView:any) {
+  sharePermission(deliveryId: any, doView: any) {
     Swal.fire({
       title: 'Are you sure to change Permission Status?',
       text: "You won't be able to revert this!",
@@ -682,22 +744,22 @@ export class DeliveryOrderComponent implements OnInit {
     }).then((result: any) => {
       if (result.value) {
 
-        let api_req:any=new Object();
-        let api_reqSharePerm:any=new Object();
-        api_req.moduleType="deliveryorder";
-        api_req.api_url="deliveryorder/shared_delivery";
-        api_req.api_type="web";
+        let api_req: any = new Object();
+        let api_reqSharePerm: any = new Object();
+        api_req.moduleType = "deliveryorder";
+        api_req.api_url = "deliveryorder/shared_delivery";
+        api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_reqSharePerm.action="shared_delivery";
-        api_reqSharePerm.user_id=localStorage.getItem('erp_c4c_user_id');
-        api_reqSharePerm.deliveryId=deliveryId;
-        api_reqSharePerm.do_view=!doView;
-        api_req.element_data=api_reqSharePerm;
+        api_reqSharePerm.action = "shared_delivery";
+        api_reqSharePerm.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqSharePerm.deliveryId = deliveryId;
+        api_reqSharePerm.do_view = !doView;
+        api_req.element_data = api_reqSharePerm;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            this.doView_SharePermission=!doView;
-      
+            this.doView_SharePermission = !doView;
+
             iziToast.success({
               message: "Permission Status changed successfully",
               position: 'topRight'
@@ -802,6 +864,7 @@ export class DeliveryOrderComponent implements OnInit {
         message: "Choose From Email Value",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -812,6 +875,7 @@ export class DeliveryOrderComponent implements OnInit {
         message: "Choose To Email Value",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -824,6 +888,7 @@ export class DeliveryOrderComponent implements OnInit {
         message: "Choose Subject",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -834,6 +899,7 @@ export class DeliveryOrderComponent implements OnInit {
         message: "Choose Message",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -882,14 +948,24 @@ export class DeliveryOrderComponent implements OnInit {
 
   goAddDeliveryOrder() {
 
-  
-    this.searchResult_PopUp_CustomerID 
-    this.searchResult_PopUp_CustomerName 
+    if (this.searchResult_PopUp_CustomerName === null || this.searchResult_PopUp_CustomerName === undefined || this.searchResult_PopUp_CustomerID === undefined || this.invoiceValue_PopUp === null || this.invoiceValue_PopUp === undefined || this.WarrantyValue_PopUp === null || this.WarrantyValue_PopUp=== undefined) {
+      iziToast.error({
+        message: "Choose Valid Input",
+        position: 'topRight'
+      });
+      return false;
+    }
+    else {
+      this.router.navigate(['/addDeliveryOrder'], { queryParams: { customerID_P: this.searchResult_PopUp_CustomerID, customerName_P: this.searchResult_PopUp_CustomerName, invoice_p: this.invoiceValue_PopUp, warranty_p: this.WarrantyValue_PopUp } });
+
+    }
+
+    this.searchResult_PopUp_CustomerID
+    this.searchResult_PopUp_CustomerName
     this.invoiceValue_PopUp
     this.WarrantyValue_PopUp
 
 
-    this.router.navigate(['/addDeliveryOrder'], { queryParams: { customerID_P: this.searchResult_PopUp_CustomerID , customerName_P: this.searchResult_PopUp_CustomerName, invoice_p: this.invoiceValue_PopUp, warranty_p: this.WarrantyValue_PopUp } });
 
     $('#addDoFormId').modal('hide');
   }

@@ -199,6 +199,7 @@ export class AddPurchaseOrderComponent implements OnInit {
         this.addresses.removeAt(i);
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
+ this.totalCalculate();
      
       }
     });
@@ -240,7 +241,7 @@ export class AddPurchaseOrderComponent implements OnInit {
         'section3_gst_dropdown': response.default_tax_id,
         'section3_tax_per_hd':response.percent_val,
       });
-      
+      this.tax_per_mod = response.percent_val;
     });
 
     this.totalCalculate();
@@ -675,7 +676,7 @@ export class AddPurchaseOrderComponent implements OnInit {
 
     for (let i = 0; i < addr.length; i++) {
 
-      if ($('#pd_productName_txtbox_' + i).val() == '') {
+      if ($('#prodName_' + i).val() == '') {
         iziToast.warning({
           message: "Select Minimum 1 Product Details",
           position: 'topRight'
@@ -806,7 +807,7 @@ export class AddPurchaseOrderComponent implements OnInit {
   }
 
   keyPress(event: any, i: any) {
-alert("hi")
+
     this.invoicePriceKey = i;
     this.row_cnt_mod = i;
     var key = event.target.value;
@@ -890,11 +891,11 @@ alert("hi")
    
     }
 
-    var tax_val = this.addPI_section3.value.section3_tax_per_hd;
+    var tax_val = this.tax_per_mod;
     var tax_amount = tax_amt_tot * tax_val/100;
     this.finalTax = tax_amount;
     this.grossTotal = tax_amt_tot;
-    this.grandTotal = tax_amt_tot+tax_amount;
+    this.grandTotal = tax_amt_tot+tax_amount+this.addPI_section3.value.section3_bankingCharge_amt_txtbox+this.addPI_section3.value.section3_shipping_amt_txtbox;
 
     
   }

@@ -81,7 +81,10 @@ import { LedgerComponent } from './ledger/ledger.component';
 import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component';
 import { EditTransactionNewComponent } from './ledger/transactionnew/edit-transaction-new/edit-transaction-new.component';
 import { ResellerManagementComponent } from './masters/reseller-management/reseller-management.component';
-import { PipeComponent } from './pipe/pipe.component'; 
+import { PipeComponent } from './pipe/pipe.component';
+import { CrmComponent } from './crm/crm.component';
+import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component';
+import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component'; 
 
 @NgModule({
   declarations: [
@@ -143,7 +146,10 @@ import { PipeComponent } from './pipe/pipe.component';
      AddTransactionNewComponent,
      EditTransactionNewComponent,
      ResellerManagementComponent,
-     PipeComponent
+     PipeComponent,
+     CrmComponent,
+     EnquirynewComponent,
+     AddNewEnquiryComponent
      
     
   ],

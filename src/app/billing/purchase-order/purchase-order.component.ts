@@ -106,6 +106,12 @@ export class PurchaseOrderComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
+      if (response.total_cnt == 0) {
+        iziToast.warning({
+          message: "No Matching Records",
+          position: 'topRight'
+        });
+      }
 
       if (response) {
         this.biller_list = response.biller_details;
@@ -273,11 +279,11 @@ export class PurchaseOrderComponent implements OnInit {
         }
 
 
-        iziToast.success({
-          message: "Email Details displayed Successfully",
-          position: 'topRight'
+        // iziToast.success({
+        //   message: "Email Details displayed Successfully",
+        //   position: 'topRight'
 
-        });
+        // });
         this.PurchaseOrderList({});
       } else {
 
@@ -335,6 +341,7 @@ export class PurchaseOrderComponent implements OnInit {
         message: "Choose From Email Value",
         position: 'topRight'
       });
+      Swal.close();
       return false;
 
     }
@@ -416,7 +423,6 @@ export class PurchaseOrderComponent implements OnInit {
     var url = "https://laravelapi.erp1.cal4care.com/api/purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
     window.open(url, '_blank');
     console.log("url", url)
-
 
   }
   editPurchaseOrder(po_id: any) {

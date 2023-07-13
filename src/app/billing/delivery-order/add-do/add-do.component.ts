@@ -667,7 +667,7 @@ isReadonly:boolean=true;
 
 
   AddDO($event: MouseEvent) {
-alert(this.radioSelectWarranty)
+
     let api_req: any = new Object();
     let api_saveDO_req: any = new Object();
     api_req.moduleType = "deliveryorder";
@@ -699,7 +699,7 @@ alert(this.radioSelectWarranty)
     if (this.customerName_Data === null || this.customerName_Data === undefined) {
 
       iziToast.warning({
-        message: "Select Bill",
+        message: "Select Customer Name / Bill",
         position: 'topRight'
       });
       return false;
@@ -788,7 +788,7 @@ alert(this.radioSelectWarranty)
 
       }
       else if (response.status === 500) {
-        alert("status == 500")
+       
         iziToast.error({
           message: "Invoice not added Successfully",
           position: 'topRight'
@@ -796,7 +796,7 @@ alert(this.radioSelectWarranty)
         this.gotoDOList();
       }
       else {
-        alert("status == false")
+      
         iziToast.warning({
           message: "Invoice not added Successfully",
           position: 'topRight'
@@ -807,8 +807,7 @@ alert(this.radioSelectWarranty)
     }),
       (error: any) => {
         ($event.target as HTMLButtonElement).disabled = false;
-        alert(error)
-
+       
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'

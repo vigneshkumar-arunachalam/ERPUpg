@@ -824,6 +824,8 @@ alert( this.payment_details)
   SelectTransactionType_Others() {
     this.Select_Transaction_Type = 8;
   }
+
+  
   goBackTransaction() {
     this.router.navigate(['/transactionnew']);
   }

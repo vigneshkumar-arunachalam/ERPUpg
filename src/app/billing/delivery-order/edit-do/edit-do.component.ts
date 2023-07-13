@@ -107,6 +107,7 @@ export class EditDoComponent implements OnInit {
       { name: 'No Warranty', selected: false, id: 1,val:'no' },
       { name: 'One Warranty ', selected: false, id: 2,val:'one' },
       { name: 'Two Warranty', selected: false, id: 3,val:'two' },
+      { name: 'None', selected: false, id: 4,val:'none' },
 
     ];
 
@@ -157,23 +158,32 @@ export class EditDoComponent implements OnInit {
     var Nowarranty = "No Warranty";
     var Onewarranty = "Above items are One year warranty from the date of delivery";
     var Twowarranty = "Above items are Two year warranty from the date of delivery";
+    var Nonewarranty='';
+
     this.radioID_Logo = data;
     this.radio_Value_warranty = evt.target.value;
     if (this.radio_Value_warranty == 1) {
-
+      this.radio_Value_warranty="no";
       $('#description_details').val(Nowarranty);
       console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 2) {
+      this.radio_Value_warranty="one";
 
       $('#description_details').val(Onewarranty);
       console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 3) {
-
+      this.radio_Value_warranty="two";
       $('#description_details').val(Twowarranty);
+      console.log($('#description_details').val());
+
+    }
+    if (this.radio_Value_warranty == 4) {
+      this.radio_Value_warranty="none";
+      $('#description_details').val(Nonewarranty);
       console.log($('#description_details').val());
 
     }
@@ -410,6 +420,7 @@ export class EditDoComponent implements OnInit {
   // CUSTOMER AUTO COMPLETE
 
   searchCustomer_selectDropdownData(data: any) {
+    alert(data.customerName)
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
@@ -502,9 +513,9 @@ export class EditDoComponent implements OnInit {
 
 
         this.editDo_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
+          'customerAddress1': response.customer_details[0].customerAddress1,
+          'customerAddress2': response.customer_details[0].customerAddress2,
+          'customerAddress3': address_3,
           'Attn_1': response.customer_details[0].companyName,
           'ship_to': ship_to_str,
           'ship_address_1': ship_address_str1,
@@ -516,9 +527,9 @@ export class EditDoComponent implements OnInit {
       }
       else {
         this.editDo_section1.patchValue({
-          'address_1': '',
-          'address_2': '',
-          'address_3': '',
+          'customerAddress1': '',
+          'customerAddress2': '',
+          'customerAddress3': '',
           'Attn_1': '',
           'ship_to': '',
           'ship_address_1': '',
@@ -640,7 +651,7 @@ export class EditDoComponent implements OnInit {
         this.billsLogo_value = response.delivery_pararent_details[0].bills_logo_id;
         this.warranty_value = response.delivery_pararent_details[0].warranty_type;
         this.customer_ID = response.delivery_pararent_details[0].customer_id;
-
+        this.customer_NAME =response.delivery_pararent_details[0].customerName;
         this.editDo_section1.patchValue({
 
           'companyName': response.delivery_pararent_details[0].billerId,
@@ -671,6 +682,7 @@ export class EditDoComponent implements OnInit {
 
 
         const formArray = new FormArray([]);
+    
         for (let index = 0; index < response.delivery_details.length; index++) {
 
           console.log('delivery_details++index' + index);
@@ -691,12 +703,20 @@ export class EditDoComponent implements OnInit {
 
         console.log(formArray)
         this.editDo_section2.setControl('addresses', formArray);
-        console.log(this.addresses)
+        console.log(this.addresses);
+        this.editAddress();
+        this.removeAddresstest(response.delivery_details.length);
 
       }
     });
   }
+  removeAddresstest(i: number) {
+    console.log(i)
+    console.log(this.addresses)
+    this.addresses.removeAt(i);
+   
 
+  }
 
   descriptionPermission(event: any) {
 
@@ -759,7 +779,7 @@ export class EditDoComponent implements OnInit {
 
     api_updateDO_req.customer_name = this.customer_NAME;
     api_updateDO_req.customer_id = this.customer_ID;
-    api_updateDO_req.BillTo_customer_NAME = this.customer_NAME;
+    // api_updateDO_req.BillTo_customer_NAME = this.customer_NAME;
     api_updateDO_req.customerAddress1 = this.editDo_section1.value.customerAddress1;
     api_updateDO_req.customerAddress2 = this.editDo_section1.value.customerAddress2;
     api_updateDO_req.customerAddress3 = this.editDo_section1.value.customerAddress3;
@@ -773,16 +793,18 @@ export class EditDoComponent implements OnInit {
     api_updateDO_req.description_details_show_state = this.description_details_show_state;
     //section 2
     var addr = this.editDo_section2.value.addresses;
-    // for (let i = 0; i < addr.length; i++) {
+    console.log("addr",addr)
+    for (let i = 0; i < addr.length-1; i++) {
 
-    //   addr[i].deliveryChildId = $('#deliveryChildId_' + i).val();
+      addr[i].deliveryChildId = $('#deliveryChildId_' + i).val();
 
-    //   addr[i].productName = $('#prodName_' + i).val();
-    //   addr[i].qty = $('#quantity_' + i).val();
-    //   addr[i].productDesc = $('#desc_' + i).val();
+      addr[i].productName = $('#prodName_' + i).val();
+      addr[i].qty = $('#quantity_' + i).val();
+      addr[i].productDesc = $('#desc_' + i).val();
 
-    // }
+    }
     api_updateDO_req.deliverychild_values = addr;
+
     //section 3
     api_updateDO_req.remarks = this.editDo_section3.value.remarks;
 

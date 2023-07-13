@@ -56,10 +56,22 @@ import { AddTransactionNewComponent } from './ledger/transactionnew/add-transact
 import { EditTransactionNewComponent } from './ledger/transactionnew/edit-transaction-new/edit-transaction-new.component'; 
 import { ResellerManagementComponent } from './masters/reseller-management/reseller-management.component'; 
 import { PipeComponent } from './pipe/pipe.component';
+import { CrmComponent } from './crm/crm.component';
+import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component'; 
+import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component'; 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'addNewEnquiry', component: AddNewEnquiryComponent
+  },
+  {
+    path: 'crm', component: CrmComponent
+  },
+  {
+    path: 'enquirynew', component: EnquirynewComponent
   },
   {
     path: 'pipe', component: PipeComponent

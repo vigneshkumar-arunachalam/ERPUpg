@@ -383,3 +383,47 @@ th {
 .transaction-approval-panel .normal-table td:nth-child(8) span:first-child {
   width: 140px;
 }
+
+
+/* -------------------------------KS-CODE--------------------------------------- */
+.card-body{
+  padding: 0px;
+}
+.userDatatable table tr td:nth-child(2) span {
+  width: 100%;
+}
+.transaction-approval-panel .check-box-table td:nth-child(5) {
+  width: 10%;
+  white-space: normal;
+}
+.transaction-approval-panel .check-box-table .userDatatable-header th:nth-child(5), .transaction-approval-panel .check-box-table td:nth-child(5), .transaction-approval-panel .check-box-table .userDatatable-header th:nth-child(6), .transaction-approval-panel .check-box-table td:nth-child(6) {
+  width: 10%;
+}
+.transaction-approval-panel .check-box-table td:nth-child(6) span{
+  width: 100%;
+  white-space: normal;
+}
+.userDatatable table tr td span{
+  width: auto;
+  white-space: normal;
+}
+.userDatatable button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.transaction-approval-panel .check-box-table .userDatatable-header th:nth-child(9), .transaction-approval-panel .check-box-table td:nth-child(9), .transaction-approval-panel .check-box-table .userDatatable-header th:nth-child(10), .transaction-approval-panel .check-box-table td:nth-child(10) {
+  width: auto;
+}
+.transaction-approval-panel .normal-table .userDatatable-header th:nth-child(8), .transaction-approval-panel .normal-table td:nth-child(8), .transaction-approval-panel .normal-table .userDatatable-header th:nth-child(9), .transaction-approval-panel .normal-table td:nth-child(9){
+  width: auto;
+}
+.transaction-approval-panel .normal-table td:nth-child(8) span:first-child {
+  width: auto;
+}
+.transaction-approval-panel .normal-table td:nth-child(8) span:last-child{
+  white-space: normal;
+}
+.transaction-approval-panel .check-box-table td:nth-child(9) span:last-child {
+  white-space: normal;
+}
+/* -------------------------------KS-CODE--------------------------------------- */

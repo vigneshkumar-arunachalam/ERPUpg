@@ -156,7 +156,7 @@
     width: 100%;
     height: 2.625rem;
     padding: 0.375rem 1.2rem;
-    padding-left: 4px!important;
+    /* padding-left: 4px!important; */
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
@@ -804,8 +804,10 @@ th{
   font-size: 12px;
 }
 .customerlist-section td span{
-  white-space: normal!important;
+  /* white-space: normal!important; */
   width: 100%;
+  cursor:pointer;
+  
 }
 .userDatatable table .customerlist-section tr td span{
   width: 110px;

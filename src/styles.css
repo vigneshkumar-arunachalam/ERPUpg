@@ -29015,4 +29015,6 @@ button.Cal4Care.SG.buttonClass {
   button.connectviet.buttonClass{
     background-image: linear-gradient(to right, #ebdb0a , #BDB76B);
   }
-
+input,select,textarea, .ng-autocomplete .autocomplete-container .input-container input{
+    padding:0px 10px!important;
+}

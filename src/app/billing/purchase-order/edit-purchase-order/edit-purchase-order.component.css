@@ -757,8 +757,13 @@ hr {
   }
 }
 
-ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched {
-  padding: 0px 0px !important;
+
+ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+  padding: 0px 0px!important;
+}
+
+.ng-autocomplete{
+  padding: 0px 0px!important; 
 }
 
 
