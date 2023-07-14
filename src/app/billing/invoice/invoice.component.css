@@ -542,6 +542,7 @@ td{border-bottom: 1px solid #c91a71!important;}
 .dropdown__item{
   display: flex;
   align-items: center;
+  height: 45px;
 }
 .dropdown img, .dropdown svg {
   width: 24px;
@@ -550,3 +551,14 @@ td{border-bottom: 1px solid #c91a71!important;}
   font-size: 18px;
 }
 .dropdown__item span {width: 100%!important;}
+.recurring-Status{
+  margin: 0px 10px;
+  width: 30px!important;
+  height: 30px;
+  background: #fff;
+  align-items: center;
+  display: flex!important;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 900;
+}

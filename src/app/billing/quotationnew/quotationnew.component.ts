@@ -640,6 +640,7 @@ export class QuotationnewComponent implements OnInit {
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
       else {
+        this.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -649,6 +650,8 @@ export class QuotationnewComponent implements OnInit {
         })
       }
     });
+    this.spinner.hide();
+
   }
   listDataInfo(list_data: any) {
     console.log(list_data)

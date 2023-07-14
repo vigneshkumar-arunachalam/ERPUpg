@@ -359,6 +359,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
     });
+  
 
   }
 
@@ -1038,6 +1039,7 @@ export class EditInvoiceComponent implements OnInit {
   editInvoice() {
     // alert(this.editbillerID)
     // alert(this.edit_Duplicate_ID)
+   
     this.spinner.show();
     let api_req: any = new Object();
     let api_editPI_req: any = new Object();
@@ -1239,7 +1241,7 @@ export class EditInvoiceComponent implements OnInit {
           this.totalCalculate()
         }, 1500);
 
-
+        this.spinner.hide();
       }
       else {
         this.spinner.hide();
@@ -1259,7 +1261,7 @@ export class EditInvoiceComponent implements OnInit {
         console.log(error);
       }
 
-
+      this.spinner.hide();
 
   }
 

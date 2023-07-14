@@ -58,18 +58,17 @@ export class LoginComponent implements OnInit {
       console.log('socket connected');
     };
     this.websocket.onmessage = function (event: any) {
-      console.log(event)
       s.getdatas = JSON.parse(event.data);
       console.log('socket detail' + localStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
         if (localStorage.getItem('erp_c4c_user_id') == null) {
           s.qrLogin();
         }
-        // this.websocket.onclose;
+        this.websocket.onclose;
       }
-      if(s.getdatas.login_status=="login_successful"){
-        s.qrLogin();
-      }
+      // if(s.getdatas.login_status=="login_successful"){
+      //   s.qrLogin();
+      // }
 
     };
 
@@ -96,7 +95,7 @@ export class LoginComponent implements OnInit {
       verify_otp_ctrl: new FormControl(null),
 
     });
-    // this.subscribes('');
+    this.subscribes('');
 
   }
 
@@ -105,7 +104,7 @@ export class LoginComponent implements OnInit {
   subscribes(val: any) {
     this.expired = false;
     if (val != '') this.count = 1;
-    // this.qrcodes();
+    this.qrcodes();
     const source = interval(30000);
     this.subscription = source.subscribe((val) => this.qrcodes());
   }
@@ -181,7 +180,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('profile_image', response.profile_image)
         console.log("profile_image",alert);
         console.log(response)
-        if (response.userId != '') {
+        if (response.userId != '') { 
           setTimeout(()=>{
             var k = '{"data":"reload_profile_data"}';
             this.serverService.reload_profile.next(k);

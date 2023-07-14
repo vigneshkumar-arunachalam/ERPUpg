@@ -543,7 +543,7 @@ export class InvoiceComponent implements OnInit {
   }
   searchCustomerData(data: any) {
   
-   if(data.length>3){
+   if(data.length>0){
     // this.spinner.show();
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
@@ -559,17 +559,17 @@ export class InvoiceComponent implements OnInit {
      
       console.log("vignesh-customer_status response", response);
       // this.searchResult = response[0];
-     
+      this.searchResult = response.customer_names;
       console.log("vignesh-advanced search result", this.searchResult);
       if (response ! = null) {
         this.searchResult = response.customer_names;
         this.spinner.hide();
       }
       else{
-        iziToast.warning({
-          message: "Sorry, No Matching Data",
-          position: 'topRight'
-        });
+        // iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
 
       }
     });
@@ -802,10 +802,10 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("PI list", response);
       if(response.total_cnt==0){
-        iziToast.warning({
-          message: "Sorry, No Matching Data",
-          position: 'topRight'
-        });
+        // iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
         $("#searchInvoiceFormId").modal("hide");
 
       }
@@ -914,10 +914,10 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("PI list", response);
       if(response.total_cnt==0){
-        iziToast.warning({
-          message: "Sorry, No Matching Data",
-          position: 'topRight'
-        });
+        // iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
         $("#searchInvoiceFormId").modal("hide");
 
       }
