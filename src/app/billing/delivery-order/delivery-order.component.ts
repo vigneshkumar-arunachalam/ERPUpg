@@ -17,6 +17,7 @@ export class DeliveryOrderComponent implements OnInit {
   // List 
 
   Delivery_Order: any;
+  response_total_cnt:any;
 
   // add delivery order-pop up
 
@@ -83,12 +84,13 @@ export class DeliveryOrderComponent implements OnInit {
   warrantyLisT: any;
   invoiceValue_PopUp: any;
   WarrantyValue_PopUp: any;
+  completer: any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.DOList1({});
-    this.warrantyLisT = [{ "id": "no", "name": "No Warranty" }, { "id": "one", "name": "One Year Warranty" }, { "id": "two", "name": "Two Year Warranty" }];
+    this.warrantyLisT = [{ "id": "no", "name": "No Year Warranty" }, { "id": "one", "name": "One Year Warranty" }, { "id": "two", "name": "Two Year Warranty" }];
 
 
 
@@ -179,9 +181,11 @@ export class DeliveryOrderComponent implements OnInit {
         });
 
       }
-
-      if (response) {
+      console.log("response",response);
+      if (response!='') {
         // this.biller_list = response.biller_details;
+        this.response_total_cnt=response.total_cnt;
+        
         this.Delivery_Order = response.dc_details;
 
 
@@ -232,7 +236,8 @@ export class DeliveryOrderComponent implements OnInit {
 
       }
 
-      if (response) {
+      if (response!='') {
+        this.response_total_cnt=response.total_cnt;
         this.biller_list = response.biller_details;
         this.Delivery_Order = response.dc_details;
 
@@ -509,6 +514,18 @@ console.log(data)
     this.router.navigate(['/editDeliveryOrder'])
 
     this.router.navigate(['/editDeliveryOrder'], {
+      queryParams: {
+        e_editBillID: editbillID,
+      }
+    });
+
+  }
+  duplicateDo(id: any) {
+
+    var editbillID = id;
+    this.router.navigate(['/duplicateDo'])
+
+    this.router.navigate(['/duplicateDo'], {
       queryParams: {
         e_editBillID: editbillID,
       }
@@ -945,9 +962,29 @@ console.log(data)
       console.log("final error", error);
     }
   }
+  
+  onKeyup(event: KeyboardEvent) {
+    console.log(event)
+    
+    if (
+      event.key=== "Backspace" || event.key=== "Delete"    // backspace or delete       // delete + ctrl
+    ) {
+      this.clear();
+    }
+  }
+ 
+  clear(){
+    this.searchResult_PopUp_CustomerName='';
 
+  }
+ // x ng-star-inserted
+ 
   goAddDeliveryOrder() {
-
+    
+    console.log("this.searchResult_PopUp_CustomerName",this.searchResult_PopUp_CustomerName);
+    console.log("this.searchResult_PopUp_CustomerID",this.searchResult_PopUp_CustomerID);
+    console.log("this.WarrantyValue_PopUp",this.WarrantyValue_PopUp);
+    // return false;
     if (this.searchResult_PopUp_CustomerName === null || this.searchResult_PopUp_CustomerName === undefined || this.searchResult_PopUp_CustomerID === undefined || this.invoiceValue_PopUp === null || this.invoiceValue_PopUp === undefined || this.WarrantyValue_PopUp === null || this.WarrantyValue_PopUp=== undefined) {
       iziToast.error({
         message: "Choose Valid Input",
@@ -969,12 +1006,6 @@ console.log(data)
 
     $('#addDoFormId').modal('hide');
   }
-
-
-
-
-
-
 
 
 }

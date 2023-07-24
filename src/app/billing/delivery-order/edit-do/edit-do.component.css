@@ -696,3 +696,9 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
 form.ng-untouched.ng-pristine.ng-valid {
   padding: 30px 0px;
 }
+
+
+ng-autocomplete .ng-autocomplete.ng-pristine.ng-valid.ng-touched,
+.ng-autocomplete {
+  padding: 0 !important;
+}

@@ -562,3 +562,11 @@ td{border-bottom: 1px solid #c91a71!important;}
   border-radius: 50%;
   font-weight: 900;
 }
+.ActionId li span{
+  overflow: visible!important;
+}
+.ActionId li{cursor: pointer;}
+.dropdown a{
+  width: auto;
+  border-radius: 5px;
+}

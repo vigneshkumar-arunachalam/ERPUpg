@@ -8,24 +8,23 @@ import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
 @Component({
-  selector: 'app-add-do',
-  templateUrl: './add-do.component.html',
-  styleUrls: ['./add-do.component.css']
+  selector: 'app-duplicate-do',
+  templateUrl: './duplicate-do.component.html',
+  styleUrls: ['./duplicate-do.component.css']
 })
-export class AddDoComponent implements OnInit {
+export class DuplicateDOComponent implements OnInit {
 
-  public addDo_section1: FormGroup;
-  public addDo_section2: FormGroup;
-  public addDo_section3: FormGroup;
+  public editDo_section1: FormGroup;
+  public editDo_section2: FormGroup;
+  public editDo_section3: FormGroup;
+
   // company name list
 
   companyNameList: any;
-  billerChangeID: any;
+  editDeliveryID: any;
   editQuotationID: any;
-  //get add quotation
-  billerList: any;
   // select footer 
-
+  billerChangeID: any;
   FooterDetails: any;
   radioSelectFooterChecked: boolean = false;
   billerID: any;
@@ -42,14 +41,10 @@ export class AddDoComponent implements OnInit {
   radioID_Logo: any;
   radio_Value_Export_logo: any;
   selected_pdf_footer: any;
-isReadonly:boolean=true;
-  //shipping address
-  shipAddress1: any;
-  shipAddress2: any;
-  shipAddress3: any;
+
 
   // warranty
-  radioSelectWarranty: any;
+
   warranty_id_radio: any;
   warranty_value: any;
   warranty_Logo: any;
@@ -72,15 +67,8 @@ isReadonly:boolean=true;
   itre = 0;
   test: boolean[] = [];
 
-  //add pop up query params value
-
-  customerID_Add_DO: any;
-  customerName_Add_DO: any;
-  invoice_Add_DO: any;
-  warranty_Add_DO: any;
-
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
-    this.addDo_section2 = this.fb.group({
+    this.editDo_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
     });
 
@@ -88,26 +76,22 @@ isReadonly:boolean=true;
 
   ngOnInit(): void {
 
-    this.loadADD();
-    this.ADDLoadDO();
-    this.radioSelectWarranty == 'no';
-    $('#description_details').val("No Warranty");
 
-    this.Get_add_delivery_order();
+    this.ADDLoadDO();
+    this.loadADD();
     this.route.queryParams
       .subscribe(params => {
         console.log("params output value", params);
-        this.customerID_Add_DO = params['customerID_P'];
-        this.customerName_Add_DO = params['customerName_P'];
-        this.invoice_Add_DO = params['invoice_p'];
-        this.warranty_Add_DO = params['warranty_p'];
 
-        console.log("this.customerID_Add_DO", this.customerID_Add_DO);
-        console.log(" this.customerName_Add_DO", this.customerName_Add_DO);
-        console.log(" this.invoice_Add_DO", this.invoice_Add_DO);
-        console.log(" this.warranty_Add_DO", this.warranty_Add_DO);
+        this.editDeliveryID = params['e_editBillID'];
 
 
+
+        console.log("edit biller id", this.editDeliveryID);
+
+
+
+        this.editDo();
       }
       );
     this.bills_logo_id_radio = [
@@ -115,23 +99,22 @@ isReadonly:boolean=true;
       { name: 'Calncall', selected: false, id: 2 },
       { name: 'DID Sg', selected: false, id: 3 },
       { name: 'Callcloud', selected: false, id: 4 },
-      { name: 'Mrvoip', selected: false, id: 5 }
+      { name: 'Mrvoip', selected: false, id: 5 },
+      { name: 'None', selected: false, id: 0 },
     ];
 
     this.warranty_id_radio = [
-      { name: 'No Warranty', selected: false, id: 1 },
-      { name: 'One Year Warranty ', selected: false, id: 2 },
-      { name: 'Two Year Warranty', selected: false, id: 3 },
-      { name: 'None', selected: false, id: 4 },
+      { name: 'No Warranty', selected: false, id: 1,val:'no' },
+      { name: 'One Warranty ', selected: false, id: 2,val:'one' },
+      { name: 'Two Warranty', selected: false, id: 3,val:'two' },
+      { name: 'None', selected: false, id: 4,val:'none' },
 
     ];
 
-
-    this.addDo_section1 = new FormGroup({
+    this.editDo_section1 = new FormGroup({
       'companyName': new FormControl(null),
       'e_selectFooter': new FormControl(null),
       'dcNo': new FormControl(null),
-
       'dcDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'customer_name': new FormControl(null),
       'customerAddress1': new FormControl(null),
@@ -143,12 +126,13 @@ isReadonly:boolean=true;
       'description_details_show_state': new FormControl(null),
       'description_details': new FormControl(null),
     });
-    this.addDo_section3 = new FormGroup({
-      'remarks': new FormControl(null),
 
-    });
+    this.editDo_section3 = new FormGroup({
+      'remarks': new FormControl(null),
+    })
 
   }
+
 
   handleChange_EXTRALogo(data: any, evt: any) {
 
@@ -161,54 +145,58 @@ isReadonly:boolean=true;
     console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
-  handleChange_warrantyImp(evt: any) {
 
-    this.radioSelectWarranty = evt.target.value;
-    console.log("radio button value", this.radioSelectWarranty);
+  handleChange_warranty(data: any, evt: any) {
 
+    // this.radioID_Logo = data;
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
+    // this.radio_Value_warranty = evt.target.value;
+
+    // console.log("radio button value", this.radio_Value_warranty);
     var Nowarranty = "No Warranty";
     var Onewarranty = "Above items are One year warranty from the date of delivery";
     var Twowarranty = "Above items are Two year warranty from the date of delivery";
-    var nonewarranty='';
+    var Nonewarranty='';
 
-    if (this.radioSelectWarranty == 'no') {
-
+    this.radioID_Logo = data;
+    this.radio_Value_warranty = evt.target.value;
+    if (this.radio_Value_warranty == 1) {
+      this.radio_Value_warranty="no";
       $('#description_details').val(Nowarranty);
-     
       console.log($('#description_details').val());
 
     }
-    if (this.radioSelectWarranty == 'one') {
+    if (this.radio_Value_warranty == 2) {
+      this.radio_Value_warranty="one";
 
       $('#description_details').val(Onewarranty);
       console.log($('#description_details').val());
 
     }
-    if (this.radioSelectWarranty == 'two') {
-
+    if (this.radio_Value_warranty == 3) {
+      this.radio_Value_warranty="two";
       $('#description_details').val(Twowarranty);
       console.log($('#description_details').val());
 
     }
-    if (this.radioSelectWarranty == 'none') {
-
-      $('#description_details').val(nonewarranty);
+    if (this.radio_Value_warranty == 4) {
+      this.radio_Value_warranty="none";
+      $('#description_details').val(Nonewarranty);
       console.log($('#description_details').val());
 
     }
 
-
   }
-
-
 
 
   get addressControls() {
-    return this.addDo_section2.get('addresses') as FormArray
+    return this.editDo_section2.get('addresses') as FormArray
   }
 
   editAddress(): void {
-    this.addresses = this.addDo_section2.get('addresses') as FormArray;
+    this.addresses = this.editDo_section2.get('addresses') as FormArray;
     this.addresses.push(this.editAddress_FormControl());
 
     this.itre = this.itre + 1;
@@ -224,9 +212,11 @@ isReadonly:boolean=true;
 
   editAddress_FormControl(): FormGroup {
     return this.fb.group({
+      pd_deliveryChildId: '',
       prodName: '',
       quantity: '',
       desc: '',
+
 
     });
   }
@@ -250,7 +240,7 @@ isReadonly:boolean=true;
         console.log(i)
         console.log(this.addresses)
         this.addresses.removeAt(i);
-        var addr = this.addDo_section2.value.addresses;
+        var addr = this.editDo_section2.value.addresses;
         var list_cnt = addr.length;
       }
     });
@@ -258,7 +248,7 @@ isReadonly:boolean=true;
 
   loadADD() {
 
-    $('#description_details').val('None');
+
     let api_req: any = new Object();
     let addAPI: any = new Object();
 
@@ -275,6 +265,7 @@ isReadonly:boolean=true;
     });
 
   }
+
   ADDLoadDO() {
     let api_req: any = new Object();
     let addLoadAPI: any = new Object();
@@ -290,75 +281,10 @@ isReadonly:boolean=true;
       this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
       console.log("response-load-pi", response)
-      this.addDo_section1.patchValue({
+      this.editDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
     });
-
-  }
-  billerChangeDetails(event: any) {
-    this.billerChangeID = event.target.value;
-
-    let api_req: any = new Object();
-    let addBillerChangeAPI: any = new Object();
-
-    api_req.moduleType = "deliveryorder";
-    api_req.api_url = "deliveryorder/biller_change_details";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    addBillerChangeAPI.action = "biller_change_details";
-    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
-    addBillerChangeAPI.billerId = this.billerChangeID;
-    api_req.element_data = addBillerChangeAPI;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      // this.companyNameList = response.biller_details;
-      this.FooterDetails = response.footer_list_details;
-      console.log("response-load-pi", response)
-      this.addDo_section1.patchValue({
-        'dcNo': response.delivery_no,
-      });
-    });
-
-
-  }
-  Get_add_delivery_order() {
-
-
-    let api_req: any = new Object();
-    let quot_getDeliOrder_req: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "deliveryorder/add_delivery_order";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    quot_getDeliOrder_req.action = "add_delivery_order";
-
-    quot_getDeliOrder_req.user_id = localStorage.getItem('erp_c4c_user_id');
-
-    api_req.element_data = quot_getDeliOrder_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      if (response.status == true) {
-
-        this.billerList = response.biller_details;
-
-
-      }
-      else {
-        $("#showPerissionFormId").modal("hide");
-        iziToast.error({
-          message: "Data Not Found",
-          position: 'topRight'
-        });
-
-      }
-    }), (error: any) => {
-      iziToast.error({
-        message: "Sorry, some server issue occur. Please contact admin",
-        position: 'topRight'
-      });
-      console.log("final error", error);
-    }
-
 
   }
 
@@ -410,7 +336,7 @@ isReadonly:boolean=true;
   //     for (let index = 0; index < response.footer_details.length; index++) {
   //       this.billerIDUpdate = response.footer_details[index].billerId;
   //       if (response.status == true) {
-  //         this.addDo_section1.patchValue({
+  //         this.editDo_section1.patchValue({
   //           'quotationNumber': response.quotation_no,
   //           'selectFooter': response.footer_details[index].pdf_footer_id,
   //           'selectCurrency': response.currency_id,
@@ -424,7 +350,7 @@ isReadonly:boolean=true;
 
   //       }
   //       else {
-  //         this.addDo_section1.patchValue({
+  //         this.editDo_section1.patchValue({
   //           'quotationNumber': '',
   //           'selectFooter': '',
   //           'selectCurrency': '',
@@ -464,7 +390,7 @@ isReadonly:boolean=true;
   //     for (let index = 0; index < response.footer_details.length; index++) {
   //       this.billerIDUpdate = response.footer_details[index].billerId;
   //       if (response.status == true) {
-  //         this.addDo_section1.patchValue({
+  //         this.editDo_section1.patchValue({
   //           'quotationNumber': response.quotation_no,
   //           'selectFooter': response.footer_details[index].pdf_footer_id,
   //           'selectCurrency': response.currency_id,
@@ -475,7 +401,7 @@ isReadonly:boolean=true;
 
   //       }
   //       else {
-  //         this.addDo_section1.patchValue({
+  //         this.editDo_section1.patchValue({
   //           'quotationNumber': '',
   //           'selectFooter': '',
   //           'selectCurrency': '',
@@ -494,6 +420,7 @@ isReadonly:boolean=true;
   // CUSTOMER AUTO COMPLETE
 
   searchCustomer_selectDropdownData(data: any) {
+    alert(data.customerName)
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
@@ -585,11 +512,11 @@ isReadonly:boolean=true;
 
 
 
-        this.addDo_section1.patchValue({
+        this.editDo_section1.patchValue({
           'customerAddress1': response.customer_details[0].customerAddress1,
           'customerAddress2': response.customer_details[0].customerAddress2,
           'customerAddress3': address_3,
-          'kind_Attention': response.customer_details[0].bill_attn,
+          'Attn_1': response.customer_details[0].companyName,
           'ship_to': ship_to_str,
           'ship_address_1': ship_address_str1,
           'ship_address_2': ship_address_str2,
@@ -599,11 +526,11 @@ isReadonly:boolean=true;
         });
       }
       else {
-        this.addDo_section1.patchValue({
+        this.editDo_section1.patchValue({
           'customerAddress1': '',
           'customerAddress2': '',
           'customerAddress3': '',
-          'kind_Attention': '',
+          'Attn_1': '',
           'ship_to': '',
           'ship_address_1': '',
           'ship_address_2': '',
@@ -626,7 +553,7 @@ isReadonly:boolean=true;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "quot_customer_name";
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_Search_req.billerId = this.addDo_section1.value.companyName;
+    api_Search_req.billerId = this.editDo_section1.value.companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -634,7 +561,6 @@ isReadonly:boolean=true;
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
-       
 
       }
 
@@ -646,8 +572,151 @@ isReadonly:boolean=true;
     // do something when input is focused
   }
 
+  
+  dynamicChange_footer(val: any) {
+    this.spinner.show();
+    this.billerID = val;
+    console.log("billerID check", this.billerID);
+  
+    let api_req: any = new Object();
+    let api_dynamicDropdown_req: any = new Object();
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/get_customercbo_quat_no";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_dynamicDropdown_req.action = "get_customercbo_quat_no";
+    api_dynamicDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_dynamicDropdown_req.billerId = this.billerID;
+    api_req.element_data = api_dynamicDropdown_req;
 
 
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      this.FooterDetails = response.footer_details;
+      console.log("dynamic Dropdown change response", response)
+      console.log("dynamic term condition change response", response.quotation_terms_cond)
+      // this.FooterDetails = response.footer_details;
+      this.currencyOld_RadioValue = response.currency_id;
+      this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
+      for (let index = 0; index < response.footer_details.length; index++) {
+        this.billerIDUpdate = response.footer_details[index].billerId;
+        if (response.status == true) {
+          this.editDo_section1.patchValue({
+            // 'e_quotationNumber': response.quotation_no,
+            'e_selectFooter': this.selected_pdf_footer,
+      //      'e_selectCurrency': response.currency_id,
+     //       'e_termConditionContentChange': response.quotation_terms_cond,
+            // 'e_DescriptionText': response.quotation_desp_det,
+          });
+
+
+        }
+        else {
+          this.editDo_section1.patchValue({
+            'e_quotationNumber': '',
+            //      'e_selectFooter': '',
+            'e_selectCurrency': '',
+      //      'e_termConditionContentChange': '',
+            // 'e_DescriptionText': '',
+
+          });
+        }
+      }
+
+      setTimeout(() => {
+        this.selectFooter(this.selected_pdf_footer);
+      }, 1000)
+
+    });
+  }
+  selectFooter(selval: any) {
+    $('#footer_' + selval).prop('checked', true);
+  }
+
+  editDo() {
+    let api_req: any = new Object();
+    let edit_DO_req: any = new Object();
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/edit_duplicate_delivery_order";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    edit_DO_req.action = "edit_duplicate_delivery_order";
+    edit_DO_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    edit_DO_req.deliveryId = this.editDeliveryID;
+    api_req.element_data = edit_DO_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        this.dynamicChange_footer(response.delivery_pararent_details[0].billerId);
+        this.billsLogo_value = response.delivery_pararent_details[0].bills_logo_id;
+        this.warranty_value = response.delivery_pararent_details[0].warranty_type;
+        this.customer_ID = response.delivery_pararent_details[0].customer_id;
+        this.customer_NAME =response.delivery_pararent_details[0].customerName;
+        this.editDo_section1.patchValue({
+
+          'companyName': response.delivery_pararent_details[0].billerId,
+
+          'e_selectFooter': response.delivery_pararent_details[0].pdf_footer_id,
+          'dcNo': response.delivery_pararent_details[0].delivery_no,
+          'dcDate': response.delivery_pararent_details[0].delivery_date,
+          'customer_name': response.delivery_pararent_details[0].customerName,
+          'customerAddress1': response.delivery_pararent_details[0].customerAddress1,
+          'customerAddress2': response.delivery_pararent_details[0].customerAddress2,
+          'customerAddress3': response.delivery_pararent_details[0].customerAddress3,
+          'kind_Attention': response.delivery_pararent_details[0].kind_Attention,
+          'bills_logo_id': response.delivery_pararent_details[0].bills_logo_id,
+          'warranty_id': response.delivery_pararent_details[0].warranty_type,
+          'description_details_show_state': response.delivery_pararent_details[0].description_details_show_state,
+          'description_details': response.delivery_pararent_details[0].description_details,
+          'remarks': response.delivery_pararent_details[0].remarks,
+
+
+        });
+        this.editDo_section3.patchValue({
+          'remarks': response.delivery_pararent_details[0].remarks,
+
+
+        });
+        this.selected_pdf_footer = response.delivery_pararent_details[0].pdf_footer_id;
+
+
+
+        const formArray = new FormArray([]);
+    
+        for (let index = 0; index < response.delivery_details.length; index++) {
+
+          console.log('delivery_details++index' + index);
+
+
+          formArray.push(this.fb.group({
+
+            "pd_deliveryChildId": response.delivery_details[index].deliveryChildId,
+            "prodName": response.delivery_details[index].productName,
+            "quantity": response.delivery_details[index].qty,
+            "desc": response.delivery_details[index].productDesc,
+
+          })
+
+          );
+        }
+
+
+        console.log(formArray)
+        this.editDo_section2.setControl('addresses', formArray);
+        console.log(this.addresses);
+        this.editAddress();
+        this.removeAddresstest(response.delivery_details.length);
+
+      }
+    });
+  }
+  removeAddresstest(i: number) {
+    console.log(i)
+    console.log(this.addresses)
+    this.addresses.removeAt(i);
+   
+
+  }
 
   descriptionPermission(event: any) {
 
@@ -656,176 +725,127 @@ isReadonly:boolean=true;
 
 
     if (this.description_details_show_state = event.target.checked) {
-      this.addDo_section1.get('description_details')?.disable();
+      this.editDo_section1.get('description_details')?.disable();
     }
     else {
-      this.addDo_section1.get('description_details')?.enable();
+      this.editDo_section1.get('description_details')?.enable();
     }
 
   }
-
-
-
-  AddDO($event: MouseEvent) {
+  billerChangeDetails(event: any) {
+    this.billerChangeID = event.target.value;
 
     let api_req: any = new Object();
-    let api_saveDO_req: any = new Object();
+    let addBillerChangeAPI: any = new Object();
+
     api_req.moduleType = "deliveryorder";
-    api_req.api_url = "deliveryorder/insert_delivery_order";
+    api_req.api_url = "deliveryorder/biller_change_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_saveDO_req.action = "insert_delivery_order";
-    api_saveDO_req.user_id = localStorage.getItem('erp_c4c_user_id');
-
-
-    //section-1
-
-    if (this.addDo_section1.value.companyName === null || this.addDo_section1.value.companyName === undefined) {
-
-      iziToast.warning({
-        message: "Select Company Name",
-        position: 'topRight'
+    addBillerChangeAPI.action = "biller_change_details";
+    addBillerChangeAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    addBillerChangeAPI.billerId = this.billerChangeID;
+    api_req.element_data = addBillerChangeAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      // this.companyNameList = response.biller_details;
+      this.FooterDetails = response.footer_list_details;
+      console.log("response-load-pi", response)
+      this.editDo_section1.patchValue({
+        'dcNo': response.delivery_no,
       });
-      return false;
-
-    } else {
-      api_saveDO_req.company = this.addDo_section1.value.companyName;
-    }
-
-    api_saveDO_req.do_no = this.addDo_section1.value.dcNo;
-    api_saveDO_req.pdf_footer_id = this.addDo_section1.value.e_selectFooter;
-    api_saveDO_req.dcDate = this.addDo_section1.value.dcDate;
-
-    if (this.customerName_Data === null || this.customerName_Data === undefined) {
-
-      iziToast.warning({
-        message: "Select Customer Name / Bill",
-        position: 'topRight'
-      });
-      return false;
-
-    } else {
-      api_saveDO_req.customer_name = this.customerName_Data;
-    }
-
-    // api_saveDO_req.BillTo_customer_ID = this.customer_ID;
-    api_saveDO_req.customer_name = this.customer_NAME;
-    api_saveDO_req.customer_id = this.customer_ID;
-    api_saveDO_req.BillTo_customer_NAME = this.customer_NAME;
-    api_saveDO_req.customerAddress1 = this.addDo_section1.value.customerAddress1;
-    api_saveDO_req.customerAddress2 = this.addDo_section1.value.customerAddress2;
-    api_saveDO_req.customerAddress3 = this.addDo_section1.value.customerAddress3;
-    api_saveDO_req.kind_Attention = this.addDo_section1.value.kind_Attention;
-
-    api_saveDO_req.bills_logo_id = this.radio_Value_Export_logo;
-
-    if (this.radioSelectWarranty === null || this.radioSelectWarranty === undefined || this.radioSelectWarranty === 'undefined') {
-
-      iziToast.error({
-        message: "Select Warranty",
-        position: 'topRight'
-      });
-      return false;
-
-    } else {
-      api_saveDO_req.warranty_type = this.radioSelectWarranty;
-    }
-
-   
-    
-
-    api_saveDO_req.description_details = this.addDo_section1.value.description_details;
-    api_saveDO_req.description_details_show_state = this.description_details_show_state;
+    });
 
 
+  }
+  updateDO() {
+    this.editDo_section1.get('description_details')?.enable();
+    let api_req: any = new Object();
+    let api_updateDO_req: any = new Object();
+    api_req.moduleType = "deliveryorder";
+    api_req.api_url = "deliveryorder/duplicate_insert_delivery_order";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_updateDO_req.action = "duplicate_insert_delivery_order";
+    api_updateDO_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_updateDO_req.deliveryId = this.editDeliveryID;
 
-    //section-2
-    //  api_saveDO_req.values = this.addPI_section2.value.addresses;
+    // api_updateDO_req.deliveryId = this.vendor_Name;
+
+    api_updateDO_req.company = this.editDo_section1.value.companyName;
+    api_updateDO_req.do_no = this.editDo_section1.value.dcNo;
+    api_updateDO_req.pdf_footer_id = this.editDo_section1.value.e_selectFooter;
+    api_updateDO_req.dcDate = this.editDo_section1.value.dcDate;
 
 
-    var addr = this.addDo_section2.value.addresses;
+    api_updateDO_req.customer_name = this.customer_NAME;
+    api_updateDO_req.customer_id = this.customer_ID;
+    // api_updateDO_req.BillTo_customer_NAME = this.customer_NAME;
+    api_updateDO_req.customerAddress1 = this.editDo_section1.value.customerAddress1;
+    api_updateDO_req.customerAddress2 = this.editDo_section1.value.customerAddress2;
+    api_updateDO_req.customerAddress3 = this.editDo_section1.value.customerAddress3;
+    api_updateDO_req.kind_Attention = this.editDo_section1.value.kind_Attention;
 
 
-    for (let i = 0; i < addr.length; i++) {
+    api_updateDO_req.bills_logo_id = this.radio_Value_Export_logo;
+    api_updateDO_req.warranty_type = this.radio_Value_warranty;
 
-      if ($('#pd_productName_txtbox_' + i).val() == '') {
-        iziToast.warning({
-          message: "Select Minimum 1 Product Details",
-          position: 'topRight'
-        });
-        return false;
+    api_updateDO_req.description_details = this.editDo_section1.value.description_details;
+    api_updateDO_req.description_details_show_state = this.description_details_show_state;
+    //section 2
+    var addr = this.editDo_section2.value.addresses;
+    console.log("addr",addr)
+    for (let i = 0; i < addr.length-1; i++) {
 
-      }
+      addr[i].deliveryChildId = $('#deliveryChildId_' + i).val();
 
-
-      addr[i].prodName = $('#prodName_' + i).val();
-      addr[i].quantity = $('#quantity_' + i).val();
-      addr[i].desc = $('#desc_' + i).val();
-
+      addr[i].productName = $('#prodName_' + i).val();
+      addr[i].qty = $('#quantity_' + i).val();
+      addr[i].productDesc = $('#desc_' + i).val();
 
     }
+    api_updateDO_req.deliverychild_values = addr;
+
+    //section 3
+    api_updateDO_req.remarks = this.editDo_section3.value.remarks;
 
 
-    api_saveDO_req.values = addr;
 
 
-    //section-3 
-    api_saveDO_req.remarks = this.addDo_section3.value.remarks;
-
-    api_req.element_data = api_saveDO_req;
-    ($event.target as HTMLButtonElement).disabled = true;
-
+    api_req.element_data = api_updateDO_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      ($event.target as HTMLButtonElement).disabled = false;
+      console.log("add quotation new save", response);
       if (response.status == true) {
-        this.router.navigate(['/deliveryOrder']);
-        iziToast.success({
-          message: "Delivery Order saved successfully",
-          position: 'topRight'
-        });
-        this.gotoDOList();
 
-      }
-      else if (response.status === 500) {
-       
-        iziToast.error({
-          message: "Invoice not added Successfully",
-          position: 'topRight'
+        iziToast.success({
+          title: 'Updated',
+          message: 'Delivery Order Updated Successfully !',
         });
-        this.gotoDOList();
+
       }
       else {
-      
+
+
         iziToast.warning({
-          message: "Invoice not added Successfully",
+          message: "Delivery Order Not Saved Successfully",
           position: 'topRight'
         });
-        this.gotoDOList();
+
       }
-
-    }),
-      (error: any) => {
-        ($event.target as HTMLButtonElement).disabled = false;
-       
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("500", error);
-      }
-
-    this.gotoDOList();
-    // this.router.navigate(['/invoice']);
-
-
+      
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+    this.goBack();
   }
 
 
   goBack() {
     this.router.navigate(['/deliveryorder']);
   }
-  gotoDOList() {
-    this.router.navigate(['/deliveryorder']);
-  }
+  
 }

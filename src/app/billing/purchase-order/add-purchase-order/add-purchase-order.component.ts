@@ -199,7 +199,11 @@ export class AddPurchaseOrderComponent implements OnInit {
         this.addresses.removeAt(i);
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
- this.totalCalculate();
+        setTimeout(() => {
+          this.totalCalculate();
+        }, 1000)
+    
+
      
       }
     });
@@ -264,6 +268,7 @@ export class AddPurchaseOrderComponent implements OnInit {
       // this.companyNameList = response.biller_details;
       this.FooterDetails = response.addres_arr;
       this.purchaseorder_tinName = response.addres_arr.tinName;
+      
       this.purchaseorder_tinNo = response.addres_arr.tinNo;
       this.purchaseorder_cstName = response.addres_arr.cstName;
       this.purchaseorder_cstNo = response.addres_arr.cstNo;
@@ -581,6 +586,11 @@ export class AddPurchaseOrderComponent implements OnInit {
 
       if (response.status = true) {
 
+        this.addDo_section1.patchValue({
+          'customerAddress1': response.vendor_address,
+        });
+
+       
 
       }
 
@@ -718,6 +728,7 @@ export class AddPurchaseOrderComponent implements OnInit {
 
        ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
+        this.gotoPurchaseOrderList();
         this.router.navigate(['/invoice']);
         iziToast.success({
           message: "Purchase Order saved successfully",

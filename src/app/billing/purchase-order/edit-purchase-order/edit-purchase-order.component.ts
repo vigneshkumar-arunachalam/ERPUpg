@@ -68,7 +68,9 @@ export class EditPurchaseOrderComponent implements OnInit {
   getCurrencyCode: any;
   invoicePriceKey: any;
   row_cnt_mod: any;
-
+  e_vendor_company_name:any;
+  e_vendor_company_address:any;
+  
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
@@ -222,7 +224,7 @@ export class EditPurchaseOrderComponent implements OnInit {
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
 	
-	 this.totalCalculate();
+	      this.totalCalculate();
 
         let api_req: any = new Object();
         let api_ProdAutoFill_req: any = new Object();
@@ -232,11 +234,12 @@ export class EditPurchaseOrderComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_purchase_order_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.quotationChildId = purchaseOrderChildId;
+        api_ProdAutoFill_req.poChildId = purchaseOrderChildId;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response)
+          console.log("response", response);
+          location.reload();
 
 
         });
@@ -422,15 +425,21 @@ export class EditPurchaseOrderComponent implements OnInit {
       if (response.status = true) {
 
         this.spinner.hide();
-
+        
+        $("#vend_company").val(response.vendorName);
+        $("#vend_address").val(response.vendor_address);
+        
+        
 
         this.e_vendor_name = response.vendorName;
-        this.addDo_section1.patchValue({
+        this.e_vendor_company_name = response.vendorName;
+        this.e_vendor_company_address=response.vendor_address;
+        // this.addDo_section1.patchValue({
 
-          'e_vendorCompany': response.vendorName,
-          'customerAddress1': response.vendor_address,
+        //   'e_vendorCompany': response.vendorName,
+        //   'customerAddress1': response.vendor_address,
 
-        });
+        // });
       }
 
     });
@@ -452,8 +461,8 @@ export class EditPurchaseOrderComponent implements OnInit {
       console.log("vignesh-vendor_name response", response);
       this.searchResult_vendor = response.vendor_list;
 
-      if (response.status = true) {
-
+      if (response!='') {
+       
 
       }
 
@@ -625,7 +634,7 @@ export class EditPurchaseOrderComponent implements OnInit {
 
 
   editPurchaseOrder() {
-
+   
     let api_req: any = new Object();
     let api_editPODetails: any = new Object();
     api_req.moduleType = "purchaseorder";
@@ -642,9 +651,12 @@ export class EditPurchaseOrderComponent implements OnInit {
       if (response != '') {
         // this.purchaseOrderDetails=response.purchaseorderparent_details;
         this.currencyList = response.currency_details;
-        this.customernameID = response.purchaseorderparent_details[0].billerId
-        console.log("  this.customernameID", this.customernameID)
-
+        this.customernameID = response.purchaseorderparent_details[0].billerId;
+        console.log("  this.customernameID", this.customernameID);
+      
+        this.e_vendor_name = response.purchaseorderparent_details[0].vendorName,
+        this.e_vendor_company_name= response.purchaseorderparent_details[0].vendorCompany,
+        this.e_vendor_company_address= response.purchaseorderparent_details[0].vendorAddress1,
 
         this.addDo_section1.patchValue({          
           'e_companyName': response.purchaseorderparent_details[0].billerId,
@@ -713,7 +725,7 @@ export class EditPurchaseOrderComponent implements OnInit {
 
 
           })
-
+            
           );
         }
         console.log(formArray)
@@ -722,6 +734,7 @@ export class EditPurchaseOrderComponent implements OnInit {
         this.editAddress();
         this.removeAddresstest(response.purchaseorderchild_details.length);
         this.billerChangeDetails1(this.customernameID);
+        this.getTaxCals();
         // this.getInvoice({});
       } else {
 
@@ -783,16 +796,16 @@ export class EditPurchaseOrderComponent implements OnInit {
     api_updatePO_req.poNo = this.addDo_section1.value.e_PONo;
     api_updatePO_req.poDate = this.addDo_section1.value.e_PODate;
     // api_updatePO_req.vendorID =  this.vendor_ID ;
-    if(this.e_vendor_name!=''){
-      api_updatePO_req.vendorName = this.e_vendor_name;
-    }else{
-      this.e_vendor_name=this.addDo_section1.value.e_vendor_name
-      api_updatePO_req.vendorName = this.e_vendor_name;      
-    }
-    
+    // if(this.e_vendor_name!=''){
+    //   api_updatePO_req.vendorName = this.e_vendor_name;
+    // }else{
+    //   this.e_vendor_name=this.addDo_section1.value.e_vendor_name
+    //   api_updatePO_req.vendorName = this.e_vendor_name;      
+    // }
 
-    api_updatePO_req.vendorCompany = this.addDo_section1.value.e_vendorCompany;
-    api_updatePO_req.vendorAddress1 = this.addDo_section1.value.e_customerAddress1;
+    api_updatePO_req.vendorName =this.e_vendor_name;
+    api_updatePO_req.vendorCompany = this.e_vendor_company_name;
+    api_updatePO_req.vendorAddress1 = this.e_vendor_company_address;
     api_updatePO_req.currency = this.addDo_section1.value.e_currency;
     api_updatePO_req.shipVia = this.addDo_section1.value.e_despatchThrough;
     api_updatePO_req.payment_terms = this.addDo_section1.value.e_payment;
@@ -979,15 +992,12 @@ export class EditPurchaseOrderComponent implements OnInit {
     // var grs_amt=0;
     // var net_amt =0;
     var tax_amt = 0;
-    var tax_amt_tot = 0;
     var grs_amt = 0;
     var sub_total_amt = 0;
-
     let discount_type: any;
- 
-    var dis_amt_val: any;
+     var dis_amt_val: any;
 
- 
+    var tax_amt_tot = 0;
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     //  alert(list_cnt);
@@ -1010,7 +1020,7 @@ export class EditPurchaseOrderComponent implements OnInit {
       tax_amt_tot += total_amt;
    
     }
-
+    console.log('t',tax_amt_tot);
     var tax_val = this.tax_per_mod;
     var tax_amount = tax_amt_tot * tax_val/100;
     this.finalTax = tax_amount;

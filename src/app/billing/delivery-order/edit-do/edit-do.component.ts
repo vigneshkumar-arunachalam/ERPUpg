@@ -161,6 +161,7 @@ export class EditDoComponent implements OnInit {
     var Nonewarranty='';
 
     this.radioID_Logo = data;
+
     this.radio_Value_warranty = evt.target.value;
     if (this.radio_Value_warranty == 1) {
       this.radio_Value_warranty="no";
@@ -647,6 +648,7 @@ export class EditDoComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
+       
         this.dynamicChange_footer(response.delivery_pararent_details[0].billerId);
         this.billsLogo_value = response.delivery_pararent_details[0].bills_logo_id;
         this.warranty_value = response.delivery_pararent_details[0].warranty_type;
@@ -787,7 +789,34 @@ export class EditDoComponent implements OnInit {
 
 
     api_updateDO_req.bills_logo_id = this.radio_Value_Export_logo;
-    api_updateDO_req.warranty_type = this.radio_Value_warranty;
+    if(this.radio_Value_warranty==''||this.radio_Value_warranty=='undefined'||this.radio_Value_warranty==undefined){
+       var warranty = $('#warranty_id' ).val();
+
+       if (warranty == 1) {
+        warranty="no";
+        api_updateDO_req.warranty_type = warranty;
+  
+      }
+      if (warranty == 2) {
+        warranty="one";
+        api_updateDO_req.warranty_type = warranty;
+       
+  
+      }
+      if (warranty == 3) {
+        warranty="two";
+        api_updateDO_req.warranty_type = warranty;
+  
+      }
+      if (warranty == 4) {
+        warranty="none";
+        api_updateDO_req.warranty_type = warranty;
+  
+      }
+    }else{
+      api_updateDO_req.warranty_type = this.radio_Value_warranty;
+    }
+    
 
     api_updateDO_req.description_details = this.editDo_section1.value.description_details;
     api_updateDO_req.description_details_show_state = this.description_details_show_state;

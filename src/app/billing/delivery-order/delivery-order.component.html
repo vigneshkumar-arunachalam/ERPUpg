@@ -95,7 +95,8 @@
                           </li>
 
                           <li class="dropdown__item">
-                            <a class="hover4" title="Duplicate" data-toggle="modal">
+                            <a class="hover4" title="Duplicate" (click)="duplicateDo(list.deliveryId)">
+                             
                               <img class="show" src="assets/img/icon2/duplicate-blue.png">
                               <img class="hide" src="assets/img/icon2/duplicate-black.png">
                             </a>
@@ -136,7 +137,7 @@
                           </li>
 
                           <li class="dropdown__item">
-                            <a class="hover4" title="Share permission" data-toggle="modal"
+                            <a class="hover3" title="Share permission" data-toggle="modal"
                               data-target="#showPerissionFormId" *ngIf="(list.do_view==0)"
                               (click)="sharePermission(list.deliveryId,list.do_view)">
                               <img class="show" src="assets/img/icon2/share-square-red.png">
@@ -155,7 +156,7 @@
             </div>
           </div>
           <br>
-          <nav class="atbd-page">
+          <nav class="atbd-page" *ngIf="(response_total_cnt>0)">
             <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
               <li class="page-item">
                 <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
@@ -194,18 +195,22 @@
           <br>
           <table border="0" cellspacing="0" cellpadding="0">
             <tbody>
+              
               <tr>
-                <td width="20" bgcolor="#d0ffc3">&nbsp;</td>
-                <td width="100" style="padding-left:20px;">Paid </td>
-                <td width="20" bgcolor="#fffeb3">&nbsp;</td>
-                <td width="100" style="padding-left:20px;">Partial Paid</td>
-                <td width="20" bgcolor="#ffb8b8">&nbsp;</td>
-                <td width="100" style="padding-left:20px;"> Not Paid </td>
+                <td width="20" bgcolor="#FFF">&nbsp;</td>
+                <td width="100" style="padding-left:20px;">Enquiry </td>
+                <td width="20" bgcolor="#FFFF66">&nbsp;</td>
+                <td width="100" style="padding-left:20px;">Interest</td>
+                <td width="20" bgcolor="#66FF00">&nbsp;</td>
+                <td width="100" style="padding-left:20px;">Complete</td>
                 <td width="20" bgcolor="#FA600C">&nbsp;</td>
-                <td width="100" style="padding-left:20px;"> Cancel </td>
-                <td width="20" bgcolor="#aeffff">&nbsp;</td>
-                <td width="100" style="padding-left:20px;"> Write OFF </td>
+                <td width="100" style="padding-left:20px;">Not Interest</td>
+                <td width="20" bgcolor="#FFCC00">&nbsp;</td>
+                <td width="100" style="padding-left:20px;">Hold
+                <input type="hidden" name="search_text_hd" id="search_text_hd" value=""> </td>
+                
               </tr>
+
             </tbody>
           </table>
         </div>
@@ -243,7 +248,8 @@
                 <ng-autocomplete [data]="searchResult_popUp" [searchKeyword]="keywordCustomerName"
                   formControlName="customer_name" (selected)='searchCustomer_selectDropdownData_PopUp($event)'
                   (inputChanged)='searchCustomerData_popUp($event)' (inputFocused)='onFocusedCustomer($event)'
-                  [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                  [itemTemplate]="itemTemplateCustomer" 
+                  (keyup)="onKeyup($event)" [notFoundTemplate]="notFoundTemplate">
 
                 </ng-autocomplete>
                 <ng-template #itemTemplateCustomer let-item>

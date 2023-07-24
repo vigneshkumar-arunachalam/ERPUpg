@@ -31,7 +31,14 @@ export class PurchaseOrderComponent implements OnInit {
   searchResult1_CustomerName: any;
   AdvanceSearchResult: any;
   searchPurchaseOrderForm: FormGroup;
-
+//permission
+PO_Permission_add:any;
+PO_Permission_delete:any;
+PO_Permission_edit:any;
+PO_Permission_mail:any;
+PO_Permission_pdf:any;
+PO_Permission_search:any;
+PO_Permission_view:any;
   //for error
   edit_array_SearchBiller_Checkbox: any;
   biller_list: any;
@@ -114,8 +121,19 @@ export class PurchaseOrderComponent implements OnInit {
       }
 
       if (response) {
+
         this.biller_list = response.biller_details;
         this.Purchase_Order = response.po_details;
+        this.PO_Permission_add=response.po_permission_arr.add;
+        this.PO_Permission_delete=response.po_permission_arr.delete;
+        this.PO_Permission_edit=response.po_permission_arr.edit;
+        this.PO_Permission_mail=response.po_permission_arr.mail;
+        this.PO_Permission_pdf=response.po_permission_arr.pdf;
+        this.PO_Permission_search=response.po_permission_arr.search;
+        console.log("this.PO_Permission_add",this.PO_Permission_add);
+        console.log("this.PO_Permission_delete",this.PO_Permission_delete);
+        console.log("this.PO_Permission_edit",this.PO_Permission_edit);
+        console.log("this.PO_Permission_pdf",this.PO_Permission_pdf);
 
 
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });

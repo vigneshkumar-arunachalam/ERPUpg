@@ -168,7 +168,7 @@ export class EditInvoiceComponent implements OnInit {
 
         console.log("edit biller id", this.editbillerID);
 
-
+        alert(this.editbillerID);
 
         this.editInvoice();
       }
@@ -564,7 +564,12 @@ export class EditInvoiceComponent implements OnInit {
     //  alert(list_cnt);
     // var tax_per = $('#tax_per_hd_id').val();
     //var tax_per = $('#tax_per_hd_id').val();
-    this.finalDiscount = $('#finalDiscount_amt').val();
+
+    
+  
+      this.finalDiscount = $('#finalDiscount_amt').val();
+    
+   
     this.shipping_amt = $('#shipping_amt_id').val();
     this.bankingCharge = $('#bankingCharge_amt_id').val();
     this.finalTax = 0;
@@ -1403,17 +1408,17 @@ export class EditInvoiceComponent implements OnInit {
     let api_req: any = new Object();
     let api_updatePI_req: any = new Object();
     api_req.moduleType = "invoice";
-    if(this.edit_Duplicate_ID=='undefined'  ){
+    // if(this.edit_Duplicate_ID=='undefined'  ){
 
-      api_req.api_url = "invoice/update_invoice";
+    //   api_req.api_url = "invoice/update_invoice";
 
-    }else{
+    // }else{
       
-      api_req.api_url = "invoice/insert_invoice";
+    //   api_req.api_url = "invoice/insert_invoice";
     
-    }
+    // }
     
-
+    api_req.api_url = "invoice/update_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_updatePI_req.action = "update_proforma_invoice";

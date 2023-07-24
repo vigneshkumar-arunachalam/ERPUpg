@@ -20,11 +20,13 @@
 
             <div class="quotation-btn-section">
               <button type="button" title="Add New Purchase Order" class="btn btn-primary btn-default btn-squared"
-                (click)="goAddDeliveryOrder()" style="margin-right: 30px;"><i class="fas fa-plus"
-                  style="margin-right:0;"></i>Add
+              *ngIf="(PO_Permission_add==1)"
+             
+               (click)="goAddDeliveryOrder()" style="margin-right: 30px;"><i class="fas fa-plus"
+                 style="margin-right:0;"></i>Add
               </button>
               <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                data-target="#searchPurchaseOrderFormId">
+              *ngIf="(PO_Permission_search==1)"  data-target="#searchPurchaseOrderFormId">
                 <i class="fas fa-search" style="margin-right:0;"></i>Search
               </button>
 
@@ -100,7 +102,7 @@
                           <button class="btn1"><i class="fa fa-bars"></i></button>
                           <ul class="dropdown__list">
 
-                            <li class="dropdown__item">
+                            <li class="dropdown__item" *ngIf="(PO_Permission_edit==1)">
                               <a class="hover3" title="Edit" (click)=" editPurchaseOrder(list.po_id)">
                                 <img class="show" src="assets/img/icon2/edit-blue.png">
                                 <img class="hide" src="assets/img/icon2/edit-black.png">
@@ -109,7 +111,7 @@
 
                            
 
-                            <li class="dropdown__item">
+                            <li class="dropdown__item" *ngIf="(PO_Permission_pdf==1)">
                               <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
                                 (click)="pdf(list.po_id)">
                                 <img class="show" src="assets/img/icon2/pdf-blue.png">
@@ -117,7 +119,7 @@
                               </a>
                             </li>
 
-                            <li class="dropdown__item">
+                            <li class="dropdown__item" *ngIf="(PO_Permission_mail==1)">
                               <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
                                 (click)="getEmailDetails(list.po_id)">
                                 <img class="show" src="assets/img/icon2/gmail-blue.png">
@@ -125,7 +127,7 @@
                               </a>
                             </li>
 
-                            <li class="dropdown__item">
+                            <li class="dropdown__item" *ngIf="(PO_Permission_delete==1)">
                               <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
                                 (click)="deletePurchaseOrder(list.po_id)">
                                 <img class="show" src="assets/img/icon2/delete-blue.png">
@@ -133,7 +135,7 @@
                               </a>
                             </li>
 
-                            <li class="dropdown__item">
+                            <li class="dropdown__item" *ngIf="(list.approval_staus==0)" >
                               <a class="hover3" title="Send to Approval" data-toggle="modal" data-target="#sendApproval"
                                 (click)="sendtoApproval(list.po_id)">
                                 <img class="show" src="assets/img/icon2/share-blue.png">
@@ -204,7 +206,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced search</h2>
+        <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle1">Advanced Search</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -215,22 +217,28 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="form-group row">
-                <div class="ng-autocomplete">
-                  <label for="companyName" style="padding-left: 250px;" >Search Text</label>
-                  <ng-autocomplete [data]="AdvanceSearchResult" [searchKeyword]="keywordCustomerName"
-                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
-                    (inputChanged)='AdvanceSearchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                  </ng-autocomplete>
-
-                  <ng-template #itemTemplateCustomer let-item>
-                    <a [innerHTML]="item.customerName"></a>
-                  </ng-template>
-
-                  <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                  </ng-template>
+                <div class="col-lg-4 mt-2">
+<label>Search Text</label>
                 </div>
+                <div class="col-lg-8">
+                  <div class="ng-autocomplete">
+                  
+                    <ng-autocomplete [data]="AdvanceSearchResult" [searchKeyword]="keywordCustomerName"
+                      formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                      (inputChanged)='AdvanceSearchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+  
+                    <ng-template #itemTemplateCustomer let-item>
+                      <a [innerHTML]="item.customerName"></a>
+                    </ng-template>
+  
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
+                </div>
+                
 
               </div>
             </div>

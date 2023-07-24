@@ -84,7 +84,8 @@ import { ResellerManagementComponent } from './masters/reseller-management/resel
 import { PipeComponent } from './pipe/pipe.component';
 import { CrmComponent } from './crm/crm.component';
 import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component';
-import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component'; 
+import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component';
+import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component'; 
 
 @NgModule({
   declarations: [
@@ -149,7 +150,8 @@ import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new
      PipeComponent,
      CrmComponent,
      EnquirynewComponent,
-     AddNewEnquiryComponent
+     AddNewEnquiryComponent,
+     DuplicateDOComponent
      
     
   ],
