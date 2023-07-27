@@ -85,7 +85,8 @@ import { PipeComponent } from './pipe/pipe.component';
 import { CrmComponent } from './crm/crm.component';
 import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component';
 import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component';
-import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component'; 
+import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component';
+import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component'; 
 
 @NgModule({
   declarations: [
@@ -151,7 +152,8 @@ import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/dupl
      CrmComponent,
      EnquirynewComponent,
      AddNewEnquiryComponent,
-     DuplicateDOComponent
+     DuplicateDOComponent,
+     EditNewEnquiryComponent
      
     
   ],

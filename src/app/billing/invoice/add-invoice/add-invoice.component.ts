@@ -45,7 +45,7 @@ export class AddInvoiceComponent implements OnInit {
   cbk_ESA_Value: any;
   EditShippingAddress: boolean = false;
   //checkbox
-  mile_check_value: any;
+  mile_check_value: boolean = true;
   dynamicCheckboxwithKey: any;
   SelectExtraLogoCheckboxwithKey: any;
   cbk_conversionAmtShow_value: any;
@@ -128,6 +128,12 @@ warrantyValue:any;
     invoiceAddSignature_filename:any;
     checkbox_selectAdditionalSignature:any;
     selectAdditionalSign:boolean=true;
+    //section 3 select terms condition
+    section3_Terms1:any;
+    section3_Terms2:any;
+    section3_Terms3:any;
+    section3_Terms4:any;
+    section3_Terms5:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
@@ -137,7 +143,7 @@ warrantyValue:any;
   keywordCompanyName = 'customerName';
   keywordUserName = 'reseller_name';
   ngOnInit(): void {
-    console.log("this.chkTermsandcondition", this.chkTermsandcondition)
+    // console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
     this.EditShippingAddress = true;
     this.addressControls.controls.forEach((elt, index) => {
@@ -151,6 +157,12 @@ warrantyValue:any;
       { name: ' M S Display ', selected: false, id: 3 },
 
     ];
+    this.section3_Terms1="Price Term: EXW SINGAPORE";
+    this.section3_Terms2="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3="Port of Discharge:";
+    this.section3_Terms4="Port of Loading: SINGAPORE";
+    this.section3_Terms5="Lead Time: 21 - 30 DAYS";
+
     this.SelectExtraLogoCheckboxwithKey = [
 
       { name: 'IT Care', selected: false, id: 1 },
@@ -244,6 +256,11 @@ warrantyValue:any;
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_previousDue': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
@@ -314,28 +331,28 @@ warrantyValue:any;
   handleChange_initial(id: any, evt: any) {
     var radioSelectInitial = evt.target.value;
     var abc = id;
-    console.log("radio button value", radioSelectInitial);
-    console.log("radio button id value", abc);
+    // console.log("radio button value", radioSelectInitial);
+    // console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
     this.radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radioSelectFooter);
+    // console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
     this.ExtralogoValue = event.target.value;
     // var xyz = id;
-    console.log("radio button value for Extra logo", this.ExtralogoValue);
+    // console.log("radio button value for Extra logo", this.ExtralogoValue);
 
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
-    console.log("mile",this.mile_check_value);
+    // console.log("mile",this.mile_check_value);
   }
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.checked;
-    console.log(this.MSDisplay_Value);
+    // console.log(this.MSDisplay_Value);
   }
   radioSelectCommissionType(event: any) {
     $('#CommissionValue').val('');
@@ -385,15 +402,15 @@ warrantyValue:any;
   // }
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
-    console.log(this.chkTermsandcondition)
+    // console.log(this.chkTermsandcondition)
   }
   chkReceivedAuthorizedSignatureEvent(event: any) {
     this.chkReceivedAuthorizedSignature = event.target.checked;
-    console.log(this.chkReceivedAuthorizedSignature)
+    // console.log(this.chkReceivedAuthorizedSignature)
   }
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-    console.log(this.chklogoAddressSignature)
+    // console.log(this.chklogoAddressSignature)
   }
   // cbk_Fn_EditShipAddress(event: any){
   //   this.cbk_ESA_Value=event.target.checked;
@@ -402,7 +419,7 @@ warrantyValue:any;
   // }
   cbk_Fn_EditShipAddress(event: any) {
     this.EditShippingAddress = event.target.checked;
-    console.log(this.EditShippingAddress)
+    // console.log(this.EditShippingAddress)
 
     if (this.EditShippingAddress) {
 
@@ -421,28 +438,28 @@ warrantyValue:any;
 
 
     }
-    console.log(this.EditShippingAddress)
+    // console.log(this.EditShippingAddress)
   }
   cbk_fn_conversionAmtShow(event: any) {
     this.cbk_conversionAmtShow_value = event.target.checked;
-    console.log(this.cbk_conversionAmtShow_value)
+    // console.log(this.cbk_conversionAmtShow_value)
 
   }
   cbk_fn_deductWithholdingTax(event: any) {
     this.cbk_deductWithholdingTax = event.target.checked;
-    console.log(this.cbk_deductWithholdingTax)
+    // console.log(this.cbk_deductWithholdingTax)
 
   }
   cbk_fn_previousDue(event: any) {
     this.cbk_previousDue = event.target.checked;
-    console.log(this.cbk_previousDue)
+    // console.log(this.cbk_previousDue)
   }
 
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
 
-    console.log(item)
+    // console.log(item)
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
@@ -453,7 +470,7 @@ warrantyValue:any;
 
   selectEventUser(item: any) {
 
-    console.log(item)
+    // console.log(item)
     // do something with selected item
   }
   onFocusedUser(e: any) {
@@ -533,11 +550,17 @@ warrantyValue:any;
         setTimeout(() => {
           this.addPI_section3.patchValue({
             'section3_gst_dropdown': response.default_tax_id,
-          });
+            'section3_Terms1': "Price Term: EXW SINGAPORE",
+            'section3_Terms2': "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T",
+            'section3_Terms3': "Port of Discharge:",
+            'section3_Terms4': "Port of Loading: SINGAPORE",
+            'section3_Terms5': "Lead Time: 21 - 30 DAYS",
 
+          });
+         
         }, 500);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
-        console.log('response.default_tax_id' + response.default_tax_id);
+        // console.log('response.default_tax_id' + response.default_tax_id);
 
 
 
@@ -571,8 +594,8 @@ warrantyValue:any;
       }
     }
     for (let j = 0; j <= this.itre; j++) {
-      console.log($('#pd_Total_' + j).val())
-      console.log($('#pd_netPrice_' + j).val())
+      // console.log($('#pd_Total_' + j).val())
+      // console.log($('#pd_netPrice_' + j).val())
 
     }
 
@@ -600,7 +623,7 @@ warrantyValue:any;
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
-    console.log('row_cnt' + row_cnt);
+    // console.log('row_cnt' + row_cnt);
     $('#enablePercentabeDiscont').val('');
     $('#enablePriceDiscont').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
@@ -639,7 +662,7 @@ warrantyValue:any;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+      // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -663,7 +686,7 @@ warrantyValue:any;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+  
       this.usersearchResult = response.reseller_list;
 
       if (response.status = true) {
@@ -679,8 +702,8 @@ warrantyValue:any;
 
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -694,7 +717,7 @@ warrantyValue:any;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("customer_address_details---response", response)
+     
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
@@ -798,8 +821,8 @@ warrantyValue:any;
     this.resellerName = item.reseller_name;
     this.resellerID = item.reseller_id;
 
-    console.log(item.reseller_name)
-    console.log(item.reseller_id)
+    // console.log(item.reseller_name)
+    // console.log(item.reseller_id)
 
 
   }
@@ -932,7 +955,7 @@ warrantyValue:any;
 
       }
 
-      console.log(addr[i].pd_quantity_txtbox1)
+      // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
@@ -974,7 +997,14 @@ warrantyValue:any;
     api_saveInvoice_req.add_amt = this.addPI_section3.value.section3_bankingCharge_amt_txtbox;
     api_saveInvoice_req.netTotal = this.addPI_section3.value.section3_grand_total;
     api_saveInvoice_req.remarks = this.addPI_section3.value.section3_remarks;
+    api_saveInvoice_req.previous_due_state = this.addPI_section3.value.section3_previousDue;
     api_saveInvoice_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
+    api_saveInvoice_req.terms_cond1 = this.addPI_section3.value.section3_Terms1;
+    api_saveInvoice_req.terms_cond2 = this.addPI_section3.value.section3_Terms2;
+    api_saveInvoice_req.terms_cond3 = this.addPI_section3.value.section3_Terms3;
+    api_saveInvoice_req.terms_cond4 = this.addPI_section3.value.section3_Terms4;
+    api_saveInvoice_req.terms_cond5 = this.addPI_section3.value.section3_Terms5;
+
     api_saveInvoice_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
     api_saveInvoice_req.received_signature =  this.chkReceivedAuthorizedSignature;
     api_saveInvoice_req.logo = this.addPI_section3.value.section3_logo;
@@ -1015,7 +1045,7 @@ warrantyValue:any;
          
       }
       else if (response.status === 500) {
-        alert("status == 500")
+        // alert("status == 500")
         iziToast.error({
           message: "Invoice not added Successfully",
           position: 'topRight'
@@ -1023,7 +1053,7 @@ warrantyValue:any;
         this.gotoInvoiceList();
       }
       else {
-        alert("status == false")
+        // alert("status == false")
         iziToast.warning({
           message: "Invoice not added Successfully",
           position: 'topRight'
@@ -1034,17 +1064,17 @@ warrantyValue:any;
     }),
       (error: any) => {
         ($event.target as HTMLButtonElement).disabled = false;
-        alert(error)
+        // alert(error)
 
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("500",error);
+        // console.log("500",error);
       }
 
       this.gotoInvoiceList();
-      // this.router.navigate(['/invoice']);
+      this.router.navigate(['/invoice']);
       
 
   }
@@ -1096,7 +1126,7 @@ this.spinner.show();
     add_BillerDetails_req.billerId = this.addInvoice_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+      // console.log(response);
 
 
       if (response != '') {
@@ -1128,7 +1158,7 @@ this.spinner.show();
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+        // console.log(error);
       }
 
 
@@ -1136,9 +1166,9 @@ this.spinner.show();
 
   }
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+    // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+    // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1201,15 +1231,15 @@ this.spinner.show();
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
+      // console.log('discount_type' + discount_type);
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
+        // console.log('discount_type1111' + this.sub_dis_val);
         if(this.sub_dis_val==''){
           this.sub_dis_val=0;
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
+        // console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
         $('#pd_netPrice_' + a).val(sub_total_amt);
         $('#sub_discount_' + a).val(dis_amt_val);
@@ -1261,8 +1291,8 @@ this.spinner.show();
       this.bankingCharge = 0;
     }
     this.finalDiscountCalc();
-    console.log('grs_amt' + grs_amt);
-    console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
+    // console.log('grs_amt' + grs_amt);
+    // console.log('tax_per' + this.tax_per_mod + 'grossTotal' + this.grossTotal + 'this.finalTax' + this.finalTax + 'shipping_amt' + this.shipping_amt + 'finalDiscount' + this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
   }
 
@@ -1357,7 +1387,7 @@ this.spinner.show();
     $('#final_discount').val(enablePriceDiscont);
     $('#final_discount_val').val(enablePriceDiscont);
     this.finalDiscountVal = enablePercentabeDiscont;
-    console.log('999' + price);
+    // console.log('999' + price);
   }
 
   if (this.grandTotal > 0) {
@@ -1396,17 +1426,17 @@ this.spinner.show();
       var commissionType3 = $('input:radio[name=selectCommission]:checked').val();
 
       this.commissionType = commissionType3;
-      console.log("before if-  commissionType3", commissionType3)
-      console.log("before if-  this.commissionValue", this.commissionType)
+      // console.log("before if-  commissionType3", commissionType3)
+      // console.log("before if-  this.commissionValue", this.commissionType)
       var commissionValue3 = $('#CommissionValue').val()
-      console.log("in if-  commissionValue3", commissionValue3)
+      // console.log("in if-  commissionValue3", commissionValue3)
       this.commissionValue = commissionValue3;
       if (commissionType3 == "Fixed") {
 
         this.commissionValue = commissionValue3;
         this.commissionAmount = commissionValue3;
-        console.log("if-fixed  this.commissionValue", this.commissionValue)
-        console.log("if-fixed  this.commissionAmount", this.commissionAmount)
+        // console.log("if-fixed  this.commissionValue", this.commissionValue)
+        // console.log("if-fixed  this.commissionAmount", this.commissionAmount)
         var abc=$('#CommissionAmount').val(commissionValue3);
         this.commissionAmount=abc;
       }
@@ -1482,20 +1512,20 @@ this.spinner.show();
     $('#enablePriceFinal').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+    // console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountTYpe_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal').val(final_dis_val);
-      console.log('22' + disType);
+      // console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountTYpe_amt').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
       $('#enablePriceFinal').val(final_dis_val);
-      console.log('33' + disType);
+      // console.log('33' + disType);
     } else {
-      console.log('44' + disType);
+      // console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -1508,7 +1538,7 @@ this.spinner.show();
 
   eventCheckSelectAdditionalSignature(e: any) {
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature );
+    // console.log(this.checkbox_selectAdditionalSignature );
   }
   invoiceAddSignature(){
     let api_req: any = new Object();
@@ -1523,7 +1553,7 @@ this.spinner.show();
     api_req.element_data = api_invoiceAddSignature_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("invoice_add_signature response", response)
+      // console.log("invoice_add_signature response", response)
 
       if (response.status == true) {
       

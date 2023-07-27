@@ -8,26 +8,18 @@
             <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
               <span class="breadcrumb-item active"> Purchase Order Details</span></h3>
            
-            <!-- <div>
-             <input type="text" placeholder="Quick Search">
-            </div> -->
-            <!-- <div class="search-bar-section">
-              <input type="search" id="box" placeholder="Quick Search anything..." title="Quick Search"
-                (mouseleave)="CustomerListQuickSearch($event)" (keyup)="CustomerListQuickSearch($event)"
-                class="search__box">
-              <i class="fas fa-search search__icon" id="icon" onclick="toggleShow()"></i>
-            </div> -->
+         
 
             <div class="quotation-btn-section">
               <button type="button" title="Add New Purchase Order" class="btn btn-primary btn-default btn-squared"
               *ngIf="(PO_Permission_add==1)"
              
                (click)="goAddDeliveryOrder()" style="margin-right: 30px;"><i class="fas fa-plus"
-                 style="margin-right:0;"></i>Add
+                 style="margin-right:10;"></i>Add
               </button>
               <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
               *ngIf="(PO_Permission_search==1)"  data-target="#searchPurchaseOrderFormId">
-                <i class="fas fa-search" style="margin-right:0;"></i>Search
+                <i class="fas fa-search" style="margin-right:10;"></i>Search
               </button>
 
             </div>

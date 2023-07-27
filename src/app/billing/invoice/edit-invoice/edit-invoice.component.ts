@@ -144,6 +144,12 @@ export class EditInvoiceComponent implements OnInit {
   selectReceivedSign: boolean = true;
   received_signature_state: any;
   print_logo_state: any;
+    //section 3 select terms condition
+    section3_Terms1:any;
+    section3_Terms2:any;
+    section3_Terms3:any;
+    section3_Terms4:any;
+    section3_Terms5:any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -168,7 +174,7 @@ export class EditInvoiceComponent implements OnInit {
 
         console.log("edit biller id", this.editbillerID);
 
-        alert(this.editbillerID);
+        // alert(this.editbillerID);
 
         this.editInvoice();
       }
@@ -225,7 +231,11 @@ export class EditInvoiceComponent implements OnInit {
 
     ];
 
-
+    this.section3_Terms1="Price Term: EXW SINGAPORE";
+    this.section3_Terms2="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3="Port of Discharge:";
+    this.section3_Terms4="Port of Loading: SINGAPORE";
+    this.section3_Terms5="Lead Time: 21 - 30 DAYS";
 
     this.addPI_section1 = new FormGroup({
       'initial': new FormControl(),
@@ -300,6 +310,11 @@ export class EditInvoiceComponent implements OnInit {
       'section3_remarks': new FormControl(null),
       'section3_previousDue': new FormControl(null),
       'section3_termCondition': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
       'section3_select_additional_signature': new FormControl({ value: '', disabled: false }, Validators.required),
@@ -674,9 +689,17 @@ export class EditInvoiceComponent implements OnInit {
        this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
      }
 
+     
+
+
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
-
+    console.log("this.grossTotal",this.grossTotal);
+    console.log("this.finalTax",this.finalTax);
+    console.log("this.shipping_amt",this.shipping_amt);
+    console.log("this.bankingCharge",this.bankingCharge);
+    console.log("this.finalDiscount",this.finalDiscount);
+    console.log("this.grandTotal",this.grandTotal);
     
   }
 
@@ -1210,18 +1233,25 @@ export class EditInvoiceComponent implements OnInit {
           'section3_grand_total': response.billing_pararent_details[0].netPayment,
           //row-7
           'section3_remarks': response.billing_pararent_details[0].remarks,
+          'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
 
           //row-8
-          'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
+          'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
+          'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
+          'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
+          'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
+          'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
+          'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
           //row-9
           'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
           //row-10
-          'section3_logo': response.billing_pararent_details[0].logo,
+          'section3_logo': response.billing_pararent_details[0].print_logo,
           'section3_select_additional_signature': response.quot_signature_show_state,
         });
         console.log('==finalDiscountVal=='+this.finalDiscountVal);
         this.received_signature_state = response.billing_pararent_details[0].received_signature;
         this.print_logo_state = response.billing_pararent_details[0].print_logo;
+     
 
         this.editAddress();
         this.removeAddresstest(response.billchild_details.length);
@@ -1269,6 +1299,7 @@ export class EditInvoiceComponent implements OnInit {
       this.spinner.hide();
 
   }
+  
 
 
   Customer_selectDropdownData(customerId: any) {
@@ -1398,7 +1429,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
   updateInvoice() {
-
+    var vv=this.addPI_section1.value.shipTo_3;
     this.spinner.show();
     this.addPI_section1.get("ship_to").enable();
     this.addPI_section1.get("shipTo_1").enable();
@@ -1442,7 +1473,10 @@ export class EditInvoiceComponent implements OnInit {
     // console.log('ship_address_1'+this.addPI_section1.value.shipTo_1);
     api_updatePI_req.ship_address_1 = this.addPI_section1.value.shipTo_1,
       api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2,
-      api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
+  
+     
+        api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
+      
       api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
 
     api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
@@ -1504,9 +1538,17 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.netPayment = this.addPI_section3.value.section3_grand_total;
     //row-6
     api_updatePI_req.remarks = this.addPI_section3.value.section3_remarks;
+    api_updatePI_req.previous_due_state = this.addPI_section3.value.section3_previousDue;
     //other row
 
     api_updatePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
+    api_updatePI_req.terms_cond1 = this.addPI_section3.value.section3_Terms1;
+    api_updatePI_req.terms_cond2 = this.addPI_section3.value.section3_Terms2;
+    api_updatePI_req.terms_cond3 = this.addPI_section3.value.section3_Terms3;
+    api_updatePI_req.terms_cond4 = this.addPI_section3.value.section3_Terms4;
+    api_updatePI_req.terms_cond5 = this.addPI_section3.value.section3_Terms5;
+
+
     api_updatePI_req.received_signature = this.checkbox_selectReceivedSignature;
     api_updatePI_req.logo = this.addPI_section3.value.section3_logo;
     api_updatePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
