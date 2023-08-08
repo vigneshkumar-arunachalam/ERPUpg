@@ -857,7 +857,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <input type="number" formControlName="section3_shipping_amt_txtbox"
-                                        id="shipping_amt_id" (keyup)="totalCalculate()" class="form-control mt-2" />
+                                    (keyup)="totalCalculate()"    id="shipping_amt_id"  class="form-control mt-2" />
                                 </div>
                             </div>
 
@@ -872,7 +872,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <input type="number" formControlName="banking_charge_amt" id="bankingCharge_amt_id"
-                                        (keyup)="totalCalculate()" class="form-control mt-2" />
+                                    (keyup)="totalCalculate()"    class="form-control mt-2" />
                                 </div>
                             </div>
 
@@ -1251,8 +1251,9 @@
                                     <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" formControlName="enableFinalPercent"
-                                        id="enableFinalPercent" [(ngModel)]="input3" (input)="clearInput3()" />
+                                    <input type="number" class="form-control" formControlName="enablePerFinal"
+                                        id="enablePerFinal1" [(ngModel)]="input5"
+                                        (input)="clearInput5()" />
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -1262,13 +1263,11 @@
                                     <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input type="number" class="form-control" formControlName="enableFinalDiscount"
-                                        id="enableFinalDiscount" [(ngModel)]="input4" (input)="clearInput4()" />
+                                    <input type="number" class="form-control" formControlName="finaldiscountTYpe_amt"
+                                    [(ngModel)]="input6"
+                                    (input)="clearInput6()" id="finaldiscountTYpe_amt"  />
 
-                                    <!-- 
-                                       
-                                       
-                                     -->
+                                    
                                 </div>
                             </div>
                         </div>

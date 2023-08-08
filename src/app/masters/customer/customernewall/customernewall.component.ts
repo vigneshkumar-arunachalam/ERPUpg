@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { COMMA, ENTER, } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import Swal from 'sweetalert2';
+import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 
 declare var $: any;
 declare var iziToast: any;
@@ -39,7 +40,7 @@ export class CustomernewallComponent implements OnInit {
   groupSelectCommonId: any;
   checkbox_value: any;
   //add & list
-  companyCodeAddCustomer = 'D6387';
+  companyCodeAddCustomer:any;
   CompanyName: any;
   addCustomer: any;
   revenue_list: any;
@@ -278,7 +279,7 @@ export class CustomernewallComponent implements OnInit {
   selectedValues: any;
 
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
     this.billCodeEditForm3 = this.fb.group({
       addresses: this.fb.array([this.editBillCode_FormControl()])
@@ -308,6 +309,7 @@ export class CustomernewallComponent implements OnInit {
 
   emailList: EmailArray[] = [];
   financeemailList: FinanceEmailArray[] = [];
+
 
   keywordCompanyName = 'customerName';
   data = [
@@ -1430,9 +1432,9 @@ export class CustomernewallComponent implements OnInit {
   clearCustomerAdd() {
 
     this.addCustomer.reset();
-    this.addCustomer.patchValue({
-      'company_Code': 'D6387',
-    });
+    // this.addCustomer.patchValue({
+    //   'company_Code': 'D6387',
+    // });
 
   }
   CustomerSearchtext(event: any) {
@@ -1489,6 +1491,7 @@ export class CustomernewallComponent implements OnInit {
   }
 
   pageLoad() {
+    
     this.checkbox_EditShippingAddress = true;
     if (this.checkbox_EditShippingAddress) {
 
@@ -1514,6 +1517,8 @@ export class CustomernewallComponent implements OnInit {
       this.addCustomer.get("ESA_countryname").enable();
 
     }
+
+
 
   }
 
@@ -2217,9 +2222,9 @@ export class CustomernewallComponent implements OnInit {
 
   clearcustomer() {
     this.addCustomer.reset();
-    this.addCustomer.patchValue({
-      'company_Code': 'D6387',
-    });
+    // this.addCustomer.patchValue({
+    //   'company_Code': 'D6387',
+    // });
   }
 
   addCustomerown() {
@@ -2506,7 +2511,7 @@ export class CustomernewallComponent implements OnInit {
         this.cmsDepartmentList = response.result.depart_data;
         this.editCustomerForm.patchValue({
 
-          'e_company_Code': "D6387",
+          'e_company_Code': response.result.customer_details[0].customerCode,
 
           'edit_company_Name': response.result.customer_details[0].customerName,
           'edit_defaultBillerName': response.result.customer_details[0].def_biller_id,
@@ -2952,6 +2957,7 @@ export class CustomernewallComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         console.log(response);
+        this.checkbox_specialEdit3cxSpecialOption=response[0].licence_buy_override
         this.specialEditCustomerForm.patchValue({
           'spedit_Email': response[0].email,
           'spedit_FinanceEmail': response[0].finance_email,
@@ -3011,23 +3017,28 @@ export class CustomernewallComponent implements OnInit {
     specialUpdate_customer_req.stripe_customerId = this.specialEditCustomerForm.value.spedit_stripe_customer_id;
     specialUpdate_customer_req.system_discount_3cx = this.specialEditCustomerForm.value.spedit_c3cx_system_discount;
     specialUpdate_customer_req.reseller_dis_per = this.specialEditCustomerForm.value.spedit_discount_percentage;
-
+    specialUpdate_customer_req.licence_buy_override=this.checkbox_specialEdit3cxSpecialOption;
 
     api_req.element_data = specialUpdate_customer_req;
     console.log(this.specialEditCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#specialEditCustomerFormId").modal("hide");
       this.spinner.hide();
       console.log(response);
       var update_result = response;
       console.log("special update", update_result);
       if (response != '') {
+        this.spinner.hide();
+        $("#specialEditCustomerFormId").modal("hide");
         iziToast.success({
           message: "Special Update of Customer Updated successfully",
           position: 'topRight'
         });
 
       } else {
+        this.spinner.hide();
+        $("#specialEditCustomerFormId").modal("hide");
         iziToast.warning({
           message: "Special Update of Customer not updated. Please try again",
           position: 'topRight'
@@ -3035,6 +3046,8 @@ export class CustomernewallComponent implements OnInit {
       }
     }),
       (error: any) => {
+        this.spinner.hide();
+        $("#specialEditCustomerFormId").modal("hide");
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -4462,6 +4475,22 @@ export class CustomernewallComponent implements OnInit {
     });
 
 
+  }
+  getCustomerCode() {
+  
+    // this.https.request('https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode').
+    // subscribe((response: any) => {
+    //   console.log(response);
+    // })
+    $.ajax({
+      url: "https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode",
+      type: 'GET',
+      success: function(response:any) {
+         this.companyCodeAddCustomer=response;
+        $('#companyCode').val(response);     
+      }
+  });
+        
   }
   AssignAccountManager_edit(id: any) {
 

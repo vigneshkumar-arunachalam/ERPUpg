@@ -1,0 +1,375 @@
+<div class="contents-section">
+  <div class="no-gutters">
+    <div class="col-lg-12     mb-30">
+      <div class="card">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section">
+            <a href="#" class="breadcrumb-item">
+              <i class="fas fa-home"></i>
+              Home
+              <span class="breadcrumb-item active">Reseller Payment</span>
+            </a>
+
+          </h3>
+          <div class="quotation-btn-section">
+            <button type="button" class="btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
+              <i class="fas fa-plus" style="margin-right: 5px;"></i>Add
+            </button>
+            <button type="button" class=" btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
+              <i class="fas fa-search" style="margin-right: 5px;"></i>Search
+
+            </button>
+
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div id="main">
+              <div>
+                <div class="accordion" id="faq">
+                  <div class="card" *ngFor="let name1 of reseller_name_list; let i = index;">
+                    <div class="card-header" [id]="'faqhead' + i" *ngFor="let name of name1">
+                      <a href="#" class="btn btn-header-link collapsed" [attr.data-toggle]="'collapse'"
+                        [attr.data-target]="'#faq' + i" aria-expanded="true"
+                        [attr.aria-controls]="'faq' + i">{{name.customerName}}</a>
+                    </div>
+
+                    <div [id]="'faq' + i" class="collapse" [attr.aria-labelledby]="'faqhead' + i"
+                      [attr.data-parent]="'#faq'+i">
+                      <div class="card-body">
+                        <h1>Referral Amount Details in (SGD)</h1>
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0 table-borderless">
+                                                      <thead>
+                                                        <tr class="userDatatable-header">
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 APR</span>
+                                                          </th>
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 MAY</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 JUNE</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 JULY</span>
+                                                          </th>
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 AUG</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 SEP</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 OCT</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 NOV</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 Dec</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2023 JAN</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2023 FEB</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2023 MARCH</span>
+                                                          </th>
+                                      
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody *ngFor="let list of PI_list; let i = index">
+                                                     
+                                                        <tr>
+                                                     
+                                                          <td>
+                                                            <span>{{ list.apr}}</span>
+                                                          </td>
+                                                          <td><span>{{ list.may}}</span></td>
+                                                          <td><span>{{ list.june}}</span></td>
+                                                          <td><span>{{ list.july}}</span></td>
+                                                          <td><span>{{ list.aug}}</span></td>
+                                                          <td><span>{{ list.sep}}</span></td>
+                                                          <td>
+                                                            <span>{{ list.oct}}</span>
+                                                          </td>
+                                                          <td><span>{{ list.nov}}</span></td>
+                                                          <td><span>{{ list.dec}}</span></td>
+                                                          <td><span>{{ list.jan}}</span></td>
+                                                          <td><span>{{ list.feb}}</span></td>
+                                                          <td><span>{{ list.march}}</span></td>
+                                      
+                                                          
+                                                        </tr>
+                                                      
+                                      
+                                                      </tbody>
+                                                    </table>
+                                                  </div>
+                                                  <h1>Payout Details in (SGD)</h1>
+                                                <div class="table-responsive">
+                                                    <table class="table mb-0 table-borderless">
+                                                      <thead>
+                                                        <tr class="userDatatable-header">
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 APR</span>
+                                                          </th>
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 MAY</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 JUNE</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 JULY</span>
+                                                          </th>
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 AUG</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 SEP</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 OCT</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 NOV</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2022 Dec</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2023 JAN</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2023 FEB</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">2023 MARCH</span>
+                                                          </th>
+                                      
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody *ngFor="let list of PI_list; let i = index">
+                                                     
+                                                        <tr>
+                                                     
+                                                          <td>
+                                                            <span>{{ list.apr}}</span>
+                                                          </td>
+                                                          <td><span>{{ list.may}}</span></td>
+                                                          <td><span>{{ list.june}}</span></td>
+                                                          <td><span>{{ list.july}}</span></td>
+                                                          <td><span>{{ list.aug}}</span></td>
+                                                          <td><span>{{ list.sep}}</span></td>
+                                                          <td>
+                                                            <span>{{ list.oct}}</span>
+                                                          </td>
+                                                          <td><span>{{ list.nov}}</span></td>
+                                                          <td><span>{{ list.dec}}</span></td>
+                                                          <td><span>{{ list.jan}}</span></td>
+                                                          <td><span>{{ list.feb}}</span></td>
+                                                          <td><span>{{ list.march}}</span></td>
+                                      
+                                                          
+                                                        </tr>
+                                                      
+                                      
+                                                      </tbody>
+                                                    </table>
+                                                  </div>
+                                                  <h1>List Details</h1>
+                                                  <div class="table-responsive">
+                                                    <table class="table mb-0 table-borderless">
+                                                      <thead>
+                                                        <tr class="userDatatable-header">
+                                                          <th>
+                                                            <div class="d-flex align-items-center">
+                                                              <div class="custom-checkbox  check-all">
+                                                            
+                                                                <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1"
+                                                                id="check-3" (change)="checkUncheckAll()" /> 
+                                                                  <label for="check-3">
+                              
+                                                                  </label>
+                                                              </div>
+                                                          </div>
+                                                            
+                                                          </th>
+
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">R Code</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Invoice No</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Comm Date</span>
+                                                          </th>
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">Invoice Date</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Customer Name</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Comm Type</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Invoice Amt</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Fixed Amt</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Usage Amt</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Currency</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Referall Amount</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Conv Amount</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Customer Paid</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Action</span>
+                                                          </th>
+                                      
+                                                        </tr>
+                                                      </thead>
+                                                      
+                                                      <tbody *ngFor="let list of resellerCommission_list; let i = index">
+                                                     
+                                                        <tr>
+                                                                                                            
+                                                          <td>
+                                                            <div class="d-flex">
+                                                              <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                  <div class="checkbox-group-wrapper">
+                                                                      <div class="checkbox-group d-flex">
+                                                                          <div
+                                                                              class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                              <input type="checkbox" [(ngModel)]="list.isSelected" name="list_name" value="{{list.id}}"
+                                                                  (change)="isAllSelected()" id="check-grp1-{{i}}" />
+                                                                             
+                                                                              <label for="check-grp1-{{i}}"></label>
+                                                                          </div>
+                                                                      </div>
+                                                                  </div>
+                                                              </div>
+                              
+                                                          </div>
+                                                          </td>
+                                                          <td>{{ list.reseller_id}}</td>
+                                                          <td>{{ list.invoice_no}}</td>
+                                                          <td>{{ list.reseller_comm_dt_show}}</td>
+                                                          <td>{{ list.billDate_show}}</td>
+                                                          <td><span>{{ list.customer_name}}</span></td>
+                                                          <td>
+                                                            {{ list.commission_type}}
+                                                          </td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>
+                                                            <div class="page">
+                                      
+                                                                <div class="dropdown">
+                                                                    <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                                    <ul class="dropdown__list">
+                                          
+                                                                      <li class="dropdown__item" >
+                                                                        <a class="hover3" title="Edit" >
+                                                                          <img class="show" src="assets/img/icon2/edit-blue.png">
+                                                                          <img class="hide" src="assets/img/icon2/edit-black.png">
+                                                                        </a>
+                                                                      </li>
+                                          
+                                                                     
+                                          
+                                                                      <li class="dropdown__item" >
+                                                                        <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
+                                                                          >
+                                                                          <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                                            <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                                        </a>
+                                                                      </li>
+                                          
+                                                                      <li class="dropdown__item" >
+                                                                        <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
+                                                                          >
+                                                                          <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                                                          <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                                                        </a>
+                                                                      </li>
+                                          
+                                                                      <li class="dropdown__item">
+                                                                        <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
+                                                                          >
+                                                                          <img class="show" src="assets/img/icon2/delete-blue.png">
+                                                                          <img class="hide" src="assets/img/icon2/delete-black.png">
+                                                                        </a>
+                                                                      </li>
+                                          
+                                                                      <li class="dropdown__item"  >
+                                                                        <a class="hover3" title="Send to Approval" data-toggle="modal" data-target="#sendApproval"
+                                                                         >
+                                                                          <img class="show" src="assets/img/icon2/share-blue.png">
+                                                                          <img class="hide" src="assets/img/icon2/share-black.png">
+                                                                        </a>
+                                                                      </li>
+                                          
+                                                                    </ul>
+                                                                  </div>
+                                                            </div>
+                                                          </td>
+                                      
+                                                          
+                                                        </tr>
+                                                      
+                                      
+                                                      </tbody>
+                                                    </table>
+                                                  </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

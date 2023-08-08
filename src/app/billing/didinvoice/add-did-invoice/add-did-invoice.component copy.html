@@ -447,9 +447,9 @@
                                     </td>
                                 </tr>
                             </thead>
-                            <tbody formArrayName="fixedAddresses" *ngFor="let address of addressControls.controls; let i = index;" [formGroupName]="i">
+                            <tbody formArrayName="fixedAddresses" *ngFor="let address of addressControls.controls; let i = index;">
                               
-                                <tr >
+                                <tr [formGroupName]="i">
                                     <td>
                                         <div class="userDatatable-content">
                                         <input type="text" class="form-control mt-2 mb-2" formControlName="particular1" id="particular_1_{{i}}" />
@@ -503,13 +503,9 @@
     
                                     <td>
                                         <div class="userDatatable-content">
-                                        <!-- <input type="text" class="form-control" formControlName="amt1" id="amt_1_{{i}}"
-                                         (change)="totalCalculate_1();totalCalculate_2();totalCalculate_3()" (keyup)="totalCalculate_1();totalCalculate_2();totalCalculate_3()"  /> -->
-                                         <input type="text" class="form-control" formControlName="amt1" id="amt_1_{{i}}"
-                                            />
+                                        <input type="text" class="form-control" formControlName="amt1" id="amt_1_{{i}}"
+                                         (change)="totalCalculate_1();totalCalculate_2();totalCalculate_3()" (keyup)="totalCalculate_1();totalCalculate_2();totalCalculate_3()"  />
                                         </div>
-
-                                        
                                     </td>
     
                                     <td>
@@ -526,6 +522,9 @@
                                     </td>
                                 
                                 </tr>
+                            </tbody>
+                            <br>
+                            <tbody>
                                 <tr >
     
                                     <td colspan="3">
@@ -563,7 +562,7 @@
                                             <label  class="col-form-label" >Sub Total(Rs.) </label>
                                            
                                         </div>
-                                        <input type="text" class="form-control"  id="sub_total_{{i}}" [attr.readonly]="isReadOnly"
+                                        <input type="text" class="form-control"  id="sub_total_1" [attr.readonly]="isReadOnly"
                                         />
                                     </td>
                                     <td colspan="1">
@@ -578,9 +577,6 @@
     
                                 </tr>
                             </tbody>
-                            <br>
-                          
-
                             <div class="text-left"> 
                                 <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addInvoice()"
                                     style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>

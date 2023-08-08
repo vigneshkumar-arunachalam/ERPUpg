@@ -33,6 +33,7 @@ export class AppComponent {
     //900 = 15 minute
     //3600= 1 hour
     //1800= 30 minutes
+    //86400=24 hours
     this.bnIdle.startWatching(86400).subscribe((res) => {
       if (res) {
         localStorage.clear();

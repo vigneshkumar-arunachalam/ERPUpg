@@ -24,7 +24,7 @@
               </div>
 
               <button type="button" title="Add New Customer" class="btn btn-primary btn-default btn-squared"
-                data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()"
+                data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()" (click)="getCustomerCode()"
                 style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i> Add
               </button>
 
@@ -653,7 +653,7 @@
                 <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
                     *</span></label>
                 <div class="col-lg-12">
-                  <input type="text" class="form-control" [(ngModel)]="companyCodeAddCustomer" [readonly]="isReadOnly"
+                  <input type="text" class="form-control"  [readonly]="isReadOnly"
                     formControlName="company_Code" id="companyCode" />
                 </div>
               </div>
@@ -2614,12 +2614,14 @@
 
             <div class="col-lg-12">
               <div class="form-group row">
+               
 
                 <input type="checkbox" formControlName="spedit_3cx_BuySpecial" id="su_bso" class="chb1 chb1-altered"
-                  (change)="eventCheck_spedit_3cxspecialOption($event)" />
+                checked="{{checkbox_specialEdit3cxSpecialOption =='1'? 'checked' : ''}}"  (change)="eventCheck_spedit_3cxspecialOption($event)" />
                 <label class="col-lg-12 col-form-label" for="su_bso">3CX Buy Special Option</label>
               </div>
             </div>
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="discount_percentage" class="col-lg-12 col-form-label">Discount

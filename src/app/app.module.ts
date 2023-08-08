@@ -87,7 +87,8 @@ import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component';
 import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component';
 import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component';
 import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component'; 
-
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -153,12 +154,13 @@ import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-
      EnquirynewComponent,
      AddNewEnquiryComponent,
      DuplicateDOComponent,
-     EditNewEnquiryComponent
+     EditNewEnquiryComponent,
+     ResellerPaymentComponent
      
     
   ],
   imports: [
-    BrowserModule,
+    BrowserModule,CanvasJSAngularChartsModule,
     FormsModule,MatTabsModule,NgxSpinnerModule,
     ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,

@@ -142,437 +142,273 @@
                     <div class="page">
 
                       <div class="dropdown">
-                        <div style="display: flex;align-items: center;">
-                          <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
-                            (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i></button>
-                          <span class="recurring-Status" *ngIf="(this.recurring_state_all=='1')">R</span>
-                          <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
-                              src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
-                        </div>
-                        <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
-                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-dialog-centered ActionId" role="document"
-                            style="max-width: 1000px;">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <span class="col-12 modal-title text-center"
-                                  style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
-                                </span>
-                                <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true"
-                                    style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
-                                </h6>
-                              </div>
-                              <div class="modal-body">
-                                <!-- <div class="modal-body" style="display: flex;justify-content: space-between;"> -->
-                                <!-- <ul class="dropdown__list"> -->
-
-                                <div class="row" style="border-bottom: 2px solid #8e85857d;display: flex;
-                                justify-content: space-between;padding-bottom: 25px;">
-                                  <li class="dropdown__item" *ngIf="(invoicePermissionList_pdf_view==1)">
-                                    <a class="hover3" title="PDF" data-toggle="modal" data-target="#pdfFormId"
-                                      (click)="pdf(list.billId)">
-                                      <img class="show" src="assets/img/icon2/pdf-blue.png">
-                                      <img class="hide" src="assets/img/icon2/pdf-black.png">
-                                      <span><b style="padding: 0px 20px;">-</b><strong>PDF</strong></span>
-                                    </a>
-
-                                  </li>
-                                  <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
-                                    <a *ngIf="(recurring_Status=='1')" class="hover4" title="Un-Recurring"
-                                      data-toggle="modal" data-target="#RecurringFormId"
-                                      (click)="RecurringEdit(list.billId,i)">
-
-                                      <img class="show" src="assets/img/icon2/R-red.png">
-                                      <img class="hide" src="assets/img/icon2/R-black.png">
-                                      <span><b style="padding: 0px 20px;">-</b><strong>Recurring</strong></span>
-                                    </a>
-                                    <a *ngIf="(recurring_Status=='0')" class="hover4" title="Recurring"
-                                      data-toggle="modal" data-target="#RecurringFormId"
-                                      (click)="RecurringEdit(list.billId,i)">
-
-                                      <img class="show" src="assets/img/icon2/R-blue.png">
-                                      <img class="hide" src="assets/img/icon2/R-black.png">
-                                      <span><b style="padding: 0px 20px;">-</b><strong>Recurring</strong></span>
-                                    </a>
-
-                                  </li>
-                                  <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
-                                    <a *ngIf="(reseller_commissionState=='1')" class="hover3"
-                                      title="Set Reseller Commission" data-toggle="modal"
-                                      data-target="#withoutFormArrayResellerCommissionFormId"
-                                      (click)="get_WFA_ResellerCommission(list.billId,i)">
-
-                                      <img class="show" src="assets/img/icon2/C-red.png">
-                                      <img class="hide" src="assets/img/icon2/C-black.png">
-                                      <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
-                                          Commission</strong></span>
-                                    </a>
-                                    <a *ngIf="(reseller_commissionState=='0')" class="hover3"
-                                      title="Set Reseller Commission" data-toggle="modal"
-                                      data-target="#withoutFormArrayResellerCommissionFormId"
-                                      (click)="get_WFA_ResellerCommission(list.billId,i)">
-                                      <img class="show" src="assets/img/icon2/C-blue.png">
-                                      <img class="hide" src="assets/img/icon2/C-black.png">
-                                      <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
-                                          Commission</strong></span>
-                                    </a>
-
-
-                                  </li>
-                                  <li class="dropdown__item" *ngIf="(invoicePermissionList_payment_process==1)">
-                                    <a *ngIf="(billStatus=='3')" class="hover4" title="Payment Process"
-                                      data-toggle="modal" data-target="#processPaymentFormId"
-                                      (click)="processPaymentEdit(list.billId,i)">
-                                      <img class="show" src="assets/img/icon2/P-red.png">
-                                      <img class="hide" src="assets/img/icon2/P-black.png">
-
-                                      <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
-                                    </a>
-                                    <a *ngIf="(billStatus!='3')" class="hover4" title="Payment Process"
-                                      data-toggle="modal" data-target="#processPaymentFormId"
-                                      (click)="processPaymentEdit(list.billId,i)">
-                                      <img class="show" src="assets/img/icon2/P-blue.png">
-                                      <img class="hide" src="assets/img/icon2/P-black.png">
-
-                                      <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
-                                    </a>
-                                  </li>
-
-
-                                </div>
-
-
-                                <div class="row" style="display: flex;
-                                justify-content: space-between;">
-                                  <ul>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_edit==1)">
-                                      <a class="hover3" title="Edit" (click)="editDidGo(list.billId,i,list.did_invoice_state)">
-                                        <img class="show" src="assets/img/icon2/edit-blue.png">
-                                        <img class="hide" src="assets/img/icon2/edit-black.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
-                                      </a>
-                                    </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_duplicate==1)">
-                                      <a class="hover4" title="Duplicate" data-toggle="modal"
-                                        (click)="duplicatePIGo(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/duplicate-blue.png">
-                                        <img class="hide" src="assets/img/icon2/duplicate-black.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Duplicate</strong></span>
-                                      </a>
-                                    </li>
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_delete==1)">
-                                      <a class="hover3" title="Delete" data-toggle="modal"
-                                        (click)="deleteDIDInvoice(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/delete-blue.png">
-                                        <img class="hide" src="assets/img/icon2/delete-black.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
-                                      </a>
-                                    </li>
-
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
-                                      <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
-                                        data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-blue.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                      <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
-                                        class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                        data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-red.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                    </li>
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==0)">
-                                      <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
-                                        data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-blue.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                      <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
-                                        class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                        data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-red.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                    </li>
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_mail==1)">
-                                      <a class="hover4" title="Email" data-toggle="modal" data-target="#emailFormId"
-                                        (click)="getEmailDetails(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                        <img class="hide" src="assets/img/icon2/gmail-black.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Email</strong></span>
-                                      </a>
-                                    </li>
-
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_share==1)">
-                                      <a *ngIf="(share_access_state==0)" class="hover4" title="Share permission"
-                                        data-toggle="modal" data-target="#sharPerissionFormId"
-                                        (click)="invoiceSharPersonEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/share-square-blue.png">
-                                        <img class="hide" src="assets/img/icon2/share-square-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Share
-                                            permission</strong></span>
-                                      </a>
-                                      <a *ngIf="(share_access_state==1)" class="hover4" title="Share permission"
-                                        data-toggle="modal" data-target="#sharPerissionFormId"
-                                        (click)="invoiceSharPersonEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/share-square-red.png">
-                                        <img class="hide" src="assets/img/icon2/share-square-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Share
-                                            permission</strong></span>
-                                      </a>
-
-                                    </li>
-
-
-
-
-                                  </ul>
-                                  <ul>
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_set_prev_billing==1)">
-                                      <a class="hover4" title="Set Previous Due" data-toggle="modal" data-target=""
-                                        (click)="setPreviousDue(list.billId,list.previous_due_state,i)">
-
-                                        <img class="show" src="assets/img/icon2/previous-blue.png">
-                                        <img class="hide" src="assets/img/icon2/previous-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Previous
-                                            Due</strong></span>
-                                      </a>
-
-                                    </li>
-
-
-                                    <!-- <li class="dropdown__item" *ngIf="(invoicePermissionList_online_pay_link==1)">
-                                      <a class="hover3" title="Payment Link" data-toggle="modal"
-                                        (click)="paymentLink(list.paylink_id,i)">
-                                        <img class="show" src="assets/img/icon2/online-payment.png">
-                                        <img class="hide" src="assets/img/icon2/online-payment.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Payment Link</strong></span>
-                                      </a>
-
-                                    </li> -->
-
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_file_attach==1)">
-                                      <a class="hover4" title="File Attachment" data-toggle="modal"
-                                        data-target="#fileAttachmentFormId"
-                                        (click)="fileAttachmentEdit(list.billId,i)">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
-                                          viewBox="0 0 24 24" fill="none" stroke="#6d5dfc" stroke-width="3"
-                                          stroke-linecap="round" stroke-linejoin="round"
-                                          class="feather feather-file-plus">
-                                          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                                          <polyline points="14 2 14 8 20 8"></polyline>
-                                          <line x1="12" y1="18" x2="12" y2="12"></line>
-                                          <line x1="9" y1="15" x2="15" y2="15"></line>
-                                        </svg>
-                                        <span><b style="padding: 0px 20px;">-</b><strong>File
-                                            Attachment</strong></span>
-                                      </a>
-
-                                    </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_set_terms_condition==1)">
-                                      <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
-                                        data-target="#settermsConditionFormId"
-                                        (click)="setTermsConditionEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/TermsConditions-blue.png">
-                                        <img class="hide" src="assets/img/icon2/TermsConditions-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Terms &
-                                            Condition</strong></span>
-                                      </a>
-
-                                    </li>
-
-                                    <!-- <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_revenue==1)">
-                                      <a class="hover4" title="Invoice Revenue" data-toggle="modal"
-                                        data-target="#InvoiceRevenueFormId"
-                                        (click)="InvoiceRevenueEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/invoiceRevenueeee-blue.png">
-                                        <img class="hide" src="assets/img/icon2/invoiceRevenueeee-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Invoice
-                                            Revenue</strong></span>
-                                      </a>
-
-
-                                    </li> -->
-
-
-                                    <!-- <li class="dropdown__item" *ngIf="(invoicePermissionList_set_actual_cost==1)">
-                                      <a class="hover4" title="Set Actual Cost" data-toggle="modal"
-                                        data-target="#setActualCostId"
-                                        (click)="get_actualcost_details(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/budget.png">
-                                        <img class="hide" src="assets/img/icon2/budget.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Actual
-                                            Cost</strong></span>
-                                      </a>
-
-                                    </li> -->
-                                    <!-- <li class="dropdown__item">
-                                      <a class="hover3" title="Set Actual Cost" data-toggle="modal"
-                                        data-target="#setActualCostId"
-                                        (click)="get_actualcost_details(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/budget.png">
-                                        <img class="hide" src="assets/img/icon2/budget.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Actual
-                                            Cost</strong></span>
-                                      </a>
-
-                                    </li> -->
-                                  </ul>
-                                  <ul>
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_type==1)">
-                                      <a class="hover4" title="Set Invoice Type Name" data-toggle="modal"
-                                        data-target="#setInvoiceTypeNameFormId"
-                                        (click)="setInvoiceTypeNameEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/invoicetpe.png">
-                                        <img class="hide" src="assets/img/icon2/invoicetpe.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Invoice Type
-                                            Name</strong></span>
-                                      </a>
-
-                                    </li>
-                                    <!-- <li class="dropdown__item">
-                                      <a class="hover3" title="Notes" data-toggle="modal" data-target="#NotesFormId"
-                                        (click)="getNotes(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/notepad.png">
-                                        <img class="hide" src="assets/img/icon2/notepad-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Notes</strong></span>
-                                      </a>
-
-                                    </li> -->
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_pi==1)">
-                                      <a class="hover4" title="Invoice to Proforma" data-toggle="modal"
-                                        (click)="InvoicetoProforma(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/invoice-pi.png">
-                                        <img class="hide" src="assets/img/icon2/invoice-pi.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Invoice to
-                                            Proforma</strong></span>
-                                      </a>
-
-
-                                    </li>
-                                    <!-- <li class="dropdown__item">
-
-                                      <a class="hover3" title="License Details" data-toggle="modal"
-                                        data-target="#LicenseDetailsFormId"
-                                        (click)="get_invoice_licence_details(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/licensing.png">
-                                        <img class="hide" src="assets/img/icon2/licensing.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>License
-                                            Details</strong></span>
-                                      </a>
-
-                                    </li> -->
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_quotation==1)">
-
-                                      <a class="hover4" title="Invoice to Quotation Conversion" data-toggle="modal"
-                                        data-target="#InvoicetoQuotationFormId"
-                                        (click)="invoicetoQuotationEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/convert.png">
-                                        <img class="hide" src="assets/img/icon2/convert.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Convert Invoice to Quotation
-                                          </strong></span>
-                                      </a>
-
-                                    </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_export_billing==1)">
-                                      <a class="hover3" title="Local to Export" data-toggle="modal"
-                                        (click)="setLocaltoExport(list.billId,list.export_state,i)">
-
-
-
-                                        <img *ngIf="list.export_state==1" class="show"
-                                          src="assets/img/icon2/share-a.png">
-                                        <img *ngIf="list.export_state==1" class="hide"
-                                          src="assets/img/icon2/share-a.png">
-                                        <img *ngIf="list.export_state==2" class="show"
-                                          src="assets/img/icon2/share-b.png">
-                                        <img *ngIf="list.export_state==2" class="hide"
-                                          src="assets/img/icon2/share-b.png">
-                                        <img *ngIf="list.export_state==3" class="show"
-                                          src="assets/img/icon2/share-c.png">
-                                        <img *ngIf="list.export_state==3" class="hide"
-                                          src="assets/img/icon2/share-c.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Local to
-                                            Export</strong></span>
-                                      </a>
-
-                                    </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
-                                      <a class="hover4" title="Delivery Order" data-toggle="modal"
-                                        data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/delivery-blue.png">
-                                        <img class="hide" src="assets/img/icon2/delivery-black.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Delivery
-                                            Order</strong></span>
-                                      </a>
-                                    </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_did==1)">
-                                      <a class="hover3" title="Invoice to DID Invoice" data-toggle="modal"
-                                        data-target="#">
-                                        <img class="show" src="assets/img/icon2/did.png">
-                                        <img class="hide" src="assets/img/icon2/did.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Invoice to DID
-                                            Invoice</strong></span>
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-dark" style="line-height: 10px;"
-                                  data-dismiss="modal">
-                                  Cancel
-                                </button>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                        <ul class="dropdown__list">
+
+                          <li class="dropdown__item">
+                            <a class="hover3" title="Edit" (click)="editDidGo(list.billId)">
+                              <img class="show" src="assets/img/icon2/edit-blue.png">
+                              <img class="hide" src="assets/img/icon2/edit-black.png">
+                            </a>
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_pdf_view==1)">
+                            <a class="hover3" title="PDF" data-toggle="modal" data-target="#pdfFormId"
+                              (click)="pdf(list.billId)">
+                              <img class="show" src="assets/img/icon2/pdf-blue.png">
+                              <img class="hide" src="assets/img/icon2/pdf-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>PDF</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
+                            <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
+                              data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
+                              (click)="getInvoice_Post(list.billId)"
+                              (click)="InvoiceSendingMethodEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/post-blue.png">
+                              <img class="hide" src="assets/img/icon2/post-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                  Post</strong></span>
+                            </a>
+
+                            <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
+                              class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                              data-target="#InvoiceSendingMethodFormId"
+                              (click)="getInvoice_Post(list.billId)"
+                              (click)="InvoiceSendingMethodEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/post-red.png">
+                              <img class="hide" src="assets/img/icon2/post-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                  Post</strong></span>
+                            </a>
+
+                          </li>
+
+
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==0)">
+                            <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
+                              data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
+                              (click)="getInvoice_Post(list.billId)"
+                              (click)="InvoiceSendingMethodEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/post-blue.png">
+                              <img class="hide" src="assets/img/icon2/post-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                  Post</strong></span>
+                            </a>
+
+                            <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
+                              class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                              data-target="#InvoiceSendingMethodFormId"
+                              (click)="getInvoice_Post(list.billId)"
+                              (click)="InvoiceSendingMethodEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/post-red.png">
+                              <img class="hide" src="assets/img/icon2/post-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                  Post</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_share==1)">
+                            <a *ngIf="(share_access_state==0)" class="hover4" title="Share permission"
+                              data-toggle="modal" data-target="#sharPerissionFormId"
+                              (click)="invoiceSharPersonEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/share-square-blue.png">
+                              <img class="hide" src="assets/img/icon2/share-square-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Share
+                                  permission</strong></span>
+                            </a>
+                            <a *ngIf="(share_access_state==1)" class="hover4" title="Share permission"
+                              data-toggle="modal" data-target="#sharPerissionFormId"
+                              (click)="invoiceSharPersonEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/share-square-red.png">
+                              <img class="hide" src="assets/img/icon2/share-square-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Share
+                                  permission</strong></span>
+                            </a>
+
+                          </li>
+
+                          <li class="dropdown__item" >
+                            <a class="hover4" title="Email" data-toggle="modal" data-target="#emailFormId"
+                              (click)="getEmailDetails(list.billId)">
+                              <img class="show" src="assets/img/icon2/gmail-blue.png">
+                              <img class="hide" src="assets/img/icon2/gmail-black.png">
+
+                              <span><b style="padding: 0px 20px;">-</b><strong>Email</strong></span>
+                            </a>
+                          </li>
+
+                         
+                          <li class="dropdown__item" >
+                          
+                            <a  class="hover4" title="Payment Process"
+                              data-toggle="modal" data-target="#processPaymentFormId"
+                              (click)="processPaymentEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/P-blue.png">
+                              <img class="hide" src="assets/img/icon2/P-black.png">
+
+                              <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
+                              (click)="deleteDIDInvoice(list.billId)">
+                              <img class="show" src="assets/img/icon2/delete-blue.png">
+                              <img class="hide" src="assets/img/icon2/delete-black.png">
+                            </a>
+                          </li>
+                          <li class="dropdown__item" >
+                            <a class="hover4" title="Invoice to Proforma" data-toggle="modal"
+                              (click)="InvoicetoProforma(list.billId)">
+                              <img class="show" src="assets/img/icon2/invoice-pi.png">
+                              <img class="hide" src="assets/img/icon2/invoice-pi.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Invoice to
+                                  Proforma</strong></span>
+                            </a>
+
+
+                          </li>
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Delivery Order" data-toggle="modal"
+                              data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/delivery-blue.png">
+                              <img class="hide" src="assets/img/icon2/delivery-black.png">
+
+                              <span><b style="padding: 0px 20px;">-</b><strong>Delivery
+                                  Order</strong></span>
+                            </a>
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_type==1)">
+                            <a class="hover4" title="Set Invoice Type Name" data-toggle="modal"
+                              data-target="#setInvoiceTypeNameFormId"
+                              (click)="setInvoiceTypeNameEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/invoicetpe.png">
+                              <img class="hide" src="assets/img/icon2/invoicetpe.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Set Invoice Type
+                                  Name</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
+                            <a *ngIf="(recurring_Status=='1')" class="hover4" title="Un-Recurring"
+                              data-toggle="modal" data-target="#RecurringFormId"
+                              (click)="RecurringEdit(list.billId)">
+
+                              <img class="show" src="assets/img/icon2/R-red.png">
+                              <img class="hide" src="assets/img/icon2/R-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Recurring</strong></span>
+                            </a>
+                            <a *ngIf="(recurring_Status=='0')" class="hover4" title="Recurring"
+                              data-toggle="modal" data-target="#RecurringFormId"
+                              (click)="RecurringEdit(list.billId)">
+
+                              <img class="show" src="assets/img/icon2/R-blue.png">
+                              <img class="hide" src="assets/img/icon2/R-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Recurring</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_set_prev_billing==1)">
+                            <a class="hover4" title="Set Previous Due" data-toggle="modal" data-target=""
+                              (click)="setPreviousDue(list.billId,list.previous_due_state)">
+
+                              <img class="show" src="assets/img/icon2/previous-blue.png">
+                              <img class="hide" src="assets/img/icon2/previous-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Set Previous
+                                  Due</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_file_attach==1)">
+                            <a class="hover4" title="File Attachment" data-toggle="modal"
+                              data-target="#fileAttachmentFormId"
+                              (click)="fileAttachmentEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/fileAttach-blue.png">
+                              <img class="hide" src="assets/img/icon2/fileAttach-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>File
+                                  Attachment</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_set_terms_condition==1)">
+                            <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
+                              data-target="#settermsConditionFormId"
+                              (click)="setTermsConditionEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/TermsConditions-blue.png">
+                              <img class="hide" src="assets/img/icon2/TermsConditions-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Set Terms &
+                                  Condition</strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
+                            <a *ngIf="(reseller_commissionState=='1')" class="hover3"
+                              title="Set Reseller Commission" data-toggle="modal"
+                              data-target="#withoutFormArrayResellerCommissionFormId"
+                              (click)="get_WFA_ResellerCommission(list.billId)">
+
+                              <img class="show" src="assets/img/icon2/C-red.png">
+                              <img class="hide" src="assets/img/icon2/C-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
+                                  Commission</strong></span>
+                            </a>
+                            <a *ngIf="(reseller_commissionState=='0')" class="hover3"
+                              title="Set Reseller Commission" data-toggle="modal"
+                              data-target="#withoutFormArrayResellerCommissionFormId"
+                              (click)="get_WFA_ResellerCommission(list.billId)">
+                              <img class="show" src="assets/img/icon2/C-blue.png">
+                              <img class="hide" src="assets/img/icon2/C-black.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
+                                  Commission</strong></span>
+                            </a>
+
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_quotation==1)">
+
+                            <a class="hover4" title="Invoice to Quotation Conversion" data-toggle="modal"
+                              data-target="#InvoicetoQuotationFormId"
+                              (click)="invoicetoQuotationEdit(list.billId)">
+                              <img class="show" src="assets/img/icon2/convert.png">
+                              <img class="hide" src="assets/img/icon2/convert.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Convert Invoice to Quotation
+                                </strong></span>
+                            </a>
+
+                          </li>
+                          <li class="dropdown__item" *ngIf="(invoicePermissionList_export_billing==1)">
+                            <a class="hover3" title="Local to Export" data-toggle="modal"
+                              (click)="setLocaltoExport(list.billId,list.export_state)">
+
+
+
+                              <img *ngIf="list.export_state==1" class="show"
+                                src="assets/img/icon2/share-a.png">
+                              <img *ngIf="list.export_state==1" class="hide"
+                                src="assets/img/icon2/share-a.png">
+                              <img *ngIf="list.export_state==2" class="show"
+                                src="assets/img/icon2/share-b.png">
+                              <img *ngIf="list.export_state==2" class="hide"
+                                src="assets/img/icon2/share-b.png">
+                              <img *ngIf="list.export_state==3" class="show"
+                                src="assets/img/icon2/share-c.png">
+                              <img *ngIf="list.export_state==3" class="hide"
+                                src="assets/img/icon2/share-c.png">
+                              <span><b style="padding: 0px 20px;">-</b><strong>Local to
+                                  Export</strong></span>
+                            </a>
+
+                          </li>
+                        
+                          <li class="dropdown__item">
+                            <a href="#" class="hover4" title="Coupon Assign" data-toggle="modal"
+                              data-target="#couponAssignFormId">
+                              <img class="show" src="assets/img/icon2/coupon.png">
+                              <img class="hide" src="assets/img/icon2/coupon-black.png">
+                            </a>
+                          </li>
+                        </ul>
                       </div>
                     </div>
                   </td>

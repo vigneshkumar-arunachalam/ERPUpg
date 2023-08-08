@@ -585,3 +585,7 @@ td{border-bottom: 1px solid #231ac9!important;}
 #suspendInvoiceFormId .modal-dialog {
   max-width: 95%;
 }
+#monthlyTurnOverChartFormId .modal-dialog {
+  max-width: 38%;
+  height: 170%;
+}

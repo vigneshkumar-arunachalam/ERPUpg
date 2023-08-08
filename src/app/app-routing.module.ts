@@ -61,10 +61,14 @@ import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component';
 import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component'; 
 import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component'; 
 import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component'; 
+import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'resellerPayment', component: ResellerPaymentComponent
   },
   {
     path: 'editNewEnquiry', component: EditNewEnquiryComponent

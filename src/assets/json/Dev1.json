@@ -83,6 +83,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/didInvoice"
+        },{
+            "name": "Reseller Payment",
+            "icon": "framer",
+            "IDs": [2036],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/resellerPayment"
         }
        
         

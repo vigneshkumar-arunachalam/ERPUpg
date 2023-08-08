@@ -127,31 +127,39 @@ export class LoginComponent implements OnInit {
     api_req.element_data = addAPI;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-
+$("#u_id").val(response.userId);
+console.log("response",response);
       this.loginDetails = response;
       this.userID = response.userId;
       this.userName = response.firstName;
       this.role = response.role;
 
-
-
-      localStorage.setItem('access_token', 'test')
-      localStorage.setItem('login_status', '1')
-      localStorage.setItem('erp_c4c_user_id', response.userId)
-      localStorage.setItem('user_name', response.firstName)
-      localStorage.setItem('role', response.role)
-      localStorage.setItem('profile_image', response.profile_image)
+console.log($("#u_id").val());
+// return false;
+if($("#u_id").val()!='') {
+  localStorage.setItem('access_token', 'test')
+  localStorage.setItem('login_status', '1')
+  localStorage.setItem('erp_c4c_user_id', response.userId)
+  localStorage.setItem('user_name', response.firstName)
+  localStorage.setItem('role', response.role)
+  localStorage.setItem('profile_image', response.profile_image)
+  
+  console.log("profile_image",alert);
+  this.router.navigate(['/']);
+}
       
-      console.log("profile_image",alert);
-
-
-      if (this.userID != '') {
-        this.router.navigate(['/']);
-      }
-      if (this.userID == 'undefined') {
+if($("#u_id").val()=='undefined') {
+  localStorage.clear();
         this.router.navigate(['/logout']);
-      }
+}
+
+      // if (this.userID != '') {
+      //   this.router.navigate(['/']);
+      // }
+      // if (this.userID == 'undefined') {
+      //   localStorage.clear();
+      //   this.router.navigate(['/logout']);
+      // }
 
     });
 
@@ -192,6 +200,7 @@ export class LoginComponent implements OnInit {
           },1000) 
         }
         if (response.userId == 'undefined' || response.userId === null || response.userId=='' ) {
+          localStorage.clear();
           this.router.navigate(['/logout']);
         }
       });

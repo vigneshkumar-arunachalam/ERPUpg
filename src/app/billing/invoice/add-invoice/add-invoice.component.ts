@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-add-invoice',
   templateUrl: './add-invoice.component.html',
@@ -318,12 +319,73 @@ warrantyValue:any;
     });
 
   }
-  removeAddress(i: number) {
-    this.addresses.removeAt(i);
-    var addr = this.addPI_section2.value.addresses;
-    var list_cnt = addr.length;
 
-    this.totalCalculate();
+  // removeAddress(i: number) {
+  //   this.addresses.removeAt(i);
+  //   var addr = this.addPI_section2.value.addresses;
+  //   var list_cnt = addr.length;
+
+  //   this.totalCalculate();
+
+  // }
+
+  removeAddress(i: number) {
+
+
+    var pd_billchild_id = $('#pd_billchild_id_' + i).val();
+    //console.log('quotationChildId'+quotationChildId);
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.addresses.removeAt(i);
+        var addr = this.addPI_section2.value.addresses;
+        var list_cnt = addr.length;
+        
+     
+              
+        
+
+
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "proforma";
+        api_req.api_url = "proforma/delete_billing_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_quotation_child";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+
+        });
+
+        setTimeout(() => {
+          this.totalCalculate();
+        }, 1500);
+        
+
+        setTimeout(() => {
+        this.totalCalculate();
+      }, 1500);
+
+
+      }
+    })
+
+
+    
+
 
   }
 

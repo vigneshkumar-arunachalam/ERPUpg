@@ -113,6 +113,7 @@ export class EditDidInvoiceComponent implements OnInit {
 quotationAddSignature_state:any;
 quotationAddSignature_filename:any;
 selectAdditionalSign:boolean=true; 
+editDIDStateID:any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
@@ -139,8 +140,22 @@ selectAdditionalSign:boolean=true;
   keywordUserName = 'reseller_name';
 
   ngOnInit(): void {
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);
 
-    this.editDidInvice();
+      this.editbillerID = params['e_editBillID'];
+      this.editDIDStateID=params['e_editDIDState'];
+
+
+
+      console.log("edit biller id", this.editbillerID);
+      console.log("edit DID state id", this.editDIDStateID);
+      this.editDidInvice();
+      
+    }
+    );
+   
     this.addDidLoad();
 
     
@@ -904,11 +919,11 @@ selectAdditionalSign:boolean=true;
     
     let api_req: any = new Object();
     let api_editDid_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/edit_profoma_invoice";
+    api_req.moduleType = "did";
+    api_req.api_url = "did/edit_did_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_editDid_req.action = "edit_profoma_invoice";
+    api_editDid_req.action = "edit_did_invoice";
     api_editDid_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_editDid_req.billId = this.editbillerID; 
     api_req.element_data = api_editDid_req;
