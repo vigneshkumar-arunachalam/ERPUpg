@@ -121,120 +121,149 @@
                       </td>
                       <td>
                         <div class="page">
-
                           <div class="dropdown">
-                            <button class="btn1"><i class="fa fa-bars"></i></button>
-                            <ul class="dropdown__list">
-
-                              <li class="dropdown__item">
-                                <a class="hover3" title="Edit"
-                                  (click)="list.did_invoice_state==0?editPIGo(list.billId):editDidPIGo(list.billId)">
-                                  <img class="show" src="assets/img/icon2/edit-blue.png">
-                                  <img class="hide" src="assets/img/icon2/edit-black.png">
-                                </a>
-                              </li>
-                          
-
-                              <li class="dropdown__item">
-                                <a class="hover3" title="Payment Process" data-toggle="modal"
-                                  data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId)">
-                                  <img class="show" src="assets/img/icon2/payment-method1.png">
-                                  <img class="hide" src="assets/img/icon2/payment-method.png">
-                                </a>
-                              </li>
-                              <li class="dropdown__item">
-                                <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
-                                  (click)="deleteProformaInvoice(list.billId)">
-                                  <img class="show" src="assets/img/icon2/delete-blue.png">
-                                  <img class="hide" src="assets/img/icon2/delete-black.png">
-                                </a>
-                              </li>
-                              <li class="dropdown__item">
-                                <a href="#" class="hover3" title="PI to Invoice Conversion" data-toggle="modal"
-                                  (click)="PItoInvoiceConversion(list.billId,$event)">
-                                  <img class="show" src="assets/img/icon2/invoice-pi.png">
-                                  <img class="hide" src="assets/img/icon2/invoice-pi.png">
-
-                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-move">
-                                    <polyline points="5 9 2 12 5 15"></polyline>
-                                    <polyline points="9 5 12 2 15 5"></polyline>
-                                    <polyline points="15 19 12 22 9 19"></polyline>
-                                    <polyline points="19 9 22 12 19 15"></polyline>
-                                    <line x1="2" y1="12" x2="22" y2="12"></line>
-                                    <line x1="12" y1="2" x2="12" y2="22"></line>
-                                  </svg> -->
-                                </a>
-
-                              </li>
-
-                              <li class="dropdown__item">
-                                <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
-                                  (click)="getEmailDetails(list.billId)">
-                                  <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                  <img class="hide" src="assets/img/icon2/gmail-black.png">
-                                </a>
-                              </li>
-
-
-                              <li class="dropdown__item">
-                                <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
-                                  (click)="pdf(list.billId,list.did_invoice_state)">
-                                  <img class="show" src="assets/img/icon2/pdf-blue.png">
-                                  <img class="hide" src="assets/img/icon2/pdf-black.png">
-                                </a>
-                              </li>
-                              <li class="dropdown__item">
-                                <a class="hover3" title="show permission" data-toggle="modal"
-                                  data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId)">
-                                  <img class="show" src="assets/img/icon2/share-square-blue.png">
-                                  <img class="hide" src="assets/img/icon2/share-square-black.png">
-
-                                </a>
-                              </li>
-                              <li class="dropdown__item">
-                                <a class="hover3" title="Convert to DID Invoice" data-toggle="modal"
-                                  (click)="InvoicetoDIDConversion(list.billId)">
-                                  <img class="show" src="assets/img/icon2/did.png">
-                                  <img class="hide" src="assets/img/icon2/did.png">
-                                  <!-- <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24"
-                                    fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-chrome">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <circle cx="12" cy="12" r="4"></circle>
-                                    <line x1="21.17" y1="8" x2="12" y2="8"></line>
-                                    <line x1="3.95" y1="6.06" x2="8.54" y2="14"></line>
-                                    <line x1="10.88" y1="21.94" x2="15.46" y2="14"></line>
-                                  </svg> -->
-                                </a>
-                              </li>
-
-                              <li class="dropdown__item">
-                                <a class="hover3" title="Payment Link" data-toggle="modal" (click)="paymentLink(list.paylink_id)">
-                                  <img class="show" src="assets/img/icon2/online-payment.png">
-                                  <img class="hide" src="assets/img/icon2/online-payment.png">
-                                </a>
-                              </li>
-
+                            <div style="display: flex;align-items: center;">
+                              <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
+                                ><i class="fa fa-bars"></i></button>
                             
-                              <li class="dropdown__item">
-                                <a class="hover4" title="set Invoice Type Name" data-toggle="modal"
-                                  data-target="#setInvoiceTypeNameFormId" (click)="setInvoiceTypeNameEdit(list.billId)">
-                                  <img class="show" src="assets/img/icon/gift-card-b.png">
-                                  <img class="hide" src="assets/img/icon/gift-card.png">
-                                  
-                                </a>
-                              </li>
-                              <li class="dropdown__item">
-                                <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
-                                  data-target="#settermsConditionFormId" (click)="setTermsConditionEdit(list.billId)">
-                                  <img class="show" src="assets/img/icon2/TermsConditions-blue.png">
-                                  <img class="hide" src="assets/img/icon2/TermsConditions-black.png">
-                                </a>
-                              </li>
-                            </ul>
+                            </div>
+                            <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
+                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered ActionId" role="document"
+                                style="max-width: 1000px;">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <span class="col-12 modal-title text-center"
+                                      style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
+                                    </span>
+                                    <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true"
+                                        style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
+                                    </h6>
+                                  </div>
+                                  <div class="modal-body">
+  
+                                    <div class="row" style="display: flex;
+                                    justify-content: space-between;">
+                                      <ul>
+                                        <li class="dropdown__item">
+                                          <a class="hover3" title="Edit"
+                                            (click)="list.did_invoice_state==0?editPIGo(list.billId):editDidPIGo(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/edit-blue.png">
+                                            <img class="hide" src="assets/img/icon2/edit-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
+                                            (click)="deleteProformaInvoice(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/delete-blue.png">
+                                            <img class="hide" src="assets/img/icon2/delete-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover3" title="Payment Link" data-toggle="modal" (click)="paymentLink(list.paylink_id,i)">
+                                            <img class="show" src="assets/img/icon2/online-payment.png">
+                                            <img class="hide" src="assets/img/icon2/online-payment.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Payment Link</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover4" title="Convert to DID Invoice" data-toggle="modal"
+                                            (click)="InvoicetoDIDConversion(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/did.png">
+                                            <img class="hide" src="assets/img/icon2/did.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Convert to DID Invoice</strong></span>
+                                          
+                                          </a>
+                                        </li>
+                                     
+  
+                                      </ul>
+                                      <ul>
+                                        <li class="dropdown__item">
+                                          <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
+                                            (click)="pdf(list.billId,list.did_invoice_state,i)">
+                                            <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                            <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>PDF</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover3" title="show permission" data-toggle="modal"
+                                            data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/share-square-blue.png">
+                                            <img class="hide" src="assets/img/icon2/share-square-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Show Permission</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover4" title="Payment Process" data-toggle="modal"
+                                            data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/payment-method1.png">
+                                            <img class="hide" src="assets/img/icon2/payment-method.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover3" title="set Invoice Type Name" data-toggle="modal"
+                                            data-target="#setInvoiceTypeNameFormId" (click)="setInvoiceTypeNameEdit(list.billId,i)">
+                                            <img class="show" src="assets/img/icon/gift-card-b.png">
+                                            <img class="hide" src="assets/img/icon/gift-card.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Set Invoice Type Name</strong></span>
+                                            
+                                          </a>
+                                        </li>
+  
+                                      </ul>
+                                      <ul>
+                                        <li class="dropdown__item">
+                                          <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
+                                            (click)="getEmailDetails(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                            <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Email</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a href="#" class="hover4" title="PI to Invoice Conversion" data-toggle="modal"
+                                            (click)="PItoInvoiceConversion(list.billId,$event,i)">
+                                            <img class="show" src="assets/img/icon2/invoice-pi.png">
+                                            <img class="hide" src="assets/img/icon2/invoice-pi.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>PI to Invoice Conversion</strong></span>
+          
+                            
+                                          </a>
+          
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
+                                            data-target="#settermsConditionFormId" (click)="setTermsConditionEdit(list.billId,i)">
+                                            <img class="show" src="assets/img/icon2/TermsConditions-blue.png">
+                                            <img class="hide" src="assets/img/icon2/TermsConditions-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Set Terms & Condition</strong></span>
+                                          </a>
+                                        </li>
+  
+                                      </ul>
+                                      
+                                     
+                                    </div>
+  
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-dark" style="line-height: 10px;"
+                                      data-dismiss="modal">
+                                      Cancel
+                                    </button>
+  
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
+                          
                         </div>
                       </td>
                       <br>

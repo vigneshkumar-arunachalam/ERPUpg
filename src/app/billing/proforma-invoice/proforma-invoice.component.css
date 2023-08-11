@@ -316,3 +316,28 @@ label.col-lg-2.col-form-label{text-align: right;}
 .dropdown__item:hover .show{display: none;}
 .userDatatable table td {border-bottom: 1px solid #ddd;}
 /* ---------------------------------KS-CODE--------------------------------- */
+
+
+/* ------------ks--------------------- */
+.dropdown__item{
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.dropdown img, .dropdown svg {
+  width: 24px;
+
+}
+.dropdown__item span strong{
+  font-size: 18px;
+}
+.dropdown__item span {width: 100%!important;}
+
+.ActionId li span{
+  overflow: visible!important;
+}
+.ActionId li{cursor: pointer;}
+.dropdown a{
+  width: auto;
+  border-radius: 5px;
+}

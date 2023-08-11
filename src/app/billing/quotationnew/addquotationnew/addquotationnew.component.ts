@@ -1181,6 +1181,9 @@ quotationAddSignature_filename:any;
     var enablePriceDiscont = $('#enablePriceDiscont').val()
     var disType = $('input:radio[name=discountTYpe]:checked').val();
     var final_tot = $('#pd_Total_' + this.quotationPriceKey).val();
+    // alert(final_tot)
+    console.log(final_tot);
+    
     $('#sub_discount_type_' + this.quotationPriceKey).val(disType);
     var price: any;
     if (disType == 'per') {

@@ -194,211 +194,178 @@
                                                 <div class="page">
 
                                                     <div class="dropdown">
-                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
-
-                                                        <ul class="dropdown__list">
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_Edit=='1')">
-                                                                <a class="hover1" title="Edit Quotation"
-                                                                    data-toggle="modal"
-                                                                    data-target="#editNewQuotationFormId"
-                                                                    (click)="editQuotationPopUP(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/nfc-pen-b.png">
-                                                                    <img class="hide" src="assets/img/icon/nfc-pen.png">
-                                                                </a>
-
-                                                            </li>
-
-
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_Edit=='1')">
-                                                                <a class="hover2" title="Duplicate" data-toggle="modal"
-                                                                    data-target="#duplicateQuotationFormId"
-                                                                    (click)="duplicateQuotationPopUP(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/copy-b.png">
-                                                                    <img class="hide" src="assets/img/icon/copy.png">
-                                                                </a>
-
-                                                            </li>
-                                                            <li class="dropdown__item">
-                                                                <a class="hover1" title="PDF" data-toggle="modal"
-                                                                   
-                                                                    (click)="pdf(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/storage-of-documents-files-b.png">
-                                                                    <img class="hide" src="assets/img/icon/storage-of-documents-files.png">
-                                                                </a>
-                                                            </li>
-                                                          
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_Mail=='1')">
-                                                                <a class="hover2 " title="Email"
-                                                                    (click)="Email(list.quotationId)"
-                                                                    data-toggle="modal" data-target="#TextEditorId">
-                                                                    <img class="show" src="assets/img/icon/arroba-sign-b.png">
-                                                                    <img class="hide" src="assets/img/icon/arroba-sign.png">
-                                                                </a>
-
-                                                            </li>
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(list.approval_staus=='0')">
-                                                                <a class="hover1" title="Quotation Approval"
-                                                                    *ngIf="(list.approval_staus=='0')"
-                                                                    data-toggle="modal"
-                                                                    data-target="#quotationApprovalId"
-                                                                    (click)="quotationApprovalEdit(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/tick-b.png">
-                                                                    <img class="hide" src="assets/img/icon/tick.png">
-                                                                </a>
-                                                            </li>
-                                                            <!-- <li class="dropdown__item"
-                                                                *ngIf="(list.approval_staus=='1')">
-                                                                <a class="hover2" title="Quotation Approval"
-                                                                    *ngIf="(list.approval_staus=='1')"
-                                                                    data-toggle="modal"
-                                                                    data-target="#quotationApprovalId"
-                                                                    (click)="quotationApprovalEdit(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
-                                                                        height="100" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="red" stroke-width="3"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="feather feather-check-circle">
-                                                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14">
-                                                                        </path>
-                                                                        <polyline points="22 4 12 14.01 9 11.01">
-                                                                        </polyline>
-                                                                    </svg>
-                                                                </a>
-                                                            </li> -->
-                                                            <li class="dropdown__item">
-                                                                <a class="hover1" title="Proforma Invoice"
-                                                                    *ngIf="(list.pi_convert_status=='0')"
-                                                                    data-toggle="modal" data-target="#PIId"
-                                                                    (click)="PIEdit(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/pi-b.png">
-                                                                    <img class="hide" src="assets/img/icon/pi.png">
-                                                                </a>
-                                                            </li>
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_ActualPrice=='1')">
-                                                                <a class="hover2" title="Set Actual Cost"
-                                                                    *ngIf="(list.actual_state=='1')" data-toggle="modal"
-                                                                    data-target="#setActualCostId"
-                                                                    (click)="setActualCost(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/dollar-symbol-b.png">
-                                                                    <img class="hide" src="assets/img/icon/dollar-symbol.png">
-                                                                </a>
-                                                            </li>
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_ActualPrice=='1')">
-                                                                <a class="hover1" title="Set Actual Cost"
-                                                                    *ngIf="(list.actual_state=='0')" data-toggle="modal"
-                                                                    data-target="#setActualCostId"
-                                                                    (click)="setActualCost(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/dollar-symbol-b.png">
-                                                                    <img class="hide" src="assets/img/icon/dollar-symbol.png">
-                                                                </a>
-                                                            </li>
-
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_Delete=='1')">
-                                                                <a class="hover2" title="Delete Quotation"
-                                                                    (click)="deleteQuotation(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/remove-b.png">
-                                                                    <img class="hide" src="assets/img/icon/remove.png">
-                                                                </a>
-
-                                                            </li>
-                                                            <li class="dropdown__item">
-                                                                <a class="hover1" title="File Attachment"
-                                                                    data-toggle="modal"
-                                                                    data-target="#fileAttachmentFormId"
-                                                                    (click)="fileAttachmentEdit(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/paperclip-b.png">
-                                                                    <img class="hide" src="assets/img/icon/paperclip.png">
-                                                                </a>
-                                                            </li>
+                                                        <div style="display: flex;align-items: center;">
+                                                          <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"><i class="fa fa-bars"></i></button>
+                                                      
+                                                        </div>
+                                                        <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
+                                                          aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                          <div class="modal-dialog modal-dialog-centered ActionId" role="document" style="max-width: 1000px;">
+                                                            <div class="modal-content">
+                                                              <div class="modal-header">
+                                                                <span class="col-12 modal-title text-center"
+                                                                  style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
+                                                                </span>
+                                                                <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
+                                                                  <span aria-hidden="true"
+                                                                    style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
+                                                                </h6>
+                                                              </div>
+                                                              <div class="modal-body">
+                                                      
+                                                                <div class="row" style="display: flex;
+                                                                                        justify-content: space-between;">
+                                                                  <ul>
+                                                                    <li class="dropdown__item" *ngIf="(this.quotationPermission_Edit=='1')">
+                                                                      <a class="hover1" title="Edit Quotation" data-toggle="modal" data-target="#editNewQuotationFormId"
+                                                                        (click)="editQuotationPopUP(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon/nfc-pen-b.png">
+                                                                        <img class="hide" src="assets/img/icon/nfc-pen.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
+                                                                      </a>
+                                                      
+                                                                    </li>
+                                                                    <li class="dropdown__item" *ngIf="(this.quotationPermission_Edit=='1')">
+                                                                      <a class="hover2" title="Duplicate" data-toggle="modal" data-target="#duplicateQuotationFormId"
+                                                                        (click)="duplicateQuotationPopUP(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon/copy-b.png">
+                                                                        <img class="hide" src="assets/img/icon/copy.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Duplicate</strong></span>
+                                                                      </a>
+                                                      
+                                                                    </li>
+                                                                    <li class="dropdown__item">
+                                                                      <a class="hover1" title="PDF" data-toggle="modal" (click)="pdf(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                                        <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>PDF</strong></span>
+                                                                      </a>
+                                                                    </li>
+                                                                    <li class="dropdown__item" *ngIf="(this.quotationPermission_Delete=='1')">
+                                                                        <a class="hover2" title="Delete Quotation" (click)="deleteQuotation(list.quotationId,i)">
+                                                                          <img class="show" src="assets/img/icon/remove-b.png">
+                                                                          <img class="hide" src="assets/img/icon/remove.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
+                                                                        </a>
                                                         
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_Share=='1')">
-                                                                <a class="hover2" title="Share Permission"
-                                                                    data-toggle="modal"
-                                                                    *ngIf="(list.share_access_state=='0')"
-                                                                    data-target="#quotationSharedPersonId"
-                                                                    (click)="quotationSharedPersonEdit(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon2/share-square-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/share-square-black.png">
-                                                                </a>
-                                                            </li>
-                                                            <li class="dropdown__item"
-                                                                *ngIf="(this.quotationPermission_Share=='1')">
-                                                                <a class="hover1" title="Share Permission"
-                                                                    data-toggle="modal"
-                                                                    *ngIf="(list.share_access_state=='1')"
-                                                                    data-target="#quotationSharedPersonId"
-                                                                    (click)="quotationSharedPersonEdit(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon2/share-square-red.png">
-                                                                    <img class="hide" src="assets/img/icon2/share-square-black.png">
-                                                                </a>
-                                                            </li>
-<!-- 
-                                                            <li class="dropdown__item">
-                                                                <a class="hover2" title="Share Permission-Duplicate"
-                                                                    data-toggle="modal" data-target="#quotationSharedPersonId"
-                                                                    (click)="quotationSharedPersonEdi(list.quotationId)">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100"
-                                                                        height="100" viewBox="0 0 24 24" fill="none"
-                                                                        stroke="#009688" stroke-width="3"
-                                                                        stroke-linecap="round" stroke-linejoin="round"
-                                                                        class="feather feather-gift">
-                                                                        <polyline points="20 12 20 22 4 22 4 12">
-                                                                        </polyline>
-                                                                        <rect x="2" y="7" width="20" height="5"></rect>
-                                                                        <line x1="12" y1="22" x2="12" y2="7"></line>
-                                                                        <path
-                                                                            d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z">
-                                                                        </path>
-                                                                        <path
-                                                                            d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z">
-                                                                        </path>
-                                                                    </svg>
-
-                                                                </a>
-                                                            </li> -->
-
-
-                                                            <li class="dropdown__item">
-                                                                <a class="hover2" title="Set Template Name"
-                                                                    data-toggle="modal" data-target="#setTemplateNameId"
-                                                                    (click)="setTemplateName(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/gift-card-b.png">
-                                                                    <img class="hide" src="assets/img/icon/gift-card.png">
-                                                                </a>
-                                                            </li>
-
-
-
-                                                            <li class="dropdown__item">
-                                                                <a class="hover1" title="Quotation Comments"
-                                                                    data-toggle="modal"
-                                                                    data-target="#quotationCommentsId"
-                                                                    (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon/open-book-b.png">
-                                                                    <img class="hide" src="assets/img/icon/open-book.png">
-                                                                </a>
-                                                            </li>
-                                                            <li class="dropdown__item">
-                                                                <a class="hover2" title="Excel Export"
-                                                                    (click)="quotationExcelExport(list.quotationId)">
-                                                                    <img class="show" src="assets/img/icon/paper-plane-blue.png">
-                                                                    <img class="hide" src="assets/img/icon/paper-plane.png">
-                                                                </a>
-                                                            </li>
-
-
-
-                                                        </ul>
-                                                    </div>
-
+                                                                      </li>
+                                                                  
+                                                      
+                                                                  </ul>
+                                                                  <ul>
+                                                                    <li class="dropdown__item" *ngIf="(this.quotationPermission_Mail=='1')">
+                                                                        <a class="hover2 " title="Email" (click)="Email(list.quotationId,i)" data-toggle="modal"
+                                                                          data-target="#TextEditorId">
+                                                                          <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                                                          <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>Email</strong></span>
+                                                                        </a>
+                                                        
+                                                                      </li>
+                                                                    <li class="dropdown__item" *ngIf="(list.approval_staus=='0')">
+                                                                      <a class="hover1" title="Quotation Approval" *ngIf="(list.approval_staus=='0')" data-toggle="modal"
+                                                                        data-target="#quotationApprovalId" (click)="quotationApprovalEdit(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon/tick-b.png">
+                                                                        <img class="hide" src="assets/img/icon/tick.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Quotation Approval</strong></span>
+                                                                      </a>
+                                                                    </li>
+                                                                    <li class="dropdown__item">
+                                                                      <a class="hover2" title="Proforma Invoice" *ngIf="(list.pi_convert_status=='0')" data-toggle="modal"
+                                                                        data-target="#PIId" (click)="PIEdit(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon/pi-b.png">
+                                                                        <img class="hide" src="assets/img/icon/pi.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Proforma Invoice</strong></span>
+                                                                      </a>
+                                                                    </li>
+                                                                   
+                                                                  </ul>
+                                                                  <ul>
+                                                                    <li class="dropdown__item">
+                                                                      <a class="hover1" title="File Attachment" data-toggle="modal" data-target="#fileAttachmentFormId"
+                                                                        (click)="fileAttachmentEdit(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon/paperclip-b.png">
+                                                                        <img class="hide" src="assets/img/icon/paperclip.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>File Attachment</strong></span>
+                                                                      </a>
+                                                                    </li>
+                                                      
+                                                                    <li class="dropdown__item" *ngIf="(this.quotationPermission_Share=='1')">
+                                                                      <a class="hover2" title="Share Permission" data-toggle="modal" *ngIf="(list.share_access_state=='0')"
+                                                                        data-target="#quotationSharedPersonId" (click)="quotationSharedPersonEdit(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon2/share-square-blue.png">
+                                                                        <img class="hide" src="assets/img/icon2/share-square-black.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Share Permission</strong></span>
+                                                                      </a>
+                                                                 
+                                                                      <a class="hover2" title="Share Permission" data-toggle="modal" *ngIf="(list.share_access_state=='1')"
+                                                                        data-target="#quotationSharedPersonId" (click)="quotationSharedPersonEdit(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon2/share-square-red.png">
+                                                                        <img class="hide" src="assets/img/icon2/share-square-black.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Share Permission</strong></span>
+                                                                      </a>
+                                                                    </li>
+                                                                    <li class="dropdown__item">
+                                                                      <a class="hover1" title="Set Template Name" data-toggle="modal" data-target="#setTemplateNameId"
+                                                                        (click)="setTemplateName(list.quotationId,i)">
+                                                                        <img class="show" src="assets/img/icon/gift-card-b.png">
+                                                                        <img class="hide" src="assets/img/icon/gift-card.png">
+                                                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Template Name</strong></span>
+                                                                      </a>
+                                                                    </li>
+                                                                 
+                                                                  
+                                                                  </ul>
+                                                                  <ul>
+                                                                    <li class="dropdown__item" *ngIf="(this.quotationPermission_ActualPrice=='1')">
+                                                                        <a class="hover2" title="Set Actual Cost" *ngIf="(list.actual_state=='1')" data-toggle="modal"
+                                                                          data-target="#setActualCostId" (click)="setActualCost(list.quotationId,i)">
+                                                                          <img class="show" src="assets/img/icon/dollar-symbol-b.png">
+                                                                          <img class="hide" src="assets/img/icon/dollar-symbol.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>Set Actual Cost</strong></span>
+                                                                        </a>
+                                                                     
+                                                                        <a class="hover2" title="Set Actual Cost" *ngIf="(list.actual_state=='0')" data-toggle="modal"
+                                                                          data-target="#setActualCostId" (click)="setActualCost(list.quotationId,i)">
+                                                                          <img class="show" src="assets/img/icon/dollar-symbol-b.png">
+                                                                          <img class="hide" src="assets/img/icon/dollar-symbol.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>Set Actual Cost</strong></span>
+                                                                        </a>
+                                                                      </li>
+                                                        
+                                                                   
+                                                                      <li class="dropdown__item">
+                                                                        <a class="hover1" title="Quotation Comments" data-toggle="modal" data-target="#quotationCommentsId"
+                                                                          (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id,i)">
+                                                                          <img class="show" src="assets/img/icon/open-book-b.png">
+                                                                          <img class="hide" src="assets/img/icon/open-book.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>Quotation Comments</strong></span>
+                                                                        </a>
+                                                                      </li>
+                                                                    <li class="dropdown__item">
+                                                                        <a class="hover2" title="Excel Export" (click)="quotationExcelExport(list.quotationId,i)">
+                                                                          <img class="show" src="assets/img/icon/paper-plane-blue.png">
+                                                                          <img class="hide" src="assets/img/icon/paper-plane.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>Excel Export</strong></span>
+                                                                        </a>
+                                                                      </li> 
+                                                               
+                                                                 
+                                                                 
+                                                                  </ul>
+                                                                </div>
+                                                      
+                                                              </div>
+                                                              <div class="modal-footer">
+                                                                <button type="button" class="btn btn-dark" style="line-height: 10px;" data-dismiss="modal">
+                                                                  Cancel
+                                                                </button>
+                                                      
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
                                                 </div>
 
                                             </td>
@@ -577,7 +544,7 @@
 <!------------Modal Pop Up (BEGIN) edit- Pop Up  in customer Contract Classification------------------>
 <div class="modal fade" id="editNewQuotationFormId" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content addcontractmastercss">
             <div class="modal-header">
                 <h2 class="modal-title" id="addModalLongTitle">Edit Enquiry From Details</h2>

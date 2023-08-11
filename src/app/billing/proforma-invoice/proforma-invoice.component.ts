@@ -343,7 +343,8 @@ export class ProformaInvoiceComponent implements OnInit {
 
     }
   }
-  getEmailDetails(id: any) {
+  getEmailDetails(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.Email_BillId = id;
     let api_req: any = new Object();
@@ -447,7 +448,8 @@ export class ProformaInvoiceComponent implements OnInit {
 
     });
   }
-  PItoInvoiceConversion(Id: any,$event: MouseEvent) {
+  PItoInvoiceConversion(Id: any,$event: MouseEvent,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -509,7 +511,8 @@ export class ProformaInvoiceComponent implements OnInit {
       }
     })
   }
-  InvoicetoDIDConversion(Id: any) {
+  InvoicetoDIDConversion(Id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -814,7 +817,8 @@ export class ProformaInvoiceComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  paymentLink(paylink_id: any) {
+  paymentLink(paylink_id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
@@ -876,7 +880,9 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
 
-  editDidPIGo(id: any) {
+  editDidPIGo(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+    $("body").removeClass("modal-open");
 
     var editbillID = id;
     this.router.navigate(['/EditDidPI'])
@@ -934,7 +940,9 @@ export class ProformaInvoiceComponent implements OnInit {
     })
   }
 
-  deleteProformaInvoice(billId: any) {
+  deleteProformaInvoice(billId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+  
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -993,7 +1001,8 @@ export class ProformaInvoiceComponent implements OnInit {
   EmailEdit(a: any) {
 
   }
-  invoiceShowPersonEdit(Id: any) {
+  invoiceShowPersonEdit(Id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
@@ -1076,7 +1085,8 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
 
-  pdf(billId: any, did_invoice_state: any) {
+  pdf(billId: any, did_invoice_state: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     if (did_invoice_state == 1) {
       var url = "https://erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
@@ -1102,7 +1112,8 @@ export class ProformaInvoiceComponent implements OnInit {
     $("#paytype").val('');
     $("#dateee").val('');
   }
-  processPaymentEdit(id: any) {
+  processPaymentEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.spinner.show();
     this.billID_processPayment = id;
@@ -1225,7 +1236,8 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
 
-  setInvoiceTypeNameEdit(id: any) {
+  setInvoiceTypeNameEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.InvoiceType_BillerID = id;
 
@@ -1317,7 +1329,8 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
 
-  setTermsConditionEdit(id: any) {
+  setTermsConditionEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     // this.setInvoiceType.reset();
     this.spinner.show();
     this.TermCondition_BillerID = id;

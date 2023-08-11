@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-did-invoice',
@@ -114,7 +115,63 @@ quotationAddSignature_state:any;
 quotationAddSignature_filename:any;
 selectAdditionalSign:boolean=true; 
 editDIDStateID:any;
+//dropdown
+CustomerBillCodeArray: any;
+  //ngmodal-clear
+  txtbox_percentPriceClear: string;
+  txtbox_directPriceClear: string;
+  FinalDiscount_percentPriceClear:string;
+  FinalDiscount_directPriceClear:string;
+  UsageSave_percentPriceClear:string;
+  UsageSave_directPriceClear:string;
+  OtherSave_percentPriceClear:string;
+  OtherSave_directPriceClear:string;
+  //edit
+  did_bill_code:any;
+  EditShippingAddress: boolean = false;
+  billsLogo_value:any;
+  radioID_Logo:any;
+  radio_Value_SelectExtraLogo:any;
+  exportState_Radio: any;
+  exportState_value:any;
+  radioID_Export:any;
+  radio_Value_ExportState:any;
+  //section-3
+  
+  chkTermsandcondition: boolean = false;
+  chklogoAddressSignature: boolean = true;
+  previousDue: boolean = true;
+  chkReceivedAuthorizedSignature: boolean = true;
+  cbk_previousDue: any;
 
+    //  quotationAddSignature
+
+    sign_state: number;
+    invoiceAddSignature_state: any;
+    invoiceAddSignature_filename: any;
+    invoiceAddSignatureCHKShowState: any;
+    input1: string;
+    input2: string;
+    input4: string;
+    input3: string;
+    input5: string;
+    input6: string;
+  
+    //section 3 select terms condition
+    section3_Terms1:any;
+    section3_Terms2:any;
+    section3_Terms3:any;
+    section3_Terms4:any;
+    section3_Terms5:any;
+    checkbox_selectReceivedSignature: any;
+
+    checkbox_selectAdditionalSignature: any;
+  
+    selectReceivedSign: boolean = true;
+    received_signature_state: any;
+    print_logo_state: any;
+    did_bill_code_section1:any;
+    Jompay_Value: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
     this.route.queryParams
@@ -140,6 +197,16 @@ editDIDStateID:any;
   keywordUserName = 'reseller_name';
 
   ngOnInit(): void {
+    this.did_bill_code = [
+      { "customer_bill_code_id": 1445 ,"bill_code":-810},
+      
+    ];
+    this.did_bill_code_section1 = [
+      { "customer_bill_code_id": 1445 ,"bill_code":-810},
+      
+    ];
+   
+
     this.route.queryParams
     .subscribe(params => {
       console.log("params output value", params);
@@ -152,13 +219,34 @@ editDIDStateID:any;
       console.log("edit biller id", this.editbillerID);
       console.log("edit DID state id", this.editDIDStateID);
       this.editDidInvice();
+      this.EditShippingAddress = true;
       
     }
     );
    
     this.addDidLoad();
 
-    
+    this.SelectExtraLogoCheckboxwithKey = [
+
+      { name: 'IT Care', selected: false, id: 1 },
+      { name: 'Calncall', selected: false, id: 2 },
+      { name: ' DID Sg  ', selected: false, id: 3 },
+      { name: ' Callcloud  ', selected: false, id: 4 },
+      { name: ' Mrvoip  ', selected: false, id: 5 },
+      { name: ' None  ', selected: false, id: 0 },
+
+    ];
+    this.exportState_Radio = [
+      { name: 'Local', selected: false, id: 1 },
+      { name: 'Export', selected: false, id: 2 },
+      { name: 'Zero Valid', selected: false, id: 3 },
+
+    ];
+    this.section3_Terms1="Price Term: EXW SINGAPORE";
+    this.section3_Terms2="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3="Port of Discharge:";
+    this.section3_Terms4="Port of Loading: SINGAPORE";
+    this.section3_Terms5="Lead Time: 21 - 30 DAYS";
    
     this.addDid_section1 = new FormGroup({
       'initial': new FormControl(),
@@ -179,10 +267,12 @@ editDIDStateID:any;
       'address_3': new FormControl(),
       'PoNo': new FormControl(),
       'Attn_1': new FormControl(),
-      'ship_to': new FormControl(),
-      'ship_address_1': new FormControl(),
-      'ship_address_2': new FormControl(),
-      'ship_address_3': new FormControl(),
+      'Attn_2': new FormControl(),
+      'ESA_Cbk': new FormControl(),
+      'ship_to': new FormControl({ value: '', disabled: true }, Validators.required),
+      'shipTo_1': new FormControl({ value: '', disabled: true }, Validators.required),
+      'shipTo_2': new FormControl({ value: '', disabled: true }, Validators.required),
+      'shipTo_3': new FormControl({ value: '', disabled: true }, Validators.required),
       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
@@ -200,6 +290,7 @@ editDIDStateID:any;
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
       'Jompay_logo': new FormControl(),
+      
       
     });
 
@@ -222,6 +313,11 @@ editDIDStateID:any;
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
       'section3_previousDue': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
       'section3_select_additional_signature': new FormControl({value: '', disabled: false}, Validators.required),
@@ -287,14 +383,66 @@ editDIDStateID:any;
       productDesc1: '',
       amt1: '',
       call_duration1: '',
+     
 
 
     });
   }
+  // removeDid1(i: number) {
+  //   this.fixedAddresses.removeAt(i);
+  //   var addr = this.did_Invice_fixed_charges.value.fixedAddresses;
+  //   var list_cnt = addr.length;
+  //   this.totalCalculate_1();
+  //   this.fixedSaveDiscount();
+  // }
   removeDid1(i: number) {
-    this.fixedAddresses.removeAt(i);
+
+    var pd_billchild_id = $('#pd_billchild_id_' + i).val();
+    
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.fixedAddresses.removeAt(i);
     var addr = this.did_Invice_fixed_charges.value.fixedAddresses;
     var list_cnt = addr.length;
+
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "proforma";
+        api_req.api_url = "proforma/delete_billing_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_quotation_child";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+
+        });
+
+        setTimeout(() => {
+          this.totalCalculate_1();
+        }, 1500);
+        
+
+        setTimeout(() => {
+        this.fixedSaveDiscount();
+      }, 1500);
+
+
+      }
+    })
+
   }
 
   // USAGE CHARGES
@@ -329,10 +477,62 @@ editDIDStateID:any;
 
     });
   }
+  // removeDid2(i: number) {
+  
+  //   this.usageAddress.removeAt(i);
+  //   var addr = this.did_Invice_usage_Charges.value.usageAddress;
+  //   var list_cnt = addr.length;
+  //   this.totalCalculate_2();
+  //   this.usageSaveDiscount();
+  // }
   removeDid2(i: number) {
-    this.usageAddress.removeAt(i);
-    var addr = this.did_Invice_usage_Charges.value.usageAddress;
-    var list_cnt = addr.length;
+
+    var pd_usageChr_billchild_id_ = $('#pd_usageChr_billchild_id_' + i).val();
+    
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.usageAddress.removeAt(i);
+        var addr = this.did_Invice_usage_Charges.value.usageAddress;
+        var list_cnt = addr.length;
+
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "proforma";
+        api_req.api_url = "proforma/delete_billing_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_quotation_child";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.billchild_id = pd_usageChr_billchild_id_;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+
+        });
+
+        setTimeout(() => {
+          this.totalCalculate_2();
+        }, 1500);
+        
+
+        setTimeout(() => {
+        this.usageSaveDiscount();
+      }, 1500);
+
+
+      }
+    })
+
   }
 
 
@@ -367,10 +567,62 @@ editDIDStateID:any;
 
     });
   }
+  // removeDid3(i: number) {
+  //   this.otherAddress.removeAt(i);
+  //   var addr = this.did_Invice_other_charges.value.otherAddress;
+  //   var list_cnt = addr.length;
+  //   this.totalCalculate_3();
+  //   this.otherSaveDiscount();
+  // }
+
   removeDid3(i: number) {
-    this.otherAddress.removeAt(i);
-    var addr = this.did_Invice_other_charges.value.otherAddress;
-    var list_cnt = addr.length;
+
+    var pd_othChr_billchild_id_ = $('#pd_othChr_billchild_id_' + i).val();
+    
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.usageAddress.removeAt(i);
+        var addr = this.did_Invice_usage_Charges.value.usageAddress;
+        var list_cnt = addr.length;
+
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "proforma";
+        api_req.api_url = "proforma/delete_billing_child";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "delete_quotation_child";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.billchild_id = pd_othChr_billchild_id_;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+
+        });
+
+        setTimeout(() => {
+          this.totalCalculate_3();
+        }, 1500);
+        
+
+        setTimeout(() => {
+        this.otherSaveDiscount();
+      }, 1500);
+
+
+      }
+    })
+
   }
 
   handleChangeLocal(event: any) {
@@ -397,17 +649,38 @@ editDIDStateID:any;
     console.log("radio button value", radioSelectInitial);
     console.log("radio button id value", abc);
   }
+  handleChange_Jompay(event: any) {
+    this.Jompay_Value = false;
+    this.Jompay_Value = event.target.checked;
+    console.log(this.Jompay_Value);
+  }
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
     // var xyz = id;
     console.log("radio button value", radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
+  handleChange_ExportState(data: any, evt: any) {
+
+    this.radioID_Export = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_ExportState = evt.target.value;
+  
+    console.log("radio button value", this.radio_Value_ExportState);
+  
+  }
   handleChangeExtraLogo(event: any) {
     this.ExtralogoValue = event.target.value;
     // var xyz = id;
     console.log("radio button value for Extra logo", this.ExtralogoValue);
 
+  }
+  eventCheckSelectReceivedSignature(e: any) {
+
+    this.checkbox_selectReceivedSignature = e.target.checked;
+    console.log(this.checkbox_selectReceivedSignature);
   }
   mile(e: any) {
     this.mile_check_value = e.target.value;
@@ -417,16 +690,64 @@ editDIDStateID:any;
     this.MSDisplay_Value = event.target.value;
     console.log(this.MSDisplay_Value);
   }
+  cbk_fn_previousDue(event: any) {
+    this.cbk_previousDue = event.target.checked;
+    console.log(this.cbk_previousDue)
+  }
+  chklogoAddressSignatureEvent(event: any) {
+    this.chklogoAddressSignature = event.target.checked;
+    console.log(this.chklogoAddressSignature)
+  }
+  handleChange_SelectExtraLogo(data: any, evt: any) {
+
+    this.radioID_Logo = data;
+    console.log("evt", evt.target.checked)
+    console.log("evt-value", evt.target.value)
+    console.log("evt-id", evt.target.id)
+    this.radio_Value_SelectExtraLogo = evt.target.value;
+
+    console.log("radio button value", this.radio_Value_SelectExtraLogo);
+
+  }
+  chkTermsandconditionEvent(event: any) {
+    this.chkTermsandcondition = event.target.checked;
+    console.log(this.chkTermsandcondition)
+  }
   radioSelectCommissionType(event: any) {
     $('#CommissionValue').val('');
     $('#CommissionAmount').val('');
   }
-  checkbox_selectAdditionalSignature:any;
+
   eventCheckSelectAdditionalSignature(e:any){
     this.checkbox_selectAdditionalSignature = e.target.checked
     console.log(this.checkbox_selectAdditionalSignature );
   }
-  
+  billCodeChange(event:any){
+    this.did_bill_code=event.target.value;
+  }
+  cbk_Fn_EditShipAddress(event: any) {
+    this.EditShippingAddress = event.target.checked;
+    console.log(this.EditShippingAddress)
+
+    if (this.EditShippingAddress) {
+
+      this.addDid_section1.get("ship_to").disable();
+      this.addDid_section1.get("shipTo_1").disable();
+      this.addDid_section1.get("shipTo_2").disable();
+      this.addDid_section1.get("shipTo_3").disable();
+
+    }
+    else {
+
+      this.addDid_section1.get("ship_to").enable();
+      this.addDid_section1.get("shipTo_1").enable();
+      this.addDid_section1.get("shipTo_2").enable();
+      this.addDid_section1.get("shipTo_3").enable();
+
+
+    }
+    console.log(this.EditShippingAddress)
+  }
 
   getCustomerInvoiceDetails(event: any) {
     this.billerID = event.target.value;
@@ -686,6 +1007,42 @@ editDIDStateID:any;
 
     });
   }
+  computeUsageCharge(){
+    let api_req: any = new Object();
+    let api_computeUsage_req: any = new Object();
+    api_req.moduleType = "did";
+    api_req.api_url = "did/get_did_usage_charge";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_computeUsage_req.action = "get_did_usage_charge";
+    api_computeUsage_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_computeUsage_req.customerId = this.customer_ID;
+    api_computeUsage_req.did_bill_code = this.did_bill_code;
+    for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
+
+      api_computeUsage_req.fromdt = $('#fromdt2_' + a).val();
+      api_computeUsage_req.todt = $('#todt2_' + a).val();
+     
+
+    }
+   
+    api_req.element_data = api_computeUsage_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+     
+
+      if (response.status == true) {
+
+        this.quotationAddSignature_state = response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        this.quotationAddSignature_filename = response.signature_filename;
+      }
+      else {
+
+      }
+    });
+
+  }
   
   getTaxCals() {
     var tax_id = this.addDid_section3.value.section3_gst_dropdown;
@@ -764,109 +1121,125 @@ editDIDStateID:any;
 
   }
 
-  Customer_selectDropdownData(customerId:any) {
-    //   this.customer_ID=customerId;
-    //   this.customer_NAME=data.customerName;
-    //    console.log("search data in dropdown", data)
-    //    console.log("search data-customer Id", data.customerId)
-        this.customerName_Data = customerId;
-        let api_req: any = new Object();
-        let api_SearchCUST_req: any = new Object();
-        api_req.moduleType = "proforma";
-        api_req.api_url = "proforma/customer_address_details";
-        api_req.api_type = "web";
-        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_SearchCUST_req.action = "quot_customer_details";
-        api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_SearchCUST_req.customerId = customerId;
-        api_req.element_data = api_SearchCUST_req;
-        this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
-          console.log("customer_address_details---response", response)
-          if (response.status == true) {
-           // console.log('address'+response.customer_details[0].customerAddress1);
-    
-    
-           var address_3;
-           var ship_to_str,ship_address_str1,ship_address_str2,ship_address_str3;
-    
-           if(response.customer_details[0].city!=''){
-            address_3=response.customer_details[0].city;
-           }
-           if(address_3!='' && response.customer_details[0].state!=''){
-            address_3=address_3+' ,'+response.customer_details[0].state;
-           }else{
-            address_3=response.customer_details[0].state;
-           }
-           if(address_3!='' && response.customer_details[0].country!=''){
-            address_3=address_3+' ,'+response.customer_details[0].country;
-           }else{
-            address_3=response.customer_details[0].country;
-           }
-    
-           if(response.customer_details[0].ship_city!=''){
-            ship_address_str3=response.customer_details[0].ship_city;
-           }
-           if(ship_address_str3!='' && response.customer_details[0].ship_state!=''){
-            ship_address_str3=ship_address_str3+' ,'+response.customer_details[0].ship_state;
-           }else{
-            ship_address_str3=response.customer_details[0].state;
-           }
-           if(ship_address_str3!='' && response.customer_details[0].ship_country!=''){
-            ship_address_str3=ship_address_str3+' ,'+response.customer_details[0].ship_country;
-           }else{
-            ship_address_str3=response.customer_details[0].country;
-           }
-    
-    
-            if(response.customer_details[0].ship_to!=''){
-              ship_to_str =response.customer_details[0].ship_to;
-            }else{
-              ship_to_str =response.customer_details[0].customerName;
-            }
-    
-            if(response.customer_details[0].ship_customerAddress1!=''){
-              ship_address_str1 =response.customer_details[0].ship_customerAddress1;
-            }else{
-              ship_address_str1 =response.customer_details[0].customerAddress1;
-            }
-    
-            if(response.customer_details[0].ship_customerAddress2!=''){
-              ship_address_str2 =response.customer_details[0].ship_customerAddress2;
-            }else{
-              ship_address_str2 =response.customer_details[0].customerAddress2;
-            }
-    
-    
-          
-            this.addDid_section1.patchValue({
-                'address_1':response.customer_details[0].customerAddress1,
-                'address_2':response.customer_details[0].customerAddress2,
-                'address_3':address_3,
-                'Attn_1':response.customer_details[0].companyName,
-                'ship_to':ship_to_str,
-                'shipTo_1':ship_address_str1,
-                'shipTo_2':ship_address_str2,
-                'shipTo_3':ship_address_str3,
-                'ship_attn':response.customer_details[0].companyName,            
-            });
-          }
-          else {
-            this.addDid_section1.patchValue({
-              'address_1':'',
-              'address_2':'',
-              'address_3':'',
-              'Attn_1':'',
-              'ship_to':'',
-              'shipTo_1':'',
-              'shipTo_2':'',
-              'shipTo_3':'',
-              'ship_attn':'',            
-          });
-          }
-    
+  Customer_selectDropdownData(customerId: any) {
+   
+    this.customerName_Data = customerId;
+    let api_req: any = new Object();
+    let api_SearchCUST_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/customer_address_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_SearchCUST_req.action = "quot_customer_details";
+    api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.customerId = customerId;
+    api_req.element_data = api_SearchCUST_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      console.log("customer_address_details---response", response)
+      if (response.status == true) {
+
+
+
+        var address_3;
+        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
+
+        if (response.customer_details[0].city != '') {
+          address_3 = response.customer_details[0].city;
+        }
+        if (address_3 != '' && response.customer_details[0].state != '') {
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+        } else {
+          address_3 = response.customer_details[0].state;
+        }
+        if (address_3 != '' && response.customer_details[0].country != '') {
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;
+        } else {
+          address_3 = response.customer_details[0].country;
+        }
+
+
+
+
+        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
+
+          ship_to_str = response.customer_details[0].customerName;
+
+        } else {
+          ship_to_str = response.customer_details[0].ship_to;
+        }
+
+        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+        } else {
+          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+
+        }
+
+        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+        } else {
+          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+        }
+
+
+        if (response.customer_details[0].ship_city != '') {
+          ship_address_str3 = response.customer_details[0].city;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;
+        } else {
+          ship_address_str3 = response.customer_details[0].ship_state;
+        }
+        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;
+        } else {
+          ship_address_str3 = response.customer_details[0].ship_country;
+        }
+
+        if (response.customer_details[0].ship_to == '') {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str3 = address_3;
+        }
+
+
+
+        this.did_bill_code = response.customer_billcode_arr;
+        this.did_bill_code_section1 = response.customer_billcode_arr;
+
+        this.addDid_section1.patchValue({
+          'address_1': response.customer_details[0].customerAddress1,
+          'address_2': response.customer_details[0].customerAddress2,
+          'address_3': address_3,
+          'Attn_1': response.customer_details[0].companyName,
+          'ship_to': ship_to_str,
+          'shipTo_1': ship_address_str1,
+          'shipTo_2': ship_address_str2,
+          'shipTo_3': ship_address_str3,
+          'ship_attn': response.customer_details[0].companyName,
         });
       }
+      else {
+        this.addDid_section1.patchValue({
+          'address_1': '',
+          'address_2': '',
+          'address_3': '',
+          'Attn_1': '',
+          'ship_to': '',
+          'shipTo_1': '',
+          'shipTo_2': '',
+          'shipTo_3': '',
+          'ship_attn': '',
+        });
+      }
+
+    });
+  }
 
   searchCustomer_selectDropdownData(data: any) {
     this.customer_ID = data.customerId;
@@ -888,6 +1261,10 @@ editDIDStateID:any;
 
 
       if (response.status == true) {
+       
+        this.did_bill_code = response.customer_billcode_arr;
+        this.did_bill_code_section1 = response.customer_billcode_arr;
+
         this.addDid_section1.patchValue({
           "customer_id_hd":response.customer_list.customerId,
           "b_name":response.customer_list.customerName,
@@ -900,7 +1277,7 @@ editDIDStateID:any;
           "shipTo_1":response.customer_list.ship_customerAddress1,
           "shipTo_2":response.customer_list.ship_customerAddress2,
           "shipTo_3":response.customer_list.ship_customerAddress3,
-          "Attn_2":response.customer_list.ship_attn,
+          
           
           
 
@@ -931,8 +1308,11 @@ editDIDStateID:any;
 
       console.log("response-load-pi", response)
       if (response != '') {
+        this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+        this.exportState_value = response.billing_pararent_details[0].export_state;
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
+          
           'companyName': response.billing_pararent_details[0].billerId,
           'BillTo': response.billing_pararent_details[0].b_name,
           'customer_name': response.billing_pararent_details[0].b_name,
@@ -945,6 +1325,7 @@ editDIDStateID:any;
           'ship_address_2': response.billing_pararent_details[0].s_address2,
           'shpi_address_3': response.billing_pararent_details[0].s_address3,
           'Attn_2': response.billing_pararent_details[0].s_attn,
+          'Ref': response.billing_pararent_details[0].ref,
 
           'invoiceNo': response.billing_pararent_details[0].invoice_no,
           'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
@@ -973,19 +1354,21 @@ editDIDStateID:any;
         // part-1
 
         const formArray1 = new FormArray([]);
-        for (let index = 0; index < response.billchild_details.length; index++) {
+        for (let index = 0; index < response.bill_fixed_details.length; index++) {
 
           console.log('billchild_details++index'+index);
-
+          $('#sub_total_1').val(response.bill_fixed_details[index].net_amt);
           formArray1.push(this.fb.group({
-            "particular1": response.billchild_details[index].particular1,
-            "fromdt1": response.billchild_details[index].fromdt1,
-            "todt1": response.billchild_details[index].todt1,
-            "md_chk1": response.billchild_details[index].md_chk1,
-            "did_diff_date1": response.billchild_details[index].did_diff_date1,
-            "productDesc1": response.billchild_details[index].productDesc1,
-            "amt1": response.billchild_details[index].amt1,
-            "call_duration1": response.billchild_details[index].call_duration1,
+            "particular1": response.bill_fixed_details[index].productName,
+            "fromdt1": response.bill_fixed_details[index].fromDate,
+            "todt1": response.bill_fixed_details[index].toDate,
+            "md_chk1": response.bill_fixed_details[index].md_state,
+            "did_diff_date1": response.bill_fixed_details[index].did_diff_date,
+            "productDesc1": response.bill_fixed_details[index].productDesc,
+            "amt1": response.bill_fixed_details[index].total_amt,
+            "call_duration1": response.bill_fixed_details[index].call_duration_state,
+            
+            
           })
 
           );
@@ -999,19 +1382,19 @@ editDIDStateID:any;
          // part-2
         
          const formArray2 = new FormArray([]);
-         for (let index = 0; index < response.billchild_details.length; index++) {
- 
-           console.log('billchild_details++index'+index);
+         for (let index = 0; index < response.bill_usage_details.length; index++) {
+          $('#sub_total_2').val(response.bill_usage_details[index].net_amt);
+           console.log('bill_usage_details++index'+index);
  
            formArray2.push(this.fb.group({
-             "particular2": response.billchild_details[index].particular2,
-             "fromdt2": response.billchild_details[index].fromdt2,
-             "todt2": response.billchild_details[index].todt2,
-             "md_chk2": response.billchild_details[index].md_chk2,
-             "did_diff_date2": response.billchild_details[index].did_diff_date2,
-             "productDesc2": response.billchild_details[index].productDesc2,
-             "amt2": response.billchild_details[index].amt2,
-             "call_duration2": response.billchild_details[index].call_duration2,
+             "particular2": response.bill_usage_details[index].productName,
+             "fromdt2": response.bill_usage_details[index].fromDate,
+             "todt2": response.bill_usage_details[index].toDate,
+             "md_chk2": response.bill_usage_details[index].md_state,
+             "did_diff_date2": response.bill_usage_details[index].did_diff_date,
+             "productDesc2": response.bill_usage_details[index].productDesc,
+             "amt2": response.bill_usage_details[index].total_amt,
+             "call_duration2": response.bill_usage_details[index].call_duration_state,
            })
  
            );
@@ -1025,19 +1408,19 @@ editDIDStateID:any;
            // part-2
         
            const formArray3 = new FormArray([]);
-           for (let index = 0; index < response.billchild_details.length; index++) {
-   
-             console.log('billchild_details++index'+index);
+           for (let index = 0; index < response.bill_other_details.length; index++) {
+            $('#sub_total_3').val(response.bill_other_details[index].net_amt);
+             console.log('bill_other_details++index'+index);
    
              formArray3.push(this.fb.group({
-               "particular3": response.billchild_details[index].particular3,
-               "fromdt3": response.billchild_details[index].fromdt3,
-               "todt3": response.billchild_details[index].todt3,
-               "md_chk3": response.billchild_details[index].md_chk3,
-               "did_diff_date3": response.billchild_details[index].did_diff_date3,
-               "productDesc3": response.billchild_details[index].productDesc3,
-               "amt3": response.billchild_details[index].amt3,
-               "call_duration3": response.billchild_details[index].call_duration3,
+               "particular3": response.bill_other_details[index].productName,
+               "fromdt3": response.bill_other_details[index].fromDate,
+               "todt3": response.bill_other_details[index].toDate,
+               "md_chk3": response.bill_other_details[index].md_state,
+               "did_diff_date3": response.bill_other_details[index].did_diff_date,
+               "productDesc3": response.bill_other_details[index].productDesc,
+               "amt3": response.bill_other_details[index].total_amt,
+               "call_duration3": response.bill_other_details[index].call_duration_state,
              })
    
              );
@@ -1069,16 +1452,29 @@ editDIDStateID:any;
           'section3_grand_total': response.billing_pararent_details[0].netPayment,
           //row-7
           'section3_remarks': response.billing_pararent_details[0].remarks,
+          'section3_previousDue': response.billing_pararent_details[0].previous_due_state,
 
           //row-8
-          'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
+          'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
+          'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
+          'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
+          'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
+          'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
+          'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
           //row-9
           'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
           //row-10
-          'section3_logo': response.billing_pararent_details[0].logo,
+          'section3_logo': response.billing_pararent_details[0].print_logo,
+          'section3_select_additional_signature': response.quot_signature_show_state,
         });
       }
       this.quotationAddSignature();
+      // this.fixedSaveDiscount();
+      // this.usageSaveDiscount();
+      // this.otherSaveDiscount();
+      // this.totalCalculate_1();
+      // this.totalCalculate_2();
+      // this.totalCalculate_3();
     });
     
   }
@@ -1096,14 +1492,18 @@ editDIDStateID:any;
 
     console.log('this.addPI_section3.value.billId_edit'+this.addDid_section1.value.billId_edit);
     //section-1
+    api_updateDid_req.billId = this.addDid_section1.value.billId_edit;
     api_updateDid_req.billerId = this.addDid_section1.value.companyName;
     api_updateDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
+    api_updateDid_req.cus_invoice_no = this.addDid_section1.value.cusInvoiceNo;
+    api_updateDid_req.customerId = this.addDid_section1.value.customer_id_hd;
     api_updateDid_req.customer_name = this.customerName_Data;
     api_updateDid_req.tinNo = this.addDid_section1.value.tin;
     api_updateDid_req.BillTo_customer_ID = this.customer_ID;
     api_updateDid_req.BillTo_customer_NAME = this.customer_NAME;
 
-    api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
+    // api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
+    api_updateDid_req.b_name = this.addDid_section1.value.customer_name;
     api_updateDid_req.b_address1 = this.addDid_section1.value.address_1;
     api_updateDid_req.b_address2 = this.addDid_section1.value.address_2;
     api_updateDid_req.b_address3 = this.addDid_section1.value.address_3;
@@ -1128,6 +1528,7 @@ editDIDStateID:any;
     api_updateDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
     api_updateDid_req.bills_logo_id = this.ExtralogoValue;
     api_updateDid_req.export_state = this.export_state;
+    api_updateDid_req.jom_pay_logo = this.Jompay_Value; 
     
     if (this.addDid_section1.value.BillTo === null) {
 
@@ -1169,7 +1570,7 @@ editDIDStateID:any;
       addr1[i].did_diff_date1 = $('#did_diff_date_1_' + i).val();
       addr1[i].productDesc1 = $('#productDesc_1_' + i).val();
       addr1[i].amt1 = $('#amt_1_' + i).val();
-      addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
+     
 
     }
 
@@ -1357,49 +1758,102 @@ console.log(v)
     }
     this.gross_total();
   }
+  percentPriceClear() {
+    this.txtbox_percentPriceClear = '';
 
+    $('#enablePriceFinal_1').val('');
+  }
+  directPriceClear() {
+    this.txtbox_directPriceClear = '';
+    $('#enablePerFinal_1').val('');
+  }
+  US_percentPriceClear(){
+    this.UsageSave_directPriceClear='';
+    $('#enablePriceFinal_2').val('');
+  }
+  US_directPriceClear(){
+    this.UsageSave_percentPriceClear='';
+    $('#enablePerFinal_2').val('');
+  }
+  OS_percentPriceClear(){
+    this.OtherSave_directPriceClear='';
+    $('#enablePriceFinal_3').val('');
+  }
+  OS_directPriceClear(){
+    this.OtherSave_percentPriceClear='';
+    $('#enablePerFinal_3').val('');
+  }
 
+  FD_percentPriceClear(){
+   
+    this.FinalDiscount_directPriceClear='';
+    $('#enablePriceFinal_4').val('');
+   
+  }
+  FD_directPriceClear(){
+     this.FinalDiscount_percentPriceClear='';
+     $('#enablePerFinal_4').val('');
+  }
 
   fixedSaveDiscount() {
 
     var enablePerFinal_1 = $('#enablePerFinal_1').val()
-    var enablePriceFinal_1 = $('#enablePriceFinal_1').val()
+
     var disType = $('input:radio[name=fix_DiscountTYpe]:checked').val();
+    // alert($('#sub_total_1').val());
     var final_tot = $('#sub_total_1').val();
-    console.log('final_tot' + final_tot);
+    console.log('final_tot', final_tot);
     $('#sub_discount_type_1').val(disType);
     var price: any;
-    // this.totalCalculate_1();
-    // setTimeout(()=>{
-    //   this.totalCalculate_1();
-    // },1000)
-
+    var fixedCharge_TotalAmount = 0;
+    var enablePriceFinal_1 = $('#enablePriceFinal_1').val()
     if (disType == 'per') {
-
+      $('#sub_total_1').val('');
       if (enablePerFinal_1 != '') {
+        for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
-        price = (parseFloat(enablePerFinal_1) * parseFloat(final_tot) / 100).toFixed(2);
+
+          fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + parseInt($('#amt_1_' + a).val());
+
+          console.log("dummy inside", fixedCharge_TotalAmount)
+
+        }
+        console.log("dummy outside", fixedCharge_TotalAmount)
+
+
+        price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100).toFixed(2);
         console.log(price);
         $('#sub_discount_1').val(price);
         $('#sub_discount_val_1').val(enablePerFinal_1);
-        price = final_tot - price;
-        console.log("sub_total" + price);
+        price = fixedCharge_TotalAmount - price;
+        console.log("sub_total", price);
         $('#sub_total_1').val(price);
+        this.gross_total();
 
       } else {
         $('#sub_discount_1').val('');
         $('#sub_discount_val_1').val('');
 
         price = final_tot;
+        this.gross_total();
 
       }
     }
     else {
-      price = final_tot - enablePriceFinal_1;
+      for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
+
+
+        fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + parseInt($('#amt_1_' + a).val());
+
+        console.log("dummy inside", fixedCharge_TotalAmount)
+
+      }
+      price = fixedCharge_TotalAmount - enablePriceFinal_1;
       console.log('price_fin' + price);
       $('#sub_total_1').val(price);
       $('#sub_discount_1').val(enablePriceFinal_1);
       $('#sub_discount_val_1').val(enablePriceFinal_1);
+      this.gross_total();
     }
 
     $('#sub_total_1').val(price)
@@ -1417,7 +1871,6 @@ console.log(v)
 
 
     $('#fixedDiscountFormId').modal('hide');
-   
 
   }
 
@@ -1456,36 +1909,58 @@ console.log(v)
     var enablePriceFinal_2 = $('#enablePriceFinal_2').val()
     var disType = $('input:radio[name=use_DiscountTYpe]:checked').val();
     var final_tot = $('#sub_total_2').val();
-    console.log('final_tot' + final_tot);
+    console.log('final_tot', final_tot);
     $('#sub_discount_type_2').val(disType);
     var price: any;
+    var UsageCharge_TotalAmount = 0;
 
     if (disType == 'per') {
 
       if (enablePerFinal_2 != '') {
+       
+        for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
-        price = (parseFloat(enablePerFinal_2) * parseFloat(final_tot) / 100).toFixed(2);
-        console.log(price);
+
+          UsageCharge_TotalAmount = Number(UsageCharge_TotalAmount) + parseInt($('#amt2_' + a).val());
+
+          console.log("UsageCharge_TotalAmount inside", UsageCharge_TotalAmount)
+
+        }
+        console.log("UsageCharge_TotalAmount outside", UsageCharge_TotalAmount)
+
+        price = (parseFloat(enablePerFinal_2) * (UsageCharge_TotalAmount) / 100).toFixed(2);
+        console.log("price", price);
         $('#sub_discount_2').val(price);
         $('#sub_discount_val_2').val(enablePerFinal_2);
-        price = final_tot - price;
-        console.log("sub_total" + price);
+        price = UsageCharge_TotalAmount - price;
+        console.log("sub_total", price);
         $('#sub_total_2').val(price);
+        this.gross_total();
 
       } else {
         $('#sub_discount_2').val('');
         $('#sub_discount_val_2').val('');
 
         price = final_tot;
+        this.gross_total();
 
       }
     }
     else {
-      price = final_tot - enablePriceFinal_2;
+      for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
+
+
+        UsageCharge_TotalAmount = Number(UsageCharge_TotalAmount) + parseInt($('#amt2_' + a).val());
+
+        console.log("UsageCharge_TotalAmount inside", UsageCharge_TotalAmount)
+
+      }
+      price = UsageCharge_TotalAmount - enablePriceFinal_2;
       console.log('price_fin' + price);
       $('#sub_total_2').val(price);
       $('#sub_discount_2').val(enablePriceFinal_2);
       $('#sub_discount_val_2').val(enablePriceFinal_2);
+      this.gross_total();
     }
 
     $('#sub_total_2').val(price)
@@ -1501,7 +1976,6 @@ console.log(v)
       }
     }
     $('#usageDiscountFormId').modal('hide');
-   
 
 
   }
@@ -1532,7 +2006,6 @@ console.log(v)
   }
 
 
-
   otherSaveDiscount() {
 
     var enablePerFinal_3 = $('#enablePerFinal_3').val()
@@ -1540,35 +2013,56 @@ console.log(v)
     var disType = $('input:radio[name=oth_DiscountTYpe]:checked').val();
     var final_tot = $('#sub_total_3').val();
     console.log('final_tot' + final_tot);
-    $('#sub_discount_type_3' ).val(disType);
+    $('#sub_discount_type_3').val(disType);
     var price: any;
+    var OtherCharge_TotalAmount = 0;
 
     if (disType == 'per') {
-  
+
       if (enablePerFinal_3 != '') {
-        
-        price = (parseFloat(enablePerFinal_3) * parseFloat(final_tot) / 100).toFixed(2);
+        for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
+
+
+          OtherCharge_TotalAmount = Number(OtherCharge_TotalAmount) + parseInt($('#amt3_' + a).val());
+
+          console.log("OtherCharge_TotalAmount inside", OtherCharge_TotalAmount)
+
+        }
+        console.log("OtherCharge_TotalAmount outside", OtherCharge_TotalAmount)
+
+        price = (parseFloat(enablePerFinal_3) * (OtherCharge_TotalAmount) / 100).toFixed(2);
         console.log(price);
-        $('#sub_discount_3' ).val(price);
+        $('#sub_discount_3').val(price);
         $('#sub_discount_val_3').val(enablePerFinal_3);
-        price = final_tot - price;
-        console.log("sub_total" + price);
+        price = OtherCharge_TotalAmount - price;
+        console.log("sub_total", price);
         $('#sub_total_3').val(price);
-        
+        this.gross_total();
+
       } else {
-        $('#sub_discount_3' ).val('');
+        $('#sub_discount_3').val('');
         $('#sub_discount_val_3').val('');
-          
+
         price = final_tot;
 
+        this.gross_total();
       }
-    } 
+    }
     else {
-      price = final_tot - enablePriceFinal_3;
+      for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
+
+
+        OtherCharge_TotalAmount = Number(OtherCharge_TotalAmount) + parseInt($('#amt3_' + a).val());
+
+        console.log("OtherCharge_TotalAmount inside", OtherCharge_TotalAmount)
+
+      }
+      price = OtherCharge_TotalAmount - enablePriceFinal_3;
       console.log('price_fin_3' + price);
       $('#sub_total_3').val(price);
       $('#sub_discount_3').val(enablePriceFinal_3);
       $('#sub_discount_val_3').val(enablePriceFinal_3);
+      this.gross_total();
     }
 
     $('#sub_total_3').val(price)
@@ -1584,11 +2078,14 @@ console.log(v)
       }
     }
     $('#otherDiscountFormId').modal('hide');
-   
+
 
   }
 
+
   gross_total() {
+   
+
     var total_amt: any = 0;
     var gross_tot = 0;
 
@@ -1597,7 +2094,12 @@ console.log(v)
     sub_total1 = $('#sub_total_1').val();
     sub_total2 = $('#sub_total_2').val();
     sub_total3 = $('#sub_total_3').val();
-    total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
+    if(sub_total3=='' ){
+      total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)); 
+    }else{
+      total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
+    }
+   
 
     console.log(total_amt);
     gross_tot += parseFloat(total_amt);
@@ -1791,6 +2293,54 @@ console.log(v)
        
       }
     });
+  }
+
+  invoiceAddSignatureEdit(sign_val: any) {
+ 
+    let api_req: any = new Object();
+    let api_invoiceAddSignatureEdit_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/invoice_add_signature_edit";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_invoiceAddSignatureEdit_req.action = "invoice_add_signature_edit";
+
+    api_invoiceAddSignatureEdit_req.user_id = this.addDid_section1.value.salesRep;
+  
+    api_invoiceAddSignatureEdit_req.billerId = this.addDid_section1.value.companyName;
+    api_invoiceAddSignatureEdit_req.billId = this.editbillerID;
+    api_req.element_data = api_invoiceAddSignatureEdit_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-quotation_add_signature response", response)
+
+      if (response.status == true) {
+
+        this.invoiceAddSignature_state = response.signature_state;
+        this.checkbox_selectAdditionalSignature = true
+        if (sign_val == 0) {
+          console.log('response.signature_filename' + response.signature_filename);
+          this.invoiceAddSignature_filename = response.signature_filename;
+        }
+
+        this.invoiceAddSignatureCHKShowState = response.invoice_signature_show_state;
+
+        this.addDid_section3.patchValue({
+          //section-3
+
+          //row-9
+          //     'section3_select_additional_signature': response.quot_signature_show_state,
+
+        });
+      }
+      else {
+
+      }
+
+
+    });
+
+
   }
 
 

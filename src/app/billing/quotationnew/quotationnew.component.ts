@@ -715,7 +715,9 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-  editQuotationPopUP(QuotationId: any) {
+  editQuotationPopUP(QuotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+    $("body").removeClass("modal-open");
     this.edit_quotationID = QuotationId;
     let api_req: any = new Object();
     let edit_popup_req: any = new Object();
@@ -754,7 +756,9 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-  duplicateQuotationPopUP(QuotationId: any) {
+  duplicateQuotationPopUP(QuotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+    $("body").removeClass("modal-open");
     this.duplicate_quotationID = QuotationId;
     let api_req: any = new Object();
     let duplicate_popup_req: any = new Object();
@@ -793,7 +797,8 @@ export class QuotationnewComponent implements OnInit {
 
     });
   }
-  quotationSharedPersonEdit(QuotationId: any) {
+  quotationSharedPersonEdit(QuotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.sharePermissionQuotationId = QuotationId;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
@@ -1096,7 +1101,8 @@ export class QuotationnewComponent implements OnInit {
     console.log("after--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
-  quotationApprovalEdit(id: any) {
+  quotationApprovalEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.quotationApproval_ID = id;
     let api_req: any = new Object();
@@ -1208,7 +1214,8 @@ export class QuotationnewComponent implements OnInit {
     this.quotationApprovalForm.reset();
     window.location.reload()
   }
-  deleteQuotation(id: any) {
+  deleteQuotation(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1255,7 +1262,8 @@ export class QuotationnewComponent implements OnInit {
 
 
   }
-  setTemplateName(quotationId: any) {
+  setTemplateName(quotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.template_quotationID = quotationId;
     let api_req: any = new Object();
@@ -1308,7 +1316,8 @@ export class QuotationnewComponent implements OnInit {
     });
 
   }
-  setActualCost(quotationId: any) {
+  setActualCost(quotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.actualCost_quotationID = quotationId;
     let api_req: any = new Object();
     let actualCost_req: any = new Object();
@@ -1394,7 +1403,8 @@ export class QuotationnewComponent implements OnInit {
 
   }
 
-  fileAttachmentEdit(ID: any) {
+  fileAttachmentEdit(ID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.myFiles = [];
     $("#fileAttachmentFormId").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
@@ -1622,7 +1632,8 @@ export class QuotationnewComponent implements OnInit {
 
     }
   }
-  Email(QuotationID: any) {
+  Email(QuotationID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.emailForm.reset();
     this.EmailQuotationID = QuotationID;
 
@@ -1856,7 +1867,8 @@ export class QuotationnewComponent implements OnInit {
     }
   }
 
-  quotationCommentsEdit(quotationID: any, transactionID: any) {
+  quotationCommentsEdit(quotationID: any, transactionID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     console.log("transactionid", transactionID)
     if (transactionID != null) {
 
@@ -1933,7 +1945,8 @@ export class QuotationnewComponent implements OnInit {
   PIEdit1(quotationId: any) {
 
   }
-  PIEdit(quotationId: any) {
+  PIEdit(quotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.PIResult = [];//for refreshing we are emptying the variable
     // this.invoiceCheckboxID_array=[];
     //for refreshing we are emptying the variable
@@ -2026,7 +2039,8 @@ this.spinner.show();
       console.log("final error", error);
     }
   }
-  pdf(quotationId: any) {
+  pdf(quotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
     window.open(url, '_blank');
     console.log("url", url)
@@ -2034,7 +2048,8 @@ this.spinner.show();
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
   }
-  quotationExcelExport(quotationId: any) {
+  quotationExcelExport(quotationId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.spinner.show();
     let api_req: any = new Object();
     let api_quotExcel_req: any = new Object();
