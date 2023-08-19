@@ -124,10 +124,10 @@
                             <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
                             <div class="col-lg-12">
     
-                                <select id="billCode" class="form-control" formControlName="billCode">
+                                <select id="billCode" class="form-control" formControlName="billCode" (change)="billCodeChange($event)">
                                     <option [ngValue]="null" selected >Select Bill Code</option>
                                    
-                                    <option *ngFor="let bill of did_bill_code_section1" value="{{bill.customer_bill_code_id}}">
+                                    <option *ngFor="let bill of did_bill_codexx" value="{{bill.customer_bill_code_id}}">
                                         {{bill.bill_code}}
                                     </option>
                                 </select>
@@ -505,7 +505,7 @@
                                     <td>
                                         <div class="userDatatable-content">
                                         <input type="text" class="form-control" formControlName="amt1" id="amt_1_{{i}}"
-                                         (change)="totalCalculate_1();fixedSaveDiscount();totalCalculate_2();totalCalculate_3()" (keyup)="totalCalculate_1();totalCalculate_2();totalCalculate_3()"  />
+                                         (change)="totalCalculate_1();fixedSaveDiscount();getTaxCals(); extraFees();" (keyup)="totalCalculate_1();fixedSaveDiscount();getTaxCals(); extraFees();"  />
                                          <!-- <input type="text" class="form-control" formControlName="amt1" id="amt_1_{{i}}"
                                             /> -->
                                         </div>
@@ -638,7 +638,7 @@
             
                                         <select id="billCode" class="form-control"  formControlName="billCode" (change)="billCodeChange_section1($event)" >
                                             <option [ngValue]="null" selected disabled>Select Bill Code</option>
-                                            <option *ngFor="let bill of did_bill_code" value="{{bill.customer_bill_code_id}}">
+                                            <option *ngFor="let bill of did_bill_code_section1" value="{{bill.customer_bill_code_id}}">
                                                 {{bill.bill_code}}
                                             </option> 
                                         </select>
@@ -689,7 +689,8 @@
                         <td>
                             <div class="userDatatable-content">
                             <input type="text" class="form-control" formControlName="amt2" id="amt2_{{i}}"
-                            (change)="totalCalculate_1();totalCalculate_2();usageSaveDiscount();totalCalculate_3()"(keyup)="totalCalculate_1();totalCalculate_2();usageSaveDiscount();totalCalculate_3()" />
+                            (change)="totalCalculate_2();usageSaveDiscount();getTaxCals(); extraFees();" (keyup)="totalCalculate_2();usageSaveDiscount();getTaxCals(); extraFees();"
+                            />
                             </div>
                         </td>
     
@@ -804,8 +805,8 @@
                                 <div class="userDatatable-content" >
                                     <br>
                                 <input type="date" class="form-control" formControlName="todt3" id="todt3_{{i}}"  />
-                                <button  type="button"  class="btn btn-primary">Compute
-                                </button>
+                                <!-- <button  type="button"  class="btn btn-primary">Compute
+                                </button> -->
     
                                     </div>
                             </td>
@@ -841,7 +842,8 @@
                             <td>
                                 <div class="userDatatable-content">
                                 <input type="text" class="form-control" formControlName="amt3" id="amt3_{{i}}"
-                                (change)="totalCalculate_1();totalCalculate_2();totalCalculate_3(); otherSaveDiscount();" (keyup)="totalCalculate_1();totalCalculate_2();totalCalculate_3(); otherSaveDiscount();" />
+                                (change)="totalCalculate_3();otherSaveDiscount();getTaxCals(); extraFees();" (keyup)="totalCalculate_3();otherSaveDiscount();getTaxCals(); extraFees();"
+                                />
                                 </div>
                             </td>
     
@@ -938,7 +940,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control mt-2"
-                                            formControlName="section3_gross_total" id="section3_gross_total" [(ngModel)]="grossTotal" [attr.readonly]="isReadOnly" />
+                                            formControlName="section3_gross_total" id="section3_gross_total"  [attr.readonly]="isReadOnly" />
                                     </div>
                                 </div>
                             </div>
@@ -964,14 +966,26 @@
                                 </div>
                             </div>
     
-    
+                            <div class="col-lg-12">
+                                <div class="row d-flex">
+                                    
+                                    <div class="col-lg-6 mt-2"  style="text-align: right;">
+                                        <label class="col-form-label">Gross
+                                            Total(Rs.)(After Discount)</label>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <input type="text" class="form-control mt-2"
+                                            formControlName="section3_gross_total_afterDiscount" id="section3_gross_total_afterDiscount"  [attr.readonly]="isReadOnly" />
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="form-group ml-2 mt-2">
     
     
                                     <select name="billerID" id="billerIDs" class="form-control"
                                         aria-label="Default select example" formControlName="section3_gst_dropdown"
-                                        (change)="getTaxCals()">
+                                        (change)="getTaxCals();extraFees();">
                                         <option [ngValue]="null" selected disabled>Select Tax</option>
     
     
@@ -988,7 +1002,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     
-                                    <input type="text" formControlName="section3_taxAmt_txtbox" id="tax_amt_id" [(ngModel)]="finalTax"
+                                    <input type="text" formControlName="section3_taxAmt_txtbox" id="Tax_amt_id" 
                                             class="form-control mt-2" [attr.readonly]="isReadOnly" />
     
                                 </div>
@@ -1005,8 +1019,8 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <!--  -->
-                                    <input type="text" formControlName="section3_shipping_amt_txtbox" (keyup)="extraFees()"
-                                        id="shipping_amt_id" class="form-control mt-2" />
+                                    <input type="text" formControlName="section3_shipping_amt_txtbox" 
+                                        id="shipping_amt_id" class="form-control mt-2" (keyup)="extraFees()"/>
                                 </div>
                             </div>
     
@@ -1021,8 +1035,8 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <!--  -->
-                                    <input type="text" formControlName="section3_bankingCharge_amt_txtbox" (keyup)="extraFees()"
-                                            id="bankingCharge_amt_id" class="form-control mt-2" />
+                                    <input type="text" formControlName="section3_bankingCharge_amt_txtbox" 
+                                            id="bankingCharge_amt_id" class="form-control mt-2" (keyup)="extraFees()"/>
                                 </div>
                             </div>
     
@@ -1036,7 +1050,7 @@
     
                                     <div class="col-lg-6 mt-2">
                                         <!-- (change)="totalCalculate()" -->
-                                        <input type="text" class="form-control" [(ngModel)]="grandTotal"
+                                        <input type="text" class="form-control" 
                                             formControlName="section3_grand_total" id="section3_grand_total" [attr.readonly]="isReadOnly" />
                                     </div>
     
@@ -1088,11 +1102,11 @@
                                         <label>Add to terms and condition</label>
                                     </div>
     
-                                    <!-- <div class="col-lg-6 mt-2">
+                                    <div class="col-lg-6">
                                         <input type="checkbox" [(ngModel)]="chkTermsandcondition"
                                             formControlName="section3_termCondition"
                                             (change)="chkTermsandconditionEvent($event)" />
-                                    </div> -->
+                                    </div>
     
     
                                 </div>
@@ -1523,12 +1537,13 @@ aria-hidden="true">
      </div>
      <div class="modal-footer">
 
-         <button type="button" class="btn btn-primary" (click)="finalSaveDiscount()">Save</button>
+         <button type="button" class="btn btn-primary" (click)="finalSaveDiscount();">Save</button>
          <button type="button" class="btn btn-dark" data-dismiss="modal">
              Cancel
          </button>
 
-     </div>
+  
+</div>
  </div>
 </div>
 </div>

@@ -877,12 +877,13 @@ export class ProformaInvoiceComponent implements OnInit {
         e_editBillID: editbillID,
       }
     });
+    $("body").removeClass("modal-open");
   }
 
 
   editDidPIGo(id: any,i:any) {
     $("#ActionId" + i).modal("hide");
-    $("body").removeClass("modal-open");
+ 
 
     var editbillID = id;
     this.router.navigate(['/EditDidPI'])
@@ -892,6 +893,7 @@ export class ProformaInvoiceComponent implements OnInit {
         e_editBillID: editbillID,
       }
     });
+    $("body").removeClass("modal-open");
   }
 
 

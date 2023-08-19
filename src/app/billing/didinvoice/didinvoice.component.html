@@ -145,7 +145,7 @@
                         <div style="display: flex;align-items: center;">
                           <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
                             (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i></button>
-                          <span class="recurring-Status" *ngIf="(this.recurring_state_all=='1')">R</span>
+                          <span class="recurring-Status" *ngIf="(recurring_state_all=='1')">R</span>
                           <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                               src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                         </div>
@@ -277,54 +277,7 @@
 
 
 
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
-                                      <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
-                                        data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-blue.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                      <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
-                                        class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                        data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-red.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                    </li>
-
-
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==0)">
-                                      <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
-                                        data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-blue.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                      <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
-                                        class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                        data-target="#InvoiceSendingMethodFormId"
-                                        (click)="getInvoice_Post(list.billId,i)"
-                                        (click)="InvoiceSendingMethodEdit(list.billId)">
-                                        <img class="show" src="assets/img/icon2/post-red.png">
-                                        <img class="hide" src="assets/img/icon2/post-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
-                                            Post</strong></span>
-                                      </a>
-
-                                    </li>
+                           
 
 
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_mail==1)">
@@ -456,6 +409,67 @@
                                       </a>
 
                                     </li> -->
+
+
+                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
+                                      <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
+                                        data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
+                                        (click)="getInvoice_Post(list.billId,i)"
+                                        (click)="InvoiceSendingMethodEdit(list.billId)">
+                                        <img class="show" src="assets/img/icon2/post-blue.png">
+                                        <img class="hide" src="assets/img/icon2/post-black.png">
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                            Post</strong></span>
+                                      </a>
+
+                                      <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
+                                        class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                                        data-target="#InvoiceSendingMethodFormId"
+                                        (click)="getInvoice_Post(list.billId,i)"
+                                        (click)="InvoiceSendingMethodEdit(list.billId)">
+                                        <img class="show" src="assets/img/icon2/post-red.png">
+                                        <img class="hide" src="assets/img/icon2/post-black.png">
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                            Post</strong></span>
+                                      </a>
+
+                                    </li>
+
+
+                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==0)">
+                                      <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
+                                        data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
+                                        (click)="getInvoice_Post(list.billId,i)"
+                                        (click)="InvoiceSendingMethodEdit(list.billId)">
+                                        <img class="show" src="assets/img/icon2/post-blue.png">
+                                        <img class="hide" src="assets/img/icon2/post-black.png">
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                            Post</strong></span>
+                                      </a>
+
+                                      <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
+                                        class="hover3" title="Send Invoice to Post" data-toggle="modal"
+                                        data-target="#InvoiceSendingMethodFormId"
+                                        (click)="getInvoice_Post(list.billId,i)"
+                                        (click)="InvoiceSendingMethodEdit(list.billId)">
+                                        <img class="show" src="assets/img/icon2/post-red.png">
+                                        <img class="hide" src="assets/img/icon2/post-black.png">
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Send Invoice to
+                                            Post</strong></span>
+                                      </a>
+
+                                    </li>
+
+                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
+                                      <a class="hover4" title="Delivery Order" data-toggle="modal"
+                                        data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId,i)">
+                                        <img class="show" src="assets/img/icon2/delivery-blue.png">
+                                        <img class="hide" src="assets/img/icon2/delivery-black.png">
+
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Delivery
+                                            Order</strong></span>
+                                      </a>
+                                    </li>
                                   </ul>
                                   <ul>
 
@@ -539,16 +553,7 @@
                                       </a>
 
                                     </li>
-                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
-                                      <a class="hover4" title="Delivery Order" data-toggle="modal"
-                                        data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/delivery-blue.png">
-                                        <img class="hide" src="assets/img/icon2/delivery-black.png">
-
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Delivery
-                                            Order</strong></span>
-                                      </a>
-                                    </li>
+                                 
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_did==1)">
                                       <a class="hover3" title="Invoice to DID Invoice" data-toggle="modal"
                                         data-target="#">

@@ -181,264 +181,200 @@
                           <div class="page">
   
                             <div class="dropdown">
-                              <div style="display: flex;align-items: center;">
-                                <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
-                                  ><i class="fa fa-bars"></i></button>
-                               
-                              </div>
-                              <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
-                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered ActionId" role="document"
-                                  style="max-width: 1000px;">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <span class="col-12 modal-title text-center"
-                                        style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
-                                      </span>
-                                      <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true"
-                                          style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
-                                      </h6>
-                                    </div>
-                                    <div class="modal-body">
-                              
-                                      <div class="row" style="display: flex;
-                                      justify-content: space-between;">
-                                        <ul>
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="View" data-toggle="modal" data-target="#viewCustomerFormId"
-                                              (click)="viewCustomer(list.customerId,i)">
-            
-                                              <img class="show" src="assets/img/icon2/eye-yellow.png">
-                                              <img class="hide" src="assets/img/icon2/eye-black1.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>View Customer</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
-                                              (click)="editCustomer(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/edit-blue.png">
-                                              <img class="hide" src="assets/img/icon2/edit-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Edit Customer</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="Delete" (click)="deleteCustomer(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/delete-blue.png">
-                                              <img class="hide" src="assets/img/icon2/delete-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Delete Customer</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="view" title="Landscape Email" data-toggle="modal"
-                                              data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                              <img class="hide" src="assets/img/icon2/gmail-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Email-Landscape</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="view" title="Quick Mail" (click)="quickMail(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/Atsign-blue.png">
-                                              <img class="hide" src="assets/img/icon2/Atsign-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Quick Mail</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="Special Edit" data-toggle="modal"
-                                              data-target="#specialEditCustomerFormId"
-                                              (click)="specialEditCustomer(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/specialEdit-blue.png">
-                                              <img class="hide" src="assets/img/icon2/specialEdit-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Special Edit</strong></span>
-                                            </a>
-                                          </li>
-                                      
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId"
-                                              (click)="billCodeAttachmentEdit(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/digital-blue.png">
-                                              <img class="hide" src="assets/img/icon2/digital-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Bill Code</strong></span>
-                                            </a>
-                                          </li>
-            
-                
-                                        </ul>
-                                        <ul>
-                                          <li class="dropdown__item">
-                                            <a *ngIf="list.cust_status =='P'" class="remove" title="Customer Status" data-toggle="modal"
-                                              (click)="customer_status(list.customerId,list.cust_status,i)">
-                                              <img class="show" src="assets/img/icon2/customer-blue.png">
-                                              <img class="hide" src="assets/img/icon2/customer-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
-                                            </a>
-                                        
-                                         
-                                            <a  *ngIf="list.cust_status == 'N'" class="remove" title="Customer Status" data-toggle="modal"
-                                              (click)="customer_status(list.customerId,list.cust_status,i)">
-                                              <img class="show" src="assets/img/icon2/customer-red.png">
-                                              <img class="hide" src="assets/img/icon2/customer-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a *ngIf="this.isResllerStatus==false" class="view" title="Reseller Status" data-toggle="modal"
-                                              (click)="reseller_statusMethod(list.customerId,i)" >
-                                              <img class="show" src="assets/img/icon2/reseller-red.png">
-                                              <img class="hide" src="assets/img/icon2/reseller-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Reseller Status</strong></span>
-                                            </a>
-                                        
-                                            <a *ngIf="this.isResllerStatus==true" class="view" title="Reseller Status" data-toggle="modal"
-                                              (click)="reseller_statusMethod(list.customerId,i)" >
-                                              <img class="show" src="assets/img/icon2/reseller-blue.png">
-                                              <img class="hide" src="assets/img/icon2/reseller-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Reseller Status</strong></span>
-            
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a *ngIf="this.isEmployeeStatus==true" class="remove" title="Employee Status" data-toggle="modal"
-                                              (click)="employee_status(list.customerId,i)" >
-                                              <img class="show" src="assets/img/icon2/employee-blue.png">
-                                              <img class="hide" src="assets/img/icon2/employee-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Employee Status</strong></span>
-                                            </a>
-                                        
-                                            <a *ngIf="this.isEmployeeStatus==false" class="remove" title="Employee Status" data-toggle="modal"
-                                              (click)="employee_status(list.customerId,i)" >
-                                              <img class="show" src="assets/img/icon2/employee-red.png">
-                                              <img class="hide" src="assets/img/icon2/employee-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Employee Status</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="view" title="Share Customer Permission" data-toggle="modal"
-                                              data-target="#SharedCustomerPermissionFormId"
-                                              (click)="shareCustomerPermission_edit(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/customer-service.png">
-                                              <img class="hide" src="assets/img/icon2/customer-service.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Share Customer Permission</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="Assign Account Manager" data-toggle="modal"
-                                              data-target="#AssignAccountManager"
-                                              (click)="AssignAccountManager_edit(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/accountant.png">
-                                              <img class="hide" src="assets/img/icon2/accountant.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Assign Account Manager</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="view" title="Invoice Share" data-toggle="modal"
-                                              data-target="#invoiceSharedCustomerFormId"
-                                              (click)="invoiceShare_edit(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/share-square-blue.png">
-                                              <img class="hide" src="assets/img/icon2/share-square-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Invoice Share</strong></span>
-                                            </a>
-                                          </li>
-            
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="Google Authentication" data-toggle="modal"
-                                              data-target="#GoogleAuthentication" (click)="GoogleAuthenticationId(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/google.png">
-                                              <img class="hide" src="assets/img/icon2/google.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Google Authentication</strong></span>
-                                            </a>
-                                          </li>
-    
-                                        </ul>
-                                        <ul>
-    
-                                      
-            
-                                          <li class="dropdown__item">
-                                            <a class="view" title="File Attachment" data-toggle="modal"
-                                              data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/fileAttach-blue.png">
-                                              <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>File Attachment</strong></span>
-                                            </a>
-                                          </li>
-    
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="Create a Call4Tel Customer"
-                                              (click)="nx32CustomerCreate(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/add-user-blue.png">
-                                              <img class="hide" src="assets/img/icon2/add-user-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Create a Call4Tel Customer</strong></span>
-                                            </a>
-                                          </li>
-            
-                                          <li class="dropdown__item" *ngIf="list.nx32_state==1">
-                                            <a class="view" title="NX32 Permission Status" data-toggle="modal"
-                                              data-target="#customer_NX32PermissionFormId"
-                                              (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
-                                              <img class="show" src="assets/img/icon2/permis-blue.png">
-                                              <img class="hide" src="assets/img/icon2/permis-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>NX32 Permission Status</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item" *ngIf="list.nx32_state==0">
-                                            <a class="view" title="NX32 Permission Status" data-toggle="modal"
-                                              data-target="#customer_NX32PermissionFormId"
-                                              (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
-                                              <img class="show" src="assets/img/icon2/permis-red.png">
-                                              <img class="hide" src="assets/img/icon2/userLock-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>NX32 Permission Status</strong></span>
-                                            </a>
-                                          </li>
-    
-                                          
-                                          <li class="dropdown__item">
-                                            <a class="view" title="C4T Partner Details" data-toggle="modal"
-                                              data-target="#call4tellPartnerDetailsFormId"
-                                              (click)="call4tel_address_getList(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/call4tell-blue.png">
-                                              <img class="hide" src="assets/img/icon2/call4tell-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Call4tel Partner Details</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="remove" title="MrVoip" data-toggle="modal"
-                                              data-target="#MrvoipPartnerDetailsFormId"
-                                              (click)="mrvoip_address_getList(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/mrVoip-blue.png">
-                                              <img class="hide" src="assets/img/icon2/mrVoip-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>MrVoip Partner Details</strong></span>
-                                            </a>
-                                          </li>
-                                          <li class="dropdown__item">
-                                            <a class="view" title="MConnect" data-toggle="modal"
-                                              data-target="#mconnectPartnerDetailsFormId"
-                                              (click)="mconnect_address_getList(list.customerId,i)">
-                                              <img class="show" src="assets/img/icon2/bird-blue.png">
-                                              <img class="hide" src="assets/img/icon2/bird-black.png">
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Mconnect Partner Details</strong></span>
-                                            </a>
-                                          </li>
-                                        
-    
-                                    
-                                        
-                                         
-                                        </ul>
-                                      </div>
-    
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-dark" style="line-height: 10px;"
-                                        data-dismiss="modal">
-                                        Cancel
-                                      </button>
-    
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                              <button class="btn1"><i class="fa fa-bars"></i></button>
+                              <ul class="dropdown__list">
+                                <li class="dropdown__item">
+                                  <a class="remove" title="View" data-toggle="modal" data-target="#viewCustomerFormId"
+                                    (click)="viewCustomer(list.customerId)">
+  
+                                    <img class="show" src="assets/img/icon2/eye-yellow.png">
+                                    <img class="hide" src="assets/img/icon2/eye-black1.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
+                                    (click)="editCustomer(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/edit-blue.png">
+                                    <img class="hide" src="assets/img/icon2/edit-black.png">
+                                  </a>
+                                </li>
+  
+  
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Delete" (click)="deleteCustomer(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/delete-blue.png">
+                                    <img class="hide" src="assets/img/icon2/delete-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="Landscape Email" data-toggle="modal"
+                                    data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                    <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Customer Status" data-toggle="modal"
+                                    (click)="customer_status(list.customerId,list.cust_status)"
+                                    *ngIf="list.cust_status =='P'">
+                                    <img class="show" src="assets/img/icon2/customer-blue.png">
+                                    <img class="hide" src="assets/img/icon2/customer-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Customer Status" data-toggle="modal"
+                                    (click)="customer_status(list.customerId,list.cust_status)"
+                                    *ngIf="list.cust_status == 'N'">
+                                    <img class="show" src="assets/img/icon2/customer-red.png">
+                                    <img class="hide" src="assets/img/icon2/customer-black.png">
+                                  </a>
+                                </li>
+  
+  
+  
+                                <li class="dropdown__item">
+                                  <a class="view" title="Reseller Status" data-toggle="modal"
+                                    (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==false">
+                                    <img class="show" src="assets/img/icon2/reseller-red.png">
+                                    <img class="hide" src="assets/img/icon2/reseller-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="Reseller Status" data-toggle="modal"
+                                    (click)="reseller_statusMethod(list.customerId)" *ngIf="this.isResllerStatus==true">
+                                    <img class="show" src="assets/img/icon2/reseller-blue.png">
+                                    <img class="hide" src="assets/img/icon2/reseller-black.png">
+  
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Employee Status" data-toggle="modal"
+                                    (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==true">
+                                    <img class="show" src="assets/img/icon2/employee-blue.png">
+                                    <img class="hide" src="assets/img/icon2/employee-black.png">
+  
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Employee Status" data-toggle="modal"
+                                    (click)="employee_status(list.customerId)" *ngIf="this.isEmployeeStatus==false">
+                                    <img class="show" src="assets/img/icon2/employee-red.png">
+                                    <img class="hide" src="assets/img/icon2/employee-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="Share Customer Permission" data-toggle="modal"
+                                    data-target="#SharedCustomerPermissionFormId"
+                                    (click)="shareCustomerPermission_edit(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/customer-service.png">
+                                    <img class="hide" src="assets/img/icon2/customer-service.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Assign Account Manager" data-toggle="modal"
+                                    data-target="#AssignAccountManager"
+                                    (click)="AssignAccountManager_edit(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/accountant.png">
+                                    <img class="hide" src="assets/img/icon2/accountant.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="Quick Mail" (click)="quickMail(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/Atsign-blue.png">
+                                    <img class="hide" src="assets/img/icon2/Atsign-black.png">
+                                  </a>
+                                </li>
+  
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Google Authentication" data-toggle="modal"
+                                    data-target="#GoogleAuthentication" (click)="GoogleAuthenticationId(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/google.png">
+                                    <img class="hide" src="assets/img/icon2/google.png">
+                                  </a>
+                                </li>
+  
+                                <li class="dropdown__item">
+                                  <a class="view" title="File Attachment" data-toggle="modal"
+                                    data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/fileAttach-blue.png">
+                                    <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
+                                  </a>
+                                </li>
+  
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Create a Call4Tel Customer"
+                                    (click)="nx32CustomerCreate(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/add-user-blue.png">
+                                    <img class="hide" src="assets/img/icon2/add-user-black.png">
+                                  </a>
+                                </li>
+  
+                                <li class="dropdown__item" *ngIf="list.nx32_state==1">
+                                  <a class="view" title="NX32 Permission Status" data-toggle="modal"
+                                    data-target="#customer_NX32PermissionFormId"
+                                    (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
+                                    <img class="show" src="assets/img/icon2/permis-blue.png">
+                                    <img class="hide" src="assets/img/icon2/permis-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item" *ngIf="list.nx32_state==0">
+                                  <a class="view" title="NX32 Permission Status" data-toggle="modal"
+                                    data-target="#customer_NX32PermissionFormId"
+                                    (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state)">
+                                    <img class="show" src="assets/img/icon2/permis-red.png">
+                                    <img class="hide" src="assets/img/icon2/userLock-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Special Edit" data-toggle="modal"
+                                    data-target="#specialEditCustomerFormId"
+                                    (click)="specialEditCustomer(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/specialEdit-blue.png">
+                                    <img class="hide" src="assets/img/icon2/specialEdit-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="Invoice Share" data-toggle="modal"
+                                    data-target="#invoiceSharedCustomerFormId"
+                                    (click)="invoiceShare_edit(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/share-square-blue.png">
+                                    <img class="hide" src="assets/img/icon2/share-square-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId"
+                                    (click)="billCodeAttachmentEdit(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/digital-blue.png">
+                                    <img class="hide" src="assets/img/icon2/digital-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="C4T Partner Details" data-toggle="modal"
+                                    data-target="#call4tellPartnerDetailsFormId"
+                                    (click)="call4tel_address_getList(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/call4tell-blue.png">
+                                    <img class="hide" src="assets/img/icon2/call4tell-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="remove" title="MrVoip" data-toggle="modal"
+                                    data-target="#MrvoipPartnerDetailsFormId"
+                                    (click)="mrvoip_address_getList(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/mrVoip-blue.png">
+                                    <img class="hide" src="assets/img/icon2/mrVoip-black.png">
+                                  </a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="view" title="MConnect" data-toggle="modal"
+                                    data-target="#mconnectPartnerDetailsFormId"
+                                    (click)="mconnect_address_getList(list.customerId)">
+                                    <img class="show" src="assets/img/icon2/bird-blue.png">
+                                    <img class="hide" src="assets/img/icon2/bird-black.png">
+                                  </a>
+                                </li>
+  
+  
+                              </ul>
                             </div>
   
                           </div>

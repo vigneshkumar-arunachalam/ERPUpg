@@ -510,6 +510,7 @@ CBV_UsageChargeDt: any;
   }
 
   getInvoice(data: any) {
+   
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -579,6 +580,7 @@ CBV_UsageChargeDt: any;
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
           this.recurring_state_all = response.proforma_details[j].recuring_status;
+          
           console.log("this.reseller_commissionState", this.reseller_commissionState)
           this.suspend_state = response.proforma_details[j].suspend;
         }

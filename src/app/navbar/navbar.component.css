@@ -2,3 +2,7 @@
     width: 100px;
     padding: 10px;
 }
+
+#ActionId1 .modal-dialog{
+    max-width: 65% !important;
+  }

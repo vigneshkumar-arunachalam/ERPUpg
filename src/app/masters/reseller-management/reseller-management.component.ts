@@ -2164,7 +2164,8 @@ export class ResellerManagementComponent implements OnInit {
 
   // }
 
-  viewCustomer(id: any) {
+  viewCustomer(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.spinner.show();
     let api_req: any = new Object();
     let view_customer_req: any = new Object();
@@ -2445,7 +2446,8 @@ export class ResellerManagementComponent implements OnInit {
       };
   }
 
-  editCustomer(id: any) {
+  editCustomer(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.pageEditLoad();
     console.log("id", id)
     this.get_cust_type = [];
@@ -2934,7 +2936,8 @@ export class ResellerManagementComponent implements OnInit {
   }
 
 
-  specialEditCustomer(id: any) {
+  specialEditCustomer(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.specialEditId = id;
     let api_req: any = new Object();
@@ -3041,7 +3044,8 @@ export class ResellerManagementComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  deleteCustomer(id: any) {
+  deleteCustomer(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Delete?',
       text: "You won't be able to revert this!",
@@ -3089,7 +3093,8 @@ export class ResellerManagementComponent implements OnInit {
 
   }
 
-  fileAttachmentEdit(ID: any) {
+  fileAttachmentEdit(ID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.myFiles = [];
     $("#fileAttachmentFormId").modal("show");
@@ -3254,7 +3259,8 @@ export class ResellerManagementComponent implements OnInit {
 
     }
   }
-  mconnect_address_getList(id: any) {
+  mconnect_address_getList(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.mconnectCustomerForm.reset();
     this.mconnect_Logo_Image = '';
@@ -3375,7 +3381,8 @@ export class ResellerManagementComponent implements OnInit {
 
   }
 
-  mrvoip_address_getList(id: any) {
+  mrvoip_address_getList(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.mrvoipCustomerForm.reset();
     this.mrvoip_Logo_Image = '';
     this.mrvoipParameter = id;
@@ -3489,7 +3496,8 @@ export class ResellerManagementComponent implements OnInit {
     })
   }
 
-  call4tel_address_getList(id: any) {
+  call4tel_address_getList(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.Call4telCustomerForm.reset();
     this.C4T_Logo_Image = '';
     this.Call4telParameter = id;
@@ -3602,7 +3610,8 @@ export class ResellerManagementComponent implements OnInit {
 
   }
 
-  nx32CustomerCreate(id: any) {
+  nx32CustomerCreate(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to create NX32 Customer?',
       text: "You won't be able to revert this!",
@@ -3655,7 +3664,8 @@ export class ResellerManagementComponent implements OnInit {
   }
 
 
-  invoiceShare_edit(id: any) {
+  invoiceShare_edit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
 
     this.invoice_shareCustomerPermission_ID = id;
@@ -3805,7 +3815,8 @@ export class ResellerManagementComponent implements OnInit {
   //   });
 
   // }
-  quickMail(id: any) {
+  quickMail(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Send Quick Mail?',
       text: "You won't be able to revert this!",
@@ -3857,7 +3868,8 @@ export class ResellerManagementComponent implements OnInit {
       }
     })
   }
-  shareCustomerPermission_edit(id: any) {
+  shareCustomerPermission_edit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.shareCustomerPermission_ID = id;
     let api_req: any = new Object();
@@ -3950,7 +3962,8 @@ export class ResellerManagementComponent implements OnInit {
   }
 
 
-  customer_status(id: any, Status_variable: any) {
+  customer_status(id: any, Status_variable: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Customer status?',
       text: "You won't be able to revert this!",
@@ -4013,7 +4026,8 @@ export class ResellerManagementComponent implements OnInit {
 
 
   }
-  employee_status(id: any) {
+  employee_status(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Employee status?',
       text: "You won't be able to revert this!",
@@ -4067,7 +4081,8 @@ export class ResellerManagementComponent implements OnInit {
 
 
   }
-  reseller_statusMethod(id: any) {
+  reseller_statusMethod(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Reseller status?',
       text: "You won't be able to revert this!",
@@ -4121,7 +4136,8 @@ export class ResellerManagementComponent implements OnInit {
 
 
   }
-  customer_NX32PermissionDisplay(id: any, nx32id: any) {
+  customer_NX32PermissionDisplay(id: any, nx32id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     console.log("checkbox result", this.checkbox_NX32Permission)
     this.NX32SharePermissionParameter = id;
     this.nx32permissionStatus = nx32id;
@@ -4213,7 +4229,8 @@ export class ResellerManagementComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  billCodeAttachmentEdit(id: any) {
+  billCodeAttachmentEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     // this.billCodeEditForm2.reset();
     let api_req: any = new Object();
     let api_billCodeEdit_req: any = new Object();
@@ -4462,7 +4479,8 @@ export class ResellerManagementComponent implements OnInit {
 
 
   }
-  AssignAccountManager_edit(id: any) {
+  AssignAccountManager_edit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     this.AssignAccountManager_CustomerID = id;
     let api_req: any = new Object();
@@ -4541,7 +4559,8 @@ export class ResellerManagementComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  landscapeEmailEdit(id: any) {
+  landscapeEmailEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.landscapeEmailForm.reset();
     this.landscapeEmail_Customer_ID = id;
     let api_req: any = new Object();
@@ -4735,7 +4754,8 @@ export class ResellerManagementComponent implements OnInit {
     this.addCustomer.vs_credit = '';
     this.addCustomer.def_payment_via = '';
   }
-  GoogleAuthenticationId(id: any) {
+  GoogleAuthenticationId(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.GoogleAuthenticationForm.reset();
     $('#GoogleAuthentication').modal("show");
 

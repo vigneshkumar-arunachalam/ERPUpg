@@ -2254,7 +2254,7 @@ export class CustomernewallComponent implements OnInit {
 
 
 
-    if (this.addCustomer.value.company_Code === null) {
+    if ($('#companyCode').val() ==null || $('#companyCode').val() =='' ) {
 
       iziToast.warning({
         message: "Company Code Missing",
@@ -2263,7 +2263,7 @@ export class CustomernewallComponent implements OnInit {
       Swal.close();
       return false;
     } else {
-      add_customer_req.customerCode = this.addCustomer.value.company_Code;
+      add_customer_req.customerCode = $('#companyCode').val();
     }
 
     if (this.searchResultTest === null || this.searchResultTest === undefined) {
@@ -4505,6 +4505,8 @@ export class CustomernewallComponent implements OnInit {
       success: function(response:any) {
          this.companyCodeAddCustomer=response;
         $('#companyCode').val(response);     
+        this.companyCodeAddCustomer=$('#companyCode').val(response);
+        
       }
   });
         
