@@ -89,6 +89,7 @@ import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/dupl
 import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component'; 
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
+import { EditinvoiceDIDComponent } from './billing/invoice/editinvoice-did/editinvoice-did.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -155,7 +156,8 @@ import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-pa
      AddNewEnquiryComponent,
      DuplicateDOComponent,
      EditNewEnquiryComponent,
-     ResellerPaymentComponent
+     ResellerPaymentComponent,
+     EditinvoiceDIDComponent
      
     
   ],

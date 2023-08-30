@@ -21,49 +21,62 @@
         </div>
         <div class="card">
           <div class="card-header color-dark fw-500">
-            <div class="quotation-btn-section">
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">12
+            <div class="quotation-btn-section"> 
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search" (click)="button12()"
+               style="margin-right: 10px;">12
               </button>
              
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">11
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search" (click)="button11()"
+               style="margin-right: 10px;">11
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">10
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search" 
+              (click)="button10()"
+               style="margin-right: 10px;">10
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">9
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search" (click)="button9()"
+               style="margin-right: 10px;">9
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">8
+              <button  type="button" class="btn btn-primary gfj" data-toggle="modal" title="Search"  (click)="button8()"
+               style="margin-right: 10px;">8
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">7
+              <button  type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button7()"
+               style="margin-right: 10px;">7
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">6
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button6()"
+               style="margin-right: 10px;">6
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">5
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button5()"
+               style="margin-right: 10px;">5
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">4
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button4()"
+               style="margin-right: 10px;">4
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">3
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button3()"
+               style="margin-right: 10px;">3
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">2
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button2()"
+               style="margin-right: 10px;">2
               </button>
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-              data-target="#searchInvoiceFormId" style="margin-right: 10px;">1
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"  (click)="button1()"
+               style="margin-right: 10px;">1
               </button>
+              <!-- <button type="button" class="btn btn-primary"  data-toggle="modal" title="Current Month"  
+               style="margin-right: 10px;background-color: rgb(39, 106, 106);">{{todayISOString | date}}
+              </button> -->
+              <!-- <button type="button" class="btn btn-primary"  data-toggle="modal" title="Current Month"  
+              style="margin-right: 10px;background-color: rgb(39, 106, 106);">{{todayDate | date:'M'}}
+             </button> -->
+              
 
             </div>
+          
           </div>
+      
         </div>
         <div class="card-body">
+      
+          
+           
           <div class="userDatatable global-shadow border-0 bg-white w-100">
             <div class="table-responsive">
               <table class="table mb-0 table-borderless">
@@ -118,9 +131,12 @@
                         list.billerCode}}</button></span>
 
                   </td>
-                  <td><span>{{ list.customerName}}</span></td>
+                  <td><span>{{ list.cus_invoice_no}}</span></td>
                   <td><span>{{ list.billDate}}</span></td>
-                  <td><span>{{ list.customerName}}</span></td>
+                  <td>
+                    <span>{{ list.customerName}}</span>
+                  
+                  </td>
                   <td><span>{{ list.netPayment}}</span></td>
                   <td><span>{{ list.currency_name}}</span>
                     <span><button type="button" class="buttonClass" [ngStyle]="{'background-color':'#FAFAD2'}">
@@ -145,7 +161,9 @@
                         <div style="display: flex;align-items: center;">
                           <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
                             (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i></button>
-                          <span class="recurring-Status" *ngIf="(recurring_state_all=='1')">R</span>
+                          
+                            <span class="recurring-Status" *ngIf="(list.recuring_status=='1')">R</span>
+
                           <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                               src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                         </div>
@@ -536,6 +554,10 @@
 
 
 
+                                        <img *ngIf="list.export_state==0" class="show"
+                                        src="assets/img/icon2/share-a.png">
+                                      <img *ngIf="list.export_state==0" class="hide"
+                                        src="assets/img/icon2/share-a.png">
                                         <img *ngIf="list.export_state==1" class="show"
                                           src="assets/img/icon2/share-a.png">
                                         <img *ngIf="list.export_state==1" class="hide"
@@ -1120,7 +1142,7 @@
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
 <div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="col-12 modal-title text-center">Process Payment
@@ -1407,7 +1429,7 @@
 <!-----------------Modal Pop Up-Recurring-Begin------------------>
 <div class="modal fade" id="RecurringFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="col-12 modal-title text-center">Select New Recurring Options
@@ -1606,7 +1628,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Terms Condition Details
+        <h2 class="col-12 modal-title text-center">Terms & Condition Details
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -1621,7 +1643,7 @@
               </div>
               <div class="col-lg-6">
                 <select class="form-control" formControlName="setTerm">
-                  <option [ngValue]="null" selected>Select term Condition</option>
+                  <option [ngValue]="null" selected disabled>Select term Condition</option>
 
                   <option *ngFor="let term of TermDetailsList" value="{{term}}">
                     {{term}}

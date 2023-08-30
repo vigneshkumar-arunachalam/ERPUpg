@@ -188,10 +188,13 @@ export class EditInvoiceComponent implements OnInit {
       console.log("params output value", params);
 
       this.edit_Duplicate_ID = params['e_editDuplicateID'];
+      this.editDIDStateID=params['e_editDIDState'];
+
 
 
 
       console.log("edit duplicate id", this.edit_Duplicate_ID);
+      console.log("edit DID state id", this.editDIDStateID);
 
 
 
@@ -290,9 +293,6 @@ export class EditInvoiceComponent implements OnInit {
     });
 
     this.addPI_section3 = new FormGroup({
-
-
-
       'section3_gross_total': new FormControl(null),
       'section3_discount_txtbox': new FormControl(null),
       'final_dis_type': new FormControl(null),
@@ -1404,8 +1404,17 @@ export class EditInvoiceComponent implements OnInit {
     //   api_req.api_url = "invoice/insert_invoice";
     
     // }
+
+    if(this.edit_Duplicate_ID=='undefined' || this.edit_Duplicate_ID==undefined  ){
+      api_req.api_url = "invoice/update_invoice";
+
+    }else{
+      
+      api_req.api_url = "invoice/duplicate_invoice";
     
-    api_req.api_url = "invoice/update_invoice";
+    }
+    
+    // api_req.api_url = "invoice/update_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_updatePI_req.action = "update_proforma_invoice";
@@ -1473,10 +1482,13 @@ export class EditInvoiceComponent implements OnInit {
     //row-2
 
 
-    api_updatePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
+    // api_updatePI_req.discountAmount = this.addPI_section3.value.section3_discount_txtbox;
+    // api_updatePI_req.final_dis_type = $('#final_discount_type').val();
+    // api_updatePI_req.discountPer = this.addPI_section3.value.final_dis_val;
+
+    api_updatePI_req.discountAmount = $('#finalDiscount_amt').val();
     api_updatePI_req.final_dis_type = $('#final_discount_type').val();
-   
-    api_updatePI_req.discountPer = this.addPI_section3.value.final_dis_val;
+    api_updatePI_req.discountPer = $('#final_discount_val').val();
     //row-3
     api_updatePI_req.taxId = this.addPI_section3.value.section3_gst_dropdown;
     api_updatePI_req.taxPer = $('#tax_per_hd_id').val();

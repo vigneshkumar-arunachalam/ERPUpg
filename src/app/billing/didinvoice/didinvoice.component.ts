@@ -243,6 +243,11 @@ CBV_UsageChargeDt: any;
 
     public addresses: FormArray;
     public addressForm: FormGroup;
+    currentMonthSelection:any;
+    todayNumber: number = Date.now();
+    todayDate : Date = new Date();
+    todayString : string = new Date().toDateString();
+    todayISOString : string = new Date().toISOString();
 
   constructor(private serverService: ServerService, private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService,) { 
     this.addressForm = this.fb.group({
@@ -252,6 +257,7 @@ CBV_UsageChargeDt: any;
   keywordCompanyName = 'customerName';
   keywordResellerName = 'customerName';
   ngOnInit(): void {
+   
 
     this.getInvoice({});
     this.yearsList = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"];
@@ -416,6 +422,54 @@ CBV_UsageChargeDt: any;
     this.CBV_PdfShow = event.target.checked;
 
   }
+  button12(){
+    this.currentMonthSelection=12;
+    this.getInvoice({});
+      }
+      button11(){
+        this.currentMonthSelection=11;
+        this.getInvoice({});
+      }
+      button10(){
+        this.currentMonthSelection=10;
+        this.getInvoice({});
+      }
+      button9(){
+        this.currentMonthSelection=9;
+        this.getInvoice({});
+      }
+      button8(){
+        this.currentMonthSelection=8;
+        this.getInvoice({});
+      }
+      button7(){
+        this.currentMonthSelection=7;
+        this.getInvoice({});
+      }
+      button6(){
+        this.currentMonthSelection=6;
+        this.getInvoice({});
+      }
+      button5(){
+        this.currentMonthSelection=5;
+        this.getInvoice({});
+      }
+      button4(){
+        this.currentMonthSelection=4;
+        this.getInvoice({});
+      }
+      button3(){
+        this.currentMonthSelection=3;
+        this.getInvoice({});
+      }
+      button2(){
+        this.currentMonthSelection=2;
+        this.getInvoice({});
+      }
+      button1(){
+        this.currentMonthSelection=1;
+        this.getInvoice({});
+      }
   radio_commissionType(event: any) {
     this.commissionType_value = event.target.id;
     console.log("this.commissionType_value", this.commissionType_value);
@@ -504,12 +558,13 @@ CBV_UsageChargeDt: any;
   }
   pdf(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
   }
 
   getInvoice(data: any) {
+  
    
     var list_data = this.listDataInfo(data);
 
@@ -519,16 +574,48 @@ CBV_UsageChargeDt: any;
     api_req.api_url = "did/did_invoice_list"
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_DidList.action = "did_invoice_list";
+    api_DidList.action = "invoice_list";
     api_DidList.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_DidList.Search_BillerId = this.edit_array_SearchBiller_Checkbox;
     api_DidList.off_set = list_data.offset;
     api_DidList.limit_val = list_data.limit;
-    api_DidList.current_page = "";
+    api_DidList.search_txt = this.searchResult_CustomerName;
+    api_DidList.years = this.edit_array_Years_Checkbox;
+    // api_DidList.invoiceType = this.invType_Search;
+
+    api_DidList.recurring_only = this.CBV_recurring_only;
+    api_DidList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
+    api_DidList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
+    api_DidList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+    api_DidList.did_month=this.currentMonthSelection;
+    
+    // var list_data = this.listDataInfo(data);
+
+    // let api_req: any = new Object();
+    // let api_DidList: any = new Object();
+    // api_req.moduleType = "did";
+    // api_req.api_url = "did/did_invoice_list"
+    // api_req.api_type = "web";
+    // api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    // api_DidList.action = "did_invoice_list";
+    // api_DidList.user_id = localStorage.getItem("erp_c4c_user_id");
+    // api_DidList.off_set = list_data.offset;
+    // api_DidList.limit_val = list_data.limit;
+    // api_DidList.current_page = "";
 
     api_req.element_data = api_DidList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      
       console.log("PI list", response);
+      if (response.total_cnt == 0) {
+        // iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
+        $("#searchInvoiceFormId").modal("hide");
+
+      }
       if (response) {
         this.DID_list = response.proforma_details;
 
@@ -586,6 +673,7 @@ CBV_UsageChargeDt: any;
         }
 
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        $("#searchInvoiceFormId").modal("hide");
       }
       else {
         Swal.fire({
@@ -595,6 +683,7 @@ CBV_UsageChargeDt: any;
           showConfirmButton: false,
           timer: 1500
         })
+        $("#searchInvoiceFormId").modal("hide");
       }
     });
   }
@@ -1070,12 +1159,15 @@ CBV_UsageChargeDt: any;
               message: "DID Invoice Deleted Successfully",
               position: 'topRight'
             });
+            this.getInvoice({});
+
           } else {
             Swal.close();
             iziToast.warning({
               message: "DID Invoice Delete Failed",
               position: 'topRight'
             });
+            this.getInvoice({});
           }
         }),
           (error: any) => {
@@ -1084,6 +1176,7 @@ CBV_UsageChargeDt: any;
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
+            this.getInvoice({});
             console.log("final error", error);
           };
       }
@@ -1572,11 +1665,13 @@ CBV_UsageChargeDt: any;
 
   }
   DeliveryOrderEdit(id: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+    $("#ActionId" + i).modal("hide");
     this.billerId_deliveryOrder = id;
+ 
   }
 
   DeliveryOrderUpdate() {
+    $('#DeliveryOrderFormId').modal('hide');
     Swal.fire({
       title: 'Are you sure to Change?',
       text: "You won't be able to revert this!",

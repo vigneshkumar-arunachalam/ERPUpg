@@ -449,7 +449,7 @@ export class EditquotationnewComponent implements OnInit {
   editQuotation() {
 
     // window.location.reload();
-    console.log("quotation id check for edit", this.editQuotationID)
+    //console.log("quotation id check for edit", this.editQuotationID)
 
     let api_req: any = new Object();
     let edit_Quotation_req: any = new Object();
@@ -462,9 +462,7 @@ export class EditquotationnewComponent implements OnInit {
     edit_Quotation_req.quotation_id = this.editQuotationID;
     api_req.element_data = edit_Quotation_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
-
-      console.log("edit quotation response", response);
+     
       if (response != '') {
         this.dynamicChange_edit(response.quotation_details[0].billerId);
         this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
@@ -480,7 +478,7 @@ export class EditquotationnewComponent implements OnInit {
         this.additionalSignatureList = response.additional_signature_list;
 
         if (response.sales_rep_status.dropdown_status == 0) {
-          console.log("response.sales_rep.name", response.sales_rep.name);
+         
 
           this.editQuotationInvoice_section1.patchValue({
             'salesRep_id': response.sales_rep.name,
@@ -568,18 +566,14 @@ export class EditquotationnewComponent implements OnInit {
 
         }
 
-      
-
-        console.log(formArray)
         this.addQuotationInvoice_section2.setControl('addresses', formArray);
         // this.addresses.push(this.addQuotationInvoice_section2);
-        console.log(this.addresses)
+    
         //  console.log('response.quotation_details[0].grand_total'+response.quotation_details[0].grand_total);
 
         this.finalDiscountType = '';
         this.finalDiscountVal = '';
         this.finalDiscount = '';
-        console.log('response.signature_filename' + response.quotation_details[0].signature_filename);
 
         if (response.quotation_details[0].signature_filename != '') {
           this.sign_state = 1;
@@ -652,7 +646,7 @@ export class EditquotationnewComponent implements OnInit {
 
         
         setTimeout(() => {
-          this.totalCalculate()
+        this.totalCalculate()
         }, 1500);
 
           this.editQuotationInvoice_section1.patchValue({
@@ -681,12 +675,8 @@ export class EditquotationnewComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+        
       }
-
-
-
-
 
   }
   templateContentDropdown(event: any) {
@@ -706,8 +696,7 @@ export class EditquotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("quotation-template Dropdown response", response)
-
+    
       if (response.status == true) {
         this.editQuotationInvoice_section1.patchValue({
 
@@ -729,7 +718,7 @@ export class EditquotationnewComponent implements OnInit {
     });
   }
   quotationAddSignatureEdit(sign_val: any) {
-    //alert('sign_state'+sign_state);
+   
     let api_req: any = new Object();
     let api_quotationAddSignatureEdit_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -745,14 +734,14 @@ export class EditquotationnewComponent implements OnInit {
     api_req.element_data = api_quotationAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+     
 
       if (response.status == true) {
 
         this.quotationAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
         if (sign_val == 0) {
-          console.log('response.signature_filename' + response.signature_filename);
+        
           this.quotationAddSignature_filename = response.signature_filename;
         }
 
@@ -832,8 +821,7 @@ export class EditquotationnewComponent implements OnInit {
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Tax Dropdown response", response)
-
+    
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
 
@@ -860,7 +848,7 @@ export class EditquotationnewComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation/currency_change", response)
+    
       this.CurrencyChangeFieldValue = response.terms
       if (response.status == true) {
         this.editQuotationInvoice_section1.patchValue({
@@ -991,12 +979,11 @@ export class EditquotationnewComponent implements OnInit {
       addr[i].sub_discount = $('#sub_discount_' + i).val();
     }
     api_UpdateEnquiry_req.values = addr;
-    console.log(api_req);
+   
     ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       ($event.target as HTMLButtonElement).disabled = false;
 
-      console.log("add quotation new save", response);
       if (response.status == true) {
 
         iziToast.success({
@@ -1023,14 +1010,12 @@ export class EditquotationnewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     
     }
   }
 
   searchCustomer_selectDropdownData(data: any) {
-this.spinner.show();
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+   this.spinner.show();
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1045,7 +1030,6 @@ this.spinner.show();
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
 
-      //  console.log('response'+response);
       if (response.status == true) {
         // this.autocomplete_CustomerID = response.customer_list[0].customerId;
         //  this.autocomplete_CustomerName = response.customer_list[0].customerName;
@@ -1066,7 +1050,7 @@ this.spinner.show();
           //   'e_attention': response.customer_list[0].kind_Attention,
         });
 
-        //  alert('test');
+       
       }
       else {
         this.editQuotationInvoice_section1.patchValue({
@@ -1096,7 +1080,7 @@ this.spinner.show();
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+      
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -1106,7 +1090,7 @@ this.spinner.show();
 
   }
   searchCustomerDataMouse(data: any) {
-    console.log("search data afer mouse click", data)
+    
   }
   searchProductName(data: any) {
 
@@ -1125,10 +1109,10 @@ this.spinner.show();
       console.log("quotation/product_name_auto response", response);
       this.searchResult_productName = response.products_list;
       console.log("response.partNo", response.products_list)
-      // console.log("response.partNo",response.partNo)
+      
 
       if (response.status != '') {
-        // this.productNameAutoFill();
+       
 
       }
 
@@ -1168,10 +1152,10 @@ this.spinner.show();
   }
   clearAddress() {
     var t = this.addQuotationInvoice_section2.value;
-    console.log(t)
+   
   }
   totalCalculate() {
-
+  
     // var grs_amt=0;
     // var net_amt =0;
     var tax_amt = 0;
@@ -1186,59 +1170,30 @@ this.spinner.show();
     var total_amt: any;
     var addr = this.addQuotationInvoice_section2.value.addresses;
     var list_cnt = addr.length;
-    //  alert(list_cnt);
+   
     // var tax_per = $('#tax_per_hd_id').val();
     //var tax_per = $('#tax_per_hd_id').val();
     this.finalDiscount = $('#finalDiscount_amt').val();
     this.shipping_amt = $('#shipping_amt_id').val();
     this.finalTax = 0;
-    // alert(tax_per);
-    for (let a = 0; a < list_cnt; a++) {
+    discount_type = $('#finaldiscountType_per').val();
+    var discount_type_amt = $('#finaldiscountTyp_amt').val();
 
-      total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
-      $('#pd_Total_' + a).val(total_amt);
-
-
-      discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
+     
       if (discount_type == 'per') {
-        this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
+     
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
+       
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
-        $('#pd_netPrice_' + a).val(sub_total_amt);
-        $('#sub_discount_' + a).val(dis_amt_val);
-      } else if (discount_type == 'amt') {
-        // console.log('discount_type222'+discount_type);
-
-        this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        // console.log('sub_discount_valppp'+this.sub_dis_val);
+       
+      } else if (discount_type_amt == 'amt') {
+        
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
-        $('#pd_netPrice_' + a).val(sub_total_amt);
+       
       } else {
-        $('#pd_netPrice_' + a).val(total_amt);
-        sub_total_amt = total_amt;
+       
       }
-
-      if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
-        this.net_amt = $('#pd_netPrice_' + a).val();
-
-        tax_amt = (parseFloat(this.tax_per_mod) * parseFloat(this.net_amt) / 100);
-        tax_amt_tot += tax_amt;
-
-      }
-
-
-      // sub_total_amt = total_amt - $('#sub_discount_' + a).val();
-      // $('#pd_netPrice_' + a).val(sub_total_amt);
-      //  alert('total_amt'+total_amt);
-      grs_amt += sub_total_amt;
-
-
-      //  alert('Net_Amt'+tax_amt_tot+'---'+this.net_amt);
-      //   alert(grs_amt);
-    }
+   
     this.grossTotal = grs_amt;
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
@@ -1318,7 +1273,7 @@ this.spinner.show();
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePercentabeDiscont != '') {
-        console.log('3333' + final_tot);
+        
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
 
 
@@ -1387,14 +1342,14 @@ this.spinner.show();
       sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
 
       $('#enablePercentabeDiscont').val(sub_dis_val);
-      //   console.log('22'+disType);
+    
     } else if (disType == 'amt') {
       $('#discountTYpe_amt').prop('checked', true);
       sub_dis_val = $('#sub_discount_val_' + row_cnt).val();
       $('#enablePriceDiscont').val(sub_dis_val);
-      //  console.log('33'+disType);
+     
     } else {
-      //  console.log('44'+disType);
+     
       $('#discountTYpe_per').prop('checked', false);
       $('#discountTYpe_amt').prop('checked', false);
     }
@@ -1437,7 +1392,7 @@ this.spinner.show();
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
       this.finalDiscountVal = enablePercentabeDiscont;
-      console.log('999' + price);
+    
 
     }
     if (this.grandTotal > 0) {
@@ -1452,20 +1407,20 @@ this.spinner.show();
     $('#enablePriceFinal').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+    
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal').val(final_dis_val);
-      console.log('22' + disType);
+      
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
       $('#enablePriceFinal').val(final_dis_val);
-      console.log('33' + disType);
+     
     } else {
-      console.log('44' + disType);
+    
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }

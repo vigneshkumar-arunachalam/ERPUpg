@@ -1139,13 +1139,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+              
                 <form [formGroup]="Discount1Form">
                     <div class="row">
 
@@ -1154,7 +1154,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="discountTYpe" id="discountTYpe_per" value="per">
-                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                                    <label for="per" class="ml-2 "> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="number" class="form-control" id="enablePerFinal" [(ngModel)]="input1"
@@ -1165,7 +1165,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="discountTYpe" id="discountTYpe_amt" value="amt" />
-                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                                    <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="number" class="form-control" id="enablePriceFinal" [(ngModel)]="input2"
@@ -1233,13 +1233,13 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+                <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+                
                 <form [formGroup]="Discount2Form">
                     <div class="row">
 
@@ -1248,7 +1248,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="finaldiscountTYpe" id="finaldiscountType_per" value="per">
-                                    <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                                    <label for="per" class="ml-2 "> % Price</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="number" class="form-control" formControlName="enablePerFinal"
@@ -1260,7 +1260,7 @@
                                 <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                                 <div class="col-lg-6">
                                     <input type="radio" name="finaldiscountTYpe" id="finaldiscountType_amt" value="amt">
-                                    <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                                    <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                                 </div>
                                 <div class="col-lg-6">
                                     <input type="number" class="form-control" formControlName="finaldiscountTYpe_amt"

@@ -119,43 +119,44 @@
     ],
     "isVisible": true,
     "value": "/crm"
-},   {
-    "name": "Masters",
-    "icon":"sunrise",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Customer",
-            "icon": "grid",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
-            "Type": "Sub Menu",
-            "subchild": [{
-                "name": "Customer New All",
-                "icon": "users",
-                "IDs": [5001, 5002, 5003, 5004, 5005],
-                "Type": "Sub - Sub Menu",
-                "isVisible": true,
-                "value": "/customernewall"
-            }],
-            "isVisible": true,
-            "value": "/customernewall"
-        },
-        {
-            "name": "Reseller Management",
-            "icon": "printer",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/ResellerManagement"
-        }
-       
+}, 
+{
+   "name": "Masters",
+   "icon":"sunrise",
+   "isActive": false,
+   "menuId":5,
+   "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
+   "Type": "Main Menu",
+   "children": [{
+           "name": "Customer",
+           "icon": "grid",
+           "IDs": [5001, 5002, 5003, 5004, 5005],
+           "Type": "Sub Menu",
+           "subchild": [{
+               "name": "Customer New All",
+               "icon": "users",
+               "IDs": [5001, 5002, 5003, 5004, 5005],
+               "Type": "Sub - Sub Menu",
+               "isVisible": true,
+               "value": "/customernewall"
+           }],
+           "isVisible": true,
+           "value": "/customer"
+       },
+       {
+           "name": "Reseller Management",
+           "icon": "printer",
+           "IDs": [5001, 5002, 5003, 5004, 5005],
+           "Type": "Sub Menu",
+           "subchild": [],
+           "isVisible": true,
+           "value": "/ResellerManagement"
+       }
+      
 
-    ],
-    "isVisible": true,
-    "value": "/customernewall"
+   ],
+   "isVisible": true,
+   "value": "/custom"
 }, {
     "name": "Contract",
     "icon": "slack",

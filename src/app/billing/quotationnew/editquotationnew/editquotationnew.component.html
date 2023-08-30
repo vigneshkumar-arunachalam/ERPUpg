@@ -609,7 +609,7 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <input type="number" class="form-control mt-2" [(ngModel)]="grossTotal"
-                                        [attr.readonly]="isReadOnly"    formControlName="section3_gross_total" />
+                                        [attr.readonly]="isReadOnly"   id="section3_gross_total" formControlName="section3_gross_total" />
                                     </div>
                                 </div>
                             </div>
@@ -693,7 +693,7 @@
                                     </div>
 
                                     <div class="col-lg-6">
-                                        <input type="number" class="form-control" [(ngModel)]="grandTotal"
+                                        <input type="number" class="form-control" 
                                         [attr.readonly]="isReadOnly" id="grandTotal_id"   formControlName="section3_grand_total" (change)="totalCalculate();" />
                                     </div>
 

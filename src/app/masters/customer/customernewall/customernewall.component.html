@@ -148,17 +148,24 @@
                       <td>
                         <span>{{ list.customerPhone }}</span>
                       </td>
-                      <td>
-                        <span title="{{ list.billerName }}">{{ list.billerName }}</span>
+                  
+
+                        <td >
+                          <div *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
+                            <!-- <span >{{list1.billerCode}}</span> -->
+                            <span><button type="button" class="btn_new buttonClass {{
+                              list1.billerCode}}">{{
+                                list1.billerCode}}</button><br></span>
+                          </div>
                       </td>
                       <td>
                         <span>{{ list.companyName}}</span>
                       </td>
                       <td>
-                        <span title="{{ list.email }}"> {{ list.email }}</span>
+                        <span title="{{ list.email}}"> {{ list.email }}</span>
                       </td>
                       <td>
-                        <span title="{{ list.finance_email }}">{{ list.finance_email }}</span>
+                        <span title="{{ list.finance_email}}">{{ list.finance_email }}</span>
                       </td>
                       <!-- <td style="display:none;">
                         <span>{{ list.cus_type }}</span>
@@ -266,22 +273,7 @@
               
                                       </ul>
                                       <ul>
-                                        <li class="dropdown__item">
-                                          <a *ngIf="list.cust_status =='P'" class="remove" title="Customer Status" data-toggle="modal"
-                                            (click)="customer_status(list.customerId,list.cust_status,i)">
-                                            <img class="show" src="assets/img/icon2/customer-blue.png">
-                                            <img class="hide" src="assets/img/icon2/customer-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
-                                          </a>
                                       
-                                       
-                                          <a  *ngIf="list.cust_status == 'N'" class="remove" title="Customer Status" data-toggle="modal"
-                                            (click)="customer_status(list.customerId,list.cust_status,i)">
-                                            <img class="show" src="assets/img/icon2/customer-red.png">
-                                            <img class="hide" src="assets/img/icon2/customer-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
-                                          </a>
-                                        </li>
                                         <li class="dropdown__item">
                                           <a *ngIf="this.isResllerStatus==false" class="view" title="Reseller Status" data-toggle="modal"
                                             (click)="reseller_statusMethod(list.customerId,i)" >
@@ -347,6 +339,22 @@
                                             <img class="show" src="assets/img/icon2/google.png">
                                             <img class="hide" src="assets/img/icon2/google.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Google Authentication</strong></span>
+                                          </a>
+                                        </li>
+                                        <li class="dropdown__item">
+                                          <a *ngIf="list.cust_status =='P'" class="remove" title="Customer Status" data-toggle="modal"
+                                            (click)="customer_status(list.customerId,list.cust_status,i)">
+                                            <img class="show" src="assets/img/icon2/customer-blue.png">
+                                            <img class="hide" src="assets/img/icon2/customer-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
+                                          </a>
+                                      
+                                       
+                                          <a  *ngIf="list.cust_status == 'N'" class="remove" title="Customer Status" data-toggle="modal"
+                                            (click)="customer_status(list.customerId,list.cust_status,i)">
+                                            <img class="show" src="assets/img/icon2/customer-red.png">
+                                            <img class="hide" src="assets/img/icon2/customer-black.png">
+                                            <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
                                           </a>
                                         </li>
   
@@ -524,7 +532,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Customer
+        <h2 class="modal-title" id="exampleModalLongTitle">View Customer
           Details </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -532,7 +540,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <h2 style="text-align:center;color:rgb(97, 72, 9)">View Customer Details</h2>
+       
         <form [formGroup]="viewCustomerForm">
 
           <div class="row">
@@ -701,7 +709,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content addcustomernewallcss">
       <div class="modal-header">
-        <h1 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Add Customer Details
+        <h1 class="modal-title" id="exampleModalLongTitle">Add Customer Details
         </h1>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" (click)="clearcustomer()">&times;</span>
@@ -1468,7 +1476,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="myLargeModalLabel ">
+        <h2 class=" modal-title" id="myLargeModalLabel ">
           Update Customer Details
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2194,6 +2202,8 @@
                         <th>Server-VS2(32)(TH,JP)</th>
                         <th>Server-VS2(8)(Special Account)</th>
                         <th> Action</th>
+                        <th> </th>
+                        <th> </th>
                       </tr>
                     </thead>
                     <tbody formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
@@ -2585,7 +2595,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="myLargeModalLabel ">
+        <h2 class="modal-title" id="myLargeModalLabel ">
           Update Customer Details(Special Edit)
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2729,7 +2739,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Mconnect
+        <h2 class="modal-title" id="exampleModalLongTitle">Mconnect
           Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2850,7 +2860,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Mrvoip
+        <h2 class="modal-title" id="exampleModalLongTitle">Mrvoip
           Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2997,7 +3007,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Call4tel Partner
+        <h2 class="modal-title" id="exampleModalLongTitle">Call4tel Partner
           Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">

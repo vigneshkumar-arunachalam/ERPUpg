@@ -62,10 +62,13 @@ import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new
 import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component'; 
 import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component'; 
 import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
-
+import { EditinvoiceDIDComponent } from './billing/invoice/editinvoice-did/editinvoice-did.component';
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },
+  {
+    path: 'InvoiceEditDID', component: EditinvoiceDIDComponent
   },
   {
     path: 'resellerPayment', component: ResellerPaymentComponent

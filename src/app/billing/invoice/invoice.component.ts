@@ -282,16 +282,16 @@ export class InvoiceComponent implements OnInit {
   suspend_array: any = [];
   //chart-monthly income
   chart: any;
-  chartOptions:any;
+  chartOptions: any;
   //live data-line chart
-  dataPoints:any[] = [];
-  timeout:any = null;
-  xValue:number = 1;
-  yValue:number = 10;
-  newDataCount:number = 10;
+  dataPoints: any[] = [];
+  timeout: any = null;
+  xValue: number = 1;
+  yValue: number = 10;
+  newDataCount: number = 10;
   chart1: any;
 
-  constructor(private serverService: ServerService,private http : HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
+  constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -440,11 +440,11 @@ export class InvoiceComponent implements OnInit {
       axisY: {
         labelFormatter: (e: any) => {
           var suffixes = ["", "K", "M", "B", "T"];
-   
+
           var order = Math.max(Math.floor(Math.log(e.value) / Math.log(1000)), 0);
-          if(order > suffixes.length - 1)
+          if (order > suffixes.length - 1)
             order = suffixes.length - 1;
-   
+
           var suffix = suffixes[order];
           return "$" + (e.value / Math.pow(1000, order)) + suffix;
         }
@@ -496,8 +496,8 @@ export class InvoiceComponent implements OnInit {
         ]
       }]
     }
-  
-    
+
+
 
 
   }
@@ -1135,46 +1135,59 @@ export class InvoiceComponent implements OnInit {
   addPIGo() {
     this.router.navigate(['/AddInvoice'])
   }
-  editPIGo(id: any, i: any,didState:any) {
+  editPIGo(id: any, i: any, didState: any) {
 
     $("#ActionId" + i).modal("hide");
     var editbillID = id;
-    var editDIDState=didState;
-    
+    var editDIDState = didState;
 
-    if(didState=='0'){
+
+    if (didState == '0') {
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState:editDIDState
+          e_editDIDState: editDIDState
         }
       });
     }
-    else{
-      this.router.navigate(['/editDidInvoice'], {
+    else {
+      this.router.navigate(['/InvoiceEditDID'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState:editDIDState
+          e_editDIDState: editDIDState
         }
       });
 
     }
 
-   
+
     $("body").removeClass("modal-open");
 
   }
 
-  duplicatePIGo(id: any, i: any) {
+  duplicatePIGo(id: any, i: any, didState: any) {
     $("#ActionId" + i).modal("hide");
     var editDuplicateID = id;
-    this.router.navigate(['/EditInvoice'])
 
-    this.router.navigate(['/EditInvoice'], {
-      queryParams: {
-        e_editDuplicateID: editDuplicateID,
-      }
-    });
+    if (didState == '0') {
+      this.router.navigate(['/EditInvoice'], {
+        queryParams: {
+          e_editDuplicateID: editDuplicateID,
+          e_editDIDState: didState
+        }
+      });
+
+    } else {
+      this.router.navigate(['/InvoiceEditDID'], {
+        queryParams: {
+          e_editDuplicateID: editDuplicateID,
+          e_editDIDState: didState
+        }
+      });
+
+    }
+
+
     $("body").removeClass("modal-open");
   }
   clearSearch() {
@@ -1413,7 +1426,7 @@ export class InvoiceComponent implements OnInit {
     })
   }
   deleteAllsuspendInvoice() {
-    if(this.suspend_array==''){
+    if (this.suspend_array == '') {
       iziToast.error({
         message: "Select Atleast 1 Invoice to Delete",
         position: 'topRight'

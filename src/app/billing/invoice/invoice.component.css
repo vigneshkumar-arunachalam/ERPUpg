@@ -540,7 +540,7 @@ label.col-lg-2.col-form-label{text-align: right;}
 .userDatatable-header th span{
   color: #e4ebf5;
 }
-td{border-bottom: 1px solid #231ac9!important;}
+/* td{border-bottom: 1px solid #231ac9!important;} */
 .userDatatable .buttonClass{
   border: 1px solid #ddd;
   border-radius: 5px!important;

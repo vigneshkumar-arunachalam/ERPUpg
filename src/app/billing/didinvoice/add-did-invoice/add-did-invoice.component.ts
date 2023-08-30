@@ -92,7 +92,7 @@ export class AddDidInvoiceComponent implements OnInit {
   row_cnt_mod: any;
   sub_total_glb1: any;
   sub_total_glb2: any;
-  did_bill_codexx:any;
+  did_bill_codexx: any;
 
   //export state-check box
   export_state: any;
@@ -101,7 +101,7 @@ export class AddDidInvoiceComponent implements OnInit {
   export_state_Export: any;
   export_state_ZeroValid: boolean = true;
   MSDisplay_Value: boolean = true;
-  
+
 
   //extra logo
   ExtralogoValue: any;
@@ -118,27 +118,36 @@ export class AddDidInvoiceComponent implements OnInit {
   //ngmodal-clear
   txtbox_percentPriceClear: string;
   txtbox_directPriceClear: string;
-  FinalDiscount_percentPriceClear:string;
-  FinalDiscount_directPriceClear:string;
-  UsageSave_percentPriceClear:string;
-  UsageSave_directPriceClear:string;
-  OtherSave_percentPriceClear:string;
-  OtherSave_directPriceClear:string;
+  FinalDiscount_percentPriceClear: string;
+  FinalDiscount_directPriceClear: string;
+  UsageSave_percentPriceClear: string;
+  UsageSave_directPriceClear: string;
+  OtherSave_percentPriceClear: string;
+  OtherSave_directPriceClear: string;
   //did bill code
-  did_bill_code:any;
-  did_bill_code_section1:any;
-  did_bill_code_section11:any;
-  grossTotal_BeforeDiscount:any;
-  grossTotal_AD:any;
-  finalTax_vig:any;
-  taxValue:any;
-    //section-3 checkbox
-    chkTermsandcondition: boolean = false;
-    previousDue: boolean = true;
-    chkReceivedAuthorizedSignature: boolean = true;
-    chklogoAddressSignature: boolean = true;
+  did_bill_code: any;
+  did_bill_code_section1: any;
+  did_bill_code_section11: any;
+  did_bill_code_section2: any;
+  grossTotal_BeforeDiscount: any;
+  grossTotal_AD: any;
+  finalTax_vig: any;
+  taxValue: any;
+  //section-3 checkbox
+  chkTermsandcondition: boolean = false;
+  previousDue: boolean = true;
+  chkReceivedAuthorizedSignature: boolean = true;
+  chklogoAddressSignature: boolean = true;
+  //section 3 select terms condition
+  section3_Terms1: any;
+  section3_Terms2: any;
+  section3_Terms3: any;
+  section3_Terms4: any;
+  section3_Terms5: any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router,private spinner: NgxSpinnerService) {
+
+
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private spinner: NgxSpinnerService) {
 
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
@@ -157,17 +166,19 @@ export class AddDidInvoiceComponent implements OnInit {
 
     this.addDidLoad();
 
-    this.did_bill_code=1445;
-  
+    this.did_bill_code = 1445;
+    // this.did_bill_code_section2=1445;
+
+
     this.did_bill_codexx = [
-      { "customer_bill_code_id": 1445 ,"bill_code":-810},
-      
+      { "customer_bill_code_id": 1445, "bill_code": -810 },
+
     ];
-    this.did_bill_code_section1=1445;
-    this.did_bill_code_section11 = [
-      { "customer_bill_code_id": 1445 ,"bill_code":-810},
-      
-    ];
+    // this.did_bill_code_section1=1445;
+    // this.did_bill_code_section11 = [
+    //   { "customer_bill_code_id": 1445 ,"bill_code":-810}
+
+    // ];
     this.addDid_section1 = new FormGroup({
       'initial': new FormControl(),
       'companyName': new FormControl(),
@@ -207,6 +218,11 @@ export class AddDidInvoiceComponent implements OnInit {
       'Jompay_logo': new FormControl(),
 
     });
+    this.section3_Terms1 = "Price Term: EXW SINGAPORE";
+    this.section3_Terms2 = "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3 = "Port of Discharge:";
+    this.section3_Terms4 = "Port of Loading: SINGAPORE";
+    this.section3_Terms5 = "Lead Time: 21 - 30 DAYS";
 
     this.addDid_section3 = new FormGroup({
 
@@ -227,6 +243,11 @@ export class AddDidInvoiceComponent implements OnInit {
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_previousDue': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
@@ -236,21 +257,33 @@ export class AddDidInvoiceComponent implements OnInit {
     this.FixedDiscountForm = new FormGroup({
       'section3_grant_total_show': new FormControl(null),
       'section3_gross_total': new FormControl(null),
+      'FixedDiscountForm_Percentage': new FormControl(null),
+      'FixedDiscountForm_Direct': new FormControl(null),
+      'fix_DiscountTYpe': new FormControl(null),
 
     });
     this.OtherDiscountForm = new FormGroup({
       'section3_grant_total_show': new FormControl(null),
       'section3_gross_total': new FormControl(null),
+      'OtherDiscountForm_Percentage': new FormControl(null),
+      'OtherDiscountForm_Direct': new FormControl(null),
+      'oth_DiscountTYpe': new FormControl(null),
 
     });
     this.UsageDiscountForm = new FormGroup({
       'section3_grant_total_show': new FormControl(null),
       'section3_gross_total': new FormControl(null),
+      'UsageDiscountForm_Percentage': new FormControl(null),
+      'UsageDiscountForm_Direct': new FormControl(null),
+      'use_DiscountTYpe': new FormControl(null),
 
     });
     this.FinalDiscountForm = new FormGroup({
       'section3_grant_total_show': new FormControl(null),
       'section3_gross_total': new FormControl(null),
+      'FinalDiscountForm_Percentage': new FormControl(null),
+      'FinalDiscountForm_Direct': new FormControl(null),
+      'final_DiscountTYpe': new FormControl(null),
 
     });
     this.DidCommissionForm = new FormGroup({
@@ -295,6 +328,10 @@ export class AddDidInvoiceComponent implements OnInit {
       productDesc1: '',
       amt1: '',
       call_duration1: '',
+      dis_per1: '',
+      dis_amt1: '',
+      dis_type1: '',
+
 
 
     });
@@ -338,7 +375,11 @@ export class AddDidInvoiceComponent implements OnInit {
       amt2: '',
       call_duration2: '',
       did_bill_code_chd: '',
-      
+      dis_per2: '',
+      dis_amt2: '',
+      dis_type2: '',
+
+
     });
   }
   removeDid2(i: number) {
@@ -377,6 +418,9 @@ export class AddDidInvoiceComponent implements OnInit {
       productDesc3: '',
       amt3: '',
       call_duration3: '',
+      dis_per3: '',
+      dis_amt3: '',
+      dis_type3: '',
 
 
     });
@@ -458,14 +502,19 @@ export class AddDidInvoiceComponent implements OnInit {
     this.chkTermsandcondition = event.target.checked;
     // console.log(this.chkTermsandcondition)
   }
-  billCodeChange(event:any){
-   
-    this.did_bill_code=event.target.value;
+  billCodeChange(event: any) {
+
+    this.did_bill_code = event.target.value;
   }
-  billCodeChange_section1(event:any){
-    
-    this.did_bill_code_section1=event.target.value;
+  billCodeChange_section1(event: any) {
+
+
+    // this.did_bill_code_section1=event.target.value;
+    this.did_bill_code_section2 = event.target.value;
+    // alert(this.did_bill_code_section2)
+
   }
+
 
   addDidLoad() {
 
@@ -700,6 +749,11 @@ export class AddDidInvoiceComponent implements OnInit {
         setTimeout(() => {
           this.addDid_section3.patchValue({
             'section3_gst_dropdown': response.default_tax_id,
+            'section3_Terms1': "Price Term: EXW SINGAPORE",
+            'section3_Terms2': "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T",
+            'section3_Terms3': "Port of Discharge:",
+            'section3_Terms4': "Port of Loading: SINGAPORE",
+            'section3_Terms5': "Lead Time: 21 - 30 DAYS",
           });
 
         }, 500);
@@ -715,16 +769,16 @@ export class AddDidInvoiceComponent implements OnInit {
     });
   }
   getTaxCals() {
-    
-   
+
+
     this.taxValue = (8 * Number($('#section3_gross_total').val()) / 100).toFixed(2);
     var tax_id = this.addDid_section3.value.section3_gst_dropdown;
     var tax: any;
     let api_req: any = new Object();
     let api_data_req: any = new Object();
- 
-   
-   
+
+
+
     api_req.moduleType = "quotation";
     api_req.api_url = "quotation/get_tax_percent_val";
     api_req.api_type = "web";
@@ -736,37 +790,37 @@ export class AddDidInvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.tax_per_mod = response.percent_val;
-     
-      if($('#section3_gross_total_afterDiscount').val()=='' || $('#section3_gross_total_afterDiscount').val()==0){
+
+      if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total').val()) / 100).toFixed(2);
         $('#Tax_amt_id').val(tax);
-        this.taxValue=tax;
-        var taxadd=Number($('#section3_gross_total').val())+Number(tax)+Number($('#shipping_amt_id').val())+Number($('#bankingCharge_amt_id').val());
-     
+        this.taxValue = tax;
+        var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
+
         $('#section3_grand_total').val(taxadd);
-       
-      }else{
+
+      } else {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total_afterDiscount').val()) / 100).toFixed(2);
-       this.taxValue=tax;
+        this.taxValue = tax;
         $('#Tax_amt_id').val(tax);
-        var taxadd=Number($('#section3_gross_total_afterDiscount').val())+Number(tax)+Number($('#shipping_amt_id').val())+Number($('#bankingCharge_amt_id').val());
-     
+        var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
+
         $('#section3_grand_total').val(taxadd);
       }
-     
-    
+
+
     });
-  
-    console.log("this.taxValue",this.taxValue);
-   
-  //  this.extraFees();
-    
+
+    console.log("this.taxValue", this.taxValue);
+
+    //  this.extraFees();
+
 
 
 
   }
   goBackInvoice() {
-  
+
     this.router.navigate(['/didInvoice'])
   }
 
@@ -875,7 +929,7 @@ export class AddDidInvoiceComponent implements OnInit {
           ship_address_str2 = response.customer_details[0].customerAddress2;
         }
 
-      
+
         this.did_bill_codexx = response.customer_billcode_arr;
         this.did_bill_code_section1 = response.customer_billcode_arr;
 
@@ -912,8 +966,9 @@ export class AddDidInvoiceComponent implements OnInit {
 
 
   save($event: MouseEvent) {
+
     this.spinner.show();
-    
+
     let api_req: any = new Object();
     let api_saveDid_req: any = new Object();
     api_req.moduleType = "did";
@@ -950,8 +1005,21 @@ export class AddDidInvoiceComponent implements OnInit {
     api_saveDid_req.cstNo = this.addDid_section1.value.cst;
     api_saveDid_req.billDate = this.addDid_section1.value.Date;
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
-    
-    api_saveDid_req.did_bill_code=this.did_bill_code;
+
+    if (this.did_bill_code === null) {
+
+      iziToast.warning({
+        message: "Fill Bill Code",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+
+    } else {
+      api_saveDid_req.did_bill_code = this.did_bill_code;
+    }
+
     api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
     api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
     api_saveDid_req.sales_rep = this.addDid_section1.value.salesRep;
@@ -960,6 +1028,7 @@ export class AddDidInvoiceComponent implements OnInit {
     api_saveDid_req.s_attn = this.addDid_section1.value.ship_attn;
     api_saveDid_req.terms = this.addDid_section1.value.terms;
     api_saveDid_req.currency = this.addDid_section1.value.Currency;
+    api_saveDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
     api_saveDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
     api_saveDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
     api_saveDid_req.bills_logo_id = this.ExtralogoValue;
@@ -974,7 +1043,7 @@ export class AddDidInvoiceComponent implements OnInit {
       });
       this.spinner.hide();
       return false;
-     
+
 
     }
 
@@ -1010,6 +1079,10 @@ export class AddDidInvoiceComponent implements OnInit {
       addr1[i].amt1 = $('#amt_1_' + i).val();
       addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
 
+      addr1[i].dis_per1 = $('#enablePerFinal_1' + i).val();
+      addr1[i].dis_amt1 = $('#enablePriceFinal_1' + i).val();
+      addr1[i].dis_type1 = $('#fix_DiscountTYpe' + i).val();
+
     }
 
 
@@ -1023,22 +1096,37 @@ export class AddDidInvoiceComponent implements OnInit {
     for (let i = 0; i < addr2.length; i++) {
 
 
-     
+
       addr2[i].particular2 = $('#particular2_' + i).val();
       addr2[i].fromdt2 = $('#fromdt2_' + i).val();
-      addr2[i].todt2 = $('#todt_2' + i).val();
+      addr2[i].todt2 = $('#todt2_' + i).val();
       addr2[i].md_chk2 = $('#md_chk2_' + i).val();
       addr2[i].did_diff_date2 = $('#did_diff_date2_' + i).val();
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].did_bill_code_chd =this.did_bill_code_section1;
+      addr2[i].did_bill_code_chd = this.did_bill_code_section2;
+
+      addr2[i].dis_per2 = $('#enablePerFinal_2' + i).val();
+      addr2[i].dis_amt2 = $('#enablePriceFinal_2' + i).val();
+      addr2[i].dis_type2 = $('#use_DiscountTYpe_per' + i).val();
 
     }
 
     console.log('addr2' + addr2);
 
     api_saveDid_req.usage_value = addr2;
+    if (this.did_bill_code_section2 === null || this.did_bill_code_section2 == undefined || this.did_bill_code_section2 == '') {
+
+      iziToast.warning({
+        message: "Fill Usage Charge bill code",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+
+    }
 
     // other charge
 
@@ -1052,14 +1140,17 @@ export class AddDidInvoiceComponent implements OnInit {
 
       console.log(addr3[i].amt3)
       addr3[i].particular3 = $('#particular3_' + i).val();
-      addr3[i].fromdt3 = $('#fromdt_3' + i).val();
-      addr3[i].todt3 = $('#todt_3' + i).val();
+      addr3[i].fromdt3 = $('#fromdt3_' + i).val();
+      addr3[i].todt3 = $('#todt3_' + i).val();
       addr3[i].md_chk3 = $('#md_chk3_' + i).val();
       addr3[i].did_diff_date3 = $('#did_diff_date3_' + i).val();
       addr3[i].productDesc3 = $('#productDesc3_' + i).val();
       addr3[i].amt3 = $('#amt3_' + i).val();
       addr3[i].call_duration3 = $('#call_duration3_' + i).val();
 
+      addr3[i].dis_per3 = $('#enablePerFinal_3' + i).val();
+      addr3[i].dis_amt3 = $('#enablePriceFinal_3' + i).val();
+      addr3[i].dis_type3 = $('#oth_DiscountTYpe_per' + i).val();
     }
 
 
@@ -1075,14 +1166,42 @@ export class AddDidInvoiceComponent implements OnInit {
     api_saveDid_req.taxAmt = $('#Tax_amt_id').val();
     api_saveDid_req.shippingName = this.addDid_section3.value.section3_shipping_amt_name_txtbox;
     api_saveDid_req.addName = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
-    api_saveDid_req.shippingAmt =  $('#shipping_amt_id').val();
+    api_saveDid_req.shippingAmt = $('#shipping_amt_id').val();
     api_saveDid_req.add_amt = $('#bankingCharge_amt_id').val();
     api_saveDid_req.netTotal = $('#section3_grand_total').val();
     api_saveDid_req.remarks = this.addDid_section3.value.section3_remarks;
+
+    // api_saveDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
+    // api_saveDid_req.received_signature = this.addDid_section3.value.section3_receivedAuthorizedSignature;
+    // api_saveDid_req.logo = this.addDid_section3.value.section3_logo;
+    // api_saveDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
+
+
+
+    api_saveDid_req.previous_due_state = this.addDid_section3.value.section3_previousDue;
     api_saveDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
-    api_saveDid_req.received_signature = this.addDid_section3.value.section3_receivedAuthorizedSignature;
-    api_saveDid_req.logo = this.addDid_section3.value.section3_logo;
+    api_saveDid_req.terms_cond1 = this.addDid_section3.value.section3_Terms1;
+    api_saveDid_req.terms_cond2 = this.addDid_section3.value.section3_Terms2;
+    api_saveDid_req.terms_cond3 = this.addDid_section3.value.section3_Terms3;
+    api_saveDid_req.terms_cond4 = this.addDid_section3.value.section3_Terms4;
+    api_saveDid_req.terms_cond5 = this.addDid_section3.value.section3_Terms5;
+
     api_saveDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
+    api_saveDid_req.received_signature = this.chkReceivedAuthorizedSignature;
+    api_saveDid_req.logo = this.addDid_section3.value.section3_logo;
+    // Discount
+    api_saveDid_req.dis_per1 = this.FixedDiscountForm.value.FixedDiscountForm_Percentage;
+    api_saveDid_req.dis_amt1 = this.FixedDiscountForm.value.FixedDiscountForm_Direct;
+    api_saveDid_req.dis_type1 = this.FixedDiscountForm.value.fix_DiscountTYpe;
+    api_saveDid_req.dis_per2 = this.UsageDiscountForm.value.UsageDiscountForm_Percentage;
+    api_saveDid_req.dis_amt2 = this.UsageDiscountForm.value.UsageDiscountForm_Direct;
+    api_saveDid_req.dis_type2 = this.UsageDiscountForm.value.use_DiscountTYpe;
+    api_saveDid_req.dis_per3 = this.OtherDiscountForm.value.OtherDiscountForm_Percentage;
+    api_saveDid_req.dis_amt3 = this.OtherDiscountForm.value.OtherDiscountForm_Direct;
+    api_saveDid_req.dis_type3 = this.OtherDiscountForm.value.oth_DiscountTYpe;
+    api_saveDid_req.discountPer = this.FinalDiscountForm.value.FinalDiscountForm_Percentage;
+    api_saveDid_req.discountAmount = this.FinalDiscountForm.value.FinalDiscountForm_Direct;
+
     api_req.element_data = api_saveDid_req;
 
     ($event.target as HTMLButtonElement).disabled = true;
@@ -1116,7 +1235,15 @@ export class AddDidInvoiceComponent implements OnInit {
         this.spinner.hide();
       }
 
-    });
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log(error);
+      }
 
   }
   gotoDIDInvoiceList() {
@@ -1131,16 +1258,16 @@ export class AddDidInvoiceComponent implements OnInit {
 
   // increment and decrement
 
-  addButton:any = 0;
+  addButton: any = 0;
   plus(v: any) {
-    
+
     console.log(v)
     if (this.addButton != 50) {
       this.addButton++;
       $("#did_diff_date_1_" + v).val(this.addButton)
-     
+
     }
-    this.addButton='';
+    this.addButton = '';
 
   }
 
@@ -1207,7 +1334,7 @@ export class AddDidInvoiceComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
-  
+
   }
 
   // totalCalculate_1(){
@@ -1219,7 +1346,7 @@ export class AddDidInvoiceComponent implements OnInit {
   //     console.log('subtotal 1...' + total_amt);
   //     if (!isNaN(total_amt) && total_amt != '') {
   //             total_amt_tot += parseFloat(total_amt);
-              
+
   //             console.log('total_amt_tot =' , total_amt_tot);
   //           }
 
@@ -1237,32 +1364,32 @@ export class AddDidInvoiceComponent implements OnInit {
     this.txtbox_directPriceClear = '';
     $('#enablePerFinal_1').val('');
   }
-  US_percentPriceClear(){
-    this.UsageSave_directPriceClear='';
+  US_percentPriceClear() {
+    this.UsageSave_directPriceClear = '';
     $('#enablePriceFinal_2').val('');
   }
-  US_directPriceClear(){
-    this.UsageSave_percentPriceClear='';
+  US_directPriceClear() {
+    this.UsageSave_percentPriceClear = '';
     $('#enablePerFinal_2').val('');
   }
-  OS_percentPriceClear(){
-    this.OtherSave_directPriceClear='';
+  OS_percentPriceClear() {
+    this.OtherSave_directPriceClear = '';
     $('#enablePriceFinal_3').val('');
   }
-  OS_directPriceClear(){
-    this.OtherSave_percentPriceClear='';
+  OS_directPriceClear() {
+    this.OtherSave_percentPriceClear = '';
     $('#enablePerFinal_3').val('');
   }
 
-  FD_percentPriceClear(){
-   
-    this.FinalDiscount_directPriceClear='';
+  FD_percentPriceClear() {
+
+    this.FinalDiscount_directPriceClear = '';
     $('#enablePriceFinal_4').val('');
-   
+
   }
-  FD_directPriceClear(){
-     this.FinalDiscount_percentPriceClear='';
-     $('#enablePerFinal_4').val('');
+  FD_directPriceClear() {
+    this.FinalDiscount_percentPriceClear = '';
+    $('#enablePerFinal_4').val('');
   }
 
   // fixedSaveDiscount() {
@@ -1318,7 +1445,7 @@ export class AddDidInvoiceComponent implements OnInit {
       if (enablePerFinal_1 != '') {
         for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
-          fixedCharge_TotalAmount = fixedCharge_TotalAmount + $('#amt_1_' + a).val();
+          fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
           console.log("dummy inside", fixedCharge_TotalAmount);
         }
         console.log("dummy outside", fixedCharge_TotalAmount)
@@ -1345,7 +1472,7 @@ export class AddDidInvoiceComponent implements OnInit {
     else {
       for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
-        fixedCharge_TotalAmount = fixedCharge_TotalAmount + $('#amt_1_' + a).val();
+        fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
         console.log("dummy inside", fixedCharge_TotalAmount);
       }
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
@@ -1387,7 +1514,7 @@ export class AddDidInvoiceComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
-  
+
 
   }
 
@@ -1409,7 +1536,7 @@ export class AddDidInvoiceComponent implements OnInit {
         for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
 
-          usageCharge_TotalAmount = usageCharge_TotalAmount+$('#amt2_' + a).val();
+          usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1439,7 +1566,7 @@ export class AddDidInvoiceComponent implements OnInit {
       for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
 
-        usageCharge_TotalAmount = usageCharge_TotalAmount + $('#amt2_' + a).val();
+        usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1454,7 +1581,7 @@ export class AddDidInvoiceComponent implements OnInit {
 
     $('#sub_total_2').val(usage_price)
 
-    
+
     this.getTaxCals();
     this.extraFees();
 
@@ -1484,7 +1611,7 @@ export class AddDidInvoiceComponent implements OnInit {
       console.log('sub_total =' + total_amt_tot);
 
     }
-  
+
   }
 
 
@@ -1506,7 +1633,7 @@ export class AddDidInvoiceComponent implements OnInit {
         for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-          usageCharge_TotalAmount = usageCharge_TotalAmount + $('#amt3_' + a).val();
+          usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt3_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1536,7 +1663,7 @@ export class AddDidInvoiceComponent implements OnInit {
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-        usageCharge_TotalAmount = usageCharge_TotalAmount + $('#amt3_' + a).val();
+        usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt3_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1551,7 +1678,7 @@ export class AddDidInvoiceComponent implements OnInit {
 
     $('#sub_total_3').val(other_price)
 
-    
+
     this.getTaxCals();
     this.extraFees();
 
@@ -1567,43 +1694,43 @@ export class AddDidInvoiceComponent implements OnInit {
     var sub_total1, sub_total2, sub_total3: any = 0;
 
     sub_total1 = $('#sub_total_1').val();
-    console.log("sub_total1",sub_total1);
+    console.log("sub_total1", sub_total1);
     sub_total2 = $('#sub_total_2').val();
-    console.log("sub_total2",sub_total2);
+    console.log("sub_total2", sub_total2);
     sub_total3 = $('#sub_total_3').val();
-    console.log("sub_total3",sub_total3);
+    console.log("sub_total3", sub_total3);
 
-    if(sub_total1=='' && sub_total2=='' && sub_total3=='' ){
-      total_amt = 0; 
-      console.log("total amount 000",total_amt);
-  }else if(sub_total1=='' && sub_total2=='' && sub_total3!=='') {
-      total_amt =  (Number(sub_total3)); 
-      console.log("total amount 001",total_amt);
-   }else if(sub_total1=='' && sub_total2!=='' && sub_total3=='') {
-      total_amt =  (Number(sub_total2)); 
-      console.log("total amount 010",total_amt);
-    }else if(sub_total1=='' && sub_total2!=='' && sub_total3!=='') {
-      total_amt =  (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-      console.log("total amount 011",total_amt);
-   }else if(sub_total1!=='' && sub_total2=='' && sub_total3=='') {
-      total_amt =  (parseFloat(sub_total1)) 
-      console.log("total amount 100",total_amt);
-   }else if(sub_total1!=='' && sub_total2=='' && sub_total3!=='') {
+    if (sub_total1 == '' && sub_total2 == '' && sub_total3 == '') {
+      total_amt = 0;
+      console.log("total amount 000", total_amt);
+    } else if (sub_total1 == '' && sub_total2 == '' && sub_total3 !== '') {
+      total_amt = (Number(sub_total3));
+      console.log("total amount 001", total_amt);
+    } else if (sub_total1 == '' && sub_total2 !== '' && sub_total3 == '') {
+      total_amt = (Number(sub_total2));
+      console.log("total amount 010", total_amt);
+    } else if (sub_total1 == '' && sub_total2 !== '' && sub_total3 !== '') {
+      total_amt = (parseFloat(sub_total2)) + (parseFloat(sub_total3));
+      console.log("total amount 011", total_amt);
+    } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 == '') {
+      total_amt = (parseFloat(sub_total1))
+      console.log("total amount 100", total_amt);
+    } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 !== '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total3));
-      console.log("total amount 101",total_amt);
-  }else if(sub_total1!=='' && sub_total2!=='' && sub_total3=='') {
+      console.log("total amount 101", total_amt);
+    } else if (sub_total1 !== '' && sub_total2 !== '' && sub_total3 == '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2));
-      console.log("total amount 110",total_amt);
-   }else{
+      console.log("total amount 110", total_amt);
+    } else {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     }
     // total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-this.grossTotal_BeforeDiscount=total_amt
+    this.grossTotal_BeforeDiscount = total_amt
     console.log("total_amt-gross", total_amt);
     gross_tot += parseFloat(total_amt);
     $('#section3_gross_total').val(gross_tot);
-  
-this.grossTotalAfterDiscount();
+
+    this.grossTotalAfterDiscount();
   }
 
   finalSaveDiscount() {
@@ -1615,8 +1742,8 @@ this.grossTotalAfterDiscount();
     console.log('final_tot' + final_tot);
     $('#final_discount_type').val(disType);
     var price: any;
-    var dis_etr:any;
-    var directFinal:any;
+    var dis_etr: any;
+    var directFinal: any;
 
 
     if (disType == 'per') {
@@ -1624,28 +1751,28 @@ this.grossTotalAfterDiscount();
       if (enablePerFinal_4 != '') {
 
         dis_etr = (parseFloat(enablePerFinal_4) * parseFloat(final_tot) / 100).toFixed(2);
-        
+
         $('#finalDiscount_amt').val(dis_etr);
- 
+
         price = final_tot - dis_etr;
-     
+
         $('#section3_gross_total_afterDiscount').val(price);
 
-      
+
 
       }
     }
     else {
-      directFinal=final_tot-enablePriceFinal_4;
-  
+      directFinal = final_tot - enablePriceFinal_4;
+
       $('#finalDiscount_amt').val(enablePriceFinal_4);
       $('#section3_gross_total_afterDiscount').val(directFinal);
-     
+
     }
 
     this.getTaxCals();
     this.extraFees();
-    
+
 
 
     $('#discountFormFinal').modal('hide');
@@ -1657,38 +1784,38 @@ this.grossTotalAfterDiscount();
 
 
 
-  grossTotalAfterDiscount(){
+  grossTotalAfterDiscount() {
     var enablePerFinal_4_AD = $('#enablePerFinal_4').val()
     var enablePriceFinal_4_AD = $('#enablePriceFinal_4').val()
     var disType = $('input:radio[name=final_DiscountTYpe]:checked').val();
     var final_tot = $('#section3_gross_total').val();
     $('#final_discount_type').val(disType);
     var price: any;
-    var getTax:any;
-    var ept:any
-    var directFinal:any;
-    if (disType == 'per' && enablePerFinal_4_AD!="") {
-      
-      price=(parseFloat(enablePerFinal_4_AD) * parseFloat(final_tot) / 100).toFixed(2);
-      ept=final_tot-price;
-      
+    var getTax: any;
+    var ept: any
+    var directFinal: any;
+    if (disType == 'per' && enablePerFinal_4_AD != "") {
+
+      price = (parseFloat(enablePerFinal_4_AD) * parseFloat(final_tot) / 100).toFixed(2);
+      ept = final_tot - price;
+
       $('#finalDiscount_amt').val(price);
       $('#section3_gross_total_afterDiscount').val(ept);
-      getTax=(parseFloat(ept) * parseFloat(this.tax_per_mod) / 100).toFixed(2);
-       $('#tax_amt_id').val(getTax);
-     
+      getTax = (parseFloat(ept) * parseFloat(this.tax_per_mod) / 100).toFixed(2);
+      $('#tax_amt_id').val(getTax);
+
     }
-    else if(disType == 'amt' && enablePriceFinal_4_AD!="") {
-      directFinal=final_tot-enablePriceFinal_4_AD;
-  
+    else if (disType == 'amt' && enablePriceFinal_4_AD != "") {
+      directFinal = final_tot - enablePriceFinal_4_AD;
+
       $('#finalDiscount_amt').val(enablePriceFinal_4_AD);
       $('#section3_gross_total_afterDiscount').val(directFinal);
-     
-      
+
+
     }
-   
-   // this.getTaxCals();
- //this.extraFees();
+
+    // this.getTaxCals();
+    //this.extraFees();
     $('#discountFormFinal').modal('hide');
 
   }
@@ -1697,24 +1824,24 @@ this.grossTotalAfterDiscount();
 
     var test;
     var getafterdiscountval;
-      
-    if($('#section3_gross_total_afterDiscount').val()=='' || $('#section3_gross_total_afterDiscount').val()==0){
-      getafterdiscountval=parseFloat($('#section3_gross_total').val());
-    test=Number(getafterdiscountval)+Number($("#Tax_amt_id").val())+Number($('#shipping_amt_id').val())+Number($('#bankingCharge_amt_id').val());
-     
-     $('#section3_grand_total').val(test);
-     
-    }else{
-      getafterdiscountval=$('#section3_gross_total_afterDiscount').val();
-      test=Number(getafterdiscountval)+Number($("#Tax_amt_id").val())+Number($('#shipping_amt_id').val())+Number($('#bankingCharge_amt_id').val());
-      
-       $('#section3_grand_total').val(test);
-      
-    }
-    
 
-  
-   
+    if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
+      getafterdiscountval = parseFloat($('#section3_gross_total').val());
+      test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
+
+      $('#section3_grand_total').val(test);
+
+    } else {
+      getafterdiscountval = $('#section3_gross_total_afterDiscount').val();
+      test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
+
+      $('#section3_grand_total').val(test);
+
+    }
+
+
+
+
 
 
 
@@ -1790,7 +1917,9 @@ this.grossTotalAfterDiscount();
       }
     });
   }
-  computeUsageCharge(){
+  computeUsageCharge(j: any) {
+
+
     let api_req: any = new Object();
     let api_computeUsage_req: any = new Object();
     api_req.moduleType = "did";
@@ -1800,36 +1929,30 @@ this.grossTotalAfterDiscount();
     api_computeUsage_req.action = "get_did_usage_charge";
     api_computeUsage_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_computeUsage_req.customerId = this.customer_ID;
-    api_computeUsage_req.did_bill_code = this.did_bill_code_section1;
-    for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
+    api_computeUsage_req.did_bill_code = this.did_bill_code_section2;
 
-      api_computeUsage_req.fromdt = $('#fromdt2_' + a).val();
-      api_computeUsage_req.todt = $('#todt2_' + a).val();
-     
 
-    }
-   
+    api_computeUsage_req.fromdt = $('#fromdt2_' + j).val();
+    api_computeUsage_req.todt = $('#todt2_' + j).val();
+
+
+
     api_req.element_data = api_computeUsage_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
 
-      if (response!='') {
-        for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
-          $('#amt2_'+a).val(response);  
-          this.totalCalculate_2();
-          this.usageSaveDiscount();
-          this.getTaxCals(); 
-          this.extraFees();
-        }
+      console.log("response", response)
+      console.log("response!=''", response)
 
-  
-      }
-      else {
+      $('#amt2_' + j).val(response);
+      console.log("'#amt2_'+a", $('#amt2_' + j).val(response))
 
-      }
+      this.totalCalculate_2();
+      this.usageSaveDiscount();
+      this.getTaxCals();
+      this.extraFees();
     });
-  
+
 
   }
 

@@ -277,7 +277,12 @@ export class CustomernewallComponent implements OnInit {
   typeConvertionString_invoice_Shared_Permission: any;
   // selectedValues
   selectedValues: any;
+  customer_list_billerDetails:any;
+  customer_list_billercode:any;
+  customer_list_colorcode: any;
+  test123:any;
 
+  
 
   constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
@@ -1225,6 +1230,7 @@ export class CustomernewallComponent implements OnInit {
 
   autoCreditPermission(event: any) {
     this.primary_code_auto_credit = event.target.checked;
+ 
     console.log(this.primary_code_auto_credit)
     if (this.primary_code_auto_credit) {
 
@@ -1600,6 +1606,9 @@ export class CustomernewallComponent implements OnInit {
         Swal.close();
         this.QuickSearchResultList = response.user_list;
         this.customer_list = response.customer_details;
+        console.log("customer_list",this.customer_list);
+      
+        
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchCustomerFormId').modal('hide');
@@ -1645,6 +1654,30 @@ export class CustomernewallComponent implements OnInit {
       }
       if (response != '') {
         this.customer_list = response.customer_details;
+      
+        // console.log("customer_list",this.customer_list);
+        // for (let k=0;k<response.customer_details.length;k++){
+        //   this.customer_list_billercode=response.customer_details.biller_details[k].billerCode;
+        //   this.customer_list_colorcode=response.customer_details.biller_details[k].colorCodes;
+        //   console.log("customer_list_billercode",this.customer_list_billercode);
+        //   console.log("customer_list_colorcode",this.customer_list_colorcode);
+        // }
+        // for( var i=0;i< response.customer_details.length;i++){
+
+        //   for ( var j=0;j< response.customer_details[i].biller_details.length;j++){
+
+        //       this.customer_list_billercode=response.customer_details[i].biller_details[j];
+
+        //       console.log("customer_list_billercode",this.customer_list_billercode);
+        // }
+
+        // }
+        // console.log("customer_list_billercode",JSON.parse(this.customer_list_billercode));
+     
+       
+        this.customer_list_colorcode=response.customer_details.biller_details.colorCodes;
+        console.log("customer_list_billercode",this.customer_list_billercode);
+        // console.log("customer_list_colorcode",this.customer_list_colorcode);
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
        
@@ -2472,6 +2505,7 @@ export class CustomernewallComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh", response);
       console.log("vignesh1", response.result.customer_details[0].city);
+    
       if (response.status == true) {
         var biller_id = response.result.customer_details[0].billerId;
         console.log("dropdown billwer id", biller_id)
@@ -2601,7 +2635,7 @@ export class CustomernewallComponent implements OnInit {
         this.billCodeEditForm3.setControl('addresses', formArray);
         console.log(this.addresses)
 
-
+        
 
         this.billCodeEditForm2.patchValue({
 

@@ -16,14 +16,14 @@
               (click)="suspendInvoiceGo()" style="margin-right: 10px;"><i class="fas  fa-archive"
                 style="margin-right:10;"></i>Suspend
             </button>
-            <button type="button" title="Monthly Turn Over" class="btn btn-primary btn-default btn-squared"
+            <!-- <button type="button" title="Monthly Turn Over" class="btn btn-primary btn-default btn-squared"
             data-toggle="modal" data-target="#monthlyTurnOverChartFormId" style="margin-right: 10px;"><i
               class="fas  fa-line-chart" style="margin-right:10;"></i>Monthly Turn Over
           </button>
           <button type="button" title="Monthly Turn Over" class="btn btn-primary btn-default btn-squared"
           data-toggle="modal" data-target="#DailyPaymentChartFormId" style="margin-right: 10px;"><i
             class="fas  fa-bar-chart" style="margin-right:10;"></i>Daily Payment
-        </button>
+        </button> -->
             <button type="button" *ngIf="(invoicePermissionList_add==1)" title="Add New Invoice"
               class="btn btn-primary btn-default btn-squared" (click)="addPIGo()" style="margin-right: 10px;"><i
                 class="fas fa-plus" style="margin-right:10;"></i>Add
@@ -100,8 +100,13 @@
                     </td>
                     <td><span>{{ list.cus_invoice_no}}</span></td>
                     <td><span>{{ list.billDate}}</span></td>
-                    <td><span>{{ list.customerName}}</span></td>
-                    <td><span>{{ list.netPayment}}</span></td>
+                    <td><span>{{ list.customerName}}</span>
+                      <span style="background-color: #dcf156;font-size: smaller;width: fit-content;">{{ list.reference_reseller_str}}</span>
+                    </td>
+                    <td>
+                      <span>{{ list.netPayment}}</span>
+                      <span style="background-color: #75ef93;font-size: smaller;width: fit-content;">{{ list.usage_chargeAmt}}</span>
+                    </td>
                     <td>
                       <span>{{ list.currency_name}}</span>
                       <span><button type="button" class="buttonClass" style="width: auto;border-radius: 3px;"
@@ -126,8 +131,10 @@
                           <div style="display: flex;align-items: center;">
                             <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
                               (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i></button>
-                            <span class="recurring-Status" *ngIf="(this.recurring_state_all=='1')">R</span>
-                            <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
+                            
+                              <span class="recurring-Status" *ngIf="(recurring_state_all==1)">R</span>
+                            
+                              <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                                 src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                           </div>
                           <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
@@ -237,7 +244,7 @@
                                       </li>
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_duplicate==1)">
                                         <a class="hover4" title="Duplicate" data-toggle="modal"
-                                          (click)="duplicatePIGo(list.billId,i)">
+                                          (click)="duplicatePIGo(list.billId,i,list.did_invoice_state)">
                                           <img class="show" src="assets/img/icon2/duplicate-blue.png">
                                           <img class="hide" src="assets/img/icon2/duplicate-black.png">
 

@@ -466,10 +466,10 @@
                                     
                                     <td>
                                         <div class="userDatatable-content">
-                                            <br *ngIf="i>0">
+                                           
                                         <input type="date" class="form-control" formControlName="todt1" id="todt_1_{{i}}" />
-                                        <button *ngIf="i>0" type="button"  class="btn btn-primary" >Compute
-                                     </button>
+                                        <!-- <button *ngIf="i>0" type="button"  class="btn btn-primary" >Compute
+                                     </button> -->
         
                                          </div>
                                     </td>
@@ -483,15 +483,15 @@
     
                                     <td class="date-duration-section">
                                         <div class="userDatatable-content">
-                                            <button type="button"  class="btn-info" (click)="minus(i)"
+                                            <!-- <button type="button"  class="btn-info" (click)="minus(i)"
                                              ><i class="fas fa-minus" ></i>
-                                          </button>
+                                          </button> -->
                                           <!--   -->
-                                        <input type="text" class="form-control" 
-                                        formControlName="did_diff_date1" id="did_diff_date_1_{{i}}"  [attr.readonly]="isReadOnly" />
-                                        <button type="button"  class="btn-primary" (click)="plus(i)"
+                                        <input type="number" class="form-control" 
+                                        formControlName="did_diff_date1" id="did_diff_date_1_{{i}}"   />
+                                        <!-- <button type="button"  class="btn-primary" (click)="plus(i)"
                                              ><i class="fas fa-plus" ></i>
-                                          </button>
+                                          </button> -->
                                         </div>
                                     </td>
                                     
@@ -530,7 +530,7 @@
                                 
                               
                             </tbody>
-                            <tbody>
+                            <tbody  >
                                 <tr >
     
                                     <td colspan="3">
@@ -632,12 +632,12 @@
                             <div class="userDatatable-content"  >
                             <input type="date" class="form-control" formControlName="fromdt2"   id="fromdt2_{{i}}"/>
                             
-                            <div class="userDatatable-content" *ngIf="1>i">
+                            <div class="userDatatable-content" >
                                 <div class="form-group row">
                                     <div class="col-lg-12">
             
                                         <select id="billCode" class="form-control"  formControlName="billCode" (change)="billCodeChange_section1($event)" >
-                                            <option [ngValue]="null" selected disabled>Select Bill Code</option>
+                                            <option [ngValue]="null" selected >Select Bill Code</option>
                                             <option *ngFor="let bill of did_bill_code_section1" value="{{bill.customer_bill_code_id}}">
                                                 {{bill.bill_code}}
                                             </option> 
@@ -650,9 +650,9 @@
                       
                         <td>
                             <div class="userDatatable-content" >
-                                <br>
+                            
                             <input type="date" class="form-control" formControlName="todt2" id="todt2_{{i}}"  />
-                            <button type="button" class="btn btn-primary" (click)="computeUsageCharge()">Compute
+                            <button type="button" class="btn btn-primary" (click)="computeUsageCharge(i)">Compute
                             </button>
     
                                 </div>
@@ -667,15 +667,15 @@
     
                         <td class="date-duration-section">
                             <div class="userDatatable-content">
-                                <button type="button"  class="btn-info" (click)="minus2(i)"
+                                <!-- <button type="button"  class="btn-info" (click)="minus2(i)"
                                     ><i class="fas fa-minus" ></i>
-                                </button>
+                                </button> -->
                                 <!--  formControlName="did_diff_date2" id="did_diff_date2_{{i}}" -->
-                            <input type="text"  class="form-control" 
-                            formControlName="did_diff_date2" id="did_diff_date2_{{i}}"  [attr.readonly]="isReadOnly" />
-                            <button type="button"  class="btn-primary" (click)="plus2(i)"
+                            <input type="number"  class="form-control" 
+                            formControlName="did_diff_date2" id="did_diff_date2_{{i}}"   />
+                            <!-- <button type="button"  class="btn-primary" (click)="plus2(i)"
                                     ><i class="fas fa-plus" ></i>
-                                </button>
+                                </button> -->
                             </div>
                         </td>
                         
@@ -803,7 +803,7 @@
                             
                             <td>
                                 <div class="userDatatable-content" >
-                                    <br>
+                            
                                 <input type="date" class="form-control" formControlName="todt3" id="todt3_{{i}}"  />
                                 <!-- <button  type="button"  class="btn btn-primary">Compute
                                 </button> -->
@@ -820,15 +820,15 @@
     
                             <td class="date-duration-section">
                                 <div class="userDatatable-content">
-                                    <button type="button"  class="btn-info" (click)="minus3(i)"
+                                    <!-- <button type="button"  class="btn-info" (click)="minus3(i)"
                                         ><i class="fas fa-minus" ></i>
-                                    </button>
+                                    </button> -->
                                     <!--  -->
-                                <input type="text" class="form-control"
-                                formControlName="did_diff_date3"  id="did_diff_date3_{{i}}"  [attr.readonly]="isReadOnly" />
-                                <button type="button"  class="btn-primary" (click)="plus3(i)"
+                                <input type="number" class="form-control"
+                                formControlName="did_diff_date3"  id="did_diff_date3_{{i}}"   />
+                                <!-- <button type="button"  class="btn-primary" (click)="plus3(i)"
                                         ><i class="fas fa-plus" ></i>
-                                    </button>
+                                    </button> -->
                                 </div>
                             </td>
                             
@@ -1094,23 +1094,89 @@
     
                                 </div>
                             </div>
-    
                             <div class="col-lg-12">
                                 <div class="form-group row">
-    
-                                    <div class="col-lg-6 mt-2" style="text-align: right;">
-                                        <label>Add to terms and condition</label>
+
+                                    <div class="col-lg-6 " style="text-align: right;">
+                                        <label>Add to Terms and Conditions</label>
                                     </div>
-    
+
                                     <div class="col-lg-6">
                                         <input type="checkbox" [(ngModel)]="chkTermsandcondition"
                                             formControlName="section3_termCondition"
                                             (change)="chkTermsandconditionEvent($event)" />
                                     </div>
-    
-    
+
+
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="form-group row" *ngIf="(chkTermsandcondition==true)">
+                                    
+                                        <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                            <label>Terms and Conditions-1</label>
+        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" formControlName="section3_Terms1"
+                                            value="{{this.section3_Terms1}}"     id="section3_Terms1" />
+        
+                                        </div>
+        
+                                   
+                                   
+                                        <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                            <label>Terms and Conditions-2</label>
+        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" formControlName="section3_Terms2"
+                                            value="{{this.section3_Terms2}}"    id="section3_Terms2" />
+        
+                                        </div>
+        
+                                   
+                                    
+                                        <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                            <label>Terms and Conditions-3</label>
+        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" formControlName="section3_Terms3"
+                                            value="{{this.section3_Terms3}}"    id="section3_Terms3" />
+        
+                                        </div>
+        
+                                    
+                                  
+                                        <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                            <label>Terms and Conditions-4</label>
+        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" formControlName="section3_Terms4"
+                                            value="{{this.section3_Terms4}}"    id="section3_Terms4" />
+        
+                                        </div>
+        
+                                    
+                                    
+                                        <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                            <label>Terms and Conditions-5</label>
+        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" formControlName="section3_Terms5"
+                                            value="{{this.section3_Terms5}}"    id="section3_Terms5" />
+        
+                                        </div>
+        
+                                   
+                                </div>
+                            </div>
+                           
+    
+                
     
                             <div class="col-lg-12">
                                 <div class="form-group row"  *ngIf="(quotationAddSignature_state==1)">
@@ -1125,10 +1191,10 @@
                                         <input type="checkbox" [(ngModel)]="selectAdditionalSign"
                                             formControlName="section3_select_additional_signature"
                                             (change)="eventCheckSelectAdditionalSignature($event)" /><br>
-                                        <div *ngIf="this.checkbox_selectAdditionalSignature==true">
+                                        <!-- <div *ngIf="this.checkbox_selectAdditionalSignature==true">
                                             <img src="{{this.quotationAddSignature_filename}}"
                                                 alt="No image to display " height="80px" width="100px">
-                                        </div>
+                                        </div> -->
                                     </div>
     
                                 </div>
@@ -1190,13 +1256,13 @@
  <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
          <div class="modal-header">
-             <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+            <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
              </button>
          </div>
          <div class="modal-body">
-             <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+             
              <form [formGroup]="FixedDiscountForm">
                  <div class="row">
 
@@ -1204,22 +1270,27 @@
                          <div class="form-group row">
                              <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                              <div class="col-lg-6">
-                                 <input type="radio" name="fix_DiscountTYpe" id="fix_DiscountTYpe_per" value="per">
-                                 <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                                 <input type="radio" name="fix_DiscountTYpe"
+                                 formControlName="fix_DiscountTYpe"
+                                  id="fix_DiscountTYpe_per" value="per">
+                                 <label for="per" class="ml-2 "> % Price</label><br>
                              </div>
                              <div class="col-lg-6">
-                                 <input type="text" class="form-control" id="enablePerFinal_1" [(ngModel)]="txtbox_percentPriceClear"
+                                 <input type="text" class="form-control" 
+                                 formControlName="FixedDiscountForm_Percentage" id="enablePerFinal_1" [(ngModel)]="txtbox_percentPriceClear"
                                  (input)="percentPriceClear()" />
                              </div>
                          </div>
                          <div class="form-group row">
                              <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                              <div class="col-lg-6">
-                                 <input type="radio" name="fix_DiscountTYpe" id="fix_DiscountTYpe_amt" value="amt">
-                                 <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                                 <input type="radio" name="fix_DiscountTYpe" 
+                                 formControlName="fix_DiscountTYpe" id="fix_DiscountTYpe_amt" value="amt">
+                                 <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                              </div>
                              <div class="col-lg-6">
-                                 <input type="text" class="form-control" id="enablePriceFinal_1" [(ngModel)]="txtbox_directPriceClear"
+                                 <input type="text" class="form-control" 
+                                 formControlName="FixedDiscountForm_Direct" id="enablePriceFinal_1" [(ngModel)]="txtbox_directPriceClear"
                                  (input)="directPriceClear()" />
                              </div>
                          </div>
@@ -1372,13 +1443,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
   <div class="modal-content">
       <div class="modal-header">
-          <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+        <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
       <div class="modal-body">
-          <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+         
           <form [formGroup]="UsageDiscountForm">
               <div class="row">
 
@@ -1386,11 +1457,14 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="use_DiscountTYpe" id="use_DiscountTYpe_per" value="per">
-                              <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                              <input type="radio" name="use_DiscountTYpe"
+                              formControlName="use_DiscountTYpe"
+                               id="use_DiscountTYpe_per" value="per">
+                              <label for="per" class="ml-2 "> % Price</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePerFinal_2"
+                              formControlName="UsageDiscountForm_Percentage"
                               [(ngModel)]="UsageSave_percentPriceClear"
                               (input)="US_percentPriceClear()" />
                           </div>
@@ -1398,11 +1472,14 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="use_DiscountTYpe" id="use_DiscountTYpe_amt" value="amt">
-                              <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                              <input type="radio" name="use_DiscountTYpe" 
+                              formControlName="use_DiscountTYpe"
+                              id="use_DiscountTYpe_amt" value="amt">
+                              <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePriceFinal_2" 
+                              formControlName="UsageDiscountForm_Direct"
                               [(ngModel)]="UsageSave_directPriceClear"
                               (input)="US_directPriceClear()" />
                           </div>
@@ -1432,13 +1509,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
   <div class="modal-content">
       <div class="modal-header">
-          <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+        <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
       <div class="modal-body">
-          <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+         
           <form [formGroup]="OtherDiscountForm">
               <div class="row">
 
@@ -1446,11 +1523,15 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="oth_DiscountTYpe" id="oth_DiscountTYpe_per" value="per">
-                              <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                              <input type="radio" name="oth_DiscountTYpe" 
+                              formControlName="oth_DiscountTYpe" 
+                            
+                              id="oth_DiscountTYpe_per" value="per">
+                              <label for="per" class="ml-2 "> % Price</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePerFinal_3"  
+                              formControlName="OtherDiscountForm_Percentage" 
                               [(ngModel)]="OtherSave_percentPriceClear"
                               (input)="OS_percentPriceClear()" />
                           </div>
@@ -1458,11 +1539,13 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="oth_DiscountTYpe" id="oth_DiscountTYpe_amt" value="amt">
-                              <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                              <input type="radio" name="oth_DiscountTYpe" 
+                              formControlName="oth_DiscountTYpe" id="oth_DiscountTYpe_amt" value="amt">
+                              <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePriceFinal_3" 
+                              formControlName="OtherDiscountForm_Direct" 
                               [(ngModel)]="OtherSave_directPriceClear"
                               (input)="OS_directPriceClear()" />
                           </div>
@@ -1494,13 +1577,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
  <div class="modal-content">
      <div class="modal-header">
-         <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+        <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
          </button>
      </div>
      <div class="modal-body">
-         <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+
          <form [formGroup]="FinalDiscountForm">
              <div class="row">
 
@@ -1508,11 +1591,14 @@ aria-hidden="true">
                      <div class="form-group row">
                          <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                          <div class="col-lg-6">
-                             <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_per" value="per">
-                             <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                             <input type="radio" name="final_DiscountTYpe" 
+                             formControlName="final_DiscountTYpe"
+                             id="final_DiscountTYpe_per" value="per">
+                             <label for="per" class="ml-2"> % Price</label><br>
                          </div>
                          <div class="col-lg-6">
                              <input type="text" class="form-control" id="enablePerFinal_4" 
+                             formControlName="FinalDiscountForm_Percentage"
                              [(ngModel)]="FinalDiscount_percentPriceClear"
                                  (input)="FD_percentPriceClear()" />
                          </div>
@@ -1520,11 +1606,13 @@ aria-hidden="true">
                      <div class="form-group row">
                          <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                          <div class="col-lg-6">
-                             <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_amt" value="amt">
-                             <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                             <input type="radio" name="final_DiscountTYpe"
+                             formControlName="final_DiscountTYpe" id="final_DiscountTYpe_amt" value="amt">
+                             <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                          </div>
                          <div class="col-lg-6">
                              <input type="text" class="form-control" id="enablePriceFinal_4" 
+                             formControlName="FinalDiscountForm_Direct"
                              [(ngModel)]="FinalDiscount_directPriceClear"
                              (input)="FD_directPriceClear()" />
                          </div>

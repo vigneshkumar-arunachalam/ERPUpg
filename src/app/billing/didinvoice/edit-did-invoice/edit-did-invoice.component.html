@@ -282,12 +282,20 @@
                                     <div class="col-lg-12">
                                         <input type="date" class="form-control" formControlName="Date" id="datee" [attr.readonly]="isReadOnly" />
                                     </div>
+                                    <!-- <label for="po" class="col-lg-12 col-form-label">PO.No</label>
+                                    <div class="col-lg-12">
+                                        <input type="text " class="form-control" formControlName="PoNo"  />
+            
+                                    </div> -->
+            
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group row">
                                     <label for="po" class="col-lg-12 col-form-label">PO.No</label>
                                     <div class="col-lg-12">
-                                        <input type="text " class="form-control" formControlName="PoNo" id="po" />
-            
+                                        <input type="text" class="form-control" formControlName="PoNo_edit" id="po" [attr.readonly]="isReadOnly" />
                                     </div>
-            
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -460,6 +468,8 @@
                                         <div class="userDatatable-content">
                                         <input type="text" class="form-control mt-2 mb-2" formControlName="particular1" id="particular_1_{{i}}" />
                                         </div>
+                                        <input type="hidden" formControlName="billChildid1"
+                                        id="billChildid1{{i}}" />
                                     </td>
     
                                     <td>
@@ -488,15 +498,15 @@
     
                                     <td class="date-duration-section">
                                         <div class="userDatatable-content">
-                                            <button type="button"  class="btn-info" (click)="minus(i)"
+                                            <!-- <button type="button"  class="btn-info" (click)="minus(i)"
                                              ><i class="fas fa-minus" ></i>
-                                          </button>
+                                          </button> -->
                                           <!--   -->
-                                        <input type="text" class="form-control" 
-                                        formControlName="did_diff_date1" id="did_diff_date_1_{{i}}"  [attr.readonly]="isReadOnly" />
-                                        <button type="button"  class="btn-primary" (click)="plus(i)"
+                                        <input type="number" class="form-control" 
+                                        formControlName="did_diff_date1" id="did_diff_date_1_{{i}}"  />
+                                        <!-- <button type="button"  class="btn-primary" (click)="plus(i)"
                                              ><i class="fas fa-plus" ></i>
-                                          </button>
+                                          </button> -->
                                         </div>
                                     </td>
                                     
@@ -626,7 +636,9 @@
                         <td>
                             <div class="userDatatable-content" >
                             <input type="text" class="form-control mt-2 mb-2" formControlName="particular2" id="particular2_{{i}}"  />
-                            </div>
+                            <input type="hidden" formControlName="billChildid2"
+                            id="billChildid2{{i}}" />
+                        </div>
                         </td>
     
                         <td>
@@ -635,7 +647,7 @@
                             <div class="userDatatable-content"  >
                             <input type="date" class="form-control" formControlName="fromdt2"   id="fromdt2_{{i}}"/>
                             
-                            <div class="userDatatable-content" *ngIf="1>i">
+                            <div class="userDatatable-content" >
                                 <div class="form-group row">
                                     <div class="col-lg-12">
             
@@ -655,7 +667,7 @@
                             <div class="userDatatable-content" >
                                 <br>
                             <input type="date" class="form-control" formControlName="todt2" id="todt2_{{i}}"  />
-                            <button type="button" class="btn btn-primary" (click)="computeUsageCharge()">Compute
+                            <button type="button" class="btn btn-primary" (click)="computeUsageCharge(i)">Compute
                             </button>
     
                                 </div>
@@ -670,15 +682,15 @@
     
                         <td class="date-duration-section">
                             <div class="userDatatable-content">
-                                <button type="button"  class="btn-info" (click)="minus2(i)"
+                                <!-- <button type="button"  class="btn-info" (click)="minus2(i)"
                                     ><i class="fas fa-minus" ></i>
-                                </button>
+                                </button> -->
                                 <!--  formControlName="did_diff_date2" id="did_diff_date2_{{i}}" -->
-                            <input type="text"  class="form-control" 
-                            formControlName="did_diff_date2" id="did_diff_date2_{{i}}"  [attr.readonly]="isReadOnly" />
-                            <button type="button"  class="btn-primary" (click)="plus2(i)"
+                            <input type="number"  class="form-control" 
+                            formControlName="did_diff_date2" id="did_diff_date2_{{i}}"   />
+                            <!-- <button type="button"  class="btn-primary" (click)="plus2(i)"
                                     ><i class="fas fa-plus" ></i>
-                                </button>
+                                </button> -->
                             </div>
                         </td>
                         
@@ -796,7 +808,9 @@
                         <td>
                             <div class="userDatatable-content" >
                             <input type="text" class="form-control mt-2 mb-2" formControlName="particular3" id="particular3_{{i}}" />
-                            </div>
+                            <input type="hidden" formControlName="billChildid3"
+                            id="billChildid3{{i}}" />    
+                        </div>
                         </td>
 
                         <td>
@@ -807,7 +821,7 @@
                         
                         <td>
                             <div class="userDatatable-content" >
-                                <br>
+                              
                             <input type="date" class="form-control" formControlName="todt3" id="todt3_{{i}}"  />
                             <!-- <button  type="button"  class="btn btn-primary">Compute
                             </button> -->
@@ -824,15 +838,15 @@
 
                         <td class="date-duration-section">
                             <div class="userDatatable-content">
-                                <button type="button"  class="btn-info" (click)="minus3(i)"
+                                <!-- <button type="button"  class="btn-info" (click)="minus3(i)"
                                     ><i class="fas fa-minus" ></i>
-                                </button>
+                                </button> -->
                                 <!--  -->
-                            <input type="text" class="form-control"
-                            formControlName="did_diff_date3"  id="did_diff_date3_{{i}}"  [attr.readonly]="isReadOnly" />
-                            <button type="button"  class="btn-primary" (click)="plus3(i)"
+                            <input type="number" class="form-control"
+                            formControlName="did_diff_date3"  id="did_diff_date3_{{i}}"   />
+                            <!-- <button type="button"  class="btn-primary" (click)="plus3(i)"
                                     ><i class="fas fa-plus" ></i>
-                                </button>
+                                </button> -->
                             </div>
                         </td>
                         
@@ -1317,13 +1331,13 @@
  <div class="modal-dialog modal-dialog-centered" role="document">
      <div class="modal-content">
          <div class="modal-header">
-             <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+            <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                  <span aria-hidden="true">&times;</span>
              </button>
          </div>
          <div class="modal-body">
-             <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+            
              <form [formGroup]="FixedDiscountForm">
                  <div class="row">
 
@@ -1331,22 +1345,28 @@
                          <div class="form-group row">
                              <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                              <div class="col-lg-6">
-                                 <input type="radio" name="fix_DiscountTYpe" id="fix_DiscountTYpe_per" value="per">
-                                 <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                                 <input type="radio" name="fix_DiscountTYpe"
+                                 formControlName="fix_DiscountTYpe" id="fix_DiscountTYpe_per" value="per">
+                                 <label for="per" class="ml-2"> % Price</label><br>
                              </div>
                              <div class="col-lg-6">
-                                 <input type="text" class="form-control" id="enablePerFinal_1" [(ngModel)]="txtbox_percentPriceClear"
+                                 <input type="text" class="form-control" 
+                                 formControlName="FixedDiscountForm_Percentage"
+                                 id="enablePerFinal_1" [(ngModel)]="txtbox_percentPriceClear"
                                  (input)="percentPriceClear()" />
                              </div>
                          </div>
                          <div class="form-group row">
                              <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                              <div class="col-lg-6">
-                                 <input type="radio" name="fix_DiscountTYpe" id="fix_DiscountTYpe_amt" value="amt">
-                                 <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                                 <input type="radio" name="fix_DiscountTYpe"
+                                 formControlName="fix_DiscountTYpe" id="fix_DiscountTYpe_amt" value="amt">
+                                 <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                              </div>
                              <div class="col-lg-6">
-                                 <input type="text" class="form-control" id="enablePriceFinal_1" [(ngModel)]="txtbox_directPriceClear"
+                                 <input type="text" class="form-control" 
+                                 formControlName="FixedDiscountForm_Direct"
+                                 id="enablePriceFinal_1" [(ngModel)]="txtbox_directPriceClear"
                                  (input)="directPriceClear()" />
                              </div>
                          </div>
@@ -1495,13 +1515,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
   <div class="modal-content">
       <div class="modal-header">
-          <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+        <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
       <div class="modal-body">
-          <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+       
           <form [formGroup]="UsageDiscountForm">
               <div class="row">
 
@@ -1509,11 +1529,13 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="use_DiscountTYpe" id="use_DiscountTYpe_per" value="per">
-                              <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                              <input type="radio" name="use_DiscountTYpe" 
+                              formControlName="use_DiscountTYpe" id="use_DiscountTYpe_per" value="per">
+                              <label for="per" class="ml-2 "> % Price</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePerFinal_2"
+                              formControlName="UsageDiscountForm_Percentage"
                               [(ngModel)]="UsageSave_percentPriceClear"
                               (input)="US_percentPriceClear()" />
                           </div>
@@ -1521,11 +1543,13 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="use_DiscountTYpe" id="use_DiscountTYpe_amt" value="amt">
-                              <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                              <input type="radio" name="use_DiscountTYpe" formControlName="use_DiscountTYpe" 
+                               id="use_DiscountTYpe_amt" value="amt">
+                              <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePriceFinal_2" 
+                              formControlName="UsageDiscountForm_Direct"
                               [(ngModel)]="UsageSave_directPriceClear"
                               (input)="US_directPriceClear()" />
                           </div>
@@ -1555,13 +1579,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
   <div class="modal-content">
       <div class="modal-header">
-          <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+        <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
           </button>
       </div>
       <div class="modal-body">
-          <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+          <h2 style="text-align:center;color:rgb(97, 72, 9)"></h2>
           <form [formGroup]="OtherDiscountForm">
               <div class="row">
 
@@ -1569,24 +1593,26 @@ aria-hidden="true">
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="oth_DiscountTYpe" id="oth_DiscountTYpe_per" value="per">
-                              <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                              <input type="radio" formControlName="oth_DiscountTYpe"
+                              name="oth_DiscountTYpe" id="oth_DiscountTYpe_per" value="per">
+                              <label for="per" class="ml-2 "> % Price</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePerFinal_3"  
-                              [(ngModel)]="OtherSave_percentPriceClear"
+                              formControlName="OtherDiscountForm_Percentage"    [(ngModel)]="OtherSave_percentPriceClear"
                               (input)="OS_percentPriceClear()" />
                           </div>
                       </div>
                       <div class="form-group row">
                           <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                           <div class="col-lg-6">
-                              <input type="radio" name="oth_DiscountTYpe" id="oth_DiscountTYpe_amt" value="amt">
-                              <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                              <input type="radio" formControlName="oth_DiscountTYpe"
+                              name="oth_DiscountTYpe" id="oth_DiscountTYpe_amt" value="amt">
+                              <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                           </div>
                           <div class="col-lg-6">
                               <input type="text" class="form-control" id="enablePriceFinal_3" 
-                              [(ngModel)]="OtherSave_directPriceClear"
+                              formControlName="OtherDiscountForm_Direct"    [(ngModel)]="OtherSave_directPriceClear"
                               (input)="OS_directPriceClear()" />
                           </div>
                       </div>
@@ -1618,13 +1644,13 @@ aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
  <div class="modal-content">
      <div class="modal-header">
-         <h2 class="modal-title" id="addModalLongTitle">Discount</h2>
+         <h2 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Set Discount</h2>
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
              <span aria-hidden="true">&times;</span>
          </button>
      </div>
      <div class="modal-body">
-         <h2 style="text-align:center;color:rgb(97, 72, 9)">Set Discount</h2>
+         
          <form [formGroup]="FinalDiscountForm">
              <div class="row">
 
@@ -1632,11 +1658,14 @@ aria-hidden="true">
                      <div class="form-group row">
                          <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                          <div class="col-lg-6">
-                             <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_per" value="per">
-                             <label for="per" class="ml-2 discountCSS1"> % Price</label><br>
+                             <input type="radio" name="final_DiscountTYpe" 
+                             formControlName="final_DiscountTYpe"
+                             id="final_DiscountTYpe_per" value="per">
+                             <label for="per" class="ml-2 "> % Price</label><br>
                          </div>
                          <div class="col-lg-6">
                              <input type="text" class="form-control" id="enablePerFinal_4" 
+                             formControlName="FinalDiscountForm_Percentage"
                              [(ngModel)]="FinalDiscount_percentPriceClear"
                                  (input)="FD_percentPriceClear()" />
                          </div>
@@ -1644,11 +1673,13 @@ aria-hidden="true">
                      <div class="form-group row">
                          <label for="enq_subject" class="col-lg-12 col-form-label"></label>
                          <div class="col-lg-6">
-                             <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_amt" value="amt">
-                             <label for="html" class="ml-2 discountCSS2">Direct Price Reduction</label><br>
+                             <input type="radio" name="final_DiscountTYpe" id="final_DiscountTYpe_amt" 
+                             formControlName="final_DiscountTYpe" value="amt">
+                             <label for="html" class="ml-2 ">Direct Price Reduction</label><br>
                          </div>
                          <div class="col-lg-6">
                              <input type="text" class="form-control" id="enablePriceFinal_4" 
+                             formControlName="FinalDiscountForm_Direct"
                              [(ngModel)]="FinalDiscount_directPriceClear"
                              (input)="FD_directPriceClear()" />
                          </div>
