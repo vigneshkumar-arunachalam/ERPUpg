@@ -1168,8 +1168,10 @@ export class InvoiceComponent implements OnInit {
   duplicatePIGo(id: any, i: any, didState: any) {
     $("#ActionId" + i).modal("hide");
     var editDuplicateID = id;
+   
 
     if (didState == '0') {
+     
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
           e_editDuplicateID: editDuplicateID,
@@ -1178,6 +1180,7 @@ export class InvoiceComponent implements OnInit {
       });
 
     } else {
+     
       this.router.navigate(['/InvoiceEditDID'], {
         queryParams: {
           e_editDuplicateID: editDuplicateID,

@@ -1657,7 +1657,7 @@ export class EditInvoiceComponent implements OnInit {
   
   keyPress(event: any, i: any) {
     this.invocePriceKey = i;
-    alert(this.invocePriceKey)
+    // alert(this.invocePriceKey)
     var key = event.target.value;
     var addr = this.addPI_section2.value.addresses;
     var v = addr[i].pd_quantity_txtbox1 * $('#pd_SP_' + i);

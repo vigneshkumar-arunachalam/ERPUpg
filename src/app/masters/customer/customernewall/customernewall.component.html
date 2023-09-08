@@ -1213,19 +1213,40 @@
             </div> -->
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="cmsdepartment" class="col-lg-12 col-form-label">CMS Default
-                  Department</label>
+                <label for="cmsdepartmentAdd" class="col-lg-12 col-form-label">CMS Default
+                  Department<span class="mandatoryField">
+                    *</span></label>
                 <div class="col-lg-12">
-                  <select name="cmsdepartment" id="cmsdepartment_name1 " class="form-control"
-                    formControlName="cmsdepartment">
-                    <option value="0">Select Department</option>
-                    <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }} ">
+                  <select name="cmsdepartmentAdd" id="cmsdepartment_name1 " class="form-control" aria-label="Default select example"
+                    formControlName="cmsdepartment_add" (change)="cmsdepartmentADD($event)">
+                    <option [ngValue]="null" selected disabled>Select Department</option>
+                    <option *ngFor="let cmsdept of cmslistadd" value="{{ cmsdept.dept_id }} ">
                       {{ cmsdept.department_name }}
                     </option>
                   </select>
                 </div>
               </div>
             </div>
+
+<!-- 
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="cmsdepartmentAdd" class="col-lg-12 col-form-label">CMS Default
+                  Department<span class="mandatoryField">
+                    *</span></label>
+                <div class="col-lg-12">
+                  <select name="cmsdepartmentAdd"  id="cmsdepartment_name1 " class="form-control" aria-label="Default select example"
+                    formControlName="cmsdepartment_add" (change)="cmsdepartmentADD($event)">
+                    <option [ngValue]="null" selected disabled>Select Department</option>
+                    <option *ngFor="let cmsdept of cmslistadd" value="{ dept_id:cmsdept.dept_id,department_name:cmsdept.department_name } ">
+                      {{ cmsdept.department_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div> -->
+
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="ESA_customerLimit" class="col-lg-12 col-form-label">
@@ -1906,7 +1927,7 @@
                 <div class="col-lg-12">
                   <select name="cmsdepartment" id="cmsdepartment_name " class="form-control"
                     formControlName="edit_cmsdepartment">
-                    <option value="0">Select Department</option>
+                    <option [ngValue]="null" selected disabled>Select Department</option>
                     <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }} ">
                       {{ cmsdept.department_name }}
                     </option>

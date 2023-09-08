@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=prod",
     "test": "ng test"
   },
   "private": true,

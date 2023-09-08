@@ -203,7 +203,7 @@ export class AddDidInvoiceComponent implements OnInit {
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'billCode': new FormControl(),
+      'billCode_0': new FormControl(),
       'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),

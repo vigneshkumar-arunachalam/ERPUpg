@@ -836,7 +836,7 @@ export class QuotationnewComponent implements OnInit {
       }
     }), (error: HttpErrorResponse) => {
       if (error.status == 500) {
-        alert("wrong")
+        // alert("wrong")
         console.log("vignesh", error)
       }
       iziToast.error({

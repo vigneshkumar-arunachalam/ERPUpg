@@ -256,6 +256,8 @@ export class CustomernewallComponent implements OnInit {
   googleAuthentication_userDetails: any;
   googleAuthentication_customerCode: any;
   googleAuthentication_password: any;
+  //cms add
+  cmslistadd:any;
 
   //radio-mconnect,mrvoip,cal4tel
   Partnertype_C4T_radiobox_Value: any;
@@ -441,6 +443,9 @@ export class CustomernewallComponent implements OnInit {
 
     this.customerslist({});
     this.getDynamicList();
+    this.cmsDepartmentList1();
+    this.getCustomerCode();
+this.cmsDepartmentList1();
     this.initTiny();
     // this.edit_eventCheck_auto_deselect();
     this.checkbox_EditShippingAddress = true;
@@ -589,7 +594,7 @@ export class CustomernewallComponent implements OnInit {
       'bank_countryname': new FormControl(null),
       'countryname': new FormControl(null),
       'currencyname': new FormControl(null),
-      'cmsdepartment': new FormControl(null),
+      'cmsdepartment_add': new FormControl(null),
       'payment_way': new FormControl(null),
       'permissiondisplay': new FormControl(null),
       'dcipcountryform': new FormControl(null),
@@ -1181,7 +1186,15 @@ export class CustomernewallComponent implements OnInit {
     this.checkbox_CAUS = event.target.checked;
     console.log(this.checkbox_CAUS)
   }
-
+  cmsdepartmentADD_ID:any;
+  cmsdepartmentADD_Value:any;
+  cmsdepartmentADD(event: any){
+ 
+    console.log("cms event",event)
+    this.cmsdepartmentADD_ID=event.target.value;
+    console.log("this.cmsdepartmentADD_ID",this.cmsdepartmentADD_ID);
+    
+  }
 
 
   eventCheckC4TAddressShow(event: any) {
@@ -2424,7 +2437,17 @@ export class CustomernewallComponent implements OnInit {
     }
     // add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cus_permission = this.addPermissionCheckboxID_array;
-    add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment;
+    if(this.addCustomer.value.cmsdepartment_add=='' || this.addCustomer.value.cmsdepartment_add== null || this.addCustomer.value.cmsdepartment_add== undefined){
+      iziToast.warning({
+        message: "CMS Department Missing",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+    }else{
+      add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment_add;
+    }
+  
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
     add_customer_req.reseller_id = this.addCustomer.value.ESA_c3cxResellerId_add;
     add_customer_req.def_currency_id = this.addCustomer.value.currencyname;
@@ -2545,6 +2568,7 @@ export class CustomernewallComponent implements OnInit {
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
         this.cmsDepartmentList = response.result.depart_data;
+      
         this.editCustomerForm.patchValue({
 
           'e_company_Code': response.result.customer_details[0].customerCode,
@@ -3140,6 +3164,7 @@ export class CustomernewallComponent implements OnInit {
 
 
   }
+ 
 
   fileAttachmentEdit(ID: any,i:any) {
     $("#ActionId" + i).modal("hide");
@@ -4527,22 +4552,90 @@ export class CustomernewallComponent implements OnInit {
 
 
   }
+  cmsDepartmentList1() {
+  
+    let api_req: any = new Object();
+    let cms_edit: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/getCmsDepartment";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    cms_edit.action = "getCmsDepartment";
+    cms_edit.user_id = localStorage.getItem('erp_c4c_user_id');
+   
+    api_req.element_data = cms_edit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response!='') {
+this.cmslistadd=response.cmsDep;
+console.log("this.cmslistadd",this.cmslistadd);
+        
+        
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+        
+  }
+  // getCustomerCode() {
+  
+    
+  //   $.ajax({
+  //     url: "https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode",
+  //     type: 'GET',
+  //     success: function(response:any) {
+  //        this.companyCodeAddCustomer=response;
+  //       $('#companyCode').val(response);     
+  //       this.companyCodeAddCustomer=$('#companyCode').val(response);
+        
+  //     }
+  // });
+        
+  // }
   getCustomerCode() {
   
-    // this.https.request('https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode').
-    // subscribe((response: any) => {
-    //   console.log(response);
-    // })
-    $.ajax({
-      url: "https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode",
-      type: 'GET',
-      success: function(response:any) {
-         this.companyCodeAddCustomer=response;
-        $('#companyCode').val(response);     
-        this.companyCodeAddCustomer=$('#companyCode').val(response);
+    let api_req: any = new Object();
+    let cms_edit: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/getCustomerCode";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    cms_edit.action = "getCustomerCode";
+    cms_edit.user_id = localStorage.getItem('erp_c4c_user_id');
+   
+    api_req.element_data = cms_edit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response!='') {
+
+        this.companyCodeAddCustomer=response.cuscode;
+         $('#companyCode').val(response.cuscode);     
+           this.companyCodeAddCustomer=$('#companyCode').val(response.cuscode);
         
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
       }
-  });
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
         
   }
   AssignAccountManager_edit(id: any,i:any) {

@@ -1822,7 +1822,8 @@ CustomerBillCodeArray: any;
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].did_bill_code_chd =this.did_bill_code_section2;
+      // addr2[i].did_bill_code_chd =this.did_bill_code_section2;
+      addr2[i].did_bill_code_chd = $('#billCode' + i).val();
 
    
 

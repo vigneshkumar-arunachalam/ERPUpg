@@ -183,15 +183,28 @@ CustomerBillCodeArray: any;
     did_bill_code_section2:any;
     edit_Duplicate_ID:any;  
     section1_billcode:any;
+    did_bill_code_index:any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner: NgxSpinnerService) {
 
-    // this.route.queryParams
-    // .subscribe(params => {
-    //   console.log("params output value", params);
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);
 
-    //   this.editbillerID = params['e_editBillID'];
-    //   console.log("edit biller id", this.editbillerID);
-    // });
+      this.editbillerID = params['e_editBillID'];
+      this.editDIDStateID=params['e_editDIDState'];
+      this.edit_Duplicate_ID = params['e_editDuplicateID'];
+      console.log("edit biller id", this.editbillerID);
+      console.log("edit DID state id", this.editDIDStateID);
+      console.log("edit duplicate id", this.edit_Duplicate_ID);
+      // alert(this.editbillerID);
+      // alert(this.editDIDStateID);
+      // alert(this.edit_Duplicate_ID);
+      // return false;
+       this.editDidInvice();
+    }
+    );
+
+
 
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
@@ -227,43 +240,9 @@ CustomerBillCodeArray: any;
    this.EditShippingAddress = true;
 
 
-   this.route.queryParams
-     .subscribe(params => {
-       console.log("params output value", params);
-
-       this.editbillerID = params['e_editBillID'];
-       this.editDIDStateID=params['e_editDIDState'];
-
-
-
-
-       console.log("edit biller id", this.editbillerID);
-       console.log("edit DID state id", this.editDIDStateID);
-    
-       
-     }
-     );
+  
      
-   this.route.queryParams
-   .subscribe(params => {
-     console.log("params output value", params);
-
-     this.edit_Duplicate_ID = params['e_editDuplicateID'];
-     this.editDIDStateID=params['e_editDIDState'];
-
-
-alert("editinvoice-did")
-alert( this.edit_Duplicate_ID)
-alert(this.editDIDStateID)
-
-     console.log("edit duplicate id", this.edit_Duplicate_ID);
-     console.log("edit DID state id", this.editDIDStateID);
-
-
-
-     this.editDidInvice();
-   }
-   );
+   
 
  
   // setTimeout(() => {
@@ -539,7 +518,9 @@ alert(this.editDIDStateID)
       productDesc2: '',
       amt2: '',
       call_duration2: '',
+      // billCode:'',
       did_bill_code_chd: '',
+     
 
     });
   }
@@ -794,9 +775,11 @@ alert(this.editDIDStateID)
    
     this.did_bill_code=event.target.value;
   }
-  billCodeChange_section1(event:any){
-    
+  billCodeChange_section1(event:any,i:any){
+    this.did_bill_code_index=i;
     this.did_bill_code_section2=event.target.value;
+    // alert(this.did_bill_code_index);
+    // alert(this.did_bill_code_section2);
   }
   cbk_Fn_EditShipAddress(event: any) {
     this.EditShippingAddress = event.target.checked;
@@ -1441,6 +1424,9 @@ alert(this.editDIDStateID)
   }
 
   editDidInvice() {
+    // console.log("in edit page");
+    // console.log("edit did state-1=this.edit_Duplicate_ID",this.edit_Duplicate_ID);
+    // console.log("edit did state-0=this.editbillerID",this.editbillerID);
     this.spinner.show();
     let api_req: any = new Object();
     let api_editDid_req: any = new Object();
@@ -1450,9 +1436,17 @@ alert(this.editDIDStateID)
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_editDid_req.action = "edit_did_invoice";
     api_editDid_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    if(this.editDIDStateID==1){
+    if(this.editbillerID=='' || this.editbillerID==undefined || this.editbillerID=='undefined' ){
+      // alert("duplicate only")
+      // alert(this.edit_Duplicate_ID)
       api_editDid_req.billId = this.edit_Duplicate_ID; 
+    }else if(this.edit_Duplicate_ID=='' || this.edit_Duplicate_ID==undefined || this.edit_Duplicate_ID=='undefined'){
+      // alert("edit only")
+      // alert(this.editbillerID)
+      api_editDid_req.billId = this.editbillerID; 
     }else{
+      // alert("edit other")
+      // alert(this.editbillerID)
       api_editDid_req.billId = this.editbillerID; 
     }
    
@@ -1699,10 +1693,16 @@ alert(this.editDIDStateID)
         this.usageSaveDiscount();
       // this.totalCalculate_3();
     });
+ 
+    this.spinner.hide();
+  
     setTimeout(() => {
       $('#billCode').val(this.section1_billcode)
     }, 2000);
-    this.spinner.hide();
+
+    setTimeout(() => {
+      this.usageSaveDiscount()
+    }, 2000);
     
   }
 
@@ -1713,11 +1713,32 @@ alert(this.editDIDStateID)
     let api_updateDid_req: any = new Object();
     api_req.moduleType = "did";
 
-    api_req.api_url = "did/update_invoice";
+   
+
+    if(this.editbillerID=='' || this.editbillerID==undefined || this.editbillerID=='undefined' ){
+      api_req.api_url = "did/duplicate_invoice";
+     
+    }else if(this.edit_Duplicate_ID=='' || this.edit_Duplicate_ID==undefined || this.edit_Duplicate_ID=='undefined'){
+    
+      api_req.api_url = "did/update_invoice";
+    }else{
+      
+      api_req.api_url = "did/update_invoice";
+    }
 
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_updateDid_req.action = "update_invoice";
+    if(this.editbillerID=='' || this.editbillerID==undefined || this.editbillerID=='undefined' ){
+      
+      api_updateDid_req.action = "duplicate_invoice";
+    }else if(this.edit_Duplicate_ID=='' || this.edit_Duplicate_ID==undefined || this.edit_Duplicate_ID=='undefined'){
+    
+      api_updateDid_req.action = "update_invoice";
+    }else{
+      
+      api_updateDid_req.action = "update_invoice";
+    }
+    
     api_updateDid_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
     console.log('this.addPI_section3.value.billId_edit'+this.addDid_section1.value.billId_edit);
@@ -1748,7 +1769,8 @@ alert(this.editDIDStateID)
     api_updateDid_req.cstNo = this.addDid_section1.value.cst;
     api_updateDid_req.billDate = this.addDid_section1.value.Date;
     api_updateDid_req.b_attn = this.addDid_section1.value.Attn_1;
-    api_updateDid_req.did_bill_code=this.did_bill_code;
+    // api_updateDid_req.did_bill_code=this.did_bill_code;
+    api_updateDid_req.did_bill_code=this.addDid_section1.value.billCode;
     api_updateDid_req.po_no = this.addDid_section1.value.PoNo_edit;
     api_updateDid_req.po_date = this.addDid_section1.value.PoDate;
     api_updateDid_req.sales_rep = this.addDid_section1.value.salesRep;
@@ -1836,7 +1858,8 @@ alert(this.editDIDStateID)
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].did_bill_code_chd =this.did_bill_code_section2;
+      // addr2[i].billCode =this.did_bill_code_section2;
+      addr2[i].did_bill_code_chd = $('#billCode' + i).val();
 
    
 
@@ -2549,7 +2572,7 @@ this.grossTotalAfterDiscount();
   }
 
   goBack() {
-    this.router.navigate(['/didInvoice']);
+    this.router.navigate(['/invoice']);
 
   }
   quotationAddSignature(){

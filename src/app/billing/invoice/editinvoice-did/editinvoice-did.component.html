@@ -651,7 +651,7 @@
                                 <div class="form-group row">
                                     <div class="col-lg-12">
             
-                                        <select id="billCode" class="form-control"  formControlName="billCode" (change)="billCodeChange_section1($event)" >
+                                        <select id="billCode{{i}}" class="form-control"  formControlName="did_bill_code_chd" (change)="billCodeChange_section1($event,i)" >
                                             <option [ngValue]="null" selected disabled>Select Bill Code</option>
                                             <option *ngFor="let bill of did_bill_code_section1" value="{{bill.customer_bill_code_id}}">
                                                 {{bill.bill_code}}

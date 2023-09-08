@@ -6,3 +6,68 @@
 #ActionId1 .modal-dialog{
     max-width: 65% !important;
   }
+
+  #ActionIdxx2 .modal-dialog{
+    max-width: 65% !important;
+  }
+
+
+
+
+
+
+  .modal-content {
+    background: #e4ebf5;
+  }
+   .modal-content .form-control,.CheckboxScroll {
+    border: none;
+    padding-left: 1.4rem;
+    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+    background: none;
+    font-family: inherit;
+    color: #252525;
+  }
+  .modal-content .btn-primary  {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    background: #6d5dfc;
+    box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    color: #e4ebf5;
+  }
+    .modal-content button.close  {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #9baacf;
+    transition: all 0.5s ease;
+  }
+  
+  
+  .addcustomernewallcss .form-control,  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input {
+    border: none;
+    padding-left: 1.4rem;
+    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+    background: none;
+    font-family: inherit;
+    color: #252525;
+  } 
+  .addcustomernewallcss .form-control:focus,  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input:focus{
+    outline: none;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+    border: 2px solid transparent!important;
+      background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      animation: bg-hue 2s linear infinite;
+  }
+  
+  
+  
+  
