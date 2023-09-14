@@ -72,6 +72,7 @@ export class InvoiceComponent implements OnInit {
   invoiceShowPermission_List1: any;
   invoiceShowResult: any;
   ShowPermission_BillID: any;
+  taxAmtstate:any;
 
 
   //local storage
@@ -967,6 +968,7 @@ export class InvoiceComponent implements OnInit {
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
         this.revenueTypeList = response.revenue_list;
+        this.taxAmtstate=response.proforma_details[0].taxAmtstate;
 
         this.edit_array_SearchBiller_Checkbox = response.selected_billerId;
 
@@ -1048,6 +1050,7 @@ export class InvoiceComponent implements OnInit {
         // this.recurring_Status = response.proforma_details[0].recuring_status;
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
         this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+        this.taxAmtstate=response.proforma_details[0].taxAmtstate;
         this.revenue_color = response.proforma_details[0].revenue_color;
         this.share_access_state = response.proforma_details[0].share_access_state;
         this.postal_send_color = response.proforma_details[0].postal_send_color;

@@ -151,12 +151,25 @@
                   
 
                         <td >
-                          <div *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
+                          <div class="tag-section">
+                            <div class="tags-list" *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
                             <!-- <span >{{list1.billerCode}}</span> -->
                             <span><button type="button" class="btn_new buttonClass {{
                               list1.billerCode}}">{{
                                 list1.billerCode}}</button><br></span>
-                          </div>
+                                
+                            </div>
+                            <button type="button" class="tag-btn" *ngIf="list.biller_details.length>1">{{list.biller_details.length-1}}+</button>
+                            <div class="tags"  *ngIf="list.biller_details.length>1">
+                              <div class="row">
+                              <div  class="tags-list-section col-lg-2" *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
+                                <span><button type="button" class="btn_new buttonClass {{
+                                  list1.billerCode}}">{{
+                                    list1.billerCode}}</button><br></span>
+                              </div>
+                              </div>
+                            </div>
+                        </div>
                       </td>
                       <td>
                         <span>{{ list.companyName}}</span>
@@ -2290,6 +2303,7 @@
 
 
           <div class="row">
+            
             <!-- formArrayName="TestPrimary" -->
             <div class="col-lg-12">
               <form [formGroup]="billCodeEditForm2">

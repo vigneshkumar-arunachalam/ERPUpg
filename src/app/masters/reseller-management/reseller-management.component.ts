@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { COMMA, ENTER, } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import Swal from 'sweetalert2';
+import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 
 declare var $: any;
 declare var iziToast: any;
@@ -22,6 +23,7 @@ export interface FinanceEmailArray {
   styleUrls: ['./reseller-management.component.css']
 })
 export class ResellerManagementComponent implements OnInit {
+
   //view
   viewCustomerForm: FormGroup;
   isReadOnly: boolean = true;
@@ -39,7 +41,7 @@ export class ResellerManagementComponent implements OnInit {
   groupSelectCommonId: any;
   checkbox_value: any;
   //add & list
-  companyCodeAddCustomer = 'D6387';
+  companyCodeAddCustomer:any;
   CompanyName: any;
   addCustomer: any;
   revenue_list: any;
@@ -255,6 +257,8 @@ export class ResellerManagementComponent implements OnInit {
   googleAuthentication_userDetails: any;
   googleAuthentication_customerCode: any;
   googleAuthentication_password: any;
+  //cms add
+  cmslistadd:any;
 
   //radio-mconnect,mrvoip,cal4tel
   Partnertype_C4T_radiobox_Value: any;
@@ -276,9 +280,14 @@ export class ResellerManagementComponent implements OnInit {
   typeConvertionString_invoice_Shared_Permission: any;
   // selectedValues
   selectedValues: any;
+  customer_list_billerDetails:any;
+  customer_list_billercode:any;
+  customer_list_colorcode: any;
+  test123:any;
 
+  
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
     this.billCodeEditForm3 = this.fb.group({
       addresses: this.fb.array([this.editBillCode_FormControl()])
@@ -308,6 +317,7 @@ export class ResellerManagementComponent implements OnInit {
 
   emailList: EmailArray[] = [];
   financeemailList: FinanceEmailArray[] = [];
+
 
   keywordCompanyName = 'customerName';
   data = [
@@ -434,6 +444,9 @@ export class ResellerManagementComponent implements OnInit {
 
     this.customerslist({});
     this.getDynamicList();
+    this.cmsDepartmentList1();
+    this.getCustomerCode();
+this.cmsDepartmentList1();
     this.initTiny();
     // this.edit_eventCheck_auto_deselect();
     this.checkbox_EditShippingAddress = true;
@@ -582,7 +595,7 @@ export class ResellerManagementComponent implements OnInit {
       'bank_countryname': new FormControl(null),
       'countryname': new FormControl(null),
       'currencyname': new FormControl(null),
-      'cmsdepartment': new FormControl(null),
+      'cmsdepartment_add': new FormControl(null),
       'payment_way': new FormControl(null),
       'permissiondisplay': new FormControl(null),
       'dcipcountryform': new FormControl(null),
@@ -1174,7 +1187,15 @@ export class ResellerManagementComponent implements OnInit {
     this.checkbox_CAUS = event.target.checked;
     console.log(this.checkbox_CAUS)
   }
-
+  cmsdepartmentADD_ID:any;
+  cmsdepartmentADD_Value:any;
+  cmsdepartmentADD(event: any){
+ 
+    console.log("cms event",event)
+    this.cmsdepartmentADD_ID=event.target.value;
+    console.log("this.cmsdepartmentADD_ID",this.cmsdepartmentADD_ID);
+    
+  }
 
 
   eventCheckC4TAddressShow(event: any) {
@@ -1223,6 +1244,7 @@ export class ResellerManagementComponent implements OnInit {
 
   autoCreditPermission(event: any) {
     this.primary_code_auto_credit = event.target.checked;
+ 
     console.log(this.primary_code_auto_credit)
     if (this.primary_code_auto_credit) {
 
@@ -1430,9 +1452,9 @@ export class ResellerManagementComponent implements OnInit {
   clearCustomerAdd() {
 
     this.addCustomer.reset();
-    this.addCustomer.patchValue({
-      'company_Code': 'D6387',
-    });
+    // this.addCustomer.patchValue({
+    //   'company_Code': 'D6387',
+    // });
 
   }
   CustomerSearchtext(event: any) {
@@ -1489,6 +1511,7 @@ export class ResellerManagementComponent implements OnInit {
   }
 
   pageLoad() {
+    
     this.checkbox_EditShippingAddress = true;
     if (this.checkbox_EditShippingAddress) {
 
@@ -1514,6 +1537,8 @@ export class ResellerManagementComponent implements OnInit {
       this.addCustomer.get("ESA_countryname").enable();
 
     }
+
+
 
   }
 
@@ -1595,6 +1620,9 @@ export class ResellerManagementComponent implements OnInit {
         Swal.close();
         this.QuickSearchResultList = response.user_list;
         this.customer_list = response.customer_details;
+        console.log("customer_list",this.customer_list);
+      
+        
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchCustomerFormId').modal('hide');
@@ -1640,6 +1668,30 @@ export class ResellerManagementComponent implements OnInit {
       }
       if (response != '') {
         this.customer_list = response.customer_details;
+      
+        // console.log("customer_list",this.customer_list);
+        // for (let k=0;k<response.customer_details.length;k++){
+        //   this.customer_list_billercode=response.customer_details.biller_details[k].billerCode;
+        //   this.customer_list_colorcode=response.customer_details.biller_details[k].colorCodes;
+        //   console.log("customer_list_billercode",this.customer_list_billercode);
+        //   console.log("customer_list_colorcode",this.customer_list_colorcode);
+        // }
+        // for( var i=0;i< response.customer_details.length;i++){
+
+        //   for ( var j=0;j< response.customer_details[i].biller_details.length;j++){
+
+        //       this.customer_list_billercode=response.customer_details[i].biller_details[j];
+
+        //       console.log("customer_list_billercode",this.customer_list_billercode);
+        // }
+
+        // }
+        // console.log("customer_list_billercode",JSON.parse(this.customer_list_billercode));
+     
+       
+        this.customer_list_colorcode=response.customer_details.biller_details.colorCodes;
+        console.log("customer_list_billercode",this.customer_list_billercode);
+        // console.log("customer_list_colorcode",this.customer_list_colorcode);
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
        
@@ -1728,6 +1780,7 @@ export class ResellerManagementComponent implements OnInit {
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
         this.customerPermissionList = response.cus_permission;
+        
         this.addPermissionCheckboxID_array = response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
 
@@ -2217,9 +2270,9 @@ export class ResellerManagementComponent implements OnInit {
 
   clearcustomer() {
     this.addCustomer.reset();
-    this.addCustomer.patchValue({
-      'company_Code': 'D6387',
-    });
+    // this.addCustomer.patchValue({
+    //   'company_Code': 'D6387',
+    // });
   }
 
   addCustomerown() {
@@ -2248,7 +2301,7 @@ export class ResellerManagementComponent implements OnInit {
 
 
 
-    if (this.addCustomer.value.company_Code === null) {
+    if ($('#companyCode').val() ==null || $('#companyCode').val() =='' ) {
 
       iziToast.warning({
         message: "Company Code Missing",
@@ -2257,7 +2310,7 @@ export class ResellerManagementComponent implements OnInit {
       Swal.close();
       return false;
     } else {
-      add_customer_req.customerCode = this.addCustomer.value.company_Code;
+      add_customer_req.customerCode = $('#companyCode').val();
     }
 
     if (this.searchResultTest === null || this.searchResultTest === undefined) {
@@ -2385,7 +2438,17 @@ export class ResellerManagementComponent implements OnInit {
     }
     // add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cus_permission = this.addPermissionCheckboxID_array;
-    add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment;
+    if(this.addCustomer.value.cmsdepartment_add=='' || this.addCustomer.value.cmsdepartment_add== null || this.addCustomer.value.cmsdepartment_add== undefined){
+      iziToast.warning({
+        message: "CMS Department Missing",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+    }else{
+      add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment_add;
+    }
+  
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
     add_customer_req.reseller_id = this.addCustomer.value.ESA_c3cxResellerId_add;
     add_customer_req.def_currency_id = this.addCustomer.value.currencyname;
@@ -2466,6 +2529,7 @@ export class ResellerManagementComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh", response);
       console.log("vignesh1", response.result.customer_details[0].city);
+    
       if (response.status == true) {
         var biller_id = response.result.customer_details[0].billerId;
         console.log("dropdown billwer id", biller_id)
@@ -2505,9 +2569,10 @@ export class ResellerManagementComponent implements OnInit {
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
         this.cmsDepartmentList = response.result.depart_data;
+      
         this.editCustomerForm.patchValue({
 
-          'e_company_Code': "D6387",
+          'e_company_Code': response.result.customer_details[0].customerCode,
 
           'edit_company_Name': response.result.customer_details[0].customerName,
           'edit_defaultBillerName': response.result.customer_details[0].def_biller_id,
@@ -2595,7 +2660,7 @@ export class ResellerManagementComponent implements OnInit {
         this.billCodeEditForm3.setControl('addresses', formArray);
         console.log(this.addresses)
 
-
+        
 
         this.billCodeEditForm2.patchValue({
 
@@ -2954,6 +3019,7 @@ export class ResellerManagementComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         console.log(response);
+        this.checkbox_specialEdit3cxSpecialOption=response[0].licence_buy_override
         this.specialEditCustomerForm.patchValue({
           'spedit_Email': response[0].email,
           'spedit_FinanceEmail': response[0].finance_email,
@@ -3013,23 +3079,28 @@ export class ResellerManagementComponent implements OnInit {
     specialUpdate_customer_req.stripe_customerId = this.specialEditCustomerForm.value.spedit_stripe_customer_id;
     specialUpdate_customer_req.system_discount_3cx = this.specialEditCustomerForm.value.spedit_c3cx_system_discount;
     specialUpdate_customer_req.reseller_dis_per = this.specialEditCustomerForm.value.spedit_discount_percentage;
-
+    specialUpdate_customer_req.licence_buy_override=this.checkbox_specialEdit3cxSpecialOption;
 
     api_req.element_data = specialUpdate_customer_req;
     console.log(this.specialEditCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#specialEditCustomerFormId").modal("hide");
       this.spinner.hide();
       console.log(response);
       var update_result = response;
       console.log("special update", update_result);
       if (response != '') {
+        this.spinner.hide();
+        $("#specialEditCustomerFormId").modal("hide");
         iziToast.success({
           message: "Special Update of Customer Updated successfully",
           position: 'topRight'
         });
 
       } else {
+        this.spinner.hide();
+        $("#specialEditCustomerFormId").modal("hide");
         iziToast.warning({
           message: "Special Update of Customer not updated. Please try again",
           position: 'topRight'
@@ -3037,6 +3108,8 @@ export class ResellerManagementComponent implements OnInit {
       }
     }),
       (error: any) => {
+        this.spinner.hide();
+        $("#specialEditCustomerFormId").modal("hide");
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -3092,6 +3165,7 @@ export class ResellerManagementComponent implements OnInit {
 
 
   }
+ 
 
   fileAttachmentEdit(ID: any,i:any) {
     $("#ActionId" + i).modal("hide");
@@ -4478,6 +4552,92 @@ export class ResellerManagementComponent implements OnInit {
     });
 
 
+  }
+  cmsDepartmentList1() {
+  
+    let api_req: any = new Object();
+    let cms_edit: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/getCmsDepartment";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    cms_edit.action = "getCmsDepartment";
+    cms_edit.user_id = localStorage.getItem('erp_c4c_user_id');
+   
+    api_req.element_data = cms_edit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response!='') {
+this.cmslistadd=response.cmsDep;
+console.log("this.cmslistadd",this.cmslistadd);
+        
+        
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+        
+  }
+  // getCustomerCode() {
+  
+    
+  //   $.ajax({
+  //     url: "https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode",
+  //     type: 'GET',
+  //     success: function(response:any) {
+  //        this.companyCodeAddCustomer=response;
+  //       $('#companyCode').val(response);     
+  //       this.companyCodeAddCustomer=$('#companyCode').val(response);
+        
+  //     }
+  // });
+        
+  // }
+  getCustomerCode() {
+  
+    let api_req: any = new Object();
+    let cms_edit: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/getCustomerCode";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    cms_edit.action = "getCustomerCode";
+    cms_edit.user_id = localStorage.getItem('erp_c4c_user_id');
+   
+    api_req.element_data = cms_edit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response!='') {
+
+        this.companyCodeAddCustomer=response.cuscode;
+         $('#companyCode').val(response.cuscode);     
+           this.companyCodeAddCustomer=$('#companyCode').val(response.cuscode);
+        
+      } else {
+        iziToast.warning({
+          message: "No API Response",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+        
   }
   AssignAccountManager_edit(id: any,i:any) {
     $("#ActionId" + i).modal("hide");

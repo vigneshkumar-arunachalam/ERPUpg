@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 export class TestComponent implements OnInit {
   public addresses: FormArray;
   public addressForm: FormGroup;
-
+  items:any;
   constructor(private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([ this.createAddress() ])
@@ -18,6 +18,12 @@ export class TestComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.items = [
+      { id: 1, name: 'Item 1', checked: false },
+      { id: 2, name: 'Item 2', checked: false },
+      { id: 3, name: 'Item 3', checked: false },
+      // Add more items as needed
+    ];
  
   }
 
@@ -51,6 +57,12 @@ export class TestComponent implements OnInit {
 
   logValue() {
     console.log(this.addresses.value);
+  }
+  getSelectedItems() {
+    const selectedItems = this.items.filter((item: { checked: any; }) => item.checked);
+    const selectedIds = selectedItems.map((item: { id: any; }) => item.id);
+    console.log('Selected Items:', selectedItems);
+    console.log('Selected IDs:', selectedIds);
   }
   
 }

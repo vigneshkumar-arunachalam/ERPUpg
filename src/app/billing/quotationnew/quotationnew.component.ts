@@ -553,6 +553,7 @@ export class QuotationnewComponent implements OnInit {
       console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
+
       console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }

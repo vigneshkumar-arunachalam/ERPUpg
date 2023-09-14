@@ -483,6 +483,8 @@ CustomerBillCodeArray: any;
           console.log("response", response);
 
         });
+        // $('#enablePerFinal_1').val('');
+        // $('#enablePriceFinal_1').val('');
 
         setTimeout(() => {
           this.totalCalculate_1();

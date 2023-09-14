@@ -621,7 +621,7 @@
                                             </td>
 
 
-                                            <td>
+                                            <!-- <td>
                                                 <div class="userDatatable-content"
                                                     style="top:-35px;text-align: center;">
                                                     <input type="checkbox" id="pd_selectTax_{{i}}" [ngModel]="test[i]"
@@ -630,9 +630,19 @@
 
 
                                                 </div>
+                                            </td> -->
+                                            <td>
+                                                <div class="userDatatable-content"
+                                                    style="top:-35px;text-align: center;">
+                                                    <input type="checkbox" id="pd_selectTax_{{i}}" 
+                                                        formControlName="pd_selectTax"
+                                                        (change)="totalCalculate();saveDiscount();discount_dynamic_cal();" />
+
+
+                                                </div>
                                             </td>
 
-                                            <td *ngIf="i>0">
+                                            <td >
                                                 <div class="userDatatable-content d-inline-block">
                                                     <button type="button" class="btn btn-danger btn-sm"
                                                         (click)="removeParticular(i)">X</button>

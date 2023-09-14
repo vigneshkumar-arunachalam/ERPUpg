@@ -929,5 +929,39 @@ th{
     animation: bg-hue 2s linear infinite;
 }
 
+.tags-list{
+  display: none;
+}
+.tags-list:first-child{
+  display: block;
+}
 
-
+.tags-list-section{
+ display: none;
+}
+.tags{
+  position:absolute;
+  background-color: #fff;
+  width: 60%;
+}
+.tag-section:hover .tags-list-section{
+  display: block;
+  padding: 10px;
+}
+.tags-list-section .buttonClass{
+  font-size: 10px;
+}
+.tag-btn{
+  background:#007cbc;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-size: 8px;
+  font-weight: 900;
+}
+.tags .col-lg-2 {
+  flex: 0 0 10.66667%;
+  max-width: 10.66667%;
+}

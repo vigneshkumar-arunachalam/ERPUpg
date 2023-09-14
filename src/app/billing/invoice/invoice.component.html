@@ -91,12 +91,14 @@
                   ( (list.suspend=='1') ? ('#ff0000') : ('#d0ffc3') ) )}"> -->
                     <td>
                       <span>{{ list.invoice_no}}</span>
+                     
                       <!-- <span><button type="button" class="buttonClass"
                             [ngStyle]="{backgroundColor: list.colorCodes}">{{
                             list.billerCode}}</button></span> -->
                       <span><button type="button" class="btn_new buttonClass {{
                               list.billerCode}}">{{
                           list.billerCode}}</button></span>
+                          <span *ngIf="(list.taxAmtstate=='0')" style=" padding-top: 4px;border-bottom: 4px solid rgb(251, 4, 4);" ></span>
                     </td>
                     <td><span>{{ list.cus_invoice_no}}</span></td>
                     <td><span>{{ list.billDate}}</span></td>

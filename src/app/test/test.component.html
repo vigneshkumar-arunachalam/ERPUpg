@@ -37,3 +37,11 @@
     </div>
   
   </form>
+
+  
+  <div *ngFor="let item of items">
+    <label>
+      <input type="checkbox" [(ngModel)]="item.checked"> {{ item.name }}
+    </label>
+  </div>
+  <button (click)="getSelectedItems()">Get Selected Items</button>

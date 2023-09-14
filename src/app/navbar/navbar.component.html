@@ -784,84 +784,138 @@
         </div>
         <!-------------------ActionIdxx1-Task List--Ends  ------------------------->
         <!------------------ActionIdxx1-Global Search-Starts  ---------------------->
-        <div class="modal fade" data-backdrop="false" id="ActionIdxx2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-     
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-          <div class="modal-content addcustomernewallcss">
-            <div class="modal-header">
-              <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle" style="color: black !important;">Global Search
-              </h1>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-      
-            </div>
-            <div class="modal-body mousepoint">
-                <form [formGroup]="ContractDetailsForm">
-                    <label for="companyCode" class="col-lg-12 col-form-label">Contract Details</label>
-      
-                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                      <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
-                          <thead>
-                            <tr class="userDatatable-header">
-                              <th>Contract Name</th>
-                              <th>Contract Desc</th>
-                              <th>Remarks</th>
-                              <th>Contract Period</th>
-                              <th>Classfy</th>
-                              
-                            </tr>
-                          </thead>
-                          <tbody >
-                            <tr>
-                                <td>1.1</td>
-                                <td>2.1</td>
-                                <td>3.1</td>
-                                <td>4.1</td>
-                                <td>5.1</td>
-                            
-                            </tr>
-                            <tr>
-                                <td>1.1</td>
-                                <td>2.1</td>
-                                <td>3.1</td>
-                                <td>4.1</td>
-                                <td>5.1</td>
-                            
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+        <div class="modal fade" data-backdrop="false" id="ActionIdxx2" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content addcustomernewallcss">
+                    <div class="modal-header">
+                        <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
+                            style="color: black !important;">Global Search
+                        </h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
                     </div>
-      
-      
-                   
-                  </form>
-                <form [formGroup]="GlobalSearch">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="col-lg-12">
-                                <label> Select Pages<span class="mandatoryField">*</span></label>
-                                <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                                    (change)=" CHKAll_SelectPageSelectAll($event)">
-                                <div class="CheckboxScroll">
-                                    <div *ngFor="let display of SelectPageList;let i =index;"
-                                        style="padding-left: 30px;">
-    
-                                        <input class="checkbox" style="margin-right:5px ;" type="checkbox"
-                                            id="check-grp-SelectPage-{{i}}" formControlName="GS_SelectPage"
-                                            (change)="addSelectPageCHK(display.permissionId,$event)">
-                                        {{display.permissionName}}
-    
-                                    </div>
-    
+                    <div class="modal-body mousepoint">
+                        <form [formGroup]="ContractDetailsForm">
+                            <label for="companyCode" class="col-lg-12 col-form-label">Contract Details</label>
+
+                            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-borderless">
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th>Contract Name</th>
+                                                <th>Contract Desc</th>
+                                                <th>Remarks</th>
+                                                <th>Contract Period</th>
+                                                <th>Classfy</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1.1</td>
+                                                <td>2.1</td>
+                                                <td>3.1</td>
+                                                <td>4.1</td>
+                                                <td>5.1</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>1.1</td>
+                                                <td>2.1</td>
+                                                <td>3.1</td>
+                                                <td>4.1</td>
+                                                <td>5.1</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
+                            <label for="companyCode" class="col-lg-12 col-form-label">Reseller Information</label>
+
+                            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-borderless">
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <td>Reseller Id</td>
+                                                <td>Empty</td>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Reseller Id</td>
+                                                <td>Empty</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Currency</td>
+                                                <td></td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Discount</td>
+                                                <td>0</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <div class="col-lg-12">
+                                <label for="sendCustCredentials" class="col-lg-3 col-form-label">Send Customer
+                                    Credentials</label>
+                                <a href="#" id="sendQuickMailLink_3928">
+
+                                    <i class="fa fa-fw fa-envelope tooltips" data-trigger="hover"
+                                        data-original-title="Quick Mail" title="Quick Mail"
+                                        style="font-size:17px; color:#0E0; width:18px"></i>
+                                </a>
+                                <!-- <i class="fa-solid fa-envelope fa-beat-fade " style="color: #5a52eb;"></i> -->
+                            </div>
+
+
+                        </form>
+                        <form [formGroup]="GlobalSearch">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="col-lg-12">
+                                        <label> Select Pages<span class="mandatoryField">*</span></label>
+                                        <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                                            (change)=" CHKAll_SelectPageSelectAll($event)">
+                                        <div class="CheckboxScroll">
+                                            <div *ngFor="let display of SelectPageList;let i =index;"
+                                                style="padding-left: 30px;">
+
+                                                <input class="checkbox" style="margin-right:5px ;" type="checkbox"
+                                                    id="check-grp-SelectPage-{{i}}"
+                                                    [(ngModel)]="display.checked" formControlName="GS_SelectPage">
+                                                {{display.menu_name}}
+
+                                            </div>
+
+                                            <!-- <div *ngFor="let display of SelectPageList;let i =index;"
+                                                style="padding-left: 30px;">
+
+                                                <input class="checkbox" style="margin-right:5px ;" type="checkbox"
+                                                    id="check-grp-SelectPage-{{i}}" formControlName="GS_SelectPage">
+                                                {{display.menu_name}}
+
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+                                    <!-- <button (click)="getSelectedItems()">Get Selected Pages</button> -->
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <!-- <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label for="companyCode " class="col-lg-12 col-form-label">Customer Code<span
                                             class="mandatoryField">
@@ -871,8 +925,43 @@
                                             id="companyCode" />
                                     </div>
                                 </div>
-                            </div>
-                            <!-- <div class="col-lg-12">
+                            </div> -->
+
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="ng-autocomplete">
+                                                <label for="GS_CustomerCode" class="col-lg-12 col-form-label">Customer
+                                                    Code<span class="mandatoryField">
+                                                        *</span></label>
+                                                <ng-autocomplete [data]="searchResult_code"
+                                                    [searchKeyword]="keywordCompanyCode"
+                                                    formControlName="GS_CustomerCode"
+                                                    (selected)='selected_CustomerCode($event)'
+                                                    (inputChanged)='inpChanged_CodeData($event)'
+                                                    (inputFocused)='onFocused_CustomerCode($event)'
+                                                    [itemTemplate]="itemTemplateCustomerCode"
+                                                    [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+
+                                                <ng-template #itemTemplateCustomerCode let-item>
+                                                    <a [innerHTML]="item.customerCode"></a>
+                                                </ng-template>
+
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                    <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+
+                                            </div>
+                                            <div *ngIf="GlobalSearch.controls['GS_CustomerCode'].invalid && (GlobalSearch.controls['GS_CustomerCode'].dirty || GlobalSearch.controls['GS_CustomerCode'].touched)"
+                                                class="alert alert-danger alertdangerCustomCSS mt-2">
+                                                Company Name is Required
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label for="companyCode " class="col-lg-12 col-form-label">Customer Name<span
                                             class="mandatoryField">
@@ -883,36 +972,74 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                  <div class="ng-autocomplete">
-                                    <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
-                                        *</span></label>
-                                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                                      formControlName="GS_CustomerName" (selected)='selectEventCustomer($event)'
-                                      (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                                    </ng-autocomplete>
-                  
-                                    <ng-template #itemTemplateCustomer let-item>
-                                      <a [innerHTML]="item.customerName"></a>
-                                    </ng-template>
-                  
-                                    <ng-template #notFoundTemplate let-notFound>
-                                      <div [innerHTML]="notFound"></div>
-                                    </ng-template>
-                  
-                                  </div>
-                                  <div
-                                    *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
-                                    class="alert alert-danger alertdangerCustomCSS mt-2">
-                                    Company Name is Required
-                                  </div>
-                  
-                                </div>
-                              </div>
-                            <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-                            <div class="col-lg-12">
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="ng-autocomplete">
+                                                <label for="companyName" class="col-lg-12 col-form-label">Company
+                                                    Name<span class="mandatoryField">
+                                                        *</span></label>
+                                                <ng-autocomplete [data]="searchResult"
+                                                    [searchKeyword]="keywordCompanyName"
+                                                    formControlName="GS_CustomerName"
+                                                    (selected)='selectEventCustomer($event)'
+                                                    (inputChanged)='searchCustomerData($event)'
+                                                    (inputFocused)='onFocusedCustomer($event)'
+                                                    [itemTemplate]="itemTemplateCustomer"
+                                                    [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+
+                                                <ng-template #itemTemplateCustomer let-item>
+                                                    <a [innerHTML]="item.customerName"></a>
+                                                </ng-template>
+
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                    <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+
+                                            </div>
+                                            <div *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
+                                                class="alert alert-danger alertdangerCustomCSS mt-2">
+                                                Company Name is Required
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="ng-autocomplete">
+                                                <label for="GS_CustomerCode" class="col-lg-12 col-form-label">DID
+                                                    Number<span class="mandatoryField">
+                                                        *</span></label>
+                                                <ng-autocomplete [data]="searchResult_DIDNumber"
+                                                    [searchKeyword]="keywordDIDNumber" formControlName="GS_CustomerCode"
+                                                    (selected)='selected_DIDNumber($event)'
+                                                    (inputChanged)='inpChanged_DIDNumber($event)'
+                                                    (inputFocused)='onFocused_DIDNumber($event)'
+                                                    [itemTemplate]="itemTemplatedidnumbers"
+                                                    [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+
+                                                <ng-template #itemTemplatedidnumbers let-item>
+                                                    <a [innerHTML]="item.did_numbers"></a>
+                                                </ng-template>
+
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                    <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+
+                                            </div>
+                                            <div *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
+                                                class="alert alert-danger alertdangerCustomCSS mt-2">
+                                                Company Name is Required
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label for="companyCode " class="col-lg-12 col-form-label">DID Number<span
                                             class="mandatoryField">
@@ -922,41 +1049,106 @@
                                             id="companyCode" />
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
 
-                            <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <label for="companyCode " class="col-lg-12 col-form-label">License Number<span
-                                            class="mandatoryField">
-                                            *</span></label>
+                                    <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+
                                     <div class="col-lg-12">
-                                        <input type="text" class="form-control" formControlName="GS_LicenseNumber"
-                                            id="companyCode" />
+                                        <div class="form-group row">
+                                            <div class="ng-autocomplete">
+                                                <label for="GS_LicenseNumber" class="col-lg-12 col-form-label">License
+                                                    Number<span class="mandatoryField">
+                                                        *</span></label>
+                                                <ng-autocomplete [data]="searchResult_LicenseNumber"
+                                                    [searchKeyword]="keywordLicenseNumber"
+                                                    formControlName="GS_LicenseNumber"
+                                                    (selected)='selected_LicenseNumber($event)'
+                                                    (inputChanged)='inpChanged_LicenseNumber($event)'
+                                                    (inputFocused)='onFocused_LicenseNumber($event)'
+                                                    [itemTemplate]="itemTemplateLicensenumbers"
+                                                    [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+
+                                                <ng-template #itemTemplateLicensenumbers let-item>
+                                                    <a [innerHTML]="item.license_key"></a>
+                                                </ng-template>
+
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                    <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+
+                                            </div>
+                                            <div *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
+                                                class="alert alert-danger alertdangerCustomCSS mt-2">
+                                                Company Name is Required
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
+
+
+
+
                             </div>
-                        </div>
-                      
-                      
-                        
+
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" (click)="getSelectedItems();searchGlobalList();">
+                            Search
+                        </button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">
+                            Cancel
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
+
+        <!------------------ActionIdxx1-Global Search-Starts  ---------------------->
+        <div class="modal fade" data-backdrop="false" id="ActionIdxx3" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content addcustomernewallcss">
+                    <div class="modal-header">
+                        <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
+                            style="color: black !important;">Global Search
+                        </h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                    </div>
+                    <div class="modal-body mousepoint">
+                        <a href="" (click)="gotoCustomerMaster()">Customer Result</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">Quotation List</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">Proforma Invoice</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">Invoice List</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">Credit Note List</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">Prepaid List</a><br>
+
+                        <a href="" (click)="gotoCustomerMaster()">License Key List</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">DID Number</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">Customer Project</a><br>
+                        <a href="" (click)="gotoCustomerMaster()">VS Provisioning</a><br>
+
                     </div>
 
-                </form>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">
+                            Cancel
+                        </button>
+
+                    </div>
+                </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" >
-                Search
-              </button>
-              <button type="button" class="btn btn-dark" data-dismiss="modal">
-                Cancel
-              </button>
-      
-            </div>
-          </div>
         </div>
-      </div>
-        <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
+        <!-------------------ActionIdxx3-Global Search--Ends  ------------------------->
 
         <div class="navbar-right">
             <ul class="navbar-right__menu">
