@@ -1138,6 +1138,9 @@ export class InvoiceComponent implements OnInit {
   addPIGo() {
     this.router.navigate(['/AddInvoice'])
   }
+  addDIDGo() {
+    this.router.navigate(['/addDidInvoice'])
+  }
   editPIGo(id: any, i: any, didState: any) {
 
     $("#ActionId" + i).modal("hide");

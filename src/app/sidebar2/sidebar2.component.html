@@ -15,7 +15,12 @@
                     <span class="menu-text" (click)="change(item.value)">{{item.name}}</span>
                     <span class="toggle-icon"></span>
                 </a>
-                
+                <!-- <a routerLink="{{innermenu.value}}" class="">
+                    <i class="nav-icon {{innermenu.icon}}" ></i>
+                    <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
+                    <span class="toggle-icon"></span>
+                    
+                  </a> -->
                 
                     <ul *ngIf="item.childMain && item.childMain.length > 0">
                         <li class="has-child" *ngFor="let innermenu of item.childMain">

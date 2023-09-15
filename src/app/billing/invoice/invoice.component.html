@@ -28,6 +28,10 @@
               class="btn btn-primary btn-default btn-squared" (click)="addPIGo()" style="margin-right: 10px;"><i
                 class="fas fa-plus" style="margin-right:10;"></i>Add
             </button>
+            <button type="button" *ngIf="(invoicePermissionList_add==1)" title="Add New Invoice"
+              class="btn btn-primary btn-default btn-squared" (click)="addDIDGo()" style="margin-right: 10px;"><i
+                class="fas fa-plus" style="margin-right:10;"></i>Add DID
+            </button>
             <button type="button" *ngIf="(invoicePermissionList_Search==1)" class="btn btn-primary" data-toggle="modal"
               title="Search" (click)="clearSearch()">
               <i class="fas fa-search" style="margin-right:10;"></i>Search

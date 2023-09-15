@@ -70,4 +70,17 @@
   
   
   
-  
+  #ActionIdxx1 .table-responsive .table-borderless{
+    border: 1px solid #000;
+  }
+  #ActionIdxx1 .table-responsive .table-borderless thead tr th{
+    background: #6d5dfc;
+    color: #fff;
+  }
+  #ActionIdxx1 .table-responsive .table-borderless thead tr th span{
+    color: #fff;
+  }
+  #ActionIdxx1 button.Close{
+    border-radius: 50%;
+    font-size: 20px;
+  }

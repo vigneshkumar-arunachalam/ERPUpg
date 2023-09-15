@@ -15,26 +15,26 @@ declare var tinymce: any;
   styleUrls: ['./transactionnew.component.css']
 })
 export class TransactionnewComponent implements OnInit {
-  Transaction_list:any;
-  TransactionManagementViewForm:FormGroup;
-  TransactionCommentsForm:FormGroup;
-  searchTransactionForm:FormGroup;
-    //pagination
-    recordNotFound = false;
-    pageLimit = 100;
-    paginationData: any = { "info": "hide" };
-    offset_count = 0;
-    //search
-    searchResult_CustomerID:any;
-    searchResult_CustomerName:any;
-    searchResult:any;
-    Transaction_Type_List:any;
-    searchBILLERID: any;
-    CBV_BillerName_All: any;
-    edit_array_SearchBiller_Checkbox: any = [];
-    searchResult1_CustomerID: any;
-    searchResult1_CustomerName: any;
-    AdvanceSearchResult: any;
+  Transaction_list: any;
+  TransactionManagementViewForm: FormGroup;
+  TransactionCommentsForm: FormGroup;
+  searchTransactionForm: FormGroup;
+  //pagination
+  recordNotFound = false;
+  pageLimit = 100;
+  paginationData: any = { "info": "hide" };
+  offset_count = 0;
+  //search
+  searchResult_CustomerID: any;
+  searchResult_CustomerName: any;
+  searchResult: any;
+  Transaction_Type_List: any;
+  searchBILLERID: any;
+  CBV_BillerName_All: any;
+  edit_array_SearchBiller_Checkbox: any = [];
+  searchResult1_CustomerID: any;
+  searchResult1_CustomerName: any;
+  AdvanceSearchResult: any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
@@ -52,51 +52,55 @@ export class TransactionnewComponent implements OnInit {
       { name: 'Vendor Order', selected: true, id: 6 },
       { name: 'Invoice Payment', selected: true, id: 7 },
       { name: 'Others', selected: true, id: 8 },
-   
-    
+
+
     ];
 
-  
 
-    this.TransactionManagementViewForm=new FormGroup({
-      'view_billerName':new FormControl(null),
-      'view_Date':new FormControl(null),
-      'view_priority':new FormControl(null),
-      'view_PurchaseEntryNo':new FormControl(null),
-      'view_VendorName':new FormControl(null),
-      'view_InvoiceNo':new FormControl(null),
-      'view_ContentofPurchase':new FormControl(null),
-      'view_PONumber':new FormControl(null),
-      'view_Currency':new FormControl(null),
-      'view_CurrencyConversionRate':new FormControl(null),
-      'view_TaxAmount':new FormControl(null),
-      'view_InvoiceAmount':new FormControl(null),
-      'view_Comments':new FormControl(null),
-    
+
+    this.TransactionManagementViewForm = new FormGroup({
+      'view_billerName': new FormControl(null),
+      'view_Date': new FormControl(null),
+      'view_priority': new FormControl(null),
+      'view_PurchaseEntryNo': new FormControl(null),
+      'view_VendorName': new FormControl(null),
+      'view_InvoiceNo': new FormControl(null),
+      'view_ContentofPurchase': new FormControl(null),
+      'view_PONumber': new FormControl(null),
+      'view_Currency': new FormControl(null),
+      'view_CurrencyConversionRate': new FormControl(null),
+      'view_TaxAmount': new FormControl(null),
+      'view_InvoiceAmount': new FormControl(null),
+      'view_Comments': new FormControl(null),
+
     });
-    this.searchTransactionForm=new FormGroup({
-'search_billerName':new FormControl(null),
-'company_Name':new FormControl(null),
+    this.searchTransactionForm = new FormGroup({
+      'search_billerName': new FormControl(null),
+      'company_Name': new FormControl(null),
+    });
+    this.TransactionCommentsForm = new FormGroup({
+      'transaction_comments': new FormControl(null),
+     
     });
   }
-  addtransactionGo(){
+  addtransactionGo() {
     this.router.navigate(['/AddTransactionNew'])
 
   }
 
-  edittransactionGo(id:any,transType:any){
+  edittransactionGo(id: any, transType: any) {
     var TransactionID = id;
-    var transtypeID=transType;
+    var transtypeID = transType;
     this.router.navigate(['/EditTransactionNew'])
 
     this.router.navigate(['/EditTransactionNew'], {
       queryParams: {
         e_transaction_approval_id: TransactionID,
-        e_Transaction_Type_id:transtypeID,
+        e_Transaction_Type_id: transtypeID,
       }
     });
 
-  }  
+  }
   selectEventCustomer(item: any) {
     console.log(item)
     this.searchResult_CustomerID = item.customerId;
@@ -149,31 +153,31 @@ export class TransactionnewComponent implements OnInit {
       }
     });
   }
-  clearSearch(){
+  clearSearch() {
 
   }
-  getTransactionNewList(data: any){
+  getTransactionNewList(data: any) {
     this.spinner.show();
     var list_data = this.listDataInfo(data);
-    let api_req:any=new Object();
-    let TNapi_req:any=new Object();
-    api_req.moduleType="transaction_entry";
-    api_req.api_url="transaction_entry/transaction_entry_list";
-    api_req.api_type="web";
+    let api_req: any = new Object();
+    let TNapi_req: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/transaction_entry_list";
+    api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    TNapi_req.action="transaction_entry_list";
-    TNapi_req.user_id=localStorage.getItem('erp_c4c_user_id');
+    TNapi_req.action = "transaction_entry_list";
+    TNapi_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
-    TNapi_req.off_set=list_data.offset;;
-    TNapi_req.limit_val=list_data.limit;
-    TNapi_req.current_page="";
+    TNapi_req.off_set = list_data.offset;;
+    TNapi_req.limit_val = list_data.limit;
+    TNapi_req.current_page = "";
 
     api_req.element_data = TNapi_req;
 
-    this.serverService.sendServer(api_req).subscribe((response:any)=>{
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if(response!=''){
-        this.Transaction_list=response.trans_details;
+      if (response != '') {
+        this.Transaction_list = response.trans_details;
         console.log(this.Transaction_list);
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
@@ -225,7 +229,7 @@ export class TransactionnewComponent implements OnInit {
               message: "Transaction Entry Deleted Successfully",
               position: 'topRight'
             });
-            this. getTransactionNewList({});
+            this.getTransactionNewList({});
 
           } else {
             Swal.close();
@@ -233,7 +237,7 @@ export class TransactionnewComponent implements OnInit {
               message: "Transaction Entry  Delete Failed",
               position: 'topRight'
             });
-            this. getTransactionNewList({});
+            this.getTransactionNewList({});
           }
         }),
           (error: any) => {
@@ -247,10 +251,10 @@ export class TransactionnewComponent implements OnInit {
       }
     })
   }
-  TransactionCommentsSave(){
+  TransactionCommentsSave() {
 
   }
-  TransactionCommentsClear(){
+  TransactionCommentsClear() {
 
   }
 

@@ -284,6 +284,13 @@ export class ResellerManagementComponent implements OnInit {
   customer_list_billercode:any;
   customer_list_colorcode: any;
   test123:any;
+  //mail to button
+  vig_emailList:any;
+  vig_emailList_Array:any=[];
+  cmsdepartmentADD_val: any;
+  cmsdepartmentEdit_ID:any;
+  cmsdepartmentEdit_val:any;
+
 
   
 
@@ -1189,11 +1196,33 @@ this.cmsDepartmentList1();
   }
   cmsdepartmentADD_ID:any;
   cmsdepartmentADD_Value:any;
+
   cmsdepartmentADD(event: any){
  
     console.log("cms event",event)
-    this.cmsdepartmentADD_ID=event.target.value;
+    var test=event.target.value;
+    var test2 :any=[];
+    test2=test.split(',');
+    console.log("test2",test2)
+    this.cmsdepartmentADD_ID=test2[0];
+    this.cmsdepartmentADD_val=test2[1];
+
     console.log("this.cmsdepartmentADD_ID",this.cmsdepartmentADD_ID);
+    console.log("this.cmsdepartmentADD_ID",this.cmsdepartmentADD_val);
+    
+  }
+  cmsdepartmentEdit(event: any){
+ 
+    console.log("cms event",event)
+    var testf=event.target.value;
+    var test21 :any=[];
+    test21=testf.split(',');
+    console.log("test21",test21)
+    this.cmsdepartmentEdit_ID=test21[0];
+    this.cmsdepartmentEdit_val=test21[1];
+
+    console.log("this.cmsdepartmentEdit_ID",this.cmsdepartmentEdit_ID);
+    console.log("this.cmsdepartmentEdit_val",this.cmsdepartmentEdit_val);
     
   }
 
@@ -1639,6 +1668,7 @@ this.cmsDepartmentList1();
     });
   }
   customerslist(data: any) {
+   
     this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
@@ -1667,7 +1697,11 @@ this.cmsDepartmentList1();
         });
       }
       if (response != '') {
+      
         this.customer_list = response.customer_details;
+        // this.vig_emailList=response.customer_details.email;
+        // this.vig_emailList_Array=this.vig_emailList.split(',');
+        // console.log("this.vig_emailList_Array",this.vig_emailList_Array)
       
         // console.log("customer_list",this.customer_list);
         // for (let k=0;k<response.customer_details.length;k++){
@@ -1687,7 +1721,11 @@ this.cmsDepartmentList1();
 
         // }
         // console.log("customer_list_billercode",JSON.parse(this.customer_list_billercode));
-     
+     for(var i=0;i<response.customer_details.length;i++){
+      this.vig_emailList=response.customer_details[i].email;
+        this.vig_emailList_Array=this.vig_emailList.split(',');
+        console.log("this.vig_emailList_Array",this.vig_emailList_Array)
+     }
        
         this.customer_list_colorcode=response.customer_details.biller_details.colorCodes;
         console.log("customer_list_billercode",this.customer_list_billercode);
@@ -2438,7 +2476,7 @@ this.cmsDepartmentList1();
     }
     // add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cus_permission = this.addPermissionCheckboxID_array;
-    if(this.addCustomer.value.cmsdepartment_add=='' || this.addCustomer.value.cmsdepartment_add== null || this.addCustomer.value.cmsdepartment_add== undefined){
+    if(this.cmsdepartmentADD_ID=='' || this.cmsdepartmentADD_ID== null || this.cmsdepartmentADD_ID== undefined){
       iziToast.warning({
         message: "CMS Department Missing",
         position: 'topRight'
@@ -2446,7 +2484,10 @@ this.cmsDepartmentList1();
       Swal.close();
       return false;
     }else{
-      add_customer_req.cms_default_department = this.addCustomer.value.cmsdepartment_add;
+      
+      add_customer_req.cms_default_department = this.cmsdepartmentADD_ID;
+      add_customer_req.cms_department_name = this.cmsdepartmentADD_val;
+      
     }
   
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
@@ -2569,7 +2610,9 @@ this.cmsDepartmentList1();
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
         this.cmsDepartmentList = response.result.depart_data;
-      
+        var dpt_id:any = response.result.customer_details[0].cms_default_department;
+        console.log(dpt_id);
+      $("#cmsdepartment_name").val(dpt_id)
         this.editCustomerForm.patchValue({
 
           'e_company_Code': response.result.customer_details[0].customerCode,
@@ -2611,8 +2654,8 @@ this.cmsDepartmentList1();
           // 'e_ESA_Email': response.result.customer_details[0].email,
           'edit_permission': response.result.customer_details[0].cus_permission,
 
-
-          'edit_cmsdepartment': response.result.customer_details[0].cms_default_department,
+          
+          // 'edit_cmsdepartment': dpt_id,
           'e_ESA_customerLimit': response.result.customer_details[0].credit_amt,
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,
           'edit_currencyname': response.result.customer_details[0].def_currency_id,
@@ -2790,8 +2833,23 @@ this.cmsDepartmentList1();
     //   });
     //   return false;
     // }
+   
     update_customer_req.finance_email = result_FinanceEmail_Field;
-    update_customer_req.cms_default_department = this.editCustomerForm.value.edit_cmsdepartment;
+    if(this.cmsdepartmentEdit_ID=='' || this.cmsdepartmentEdit_ID== null || this.cmsdepartmentEdit_ID== undefined){
+      iziToast.warning({
+        message: "CMS Department Missing",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+    }else{
+      
+      update_customer_req.cms_default_department = this.cmsdepartmentEdit_ID;
+      update_customer_req.cms_department_name = this.cmsdepartmentEdit_val;
+      
+    }
+
+    // update_customer_req.cms_default_department = this.editCustomerForm.value.edit_cmsdepartment;
 
     update_customer_req.credit_amt = this.editCustomerForm.value.e_ESA_customerLimit;
     update_customer_req.reseller_id = this.editCustomerForm.value.e_ESA_c3cxResellerId;

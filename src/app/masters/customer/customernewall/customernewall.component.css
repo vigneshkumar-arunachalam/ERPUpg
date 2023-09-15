@@ -941,8 +941,8 @@ th{
 }
 .tags{
   position:absolute;
-  background-color: #fff;
-  width: 60%;
+  background-color: #fdffb2fc;
+  width: 50%;
 }
 .tag-section:hover .tags-list-section{
   display: block;
@@ -961,7 +961,19 @@ th{
   font-size: 8px;
   font-weight: 900;
 }
+.tags .row{
+  margin: 0;
+}
 .tags .col-lg-2 {
   flex: 0 0 10.66667%;
-  max-width: 10.66667%;
+  max-width: fit-content;
+  
+}
+.email-tag .tags{
+  width: auto;
+  background:#fdffb2fc;
+}
+.email-tag .tags .col-lg-2 {
+  flex: 0 0 16.66667%;
+  max-width: fit-content;
 }

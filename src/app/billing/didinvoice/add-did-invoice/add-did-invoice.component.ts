@@ -821,6 +821,11 @@ export class AddDidInvoiceComponent implements OnInit {
   }
   goBackInvoice() {
 
+    this.router.navigate(['/invoice'])
+  }
+  goBackDIDInvoice() {
+
+
     this.router.navigate(['/didInvoice'])
   }
 

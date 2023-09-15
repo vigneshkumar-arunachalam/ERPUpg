@@ -321,9 +321,10 @@ CBV_UsageChargeDt: any;
       'setTerm': new FormControl(null),
     });
     this.emailForm = new FormGroup({
+      
       'Subject_Content': new FormControl(null, Validators.required),
       'email_to': new FormControl(null, Validators.required),
-      'radio_ApprovalBy': new FormControl(null, Validators.required),
+      // 'radio_ApprovalBy': new FormControl(null, Validators.required),
       'email_From': new FormControl(null, Validators.required),
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
@@ -558,7 +559,8 @@ CBV_UsageChargeDt: any;
   }
   pdf(billId: any) {
 
-    var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    // var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + ""; 
+     var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
   }

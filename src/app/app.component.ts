@@ -114,6 +114,7 @@ export class AppComponent {
       this.templateAuthView = true;
       this.router.navigate(['/login']);
     }
+    
   }
 
 }

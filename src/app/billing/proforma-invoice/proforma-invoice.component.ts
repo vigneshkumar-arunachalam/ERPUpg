@@ -178,7 +178,8 @@ export class ProformaInvoiceComponent implements OnInit {
       'setTerm': new FormControl(null)
     });
     this.searchPIForm = new FormGroup({
-      'search_billerName': new FormControl(null)
+      'search_billerName': new FormControl(null),
+      'company_Name': new FormControl(null),
 
     });
   }
