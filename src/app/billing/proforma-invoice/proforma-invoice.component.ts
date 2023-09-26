@@ -1096,6 +1096,11 @@ export class ProformaInvoiceComponent implements OnInit {
     } else {
       var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
 
+    //    if (did_invoice_state == 1) {
+    //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
+    // } else {
+    //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+
 
     }
 

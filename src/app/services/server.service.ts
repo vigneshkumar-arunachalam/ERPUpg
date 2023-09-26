@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 import { Subject,Observable } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,13 +11,14 @@ export class ServerService {
     
   }
   sendServer(postData:any){
+    
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json'
       })
     };
-     let url = "https://laravelapi.erp1.cal4care.com/api/"+postData.api_url;
-    //  let url = "https://erp1.cal4care.com/api/"+postData.api_url;
+    let url = "https://laravelapi.erp1.cal4care.com/api/"+postData.api_url;
+    //   let url = "https://erp1.cal4care.com/api/"+postData.api_url;
   
       let posting :any[]= postData;
         return this.http.post(url, posting,httpOptions);

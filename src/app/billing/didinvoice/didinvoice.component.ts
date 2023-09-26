@@ -87,9 +87,6 @@ export class DidinvoiceComponent implements OnInit {
   InvoiceType_BillerID: any
   InvoiceTypeList: any;
 
-  // invoice sending method 
-
-  InvoiceSendingMethod: FormGroup;
   // Invoice Sending Method
   InvoiceSendingMethodForm: FormGroup;
   InvoiceSendingValue: any = 'None';
@@ -282,17 +279,15 @@ CBV_UsageChargeDt: any;
       'warranty': new FormControl(null),
     });
 
-    this.InvoiceSendingMethod = new FormGroup({
-      'setTerm': new FormControl(null),
 
-    });
     this.RecurringForm = new FormGroup({
       'date': new FormControl(null),
       'recurring_state': new FormControl(null),
+      'fixedChargeDt_value': new FormControl(null),
       'fixedChargeDtCBX': new FormControl(null),
       'usageChargeDuration': new FormControl(null),
       'fixedChargeDuration': new FormControl(null),
-      'fixedChargeDt_value': new FormControl(null),
+      
       'usageChargeDtCBX': new FormControl(null),
       'usageChargeDt_value': new FormControl(null),
 
@@ -309,34 +304,35 @@ CBV_UsageChargeDt: any;
       'search_billerName': new FormControl(null),
       'company_Name': new FormControl(null),
       'years': new FormControl(null),
-      'InvType': new FormControl(null),
-      'others': new FormControl(null),
       'recurring_only': new FormControl(null),
       'dont_select_did_invoice': new FormControl(null),
       'RevenueTypeWiseShow': new FormControl(null),
-      'revenueTypewiseCBKshow': new FormControl(null)
-
+      'revenueTypewiseCBKshow': new FormControl(null),
     });
     this.setTermConditionForm = new FormGroup({
       'setTerm': new FormControl(null),
     });
     this.emailForm = new FormGroup({
-      
-      'Subject_Content': new FormControl(null, Validators.required),
-      'email_to': new FormControl(null, Validators.required),
-      // 'radio_ApprovalBy': new FormControl(null, Validators.required),
       'email_From': new FormControl(null, Validators.required),
+      'email_to': new FormControl(null, Validators.required),
+      'email_cc': new FormControl(null, Validators.required),
+      'Subject_Content': new FormControl(null, Validators.required),
+      'email_pdf_link': new FormControl(null),
+      'email_template_selection': new FormControl(null),
+      'email_payment_link': new FormControl(null),
+      // 'radio_ApprovalBy': new FormControl(null, Validators.required),
+      
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
-      'email_cc': new FormControl(null, Validators.required),
+     
 
     });
     this.showPerissionForm = new FormGroup({
-      'InvoiceSendingInput': new FormControl(null),
+      
     });
     this.withoutFormArrayResellerCommissionForm = new FormGroup({
       'ResellerName_WFA': new FormControl(null),
-      'CommissionType_WFA': new FormControl(null),
+  
       'CommissionValue_WFA': new FormControl(null),
       'CommissionAmount_WFA': new FormControl(null),
       'PdfShow_WFA': new FormControl(null),
@@ -360,7 +356,7 @@ CBV_UsageChargeDt: any;
       'date': new FormControl(null),
       'paymenttype': new FormControl(null),
       'note': new FormControl(null),
-      'paymentDetails': new FormControl(null),
+   
 
     });
     this.FileAttachmentForm = new FormGroup({
@@ -385,39 +381,39 @@ CBV_UsageChargeDt: any;
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-    console.log(this.Select_To_Type_radiobox_Value);
+  
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
-    console.log(this.CBV_PDFLink);
+   
   }
   CBF_TemplateSelection(event: any) {
     this.CBV_TemplateSelection = event.target.checked;
-    console.log(this.CBV_TemplateSelection);
+  
   }
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
-    console.log(this.CBV_PaymentLink);
+
 
   }
   radio_recurring(event: any) {
     this.recurring_State_value = event.target.id;
-    console.log(this.recurring_State_value)
+  
 
   }
   CBF_FixedChargeDtFn(event: any) {
     this.CBV_FixedChargeDt = event.target.checked;
-    console.log(this.CBV_FixedChargeDt);
+
 
   }
   CBF_UsageChargeDtFn(event: any) {
     this.CBV_UsageChargeDt = event.target.checked;
-    console.log(this.CBV_UsageChargeDt);
+
 
   }
   radio_InvoiceSendingInput(event: any) {
     this.InvoiceSendingValue = event.target.value;
-    console.log(this.InvoiceSendingValue)
+
   }
   CBF_PdfShow(event: any) {
     this.CBV_PdfShow = event.target.checked;
@@ -473,7 +469,7 @@ CBV_UsageChargeDt: any;
       }
   radio_commissionType(event: any) {
     this.commissionType_value = event.target.id;
-    console.log("this.commissionType_value", this.commissionType_value);
+  
     if (this.commissionType_value == 1) {
       var commvalue = $('#CommissionValue_WFA_ID').val();
       $('#CommissionAmount_WFA_ID').val(commvalue);
@@ -510,50 +506,50 @@ CBV_UsageChargeDt: any;
 
   }
   InvoiceShowCHK(data: any, event: any) {
-    console.log("List - Checkbox ID", data);
+    // console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
     this.Checkbox_value_invoiceShow = event.target.checked;
-    console.log(this.Checkbox_value_invoiceShow)
+    // console.log(this.Checkbox_value_invoiceShow)
     if (this.Checkbox_value_invoiceShow) {
 
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+     // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
-      console.log(index)
+ 
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
     this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
 
   }
   EditCHK_emailCC(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  
     this.groupSelect_emailCCId = data;
     this.checkbox_value1 = event.target.checked;
-    console.log(this.checkbox_value1)
+  
     if (this.checkbox_value1) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+     
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+      // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
@@ -562,7 +558,7 @@ CBV_UsageChargeDt: any;
     // var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + ""; 
      var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
-    console.log("url", url)
+   // console.log("url", url)
   }
 
   getInvoice(data: any) {
@@ -609,7 +605,7 @@ CBV_UsageChargeDt: any;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       
-      console.log("PI list", response);
+  
       if (response.total_cnt == 0) {
         // iziToast.warning({
         //   message: "Sorry, No Matching Data",
@@ -663,14 +659,13 @@ CBV_UsageChargeDt: any;
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
 
-        console.log("proforma_details list", this.DID_list)
-        console.log("this.biller_list", this.biller_list)
+      
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
           this.recurring_state_all = response.proforma_details[j].recuring_status;
           
-          console.log("this.reseller_commissionState", this.reseller_commissionState)
+      
           this.suspend_state = response.proforma_details[j].suspend;
         }
 
@@ -764,7 +759,7 @@ CBV_UsageChargeDt: any;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
-        console.log("response.selected_invoice_type", response.selected_invoice_type)
+     
         this.setInvoiceType.patchValue({
           'setInvoice': response.selected_invoice_type
         })
@@ -789,7 +784,7 @@ CBV_UsageChargeDt: any;
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        
       };
   }
   setInvoiceTypeNameUpdate() {
@@ -839,20 +834,20 @@ CBV_UsageChargeDt: any;
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.searchBILLERID", this.searchBILLERID);
+    // console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
@@ -863,14 +858,14 @@ CBV_UsageChargeDt: any;
 
       this.edit_array_Years_Checkbox.push(data);
       this.edit_array_Years_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
     }
     else {
       const index = this.edit_array_Years_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
 
     }
 
@@ -885,19 +880,19 @@ CBV_UsageChargeDt: any;
   }
   RevenueTypeWiseShowCHK(event: any) {
     this.CBV_RevenueTypeWiseShow = event.target.checked;
-    console.log(" this.CBV_RevenueTypeWiseShow", this.CBV_RevenueTypeWiseShow)
+
   }
   handleChange_RevenueTypeWiseShow(event: any) {
     this.revenueTypeWiseDropDownValue = event.target.value;
-    console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
+
 
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   searchCustomerData(data: any) {
@@ -913,10 +908,10 @@ CBV_UsageChargeDt: any;
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
+   
 
       this.searchResult = response.customer_names;
-      console.log("vignesh-advanced search result", this.searchResult);
+     // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -1106,14 +1101,14 @@ CBV_UsageChargeDt: any;
 
   }
   EditCHK(billId: any, event: any) {
-    console.log("List - CheckBox ID", billId);
+   // console.log("List - CheckBox ID", billId);
     // this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+   // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array.push(billId);
-      console.log("Final Checkbox After checkbox selected list", this.edit_array);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array);
 
     }
     else {
@@ -1121,7 +1116,7 @@ CBV_UsageChargeDt: any;
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
@@ -1264,7 +1259,7 @@ CBV_UsageChargeDt: any;
   }
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-    console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1278,7 +1273,7 @@ CBV_UsageChargeDt: any;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
+  
       this.messageContent = response.crm_template_content
       this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
@@ -1311,17 +1306,17 @@ CBV_UsageChargeDt: any;
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
     this.msg_id = tinymce.get('tinyID').getContent();
-    console.log("msgid", this.msg_id)
-    console.log("email to", this.emailTo)
-    console.log("subject", this.subjectValue)
+    // console.log("msgid", this.msg_id)
+    // console.log("email to", this.emailTo)
+    // console.log("subject", this.subjectValue)
     var pdf_state = 0
     if (this.CBV_TemplateSelection == true || this.CBV_PDFLink == true || this.CBV_PaymentLink == true) {
       var pdf_state = 1;
-      console.log("if condition if any checkbox selects", pdf_state)
+      // console.log("if condition if any checkbox selects", pdf_state)
     }
     else {
       var pdf_state = 0;
-      console.log("if condition if none of checkbox selects", pdf_state)
+      // console.log("if condition if none of checkbox selects", pdf_state)
     }
 
 
@@ -1385,7 +1380,7 @@ CBV_UsageChargeDt: any;
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-      console.log("response status", response.status);
+     
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -2005,7 +2000,7 @@ CBV_UsageChargeDt: any;
       this.spinner.hide();
       if (response.status == true) {
         var date = response.reccuring_details.recured_date_show;
-        console.log("date check", date)
+      
         // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
@@ -2191,7 +2186,7 @@ CBV_UsageChargeDt: any;
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("check  file attachment", response)
+    
       this.getFileAttachmentResult = response.inv_attachment_details;
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
@@ -2252,7 +2247,7 @@ CBV_UsageChargeDt: any;
           if (result.status == true) {
 
             self.getInvoice({});
-            console.log(result);
+           // console.log(result);
             Swal.close();
             $("#fileAttachmentFormId").modal("hide");
             this.edit_array_file = [];
@@ -2274,7 +2269,7 @@ CBV_UsageChargeDt: any;
         },
         error: function (err: any) {
 
-          console.log("err", err)
+        //  console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
@@ -2356,8 +2351,8 @@ CBV_UsageChargeDt: any;
   selectEventReseller(item: any) {
     this.ResellerName_Customer = item.customerName;
     this.ResellerId_Customer = item.customerId
-    console.log(item.customerId)
-    console.log(item.customerName)
+    // console.log(item.customerId)
+    // console.log(item.customerName)
 
 
     // do something with selected item
@@ -2439,7 +2434,7 @@ CBV_UsageChargeDt: any;
 
       if (response != '') {
 
-        console.log("response-check", response.reseller_comm[0].commission_type);
+        // console.log("response-check", response.reseller_comm[0].commission_type);
 
         this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
@@ -2489,7 +2484,7 @@ CBV_UsageChargeDt: any;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
-        console.log("response-check", response.reseller_comm[0].commission_type);
+        // console.log("response-check", response.reseller_comm[0].commission_type);
 
         this.CommissionType = response.reseller_comm[0].commission_type;
         this.resellerCommissionList = response.reseller_comm;
@@ -2510,8 +2505,8 @@ CBV_UsageChargeDt: any;
         for (var i = 0; i <= this.resellerCommissionList.length - 1; i++) {
           for (var k = 0; k <= this.resellercommissiontype.length - 1; k++) {
             if (this.resellerCommissionList[i].commission_type == this.resellercommissiontype[k].id) {
-              console.log("#CommissionType_" + i + "_" + k)
-              console.log(this.resellercommissiontype[k].id)
+              // console.log("#CommissionType_" + i + "_" + k)
+              // console.log(this.resellercommissiontype[k].id)
               $("#CommissionType_" + i + "_" + k).val(this.resellercommissiontype[k].id);
             }
           }
@@ -2557,7 +2552,7 @@ CBV_UsageChargeDt: any;
 
 
 
-        console.log(formArray)
+        // console.log(formArray)
         this.addressForm.setControl('addresses', formArray);
 
 
@@ -2744,14 +2739,14 @@ CBV_UsageChargeDt: any;
     $("#InvoicetoQuotationFormId").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#InvoicetoQuotationFormId").removeAttr("disabled");
-      console.log(response);
+      // console.log(response);
 
-      console.log("pop up for add quotation", response);
+      // console.log("pop up for add quotation", response);
       if (response != '') {
         this.enquiryFromList = response.enquiry_from;
         this.quotationValidityList = response.quot_validity;
         this.templateNameList = response.template_name_arr;
-        console.log("EnquiryFormList", this.enquiryFromList)
+        // console.log("EnquiryFormList", this.enquiryFromList)
 
         // $('#InvoicetoQuotationFormId').modal('hide');
         //this.contactsList({});

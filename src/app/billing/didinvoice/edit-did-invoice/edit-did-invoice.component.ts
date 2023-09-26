@@ -184,6 +184,11 @@ CustomerBillCodeArray: any;
     did_bill_code_section2:any;
     edit_Duplicate_ID:any;  
     section1_billcode:any;
+  getProformaBillerDetails_billerID: any;
+  // subTotalForm
+subTotalForm:FormGroup;
+subTotalForm2:FormGroup;
+subTotalForm3:FormGroup;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute,private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -328,6 +333,19 @@ CustomerBillCodeArray: any;
       'Jompay_logo': new FormControl(),
       
       
+    });
+    this.subTotalForm=new FormGroup({
+      'sub_total_1': new FormControl(),
+  
+    });
+    this.subTotalForm2=new FormGroup({
+
+      'sub_total_2': new FormControl(),
+
+    });
+    this.subTotalForm3=new FormGroup({
+   
+      'sub_total_3': new FormControl(),
     });
 
     this.addDid_section3 = new FormGroup({
@@ -726,7 +744,7 @@ CustomerBillCodeArray: any;
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
     this.radio_Value_ExportState = evt.target.value;
-  
+    this.export_state= evt.target.value;
     console.log("radio button value", this.radio_Value_ExportState);
   
   }
@@ -764,6 +782,7 @@ CustomerBillCodeArray: any;
     console.log("evt-value", evt.target.value)
     console.log("evt-id", evt.target.id)
     this.radio_Value_SelectExtraLogo = evt.target.value;
+    this.ExtralogoValue= evt.target.value;
 
     console.log("radio button value", this.radio_Value_SelectExtraLogo);
 
@@ -876,6 +895,7 @@ CustomerBillCodeArray: any;
         this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
         this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
         this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
+        this.getProformaBillerDetails_billerID=response.biller_details[0].billerId;
         this.addDid_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
@@ -919,7 +939,7 @@ CustomerBillCodeArray: any;
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
-    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_BillerID;
+    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_billerID;
     api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -1450,10 +1470,15 @@ CustomerBillCodeArray: any;
       console.log("response-load-pi", response)
       if (response != '') {
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
+        this.ExtralogoValue= response.billing_pararent_details[0].bills_logo_id;
+     
         this.exportState_value = response.billing_pararent_details[0].export_state;
+
         this.customer_ID = response.billing_pararent_details[0].custId;
         this.section1_billcode=response.billing_pararent_details[0].did_bill_code
-       
+        this.Jompay_Value=response.billing_pararent_details[0].jom_pay_logo;
+        this.export_state = response.billing_pararent_details[0].export_state;
+
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           
@@ -1871,7 +1896,9 @@ CustomerBillCodeArray: any;
 
     api_updateDid_req.other_values = addr3;
 
-
+    api_updateDid_req.sub_total_1= $('#sub_total_1' ).val();
+    api_updateDid_req.sub_total_2= $('#sub_total_2' ).val();
+    api_updateDid_req.sub_total_3= $('#sub_total_3' ).val();
 
     //section-3
     api_updateDid_req.grossTotal = $('#section3_gross_total').val();

@@ -872,10 +872,10 @@
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
 <div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Process Payment
+        <h2 class="col-12 modal-title text-center">Payment Process
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -886,31 +886,37 @@
           <div class="row">
             <div class="col-lg-6">
               <label>Invoice Id</label>
-              <input type="text" class="form-control" formControlName="invoiceID" [readonly]="isReadOnly">
+              <input type="text" class="form-control" formControlName="invoiceID" 
+              id="invoiceID"  [readonly]="isReadOnly">
 
             </div>
 
             <div class="col-lg-6">
-              <label>Toal</label>
-              <input type="text" class="form-control" formControlName="toal" [readonly]="isReadOnly">
+              <label>Total</label>
+              <input type="text" class="form-control" formControlName="toal"
+              id="toal" [readonly]="isReadOnly">
 
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Biller</label>
-              <input type="text" class="form-control" formControlName="biller" [readonly]="isReadOnly">
+              <input type="text" class="form-control" formControlName="biller" 
+              id="biller" [readonly]="isReadOnly">
 
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Paid</label>
-              <input type="text" class="form-control" formControlName="paid" [readonly]="isReadOnly">
+              <input type="text" class="form-control"  id="Paid"
+               formControlName="paid" [readonly]="isReadOnly">
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Customer</label>
-              <input type="text" class="form-control" formControlName="customer" [readonly]="isReadOnly">
+              <input type="text" class="form-control" id="Customer"
+              formControlName="customer" [readonly]="isReadOnly">
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Owing</label>
-              <input type="text" class="form-control" formControlName="owing" [readonly]="isReadOnly">
+              <input type="text" class="form-control" id="Owing"
+              formControlName="owing" [readonly]="isReadOnly">
 
             </div>
             <div class="col-lg-6">
@@ -926,17 +932,41 @@
 
             <div class="col-lg-6">
               <label class="mt-4">Date</label>
-              <input type="date" class="form-control" formControlName="date" id="dateee">
+              <input type="date" class="form-control" formControlName="date" id="dateee" >
+          
+
             </div>
-            <div class="col-lg-6">
+         
+            <div class="col-lg-6" >
               <label class="mt-4">Payment Type/Method</label>
-              <select class="form-control" formControlName="paymenttype" id="paytype">
+              <select class="form-control" formControlName="paymenttype" id="paytype" (change)="PP_PaymentMethod($event)">
 
                 <option [ngValue]="null" selected>Select Payment Method</option>
 
                 <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
                   {{term.payment_type_name}}
                 </option>
+                
+              </select>
+              <select *ngIf="(PP_paymentMethod==7)" 
+              class="form-control" formControlName="paymenttype1" id="paytype1">
+
+                <option [ngValue]="null" selected>Select credit note</option>
+
+                <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
+                  {{term1.tot_amt}}
+                </option>
+                
+              </select>
+              <select *ngIf="(PP_paymentMethod==8)" 
+              class="form-control" formControlName="paymenttype2" id="paytype2">
+
+                <option [ngValue]="null" selected>Select prepaid note</option>
+
+                <option *ngFor="let term2 of creditResponse" value="{{term2.credit_note_id}}">
+                  {{term2.tot_amt}}
+                </option>
+                
               </select>
             </div>
             <div class="col-lg-6">
@@ -945,15 +975,21 @@
               <textarea class="form-control" rows="3" formControlName="note" id="note"></textarea>
 
             </div>
-            <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment">
+            <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment;let i=index">
               <label class="mt-4">Payment Details</label>
-              <!-- <input type="text" class="form-control" formControlName="paymentDetails" [readonly]="isReadOnly"> -->
-              {{pay.paidAmount}}&nbsp;&nbsp; {{pay.payment_type_name}}&nbsp;&nbsp; from &nbsp;&nbsp;
-              {{pay.firstName}}&nbsp;&nbsp; on &nbsp;&nbsp; {{pay.processDate}}
+             
+
+              {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
+              {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
+              &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
+              <button type="button" style="margin-left: 10px;"   *ngIf="(invoicePermissionList_add==1)" title="Edit"
+              class=" btn-warning btn-default btn-squared"  style="margin-right: 10px;"
+              (click)="paymentProcessEditShow(pay.processId)"><i
+                class="fa fa-pencil-square-o" style="margin-right:10;"></i>
+            </button>
             </div>
-
-          </div>
-
+            </div>
+           
         </form>
 
 
@@ -1068,16 +1104,19 @@
 
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                  formControlName="email_pdf_link"
                     (change)="CBF_PDFLink($event)">
                   <label class="form-check-label" for="PDF Link">PDF Link</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                  <input class="form-check-input" type="checkbox" 
+                  formControlName="email_template_selection" id="Template Selection" value="option2"
                     [(ngModel)]="email_TemplateSelection" (change)="CBF_TemplateSelection($event)" id="temp">
                   <label class="form-check-label" for="Template Selection"> Template Selection</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
+                  <input class="form-check-input" 
+                  formControlName="email_payment_link" type="checkbox" id="Payment Link" value="option3"
                     (change)="CBF_PaymentLink($event)">
                   <label class="form-check-label" for="Payment Link">Payment Link</label>
                 </div>

@@ -4,6 +4,8 @@ import { ServerService } from '../services/server.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
+import { ProformaInvoiceComponent } from '../billing/proforma-invoice/proforma-invoice.component';
+
 
 declare var $: any;
 declare var iziToast: any;
@@ -41,6 +43,9 @@ export class NavbarComponent implements OnInit {
   PG_LicenseNum:any;
   PG_DIDNumber:any;
   PageIDs:any;
+  proformaList: any;
+  PI_list: any;
+  dashboard=false;
   constructor(private router: Router, private serverService: ServerService,private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -53,6 +58,7 @@ export class NavbarComponent implements OnInit {
         this.user_ProfileImage = localStorage.getItem('profile_image');
       }
     });
+   
 
   }
   keywordCompanyName = 'customerName';
@@ -67,7 +73,8 @@ export class NavbarComponent implements OnInit {
       this.role_Permission = localStorage.getItem('role');
       this.user_ProfileImage = localStorage.getItem('profile_image');
     }, 2000);
-    this.PageList();
+     this.PageList();
+    this.searchGlobalList();
     this.GlobalSearch = new FormGroup({
       'GS_SelectPage': new FormControl(null),
       'GS_CustomerCode': new FormControl(null),
@@ -197,10 +204,17 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_schGlo_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $('#ActionIdxx2').modal('hide');
+      $('#ActionIdxx2').modal('show');
       console.log(" response--pagelist", response)
       if (response != '') {
+        
         this.SelectPageList =   response.menuList;
+        this.PI_list=response.proforma_details;
+        this.dashboard=true;
+        console.log(this.dashboard);
+        
+     
+
         console.log(" this.searchResult", this.searchResult)
       } else {
         Swal.close();
@@ -409,5 +423,8 @@ export class NavbarComponent implements OnInit {
     console.log('Selected IDs:', selectedIds);
     // console.log('Selected IDs-based on selectall/deslect all:', this.addSelectPageListCheckboxID_array);
     console.log('Selected Names:', selectedNames);
+  }
+  EditCHK(i:any,k:any){
+
   }
 }

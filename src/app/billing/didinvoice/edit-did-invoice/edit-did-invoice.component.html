@@ -545,59 +545,62 @@
                                 
                               
                             </tbody>
-                            <tbody>
-                                <tr >
-    
-                                    <td colspan="3">
-                                    </td>
-                                    <td colspan="2">
-    
-                                        <div class="userDatable-content">
-                                            <!-- <button type="button"
-                                            class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                            data-toggle="modal"
-                                            data-target="#didCommissionFormId" id="didDiscount_btn">Commission  
-                                            </button> -->
-                    
-                                          
-                                        </div>
-                                    </td>
-    
-                                   
-    
-                                    <td colspan="1">
-                                        <div class="userDatable-content">
-                                            <button type="button"
-                                            class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                            data-toggle="modal" 
-                                            data-target="#fixedDiscountFormId" id="didDiscount_btn">Discount(-) 
-                                            </button>
-                                            
-                                        </div>
-                                    </td>
-    
-                                  
-                                    <td  colspan="3" class="sub-total-list">
-                                        <div class="userDatable-content">
-                    
-                                            <label  class="col-form-label" >Sub Total(Rs.) </label>
-                                           
-                                        </div>
-                                        <input type="text" class="form-control"  id="sub_total_1" [attr.readonly]="isReadOnly"
-                                        />
-                                    </td>
-                                    <td colspan="1">
-    
-                                        <input type="hidden" class="form-control" style="text-align: right;"
-                                             id="sub_discount_1" />
+                            <form  [formGroup]="subTotalForm">
+                                <tbody>
+                                    <tr >
+        
+                                        <td colspan="3">
+                                        </td>
+                                        <td colspan="2">
+        
+                                            <div class="userDatable-content">
+                                                <!-- <button type="button"
+                                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                                data-toggle="modal"
+                                                data-target="#didCommissionFormId" id="didDiscount_btn">Commission  
+                                                </button> -->
+                        
+                                              
+                                            </div>
+                                        </td>
+        
+                                       
+        
+                                        <td colspan="1">
+                                            <div class="userDatable-content">
+                                                <button type="button"
+                                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                                data-toggle="modal" 
+                                                data-target="#fixedDiscountFormId" id="didDiscount_btn">Discount(-) 
+                                                </button>
+                                                
+                                            </div>
+                                        </td>
+        
+                                      
+                                        <td  colspan="3" class="sub-total-list">
+                                            <div class="userDatable-content">
+                        
+                                                <label  class="col-form-label" >Sub Total(Rs.) </label>
+                                               
+                                            </div>
+                                            <input type="text" class="form-control"  id="sub_total_1" [attr.readonly]="isReadOnly"
+                                            />
+                                        </td>
+                                        <td colspan="1">
+        
                                             <input type="hidden" class="form-control" style="text-align: right;"
-                                             id="sub_discount_type_1" />
-                                        <input type="hidden" class="form-control" style="text-align: right;"
-                                            id="sub_discount_val_1" />
-                                       </td>
-    
-                                </tr>
-                            </tbody>
+                                                 id="sub_discount_1" />
+                                                <input type="hidden" class="form-control" style="text-align: right;"
+                                                 id="sub_discount_type_1" />
+                                            <input type="hidden" class="form-control" style="text-align: right;"
+                                                id="sub_discount_val_1" />
+                                           </td>
+        
+                                    </tr>
+                                </tbody>
+                            </form>
+                           
                             <br>
                           
 
@@ -725,55 +728,58 @@
                     </tr>
                 </tbody>
                 <br>
-                <tbody>
-                    <tr >
-    
-                        <td colspan="3">
-                        </td>
-                        <td colspan="2">
-    
-                            <div class="userDatable-content">
+                <form [formGroup]="subTotalForm2">
+                    <tbody>
+                        <tr >
         
-                               
-                                <!-- <button type="button"
-                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                data-toggle="modal" 
-                                data-target="#didCommissionFormId" id="didDiscount_btn">Commission  
-                                </button> -->
-                            </div>
-                        </td>
-    
-    
-                        <td colspan="1">
-                            <div class="userDatable-content">
+                            <td colspan="3">
+                            </td>
+                            <td colspan="2">
         
-                                <button type="button"
-                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                data-toggle="modal" 
-                                data-target="#usageDiscountFormId" id="didDiscount_btn">Discount(-) 
-                                </button>
-                            </div>
-                        </td>
-    
-                        
-                        <td  colspan="3" class="sub-total-list">
-                            <div class="userDatable-content">
+                                <div class="userDatable-content">
+            
+                                   
+                                    <!-- <button type="button"
+                                    class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                    data-toggle="modal" 
+                                    data-target="#didCommissionFormId" id="didDiscount_btn">Commission  
+                                    </button> -->
+                                </div>
+                            </td>
         
-                                <label  class="col-form-label">Sub Total(Rs.) </label>
-                                
-                            </div>
-                            <input type="text" class="form-control"  id="sub_total_2" [attr.readonly]="isReadOnly">
-                        </td>
-                        <td>
-                        <input type="hidden" class="form-control" style="text-align: right;"
-                                id="sub_discount_2" />
+        
+                            <td colspan="1">
+                                <div class="userDatable-content">
+            
+                                    <button type="button"
+                                    class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                    data-toggle="modal" 
+                                    data-target="#usageDiscountFormId" id="didDiscount_btn">Discount(-) 
+                                    </button>
+                                </div>
+                            </td>
+        
+                            
+                            <td  colspan="3" class="sub-total-list">
+                                <div class="userDatable-content">
+            
+                                    <label  class="col-form-label">Sub Total(Rs.) </label>
+                                    
+                                </div>
+                                <input type="text" class="form-control"  id="sub_total_2" [attr.readonly]="isReadOnly">
+                            </td>
+                            <td>
                             <input type="hidden" class="form-control" style="text-align: right;"
-                            id="sub_discount_type_2" />
-                        <input type="hidden" class="form-control" style="text-align: right;"
-                            id="sub_discount_val_2" />
-                        </td>
-                    </tr>
-                </tbody>
+                                    id="sub_discount_2" />
+                                <input type="hidden" class="form-control" style="text-align: right;"
+                                id="sub_discount_type_2" />
+                            <input type="hidden" class="form-control" style="text-align: right;"
+                                id="sub_discount_val_2" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </form>
+               
                 <div class="text-left"> 
                     <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="usageCharges()"
                         style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>
@@ -881,56 +887,59 @@
                     </tr>
                 </tbody>
                 <br>
-                <tbody>
-                    <tr >
-
-                        <td colspan="3">
-                        </td>
-                        <td colspan="2">
-
-                            <div class="userDatable-content">
-                                <!-- <button type="button"
-                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                data-toggle="modal"
-                                data-target="#didCommissionFormId" id="didDiscount_btn">Commission  
-                                </button> -->
-                              
-                            </div>
-                        </td>
-
-
-                        <td colspan="1">
-                            <div class="userDatable-content">
-        
-                              
-                                <button type="button"
-                                class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
-                                data-toggle="modal" 
-                                data-target="#otherDiscountFormId" id="didDiscount_btn">Discount(-) 
-                                </button>
-                            </div>
-                        </td>
-
-                        
-                        <td colspan="3" class="sub-total-list">
-                            <div class="userDatable-content">
-        
-                                <label  class="col-form-label" >Sub Total(Rs.) </label>
-                                
-                            </div>
-                            <input type="text" class="form-control" id="sub_total_3" [attr.readonly]="isReadOnly">
-                        </td>
-
-                        <td>
-                            <input type="hidden" class="form-control" style="text-align: right;"
-                                    id="sub_discount_3" />
-                                <input type="hidden" class="form-control" style="text-align: right;"
-                                id="sub_discount_type_3" />
-                            <input type="hidden" class="form-control" style="text-align: right;"
-                                id="sub_discount_val_3" />
+                <form [formGroup]="subTotalForm3">
+                    <tbody>
+                        <tr >
+    
+                            <td colspan="3">
                             </td>
-                    </tr>
-                </tbody>
+                            <td colspan="2">
+    
+                                <div class="userDatable-content">
+                                    <!-- <button type="button"
+                                    class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                    data-toggle="modal"
+                                    data-target="#didCommissionFormId" id="didDiscount_btn">Commission  
+                                    </button> -->
+                                  
+                                </div>
+                            </td>
+    
+    
+                            <td colspan="1">
+                                <div class="userDatable-content">
+            
+                                  
+                                    <button type="button"
+                                    class="btn btn-primary btn-default btn-squaredbuttoncssDiscount"
+                                    data-toggle="modal" 
+                                    data-target="#otherDiscountFormId" id="didDiscount_btn">Discount(-) 
+                                    </button>
+                                </div>
+                            </td>
+    
+                            
+                            <td colspan="3" class="sub-total-list">
+                                <div class="userDatable-content">
+            
+                                    <label  class="col-form-label" >Sub Total(Rs.) </label>
+                                    
+                                </div>
+                                <input type="text" class="form-control" id="sub_total_3" [attr.readonly]="isReadOnly">
+                            </td>
+    
+                            <td>
+                                <input type="hidden" class="form-control" style="text-align: right;"
+                                        id="sub_discount_3" />
+                                    <input type="hidden" class="form-control" style="text-align: right;"
+                                    id="sub_discount_type_3" />
+                                <input type="hidden" class="form-control" style="text-align: right;"
+                                    id="sub_discount_val_3" />
+                                </td>
+                        </tr>
+                    </tbody>
+                </form>
+              
                 <div class="text-left"> 
                     <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="otherCharges()"
                         style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add Product</i>

@@ -8,6 +8,9 @@ import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import {  Inject, LOCALE_ID } from '@angular/core';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-invoice',
   templateUrl: './add-invoice.component.html',
@@ -135,15 +138,30 @@ warrantyValue:any;
     section3_Terms3:any;
     section3_Terms4:any;
     section3_Terms5:any;
+  getProformaBillerDetails_billerID: any;
+// singapore date
 
-  constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
+formattedDate: string;
+  constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router,
+    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
+
+
+    
+    // $('datee').val(this.formattedDate)
   }
   keywordCompanyName = 'customerName';
   keywordUserName = 'reseller_name';
   ngOnInit(): void {
+    const currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+    setTimeout(() => {
+    
+         $('#datee').val(this.formattedDate);
+         
+    }, 2000);
     // console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
     this.EditShippingAddress = true;
@@ -193,7 +211,15 @@ warrantyValue:any;
 
 
     ];
+
+   
+
+
+    // const currentDate = new Date();
+    // const singaporeDate = new Date(currentDate.getTime() + (8 * 60 * 60 * 1000));
+ 
     this.addInvoice_section1 = new FormGroup({
+     
       'initial': new FormControl(),
       'companyName': new FormControl(),
       'invoiceNo': new FormControl(),
@@ -203,7 +229,10 @@ warrantyValue:any;
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
-      'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+     
+      //  'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'Date': new FormControl(singaporeDate.toISOString().substring(0, 10)),
+      'date_check': new FormControl(),
       'address_1': new FormControl(),
       'address_2': new FormControl(),
       'address_3': new FormControl(),
@@ -215,7 +244,8 @@ warrantyValue:any;
       'ship_address_1': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_address_2': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_address_3': new FormControl({ value: '', disabled: true }, Validators.required),
-      'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      //'PoDate': new FormControl(singaporeDate.toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
@@ -977,7 +1007,9 @@ warrantyValue:any;
 
 
     api_saveInvoice_req.cstNo = this.addInvoice_section1.value.cst;
-    api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
+    
+    api_saveInvoice_req.billDate =$('#datee').val();
+    // api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
     api_saveInvoice_req.b_attn = this.addInvoice_section1.value.Attn_1;
     api_saveInvoice_req.po_no = this.addInvoice_section1.value.PoNo;
     api_saveInvoice_req.po_date = this.addInvoice_section1.value.PoDate;
@@ -1196,6 +1228,7 @@ this.spinner.show();
         this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
         this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
         this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
+        this.getProformaBillerDetails_billerID=response.biller_details[0].billerId;
         this.addInvoice_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
@@ -1239,7 +1272,7 @@ this.spinner.show();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
-    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_BillerID;
+    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_billerID;
     api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -1625,6 +1658,7 @@ this.spinner.show();
       }
     });
   }
+
 
 }
 

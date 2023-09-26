@@ -90,6 +90,13 @@ import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
 import { EditinvoiceDIDComponent } from './billing/invoice/editinvoice-did/editinvoice-did.component';
+import { DatetimeTestComponent } from './datetime-test/datetime-test.component';
+
+
+// import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+// import { BsDropdownModule} from 'ngx-bootstrap/dropdown'; 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -157,7 +164,8 @@ import { EditinvoiceDIDComponent } from './billing/invoice/editinvoice-did/editi
      DuplicateDOComponent,
      EditNewEnquiryComponent,
      ResellerPaymentComponent,
-     EditinvoiceDIDComponent
+     EditinvoiceDIDComponent,
+     DatetimeTestComponent
      
     
   ],

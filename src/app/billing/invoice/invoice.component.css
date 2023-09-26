@@ -589,3 +589,9 @@ label.col-lg-2.col-form-label{text-align: right;}
   max-width: 38%;
   height: 170%;
 }
+#processPaymentFormId modal-dialog .form-control:disabled,
+.form-control[readonly] {
+    background-color: #ffdafa !important;
+    opacity: 0.6;
+    color: black!important;
+} 

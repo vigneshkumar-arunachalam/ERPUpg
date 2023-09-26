@@ -719,68 +719,7 @@
 
 
 
-<!------------------------------------- start invoice send method  -------------------------->
 
-<div class="modal fade" id="InvoiceSendingFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="modal-title" style="margin-left: 145px;">Invoice Sending Method
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="InvoiceSendingMethod">
-          <div class="row">
-            <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4">
-                <label>Select invoice sending type</label>
-              </div>
-              <div class="col-lg-6">
-
-                <div class="form-check form-check-inline">
-
-                  <input class="form-check-input" type="radio" name="post_send_status" id="post_send_status_post"
-                    value="1" checked>
-                  <label class="form-check-label" for="exampleRadios1">
-                    By Post
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="post_send_status" id="post_send_status_mail"
-                    value="3">
-                  <label class="form-check-label" for="exampleRadios2">
-                    By Email
-                  </label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="post_send_status" id="post_send_status_none"
-                    value="0">
-                  <label class="form-check-label" for="exampleRadios3">
-                    None
-                  </label>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-------------------------------------------- end invoice send method -------------------------->
 
 <!-------------------------------------------- start Share permission -------------------------->
 <div class="modal fade" id="sharePerissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -972,7 +911,7 @@
             <div class="form-group row">
               <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
               <div class="col-lg-10">
-                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
+                <select name="email_From" id="emailFrom" class="form-control" formControlName="email_From">
                   <option [ngValue]="null" selected disabled>Select From</option>
                   <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                     {{ from.from_email }}
@@ -1044,17 +983,20 @@
               <div class="col-lg-10 mt-2">
 
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                  <input class="form-check-input" type="checkbox" 
+                  formControlName="email_pdf_link"  id="PDF Link" value="option1"
                     (change)="CBF_PDFLink($event)">
                   <label class="form-check-label" for="PDF Link">PDF Link</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                  <input class="form-check-input" type="checkbox" 
+                  formControlName="email_template_selection" id="Template Selection" value="option2"
                     [(ngModel)]="email_TemplateSelection" (change)="CBF_TemplateSelection($event)" id="temp">
                   <label class="form-check-label" for="Template Selection"> Template Selection</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
+                  <input class="form-check-input" type="checkbox" 
+                  formControlName="email_payment_link" id="Payment Link" value="option3"
                     (change)="CBF_PaymentLink($event)">
                   <label class="form-check-label" for="Payment Link">Payment Link</label>
                 </div>
@@ -1081,7 +1023,7 @@
             <div class="form-group row">
               <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
               <div class="col-lg-10">
-                <select name="templat" id="template" class="form-control" formControlName="email_template"
+                <select name="email_template" id="template" class="form-control" formControlName="email_template"
                   (change)="templateContentEmailDropdown($event)">
                   <option [ngValue]="null" selected>Select Template</option>
                   <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">

@@ -1264,8 +1264,7 @@
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="cmsdepartmentAdd" class="col-lg-12 col-form-label">CMS Default
-                  Department<span class="mandatoryField">
-                    *</span></label>
+                  Department</label>
                 <div class="col-lg-12">
                   <select name="cmsdepartmentAdd" id="cmsdepartment_name1 " class="form-control" aria-label="Default select example"
                     formControlName="cmsdepartment_add" (change)="cmsdepartmentADD($event)">
@@ -1975,7 +1974,7 @@
                 <label for="cmsdepartment" class="col-lg-12 col-form-label">CMS Default
                   Department</label>
                 <div class="col-lg-12">
-                  <select id="cmsdepartment_name" class="form-control"
+                  <select id="cmsdepartment_name_edit" class="form-control"
                     formControlName="edit_cmsdepartment" (change)="cmsdepartmentEdit($event)">
                     <option [ngValue]="null" selected disabled>Select Department</option>
                     <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }}">
@@ -1985,6 +1984,7 @@
                 </div>
               </div>
             </div>
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="ESA_customerLimit" class="col-lg-12 col-form-label">
@@ -1995,6 +1995,7 @@
                 </div>
               </div>
             </div>
+          
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="ESA_c3cxResellerId" class="col-lg-12 col-form-label">3CX Reseller Id</label>

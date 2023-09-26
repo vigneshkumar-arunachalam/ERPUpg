@@ -2042,7 +2042,8 @@ this.spinner.show();
   }
   pdf(quotationId: any,i:any) {
     $("#ActionId" + i).modal("hide");
-    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+ var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+//    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
     window.open(url, '_blank');
     console.log("url", url)
     $('#pdfFormId').modal('hide');

@@ -290,6 +290,7 @@ export class CustomernewallComponent implements OnInit {
   cmsdepartmentADD_val: any;
   cmsdepartmentEdit_ID:any;
   cmsdepartmentEdit_val:any;
+  existing_email: number;
 
 
   
@@ -356,6 +357,44 @@ export class CustomernewallComponent implements OnInit {
   ];
   addEmail(event: MatChipInputEvent): void {
     console.log(event.value);
+ 
+    let api_req: any = new Object();
+    let email_Validation: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/customer_email_validation";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    email_Validation.action = "customer_email_validation";
+    email_Validation.user_id = localStorage.getItem('erp_c4c_user_id');
+    email_Validation.email = event.value;
+    api_req.element_data = email_Validation;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.existing_email=response.email_count;
+       
+        if(this.existing_email>=1){
+          iziToast.error({
+            message: "Email already exists",
+            position: 'topRight'
+          });
+          Swal.close();
+          return 0;
+      
+        }
+      } else {
+      
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+   
     if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
@@ -391,6 +430,43 @@ export class CustomernewallComponent implements OnInit {
   addFinanceEmail(event: MatChipInputEvent): void {
 
     console.log(event.value)
+    
+    let api_req: any = new Object();
+    let email_Validation: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/customer_email_validation";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    email_Validation.action = "customer_email_validation";
+    email_Validation.user_id = localStorage.getItem('erp_c4c_user_id');
+    email_Validation.email = event.value;
+    api_req.element_data = email_Validation;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.existing_email=response.email_count;
+        
+        if(this.existing_email>=1){
+          iziToast.error({
+            message: "Email already exists",
+            position: 'topRight'
+          });
+          Swal.close();
+          return 0;
+      
+        }
+      } else {
+      
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
     if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
@@ -693,6 +769,7 @@ this.cmsDepartmentList1();
       'e_ESA_FinanceEmail': new FormControl(null),
       'edit_permission': new FormControl(null),
       'edit_cmsdepartment': new FormControl(null),
+      'update_cmsDepartment': new FormControl(null),
       'e_ESA_customerLimit': new FormControl(null),
       'e_ESA_c3cxResellerId': new FormControl(null),
       'edit_currencyname': new FormControl(null),
@@ -1699,7 +1776,7 @@ this.cmsDepartmentList1();
       if (response != '') {
       
         this.customer_list = response.customer_details;    
-        this.customer_list_colorcode=response.customer_details.biller_details.colorCodes;
+        // this.customer_list_colorcode=response.customer_details.biller_details[0].colorCodes;
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
        
@@ -2447,12 +2524,15 @@ this.cmsDepartmentList1();
     // add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cus_permission = this.addPermissionCheckboxID_array;
     if(this.cmsdepartmentADD_ID=='' || this.cmsdepartmentADD_ID== null || this.cmsdepartmentADD_ID== undefined){
-      iziToast.warning({
-        message: "CMS Department Missing",
-        position: 'topRight'
-      });
-      Swal.close();
-      return false;
+      // iziToast.warning({
+      //   message: "CMS Department Missing",
+      //   position: 'topRight'
+      // });
+      // Swal.close();
+      // return false;
+      add_customer_req.cms_default_department = this.cmsdepartmentADD_ID;
+      add_customer_req.cms_department_name = this.cmsdepartmentADD_val;
+
     }else{
       
       add_customer_req.cms_default_department = this.cmsdepartmentADD_ID;
@@ -2580,9 +2660,12 @@ this.cmsDepartmentList1();
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
         this.cmsDepartmentList = response.result.depart_data;
-        var dpt_id:any = response.result.customer_details[0].cms_default_department;
-        console.log(dpt_id);
-      $("#cmsdepartment_name").val(dpt_id)
+        var dpt_id: any;
+        dpt_id = (response.result.customer_details[0].cms_default_department).toString();
+        setTimeout(() => {
+          $("#cmsdepartment_name_edit").val(dpt_id)
+        }, 3000);
+      
         this.editCustomerForm.patchValue({
 
           'e_company_Code': response.result.customer_details[0].customerCode,
@@ -2625,7 +2708,8 @@ this.cmsDepartmentList1();
           'edit_permission': response.result.customer_details[0].cus_permission,
 
           
-          // 'edit_cmsdepartment': dpt_id,
+          //  'edit_cmsdepartment': dpt_id,
+           'update_cmsDepartment': response.result.customer_details[0].cms_default_department,
           'e_ESA_customerLimit': response.result.customer_details[0].credit_amt,
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,
           'edit_currencyname': response.result.customer_details[0].def_currency_id,
@@ -2806,12 +2890,14 @@ this.cmsDepartmentList1();
    
     update_customer_req.finance_email = result_FinanceEmail_Field;
     if(this.cmsdepartmentEdit_ID=='' || this.cmsdepartmentEdit_ID== null || this.cmsdepartmentEdit_ID== undefined){
-      iziToast.warning({
-        message: "CMS Department Missing",
-        position: 'topRight'
-      });
-      Swal.close();
-      return false;
+      // iziToast.warning({
+      //   message: "CMS Department Missing",
+      //   position: 'topRight'
+      // });
+      // Swal.close();
+      // return false;
+      update_customer_req.cms_default_department = this.cmsdepartmentEdit_ID;
+      update_customer_req.cms_department_name = this.cmsdepartmentEdit_val;
     }else{
       
       update_customer_req.cms_default_department = this.cmsdepartmentEdit_ID;
