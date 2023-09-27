@@ -204,7 +204,7 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_schGlo_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $('#ActionIdxx2').modal('show');
+      $('#ActionIdxx2').modal('hide');
       console.log(" response--pagelist", response)
       if (response != '') {
         
@@ -213,7 +213,7 @@ export class NavbarComponent implements OnInit {
         this.dashboard=true;
         console.log(this.dashboard);
         
-     
+        $('#ActionIdxOutput').modal('show');
 
         console.log(" this.searchResult", this.searchResult)
       } else {

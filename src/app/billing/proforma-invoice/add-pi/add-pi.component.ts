@@ -7,6 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
+import { CommonModule } from '@angular/common';
+import { Inject, LOCALE_ID } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-add-pi',
   templateUrl: './add-pi.component.html',
@@ -104,16 +108,18 @@ export class AddPIComponent implements OnInit {
   mile_discount_display_state: boolean = true;
   //read only fields
   isReadonly: boolean = true;
-  invoiceAddSignature_state:any;
-  invoiceAddSignature_filename:any;
-  checkbox_selectAdditionalSignature:any;
-  selectAdditionalSign:boolean=true;
-  bills_logo_id:any;
+  invoiceAddSignature_state: any;
+  invoiceAddSignature_filename: any;
+  checkbox_selectAdditionalSignature: any;
+  selectAdditionalSign: boolean = true;
+  bills_logo_id: any;
 
   terms_condition_list: boolean = false;
+  // singapore date & time
+  formattedDate: string;
 
-  
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router,
+    @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -121,11 +127,12 @@ export class AddPIComponent implements OnInit {
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
+
     console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log("this.test[index]",this.test[index]);
+      console.log("this.test[index]", this.test[index]);
       this.test_outcall[index] = false;
       this.test_CMon[index] = false;
     });
@@ -137,7 +144,7 @@ export class AddPIComponent implements OnInit {
 
 
     ];
-    
+
     this.SelectExtraLogoCheckboxwithKey = [
 
       { name: 'IT Care', selected: false, id: 1 },
@@ -176,7 +183,7 @@ export class AddPIComponent implements OnInit {
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
-      'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'address_1': new FormControl(),
       'address_2': new FormControl(),
       'address_3': new FormControl(),
@@ -186,11 +193,11 @@ export class AddPIComponent implements OnInit {
       'ship_address_1': new FormControl(),
       'ship_address_2': new FormControl(),
       'ship_address_3': new FormControl(),
-      'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
       'extraLogo': new FormControl(),
@@ -236,6 +243,17 @@ export class AddPIComponent implements OnInit {
       'section3_gross_total': new FormControl(null),
     });
 
+    const currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+    setTimeout(() => {
+     
+      $('#datee').val(this.formattedDate);
+      $('#podatee').val(this.formattedDate);
+      $('#Ship_Date').val(this.formattedDate);
+
+    }, 2000);
+   
+
 
   }
   get addressControls() {
@@ -250,7 +268,7 @@ export class AddPIComponent implements OnInit {
     this.itre = this.itre + 1;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log(" this.test[index] ", this.test[index] )
+      console.log(" this.test[index] ", this.test[index])
       this.test_outcall[index] = false;
       this.test_CMon[index] = false;
 
@@ -280,14 +298,14 @@ export class AddPIComponent implements OnInit {
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
     this.totalCalculate();
-    setTimeout(() => {      
-       this.saveGrossDiscount();
+    setTimeout(() => {
+      this.saveGrossDiscount();
     }, 500);
 
-   
-   
-    
-    
+
+
+
+
 
 
   }
@@ -330,9 +348,9 @@ export class AddPIComponent implements OnInit {
   }
 
 
-  eventCheckSelectAdditionalSignature(e:any){
+  eventCheckSelectAdditionalSignature(e: any) {
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature );
+    console.log(this.checkbox_selectAdditionalSignature);
   }
 
 
@@ -501,11 +519,11 @@ export class AddPIComponent implements OnInit {
 
 
       }
-    var price_amt =  $('#pd_SP_1').val();
-    if(price_amt>0){
-      this.totalCalculate();
-    }
-      
+      var price_amt = $('#pd_SP_1').val();
+      if (price_amt > 0) {
+        this.totalCalculate();
+      }
+
 
 
 
@@ -633,7 +651,7 @@ export class AddPIComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       console.log("customer_address_details---response", response)
-        if (response.status == true) {
+      if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
 
@@ -644,17 +662,17 @@ export class AddPIComponent implements OnInit {
           address_3 = response.customer_details[0].city;
         }
         if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;        
+          address_3 = address_3 + ' ,' + response.customer_details[0].state;
         } else {
           address_3 = response.customer_details[0].state;
         }
         if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;      
+          address_3 = address_3 + ' ,' + response.customer_details[0].country;
         } else {
           address_3 = response.customer_details[0].country;
         }
 
-        
+
 
 
         if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
@@ -683,24 +701,24 @@ export class AddPIComponent implements OnInit {
           ship_address_str3 = response.customer_details[0].city;
         }
         if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
-        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;        
-        }else {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+          ship_address_str3 = ship_address_str3;
+        } else {
           ship_address_str3 = response.customer_details[0].ship_state;
         }
         if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
-        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;      
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
+        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
+          ship_address_str3 = ship_address_str3;
         } else {
           ship_address_str3 = response.customer_details[0].ship_country;
         }
 
-        if(response.customer_details[0].ship_to==''){
-          ship_address_str1= response.customer_details[0].customerAddress1;
-          ship_address_str2= response.customer_details[0].customerAddress2;
-          ship_address_str3= address_3;
+        if (response.customer_details[0].ship_to == '') {
+          ship_address_str1 = response.customer_details[0].customerAddress1;
+          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str3 = address_3;
         }
 
 
@@ -740,7 +758,7 @@ export class AddPIComponent implements OnInit {
     this.router.navigate(['/ProformaInvoice']);
   }
   save($event: MouseEvent) {
-   
+
     let api_req: any = new Object();
     let api_savePI_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -750,33 +768,33 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.action = "insert_proforma_invoice";
     api_savePI_req.user_id = localStorage.getItem('erp_c4c_user_id');
     //section-1
-    
-    if(this.addPI_section1.value.companyName===null || this.addPI_section1.value.companyName===undefined){
-     
+
+    if (this.addPI_section1.value.companyName === null || this.addPI_section1.value.companyName === undefined) {
+
       iziToast.warning({
         message: "Select Company Name",
         position: 'topRight'
       });
       return false;
 
-    }else{
+    } else {
       api_savePI_req.company = this.addPI_section1.value.companyName;
     }
-   
+
     api_savePI_req.invoice_no = this.addPI_section1.value.invoiceNo;
-    
-    if(this.customerName_Data===null||this.customerName_Data===undefined){
-     
+
+    if (this.customerName_Data === null || this.customerName_Data === undefined) {
+
       iziToast.warning({
         message: "Select Bill",
         position: 'topRight'
       });
       return false;
 
-    }else{
+    } else {
       api_savePI_req.customer_name = this.customerName_Data;
     }
-    
+
     api_savePI_req.tinNo = this.addPI_section1.value.tin;
     api_savePI_req.BillTo_customer_ID = this.customer_ID;
     api_savePI_req.BillTo_customer_NAME = this.customer_NAME;
@@ -794,16 +812,19 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.s_address3 = this.addPI_section1.value.ship_address_3;
 
     api_savePI_req.cstNo = this.addPI_section1.value.cst;
-    api_savePI_req.billDate = this.addPI_section1.value.Date;
+    api_savePI_req.billDate = $('#datee').val();
+    // api_savePI_req.billDate = this.addPI_section1.value.Date;
     api_savePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_savePI_req.po_no = this.addPI_section1.value.PoNo;
-    api_savePI_req.po_date = this.addPI_section1.value.PoDate;
+    api_savePI_req.po_date = $('#podatee').val();
+    // api_savePI_req.po_date = this.addPI_section1.value.PoDate;
     api_savePI_req.sales_rep = this.addPI_section1.value.salesRep;
     api_savePI_req.ship_by = this.addPI_section1.value.ShipBy;
-    api_savePI_req.ship_date = this.addPI_section1.value.ShipDate;
+    api_savePI_req.ship_date = $('#Ship_Date').val();
+    // api_savePI_req.ship_date = this.addPI_section1.value.ShipDate;
     api_savePI_req.s_attn = this.addPI_section1.value.ship_attn;
     api_savePI_req.ref = this.addPI_section1.value.Ref;
-   api_savePI_req.terms = this.addPI_section1.value.terms;
+    api_savePI_req.terms = this.addPI_section1.value.terms;
     // api_savePI_req.terms_condition= this.addPI_section1.value.terms;
     api_savePI_req.currency = this.addPI_section1.value.Currency;
     api_savePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
@@ -861,7 +882,7 @@ export class AddPIComponent implements OnInit {
     // api_savePI_req.final_dis_type = this.addPI_section3.value.final_dis_type;
     // api_savePI_req.final_dis_val = this.addPI_section3.value.final_dis_val;
 
-    
+
     api_savePI_req.discountAmount = $('#finalDiscount_amt').val();
     api_savePI_req.final_dis_type = $('#final_discount_type').val();
     api_savePI_req.discountPer = $('#final_discount_val').val();
@@ -883,11 +904,11 @@ export class AddPIComponent implements OnInit {
     ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-   
-     
+
+
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
-    
+
         iziToast.success({
           message: "Proforma Invoice added Successfully",
           position: 'topRight'
@@ -896,14 +917,14 @@ export class AddPIComponent implements OnInit {
 
       }
       else if (response.status === 500) {
-      
+
         iziToast.error({
           message: "Proforma Invoice not added Successfully",
           position: 'topRight'
         });
       }
       else {
-      
+
         iziToast.warning({
           message: "Proforma Invoice not added Successfully",
           position: 'topRight'
@@ -914,19 +935,19 @@ export class AddPIComponent implements OnInit {
     }),
       (error: any) => {
         ($event.target as HTMLButtonElement).disabled = false;
-       
+
 
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("500",error);
+        console.log("500", error);
       }
 
   }
 
 
-  invoiceAddSignature(){
+  invoiceAddSignature() {
     let api_req: any = new Object();
     let api_invoiceAddSignature_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -942,15 +963,15 @@ export class AddPIComponent implements OnInit {
       console.log("invoice_add_signature response", response)
 
       if (response.status == true) {
-      
-        this.invoiceAddSignature_state=response.signature_state;
+
+        this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
-        this.invoiceAddSignature_filename=response.signature_filename;
-      
-        
+        this.invoiceAddSignature_filename = response.signature_filename;
+
+
       }
       else {
-       
+
       }
 
 
@@ -1108,7 +1129,7 @@ export class AddPIComponent implements OnInit {
     this.shipping_amt = $('#shipping_amt_id').val();
     this.bankingCharge = $('#bankingCharge_amt_id').val();
     this.finalTax = 0;
-    var netAmt=0;
+    var netAmt = 0;
     // alert(tax_per);
     for (let a = 0; a < list_cnt; a++) {
 
@@ -1121,10 +1142,10 @@ export class AddPIComponent implements OnInit {
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
         console.log('discount_type1111' + this.sub_dis_val);
-        if(this.sub_dis_val==''){
-          this.sub_dis_val=0;
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
         }
-    
+
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
         console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
@@ -1134,8 +1155,8 @@ export class AddPIComponent implements OnInit {
         // console.log('discount_type222'+discount_type);
 
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        if(this.sub_dis_val==''){
-          this.sub_dis_val=0;
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
         }
         // console.log('sub_discount_valppp'+this.sub_dis_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
@@ -1148,31 +1169,31 @@ export class AddPIComponent implements OnInit {
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
         netAmt = parseFloat($('#pd_netPrice_' + a).val());
-      //  alert(this.finalDiscount);
-       //setTimeout(() => { }, 1500);
+        //  alert(this.finalDiscount);
+        //setTimeout(() => { }, 1500);
 
 
-       
-       console.log('-this.finalDiscount---'+this.finalDiscount);
-      //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
+
+        console.log('-this.finalDiscount---' + this.finalDiscount);
+        //  tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt)-parseFloat(this.finalDiscount)) / 100);
         tax_amt_tot += netAmt;
-          
+
       }
 
       grs_amt += sub_total_amt;
 
     }
 
-   
+
     this.grossTotalTax = tax_amt_tot;
     this.grossTotal = grs_amt;
-   // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
-   if(tax_amt_tot>0){
-     tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax)-parseFloat(this.finalDiscount)) / 100);
-   }
-   
+    // console.log('this.tax_per_mod--'+this.tax_per_mod+'--this.net_amt--' + this.grossTotal+'---this.finalDiscount---'+this.finalDiscount);
+    if (tax_amt_tot > 0) {
+      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotalTax) - parseFloat(this.finalDiscount)) / 100);
+    }
 
-   
+
+
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
       this.shipping_amt = 0;
@@ -1267,7 +1288,7 @@ export class AddPIComponent implements OnInit {
     this.finalDiscountCalc();
   }
 
-  finalDiscountCalc(){
+  finalDiscountCalc() {
     var enablePercentabeDiscont = $('#enablePerFinal').val()
     var enablePriceDiscont = $('#enablePriceFinal').val()
     var tax_amt = $('#tax_amt_id').val()
@@ -1278,7 +1299,7 @@ export class AddPIComponent implements OnInit {
     $('#final_discount_type').val(disType);
     this.finalDiscountType = disType;
 
-    console.log('disType' + disType+'final_tot'+final_tot);
+    console.log('disType' + disType + 'final_tot' + final_tot);
 
     if (disType == 'per') {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
@@ -1315,7 +1336,7 @@ export class AddPIComponent implements OnInit {
 
     console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
-    
+
     setTimeout(() => {
       this.totalCalculate();
     }, 1500)
@@ -1377,7 +1398,7 @@ export class AddPIComponent implements OnInit {
     this.totalCalculate();
   }
 
-  termConditionCheckList(){
+  termConditionCheckList() {
     this.terms_condition_list = !this.terms_condition_list
   }
 

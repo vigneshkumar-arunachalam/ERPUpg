@@ -1977,7 +1977,7 @@
                   <select id="cmsdepartment_name_edit" class="form-control"
                     formControlName="edit_cmsdepartment" (change)="cmsdepartmentEdit($event)">
                     <option [ngValue]="null" selected disabled>Select Department</option>
-                    <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }}">
+                    <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }},{{cmsdept.department_name }}">
                       {{ cmsdept.department_name }}
                     </option>
                   </select>

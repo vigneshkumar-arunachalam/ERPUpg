@@ -9,6 +9,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
+import { CommonModule } from '@angular/common';
+import { Inject, LOCALE_ID } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-addquotationnew',
   templateUrl: './addquotationnew.component.html',
@@ -92,8 +96,13 @@ export class AddquotationnewComponent implements OnInit {
   //  quotationAddSignature
   quotationAddSignature_state: any;
   quotationAddSignature_filename: any;
+  // singapore date & time
+  formattedDate: string;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
+
+  constructor(private serverService: ServerService, private fb: FormBuilder, 
+    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,
+    private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addQuotationInvoice_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -130,7 +139,7 @@ export class AddquotationnewComponent implements OnInit {
       'companyName': new FormControl(null),
       'quotationNumber': new FormControl(null),
       'selectFooter': new FormControl(null, [Validators.required]),
-      'quotationDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'quotationDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'customerName': new FormControl(null, [Validators.required]),
       'cust_address1': new FormControl(null),
       'cust_address2': new FormControl(null),
@@ -185,6 +194,12 @@ export class AddquotationnewComponent implements OnInit {
     setTimeout(() => {
       this.totalCalculate_last()
     }, 8000);
+    const currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+    setTimeout(() => {
+    
+         $('#quot_date').val(this.formattedDate);
+      }, 2000);
 
 
 
@@ -732,7 +747,8 @@ export class AddquotationnewComponent implements OnInit {
       api_saveEnquiry_req.billerId = this.addQuotationInvoice_section1.value.companyName;
       api_saveEnquiry_req.quotation_no = this.addQuotationInvoice_section1.value.quotationNumber;
       api_saveEnquiry_req.pdf_footer_id = this.addQuotationInvoice_section1.value.selectFooter;
-      api_saveEnquiry_req.quotation_date = this.addQuotationInvoice_section1.value.quotationDate;
+      // api_saveEnquiry_req.quotation_date = this.addQuotationInvoice_section1.value.quotationDate;
+      api_saveEnquiry_req.quotation_date = $('#quot_date').val();
       if (this.addQuotationInvoice_section1.value.customerName === null) {
 
         iziToast.warning({
@@ -742,7 +758,7 @@ export class AddquotationnewComponent implements OnInit {
         return false;
 
       }
-      if (this.addQuotationInvoice_section1.value.quotationDate === null) {
+      if ($('#quot_date').val() === null) {
 
         iziToast.warning({
           message: "Select Date",
@@ -1299,7 +1315,7 @@ export class AddquotationnewComponent implements OnInit {
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     this.FINALDISCTYPEGlobal = disType;
     var final_tot = $('#gross').val();
-  
+
     var price: any;
     var price_afterDiscount: any
     // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
@@ -1324,7 +1340,7 @@ export class AddquotationnewComponent implements OnInit {
         $('#GrossTotalafterdiscount').val(price);
 
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
-       
+
 
         // $('#finalDiscount_amt').val(price);
         $('#final_discount_val').val(enablePercentabeDiscont);
@@ -1348,7 +1364,7 @@ export class AddquotationnewComponent implements OnInit {
       }
       price = enablePriceDiscont;
       price_afterDiscount = parseFloat(final_tot) - enablePriceDiscont;
-  
+
 
       $('#finalDiscount_amt').val(enablePriceDiscont);
       $('#GrossTotalafterdiscount').val(price_afterDiscount);
@@ -1426,7 +1442,7 @@ export class AddquotationnewComponent implements OnInit {
         // alert("1")
         tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
       } else if (ted == 0) {
-// alert("guurftfvyghj")
+        // alert("guurftfvyghj")
         tax = (parseFloat(tax) * parseFloat(this.grossTotal) / 100).toFixed(2);
       }
       else {
@@ -1435,12 +1451,12 @@ export class AddquotationnewComponent implements OnInit {
         console.log("GrossTotalafterdiscount", $('#GrossTotalafterdiscount').val());
         tax = (parseFloat(tax) * ($('#GrossTotalafterdiscount').val()) / 100).toFixed(2);
         $('#tax_amt_id').val(tax);
-        
+
         console.log("tax calc-2", tax);
-        console.log("shipping_amt_id",$('#shipping_amt_id').val());
-        
-        this.grandTotal =Number($('#GrossTotalafterdiscount').val())  + Number(tax) + 
-        Number($('#shipping_amt_id').val())  ;
+        console.log("shipping_amt_id", $('#shipping_amt_id').val());
+
+        this.grandTotal = Number($('#GrossTotalafterdiscount').val()) + Number(tax) +
+          Number($('#shipping_amt_id').val());
       }
 
 
@@ -1451,7 +1467,7 @@ export class AddquotationnewComponent implements OnInit {
       this.finalTax = parseFloat(tax).toFixed(2);
       console.log(" this.finalTax", this.finalTax)
       $('#tax_amt_id').val(this.finalTax);
-      
+
 
     });
 
@@ -1469,20 +1485,20 @@ export class AddquotationnewComponent implements OnInit {
     this.totalCalculate();
   }
   extraFees1() {
-    if($('#GrossTotalafterdiscount').val()==''){
-      this.grandTotal =Number($('#gross').val())   + 
-      Number($('#shipping_amt_id').val())+ Number($('#tax_amt_id').val()) ;
+    if ($('#GrossTotalafterdiscount').val() == '') {
+      this.grandTotal = Number($('#gross').val()) +
+        Number($('#shipping_amt_id').val()) + Number($('#tax_amt_id').val());
     }
-    else{
-      this.grandTotal =Number($('#GrossTotalafterdiscount').val())  + 
-      Number($('#shipping_amt_id').val())+ Number($('#tax_amt_id').val()) ;
+    else {
+      this.grandTotal = Number($('#GrossTotalafterdiscount').val()) +
+        Number($('#shipping_amt_id').val()) + Number($('#tax_amt_id').val());
     }
-    
 
-    
+
+
   }
-  totalcalculatedelete(){
-    
+  totalcalculatedelete() {
+
   }
   removeAddress(i: number) {
     this.addresses.removeAt(i);

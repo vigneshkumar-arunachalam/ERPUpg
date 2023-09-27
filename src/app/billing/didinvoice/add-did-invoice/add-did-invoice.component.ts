@@ -5,6 +5,10 @@ import { Router } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
 import { NgxSpinnerService } from 'ngx-spinner';
+import { CommonModule } from '@angular/common';
+import {  Inject, LOCALE_ID } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-add-did-invoice',
@@ -149,9 +153,13 @@ export class AddDidInvoiceComponent implements OnInit {
 subTotalForm:FormGroup;
 subTotalForm2:FormGroup;
 subTotalForm3:FormGroup;
+// singapore date & time
+formattedDate: string;
 
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private spinner: NgxSpinnerService) {
+
+  constructor(private serverService: ServerService, private fb: FormBuilder, 
+    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router, private spinner: NgxSpinnerService) {
 
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
@@ -311,6 +319,16 @@ subTotalForm3:FormGroup;
       'CommissionAmount': new FormControl(null),
 
     });
+    const currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+    setTimeout(() => {
+    
+         $('#datee').val(this.formattedDate);
+         $('#podatee').val(this.formattedDate);
+         $('#Ship_Date').val(this.formattedDate);
+
+    }, 2000);
+
 
 
   }
@@ -1030,7 +1048,8 @@ subTotalForm3:FormGroup;
     api_saveDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
 
     api_saveDid_req.cstNo = this.addDid_section1.value.cst;
-    api_saveDid_req.billDate = this.addDid_section1.value.Date;
+    api_saveDid_req.billDate =$('#datee').val();
+    // api_saveDid_req.billDate = this.addDid_section1.value.Date;
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
 
     if (this.did_bill_code === null) {
@@ -1048,10 +1067,12 @@ subTotalForm3:FormGroup;
     }
 
     api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
-    api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
+    // api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
+    api_saveDid_req.po_date = $('#podatee').val();
     api_saveDid_req.sales_rep = this.addDid_section1.value.salesRep;
     api_saveDid_req.ship_by = this.addDid_section1.value.ShipBy;
-    api_saveDid_req.ship_date = this.addDid_section1.value.ShipDate;
+    // api_saveDid_req.ship_date = this.addDid_section1.value.ShipDate;
+    api_saveDid_req.ship_date = $('#Ship_Date').val();
     api_saveDid_req.s_attn = this.addDid_section1.value.ship_attn;
     api_saveDid_req.terms = this.addDid_section1.value.terms;
     api_saveDid_req.currency = this.addDid_section1.value.Currency;

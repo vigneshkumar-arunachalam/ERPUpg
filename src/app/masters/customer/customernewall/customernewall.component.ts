@@ -2661,7 +2661,8 @@ this.cmsDepartmentList1();
 
         this.cmsDepartmentList = response.result.depart_data;
         var dpt_id: any;
-        dpt_id = (response.result.customer_details[0].cms_default_department).toString();
+        // alert(response.result.cms_dep_value)
+        dpt_id = (response.result.cms_dep_value.toString());
         setTimeout(() => {
           $("#cmsdepartment_name_edit").val(dpt_id)
         }, 3000);
@@ -2708,7 +2709,7 @@ this.cmsDepartmentList1();
           'edit_permission': response.result.customer_details[0].cus_permission,
 
           
-          //  'edit_cmsdepartment': dpt_id,
+            'edit_cmsdepartment': response.result.cms_dep_value,
            'update_cmsDepartment': response.result.customer_details[0].cms_default_department,
           'e_ESA_customerLimit': response.result.customer_details[0].credit_amt,
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,

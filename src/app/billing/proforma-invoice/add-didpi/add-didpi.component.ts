@@ -4,6 +4,10 @@ import { ServerService } from 'src/app/services/server.service';
 import { Router } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
+import { CommonModule } from '@angular/common';
+import {  Inject, LOCALE_ID } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-add-didpi',
   templateUrl: './add-didpi.component.html',
@@ -112,7 +116,11 @@ export class AddDidpiComponent implements OnInit {
   quotationAddSignature_state: any;
   quotationAddSignature_filename: any;
   selectAdditionalSign: boolean = true;
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router) {
+  // singapore date & time
+formattedDate: string;
+
+  constructor(private serverService: ServerService, private fb: FormBuilder, 
+    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router) {
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
     });
@@ -140,7 +148,7 @@ export class AddDidpiComponent implements OnInit {
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
-      'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'address_1': new FormControl(),
       'address_2': new FormControl(),
       'address_3': new FormControl(),
@@ -150,12 +158,12 @@ export class AddDidpiComponent implements OnInit {
       'ship_address_1': new FormControl(),
       'ship_address_2': new FormControl(),
       'ship_address_3': new FormControl(),
-      'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
       'billCode': new FormControl(),
-      'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
 
@@ -222,6 +230,16 @@ export class AddDidpiComponent implements OnInit {
       'CommissionAmount': new FormControl(null),
 
     });
+    const currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+    setTimeout(() => {
+    
+         $('#datee').val(this.formattedDate);
+         $('#podatee').val(this.formattedDate);
+         $('#Ship_Date').val(this.formattedDate);
+
+    }, 2000);
+
 
 
   }
@@ -880,13 +898,16 @@ export class AddDidpiComponent implements OnInit {
     api_saveDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
 
     api_saveDid_req.cstNo = this.addDid_section1.value.cst;
-    api_saveDid_req.billDate = this.addDid_section1.value.Date;
+    // api_saveDid_req.billDate = this.addDid_section1.value.Date;
+    api_saveDid_req.billDate =$('#datee').val();
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
     api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
-    api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
+    // api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
+    api_saveDid_req.po_date = $('#podatee').val();
     api_saveDid_req.sales_rep = this.addDid_section1.value.salesRep;
     api_saveDid_req.ship_by = this.addDid_section1.value.ShipBy;
-    api_saveDid_req.ship_date = this.addDid_section1.value.ShipDate;
+    // api_saveDid_req.ship_date = this.addDid_section1.value.ShipDate;
+    api_saveDid_req.ship_date =$('#Ship_Date').val();
     api_saveDid_req.s_attn = this.addDid_section1.value.ship_attn;
     api_saveDid_req.terms = this.addDid_section1.value.terms;
     api_saveDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;

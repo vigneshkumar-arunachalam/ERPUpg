@@ -84,3 +84,7 @@
     border-radius: 50%;
     font-size: 20px;
   }
+
+  #ActionIdxOutput .modal-dialog{
+    width: 100% !important;
+  }

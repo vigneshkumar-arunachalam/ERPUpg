@@ -139,9 +139,9 @@ warrantyValue:any;
     section3_Terms4:any;
     section3_Terms5:any;
   getProformaBillerDetails_billerID: any;
-// singapore date
-
+// singapore date & time
 formattedDate: string;
+
   constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router,
     @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
@@ -160,7 +160,9 @@ formattedDate: string;
     setTimeout(() => {
     
          $('#datee').val(this.formattedDate);
-         
+         $('#podatee').val(this.formattedDate);
+         $('#Ship_Date').val(this.formattedDate);
+
     }, 2000);
     // console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
@@ -244,12 +246,12 @@ formattedDate: string;
       'ship_address_1': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_address_2': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_address_3': new FormControl({ value: '', disabled: true }, Validators.required),
-       'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
-      //'PoDate': new FormControl(singaporeDate.toISOString().substring(0, 10)),
+      //  'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+  
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
       'extraLogo': new FormControl(),
@@ -1012,10 +1014,12 @@ formattedDate: string;
     // api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
     api_saveInvoice_req.b_attn = this.addInvoice_section1.value.Attn_1;
     api_saveInvoice_req.po_no = this.addInvoice_section1.value.PoNo;
-    api_saveInvoice_req.po_date = this.addInvoice_section1.value.PoDate;
+    api_saveInvoice_req.po_date = $('#podatee').val();
+    // api_saveInvoice_req.po_date = this.addInvoice_section1.value.PoDate;
     api_saveInvoice_req.sales_rep = this.addInvoice_section1.value.salesRep;
     api_saveInvoice_req.ship_by = this.addInvoice_section1.value.ShipBy;
-    api_saveInvoice_req.ship_date = this.addInvoice_section1.value.ShipDate;
+    api_saveInvoice_req.ship_date = $('#Ship_Date').val();
+    // api_saveInvoice_req.ship_date = this.addInvoice_section1.value.ShipDate;
     api_saveInvoice_req.s_attn = this.addInvoice_section1.value.ship_attn;
     api_saveInvoice_req.ref = this.addInvoice_section1.value.Ref;
     api_saveInvoice_req.terms = this.addInvoice_section1.value.terms;
