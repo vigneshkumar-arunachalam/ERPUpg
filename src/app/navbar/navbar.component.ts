@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
 import { ProformaInvoiceComponent } from '../billing/proforma-invoice/proforma-invoice.component';
 
 
+
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -73,8 +74,8 @@ export class NavbarComponent implements OnInit {
       this.role_Permission = localStorage.getItem('role');
       this.user_ProfileImage = localStorage.getItem('profile_image');
     }, 2000);
-     this.PageList();
-    this.searchGlobalList();
+    //  this.PageList();
+    // this.searchGlobalList();
     this.GlobalSearch = new FormGroup({
       'GS_SelectPage': new FormControl(null),
       'GS_CustomerCode': new FormControl(null),
@@ -173,10 +174,10 @@ export class NavbarComponent implements OnInit {
     api_schGlo_req.action = "globalSearchAll";
     api_schGlo_req.user_id = this.user_ids;
     if(this.PG_customerId=='' || this.PG_customerId=='undefined' || this.PG_customerId==undefined){
-      iziToast.error({
-        message: "Select Customer",
-        position: 'topRight'
-      });
+      // iziToast.error({
+      //   message: "Select Customer",
+      //   position: 'topRight'
+      // });
       return false;
     
     }else{
@@ -213,7 +214,7 @@ export class NavbarComponent implements OnInit {
         this.dashboard=true;
         console.log(this.dashboard);
         
-        $('#ActionIdxOutput').modal('show');
+         $('#ActionIdOutput').modal('show');
 
         console.log(" this.searchResult", this.searchResult)
       } else {

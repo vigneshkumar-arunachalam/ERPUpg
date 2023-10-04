@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,10 +8,12 @@ declare var tinymce: any;
 import Swal from 'sweetalert2'
 import { NgxSpinnerService } from 'ngx-spinner';
 
+
 @Component({
   selector: 'app-proforma-invoice',
   templateUrl: './proforma-invoice.component.html',
-  styleUrls: ['./proforma-invoice.component.css']
+  styleUrls: ['./proforma-invoice.component.css'],
+
 })
 export class ProformaInvoiceComponent implements OnInit {
   //list

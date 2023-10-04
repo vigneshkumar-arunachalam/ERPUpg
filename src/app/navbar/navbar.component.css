@@ -12,10 +12,6 @@
   }
 
 
-
-
-
-
   .modal-content {
     background: #e4ebf5;
   }
@@ -84,7 +80,39 @@
     border-radius: 50%;
     font-size: 20px;
   }
-
-  #ActionIdxOutput .modal-dialog{
+ /* action output css--- general-starts */
+  #ActionIdOutput .modal-dialog{
     width: 100% !important;
   }
+  #ActionIdOutput .modal-dialog {
+    max-width: 100% !important;
+    min-height: 100%;
+    margin: 0;
+  }
+  #ActionIdOutput .modal-dialog  .modal-content.addcustomernewallcss{
+  min-height: 100%;
+  }
+  #ActionIdOutput button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-up,
+   #ActionIdOutput button.btn.btn-link.btn-block.text-left .fa-chevron-down{
+   display: none;
+  }
+  #ActionIdOutput button.btn.btn-link.btn-block.text-left .fa-chevron-up, 
+  #ActionIdOutput button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-down{
+    display: block;
+  }
+  #ActionIdOutput button.btn.btn-link.btn-block.text-left{
+    margin: 0;
+    padding: 0px;
+    display: flex;
+    align-items: center;
+  }
+  #ActionIdOutput button.btn.btn-link.btn-block.text-left span{
+    padding: 0 20px 0px 0px;
+    margin: 0;
+    font-size: 18px;
+  }
+  #ActionIdOutput button.btn.btn-link.btn-block.text-left i{
+    color:#868eae
+  }
+  /* action output css--- general-ends */
+

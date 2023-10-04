@@ -160,6 +160,12 @@ export class EditInvoiceComponent implements OnInit {
 
   // singapore date & time
   formattedDate: string;
+  TaxValuEDIt: any;
+  BillerAttention: any;
+  billID_Edit: any;
+  billerID_Edit: any;
+  userID_Edit: any;
+  TaxAmtEDIt: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
@@ -339,6 +345,11 @@ export class EditInvoiceComponent implements OnInit {
       'finaldiscountTYpe_amt': new FormControl(null),
 
     });
+    setTimeout(() => {
+     $('#attn1').val(this.BillerAttention);
+    }, 1500);
+
+
 
 
   }
@@ -1080,6 +1091,9 @@ export class EditInvoiceComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         //  alert(response.billing_pararent_details[0].po_date)
+        this.userID_Edit=response.billing_pararent_details[0].billGeneratedBy
+        this.billID_Edit=response.billing_pararent_details[0].billId;
+        this.billerID_Edit=response.billing_pararent_details[0].billerId;
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
@@ -1087,11 +1101,16 @@ export class EditInvoiceComponent implements OnInit {
         this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
         this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
         this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
+        this.BillerAttention=response.billing_pararent_details[0].b_attn;
+        this.TaxValuEDIt=response.billing_pararent_details[0].taxId;
+        this.TaxAmtEDIt=response.billing_pararent_details[0].taxAmt;
+       
         console.log(response.billing_pararent_details[0].currency)
         $('#curren').val(response.billing_pararent_details[0].currency)
         $('#datee').val(response.billing_pararent_details[0].billDate);
         $('#podatee').val(response.billing_pararent_details[0].po_date);
         $('#Ship_Date').val(response.billing_pararent_details[0].ship_date);
+        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId)
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
@@ -1251,7 +1270,14 @@ export class EditInvoiceComponent implements OnInit {
 
         //   this.totalCalculate()
         // }, 1500);
+        setTimeout(() => {
 
+          $('#billerIDs').val(this.TaxValuEDIt);
+          $('#Tax_amt_id').val(this.TaxAmtEDIt);
+          
+          
+        }, 3000);
+      
         this.spinner.hide();
       }
       else {
@@ -1271,8 +1297,10 @@ export class EditInvoiceComponent implements OnInit {
         });
         console.log(error);
       }
+    
 
     this.spinner.hide();
+
 
   }
 
@@ -1447,7 +1475,7 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
     api_updatePI_req.b_address3 = this.addPI_section1.value.address_3;
     api_updatePI_req.cstNo = this.addPI_section1.value.cst;
-    api_updatePI_req.billDate =$('#datee').val();
+    api_updatePI_req.billDate = $('#datee').val();
     // api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
@@ -1459,14 +1487,14 @@ export class EditInvoiceComponent implements OnInit {
       api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
 
       api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
-      // api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
+    // api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
 
     api_updatePI_req.po_date = $('#podatee').val();
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
     api_updatePI_req.ship_by = this.addPI_section1.value.ShipBy;
 
     // api_updatePI_req.ship_date = this.addPI_section1.value.ShipDate;
-    api_updatePI_req.ship_date =$('#Ship_Date').val();
+    api_updatePI_req.ship_date = $('#Ship_Date').val();
     api_updatePI_req.s_attn = this.addPI_section1.value.Attn_2;
     api_updatePI_req.ref = this.addPI_section1.value.Ref;
     api_updatePI_req.terms = this.addPI_section1.value.terms;
@@ -1955,12 +1983,15 @@ export class EditInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_invoiceAddSignatureEdit_req.action = "invoice_add_signature_edit";
 
-    api_invoiceAddSignatureEdit_req.user_id = this.addPI_section1.value.salesRep;
+    api_invoiceAddSignatureEdit_req.user_id = this.userID_Edit;
 
-    api_invoiceAddSignatureEdit_req.billerId = this.addPI_section1.value.companyName;
-    api_invoiceAddSignatureEdit_req.billId = this.editbillerID;
+    api_invoiceAddSignatureEdit_req.billerId =    this.billerID_Edit;
+    api_invoiceAddSignatureEdit_req.billId = this.billID_Edit;
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 
+
+
+   
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-quotation_add_signature response", response)
 
@@ -1972,7 +2003,7 @@ export class EditInvoiceComponent implements OnInit {
           console.log('response.signature_filename' + response.signature_filename);
           this.invoiceAddSignature_filename = response.signature_filename;
         }
-
+        this.invoiceAddSignature_filename = response.signature_filename;
         this.invoiceAddSignatureCHKShowState = response.invoice_signature_show_state;
 
         this.addPI_section3.patchValue({

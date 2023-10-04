@@ -364,8 +364,8 @@ datavalue:any;
 				   console.log("dynamic Dropdown change response", response)
 				   
 				   console.log("dynamic term condition change response", response.quotation_terms_cond)
-           alert("dynamic change")
-				      alert(response.quotation_terms_cond);  
+          //  alert("dynamic change")
+				  //     alert(response.quotation_terms_cond);  
 					 for (let index = 0; index < response.footer_details.length; index++) {
 					  this.billerIDUpdate = response.footer_details[index].billerId;
         if (response.status == true) {
