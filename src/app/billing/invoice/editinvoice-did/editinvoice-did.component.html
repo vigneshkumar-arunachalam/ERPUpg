@@ -534,7 +534,7 @@
                                         </div>
                                     </td>
     
-                                    <td>
+                                    <td *ngIf="i>0">
                                         <div class="userDatatable-content d-inline-block">
                                             <button type="button" class="btn btn-danger btn-sm"
                                                 (click)="removeDid1(i)">X</button>
@@ -545,7 +545,6 @@
                                 
                               
                             </tbody>
-                            
                             <tbody>
                                 <tr >
     
@@ -716,7 +715,7 @@
                             </div>
                         </td>
     
-                        <td >
+                        <td *ngIf="i>0">
                             <div class="userDatatable-content d-inline-block">
                                 <button type="button" class="btn btn-danger btn-sm"
                                     (click)="removeDid2(i)">X</button>
@@ -872,7 +871,7 @@
                             </div>
                         </td>
 
-                        <td >
+                        <td *ngIf="i>0">
                             <div class="userDatatable-content d-inline-block">
                                 <button type="button" class="btn btn-danger btn-sm"
                                     (click)="removeDid3(i)">X</button>

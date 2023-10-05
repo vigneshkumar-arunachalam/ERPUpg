@@ -7,9 +7,6 @@ import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
 declare var $: any;
 declare var iziToast: any;
-import { CommonModule } from '@angular/common';
-import { Inject, LOCALE_ID } from '@angular/core';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-edit-invoice',
@@ -156,7 +153,6 @@ export class EditInvoiceComponent implements OnInit {
   section3_Terms3: any;
   section3_Terms4: any;
   section3_Terms5: any;
-  getProformaBillerDetails_billerID: any;
 
   // singapore date & time
   formattedDate: string;
@@ -166,9 +162,7 @@ export class EditInvoiceComponent implements OnInit {
   billerID_Edit: any;
   userID_Edit: any;
   TaxAmtEDIt: any;
-
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router,
-    @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
@@ -178,8 +172,6 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentDate = new Date();
-    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
 
     this.EditShippingAddress = true;
 
@@ -273,7 +265,7 @@ export class EditInvoiceComponent implements OnInit {
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
-      // 'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'address_1': new FormControl(),
       'address_2': new FormControl(),
       'address_3': new FormControl(),
@@ -286,10 +278,10 @@ export class EditInvoiceComponent implements OnInit {
       'shipTo_2': new FormControl({ value: '', disabled: true }, Validators.required),
       'shipTo_3': new FormControl({ value: '', disabled: true }, Validators.required),
 
-      // 'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'ShipBy': new FormControl(),
-      // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'Attn_2': new FormControl(),
       'terms': new FormControl(),
       'Ref': new FormControl(),
@@ -345,11 +337,6 @@ export class EditInvoiceComponent implements OnInit {
       'finaldiscountTYpe_amt': new FormControl(null),
 
     });
-    setTimeout(() => {
-     $('#attn1').val(this.BillerAttention);
-    }, 1500);
-
-
 
 
   }
@@ -602,7 +589,7 @@ export class EditInvoiceComponent implements OnInit {
     for (let a = 0; a < list_cnt; a++) {
 
       total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
-      $('#pd_Total_' + a).val(total_amt);
+      $('#pd_Total_' + a).val((total_amt).toFixed(2));
 
 
       discount_type = $('#sub_discount_type_' + a).val();
@@ -616,8 +603,8 @@ export class EditInvoiceComponent implements OnInit {
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
         console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
-        $('#pd_netPrice_' + a).val(sub_total_amt);
-        $('#sub_discount_' + a).val(dis_amt_val);
+        $('#pd_netPrice_' + a).val((sub_total_amt).toFixed(2));
+        $('#sub_discount_' + a).val((dis_amt_val).toFixed(2));
       } else if (discount_type == 'amt') {
 
 
@@ -627,9 +614,9 @@ export class EditInvoiceComponent implements OnInit {
         }
 
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
-        $('#pd_netPrice_' + a).val(sub_total_amt);
+        $('#pd_netPrice_' + a).val((sub_total_amt).toFixed(2));
       } else {
-        $('#pd_netPrice_' + a).val(total_amt);
+        $('#pd_netPrice_' + a).val((total_amt).toFixed(2));
         sub_total_amt = total_amt;
       }
 
@@ -686,7 +673,7 @@ export class EditInvoiceComponent implements OnInit {
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
-
+    this.grossTotal=this.grossTotal.toFixed(2);
 
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
     console.log("this.grossTotal", this.grossTotal);
@@ -852,7 +839,6 @@ export class EditInvoiceComponent implements OnInit {
         this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
         this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
         this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
-        this.getProformaBillerDetails_billerID = response.biller_details[0].billerId;
         this.addPI_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
@@ -1090,10 +1076,9 @@ export class EditInvoiceComponent implements OnInit {
 
       if (response != '') {
         this.spinner.hide();
-        //  alert(response.billing_pararent_details[0].po_date)
-        this.userID_Edit=response.billing_pararent_details[0].billGeneratedBy
-        this.billID_Edit=response.billing_pararent_details[0].billId;
-        this.billerID_Edit=response.billing_pararent_details[0].billerId;
+        this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy
+        this.billID_Edit = response.billing_pararent_details[0].billId;
+        this.billerID_Edit = response.billing_pararent_details[0].billerId;
         this.exportState_value = response.billing_pararent_details[0].export_state;
         this.mileDiscountState_value = response.billing_pararent_details[0].mile_discount_state;
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
@@ -1101,16 +1086,9 @@ export class EditInvoiceComponent implements OnInit {
         this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
         this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
         this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
-        this.BillerAttention=response.billing_pararent_details[0].b_attn;
-        this.TaxValuEDIt=response.billing_pararent_details[0].taxId;
-        this.TaxAmtEDIt=response.billing_pararent_details[0].taxAmt;
-       
         console.log(response.billing_pararent_details[0].currency)
-        $('#curren').val(response.billing_pararent_details[0].currency)
-        $('#datee').val(response.billing_pararent_details[0].billDate);
-        $('#podatee').val(response.billing_pararent_details[0].po_date);
-        $('#Ship_Date').val(response.billing_pararent_details[0].ship_date);
-        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId)
+        $('#curren').val(response.billing_pararent_details[0].currency);
+        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
@@ -1128,12 +1106,12 @@ export class EditInvoiceComponent implements OnInit {
           'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
           'tin': response.billing_pararent_details[0].tinNo,
           'cst': response.billing_pararent_details[0].cstNo,
-          // 'Date': response.billing_pararent_details[0].billDate,
+          'Date': response.billing_pararent_details[0].billDate,
           'PoNo': response.billing_pararent_details[0].po_no,
-          // 'PoDate': response.billing_pararent_details[0].po_date,
+          'PoDate': response.billing_pararent_details[0].po_date,
           'salesRep': response.billing_pararent_details[0].sales_rep,
           'ShipBy': response.billing_pararent_details[0].ship_by,
-          // 'ShipDate': response.billing_pararent_details[0].ship_date,
+          'ShipDate': response.billing_pararent_details[0].ship_date,
           'terms': response.billing_pararent_details[0].terms,
           'Currency': response.billing_pararent_details[0].currency,
           'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
@@ -1270,14 +1248,15 @@ export class EditInvoiceComponent implements OnInit {
 
         //   this.totalCalculate()
         // }, 1500);
-        setTimeout(() => {
 
-          $('#billerIDs').val(this.TaxValuEDIt);
-          $('#Tax_amt_id').val(this.TaxAmtEDIt);
+        // setTimeout(() => {
+
+        //   $('#billerIDs').val(this.TaxValuEDIt);
+        //   $('#tax_amt_id').val(this.TaxAmtEDIt);
           
           
-        }, 3000);
-      
+        // }, 3000);
+
         this.spinner.hide();
       }
       else {
@@ -1297,10 +1276,8 @@ export class EditInvoiceComponent implements OnInit {
         });
         console.log(error);
       }
-    
 
     this.spinner.hide();
-
 
   }
 
@@ -1475,8 +1452,7 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.b_address2 = this.addPI_section1.value.address_2;
     api_updatePI_req.b_address3 = this.addPI_section1.value.address_3;
     api_updatePI_req.cstNo = this.addPI_section1.value.cst;
-    api_updatePI_req.billDate = $('#datee').val();
-    // api_updatePI_req.billDate = this.addPI_section1.value.Date;
+    api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
 
@@ -1487,14 +1463,11 @@ export class EditInvoiceComponent implements OnInit {
       api_updatePI_req.ship_address_3 = this.addPI_section1.value.shipTo_3,
 
       api_updatePI_req.po_no = this.addPI_section1.value.PoNo;
-    // api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
 
-    api_updatePI_req.po_date = $('#podatee').val();
+    api_updatePI_req.po_date = this.addPI_section1.value.PoDate;
     api_updatePI_req.sales_rep = this.addPI_section1.value.salesRep;
     api_updatePI_req.ship_by = this.addPI_section1.value.ShipBy;
-
-    // api_updatePI_req.ship_date = this.addPI_section1.value.ShipDate;
-    api_updatePI_req.ship_date = $('#Ship_Date').val();
+    api_updatePI_req.ship_date = this.addPI_section1.value.ShipDate;
     api_updatePI_req.s_attn = this.addPI_section1.value.Attn_2;
     api_updatePI_req.ref = this.addPI_section1.value.Ref;
     api_updatePI_req.terms = this.addPI_section1.value.terms;
@@ -1639,8 +1612,7 @@ export class EditInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
-
-    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_billerID;
+    api_getInvoiceDetails_req.billerId = this.addPI_section1.value.companyName;
     api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -1709,8 +1681,8 @@ export class EditInvoiceComponent implements OnInit {
     var key = event.target.value;
     var addr = this.addPI_section2.value.addresses;
     var v = addr[i].pd_quantity_txtbox1 * $('#pd_SP_' + i);
-    $('#pd_Total_' + i).val(v);
-    $('#pd_netPrice_' + i).val(v);
+    $('#pd_Total_' + i).val((v).toFixed(2));
+    $('#pd_netPrice_' + i).val((v).toFixed(2));
     var gtotel = 0;
     if (this.itre == 0) {
       gtotel = v;
@@ -1989,9 +1961,6 @@ export class EditInvoiceComponent implements OnInit {
     api_invoiceAddSignatureEdit_req.billId = this.billID_Edit;
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 
-
-
-   
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-quotation_add_signature response", response)
 
@@ -2004,6 +1973,7 @@ export class EditInvoiceComponent implements OnInit {
           this.invoiceAddSignature_filename = response.signature_filename;
         }
         this.invoiceAddSignature_filename = response.signature_filename;
+
         this.invoiceAddSignatureCHKShowState = response.invoice_signature_show_state;
 
         this.addPI_section3.patchValue({
