@@ -258,7 +258,7 @@ export class EditDidInvoiceComponent implements OnInit {
         console.log("edit DID state id", this.editDIDStateID);
 
 
-        this.editDidInvice();
+       this.editDidInvice();
       }
       );
 
@@ -625,8 +625,20 @@ export class EditDidInvoiceComponent implements OnInit {
 
     this.otherAddress = this.did_Invice_other_charges.get('otherAddress') as FormArray;
     this.otherAddress.push(this.otherFormDid());
-
+    console.log("this.itre",this.itre);
     this.itre = this.itre + 1;
+    this.otherAddressControls.controls.forEach((elt, index) => {
+      this.test[index] = true;
+
+    });
+    
+  }
+  otherCharges1() {
+ 
+    this.otherAddress = this.did_Invice_other_charges.get('otherAddress') as FormArray;
+    this.otherAddress.push(this.otherFormDid());
+    console.log("this.itre-other charge1",this.itre);
+    this.itre = this.itre;
     this.otherAddressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
 
@@ -1529,48 +1541,53 @@ export class EditDidInvoiceComponent implements OnInit {
 
         // section-2
 
-        // part-1
+         // part-1
 
-        const formArray1 = new FormArray([]);
-        var bill_fixedDetail_TotalSUBAmount = 0;
-        if (response.bill_fixed_details.length == 0) {
-          $('#sub_total_1').val(0);
-          console.log("response.bill_fixed_details.length", response.bill_fixed_details.length)
+         const formArray1 = new FormArray([]);
+         var bill_fixedDetail_TotalSUBAmount = 0;
+         if (response.bill_fixed_details.length == 0) {
+           $('#sub_total_1').val(0);
+           console.log("response.bill_fixed_details.length", response.bill_fixed_details.length)
+ 
+           this.addInvoice();
+         }
+         else{
+          for (let index = 0; index < response.bill_fixed_details.length; index++) {
+            bill_fixedDetail_TotalSUBAmount = Number(bill_fixedDetail_TotalSUBAmount) + Number(response.bill_fixed_details[index].total_amt);
+  
+            $('#sub_total_1').val(bill_fixedDetail_TotalSUBAmount);
+            console.log('#sub_total_1', bill_fixedDetail_TotalSUBAmount);
+  
+            console.log('billchild_details++index' + index);
+  
+            formArray1.push(this.fb.group({
+              "billChildid1": response.bill_fixed_details[index].billChildid,
+              "particular1": response.bill_fixed_details[index].productName,
+              "fromdt1": response.bill_fixed_details[index].fromDate,
+              "todt1": response.bill_fixed_details[index].toDate,
+              "md_chk1": response.bill_fixed_details[index].md_state,
+              "did_diff_date1": response.bill_fixed_details[index].did_diff_date,
+              "productDesc1": response.bill_fixed_details[index].productDesc,
+              "amt1": response.bill_fixed_details[index].total_amt,
+              "call_duration1": response.bill_fixed_details[index].call_duration_state,
+  
+  
+            })
+  
+            );
+          }
+          console.log(formArray1)
+          this.did_Invice_fixed_charges.setControl('fixedAddresses', formArray1);
+          console.log(this.fixedAddresses);
 
-          this.addInvoice();
-        }
-        for (let index = 0; index < response.bill_fixed_details.length; index++) {
-          bill_fixedDetail_TotalSUBAmount = Number(bill_fixedDetail_TotalSUBAmount) + Number(response.bill_fixed_details[index].total_amt);
-
-          $('#sub_total_1').val(bill_fixedDetail_TotalSUBAmount);
-          console.log('#sub_total_1', bill_fixedDetail_TotalSUBAmount);
-
-          console.log('billchild_details++index' + index);
-
-          formArray1.push(this.fb.group({
-            "billChildid1": response.bill_fixed_details[index].billChildid,
-            "particular1": response.bill_fixed_details[index].productName,
-            "fromdt1": response.bill_fixed_details[index].fromDate,
-            "todt1": response.bill_fixed_details[index].toDate,
-            "md_chk1": response.bill_fixed_details[index].md_state,
-            "did_diff_date1": response.bill_fixed_details[index].did_diff_date,
-            "productDesc1": response.bill_fixed_details[index].productDesc,
-            "amt1": response.bill_fixed_details[index].total_amt,
-            "call_duration1": response.bill_fixed_details[index].call_duration_state,
-
-
-          })
-
-          );
-        }
-
-        console.log(formArray1)
-        this.did_Invice_fixed_charges.setControl('fixedAddresses', formArray1);
-        console.log(this.fixedAddresses);
+         }
+        
+ 
+       
 
 
         // part-2
-
+        console.log("response.bill_usage_details.length", response.bill_usage_details.length)
         const formArray2 = new FormArray([]);
         var bill_usage_TotalSUBAmount = 0;
         if (response.bill_usage_details.length == 0) {
@@ -1578,7 +1595,7 @@ export class EditDidInvoiceComponent implements OnInit {
           console.log("response.bill_usage_details.length", response.bill_usage_details.length)
           this.usageCharges();
 
-        }
+        } else {
         for (let index = 0; index < response.bill_usage_details.length; index++) {
 
           bill_usage_TotalSUBAmount = Number(bill_usage_TotalSUBAmount) + Number(response.bill_usage_details[index].total_amt);
@@ -1606,26 +1623,28 @@ export class EditDidInvoiceComponent implements OnInit {
 
           );
         }
-
         console.log(formArray2)
         this.did_Invice_usage_Charges.setControl('usageAddress', formArray2);
         console.log(this.usageAddress);
 
+      }
+       
 
-        // part-2
+
+        // part-3
 
         const formArray3 = new FormArray([]);
         var bill_Other_TotalSUBAmount = 0;
         console.log("response.bill_other_details.length", response.bill_other_details.length)
         if (response.bill_other_details.length == 0) {
           $('#sub_total_3').val(0);
-          this.totalCalculate_3;
+          this.totalCalculate_3();
           this.gross_total();
           console.log("otherAddressControls",this.otherAddressControls)
-           this.otherCharges();
+          // this.otherCharges1();
           // this.addInvoice();
 
-        }
+        } else {
         for (let index = 0; index < response.bill_other_details.length; index++) {
 
           bill_Other_TotalSUBAmount = Number(bill_Other_TotalSUBAmount) + Number(response.bill_other_details[index].total_amt);
@@ -1648,11 +1667,12 @@ export class EditDidInvoiceComponent implements OnInit {
 
           );
         }
-
         console.log(formArray3)
         this.did_Invice_other_charges.setControl('otherAddress', formArray3);
         console.log(this.otherAddress);
         this.grossTotal = bill_Other_TotalSUBAmount + bill_usage_TotalSUBAmount + bill_fixedDetail_TotalSUBAmount;
+      }
+        
 
 
 
@@ -1744,10 +1764,10 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
 
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      // $('#billCode').val(this.section1_billcode)
-    }, 2000);
+    //   // $('#billCode').val(this.section1_billcode)
+    // }, 2000);
     setTimeout(() => {
 
       $('#billerIDs').val(this.TaxValuEDIt)
@@ -1755,7 +1775,6 @@ export class EditDidInvoiceComponent implements OnInit {
     this.spinner.hide();
 
   }
-
 
   updateDidInvoice() {
     this.spinner.show();

@@ -9,9 +9,9 @@
 
            
 
-            <!-- <a href="#" class="navbar-brand">
+           <a href="#" class="navbar-brand">
                 <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:30px" alt="img"
-                    data-toggle="modal" data-target="#ActionIdxx2"></a> -->
+                    data-toggle="modal" data-target="#ActionIdxx2"></a> 
 
             <div class="top-menu">
 
@@ -174,22 +174,17 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1.1</td>
-                                                <td>2.1</td>
-                                                <td>3.1</td>
-                                                <td>4.1</td>
-                                                <td>5.1</td>
+                                           
+                                            <tr *ngFor="let item of customerContractlist;let i=index">
+                                                <td>{{item.contract_name}}</td>
+                                                <td>{{item.contract_description}}</td>
+                                                <td>{{item.remark_desc}}</td>
+                                                <td>{{item.from_dt}}to{{item.to_dt}} </td>
+                                                <td>#{{item.color}}</td>
+                                             
 
                                             </tr>
-                                            <tr>
-                                                <td>1.1</td>
-                                                <td>2.1</td>
-                                                <td>3.1</td>
-                                                <td>4.1</td>
-                                                <td>5.1</td>
-
-                                            </tr>
+                                 
                                         </tbody>
                                     </table>
                                 </div>
@@ -472,7 +467,85 @@
         </div>
         <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
         <!-------------------ActionIdxxModalAll-Global Search--Start  ------------------------->
-     
+        <div class="modal fade" data-backdrop="false" id="ActionIdOutput" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="max-width: 100%;min-height:100% ;">
+
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content addcustomernewallcss">
+                <div class="modal-header">
+                    <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
+                        style="color: black !important;">Global Search
+                    </h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="modal-body " >
+                    <app-proforma-invoice></app-proforma-invoice>  
+                    <!-- <div class="accordion" id="accordionExample">
+                        <div class="card">
+                          <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <span>Collapsible Group Item #1</span>
+                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                              </button>
+                            </h2>
+                          </div>
+                      
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                              Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingTwo">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <span>Collapsible Group Item #2</span>
+                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                            <div class="card-body">
+                              Some placeholder content for the second accordion panel. This panel is hidden by default.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingThree">
+                            <h2 class="mb-0">
+                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <span>Collapsible Group Item #3</span>
+                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                              </button>
+                            </h2>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                            <div class="card-body">
+                              And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
+                            </div>
+                          </div>
+                        </div>
+                      </div> -->
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        Cancel
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    </div>
         <!-------------------ActionIdxxModalAll-Global Search--Ends  ------------------------->
 
          

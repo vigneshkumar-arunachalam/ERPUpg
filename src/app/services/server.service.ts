@@ -6,7 +6,8 @@ import { Subject,Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServerService {
-  reload_profile: Subject<any> = new Subject()
+  reload_profile: Subject<any> = new Subject();
+  global_search: Subject<any> = new Subject();
   constructor(private http:HttpClient) { 
     
   }
@@ -17,8 +18,8 @@ export class ServerService {
         'Content-Type':  'application/json'
       })
     };
-    // let url = "https://laravelapi.erp1.cal4care.com/api/"+postData.api_url;
-      let url = "https://erp1.cal4care.com/api/"+postData.api_url;
+      let url = "https://laravelapi.erp1.cal4care.com/api/"+postData.api_url;
+    //  let url = "https://erp1.cal4care.com/api/"+postData.api_url;
   
       let posting :any[]= postData;
         return this.http.post(url, posting,httpOptions);

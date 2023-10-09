@@ -8,6 +8,12 @@ import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
 import Swal from 'sweetalert2';
+
+import { CommonModule } from '@angular/common';
+import { Inject, LOCALE_ID } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
+
 @Component({
   selector: 'app-add-invoice',
   templateUrl: './add-invoice.component.html',
@@ -56,8 +62,8 @@ export class AddInvoiceComponent implements OnInit {
   groupSelectCommonId_MileDiscount: any;
   checkbox_value_MileDiscount: any;
   edit_array_MileDiscount: any = [];
-//warranty
-warrantyValue:any;
+  //warranty
+  warrantyValue: any;
   //checkbox group select-logo
   groupSelectCommonId_ExtraLogo: any;
   checkbox_value_ExtraLogo: any;
@@ -122,21 +128,26 @@ warrantyValue:any;
   commissionType: any;
   commissionValue: any;
   commissionAmount: any;
-    //read only fields
-    isReadonly: boolean = true;
+  //read only fields
+  isReadonly: boolean = true;
 
-    invoiceAddSignature_state:any;
-    invoiceAddSignature_filename:any;
-    checkbox_selectAdditionalSignature:any;
-    selectAdditionalSign:boolean=true;
-    //section 3 select terms condition
-    section3_Terms1:any;
-    section3_Terms2:any;
-    section3_Terms3:any;
-    section3_Terms4:any;
-    section3_Terms5:any;
+  invoiceAddSignature_state: any;
+  invoiceAddSignature_filename: any;
+  checkbox_selectAdditionalSignature: any;
+  selectAdditionalSign: boolean = true;
+  //section 3 select terms condition
+  section3_Terms1: any;
+  section3_Terms2: any;
+  section3_Terms3: any;
+  section3_Terms4: any;
+  section3_Terms5: any;
+  // singapore date & time
+  formattedDate: string;
+  formattedDate_FormArray: string;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder,private router: Router, private route: ActivatedRoute,private spinner:NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder,
+    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe, 
+    private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -144,6 +155,11 @@ warrantyValue:any;
   keywordCompanyName = 'customerName';
   keywordUserName = 'reseller_name';
   ngOnInit(): void {
+    const currentDate = new Date();
+    this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
+    this.formattedDate_FormArray = this.datePipe.transform(currentDate, 'MMM yyyy');
+
+
     // console.log("this.chkTermsandcondition", this.chkTermsandcondition)
     this.loadADD();
     this.EditShippingAddress = true;
@@ -158,11 +174,11 @@ warrantyValue:any;
       { name: ' M S Display ', selected: false, id: 3 },
 
     ];
-    this.section3_Terms1="Price Term: EXW SINGAPORE";
-    this.section3_Terms2="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
-    this.section3_Terms3="Port of Discharge:";
-    this.section3_Terms4="Port of Loading: SINGAPORE";
-    this.section3_Terms5="Lead Time: 21 - 30 DAYS";
+    this.section3_Terms1 = "Price Term: EXW SINGAPORE";
+    this.section3_Terms2 = "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3 = "Port of Discharge:";
+    this.section3_Terms4 = "Port of Loading: SINGAPORE";
+    this.section3_Terms5 = "Lead Time: 21 - 30 DAYS";
 
     this.SelectExtraLogoCheckboxwithKey = [
 
@@ -173,7 +189,7 @@ warrantyValue:any;
       { name: ' Mrvoip  ', selected: false, id: 5 },
 
     ];
- 
+
     this.initial_Radio = [
       { name: 'Proforma ', selected: false, id: 1 },
       { name: 'Quotation', selected: false, id: 2 },
@@ -203,7 +219,7 @@ warrantyValue:any;
       'cst': new FormControl(),
       'Reg': new FormControl(),
       'GST': new FormControl(),
-      'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'Date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'address_1': new FormControl(),
       'address_2': new FormControl(),
       'address_3': new FormControl(),
@@ -215,11 +231,11 @@ warrantyValue:any;
       'ship_address_1': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_address_2': new FormControl({ value: '', disabled: true }, Validators.required),
       'ship_address_3': new FormControl({ value: '', disabled: true }, Validators.required),
-      'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'PoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
       'extraLogo': new FormControl(),
@@ -281,6 +297,14 @@ warrantyValue:any;
       'CommissionValue': new FormControl(null),
       'CommissionAmount': new FormControl(null),
     });
+    setTimeout(() => {
+    
+      $('#datee').val(this.formattedDate);
+      $('#podatee').val(this.formattedDate);
+      $('#Ship_Date').val(this.formattedDate);
+
+ }, 2000);
+
 
 
   }
@@ -296,6 +320,7 @@ warrantyValue:any;
     this.itre = this.itre + 1;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
+      this.test_CMon[index]=true;
 
     });
   }
@@ -315,8 +340,14 @@ warrantyValue:any;
       pd_CMon: '',
       pd_selectTax: '',
 
+      pd_billchild_id:'',
+   
+      sub_dis_type:'',
+      sub_dis_val:'',
+      sub_discount:'',
 
     });
+
 
   }
 
@@ -348,10 +379,10 @@ warrantyValue:any;
         this.addresses.removeAt(i);
         var addr = this.addPI_section2.value.addresses;
         var list_cnt = addr.length;
-        
-     
-              
-        
+
+
+
+
 
 
         let api_req: any = new Object();
@@ -373,18 +404,18 @@ warrantyValue:any;
         setTimeout(() => {
           this.totalCalculate();
         }, 1500);
-        
+
 
         setTimeout(() => {
-        this.totalCalculate();
-      }, 1500);
+          this.totalCalculate();
+        }, 1500);
 
 
       }
     })
 
 
-    
+
 
 
   }
@@ -420,7 +451,11 @@ warrantyValue:any;
     $('#CommissionValue').val('');
     $('#CommissionAmount').val('');
   }
-
+  getCurrMonth(){
+    for (let a = 0; a < this.addPI_section2.value.addresses.length; a++) {
+      $('#pd_CMon_' + a).val(this.formattedDate_FormArray);
+     }
+  }
 
   // EditCHK_MileDiscount(data: any, event: any) {
   //   console.log("List - CheckBox ID", data);
@@ -619,7 +654,7 @@ warrantyValue:any;
             'section3_Terms5': "Lead Time: 21 - 30 DAYS",
 
           });
-         
+
         }, 500);
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         // console.log('response.default_tax_id' + response.default_tax_id);
@@ -662,7 +697,7 @@ warrantyValue:any;
     }
 
     this.grossTotal = gtotel;
-    console.log("this.grossTotal",this.grossTotal)
+    console.log("this.grossTotal", this.grossTotal)
     this.grandTotal = gtotel;
     if (this.finalDiscount > 0) {
       this.grandTotal = gtotel - this.finalDiscount;
@@ -749,7 +784,7 @@ warrantyValue:any;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-  
+
       this.usersearchResult = response.reseller_list;
 
       if (response.status = true) {
@@ -780,7 +815,7 @@ warrantyValue:any;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-     
+
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
@@ -858,7 +893,7 @@ warrantyValue:any;
           'ship_address_2': ship_address_str2,
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
-          'terms':response.customer_details[0].terms_condition,
+          'terms': response.customer_details[0].terms_condition,
         });
       }
       else {
@@ -872,7 +907,7 @@ warrantyValue:any;
           'ship_address_2': '',
           'ship_address_3': '',
           'ship_attn': '',
-          'terms':'',
+          'terms': '',
         });
       }
 
@@ -894,7 +929,7 @@ warrantyValue:any;
     this.router.navigate(['/invoice']);
   }
   save($event: MouseEvent) {
-   
+
     let api_req: any = new Object();
     let api_saveInvoice_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -906,34 +941,34 @@ warrantyValue:any;
 
 
     //section-1
- 
-    if(this.addInvoice_section1.value.companyName===null ||  this.addInvoice_section1.value.companyName===undefined){
-     
+
+    if (this.addInvoice_section1.value.companyName === null || this.addInvoice_section1.value.companyName === undefined) {
+
       iziToast.warning({
         message: "Select Company Name",
         position: 'topRight'
       });
       return false;
 
-    }else{
+    } else {
       api_saveInvoice_req.company = this.addInvoice_section1.value.companyName;
     }
     api_saveInvoice_req.invoice_no = this.addInvoice_section1.value.invoiceNo;
 
-    if(this.customerName_Data===null||this.customerName_Data===undefined){
-     
+    if (this.customerName_Data === null || this.customerName_Data === undefined) {
+
       iziToast.warning({
         message: "Select Bill",
         position: 'topRight'
       });
       return false;
 
-    }else{
+    } else {
       api_saveInvoice_req.customer_name = this.customerName_Data;
     }
 
 
-   
+
     api_saveInvoice_req.cus_invoice_no = this.addInvoice_section1.value.cusInvoiceNo;
 
     api_saveInvoice_req.tinNo = this.addInvoice_section1.value.tin;
@@ -978,13 +1013,16 @@ warrantyValue:any;
 
 
     api_saveInvoice_req.cstNo = this.addInvoice_section1.value.cst;
-    api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
+    api_saveInvoice_req.billDate=$('#datee').val();
+    // api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
     api_saveInvoice_req.b_attn = this.addInvoice_section1.value.Attn_1;
     api_saveInvoice_req.po_no = this.addInvoice_section1.value.PoNo;
-    api_saveInvoice_req.po_date = this.addInvoice_section1.value.PoDate;
+    api_saveInvoice_req.po_date = $('#podatee').val();
+    // api_saveInvoice_req.po_date = this.addInvoice_section1.value.PoDate;
     api_saveInvoice_req.sales_rep = this.addInvoice_section1.value.salesRep;
     api_saveInvoice_req.ship_by = this.addInvoice_section1.value.ShipBy;
-    api_saveInvoice_req.ship_date = this.addInvoice_section1.value.ShipDate;
+    api_saveInvoice_req.ship_date = $('#Ship_Date').val();
+    // api_saveInvoice_req.ship_date = this.addInvoice_section1.value.ShipDate;
     api_saveInvoice_req.s_attn = this.addInvoice_section1.value.ship_attn;
     api_saveInvoice_req.ref = this.addInvoice_section1.value.Ref;
     api_saveInvoice_req.terms = this.addInvoice_section1.value.terms;
@@ -1046,7 +1084,7 @@ warrantyValue:any;
     // api_saveInvoice_req.final_dis_type = this.addPI_section3.value.final_dis_type;
     // api_saveInvoice_req.final_dis_val = this.addPI_section3.value.final_dis_val;
 
-    
+
     api_saveInvoice_req.discountAmount = $('#finalDiscount_amt').val();
     api_saveInvoice_req.final_dis_type = $('#final_discount_type').val();
     api_saveInvoice_req.discountPer = $('#final_discount_val').val();
@@ -1069,35 +1107,35 @@ warrantyValue:any;
     api_saveInvoice_req.terms_cond5 = this.addPI_section3.value.section3_Terms5;
 
     api_saveInvoice_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
-    api_saveInvoice_req.received_signature =  this.chkReceivedAuthorizedSignature;
+    api_saveInvoice_req.received_signature = this.chkReceivedAuthorizedSignature;
     api_saveInvoice_req.logo = this.addPI_section3.value.section3_logo;
 
 
     //commission popup
     api_saveInvoice_req.resellerName = this.resellerName;
-   
+
     api_saveInvoice_req.resellerID = this.resellerID;
-   
+
     api_saveInvoice_req.commissionType = this.CommissionForm.value.selectCommission;
-   if(this.CommissionForm.value.selectCommission=='Fixed'){
-    api_saveInvoice_req.commissionValue = this.CommissionForm.value.CommissionValue;
-  
-    api_saveInvoice_req.commissionAmount = this.CommissionForm.value.CommissionValue;
-   }
-   else{
-    api_saveInvoice_req.commissionValue = this.CommissionForm.value.CommissionValue;
-  
-    api_saveInvoice_req.commissionAmount = $('#CommissionAmount' ).val();;
-   }
-    
-   
+    if (this.CommissionForm.value.selectCommission == 'Fixed') {
+      api_saveInvoice_req.commissionValue = this.CommissionForm.value.CommissionValue;
+
+      api_saveInvoice_req.commissionAmount = this.CommissionForm.value.CommissionValue;
+    }
+    else {
+      api_saveInvoice_req.commissionValue = this.CommissionForm.value.CommissionValue;
+
+      api_saveInvoice_req.commissionAmount = $('#CommissionAmount').val();;
+    }
+
+
 
     api_req.element_data = api_saveInvoice_req;
- ($event.target as HTMLButtonElement).disabled = true;
+    ($event.target as HTMLButtonElement).disabled = true;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
- ($event.target as HTMLButtonElement).disabled = false;
+      ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
         this.router.navigate(['/invoice']);
         iziToast.success({
@@ -1105,7 +1143,7 @@ warrantyValue:any;
           position: 'topRight'
         });
         this.gotoInvoiceList();
-         
+
       }
       else if (response.status === 500) {
         // alert("status == 500")
@@ -1136,15 +1174,15 @@ warrantyValue:any;
         // console.log("500",error);
       }
 
-      this.gotoInvoiceList();
-      this.router.navigate(['/invoice']);
-      
+    this.gotoInvoiceList();
+    this.router.navigate(['/invoice']);
+
 
   }
   getCustomerInvoiceDetails() {
     // this.billerID = event.target.value;
     // console.log("billerID check", this.billerID);
-this.spinner.show();
+    this.spinner.show();
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -1298,8 +1336,8 @@ this.spinner.show();
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
         // console.log('discount_type1111' + this.sub_dis_val);
-        if(this.sub_dis_val==''){
-          this.sub_dis_val=0;
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
         // console.log('dis_amt_val' + dis_amt_val);
@@ -1310,8 +1348,8 @@ this.spinner.show();
         // console.log('discount_type222'+discount_type);
 
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        if(this.sub_dis_val==''){
-          this.sub_dis_val=0;
+        if (this.sub_dis_val == '') {
+          this.sub_dis_val = 0;
         }
         // console.log('sub_discount_valppp'+this.sub_dis_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(this.sub_dis_val);
@@ -1332,15 +1370,15 @@ this.spinner.show();
       grs_amt += sub_total_amt;
 
     }
-   
+
     this.grossTotal = grs_amt.toFixed(2);
-    console.log("this.grossTotal",this.grossTotal);
-  
-   if(tax_amt_tot>0){
-     tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal)-parseFloat(this.finalDiscount)) / 100);
-   }
-   
-   
+    console.log("this.grossTotal", this.grossTotal);
+
+    if (tax_amt_tot > 0) {
+      tax_amt_tot = (parseFloat(this.tax_per_mod) * (parseFloat(this.grossTotal) - parseFloat(this.finalDiscount)) / 100);
+    }
+
+
     this.finalTax = tax_amt_tot.toFixed(2);
     if (this.shipping_amt == '') {
       this.shipping_amt = 0;
@@ -1348,7 +1386,7 @@ this.spinner.show();
     if (this.finalDiscount == '') {
       this.finalDiscount = 0;
     }
-    if (this.finalTax == '' ) {
+    if (this.finalTax == '') {
       this.finalTax = 0;
     }
     if (this.bankingCharge == '') {
@@ -1405,8 +1443,8 @@ this.spinner.show();
       }
     }
     this.grossTotal = gtotel.toFixed(2);
-  
-    console.log("this.grossTotal",this.grossTotal);
+
+    console.log("this.grossTotal", this.grossTotal);
 
 
 
@@ -1416,61 +1454,61 @@ this.spinner.show();
 
   }
 
- finalDiscountCalc(){
-  var enablePercentabeDiscont = $('#enablePerFinal').val()
-  var enablePriceDiscont = $('#enablePriceFinal').val()
-  var tax_amt = $('#tax_amt_id').val()
-  var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
-  var final_tot = this.grossTotal;
-  var price: any;
-  // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
-  $('#final_discount_type').val(disType);
-  this.finalDiscountType = disType;
+  finalDiscountCalc() {
+    var enablePercentabeDiscont = $('#enablePerFinal').val()
+    var enablePriceDiscont = $('#enablePriceFinal').val()
+    var tax_amt = $('#tax_amt_id').val()
+    var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
+    var final_tot = this.grossTotal;
+    var price: any;
+    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'disType'+disType+'--'+final_tot);
+    $('#final_discount_type').val(disType);
+    this.finalDiscountType = disType;
 
-  if (disType == 'per') {
-    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
-    if (enablePercentabeDiscont != '') {
-      //  console.log('3333'+final_tot);
-      price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
-      $('#final_discount').val(price);
-      $('#final_discount_val').val(enablePercentabeDiscont);
-      this.finalDiscountVal = enablePercentabeDiscont;
-      //     price = final_tot - price;
+    if (disType == 'per') {
+      // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
+      if (enablePercentabeDiscont != '') {
+        //  console.log('3333'+final_tot);
+        price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        $('#final_discount').val(price);
+        $('#final_discount_val').val(enablePercentabeDiscont);
+        this.finalDiscountVal = enablePercentabeDiscont;
+        //     price = final_tot - price;
+      } else {
+        $('#final_discount').val('');
+        $('#final_discount_val').val('');
+        this.finalDiscountVal = '';
+        //   console.log('222'+final_tot);
+        price = 0;
+
+      }
+      //   console.log(price);
     } else {
-      $('#final_discount').val('');
-      $('#final_discount_val').val('');
-      this.finalDiscountVal = '';
-      //   console.log('222'+final_tot);
-      price = 0;
-
+      if (enablePriceDiscont == '') {
+        enablePriceDiscont = 0;
+      }
+      price = enablePriceDiscont;
+      $('#final_discount').val(enablePriceDiscont);
+      $('#final_discount_val').val(enablePriceDiscont);
+      this.finalDiscountVal = enablePercentabeDiscont;
+      // console.log('999' + price);
     }
-    //   console.log(price);
-  } else {
-    if (enablePriceDiscont == '') {
-      enablePriceDiscont = 0;
-    }
-    price = enablePriceDiscont;
-    $('#final_discount').val(enablePriceDiscont);
-    $('#final_discount_val').val(enablePriceDiscont);
-    this.finalDiscountVal = enablePercentabeDiscont;
-    // console.log('999' + price);
-  }
 
-  if (this.grandTotal > 0) {
-    this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
+    if (this.grandTotal > 0) {
+      this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
+    }
+    this.finalDiscount = price
+
+    setTimeout(() => {
+      this.totalCalculate();
+    }, 1500)
+
   }
-  this.finalDiscount = price
-  
-  setTimeout(() => {
-    this.totalCalculate();
-  }, 1500)
-  
- }
 
   saveGrossDiscount() {
     this.finalDiscountCalc();
     $('#discountFormFinal').modal('hide');
-    
+
   }
 
   CommissionFormOpen() {
@@ -1484,7 +1522,7 @@ this.spinner.show();
     var com_amt_val: any;
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
-   
+
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#pd_qty_' + a).val() * $('#pd_SP_' + a).val();
       $('#pd_Total_' + a).val(total_amt);
@@ -1503,20 +1541,20 @@ this.spinner.show();
         this.commissionAmount = commissionValue3;
         // console.log("if-fixed  this.commissionValue", this.commissionValue)
         // console.log("if-fixed  this.commissionAmount", this.commissionAmount)
-        var abc=$('#CommissionAmount').val(commissionValue3);
-        this.commissionAmount=abc;
+        var abc = $('#CommissionAmount').val(commissionValue3);
+        this.commissionAmount = abc;
       }
       else {
-     
+
         com_amt_val = (parseFloat(commissionValue3) * parseFloat(total_amt) / 100).toFixed(2);
-       var abc= $('#CommissionAmount').val(com_amt_val);
-       this.commissionAmount=abc;
+        var abc = $('#CommissionAmount').val(com_amt_val);
+        this.commissionAmount = abc;
       }
     }
     $('#CommissionFormId').modal('hide');
     // this.CommissionForm.reset();
-   
-    
+
+
   }
 
   getTaxCals() {
@@ -1557,7 +1595,7 @@ this.spinner.show();
     setTimeout(() => {
       this.totalCalculate();
     }, 1000)
-   
+
     this.finalDiscountCalc();
 
   }
@@ -1598,7 +1636,7 @@ this.spinner.show();
 
 
   }
-  goBackInvoice(){
+  goBackInvoice() {
     this.router.navigate(['/invoice'])
   }
 
@@ -1606,7 +1644,7 @@ this.spinner.show();
     this.checkbox_selectAdditionalSignature = e.target.checked
     // console.log(this.checkbox_selectAdditionalSignature );
   }
-  invoiceAddSignature(){
+  invoiceAddSignature() {
     let api_req: any = new Object();
     let api_invoiceAddSignature_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -1622,10 +1660,10 @@ this.spinner.show();
       // console.log("invoice_add_signature response", response)
 
       if (response.status == true) {
-      
-        this.invoiceAddSignature_state=response.signature_state;
+
+        this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
-        this.invoiceAddSignature_filename=response.signature_filename;
+        this.invoiceAddSignature_filename = response.signature_filename;
       }
     });
   }

@@ -47,6 +47,9 @@ export class NavbarComponent implements OnInit {
   proformaList: any;
   PI_list: any;
   dashboard=false;
+  PI_list_send: any;
+  customerContractlist: any;
+  resellerList: any;
   constructor(private router: Router, private serverService: ServerService,private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -74,8 +77,9 @@ export class NavbarComponent implements OnInit {
       this.role_Permission = localStorage.getItem('role');
       this.user_ProfileImage = localStorage.getItem('profile_image');
     }, 2000);
-    //  this.PageList();
-    // this.searchGlobalList();
+     this.PageList();
+    this.searchGlobalList();
+    
     this.GlobalSearch = new FormGroup({
       'GS_SelectPage': new FormControl(null),
       'GS_CustomerCode': new FormControl(null),
@@ -95,9 +99,46 @@ export class NavbarComponent implements OnInit {
     this.CompanyName = item.customerName;
     // do something with selected item
   }
+
   onFocusedCustomer(e: any) {
-    // do something when input is focused
     console.log(e)
+
+    let api_req: any = new Object();
+    let api_contract_req: any = new Object();
+    api_req.moduleType = "global";
+    api_req.api_url = "global/get_contract";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_contract_req.action = "get_contract";
+    api_contract_req.user_id = this.user_ids;
+    api_contract_req.customer_id =  this.PG_customerId;
+    api_req.element_data = api_contract_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      
+      if (response != '') {
+        this.customerContractlist=response.customer_contract;
+        this.resellerList=response.reseller_info;
+      
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
   CHKAll_BillerNameSelectAll(a:any){
 
@@ -162,7 +203,7 @@ export class NavbarComponent implements OnInit {
 
   }
   searchGlobalList(){
-   
+     this.onFocusedCustomer({});
     // $('#ActionIdxx3').modal('show');
 
     let api_req: any = new Object();
@@ -211,12 +252,17 @@ export class NavbarComponent implements OnInit {
         
         this.SelectPageList =   response.menuList;
         this.PI_list=response.proforma_details;
+        this.PI_list_send=response.proforma_details;
         this.dashboard=true;
         console.log(this.dashboard);
-        
+        console.log(" this.PI_list_send", this.PI_list_send)
+        var api_req:any = '{"type":"hello","proformalist":this.PI_list_send}';
+        this.serverService.global_search.next(JSON.stringify(this.PI_list_send));
          $('#ActionIdOutput').modal('show');
 
-        console.log(" this.searchResult", this.searchResult)
+       
+       
+      
       } else {
         Swal.close();
         iziToast.warning({
@@ -282,6 +328,45 @@ export class NavbarComponent implements OnInit {
         console.log("final error", error);
       };
   }
+  
+    customerQuickMail() {
+
+
+      let api_req: any = new Object();
+      let api_quickMail_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/customer_quick_mail";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_quickMail_req.action = "customer_quick_mail";
+      api_quickMail_req.user_id = this.user_ids;
+      api_quickMail_req.customerId =  this.PG_customerId;
+      api_req.element_data = api_quickMail_req;
+  
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+  
+    
+        if (response != '') {
+         
+        } else {
+          Swal.close();
+          iziToast.warning({
+            message: "Response Failed",
+            position: 'topRight'
+          });
+  
+        }
+  
+      }),
+        (error: any) => {
+  
+          iziToast.error({
+            message: "Sorry, some server issue occur. Please contact admin",
+            position: 'topRight'
+          });
+          console.log("final error", error);
+        };
+    }
   searchCustomerData(data: any) {
 
 

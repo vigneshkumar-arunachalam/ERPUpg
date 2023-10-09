@@ -119,8 +119,23 @@ export class ProformaInvoiceComponent implements OnInit {
   searchResult_CustomerID: any;
   quotationId_new: any;
   searchResult_CustomerName: any;
-
-  constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
+testing = false;
+  constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) {
+    this.serverService.global_search.subscribe((val:any)=>{
+      console.log("before parse",val)
+      var k = JSON.parse(val);
+      console.log("after parse",k)
+      this.PI_list=k;
+      console.log(k.type)
+      console.log(k.proformalist)
+      if(k.type=="hello"){
+        this.testing =  true;
+      } else {
+        this.testing =  false;
+      }
+      console.log(this.testing)
+    })
+   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
     this.PIList({});

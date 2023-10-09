@@ -214,6 +214,7 @@ export class EditInvoiceComponent implements OnInit {
 
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
+      
     });
 
     this.dynamicCheckboxwithKey = [
@@ -602,9 +603,10 @@ export class EditInvoiceComponent implements OnInit {
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
         console.log('dis_amt_val' + dis_amt_val);
-        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
-        $('#pd_netPrice_' + a).val((sub_total_amt).toFixed(2));
-        $('#sub_discount_' + a).val((dis_amt_val).toFixed(2));
+        sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val);
+        
+        $('#pd_netPrice_'+a).val((sub_total_amt).toFixed(2));
+        $('#sub_discount_'+a).val(dis_amt_val);
       } else if (discount_type == 'amt') {
 
 
@@ -633,7 +635,7 @@ export class EditInvoiceComponent implements OnInit {
     }
 
     this.grossTotalTax = tax_amt_tot;
-    this.grossTotal = grs_amt;
+    this.grossTotal = (grs_amt.toFixed(2));
 
     var fin_disType = $('#final_discount_type').val();
     var fin_dis_val = $('#final_discount_val').val();
@@ -673,7 +675,7 @@ export class EditInvoiceComponent implements OnInit {
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
-    this.grossTotal=this.grossTotal.toFixed(2);
+
 
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
     console.log("this.grossTotal", this.grossTotal);
@@ -1681,8 +1683,8 @@ export class EditInvoiceComponent implements OnInit {
     var key = event.target.value;
     var addr = this.addPI_section2.value.addresses;
     var v = addr[i].pd_quantity_txtbox1 * $('#pd_SP_' + i);
-    $('#pd_Total_' + i).val((v).toFixed(2));
-    $('#pd_netPrice_' + i).val((v).toFixed(2));
+    $('#pd_Total_' + i).val(v);
+    $('#pd_netPrice_' + i).val(v);
     var gtotel = 0;
     if (this.itre == 0) {
       gtotel = v;
