@@ -292,11 +292,24 @@ export class CustomernewallComponent implements OnInit {
   cmsdepartmentEdit_val:any;
   existing_email: number;
 
-
+  testing =  false;
   
 
   constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-
+    this.serverService.global_search_customer.subscribe((val:any)=>{
+      console.log("before parse",val)
+      var k = JSON.parse(val);
+      console.log("after parse",k)
+      this.customer_list=k;
+      console.log(k.type)
+      console.log(k.proformalist)
+      if(k.type=="hello"){
+        this.testing =  true;
+      } else {
+        this.testing =  false;
+      }
+      console.log(this.testing)
+    })
     this.billCodeEditForm3 = this.fb.group({
       addresses: this.fb.array([this.editBillCode_FormControl()])
     });
@@ -304,6 +317,7 @@ export class CustomernewallComponent implements OnInit {
     this.popupBillCodeForm3 = this.fb.group({
       popupBillCode1: this.fb.array([this.popupBillCode_FormControl()])
     });
+    
 
   }
 

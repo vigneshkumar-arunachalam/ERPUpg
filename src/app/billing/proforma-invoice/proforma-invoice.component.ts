@@ -119,7 +119,7 @@ export class ProformaInvoiceComponent implements OnInit {
   searchResult_CustomerID: any;
   quotationId_new: any;
   searchResult_CustomerName: any;
-testing = false;
+  Global_search_filter = false;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) {
     this.serverService.global_search.subscribe((val:any)=>{
       console.log("before parse",val)
@@ -128,12 +128,12 @@ testing = false;
       this.PI_list=k;
       console.log(k.type)
       console.log(k.proformalist)
-      if(k.type=="hello"){
-        this.testing =  true;
+      if(k!=''){
+        this.Global_search_filter =  true;
       } else {
-        this.testing =  false;
+        this.Global_search_filter =  false;
       }
-      console.log(this.testing)
+      console.log(this.Global_search_filter)
     })
    }
   keywordCompanyName = 'customerName';

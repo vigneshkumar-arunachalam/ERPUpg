@@ -173,17 +173,23 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                           
+                                        <tbody >
+                                          
                                             <tr *ngFor="let item of customerContractlist;let i=index">
                                                 <td>{{item.contract_name}}</td>
                                                 <td>{{item.contract_description}}</td>
                                                 <td>{{item.remark_desc}}</td>
                                                 <td>{{item.from_dt}}to{{item.to_dt}} </td>
-                                                <td>#{{item.color}}</td>
+                                                <td>
+                                                    <span>  
+                                                        <input type="color" [(ngModel)]="'#'+item.color"   />{{ item.color}}
+                                                    </span> 
+                                                </td>
                                              
 
                                             </tr>
+                                       
+                               
                                  
                                         </tbody>
                                     </table>
@@ -194,27 +200,21 @@
                             <div class="userDatatable global-shadow border-0 bg-white w-100">
                                 <div class="table-responsive">
                                     <table class="table mb-0 table-borderless">
-                                        <thead>
-                                            <tr class="userDatatable-header">
-                                                <td>Reseller Id</td>
-                                                <td>Empty</td>
-
-                                            </tr>
-                                        </thead>
+                                      
                                         <tbody>
                                             <tr>
                                                 <td>Reseller Id</td>
-                                                <td>Empty</td>
+                                                <td>{{ this.resellerList_ResellerId}}</td>
 
                                             </tr>
                                             <tr>
                                                 <td>Currency</td>
-                                                <td></td>
+                                                <td>{{ this.resellerList_CurrencyName}}</td>
 
                                             </tr>
                                             <tr>
                                                 <td>Discount</td>
-                                                <td>0</td>
+                                                <td>{{ this.resellerList_ResellerDiscount}}</td>
 
                                             </tr>
                                         </tbody>
@@ -228,7 +228,7 @@
 
                                     <i class="fa fa-fw fa-envelope tooltips" data-trigger="hover"
                                         data-original-title="Quick Mail" title="Quick Mail"
-                                        style="font-size:17px; color:#0E0; width:18px"></i>
+                                        style="font-size:17px; color:#0E0; width:18px" (click)="QuickMail_Customer()"></i>
                                 </a>
                                 <!-- <i class="fa-solid fa-envelope fa-beat-fade " style="color: #5a52eb;"></i> -->
                             </div>
@@ -242,27 +242,42 @@
                                         <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
                                             (change)=" CHKAll_SelectPageSelectAll($event)">
                                         <div class="CheckboxScroll">
-                                            <div *ngFor="let display of SelectPageList;let i =index;"
-                                                style="padding-left: 30px;">
-    
-                                                <input class="checkbox" style="margin-right:5px ;" type="checkbox"
-                                                    id="check-grp-SelectPage-{{i}}"
-                                                    [(ngModel)]="display.checked" formControlName="GS_SelectPage">
+                                    
+                                            <div *ngFor="let display of SelectPageList;let i =index;" style="padding-left: 30px;">
+                                                <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" 
+                                                (change)="addSelectPageCHK(display.menu_name,$event)" 
+                                                    id="check-grp-SelectPage-{{i}}" 
+                                                    [(ngModel)] ="display.checked"    checked="display.checked"
+                                                    formControlName="GS_SelectPage">
                                                 {{display.menu_name}}
-    
+
+
+                                                <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
+                                                class="on-off-toggle__input" checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                                                  (change)="QuotationSharedCHK(quot.user_id,$event)"> -->
+
+                                                  
+                                                <input type="checkbox"  style="margin-right:5px ;" id="check-grp-SelectPage-{{i}}"
+                                                 [value]="display.menu_name"
+                                                 checked="{{display.checked=='true' ? 'checked':''}}" 
+                                                 (change)="addSelectPageCHK(display.menu_name,$event)">{{display.menu_name}}
+                                    
                                             </div>
-    
-                                            <!-- <div *ngFor="let display of SelectPageList;let i =index;"
-                                                style="padding-left: 30px;">
-    
-                                                <input class="checkbox" style="margin-right:5px ;" type="checkbox"
-                                                    id="check-grp-SelectPage-{{i}}" formControlName="GS_SelectPage">
-                                                {{display.menu_name}}
-    
-                                            </div> -->
-    
                                         </div>
                                     </div>
+
+                                    <!-- <div class="col-lg-12">
+                                        <label> Select Pages<span class="mandatoryField">*</span></label>
+                                        <input class="checkbox" style="margin-left:5px;" type="checkbox" id="check-3" (change)="CHKAll_SelectPageSelectAll($event)">
+                                        <div class="CheckboxScroll">
+                                          <div *ngFor="let display of SelectPageList; let i = index;" style="padding-left: 30px;">
+                                            <input class="checkbox" style="margin-right:5px;" type="checkbox" [(ngModel)]="display.checked" formControlName="GS_SelectPage">
+                                            {{ display.menu_name }}
+                                          </div>
+                                        </div>
+                                      </div> -->
+                                      
+                                      
                                     <!-- <button (click)="getSelectedItems()">Get Selected Pages</button> -->
                                 </div>
     
@@ -481,8 +496,68 @@
                     </button>
 
                 </div>
-                <div class="modal-body " >
-                    <app-proforma-invoice></app-proforma-invoice>  
+                <div class="modal-body" >
+                    <div id="accordion">
+                        <div class="card" *ngFor="let item of SelectPageList;let i=index">
+                          <div class="card-header" id="headingOne">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                {{item.menu_name}}
+                              </button>
+                            </h5>
+                          </div>
+                      
+                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div class="card-body">
+                                {{item.pageId}}
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="card">
+                          <div class="card-header" id="headingTwo">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                               Proforma Invoice
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                            <div class="card-body">
+                                <app-proforma-invoice></app-proforma-invoice> 
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                          <div class="card-header" id="headingThree">
+                            <h5 class="mb-0">
+                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Invoice
+                              </button>
+                            </h5>
+                          </div>
+                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                            <div class="card-body">
+                                <app-invoice></app-invoice> 
+                            </div>
+                          </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                              <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  Quotation
+                                </button>
+                              </h5>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                              <div class="card-body">
+                                  <app-quotationnew></app-quotationnew> 
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                     <!-- <app-proforma-invoice></app-proforma-invoice>    -->
                     <!-- <div class="accordion" id="accordionExample">
                         <div class="card">
                           <div class="card-header" id="headingOne">
@@ -538,7 +613,7 @@
 
                 <div class="modal-footer">
 
-                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
                         Cancel
                     </button>
 

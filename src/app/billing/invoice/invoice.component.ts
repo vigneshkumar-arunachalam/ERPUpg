@@ -291,13 +291,27 @@ export class InvoiceComponent implements OnInit {
   yValue: number = 10;
   newDataCount: number = 10;
   chart1: any;
-
+  testing = false;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
     this.revenueaddressForm = this.fb.group({
       revenueaddresses: this.fb.array([this.createrevenueAddress()])
+    });
+    this.serverService.global_search_invoice.subscribe((val:any)=>{
+      console.log("before parse-global_search_invoice",val)
+      var k = JSON.parse(val);
+      console.log("after parse-global_search_invoice",k)
+      this.PI_list=k;
+      console.log(k.type)
+      console.log(k.proformalist)
+      if(k.type=="hello"){
+        this.testing =  true;
+      } else {
+        this.testing =  false;
+      }
+      console.log(this.testing)
     });
   }
 

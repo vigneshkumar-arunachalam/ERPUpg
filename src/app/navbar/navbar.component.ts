@@ -25,8 +25,8 @@ export class NavbarComponent implements OnInit {
   // Global search
   GlobalSearch: FormGroup;
   pagesNameList:any;
-  SelectPageList: any;
-  addSelectPageListCheckboxID_array: any = [];
+ 
+
   SelectPageListId:any;
   //autocomplete-customer name
   searchResultTest: any;
@@ -43,13 +43,28 @@ export class NavbarComponent implements OnInit {
   PG_CustomerCode:any;
   PG_LicenseNum:any;
   PG_DIDNumber:any;
-  PageIDs:any;
+ 
   proformaList: any;
   PI_list: any;
   dashboard=false;
   PI_list_send: any;
   customerContractlist: any;
   resellerList: any;
+  resellerList_CurrencyName: any;
+  resellerList_ResellerDiscount: any;
+  resellerList_ResellerId: any;
+  customercontractForm:FormGroup;
+  testVariable: { id: number; name: string; }[];
+  PageIDs:any;
+  SelectPageList: any=[];
+  addSelectPageListCheckboxID_array: any = [];
+  pageList: any;
+  selectAllCheckbox: any;
+  deselectAllCheckbox: any;
+  Quotation_list_send: any;
+  Customer_list_send: any;
+  Invoice_list_send: any;
+ 
   constructor(private router: Router, private serverService: ServerService,private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -79,7 +94,9 @@ export class NavbarComponent implements OnInit {
     }, 2000);
      this.PageList();
     this.searchGlobalList();
-    
+ 
+    this.testVariable=[{"id":1,"name":"Credit Note"},{"id":2,"name":"Customer New"},{"id":3,"name":"Customer Project"},{"id":4,"name":" DID Number"}]
+    console.log(this.testVariable)
     this.GlobalSearch = new FormGroup({
       'GS_SelectPage': new FormControl(null),
       'GS_CustomerCode': new FormControl(null),
@@ -88,7 +105,11 @@ export class NavbarComponent implements OnInit {
       'GS_LicenseNumber': new FormControl(null),
 
     });
+    this.customercontractForm=new FormGroup({
+      'colorCU': new FormControl(null),
+    });
   }
+  
   selectEventCustomer(item: any) {
     this.searchResultTest = item.customerName;
     this.PG_customerId=item.customerId;
@@ -120,7 +141,10 @@ export class NavbarComponent implements OnInit {
       if (response != '') {
         this.customerContractlist=response.customer_contract;
         this.resellerList=response.reseller_info;
-      
+        this.resellerList_CurrencyName=response.reseller_info.currency_name;
+        this.resellerList_ResellerDiscount=response.reseller_info.reseller_discount;
+        this.resellerList_ResellerId=response.reseller_info.reseller_id;
+    
       } else {
         Swal.close();
         iziToast.warning({
@@ -152,7 +176,9 @@ export class NavbarComponent implements OnInit {
 
       this.SelectPageList.forEach((element: any, index: any) => {
         $("#check-grp-SelectPage-" + index).prop('checked', true);
-        checkAll_ID.push(element.pageId);
+        //checkAll_ID.push(element.pageId); if id needs to be send or below line if u want to send names
+        checkAll_ID.push(element.menu_name);
+       
       });
       this.addSelectPageListCheckboxID_array = [];
       this.addSelectPageListCheckboxID_array = checkAll_ID;
@@ -171,26 +197,29 @@ export class NavbarComponent implements OnInit {
     }
 
   }
+
+
+
+
   addSelectPageCHK(data: any, event: any) {
-    // console.log("Contract File Attachment Display - CheckBox ID", data);
-    // this.SelectPageListId = data;
-    // this.SelectPageList = event.target.checked;
 
+    console.log("Contract File Attachment Display - CheckBox ID", data);
+    this.SelectPageListId = data;
 
-    // if (this.SelectPageList) {
+    if (event.target.checked==true) {
 
-    //   this.addSelectPageListCheckboxID_array.push(data);
-    //   this.addSelectPageListCheckboxID_array.join(',');
-    //   console.log("Final BillerName Checkbox After checkbox selected list", this.addSelectPageListCheckboxID_array);
-    // }
-    // else {
-    //   const index = this.addSelectPageListCheckboxID_array.findIndex((el: any) => el === data)
-    //   if (index > -1) {
-    //     this.addSelectPageListCheckboxID_array.splice(index, 1);
-    //   }
-    //   console.log("Final BillerName Checkbox After Deselected selected list", this.addSelectPageListCheckboxID_array)
+      this.addSelectPageListCheckboxID_array.push(data);
+      this.addSelectPageListCheckboxID_array.join(',');
+      console.log("Final BillerName Checkbox After checkbox selected list", this.addSelectPageListCheckboxID_array);
+    }
+    else {
+      const index = this.addSelectPageListCheckboxID_array.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.addSelectPageListCheckboxID_array.splice(index, 1);
+      }
+      console.log("Final BillerName Checkbox After Deselected selected list", this.addSelectPageListCheckboxID_array)
 
-    // }
+    }
 
   }
  
@@ -202,7 +231,56 @@ export class NavbarComponent implements OnInit {
 
 
   }
+ QuickMail_Customer() {
+    Swal.fire({
+      title: 'Are you sure to Send?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Change it!'
+    }).then((result: any) => {
+      if (result.value) {
+        let api_req: any = new Object();
+        let api_reqD1: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/customer_quick_mail";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqD1.action = "customer_quick_mail";
+        api_reqD1.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqD1.customerId = this.PG_customerId;
+        api_req.element_data = api_reqD1;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+
+            iziToast.success({
+              message: "Quick Mail Sent Successfully",
+              position: 'topRight'
+            });
+
+          } else {
+            iziToast.warning({
+              message: "Quick Mail not Sent. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log("final error", error)
+          };
+      }
+    })
+
+
+  }
   searchGlobalList(){
+   
      this.onFocusedCustomer({});
     // $('#ActionIdxx3').modal('show');
 
@@ -232,14 +310,14 @@ export class NavbarComponent implements OnInit {
     api_schGlo_req.license_number = this.PG_LicenseNum;
     api_schGlo_req.did_number = this.PG_DIDNumber;
    
-    if(this.PageIDs=='' || this.PageIDs=='undefined' || this.PageIDs==undefined){
+    if(this.addSelectPageListCheckboxID_array=='' || this.addSelectPageListCheckboxID_array=='undefined' || this.addSelectPageListCheckboxID_array==undefined){
       iziToast.error({
         message: "Select Page ",
         position: 'topRight'
       });
       return false;
     }else{
-      api_schGlo_req.pagename =   this.PageIDs;
+      api_schGlo_req.pagename =   this.addSelectPageListCheckboxID_array;
     }
   
 
@@ -250,14 +328,24 @@ export class NavbarComponent implements OnInit {
       console.log(" response--pagelist", response)
       if (response != '') {
         
-        this.SelectPageList =   response.menuList;
+         this.SelectPageList =   response.menuList;
+         this.pageList =   response.menuList;
+         alert(this.SelectPageList )
         this.PI_list=response.proforma_details;
-        this.PI_list_send=response.proforma_details;
+        this.PI_list_send=response.proforma_invoice_list.proforma_details;
+        this.Quotation_list_send=response.quotation_list.quotation_details;
+        this.Customer_list_send=response.customer_list.customer_details;
+        this.Invoice_list_send=response.customer_list.proforma_details;
+
         this.dashboard=true;
         console.log(this.dashboard);
         console.log(" this.PI_list_send", this.PI_list_send)
         var api_req:any = '{"type":"hello","proformalist":this.PI_list_send}';
         this.serverService.global_search.next(JSON.stringify(this.PI_list_send));
+        this.serverService.global_search_invoice.next(JSON.stringify(this.PI_list_send));
+        this.serverService.global_search_customer.next(JSON.stringify(this.PI_list_send));
+        this.serverService.global_search_quotation.next(JSON.stringify(this.PI_list_send));
+     
          $('#ActionIdOutput').modal('show');
 
        
@@ -284,12 +372,17 @@ export class NavbarComponent implements OnInit {
 
 
   }
+  closeModal(){
+    $('#ActionIdOutput').modal('hide');
+    $("body").removeClass("modal-open");
+  }
   gotoCustomerMaster(){
     $('#ActionIdxx3').modal('hide');
     this.router.navigate(['/customernewall']);
   
 
   }
+
   PageList() {
 
 
@@ -308,7 +401,7 @@ export class NavbarComponent implements OnInit {
       console.log(" response--pagelist", response)
       if (response != '') {
         this.SelectPageList =   response.menuList;
-        console.log(" this.searchResult", this.searchResult)
+        console.log(" this.SelectPageList", this.SelectPageList)
       } else {
         Swal.close();
         iziToast.warning({
@@ -500,6 +593,7 @@ export class NavbarComponent implements OnInit {
 
   }
   getSelectedItems() {
+   
     const selectedItems = this.SelectPageList.filter((item: { checked: any; }) => item.checked);
     const selectedIds = selectedItems.map((item: { pageId: any; }) => item.pageId);
     // this.addSelectPageListCheckboxID_array= selectedItems.map((item: { pageId: any; }) => item.pageId);
