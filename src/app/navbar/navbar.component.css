@@ -39,7 +39,8 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: #9baacf;
+    /* color: #9baacf; */
+    color:#f9021b;
     transition: all 0.5s ease;
   }
   
@@ -112,7 +113,50 @@
     font-size: 18px;
   }
   #ActionIdOutput button.btn.btn-link.btn-block.text-left i{
-    color:#868eae
+    color:#e4ebf5
   }
+  
   /* action output css--- general-ends */
+  #ActionIdOutput .card {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  }
+  #ActionIdOutput  .card .card-header{
+    background: #6d5dfc;
+    color: #e4ebf5;
+  }
+  #ActionIdOutput  .modal-header{
+    background: #121240;
+  }
+  #addModalLongTitle {
+    color: #fff;
+  }
+  #ActionIdOutput .close{
+    opacity: 1;
+  }
+  #ActionIdOutput  .card .card-header span{
+    color: #e4ebf5;
+  }
+  #ActionIdOutput .modal-content button.close{
+    color: #fff;
+  }
+  #ActionIdOutput .modal-content{
+    background-color: #fff;
+  }
+
+  /* ---------------------------------KS-CODE--------------------------------- */
+
+.userDatatable-header th { background: #6d5dfc; color: #ffffff;}
+.userDatatable-header th span { color: #e4ebf5;}
+.userDatatable .page .dropdown button {
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+.userDatatable table td {border-bottom: 1px solid #ddd;}
+/* ---------------------------------KS-CODE--------------------------------- */
 

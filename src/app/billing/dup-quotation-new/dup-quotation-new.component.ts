@@ -13,11 +13,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
-  selector: 'app-quotationnew',
-  templateUrl: './quotationnew.component.html',
-  styleUrls: ['./quotationnew.component.css']
+  selector: 'app-dup-quotation-new',
+  templateUrl: './dup-quotation-new.component.html',
+  styleUrls: ['./dup-quotation-new.component.css']
 })
-export class QuotationnewComponent implements OnInit {
+export class DupQuotationNewComponent implements OnInit {
   //quotation version
   quotationVersion = '1.0';
   //add modal
@@ -177,18 +177,18 @@ export class QuotationnewComponent implements OnInit {
     }
     );
     $("body").removeClass("modal-open");
-    // this.serverService.global_search_quotation.subscribe((val: any) => {
-    //   console.log("before parse-global_search_invoice", val)
-    //   var k = JSON.parse(val);
-    //   console.log("after parse-global_search_invoice", k)
-    //   this.quotation_list = k;
-    //   if (k != '') {
-    //     this.Global_search_filter = true;
-    //   } else {
-    //     this.Global_search_filter = false;
-    //   }
+    this.serverService.global_search_quotation.subscribe((val: any) => {
+      console.log("before parse-global_search_invoice", val)
+      var k = JSON.parse(val);
+      console.log("after parse-global_search_invoice", k)
+      this.quotation_list = k;
+      if (k != '') {
+        this.Global_search_filter = true;
+      } else {
+        this.Global_search_filter = false;
+      }
       
-    // });
+    });
     this.setActualCost_FormGroup = this.fb.group({
       addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });

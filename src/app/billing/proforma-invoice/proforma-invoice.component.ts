@@ -134,7 +134,8 @@ export class ProformaInvoiceComponent implements OnInit {
         this.Global_search_filter =  false;
       }
       console.log(this.Global_search_filter)
-    })
+    });
+    $("body").removeClass("modal-open");
    }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {

@@ -4,7 +4,7 @@
         <div class="row no-gutters">
             <div class="col-lg-12 mb-30">
                 <div class="card quotation">
-                    <div class="card-header color-dark fw-500">
+                    <div class="card-header color-dark fw-500" *ngIf="this.Global_search_filter==false">
                         <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
                             <span class="breadcrumb-item active">Quotation</span></h3>
                         <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
@@ -375,7 +375,7 @@
                             </div>
                         </div>
                         <br>
-                        <nav class="atbd-page">
+                        <nav class="atbd-page" *ngIf="this.Global_search_filter==false">
                             <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
 
                                 <li class="page-item">

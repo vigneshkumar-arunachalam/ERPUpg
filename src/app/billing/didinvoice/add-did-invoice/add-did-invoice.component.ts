@@ -1217,6 +1217,7 @@ formattedDate: string;
     // api_saveDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
     api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
     api_saveDid_req.taxAmt = $('#Tax_amt_id').val();
+    api_saveDid_req.taxPer = $('#tax_per_hd_id').val();
     api_saveDid_req.shippingName = this.addDid_section3.value.section3_shipping_amt_name_txtbox;
     api_saveDid_req.addName = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
     api_saveDid_req.shippingAmt = $('#shipping_amt_id').val();

@@ -9,12 +9,14 @@ declare var $: any
 declare var iziToast: any;
 import Swal from 'sweetalert2';
 declare var tinymce: any;
+
 @Component({
-  selector: 'app-invoice',
-  templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.css']
+  selector: 'app-dup-invoice',
+  templateUrl: './dup-invoice.component.html',
+  styleUrls: ['./dup-invoice.component.css']
 })
-export class InvoiceComponent implements OnInit {
+export class DupInvoiceComponent implements OnInit {
+
   //list
   PI_list: any;
   biller_list: any;
@@ -293,6 +295,7 @@ export class InvoiceComponent implements OnInit {
   chart1: any;
   testing = false;
   Global_search_filter = false;
+  Global_search_filter_2: string;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -302,15 +305,28 @@ export class InvoiceComponent implements OnInit {
     });
     this.serverService.global_search_invoice.subscribe((val: any) => {
       console.log("before parse-global_search_invoice", val)
-      var k = JSON.parse(val);
-      console.log("after parse-global_search_invoice", k)
-      this.PI_list = k;
-      if (k != '') {
-        this.Global_search_filter = true;
-      } else {
-        this.Global_search_filter = false;
-      }
+      //  var k = JSON.parse(val);
+      //  console.log("after parse-global_search_invoice", k)
+      this.PI_list = val;
      
+
+      if (val != null || val != 'null') {
+        this.Global_search_filter = true;
+
+      } else if (val == null || val == 'null') {
+        
+        iziToast.warning({
+          message: "No Invoice Data Found",
+          position: 'topRight'
+        });
+        this.Global_search_filter_2 = 'emptylist';
+      }
+      else {
+        this.Global_search_filter = false;
+
+      }
+
+
     });
     $("body").removeClass("modal-open");
   }
@@ -2090,8 +2106,8 @@ export class InvoiceComponent implements OnInit {
       height: 500,
       plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
       toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
-       alignleft aligncenter alignright alignjustify | \
-       bullist numlist outdent indent | autoresize',
+      alignleft aligncenter alignright alignjustify | \
+      bullist numlist outdent indent | autoresize',
       paste_data_images: true,
       images_upload_url: 'upload.php',
       automatic_uploads: false,
@@ -3885,5 +3901,6 @@ export class InvoiceComponent implements OnInit {
 
 
 }
+
 
 

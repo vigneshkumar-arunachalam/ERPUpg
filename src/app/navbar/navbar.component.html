@@ -7,15 +7,12 @@
             <a class="navbar-brand" href="#"><img class="dark logo-size" src="assets/img/cal4care-logo-dark.png"
                     alt="svg"><img class="light logo-size" src="assets/img/cal4care-logo-white.png" alt="img"></a>
 
-           
 
-           <a href="#" class="navbar-brand">
-                <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:30px" alt="img"
-                    data-toggle="modal" data-target="#ActionIdxx2"></a> 
+
 
             <div class="top-menu">
 
-               
+
             </div>
         </div>
         <!-- ends: navbar-left -->
@@ -147,18 +144,20 @@
 
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
                 <div class="modal-content addcustomernewallcss">
-                    <div class="modal-header">
+                    <div class="modal-header " style="background-color: #cae0e0;">
                         <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
-                            style="color: black !important;">Global Search
+                            style="font-weight: 500;font-size:x-large; color: #861F41 !important;">Global Search
                         </h1>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
                     </div>
-                    <div class="modal-body mousepoint">
+                    <div class="modal-body mousepoint mt-0">
                         <form [formGroup]="ContractDetailsForm">
-                            <label for="companyCode" class="col-lg-12 col-form-label">Contract Details</label>
+                            <label for="companyCode" class="col-lg-12 col-form-label"
+                                style="font-weight: 420;font-size:large; color: #C04000;padding-left:0;">Contract
+                                Details</label>
 
                             <div class="userDatatable global-shadow border-0 bg-white w-100">
                                 <div class="table-responsive">
@@ -173,34 +172,50 @@
 
                                             </tr>
                                         </thead>
-                                        <tbody >
-                                          
+                                        <tbody *ngIf="this.contract_filter==true">
+
                                             <tr *ngFor="let item of customerContractlist;let i=index">
                                                 <td>{{item.contract_name}}</td>
                                                 <td>{{item.contract_description}}</td>
                                                 <td>{{item.remark_desc}}</td>
                                                 <td>{{item.from_dt}}to{{item.to_dt}} </td>
                                                 <td>
-                                                    <span>  
-                                                        <input type="color" [(ngModel)]="'#'+item.color"   />{{ item.color}}
-                                                    </span> 
+                                                    <input type="color" formControlName="contractColor" />
+
                                                 </td>
-                                             
+                                                <!-- <td>  <input type="color" />{{'#'+item.color}} </td> -->
 
                                             </tr>
-                                       
-                               
-                                 
+
+
+
                                         </tbody>
+                                        <tbody *ngIf="this.contract_filter==false">
+
+                                            <tr>
+                                                <td colspan="4">Contract Not Available</td>
+                                            </tr>
+
+                                        </tbody>
+
                                     </table>
                                 </div>
                             </div>
-                            <label for="companyCode" class="col-lg-12 col-form-label">Reseller Information</label>
+                            <label for="companyRese" class="col-lg-12 col-form-label"
+                                style="font-weight: 420;font-size: large; color: #C04000;padding-left:0;">Reseller
+                                Information</label>
 
                             <div class="userDatatable global-shadow border-0 bg-white w-100">
                                 <div class="table-responsive">
                                     <table class="table mb-0 table-borderless">
-                                      
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th>Reseller Attributes</th>
+                                                <th>Reseller Values</th>
+
+
+                                            </tr>
+                                        </thead>
                                         <tbody>
                                             <tr>
                                                 <td>Reseller Id</td>
@@ -221,84 +236,57 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-lg-12">
-                                <label for="sendCustCredentials" class="col-lg-3 col-form-label">Send Customer
+                            <div class="col-lg-12" style="padding-left:0">
+                                <label for="sendCustCredentials" class="col-lg-3 col-form-label"
+                                    style="font-weight: 420;color: blue; padding-left:0;">Send Customer
                                     Credentials</label>
                                 <a href="#" id="sendQuickMailLink_3928">
 
                                     <i class="fa fa-fw fa-envelope tooltips" data-trigger="hover"
                                         data-original-title="Quick Mail" title="Quick Mail"
-                                        style="font-size:17px; color:#0E0; width:18px" (click)="QuickMail_Customer()"></i>
+                                        style="font-size:17px; color:#C04000; width:18px;padding-left:-16;"
+                                        (click)="QuickMail_Customer()"></i>
                                 </a>
                                 <!-- <i class="fa-solid fa-envelope fa-beat-fade " style="color: #5a52eb;"></i> -->
                             </div>
 
                         </form>
                         <form [formGroup]="GlobalSearch">
-                            <div class="row">
+                            <div class="row mt-2">
                                 <div class="col-lg-6">
-                                    <div class="col-lg-12">
-                                        <label> Select Pages<span class="mandatoryField">*</span></label>
+                                    <div class="col-lg-12" style="padding-left:0">
+                                        <label class="col-lg-3 col-form-label"
+                                            style="font-weight: 420;color: blue; padding-left:0;"> Select Pages<span
+                                                class="mandatoryField">*</span></label>
                                         <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                                            (change)=" CHKAll_SelectPageSelectAll($event)">
+                                            (change)=" CHKAll_SelectPageSelectAll($event)">{{" "}}All Page
                                         <div class="CheckboxScroll">
-                                    
-                                            <div *ngFor="let display of SelectPageList;let i =index;" style="padding-left: 30px;">
-                                                <!-- <input class="checkbox" style="margin-right:5px ;" type="checkbox" 
-                                                (change)="addSelectPageCHK(display.menu_name,$event)" 
-                                                    id="check-grp-SelectPage-{{i}}" 
-                                                    [(ngModel)] ="display.checked"    checked="display.checked"
-                                                    formControlName="GS_SelectPage">
-                                                {{display.menu_name}}
 
+                                            <div *ngFor="let display of SelectPageList;let i =index;"
+                                                style="padding-left: 30px;">
+                                                <input type="checkbox" style="margin-right:5px ;"
+                                                    id="check-grp-SelectPage-{{i}}" [value]="display.menu_name"
+                                                    checked="{{display.checked=='true' ? 'checked':''}}"
+                                                    (change)="addSelectPageCHK(display.menu_name,$event)">{{display.menu_name}}
 
-                                                <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
-                                                class="on-off-toggle__input" checked="{{quot.chk_val=='true' ? 'checked':''}}"
-                                                  (change)="QuotationSharedCHK(quot.user_id,$event)"> -->
-
-                                                  
-                                                <input type="checkbox"  style="margin-right:5px ;" id="check-grp-SelectPage-{{i}}"
-                                                 [value]="display.menu_name"
-                                                 checked="{{display.checked=='true' ? 'checked':''}}" 
-                                                 (change)="addSelectPageCHK(display.menu_name,$event)">{{display.menu_name}}
-                                    
                                             </div>
                                         </div>
                                     </div>
 
-                                    <!-- <div class="col-lg-12">
-                                        <label> Select Pages<span class="mandatoryField">*</span></label>
-                                        <input class="checkbox" style="margin-left:5px;" type="checkbox" id="check-3" (change)="CHKAll_SelectPageSelectAll($event)">
-                                        <div class="CheckboxScroll">
-                                          <div *ngFor="let display of SelectPageList; let i = index;" style="padding-left: 30px;">
-                                            <input class="checkbox" style="margin-right:5px;" type="checkbox" [(ngModel)]="display.checked" formControlName="GS_SelectPage">
-                                            {{ display.menu_name }}
-                                          </div>
-                                        </div>
-                                      </div> -->
-                                      
-                                      
-                                    <!-- <button (click)="getSelectedItems()">Get Selected Pages</button> -->
+
+
+
+
                                 </div>
-    
-                                <div class="col-lg-6">
-                                    <!-- <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <label for="companyCode " class="col-lg-12 col-form-label">Customer Code<span
-                                            class="mandatoryField">
-                                            *</span></label>
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" formControlName="GS_CustomerCode"
-                                            id="companyCode" />
-                                    </div>
-                                </div>
-                            </div> -->
-    
-    
+
+                                <div class="col-lg-6 ml-0">
+
+
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="ng-autocomplete">
-                                                <label for="GS_CustomerCode" class="col-lg-12 col-form-label">Customer
+                                                <label for="GS_CustomerCode" class="col-lg-12 col-form-label"
+                                                    style="font-weight: 420;color: blue;">Customer
                                                     Code<span class="mandatoryField">
                                                         *</span></label>
                                                 <ng-autocomplete [data]="searchResult_code"
@@ -310,24 +298,24 @@
                                                     [itemTemplate]="itemTemplateCustomerCode"
                                                     [notFoundTemplate]="notFoundTemplate">
                                                 </ng-autocomplete>
-    
+
                                                 <ng-template #itemTemplateCustomerCode let-item>
                                                     <a [innerHTML]="item.customerCode"></a>
                                                 </ng-template>
-    
+
                                                 <ng-template #notFoundTemplate let-notFound>
                                                     <div [innerHTML]="notFound"></div>
                                                 </ng-template>
-    
+
                                             </div>
                                             <div *ngIf="GlobalSearch.controls['GS_CustomerCode'].invalid && (GlobalSearch.controls['GS_CustomerCode'].dirty || GlobalSearch.controls['GS_CustomerCode'].touched)"
                                                 class="alert alert-danger alertdangerCustomCSS mt-2">
                                                 Company Name is Required
                                             </div>
-    
+
                                         </div>
                                     </div>
-    
+
                                     <!-- <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label for="companyCode " class="col-lg-12 col-form-label">Customer Name<span
@@ -342,7 +330,8 @@
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="ng-autocomplete">
-                                                <label for="companyName" class="col-lg-12 col-form-label">Company
+                                                <label for="companyName" class="col-lg-12 col-form-label"
+                                                    style="font-weight: 420;color: blue; ">Company
                                                     Name<span class="mandatoryField">
                                                         *</span></label>
                                                 <ng-autocomplete [data]="searchResult"
@@ -354,29 +343,30 @@
                                                     [itemTemplate]="itemTemplateCustomer"
                                                     [notFoundTemplate]="notFoundTemplate">
                                                 </ng-autocomplete>
-    
+
                                                 <ng-template #itemTemplateCustomer let-item>
                                                     <a [innerHTML]="item.customerName"></a>
                                                 </ng-template>
-    
+
                                                 <ng-template #notFoundTemplate let-notFound>
                                                     <div [innerHTML]="notFound"></div>
                                                 </ng-template>
-    
+
                                             </div>
                                             <div *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
                                                 class="alert alert-danger alertdangerCustomCSS mt-2">
                                                 Company Name is Required
                                             </div>
-    
+
                                         </div>
                                     </div>
                                     <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-    
+
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="ng-autocomplete">
-                                                <label for="GS_DIDNumber" class="col-lg-12 col-form-label">DID
+                                                <label for="GS_DIDNumber" class="col-lg-12 col-form-label"
+                                                    style="font-weight: 420;color: blue; ">DID
                                                     Number<span class="mandatoryField">
                                                         *</span></label>
                                                 <ng-autocomplete [data]="searchResult_DIDNumber"
@@ -387,25 +377,25 @@
                                                     [itemTemplate]="itemTemplatedidnumbers"
                                                     [notFoundTemplate]="notFoundTemplate">
                                                 </ng-autocomplete>
-    
+
                                                 <ng-template #itemTemplatedidnumbers let-item>
                                                     <a [innerHTML]="item.did_numbers"></a>
                                                 </ng-template>
-    
+
                                                 <ng-template #notFoundTemplate let-notFound>
                                                     <div [innerHTML]="notFound"></div>
                                                 </ng-template>
-    
+
                                             </div>
                                             <div *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
                                                 class="alert alert-danger alertdangerCustomCSS mt-2">
                                                 Company Name is Required
                                             </div>
-    
+
                                         </div>
                                     </div>
-    
-    
+
+
                                     <!-- <div class="col-lg-12">
                                 <div class="form-group row">
                                     <label for="companyCode " class="col-lg-12 col-form-label">DID Number<span
@@ -417,13 +407,14 @@
                                     </div>
                                 </div>
                             </div> -->
-    
+
                                     <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-    
+
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="ng-autocomplete">
-                                                <label for="GS_LicenseNumber" class="col-lg-12 col-form-label">License
+                                                <label for="GS_LicenseNumber" class="col-lg-12 col-form-label"
+                                                    style="font-weight: 420;color: blue; ">License
                                                     Number<span class="mandatoryField">
                                                         *</span></label>
                                                 <ng-autocomplete [data]="searchResult_LicenseNumber"
@@ -435,40 +426,40 @@
                                                     [itemTemplate]="itemTemplateLicensenumbers"
                                                     [notFoundTemplate]="notFoundTemplate">
                                                 </ng-autocomplete>
-    
+
                                                 <ng-template #itemTemplateLicensenumbers let-item>
                                                     <a [innerHTML]="item.license_key"></a>
                                                 </ng-template>
-    
+
                                                 <ng-template #notFoundTemplate let-notFound>
                                                     <div [innerHTML]="notFound"></div>
                                                 </ng-template>
-    
+
                                             </div>
                                             <div *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
                                                 class="alert alert-danger alertdangerCustomCSS mt-2">
                                                 Company Name is Required
                                             </div>
-    
+
                                         </div>
                                     </div>
                                 </div>
-    
-    
-    
-    
+
+
+
+
                             </div>
-                            
-    
+
+
                         </form>
-                      
+
                     </div>
-                    
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" (click)="getSelectedItems();searchGlobalList();">
+                        <button type="button" class="btn btn-primary" (click)="searchGlobalList();">
                             Search
                         </button>
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="gotoRoot()">
                             Cancel
                         </button>
 
@@ -483,87 +474,135 @@
         <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
         <!-------------------ActionIdxxModalAll-Global Search--Start  ------------------------->
         <div class="modal fade" data-backdrop="false" id="ActionIdOutput" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="max-width: 100%;min-height:100% ;">
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="max-width: 100%;min-height:100% ;">
 
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-            <div class="modal-content addcustomernewallcss">
-                <div class="modal-header">
-                    <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
-                        style="color: black !important;">Global Search
-                    </h1>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                <div class="modal-content addcustomernewallcss">
+                    <div class="modal-header">
+                        <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle">Global
+                            Search
+                        </h1>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
 
-                </div>
-                <div class="modal-body" >
-                    <div id="accordion">
-                        <div class="card" *ngFor="let item of SelectPageList;let i=index">
-                          <div class="card-header" id="headingOne">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                {{item.menu_name}}
-                              </button>
-                            </h5>
-                          </div>
-                      
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                {{item.pageId}}
-                            </div>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="accordion" id="accordionExample">
+
+                            <!-- <div class="card" *ngFor="let item of SelectPageList;let i=index">
+                        <div class="card-header" id="heading{i}">
+                          <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <span> {{item.menu_name}}</span>
+                              <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                              <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                            </button>
+                          </h2>
+                        </div>
+                    
+                        <div id="collapseOne" class="collapse show" aria-labelledby="heading{i}" data-parent="#accordionExample">
+                          <div class="card-body">
+                            {{item.pageId}}
                           </div>
                         </div>
-                        
-                        <div class="card">
-                          <div class="card-header" id="headingTwo">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                               Proforma Invoice
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                            <div class="card-body">
-                                <app-proforma-invoice></app-proforma-invoice> 
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingThree">
-                            <h5 class="mb-0">
-                              <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Invoice
-                              </button>
-                            </h5>
-                          </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                            <div class="card-body">
-                                <app-invoice></app-invoice> 
-                            </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                              <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  Quotation
-                                </button>
-                              </h5>
-                            </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-                              <div class="card-body">
-                                  <app-quotationnew></app-quotationnew> 
-                              </div>
-                            </div>
-                          </div>
-                      </div>
-                     <!-- <app-proforma-invoice></app-proforma-invoice>    -->
-                    <!-- <div class="accordion" id="accordionExample">
-                        <div class="card">
+                      </div> -->
+
+
+
+                            <!-- <div class="card" *ngFor="let item of componentDynamic;let i=index">
+                                <div class="card-header" id="heading{i}">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button"
+                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            <span> {{item}}</span>
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="heading{i}"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        {{item}}
+                                        <div [ngSwitch]="'{{item}}'">
+                                            <div *ngSwitchCase="'Invoice'">
+                                                alert("invoice alert")
+                                                <app-dup-proforma-invoice></app-dup-proforma-invoice>
+                                            </div>
+                                            <div *ngSwitchCase="'Customer New'">
+                                                alert("customer new alert")
+                                                <app-dup-customer-new-all></app-dup-customer-new-all>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- <div class="card" *ngFor="let item of componentDynamic; let i = index">
+                                <div class="card-header" [id]="'heading' + i">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button"
+                                            data-toggle="collapse" [attr.data-target]="'#collapse' + i"
+                                            [attr.aria-expanded]="i === 0" [attr.aria-controls]="'collapse' + i">
+                                            <span>{{item}}</span>
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div [id]="'collapse' + i" class="collapse" [attr.aria-labelledby]="'heading' + i"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+
+                                        <ng-container [ngSwitch]="item">
+                                            <div *ngSwitchCase="'Credit Note'">
+                                                <p>Credit Note</p>
+                                            </div>
+                                            <div *ngSwitchCase="'Customer New'">
+
+                                                <app-dup-customer-new-all></app-dup-customer-new-all>
+                                            </div>
+                                            <div *ngSwitchCase="'Customer Project'">
+                                                <p>Customer Project</p>
+                                            </div>
+                                            <div *ngSwitchCase="'DID Number'">
+                                                <p>DID Number</p>
+                                            </div>
+                                            <div *ngSwitchCase="'Invoice'">
+                                                <app-dup-invoice></app-dup-invoice>
+                                            </div>
+                                            <div *ngSwitchCase="'License Key New'">
+                                                <p>License Key New</p>
+                                            </div>
+                                            <div *ngSwitchCase="'Prepaid Note'">
+                                                <p>Prepaid Note</p>
+                                            </div>
+                                            <div *ngSwitchCase="'Proforma Invoice'">
+                                                <app-dup-proforma-invoice></app-dup-proforma-invoice>
+                                            </div>
+                                            <div *ngSwitchCase="'Quotation New'">
+                                                <app-dup-quotation-new></app-dup-quotation-new>
+                                            </div>
+                                            <div *ngSwitchCase="'Vs Provisioning'">
+                                                <p>Vs Provisioning</p>
+                                            </div>
+
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                             <div class="card">
                           <div class="card-header" id="headingOne">
                             <h2 class="mb-0">
                               <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <span>Collapsible Group Item #1</span>
+                                <span>Proforma Invoice</span>
                                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                 <i class="fa fa-chevron-up" aria-hidden="true"></i>
                               </button>
@@ -572,7 +611,7 @@
                       
                           <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
-                              Some placeholder content for the first accordion panel. This panel is shown by default, thanks to the <code>.show</code> class.
+                                <app-dup-proforma-invoice></app-dup-proforma-invoice>
                             </div>
                           </div>
                         </div>
@@ -580,7 +619,7 @@
                           <div class="card-header" id="headingTwo">
                             <h2 class="mb-0">
                               <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <span>Collapsible Group Item #2</span>
+                                <span>Invoice</span>
                                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                 <i class="fa fa-chevron-up" aria-hidden="true"></i>
                               </button>
@@ -588,7 +627,8 @@
                           </div>
                           <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                             <div class="card-body">
-                              Some placeholder content for the second accordion panel. This panel is hidden by default.
+                                
+                                <app-dup-invoice></app-dup-invoice>
                             </div>
                           </div>
                         </div>
@@ -596,7 +636,7 @@
                           <div class="card-header" id="headingThree">
                             <h2 class="mb-0">
                               <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <span>Collapsible Group Item #3</span>
+                                <span>Quotation</span>
                                 <i class="fa fa-chevron-down" aria-hidden="true"></i>
                                 <i class="fa fa-chevron-up" aria-hidden="true"></i>
                               </button>
@@ -604,26 +644,42 @@
                           </div>
                           <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                             <div class="card-body">
-                              And lastly, the placeholder content for the third and final accordion panel. This panel is hidden by default.
+                             <app-dup-quotation-new></app-dup-quotation-new>
                             </div>
                           </div>
                         </div>
-                      </div> -->
-                </div>
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                  <span>Customer</span>
+                                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                              <div class="card-body">
+                               <app-dup-customer-new-all></app-dup-customer-new-all>
+                              </div>
+                            </div>
+                          </div> 
+                        </div>
+                    </div>
 
-                <div class="modal-footer">
+                    <div class="modal-footer">
 
-                    <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
-                        Cancel
-                    </button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
+                            Cancel
+                        </button>
 
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <!-------------------ActionIdxxModalAll-Global Search--Ends  ------------------------->
 
-         
+
 
         <!------------------ActionIdxx1-Global Search-Starts  ---------------------->
         <div class="modal fade" data-backdrop="false" id="ActionIdxx3" tabindex="-1" role="dialog"
@@ -679,9 +735,18 @@
                 <!-- ends: .nav-support -->
 
                 <!-- ends: .nav-flag-select -->
+                <li>
+
+                    <a href="#" class="navbar-brand" (click)="PageList()">
+                        <!-- <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:50px" alt="img"
+                    data-toggle="modal" data-target="#ActionIdxx2"></a> -->
+                        <img class="svg" src="assets/img/icon2/Global_Searc.png" style="height: 30px;width:30px"
+                            alt="img" title="Global Search" data-toggle="modal" data-target="#ActionIdxx2"></a>
+                </li>
                 <li> <a href="#" class="navbar-brand">
-                    <img class="svg" src="assets/img/icon2/up.jpeg" style="height: 30px;width:30px" alt="img"
-                        data-toggle="modal" data-target="#ActionIdxx1"></a></li>
+                        <img class="svg" src="assets/img/icon2/checklist.png" title="Task List"
+                            style="height: 30px;width:30px" alt="img" data-toggle="modal"
+                            data-target="#ActionIdxx1"></a></li>
                 <li class="nav-author">
 
                     <!-- <a href="https://dev.cal4care.com/erp/quotationNew.php?ac=QuotationNew" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle"></a> -->
@@ -736,8 +801,7 @@
                     <span data-feather="more-vertical"></span></a>
             </div>
         </div>
-      
+
         <!-- ends: .navbar-right -->
     </nav>
 </header>
-

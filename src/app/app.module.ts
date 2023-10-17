@@ -91,6 +91,17 @@ import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
 import { EditinvoiceDIDComponent } from './billing/invoice/editinvoice-did/editinvoice-did.component';
 import { DatetimeTestComponent } from './datetime-test/datetime-test.component';
+import { DupProformaInvoiceComponent } from './billing/dup-proforma-invoice/dup-proforma-invoice.component';
+import { DupAddPIComponent } from './billing/dup-proforma-invoice/dup-add-pi/dup-add-pi.component';
+import { DupEditPIComponent } from './billing/dup-proforma-invoice/dup-edit-pi/dup-edit-pi.component';
+import { DupInvoiceComponent } from './billing/dup-invoice/dup-invoice.component';
+import { DupAddInvoiceComponent } from './billing/dup-invoice/dup-add-invoice/dup-add-invoice.component';
+import { DupEditInvoiceComponent } from './billing/dup-invoice/dup-edit-invoice/dup-edit-invoice.component';
+import { DupEditInvoiceDIDComponent } from './billing/dup-invoice/dup-edit-invoice-did/dup-edit-invoice-did.component';
+import { DupCustomerNewAllComponent } from './masters/customer/dup-customer-new-all/dup-customer-new-all.component';
+import { DupQuotationNewComponent } from './billing/dup-quotation-new/dup-quotation-new.component';
+import { DupAddQuotationNewComponent } from './billing/dup-quotation-new/dup-add-quotation-new/dup-add-quotation-new.component';
+import { DupEditQuotationNewComponent } from './billing/dup-quotation-new/dup-edit-quotation-new/dup-edit-quotation-new.component';
 
 
 
@@ -165,7 +176,18 @@ import { DatetimeTestComponent } from './datetime-test/datetime-test.component';
      EditNewEnquiryComponent,
      ResellerPaymentComponent,
      EditinvoiceDIDComponent,
-     DatetimeTestComponent
+     DatetimeTestComponent,
+     DupProformaInvoiceComponent,
+     DupAddPIComponent,
+     DupEditPIComponent,
+     DupInvoiceComponent,
+     DupAddInvoiceComponent,
+     DupEditInvoiceComponent,
+     DupEditInvoiceDIDComponent,
+     DupCustomerNewAllComponent,
+     DupQuotationNewComponent,
+     DupAddQuotationNewComponent,
+     DupEditQuotationNewComponent
      
     
   ],

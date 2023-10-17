@@ -4,6 +4,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { ActivatedRoute } from '@angular/router';
 import { ServerService } from './services/server.service';
 import { DatePipe } from '@angular/common';
+declare var $:any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -108,6 +109,8 @@ export class AppComponent {
       
    
     }else if (localStorage.getItem('access_token')) {
+      // $('#ActionIdOutput').modal('hide');
+      // $("body").removeClass("modal-open");
       this.templateAuthView = false;
 
     } else {
