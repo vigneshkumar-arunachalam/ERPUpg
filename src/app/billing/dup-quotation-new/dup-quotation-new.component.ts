@@ -165,6 +165,7 @@ export class DupQuotationNewComponent implements OnInit {
   quotationPermission_Share: any;
   user_ids: any;
   Global_search_filter = false;
+  quotDelay: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       console.log(params)
@@ -178,17 +179,21 @@ export class DupQuotationNewComponent implements OnInit {
     );
     $("body").removeClass("modal-open");
     this.serverService.global_search_quotation.subscribe((val: any) => {
-      console.log("before parse-global_search_invoice", val)
+      console.log("received data from Global search-before parse-Quotation", val)
       var k = JSON.parse(val);
-      console.log("after parse-global_search_invoice", k)
+      this.quotDelay=JSON.parse(val);
+      console.log("received data from Global search-after parse-Quotation", k);
+
       this.quotation_list = k;
+    
       if (k != '') {
         this.Global_search_filter = true;
       } else {
         this.Global_search_filter = false;
       }
-      
+      return false;
     });
+    
     this.setActualCost_FormGroup = this.fb.group({
       addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });
@@ -278,6 +283,9 @@ export class DupQuotationNewComponent implements OnInit {
     setTimeout(() => {
       this.quotationList({});
     }, 3000);
+    // setTimeout(() => {
+    //   this.quotation_list =  this.quotDelay;
+    // }, 4000);
 
     this.search_BillerList();
   }
@@ -610,7 +618,7 @@ export class DupQuotationNewComponent implements OnInit {
     // Swal.fire('Loading');
     // Swal.showLoading();
     this.spinner.show();
-    $("#searchQuotationFormId ").modal("hide");
+    $("#searchQuotationFormIdDQ ").modal("hide");
 
     console.log("Quotation List UI Display Data after OnInit ")
     var list_data = this.listDataInfo(data);
@@ -695,7 +703,7 @@ export class DupQuotationNewComponent implements OnInit {
     // }, 2000);
 
     this.spinner.show();
-    $("#addNewQuotationFormId").modal("show");
+    $("#addNewQuotationFormIdDQ").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
@@ -709,10 +717,10 @@ export class DupQuotationNewComponent implements OnInit {
     add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
     api_req.element_data = add_newQuotation_req;
-    $("#addNewQuotationFormId").attr("disabled", true);
+    $("#addNewQuotationFormIdDQ").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $("#addNewQuotationFormId").removeAttr("disabled");
+      $("#addNewQuotationFormIdDQ").removeAttr("disabled");
       console.log(response);
 
       console.log("pop up for add quotation", response);
@@ -722,15 +730,15 @@ export class DupQuotationNewComponent implements OnInit {
         this.templateNameList = response.template_name_arr;
         console.log("EnquiryFormList", this.enquiryFromList)
 
-        // $('#addNewQuotationFormId').modal('hide');
+        // $('#addNewQuotationFormIdDQ').modal('hide');
         //this.contactsList({});
 
       }
 
     });
   }
-  editQuotationPopUP(QuotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  editQuotationPopUP(QuotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     $("body").removeClass("modal-open");
     this.edit_quotationID = QuotationId;
     let api_req: any = new Object();
@@ -763,15 +771,15 @@ export class DupQuotationNewComponent implements OnInit {
         });
 
 
-        // $('#addNewQuotationFormId').modal('hide');
+        // $('#addNewQuotationFormIdDQ').modal('hide');
         //this.contactsList({});
 
       }
 
     });
   }
-  duplicateQuotationPopUP(QuotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  duplicateQuotationPopUP(QuotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     $("body").removeClass("modal-open");
     this.duplicate_quotationID = QuotationId;
     let api_req: any = new Object();
@@ -804,15 +812,15 @@ export class DupQuotationNewComponent implements OnInit {
         });
 
 
-        // $('#addNewQuotationFormId').modal('hide');
+        // $('#addNewQuotationFormIdDQ').modal('hide');
         //this.contactsList({});
 
       }
 
     });
   }
-  quotationSharedPersonEdit(QuotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  quotationSharedPersonEdit(QuotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     this.sharePermissionQuotationId = QuotationId;
     let api_req: any = new Object();
     let quot_share_req: any = new Object();
@@ -838,10 +846,10 @@ export class DupQuotationNewComponent implements OnInit {
         this.quotationSharedResult = response.user_list;
         this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',').map(Number);
         console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
-     
+
       }
       else {
-        $("#quotationSharedPersonId").modal("hide");
+        $("#quotationSharedPersonIdDQ").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -883,7 +891,7 @@ export class DupQuotationNewComponent implements OnInit {
           position: 'topRight'
         });
 
-        $('#quotationSharedPersonId').modal('hide');
+        $('#quotationSharedPersonIdDQ').modal('hide');
 
         this.typeConvertionString_quotation_Shared_Permission = [];
         this.quotationList({});
@@ -929,7 +937,7 @@ export class DupQuotationNewComponent implements OnInit {
   //       console.log("response.customer_invoice_details", response.customer_invoice_details)
   //       this.quotationList({});
 
-  //       $("#quotationSharedPersonId").modal("hide");
+  //       $("#quotationSharedPersonIdDQ").modal("hide");
   //       console.log("Quotation Shared checkbox array-after update click", this.quotationSharedCheckboxID_array)
   //       iziToast.success({
   //         message: "Quotation Shared has been Updated",
@@ -980,7 +988,7 @@ export class DupQuotationNewComponent implements OnInit {
   //       console.log("Initial Quotation list before select/deselect", this.quotationSharedCheckboxID_array);
   //     }
   //     else {
-  //       $("#quotationSharedPersonId").modal("hide");
+  //       $("#quotationSharedPersonIdDQ").modal("hide");
   //       iziToast.error({
   //         message: "Data Not Found",
   //         position: 'topRight'
@@ -1115,8 +1123,8 @@ export class DupQuotationNewComponent implements OnInit {
     console.log("after--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
-  quotationApprovalEdit(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  quotationApprovalEdit(id: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
 
     this.quotationApproval_ID = id;
     let api_req: any = new Object();
@@ -1141,7 +1149,7 @@ export class DupQuotationNewComponent implements OnInit {
 
       }
       else {
-        $("#quotationApprovalId").modal("hide");
+        $("#quotationApprovalIdDQ").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1190,10 +1198,10 @@ export class DupQuotationNewComponent implements OnInit {
 
     api_req.element_data = quot_approvalUpdate_req;
 
-    $("#quotationApprovalId").attr("disabled", true);
+    $("#quotationApprovalIdDQ").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $("#quotationApprovalId").removeAttr("disabled");
+      $("#quotationApprovalIdDQ").removeAttr("disabled");
       console.log("response status", response.status);
       if (response.status == true) {
 
@@ -1201,12 +1209,12 @@ export class DupQuotationNewComponent implements OnInit {
           message: "Quotation Sent for Approval",
           position: 'topRight'
         });
-        $("#quotationApprovalId").modal("hide");
+        $("#quotationApprovalIdDQ").modal("hide");
         this.quotationList({})
 
       }
       else {
-        $("#quotationApprovalId").modal("hide");
+        $("#quotationApprovalIdDQ").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1228,8 +1236,8 @@ export class DupQuotationNewComponent implements OnInit {
     this.quotationApprovalForm.reset();
     window.location.reload()
   }
-  deleteQuotation(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  deleteQuotation(id: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1272,12 +1280,12 @@ export class DupQuotationNewComponent implements OnInit {
 
 
   }
-  colorFunction(colorcode:any){
+  colorFunction(colorcode: any) {
 
 
   }
-  setTemplateName(quotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  setTemplateName(quotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
 
     this.template_quotationID = quotationId;
     let api_req: any = new Object();
@@ -1324,14 +1332,14 @@ export class DupQuotationNewComponent implements OnInit {
 
       console.log("set template name update", response);
       if (response != '') {
-        $("#setTemplateNameId").modal("hide");
+        $("#setTemplateNameIdDQ").modal("hide");
       }
-      // $("#setTemplateNameId").modal("hide");
+      // $("#setTemplateNameIdDQ").modal("hide");
     });
 
   }
-  setActualCost(quotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  setActualCost(quotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     this.actualCost_quotationID = quotationId;
     let api_req: any = new Object();
     let actualCost_req: any = new Object();
@@ -1408,7 +1416,7 @@ export class DupQuotationNewComponent implements OnInit {
           position: 'topRight'
         });
 
-        $("#setActualCostId").modal("hide");
+        $("#setActualCostIdDQ").modal("hide");
 
 
       }
@@ -1417,10 +1425,10 @@ export class DupQuotationNewComponent implements OnInit {
 
   }
 
-  fileAttachmentEdit(ID: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  fileAttachmentEdit(ID: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     this.myFiles = [];
-    $("#fileAttachmentFormId").modal("show");
+    $("#fileAttachmentFormIdDQ").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttach_quotationID = ID;
     let api_req: any = new Object();
@@ -1494,7 +1502,7 @@ export class DupQuotationNewComponent implements OnInit {
               position: 'topRight'
             });
 
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormIdDQ").modal("hide");
 
           } else {
             iziToast.warning({
@@ -1552,7 +1560,7 @@ export class DupQuotationNewComponent implements OnInit {
   //         self.quotationList({});
   //         console.log(result);
   //         Swal.close();
-  //         $("#fileAttachmentFormId").modal("hide");
+  //         $("#fileAttachmentFormIdDQ").modal("hide");
   //         this.edit_array = [];
 
   //         iziToast.success({
@@ -1612,7 +1620,7 @@ export class DupQuotationNewComponent implements OnInit {
             self.quotationList({});
             console.log(result);
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormIdDQ").modal("hide");
             this.edit_array = [];
 
             iziToast.success({
@@ -1622,7 +1630,7 @@ export class DupQuotationNewComponent implements OnInit {
           }
           else {
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormIdDQ").modal("hide");
 
             iziToast.warning({
               message: "File Attachment Update Failed",
@@ -1638,7 +1646,7 @@ export class DupQuotationNewComponent implements OnInit {
             position: 'topRight'
           });
           Swal.close();
-          $("#fileAttachmentFormId").modal("hide");
+          $("#fileAttachmentFormIdDQ").modal("hide");
         }
 
       })
@@ -1646,8 +1654,8 @@ export class DupQuotationNewComponent implements OnInit {
 
     }
   }
-  Email(QuotationID: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  Email(QuotationID: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     this.emailForm.reset();
     this.EmailQuotationID = QuotationID;
 
@@ -1668,7 +1676,7 @@ export class DupQuotationNewComponent implements OnInit {
       if (response != true) {
         // this.myForm.reset();
         console.log("emailpagecontent", response)
-        // $("#fileAttachmentFormId").modal("hide");
+        // $("#fileAttachmentFormIdDQ").modal("hide");
         this.email_fromList = response.email_from;
         this.email_crmTemplateList = response.crm_template;
         this.email_cc_userList = response.cc_user;
@@ -1795,7 +1803,7 @@ export class DupQuotationNewComponent implements OnInit {
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
+        $("#TextEditorIdDQ").modal("hide");
         tinymce.activeEditor.setContent("");
         this.quotationList({})
         Swal.close();
@@ -1808,7 +1816,7 @@ export class DupQuotationNewComponent implements OnInit {
       else {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
+        $("#TextEditorIdDQ").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.quotationList({})
@@ -1881,8 +1889,8 @@ export class DupQuotationNewComponent implements OnInit {
     }
   }
 
-  quotationCommentsEdit(quotationID: any, transactionID: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  quotationCommentsEdit(quotationID: any, transactionID: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     console.log("transactionid", transactionID)
     if (transactionID != null) {
 
@@ -1907,7 +1915,7 @@ export class DupQuotationNewComponent implements OnInit {
 
       });
     } else {
-      $('#quotationCommentsId').modal('hide');
+      $('#quotationCommentsIdDQ').modal('hide');
 
       iziToast.warning({
         message: "Transaction ID is empty. Unable to save Comments. Please try with Transaction ID",
@@ -1936,7 +1944,7 @@ export class DupQuotationNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
-        $('#quotationCommentsId').modal('hide');
+        $('#quotationCommentsIdDQ').modal('hide');
         iziToast.success({
           message: "Comment Added successfully",
           position: 'topRight'
@@ -1959,8 +1967,8 @@ export class DupQuotationNewComponent implements OnInit {
   PIEdit1(quotationId: any) {
 
   }
-  PIEdit(quotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  PIEdit(quotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     this.PIResult = [];//for refreshing we are emptying the variable
     // this.invoiceCheckboxID_array=[];
     //for refreshing we are emptying the variable
@@ -2008,7 +2016,7 @@ export class DupQuotationNewComponent implements OnInit {
     }
   }
   quotationConvertPI($event: MouseEvent) {
-this.spinner.show();
+    this.spinner.show();
     let api_req: any = new Object();
     let api_quotConvertPI_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -2021,12 +2029,12 @@ this.spinner.show();
     api_quotConvertPI_req.quotationId = this.quotationID_PI;
     api_req.element_data = api_quotConvertPI_req;
 
-    $("#PIId").attr("disabled", true);
+    $("#PIIdDQ").attr("disabled", true);
     ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       ($event.target as HTMLButtonElement).disabled = false;
-      $("#PIId").removeAttr("disabled");
+      $("#PIIdDQ").removeAttr("disabled");
       console.log("response-quotation convert pi", response)
       if (response.status == true) {
         iziToast.success({
@@ -2034,10 +2042,10 @@ this.spinner.show();
           position: 'topRight'
         });
         this.quotationList({});
-        $('#PIId').modal('hide');
+        $('#PIIdDQ').modal('hide');
       }
       else {
-        $('#PIId').modal('hide');
+        $('#PIIdDQ').modal('hide');
         iziToast.warning({
           message: "Data Not Found",
           position: 'topRight'
@@ -2053,18 +2061,18 @@ this.spinner.show();
       console.log("final error", error);
     }
   }
-  pdf(quotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
- var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
-//    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+  pdf(quotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
+    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+    //    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
     window.open(url, '_blank');
     console.log("url", url)
-    $('#pdfFormId').modal('hide');
+    $('#pdfFormIdDQ').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
   }
-  quotationExcelExport(quotationId: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  quotationExcelExport(quotationId: any, i: any) {
+    $("#ActionIdquotdup" + i).modal("hide");
     this.spinner.show();
     let api_req: any = new Object();
     let api_quotExcel_req: any = new Object();
@@ -2186,7 +2194,7 @@ this.spinner.show();
 
     this.router.navigate(['/addquotationnew'], { queryParams: { formID: enq_formID, subject: enq_subject, validity: enq_quotation_valid_day, version: enq_duplicate_version } });
 
-    $('#addNewQuotationFormId').modal('hide');
+    $('#addNewQuotationFormIdDQ').modal('hide');
   }
   EditQuotationGo() {
     console.log("e_formID", this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP)
@@ -2208,7 +2216,7 @@ this.spinner.show();
         e_version: enq_duplicate_version
       }
     });
-    $('#editNewQuotationFormId').modal('hide');
+    $('#editNewQuotationFormIdDQ').modal('hide');
 
 
   }
@@ -2243,7 +2251,7 @@ this.spinner.show();
       var enq_quotation_valid_day = this.duplicateQuotationPopUpForm.value.d_quotationValidity_addPopUP;
       var enq_duplicate_version = this.duplicateQuotationPopUpForm.value.d_version_enqForm_addPopUP;
       this.router.navigate(['/editquotationnew'], { queryParams: { e_quotID: editQuotID, e_formID: enq_formID, e_subject: enq_subject, e_validity: enq_quotation_valid_day, e_version: enq_duplicate_version } });
-      $('#duplicateQuotationFormId').modal('hide');
+      $('#duplicateQuotationFormIdDQ').modal('hide');
 
     });
     // console.log("editQuotID", editQuotID);

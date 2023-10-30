@@ -18,7 +18,7 @@
                         </button>
 
                         <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                             data-target="#searchQuotationFormId">
+                             data-target="#searchQuotationFormIdDQ">
                             <i class="fas fa-search" style="margin-right:0;"></i>
                             Search
                         </button>
@@ -195,12 +195,12 @@
 
                                                 <div class="dropdown">
                                                     <div style="display: flex;align-items: center;">
-                                                      <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"><i class="fa fa-bars"></i></button>
+                                                      <button class="btn1" data-toggle="modal" attr.data-target="#ActionIdquotdup{{i}}"><i class="fa fa-bars"></i></button>
                                                   
                                                     </div>
-                                                    <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
+                                                    <div class="modal fade" data-backdrop="false" id="ActionIdquotdup{{i}}" tabindex="-1" role="dialog"
                                                       aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                      <div class="modal-dialog modal-dialog-centered ActionId" role="document" style="max-width: 1000px;">
+                                                      <div class="modal-dialog modal-dialog-centered ActionIdquotdup" role="document" style="max-width: 1000px;">
                                                         <div class="modal-content">
                                                           <div class="modal-header">
                                                             <span class="col-12 modal-title text-center"
@@ -217,7 +217,7 @@
                                                                                     justify-content: space-between;">
                                                               <ul>
                                                                 <li class="dropdown__item" *ngIf="(this.quotationPermission_Edit=='1')">
-                                                                  <a class="hover1" title="Edit Quotation" data-toggle="modal" data-target="#editNewQuotationFormId"
+                                                                  <a class="hover1" title="Edit Quotation" data-toggle="modal" data-target="#editNewQuotationFormIdDQ"
                                                                     (click)="editQuotationPopUP(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon/nfc-pen-b.png">
                                                                     <img class="hide" src="assets/img/icon/nfc-pen.png">
@@ -226,7 +226,7 @@
                                                   
                                                                 </li>
                                                                 <li class="dropdown__item" *ngIf="(this.quotationPermission_Edit=='1')">
-                                                                  <a class="hover2" title="Duplicate" data-toggle="modal" data-target="#duplicateQuotationFormId"
+                                                                  <a class="hover2" title="Duplicate" data-toggle="modal" data-target="#duplicateQuotationFormIdDQ"
                                                                     (click)="duplicateQuotationPopUP(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon/copy-b.png">
                                                                     <img class="hide" src="assets/img/icon/copy.png">
@@ -255,7 +255,7 @@
                                                               <ul>
                                                                 <li class="dropdown__item" *ngIf="(this.quotationPermission_Mail=='1')">
                                                                     <a class="hover2 " title="Email" (click)="Email(list.quotationId,i)" data-toggle="modal"
-                                                                      data-target="#TextEditorId">
+                                                                      data-target="#TextEditorIdDQ">
                                                                       <img class="show" src="assets/img/icon2/gmail-blue.png">
                                                                       <img class="hide" src="assets/img/icon2/gmail-black.png">
                                                                       <span><b style="padding: 0px 20px;">-</b><strong>Email</strong></span>
@@ -264,7 +264,7 @@
                                                                   </li>
                                                                 <li class="dropdown__item" *ngIf="(list.approval_staus=='0')">
                                                                   <a class="hover1" title="Quotation Approval" *ngIf="(list.approval_staus=='0')" data-toggle="modal"
-                                                                    data-target="#quotationApprovalId" (click)="quotationApprovalEdit(list.quotationId,i)">
+                                                                    data-target="#quotationApprovalIdDQ" (click)="quotationApprovalEdit(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon/tick-b.png">
                                                                     <img class="hide" src="assets/img/icon/tick.png">
                                                                     <span><b style="padding: 0px 20px;">-</b><strong>Quotation Approval</strong></span>
@@ -272,7 +272,7 @@
                                                                 </li>
                                                                 <li class="dropdown__item">
                                                                   <a class="hover2" title="Proforma Invoice" *ngIf="(list.pi_convert_status=='0')" data-toggle="modal"
-                                                                    data-target="#PIId" (click)="PIEdit(list.quotationId,i)">
+                                                                    data-target="#PIIdDQ" (click)="PIEdit(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon/pi-b.png">
                                                                     <img class="hide" src="assets/img/icon/pi.png">
                                                                     <span><b style="padding: 0px 20px;">-</b><strong>Proforma Invoice</strong></span>
@@ -282,7 +282,7 @@
                                                               </ul>
                                                               <ul>
                                                                 <li class="dropdown__item">
-                                                                  <a class="hover1" title="File Attachment" data-toggle="modal" data-target="#fileAttachmentFormId"
+                                                                  <a class="hover1" title="File Attachment" data-toggle="modal" data-target="#fileAttachmentFormIdDQ"
                                                                     (click)="fileAttachmentEdit(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon/paperclip-b.png">
                                                                     <img class="hide" src="assets/img/icon/paperclip.png">
@@ -292,21 +292,21 @@
                                                   
                                                                 <li class="dropdown__item" *ngIf="(this.quotationPermission_Share=='1')">
                                                                   <a class="hover2" title="Share Permission" data-toggle="modal" *ngIf="(list.share_access_state=='0')"
-                                                                    data-target="#quotationSharedPersonId" (click)="quotationSharedPersonEdit(list.quotationId,i)">
+                                                                    data-target="#quotationSharedPersonIdDQ" (click)="quotationSharedPersonEdit(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon2/share-square-blue.png">
                                                                     <img class="hide" src="assets/img/icon2/share-square-black.png">
                                                                     <span><b style="padding: 0px 20px;">-</b><strong>Share Permission</strong></span>
                                                                   </a>
                                                              
                                                                   <a class="hover2" title="Share Permission" data-toggle="modal" *ngIf="(list.share_access_state=='1')"
-                                                                    data-target="#quotationSharedPersonId" (click)="quotationSharedPersonEdit(list.quotationId,i)">
+                                                                    data-target="#quotationSharedPersonIdDQ" (click)="quotationSharedPersonEdit(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon2/share-square-red.png">
                                                                     <img class="hide" src="assets/img/icon2/share-square-black.png">
                                                                     <span><b style="padding: 0px 20px;">-</b><strong>Share Permission</strong></span>
                                                                   </a>
                                                                 </li>
                                                                 <li class="dropdown__item">
-                                                                  <a class="hover1" title="Set Template Name" data-toggle="modal" data-target="#setTemplateNameId"
+                                                                  <a class="hover1" title="Set Template Name" data-toggle="modal" data-target="#setTemplateNameIdDQ"
                                                                     (click)="setTemplateName(list.quotationId,i)">
                                                                     <img class="show" src="assets/img/icon/gift-card-b.png">
                                                                     <img class="hide" src="assets/img/icon/gift-card.png">
@@ -319,14 +319,14 @@
                                                               <ul>
                                                                 <li class="dropdown__item" *ngIf="(this.quotationPermission_ActualPrice=='1')">
                                                                     <a class="hover2" title="Set Actual Cost" *ngIf="(list.actual_state=='1')" data-toggle="modal"
-                                                                      data-target="#setActualCostId" (click)="setActualCost(list.quotationId,i)">
+                                                                      data-target="#setActualCostIdDQ" (click)="setActualCost(list.quotationId,i)">
                                                                       <img class="show" src="assets/img/icon/dollar-symbol-b.png">
                                                                       <img class="hide" src="assets/img/icon/dollar-symbol.png">
                                                                       <span><b style="padding: 0px 20px;">-</b><strong>Set Actual Cost</strong></span>
                                                                     </a>
                                                                  
                                                                     <a class="hover2" title="Set Actual Cost" *ngIf="(list.actual_state=='0')" data-toggle="modal"
-                                                                      data-target="#setActualCostId" (click)="setActualCost(list.quotationId,i)">
+                                                                      data-target="#setActualCostIdDQ" (click)="setActualCost(list.quotationId,i)">
                                                                       <img class="show" src="assets/img/icon/dollar-symbol-b.png">
                                                                       <img class="hide" src="assets/img/icon/dollar-symbol.png">
                                                                       <span><b style="padding: 0px 20px;">-</b><strong>Set Actual Cost</strong></span>
@@ -335,7 +335,7 @@
                                                     
                                                                
                                                                   <li class="dropdown__item">
-                                                                    <a class="hover1" title="Quotation Comments" data-toggle="modal" data-target="#quotationCommentsId"
+                                                                    <a class="hover1" title="Quotation Comments" data-toggle="modal" data-target="#quotationCommentsIdDQ"
                                                                       (click)="quotationCommentsEdit(list.quotationId,list.transaction_approval_id,i)">
                                                                       <img class="show" src="assets/img/icon/open-book-b.png">
                                                                       <img class="hide" src="assets/img/icon/open-book.png">
@@ -420,7 +420,7 @@
 </div>
 
 <!-----------------Modal Pop Up (BEGIN) add new Pop Up  in customer Contract Classification------------------>
-<div class="modal fade" id="addNewQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="addNewQuotationFormIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcontractmastercss">
@@ -542,7 +542,7 @@ aria-hidden="true">
 
 
 <!------------Modal Pop Up (BEGIN) edit- Pop Up  in customer Contract Classification------------------>
-<div class="modal fade" id="editNewQuotationFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="editNewQuotationFormIdDQ" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content addcontractmastercss">
@@ -648,7 +648,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <!---------------- vignesh edit-popup New Quotation Pop up ends------------------------------>
 
 <!----------Modal Pop Up (BEGIN) Duplicate- Pop Up  in customer Contract Classification------------------>
-<div class="modal fade" id="duplicateQuotationFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="duplicateQuotationFormIdDQ" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcontractmastercss">
@@ -756,7 +756,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
 
 <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
-<div class="modal fade" id="searchQuotationFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="searchQuotationFormIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content ">
@@ -833,7 +833,7 @@ aria-hidden="true">
 <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Quotation Shared Attachment in customer Contract------------------>
-<div class="modal fade" id="quotationSharedPersonId" tabindex="-1" role="dialog"
+<div class="modal fade" id="quotationSharedPersonIdDQ" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -917,7 +917,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
 
 <!----------Modal Pop Up (BEGIN)  for Quotation Approval in customer Contract------------------>
-<div class="modal fade" id="quotationApprovalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="quotationApprovalIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content quotApprovalcss">
@@ -1041,7 +1041,7 @@ aria-hidden="true">
 
 
 <!----------Modal Pop Up (BEGIN)  for set template name in customer Contract------------------>
-<div class="modal fade" id="setTemplateNameId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="setTemplateNameIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1081,7 +1081,7 @@ aria-hidden="true">
 
 
 <!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
-<div class="modal fade" id="setActualCostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="setActualCostIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1288,7 +1288,7 @@ aria-hidden="true">
 <!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
 
 <!-- -----------------------Modal-Quotation File Attachment begins-------------------------------- -->
-<div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="fileAttachmentFormIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1365,7 +1365,7 @@ aria-hidden="true">
 <!-------------------------- ------Modal-Quotation File Attachment ends-------------------------------------- -->
 
 <!----------Modal Pop Up (BEGIN)  for email Text Editor in customer Contract------>
-<div class="modal fade" id="TextEditorId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="TextEditorIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1536,7 +1536,7 @@ aria-hidden="true">
 
 
 <!-- -----------------------Modal-Quotation Comments begins-------------------------------- -->
-<div class="modal fade" id="quotationCommentsId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="quotationCommentsIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1582,7 +1582,7 @@ aria-hidden="true">
 <!-------------------------- ------Modal-Quotation Comments ends-------------------------------------- -->
 
 <!----------Modal Pop Up (BEGIN)  for PI(performa) in customer Contract------------------>
-<div class="modal fade" id="PIId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="PIIdDQ" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content invoicecss">
@@ -1627,7 +1627,7 @@ aria-hidden="true">
 
 
 <!----------Modal Pop Up (BEGIN) PDF------>
-<div class="modal fade" id="pdfFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="pdfFormIdDQ" tabindex="-1" role="dialog"
 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog" role="document">
     <div class="modal-content temporaryFileGenerateCSS">

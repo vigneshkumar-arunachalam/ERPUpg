@@ -31,136 +31,57 @@
                   <div class="card" *ngFor="let name1 of reseller_name_list; let i = index;">
                     <div class="card-header" [id]="'faqhead' + i" *ngFor="let name of name1">
                       <a href="#" class="btn btn-header-link collapsed" [attr.data-toggle]="'collapse'"
-                        [attr.data-target]="'#faq' + i" aria-expanded="true"
-                        [attr.aria-controls]="'faq' + i">{{name.customerName}}</a>
+                        [attr.data-target]="'#faq' + i" aria-expanded="true" (click)="getResellerPaymentdetails(name.customerId)"
+                        [attr.aria-controls]="'faq' + i">{{name.customerName}}     
+                      </a>
                     </div>
 
                     <div [id]="'faq' + i" class="collapse" [attr.aria-labelledby]="'faqhead' + i"
                       [attr.data-parent]="'#faq'+i">
                       <div class="card-body">
-                        <h1>Referral Amount Details in (SGD)</h1>
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0 table-borderless">
+                        <h1>Referral Amount Details in ({{(payCurrencyName)}})</h1>
+                                                <div class="table-responsive" style="display: inline-flex;" >
+                                                    <table class="table mb-0 table-borderless" *ngFor="let dis of referallAmountDetails;let j=index">
                                                       <thead>
-                                                        <tr class="userDatatable-header">
-                                      
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 APR</span>
+                                                       
+                                                        <tr class="userDatatable-header"  >
+                                                          <th style="background:linear-gradient(to bottom, #7f7fd5 42%, #91eae4 93%);">
+                                                            <!-- <th style="background:linear-gradient(to bottom, #0f3443 42%, #34e89e 93%)!important;"> -->
+                                                            <span class="userDatatable-title">{{dis.date_year}}</span><br>
+                                                            <span class="userDatatable-title">{{dis.date_month_name}}</span><br>
+                                                            <span class="userDatatable-title">{{dis.commission_amt}}</span>
                                                           </th>
-                                      
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 MAY</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 JUNE</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 JULY</span>
-                                                          </th>
-                                      
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 AUG</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 SEP</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 OCT</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 NOV</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 Dec</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2023 JAN</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2023 FEB</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2023 MARCH</span>
-                                                          </th>
-                                      
                                                         </tr>
                                                       </thead>
-                                                      <tbody *ngFor="let list of PI_list; let i = index">
-                                                     
-                                                        <tr>
-                                                     
-                                                          <td>
-                                                            <span>{{ list.apr}}</span>
-                                                          </td>
-                                                          <td><span>{{ list.may}}</span></td>
-                                                          <td><span>{{ list.june}}</span></td>
-                                                          <td><span>{{ list.july}}</span></td>
-                                                          <td><span>{{ list.aug}}</span></td>
-                                                          <td><span>{{ list.sep}}</span></td>
-                                                          <td>
-                                                            <span>{{ list.oct}}</span>
-                                                          </td>
-                                                          <td><span>{{ list.nov}}</span></td>
-                                                          <td><span>{{ list.dec}}</span></td>
-                                                          <td><span>{{ list.jan}}</span></td>
-                                                          <td><span>{{ list.feb}}</span></td>
-                                                          <td><span>{{ list.march}}</span></td>
+                                                      <!-- <tbody>
+                                                        <tr class="userDatatable-header" >
                                       
-                                                          
+                                                          <th>
+                                                            <span class="userDatatable-title">{{dis.date_year}}</span><br>
+                                                            <span class="userDatatable-title">{{dis.date_month_name}}</span><br>
+                                                            <span class="userDatatable-title">{{dis.commission_amt}}</span>
+                                                          </th>
+                          
                                                         </tr>
-                                                      
-                                      
-                                                      </tbody>
+                                                      </tbody> -->
+                                                     
                                                     </table>
                                                   </div>
-                                                  <h1>Payout Details in (SGD)</h1>
-                                                <div class="table-responsive">
-                                                    <table class="table mb-0 table-borderless">
+                                                  <h1>Payout Details in ({{(payCurrencyName)}})</h1>
+                                                <div class="table-responsive" style="display: inline-flex;" >
+                                                    <table class="table mb-0 table-borderless" *ngFor="let dis of payoutAmountDetails;let j=index">
                                                       <thead>
-                                                        <tr class="userDatatable-header">
+                                                        <tr class="userDatatable-header" >
                                       
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 APR</span>
-                                                          </th>
-                                      
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 MAY</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 JUNE</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 JULY</span>
-                                                          </th>
-                                      
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 AUG</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 SEP</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 OCT</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 NOV</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2022 Dec</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2023 JAN</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2023 FEB</span>
-                                                          </th>
-                                                          <th>
-                                                            <span class="userDatatable-title">2023 MARCH</span>
+                                                          <th style="background-color: brown !important;">
+                                                            <span class="userDatatable-title">{{dis.date_year}}</span><br>
+                                                            <span class="userDatatable-title">{{dis.date_month_name}}</span><br>
+                                                            <span class="userDatatable-title">{{dis.commission_amt}}</span>
                                                           </th>
                                       
                                                         </tr>
                                                       </thead>
-                                                      <tbody *ngFor="let list of PI_list; let i = index">
+                                                      <!-- <tbody *ngFor="let list of PI_list; let i = index">
                                                      
                                                         <tr>
                                                      
@@ -185,7 +106,7 @@
                                                         </tr>
                                                       
                                       
-                                                      </tbody>
+                                                      </tbody> -->
                                                     </table>
                                                   </div>
                                                   <h1>List Details</h1>

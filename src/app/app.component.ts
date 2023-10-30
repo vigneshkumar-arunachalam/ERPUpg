@@ -109,7 +109,8 @@ export class AppComponent {
       
    
     }else if (localStorage.getItem('access_token')) {
-      // $('#ActionIdOutput').modal('hide');
+    $('#ActionIdOutput').modal('hide');
+    $('#ActionIdxx2').modal('hide');
       // $("body").removeClass("modal-open");
       this.templateAuthView = false;
 

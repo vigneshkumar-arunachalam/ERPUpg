@@ -947,7 +947,7 @@ export class DupInvoiceComponent implements OnInit {
         //   message: "Sorry, No Matching Data",
         //   position: 'topRight'
         // });
-        $("#searchInvoiceFormId").modal("hide");
+        $("#invsearchInvoiceFormIdDI").modal("hide");
 
       }
       if (response) {
@@ -1020,7 +1020,7 @@ export class DupInvoiceComponent implements OnInit {
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
 
-        $("#searchInvoiceFormId").modal("hide");
+        $("#invsearchInvoiceFormIdDI").modal("hide");
       }
       else {
         Swal.fire({
@@ -1071,7 +1071,7 @@ export class DupInvoiceComponent implements OnInit {
         //   message: "Sorry, No Matching Data",
         //   position: 'topRight'
         // });
-        $("#searchInvoiceFormId").modal("hide");
+        $("#invsearchInvoiceFormIdDI").modal("hide");
 
       }
       if (response) {
@@ -1142,7 +1142,7 @@ export class DupInvoiceComponent implements OnInit {
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
 
-        $("#searchInvoiceFormId").modal("hide");
+        $("#invsearchInvoiceFormIdDI").modal("hide");
       }
       else {
         Swal.fire({
@@ -1170,7 +1170,7 @@ export class DupInvoiceComponent implements OnInit {
   }
   editPIGo(id: any, i: any, didState: any) {
 
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     var editbillID = id;
     var editDIDState = didState;
 
@@ -1199,7 +1199,7 @@ export class DupInvoiceComponent implements OnInit {
   }
 
   duplicatePIGo(id: any, i: any, didState: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     var editDuplicateID = id;
 
 
@@ -1227,10 +1227,10 @@ export class DupInvoiceComponent implements OnInit {
     $("body").removeClass("modal-open");
   }
   clearSearch() {
-    $("#searchInvoiceFormId").modal("show");
+    $("#invsearchInvoiceFormIdDI").modal("show");
   }
   suspendInvoiceGo() {
-    $('#suspendInvoiceFormId').modal('show');
+    $('#invsuspendInvoiceFormIdDI').modal('show');
     this.suspendInvoiceList();
 
   }
@@ -1273,7 +1273,7 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   invoiceSharPersonEdit(Id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.getInvoice1({});
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
@@ -1336,7 +1336,7 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $('#sharPerissionFormId').modal('hide');
+        $('#sharPerissionFormIdDI').modal('hide');
         this.typeConvertionString_invoiceShowPermission = [];
       } else {
         iziToast.warning({
@@ -1354,7 +1354,7 @@ export class DupInvoiceComponent implements OnInit {
       };
   }
   deleteInvoice(billId: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1600,7 +1600,7 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   getInvoice_Post(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.billId_InvoicePost = id;
     this.getInvoice1({});
     let api_req: any = new Object();
@@ -1664,7 +1664,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Invoice Send to post details Successful. ",
           position: 'topRight'
         });
-        $('#InvoiceSendingMethodFormId').modal('hide');
+        $('#InvoiceSendingMethodFormIdDI').modal('hide');
 
       } else {
 
@@ -1673,7 +1673,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Invoice Send to post details not Updated. Please try again",
           position: 'topRight'
         });
-        $('#InvoiceSendingMethodFormId').modal('hide');
+        $('#InvoiceSendingMethodFormIdDI').modal('hide');
       }
     }),
       (error: any) => {
@@ -1710,7 +1710,7 @@ export class DupInvoiceComponent implements OnInit {
 
       }
       else {
-        $("#InvoiceSendingMethodFormId").modal("hide");
+        $("#InvoiceSendingMethodFormIdDI").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1736,7 +1736,7 @@ export class DupInvoiceComponent implements OnInit {
     $("#dateee").val('');
   }
   processPaymentEdit(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
     this.billID_processPayment = id;
     let api_req: any = new Object();
@@ -1773,7 +1773,7 @@ export class DupInvoiceComponent implements OnInit {
         this.getInvoice1({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormIdDI').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1824,13 +1824,13 @@ export class DupInvoiceComponent implements OnInit {
     }
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
-    $("#processPaymentFormId").attr("disabled", true);
+    $("#processPaymentFormIdDI").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#processPaymentFormId").removeAttr("disabled");
+      $("#processPaymentFormIdDI").removeAttr("disabled");
       if (response.status == true) {
 
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormIdDI').modal("hide");
         iziToast.success({
           message: "Payment Process Updated Successfully",
           position: 'topRight'
@@ -1840,7 +1840,7 @@ export class DupInvoiceComponent implements OnInit {
 
       } else {
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormIdDI').modal("hide");
         iziToast.warning({
           message: "Payment Process not displayed. Please try again",
           position: 'topRight'
@@ -1859,7 +1859,7 @@ export class DupInvoiceComponent implements OnInit {
       };
   }
   getEmailDetails(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.email_TemplateSelection = false;
     $('#temp').val('');
 
@@ -1914,7 +1914,7 @@ export class DupInvoiceComponent implements OnInit {
         this.getInvoice1({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormIdDI').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -2071,7 +2071,7 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $("#emailFormId").modal("hide");
+        $("#emailFormIdDI").modal("hide");
         this.getInvoice1({});
 
       }
@@ -2079,7 +2079,7 @@ export class DupInvoiceComponent implements OnInit {
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
-        $("#emailFormId").modal("hide");
+        $("#emailFormIdDI").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.getInvoice1({});
@@ -2159,7 +2159,7 @@ export class DupInvoiceComponent implements OnInit {
     console.log("url", url)
   }
   get_actualcost_details(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
     let api_req: any = new Object();
     let api_invActCost: any = new Object();
@@ -2199,7 +2199,7 @@ export class DupInvoiceComponent implements OnInit {
   }
 
   get_invoice_licence_details(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     let api_req: any = new Object();
     let api_invLicDet: any = new Object();
     api_req.moduleType = "invoice";
@@ -2281,12 +2281,12 @@ export class DupInvoiceComponent implements OnInit {
       };
   }
   fileAttachmentEdit(ID: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     $('#file').val();
     $('#file').val('');
 
     this.myFiles = [];
-    $("#fileAttachmentFormId").modal("show");
+    $("#invfileAttachmentFormIdDI").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttach_quotationID = ID;
     let api_req: any = new Object();
@@ -2364,7 +2364,7 @@ export class DupInvoiceComponent implements OnInit {
             self.getInvoice1({});
             console.log(result);
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#invfileAttachmentFormIdDI").modal("hide");
             this.edit_array = [];
 
             iziToast.success({
@@ -2374,7 +2374,7 @@ export class DupInvoiceComponent implements OnInit {
           }
           else {
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#invfileAttachmentFormIdDI").modal("hide");
 
             iziToast.warning({
               message: "File Attachment Update Failed",
@@ -2390,7 +2390,7 @@ export class DupInvoiceComponent implements OnInit {
             position: 'topRight'
           });
           Swal.close();
-          $("#fileAttachmentFormId").modal("hide");
+          $("#invfileAttachmentFormIdDI").modal("hide");
         }
 
       })
@@ -2441,7 +2441,7 @@ export class DupInvoiceComponent implements OnInit {
               position: 'topRight'
             });
 
-            $("#fileAttachmentFormId").modal("hide");
+            $("#invfileAttachmentFormIdDI").modal("hide");
 
           } else {
             iziToast.warning({
@@ -2461,7 +2461,7 @@ export class DupInvoiceComponent implements OnInit {
 
   setTermsConditionEdit(id: any, i: any) {
     // this.setInvoiceType.reset();
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
     this.TermCondition_BillerID = id;
 
@@ -2489,7 +2489,7 @@ export class DupInvoiceComponent implements OnInit {
 
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#invsettermsConditionFormIdDI').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not displayed. Please try again",
           position: 'topRight'
@@ -2530,10 +2530,10 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        $('#settermsConditionFormId').modal("hide");
+        $('#invsettermsConditionFormIdDI').modal("hide");
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#invsettermsConditionFormIdDI').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not Updated. Please try again",
           position: 'topRight'
@@ -2553,7 +2553,7 @@ export class DupInvoiceComponent implements OnInit {
     this.setTermConditionForm.reset();
   }
   paymentLink(paylink_id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
@@ -2564,7 +2564,7 @@ export class DupInvoiceComponent implements OnInit {
   }
   RecurringEdit(id: any, i: any) {
 
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
     this.recurring_BillerID = id;
     this.getInvoice1({});
@@ -2606,7 +2606,7 @@ export class DupInvoiceComponent implements OnInit {
 
         })
 
-        // $('#RecurringFormId').modal("hide");
+        // $('#RecurringFormIdDI').modal("hide");
         this.getInvoice1({});
 
       } else {
@@ -2616,7 +2616,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Recurring Details not displayed. Please try again",
           position: 'topRight'
         });
-        $('#RecurringFormId').modal("hide");
+        $('#RecurringFormIdDI').modal("hide");
       }
     }),
       (error: any) => {
@@ -2658,7 +2658,7 @@ export class DupInvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $('#RecurringFormId').modal('hide');
+      $('#RecurringFormIdDI').modal('hide');
 
       if (response.status == true) {
         iziToast.success({
@@ -2690,7 +2690,7 @@ export class DupInvoiceComponent implements OnInit {
 
 
   setPreviousDue(id: any, Status_variable: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Previous Due status?',
       text: "You won't be able to revert this!",
@@ -2752,7 +2752,7 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   InvoiceRevenueEdit(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.billId_invoiceRevenue = id;
     let api_req: any = new Object();
     let api_reqInvRe: any = new Object();
@@ -2837,7 +2837,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Revenue Details Updated Successfully",
           position: 'topRight'
         });
-        $('#InvoiceRevenueFormId').modal("hide");
+        $('#InvInvoiceRevenueFormIdDI').modal("hide");
 
 
         this.getInvoice1({});
@@ -2847,7 +2847,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Revenue Details not Updated Successfully",
           position: 'topRight'
         });
-        $('#InvoiceRevenueFormId').modal("hide");
+        $('#InvInvoiceRevenueFormIdDI').modal("hide");
 
 
         this.getInvoice1({});
@@ -2860,7 +2860,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Network Error",
           position: 'topRight'
         });
-        $('#InvoiceRevenueFormId').modal("hide");
+        $('#InvInvoiceRevenueFormIdDI').modal("hide");
 
 
         this.getInvoice1({});
@@ -2869,7 +2869,7 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   getNotes(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.billId_notes = id;
     let api_req: any = new Object();
     let api_reqNotes: any = new Object();
@@ -2923,7 +2923,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Invoice Notes Updated Successfully",
           position: 'topRight'
         });
-        $('#NotesFormId').modal("hide");
+        $('#InvNotesFormIdDI').modal("hide");
 
 
         this.getInvoice1({});
@@ -2933,7 +2933,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Invoice Notes not Updated. Check response",
           position: 'topRight'
         });
-        $('#NotesFormId').modal("hide");
+        $('#InvNotesFormIdDI').modal("hide");
 
 
         this.getInvoice1({});
@@ -2946,7 +2946,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Delivery Order not Updated. Check response",
           position: 'topRight'
         });
-        $('#NotesFormId').modal("hide");
+        $('#InvNotesFormIdDI').modal("hide");
 
 
         this.getInvoice1({});
@@ -2959,7 +2959,7 @@ export class DupInvoiceComponent implements OnInit {
   }
 
   InvoicetoProforma(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to convert Invoice to Proforma?',
       text: "You won't be able to revert this!",
@@ -3014,7 +3014,7 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   DeliveryOrderEdit(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.billerId_deliveryOrder = id;
   }
   // DeliveryOrderUpdate() {
@@ -3039,7 +3039,7 @@ export class DupInvoiceComponent implements OnInit {
   //         message: "Delivery Order Updated Successfully",
   //         position: 'topRight'
   //       });
-  //       $('#DeliveryOrderFormId').modal("hide");
+  //       $('#InvDeliveryOrderFormIdDI').modal("hide");
 
 
   //       this.getInvoice1({});
@@ -3048,7 +3048,7 @@ export class DupInvoiceComponent implements OnInit {
   //         message: "Delivery Order not Updated. Please try again",
   //         position: 'topRight'
   //       });
-  //       $('#DeliveryOrderFormId').modal("hide");
+  //       $('#InvDeliveryOrderFormIdDI').modal("hide");
   //       this.getInvoice1({});
   //     }
   //   }),
@@ -3093,7 +3093,7 @@ export class DupInvoiceComponent implements OnInit {
               message: "Delivery Order Updated Successfully",
               position: 'topRight'
             });
-            $('#DeliveryOrderFormId').modal("hide");
+            $('#InvDeliveryOrderFormIdDI').modal("hide");
 
 
             this.getInvoice1({});
@@ -3103,7 +3103,7 @@ export class DupInvoiceComponent implements OnInit {
               message: "Delivery Order not Updated. Please try again",
               position: 'topRight'
             });
-            $('#DeliveryOrderFormId').modal("hide");
+            $('#InvDeliveryOrderFormIdDI').modal("hide");
             this.getInvoice1({});
           }
         }),
@@ -3121,7 +3121,7 @@ export class DupInvoiceComponent implements OnInit {
   }
 
   setInvoiceTypeNameEdit(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
     this.InvoiceType_BillerID = id;
 
@@ -3150,7 +3150,7 @@ export class DupInvoiceComponent implements OnInit {
 
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#invsetInvoiceTypeNameFormIdDI').modal("hide");
         iziToast.warning({
           message: "Invoice Type Details not displayed. Please try again",
           position: 'topRight'
@@ -3191,10 +3191,10 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#invsetInvoiceTypeNameFormIdDI').modal("hide");
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#invsetInvoiceTypeNameFormIdDI').modal("hide");
         iziToast.warning({
           message: "Invoice Type Details not Updated. Please try again",
           position: 'topRight'
@@ -3264,7 +3264,7 @@ export class DupInvoiceComponent implements OnInit {
 
   // }
   setLocaltoExport(id: any, export_state: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Change?',
       text: "You won't be able to revert this!",
@@ -3324,9 +3324,9 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   invoicetoQuotationEdit(id: any, i: any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     this.billId_InvoicetoQuotation = id;
-    $("#InvoicetoQuotationFormId").modal("show");
+    $("#InvInvoicetoQuotationFormIdDI").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
@@ -3340,9 +3340,9 @@ export class DupInvoiceComponent implements OnInit {
     add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
     api_req.element_data = add_newQuotation_req;
-    $("#InvoicetoQuotationFormId").attr("disabled", true);
+    $("#InvInvoicetoQuotationFormIdDI").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#InvoicetoQuotationFormId").removeAttr("disabled");
+      $("#InvInvoicetoQuotationFormIdDI").removeAttr("disabled");
       console.log(response);
 
       console.log("pop up for add quotation", response);
@@ -3352,7 +3352,7 @@ export class DupInvoiceComponent implements OnInit {
         this.templateNameList = response.template_name_arr;
         console.log("EnquiryFormList", this.enquiryFromList)
 
-        // $('#InvoicetoQuotationFormId').modal('hide');
+        // $('#InvInvoicetoQuotationFormIdDI').modal('hide');
         //this.contactsList({});
 
       }
@@ -3385,7 +3385,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Invoice to Quotation Conversion Successful",
           position: 'topRight'
         });
-        $('#InvoicetoQuotationFormId').modal('hide');
+        $('#InvInvoicetoQuotationFormIdDI').modal('hide');
 
 
       } else {
@@ -3476,7 +3476,7 @@ export class DupInvoiceComponent implements OnInit {
   get_WFA_ResellerCommission(id: any, i: any) {
 
     this.billId_ResellerCommissionId = id;
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdInvDup" + i).modal("hide");
     // $("body").removeClass("modal-open");
 
     this.withoutFormArrayResellerCommissionForm.reset();
@@ -3706,7 +3706,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Reseller Commission Details updated Successful",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
 
 
       } else {
@@ -3716,7 +3716,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "No Match. Please try again",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
       }
     }),
       (error: any) => {
@@ -3725,7 +3725,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
         console.log("final error", error);
       };
 
@@ -3760,7 +3760,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Reseller Commission Details updated Successful",
           position: 'topRight'
         });
-        $('#ResellerCommissionFormId').modal('hide');
+        $('#InvResellerCommissionFormIdDI').modal('hide');
 
 
       } else {
@@ -3770,7 +3770,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "No Match. Please try again",
           position: 'topRight'
         });
-        $('#ResellerCommissionFormId').modal('hide');
+        $('#InvResellerCommissionFormIdDI').modal('hide');
       }
     }),
       (error: any) => {
@@ -3779,7 +3779,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        $('#ResellerCommissionFormId').modal('hide');
+        $('#InvResellerCommissionFormIdDI').modal('hide');
         console.log("final error", error);
       };
 
@@ -3834,7 +3834,7 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $("#setActualCostId").modal("hide");
+        $("#invsetActualCostIdDI").modal("hide");
 
 
       }

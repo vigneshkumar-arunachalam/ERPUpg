@@ -17,11 +17,11 @@
                 style="margin-right:10;"></i>Suspend
             </button>
             <!-- <button type="button" title="Monthly Turn Over" class="btn btn-primary btn-default btn-squared"
-            data-toggle="modal" data-target="#monthlyTurnOverChartFormId" style="margin-right: 10px;"><i
+            data-toggle="modal" data-target="#invmonthlyTurnOverChartFormIdDI" style="margin-right: 10px;"><i
               class="fas  fa-line-chart" style="margin-right:10;"></i>Monthly Turn Over
           </button>
           <button type="button" title="Monthly Turn Over" class="btn btn-primary btn-default btn-squared"
-          data-toggle="modal" data-target="#DailyPaymentChartFormId" style="margin-right: 10px;"><i
+          data-toggle="modal" data-target="#InvDailyPaymentChartFormIdDI" style="margin-right: 10px;"><i
             class="fas  fa-bar-chart" style="margin-right:10;"></i>Daily Payment
         </button> -->
             <button type="button" *ngIf="(invoicePermissionList_add==1)" title="Add New Invoice"
@@ -132,7 +132,7 @@
 
                         <div class="dropdown">
                           <div style="display: flex;align-items: center;">
-                            <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
+                            <button class="btn1" data-toggle="modal" attr.data-target="#ActionIdInvDup{{i}}"
                               (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i></button>
                             
                               <span class="recurring-Status" *ngIf="(recurring_state_all==1)">R</span>
@@ -140,9 +140,9 @@
                               <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                                 src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                           </div>
-                          <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
+                          <div class="modal fade" data-backdrop="false" id="ActionIdInvDup{{i}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered ActionId" role="document"
+                            <div class="modal-dialog modal-dialog-centered ActionIdInvDup" role="document"
                               style="max-width: 1000px;">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -171,7 +171,7 @@
                                     </li>
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
                                       <a *ngIf="(recurring_Status=='1')" class="hover4" title="Un-Recurring"
-                                        data-toggle="modal" data-target="#RecurringFormId"
+                                        data-toggle="modal" data-target="#RecurringFormIdDI"
                                         (click)="RecurringEdit(list.billId,i)">
 
                                         <img class="show" src="assets/img/icon2/R-red.png">
@@ -179,7 +179,7 @@
                                         <span><b style="padding: 0px 20px;">-</b><strong>Recurring</strong></span>
                                       </a>
                                       <a *ngIf="(recurring_Status=='0')" class="hover4" title="Recurring"
-                                        data-toggle="modal" data-target="#RecurringFormId"
+                                        data-toggle="modal" data-target="#RecurringFormIdDI"
                                         (click)="RecurringEdit(list.billId,i)">
 
                                         <img class="show" src="assets/img/icon2/R-blue.png">
@@ -191,7 +191,7 @@
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                       <a *ngIf="(reseller_commissionState=='1')" class="hover3"
                                         title="Set Reseller Commission" data-toggle="modal"
-                                        data-target="#withoutFormArrayResellerCommissionFormId"
+                                        data-target="#invwithoutFormArrayResellerCommissionFormIdDI"
                                         (click)="get_WFA_ResellerCommission(list.billId,i)">
 
                                         <img class="show" src="assets/img/icon2/C-red.png">
@@ -201,7 +201,7 @@
                                       </a>
                                       <a *ngIf="(reseller_commissionState=='0')" class="hover3"
                                         title="Set Reseller Commission" data-toggle="modal"
-                                        data-target="#withoutFormArrayResellerCommissionFormId"
+                                        data-target="#invwithoutFormArrayResellerCommissionFormIdDI"
                                         (click)="get_WFA_ResellerCommission(list.billId,i)">
                                         <img class="show" src="assets/img/icon2/C-blue.png">
                                         <img class="hide" src="assets/img/icon2/C-black.png">
@@ -213,7 +213,7 @@
                                     </li>
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_payment_process==1)">
                                       <a *ngIf="(billStatus=='3')" class="hover4" title="Payment Process"
-                                        data-toggle="modal" data-target="#processPaymentFormId"
+                                        data-toggle="modal" data-target="#processPaymentFormIdDI"
                                         (click)="processPaymentEdit(list.billId,i)">
                                         <img class="show" src="assets/img/icon2/P-red.png">
                                         <img class="hide" src="assets/img/icon2/P-black.png">
@@ -221,7 +221,7 @@
                                         <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
                                       </a>
                                       <a *ngIf="(billStatus!='3')" class="hover4" title="Payment Process"
-                                        data-toggle="modal" data-target="#processPaymentFormId"
+                                        data-toggle="modal" data-target="#processPaymentFormIdDI"
                                         (click)="processPaymentEdit(list.billId,i)">
                                         <img class="show" src="assets/img/icon2/P-blue.png">
                                         <img class="hide" src="assets/img/icon2/P-black.png">
@@ -270,7 +270,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==1)">
                                         <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
-                                          data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
+                                          data-toggle="modal" data-target="#InvoiceSendingMethodFormIdDI"
                                           (click)="getInvoice_Post(list.billId,i)"
                                           (click)="InvoiceSendingMethodEdit(list.billId)">
                                           <img class="show" src="assets/img/icon2/post-blue.png">
@@ -281,7 +281,7 @@
 
                                         <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
                                           class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                          data-target="#InvoiceSendingMethodFormId"
+                                          data-target="#InvoiceSendingMethodFormIdDI"
                                           (click)="getInvoice_Post(list.billId,i)"
                                           (click)="InvoiceSendingMethodEdit(list.billId)">
                                           <img class="show" src="assets/img/icon2/post-red.png">
@@ -295,7 +295,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_sent_to_post==0)">
                                         <a *ngIf="(post_send_status==0)" class="hover3" title="Send Invoice to Post"
-                                          data-toggle="modal" data-target="#InvoiceSendingMethodFormId"
+                                          data-toggle="modal" data-target="#InvoiceSendingMethodFormIdDI"
                                           (click)="getInvoice_Post(list.billId,i)"
                                           (click)="InvoiceSendingMethodEdit(list.billId)">
                                           <img class="show" src="assets/img/icon2/post-blue.png">
@@ -306,7 +306,7 @@
 
                                         <a *ngIf="(post_send_status==1 || post_send_status==2 || post_send_status==3 )"
                                           class="hover3" title="Send Invoice to Post" data-toggle="modal"
-                                          data-target="#InvoiceSendingMethodFormId"
+                                          data-target="#InvoiceSendingMethodFormIdDI"
                                           (click)="getInvoice_Post(list.billId,i)"
                                           (click)="InvoiceSendingMethodEdit(list.billId)">
                                           <img class="show" src="assets/img/icon2/post-red.png">
@@ -319,7 +319,7 @@
 
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_mail==1)">
-                                        <a class="hover4" title="Email" data-toggle="modal" data-target="#emailFormId"
+                                        <a class="hover4" title="Email" data-toggle="modal" data-target="#emailFormIdDI"
                                           (click)="getEmailDetails(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/gmail-blue.png">
                                           <img class="hide" src="assets/img/icon2/gmail-black.png">
@@ -332,7 +332,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_share==1)">
                                         <a *ngIf="(share_access_state==0)" class="hover4" title="Share permission"
-                                          data-toggle="modal" data-target="#sharPerissionFormId"
+                                          data-toggle="modal" data-target="#sharPerissionFormIdDI"
                                           (click)="invoiceSharPersonEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/share-square-blue.png">
                                           <img class="hide" src="assets/img/icon2/share-square-black.png">
@@ -340,7 +340,7 @@
                                               permission</strong></span>
                                         </a>
                                         <a *ngIf="(share_access_state==1)" class="hover4" title="Share permission"
-                                          data-toggle="modal" data-target="#sharPerissionFormId"
+                                          data-toggle="modal" data-target="#sharPerissionFormIdDI"
                                           (click)="invoiceSharPersonEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/share-square-red.png">
                                           <img class="hide" src="assets/img/icon2/share-square-black.png">
@@ -383,7 +383,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_file_attach==1)">
                                         <a class="hover4" title="File Attachment" data-toggle="modal"
-                                          data-target="#fileAttachmentFormId"
+                                          data-target="#invfileAttachmentFormIdDI"
                                           (click)="fileAttachmentEdit(list.billId,i)">
                                           <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
                                             viewBox="0 0 24 24" fill="none" stroke="#6d5dfc" stroke-width="3"
@@ -401,7 +401,7 @@
                                       </li>
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_set_terms_condition==1)">
                                         <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
-                                          data-target="#settermsConditionFormId"
+                                          data-target="#invsettermsConditionFormIdDI"
                                           (click)="setTermsConditionEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/TermsConditions-blue.png">
                                           <img class="hide" src="assets/img/icon2/TermsConditions-black.png">
@@ -413,7 +413,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_revenue==1)">
                                         <a class="hover4" title="Invoice Revenue" data-toggle="modal"
-                                          data-target="#InvoiceRevenueFormId"
+                                          data-target="#InvInvoiceRevenueFormIdDI"
                                           (click)="InvoiceRevenueEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/invoiceRevenueeee-blue.png">
                                           <img class="hide" src="assets/img/icon2/invoiceRevenueeee-black.png">
@@ -427,7 +427,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_set_actual_cost==1)">
                                         <a class="hover4" title="Set Actual Cost" data-toggle="modal"
-                                          data-target="#setActualCostId"
+                                          data-target="#invsetActualCostIdDI"
                                           (click)="get_actualcost_details(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/budget.png">
                                           <img class="hide" src="assets/img/icon2/budget.png">
@@ -438,7 +438,7 @@
                                       </li>
                                       <li class="dropdown__item">
                                         <a class="hover3" title="Set Actual Cost" data-toggle="modal"
-                                          data-target="#setActualCostId"
+                                          data-target="#invsetActualCostIdDI"
                                           (click)="get_actualcost_details(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/budget.png">
                                           <img class="hide" src="assets/img/icon2/budget.png">
@@ -453,7 +453,7 @@
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_set_invoice_type==1)">
                                         <a class="hover4" title="Set Invoice Type Name" data-toggle="modal"
-                                          data-target="#setInvoiceTypeNameFormId"
+                                          data-target="#invsetInvoiceTypeNameFormIdDI"
                                           (click)="setInvoiceTypeNameEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/invoicetpe.png">
                                           <img class="hide" src="assets/img/icon2/invoicetpe.png">
@@ -463,7 +463,7 @@
 
                                       </li>
                                       <li class="dropdown__item">
-                                        <a class="hover3" title="Notes" data-toggle="modal" data-target="#NotesFormId"
+                                        <a class="hover3" title="Notes" data-toggle="modal" data-target="#InvNotesFormIdDI"
                                           (click)="getNotes(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/notepad.png">
                                           <img class="hide" src="assets/img/icon2/notepad-black.png">
@@ -486,7 +486,7 @@
                                       <li class="dropdown__item">
 
                                         <a class="hover3" title="License Details" data-toggle="modal"
-                                          data-target="#LicenseDetailsFormId"
+                                          data-target="#InvLicenseDetailsFormIdDI"
                                           (click)="get_invoice_licence_details(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/licensing.png">
                                           <img class="hide" src="assets/img/icon2/licensing.png">
@@ -498,7 +498,7 @@
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_quotation==1)">
 
                                         <a class="hover4" title="Invoice to Quotation Conversion" data-toggle="modal"
-                                          data-target="#InvoicetoQuotationFormId"
+                                          data-target="#InvInvoicetoQuotationFormIdDI"
                                           (click)="invoicetoQuotationEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/convert.png">
                                           <img class="hide" src="assets/img/icon2/convert.png">
@@ -532,7 +532,7 @@
                                       </li>
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
                                         <a class="hover4" title="Delivery Order" data-toggle="modal"
-                                          data-target="#DeliveryOrderFormId" (click)="DeliveryOrderEdit(list.billId,i)">
+                                          data-target="#InvDeliveryOrderFormIdDI" (click)="DeliveryOrderEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/delivery-blue.png">
                                           <img class="hide" src="assets/img/icon2/delivery-black.png">
 
@@ -644,7 +644,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<!-- <div class="modal fade" id="processPaymentFormId1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<!-- <div class="modal fade" id="processPaymentFormIdDI1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -739,7 +739,7 @@
 <!-------------- Process Payment Pop up ends------------------------------------------>
 
 <!-----------------Modal Pop Up-BEGIN-Invoice Sending Method------------------>
-<div class="modal fade" id="InvoiceSendingMethodFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="InvoiceSendingMethodFormIdDI" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -796,7 +796,7 @@
 <!-------------- -Modal Pop Up-ENDS-Invoice Sending Method------------------------------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
-<div class="modal fade" id="sharPerissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="sharPerissionFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -870,7 +870,7 @@
 <!----------Modal Pop Up (END) for Invoice Show Permission------------------>
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="processPaymentFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -977,7 +977,7 @@
 
 <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
-<div class="modal fade" id="emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="emailFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1163,7 +1163,7 @@
 
 
 <!-----------------Modal Pop Up-Recurring-Begin------------------>
-<div class="modal fade" id="RecurringFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="RecurringFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1287,7 +1287,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) Coupon Assign------------------>
-<div class="modal fade" id="couponAssignFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="couponAssignFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1332,7 +1332,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
-<div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="invfileAttachmentFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1406,7 +1406,7 @@
 
 <!------------------------ set Terms & Condition pop up start  ---------->
 
-<div class="modal fade" id="settermsConditionFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="invsettermsConditionFormIdDI" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1453,7 +1453,7 @@
 
 
 <!----------------------Revenue Details Modal Pop Up Starts------------------------------->
-<div class="modal fade" id="InvoiceRevenueFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="InvInvoiceRevenueFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1611,7 +1611,7 @@
 
 <!------------------------ Delivery Order start  ---------->
 
-<div class="modal fade" id="DeliveryOrderFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="InvDeliveryOrderFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1659,7 +1659,7 @@
 
 <!---------------------- set Invoice Type Name pop up start  -------------------------->
 
-<div class="modal fade" id="setInvoiceTypeNameFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="invsetInvoiceTypeNameFormIdDI" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1705,7 +1705,7 @@
 
 <!------------------------ Notes start  ---------->
 
-<div class="modal fade" id="NotesFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="InvNotesFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -1747,7 +1747,7 @@
 
 <!------------------------  Reseller Commission Details start  ---------->
 
-<div class="modal fade" id="withoutFormArrayResellerCommissionFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="invwithoutFormArrayResellerCommissionFormIdDI" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1856,7 +1856,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) reseller commission------------------>
-<div class="modal fade" id="ResellerCommissionFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="InvResellerCommissionFormIdDI" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -2065,7 +2065,7 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
-<div class="modal fade" id="setActualCostId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="invsetActualCostIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -2263,7 +2263,7 @@
 <!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
 
 <!-----------------Modal Pop Up (BEGIN) Licence Details ------------------>
-<div class="modal fade" id="LicenseDetailsFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="InvLicenseDetailsFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -2412,7 +2412,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) add new Pop Up  in customer Contract Classification------------------>
-<div class="modal fade" id="InvoicetoQuotationFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="InvInvoicetoQuotationFormIdDI" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcontractmastercss">
@@ -2512,7 +2512,7 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
-<div class="modal fade" id="searchInvoiceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="invsearchInvoiceFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
@@ -2638,7 +2638,7 @@
 <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
 
 <!----------Modal Pop Up (BEGIN)  for suspend invoice ------------------>
-<div class="modal fade" id="suspendInvoiceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="invsuspendInvoiceFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
@@ -2789,7 +2789,7 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for Monthly Turn Over Chart ------------------>
-<div class="modal fade" id="monthlyTurnOverChartFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="invmonthlyTurnOverChartFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
@@ -2826,7 +2826,7 @@
 <!----------Modal Pop Up (END)  for Monthly Turn Over Chart  ------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Daily Payment Chart ------------------>
-<div class="modal fade" id="DailyPaymentChartFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="InvDailyPaymentChartFormIdDI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">

@@ -68,6 +68,11 @@ contract_filter=false;
   PG_LicenseKey: any;
   PG_DIDNumbers: any;
   componentDynamic: any;
+  PI_UI_Show: any;
+  Quot_UI_Show: any;
+  Cust_UI_Show: any;
+  Invoice_UI_Show: any;
+  show: boolean=true;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -88,11 +93,13 @@ contract_filter=false;
   keywordDIDNumber = 'did_numbers';
   keywordLicenseNumber = 'license_key';
   ngOnInit(): void {
+    this.show=true;
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.resellerList_CurrencyName ='SGD';
     this.resellerList_ResellerDiscount =0;
     this.resellerList_ResellerId ='Empty';
     this.addSelectPageListCheckboxID_array=["Customer New"];
+    console.log("addSelectPageListCheckboxID_array----initial on load",this.addSelectPageListCheckboxID_array);
     setTimeout(() => {
       this.userName = localStorage.getItem('user_name');
       this.userId = localStorage.getItem('erp_c4c_user_id');
@@ -125,15 +132,19 @@ contract_filter=false;
     this.searchResultTest = item.customerName;
     this.PG_customerId = item.customerId;
     this.PG_customerName = item.customerName;
+    console.log(" this.PG_customerName-customer select change",this.PG_customerName);
     console.log(item.customerId)
     console.log(item.customerName)
 
     this.CompanyName = item.customerName;
     // do something with selected item
   }
-
+  showFunction(){
+    this.show=true;
+  }
   onFocusedCustomer(e: any) {
- 
+   
+    this.show=false;
     let api_req: any = new Object();
     let api_contract_req: any = new Object();
     api_req.moduleType = "global";
@@ -160,7 +171,7 @@ contract_filter=false;
         this.resellerList_ResellerId = response.reseller_info.reseller_id;
         
         this.ContractDetailsForm.patchValue({
-          'contractColor':'#'+response.customer_contract[0].color
+          'contractColor':response.customer_contract[0].color
         })
 
       } else {
@@ -238,6 +249,7 @@ contract_filter=false;
 
     }
     this.addSelectPageListCheckboxID_array.join(',');
+    console.log("addSelectPageListCheckboxID_array----after join",this.addSelectPageListCheckboxID_array);
 
   }
 
@@ -257,7 +269,7 @@ contract_filter=false;
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Change it!'
+      confirmButtonText: 'OK'
     }).then((result: any) => {
       if (result.value) {
         this.spinner.show();
@@ -324,7 +336,7 @@ contract_filter=false;
       api_schGlo_req.customer_id = this.PG_customerId;
     }
 
-
+    console.log(" this.PG_customerName-inside search global list",this.PG_customerName);
     api_schGlo_req.customer_name = this.PG_customerName;
     api_schGlo_req.customer_code = this.PG_CustomerCode;
 
@@ -338,6 +350,7 @@ contract_filter=false;
       });
       return false;
     } else {
+      console.log("addSelectPageListCheckboxID_array----in search global list api-pagename",this.addSelectPageListCheckboxID_array)
       api_schGlo_req.pagename = this.addSelectPageListCheckboxID_array;
     }
     
@@ -356,32 +369,60 @@ contract_filter=false;
       
         this.PI_list = response.proforma_details;
         this.PI_list_send = response.proforma_invoice_list.proforma_details;
-        if(response.quotation_list!=0|| response.quotation_list!='0'){
-          this.Quotation_list_send = response.quotation_list.quotation_details;
-          this.serverService.global_search_quotation.next(JSON.stringify(this.Quotation_list_send));
-        }else{
-          
-          console.log("quotation skipped")
-        }
-        
-        console.log(this.Quotation_list_send);
+        this.Quotation_list_send = response.quotation_list.quotation_details;
         this.Customer_list_send = response.customer_list.customer_details;
         this.Invoice_list_send = response.invoice_list.proforma_details;
+        if(response.quotation_list!=0|| response.quotation_list!='0'){
+          this.Quotation_list_send = response.quotation_list.quotation_details;
+          this.Quot_UI_Show=response.quotation_list;
+          console.log("quotation-global-before send",JSON.stringify(this.Quotation_list_send));
+          this.serverService.global_search_quotation.next(JSON.stringify(this.Quotation_list_send));
+        }else{
+          this.Quot_UI_Show=response.quotation_list;
+          console.log("Quotation Skipped")
+        }
+        if(response.proforma_invoice_list!=0|| response.proforma_invoice_list!='0'){
+          this.PI_list_send = response.proforma_invoice_list.proforma_details;
+          this.PI_UI_Show=response.proforma_invoice_list;
+          this.serverService.global_search.next(JSON.stringify(this.PI_list_send));
+        }else{
+          this.PI_UI_Show=response.proforma_invoice_list;
+          
+          console.log("Performa invoice Skipped")
+        }
+
+        if(response.customer_list!=0|| response.customer_list!='0'){
+          this.Customer_list_send = response.customer_list.customer_details;
+          this.Cust_UI_Show=response.customer_list;
+          this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
+        }else{
+          this.Cust_UI_Show=response.customer_list;
+          console.log("Customer List Skipped")
+        }
+
+
+        if(response.invoice_list!=0|| response.invoice_list!='0'){
+          this.Invoice_list_send = response.invoice_list.proforma_details;
+          this.Invoice_UI_Show=response.invoice_list;
+          console.log("this.Invoice_list_send---before send",this.Invoice_list_send);
+          this.serverService.global_search_invoice.next(this.Invoice_list_send);
+        }else{
+          this.Invoice_UI_Show=response.invoice_list;
+          console.log("Invoice List Skipped")
+        }
+        
+        
+        console.log(this.Quotation_list_send);
+       
         console.log("without json stringfy,this.Customer_list_send",this.Customer_list_send);
         console.log("with json stringfy,this.Customer_list_send",JSON.stringify(this.Customer_list_send));
         this.dashboard = true;
-        console.log(this.dashboard);
-        console.log(" this.PI_list_send", this.PI_list_send)
+      
+       
         var api_req: any = '{"type":"hello","proformalist":this.PI_list_send}';
-        this.serverService.global_search.next(JSON.stringify(this.PI_list_send));
-        this.serverService.global_search_invoice.next(this.Invoice_list_send);
-        this.serverService.global_search_customer.next(this.Customer_list_send);
-        
 
         $('#ActionIdOutput').modal('show');
       
-
-
 
       } else {
         Swal.close();
@@ -414,44 +455,43 @@ contract_filter=false;
     this.PageList();
     $('#ActionIdOutput').modal('hide');
     setTimeout(() => {
-      if(this.addSelectPageListCheckboxID_array[0] == "Credit Note"){
-        $("#check-grp-SelectPage-0").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[1] == "Customer New"){
-        $("#check-grp-SelectPage-1").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[2] == "Customer Project"){
-        $("#check-grp-SelectPage-2").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[3] == "DID Number"){
-        $("#check-grp-SelectPage-3").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[4] == "Invoice"){
-        $("#check-grp-SelectPage-4").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[5] == "License Key New"){
-        $("#check-grp-SelectPage-5").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[6] == "Prepaid Note"){
-        $("#check-grp-SelectPage-6").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[7] == "Proforma Invoice"){
-        $("#check-grp-SelectPage-7").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[8] == "Quotation New"){
-        $("#check-grp-SelectPage-8").prop('checked', true);
-      }
-      if(this.addSelectPageListCheckboxID_array[9] == "Vs Provisioning"){
-        $("#check-grp-SelectPage-9").prop('checked', true);
-      }
-      console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[0])
+      for(let i=0;i<this.addSelectPageListCheckboxID_array.length;i++){
+        console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
+        if(this.addSelectPageListCheckboxID_array[i] =="Credit Note"){
+          $("#check-grp-SelectPage-0").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Customer New"){
+          $("#check-grp-SelectPage-1").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Customer Project"){
+          $("#check-grp-SelectPage-2").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "DID Number"){
+          $("#check-grp-SelectPage-3").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Invoice"){
+          $("#check-grp-SelectPage-4").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "License Key New"){
+          $("#check-grp-SelectPage-5").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Prepaid Note"){
+          $("#check-grp-SelectPage-6").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Proforma Invoice"){
+          $("#check-grp-SelectPage-7").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Quotation New"){
+          $("#check-grp-SelectPage-8").prop('checked', true);
+        }
+        else if(this.addSelectPageListCheckboxID_array[i] == "Vs Provisioning"){
+          $("#check-grp-SelectPage-9").prop('checked', true);
+        }
+    }
+    
+    
     }, 1000);
 
-
-    // setTimeout(() => {
-    //   this.addSelectPageCHK({},{});
-    // }, 1000);
- 
   }
   gotoCustomerMaster() {
     $('#ActionIdxx3').modal('hide');
@@ -681,6 +721,7 @@ contract_filter=false;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
+      console.log(" this.PG_customerName-license number",this.PG_customerName);
       this.PG_LicenseKey = response.license_key;
 
     });
@@ -700,6 +741,7 @@ contract_filter=false;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
+      console.log(" this.PG_customerName-DID number",this.PG_customerName);
       this.PG_DIDNumbers = response.did_numbers;
 
     });

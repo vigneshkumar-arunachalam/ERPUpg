@@ -1757,7 +1757,7 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice1({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentIdinv').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1774,7 +1774,6 @@ export class InvoiceComponent implements OnInit {
   }
   processPaymentUpdate() {
     this.spinner.show();
-
     let api_req: any = new Object();
     let api_processpaymentUpdate: any = new Object();
     api_req.moduleType = "proforma";
@@ -1808,13 +1807,13 @@ export class InvoiceComponent implements OnInit {
     }
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
-    $("#processPaymentFormId").attr("disabled", true);
+    $("#processPaymentIdinv").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#processPaymentFormId").removeAttr("disabled");
+      $("#processPaymentIdinv").removeAttr("disabled");
       if (response.status == true) {
 
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentIdinv').modal("hide");
         iziToast.success({
           message: "Payment Process Updated Successfully",
           position: 'topRight'
@@ -1824,7 +1823,7 @@ export class InvoiceComponent implements OnInit {
 
       } else {
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentIdinv').modal("hide");
         iziToast.warning({
           message: "Payment Process not displayed. Please try again",
           position: 'topRight'
@@ -1898,7 +1897,7 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice1({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentIdinv').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'

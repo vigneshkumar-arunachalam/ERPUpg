@@ -29018,3 +29018,6 @@ button.Cal4Care.SG.buttonClass {
 input,select,textarea, .ng-autocomplete .autocomplete-container .input-container input{
     padding:0px 10px!important;
 }
+.modal-backdrop{
+    z-index: 999!important;
+}

@@ -154,7 +154,7 @@
 
                     </div>
                     <div class="modal-body mousepoint mt-0">
-                        <form [formGroup]="ContractDetailsForm">
+                        <form [formGroup]="ContractDetailsForm" *ngIf="(show==false)">
                             <label for="companyCode" class="col-lg-12 col-form-label"
                                 style="font-weight: 420;font-size:large; color: #C04000;padding-left:0;">Contract
                                 Details</label>
@@ -178,9 +178,9 @@
                                                 <td>{{item.contract_name}}</td>
                                                 <td>{{item.contract_description}}</td>
                                                 <td>{{item.remark_desc}}</td>
-                                                <td>{{item.from_dt}}to{{item.to_dt}} </td>
+                                                <td>{{item.from_dt}}{{" "}}to {{" "}}{{item.to_dt}} </td>
                                                 <td>
-                                                    <input type="color" formControlName="contractColor" />
+                                                    <input type="color" formControlName="contractColor" />{{" "}}{{item.classification_name}}
 
                                                 </td>
                                                 <!-- <td>  <input type="color" />{{'#'+item.color}} </td> -->
@@ -472,7 +472,7 @@
             </div>
         </div>
         <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
-        <!-------------------ActionIdxxModalAll-Global Search--Start  ------------------------->
+        <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Start  ------------------------->
         <div class="modal fade" data-backdrop="false" id="ActionIdOutput" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="max-width: 100%;min-height:100% ;">
 
@@ -598,72 +598,84 @@
                                 </div>
                             </div> -->
 
-                             <div class="card">
-                          <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <span>Proforma Invoice</span>
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                              </button>
-                            </h2>
-                          </div>
-                      
-                          <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <app-dup-proforma-invoice></app-dup-proforma-invoice>
+                            <div class="card" *ngIf="(this.PI_UI_Show!=0)">
+                                <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button"
+                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            <span>Proforma Invoice</span>
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body" *ngIf="(this.PI_UI_Show!=0)">
+                                        <app-dup-proforma-invoice></app-dup-proforma-invoice>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingTwo">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                <span>Invoice</span>
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                            <div class="card-body">
-                                
-                                <app-dup-invoice></app-dup-invoice>
+                            <div class="card" *ngIf="(this.Invoice_UI_Show!=0)">
+                                <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
+                                            aria-controls="collapseTwo">
+                                            <span>Invoice</span>
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+
+                                        <app-dup-invoice></app-dup-invoice>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                          <div class="card-header" id="headingThree">
-                            <h2 class="mb-0">
-                              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                <span>Quotation</span>
-                                <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                              </button>
-                            </h2>
-                          </div>
-                          <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                            <div class="card-body">
-                             <app-dup-quotation-new></app-dup-quotation-new>
+                            <div class="card" *ngIf="(this.Quot_UI_Show!=0)">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree">
+                                            <span>Quotation</span>
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                          <app-dup-quotation-new></app-dup-quotation-new>  
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree">
-                              <h2 class="mb-0">
-                                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                  <span>Customer</span>
-                                  <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                  <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                </button>
-                              </h2>
+                            <div class="card" *ngIf="(this.Cust_UI_Show!=0)">
+                                <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left collapsed" type="button"
+                                            data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
+                                            aria-controls="collapseThree">
+                                            <span>Customer</span>
+                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                    data-parent="#accordionExample">
+                                    <div class="card-body">
+                                         <app-dup-customer-new-all></app-dup-customer-new-all> 
+                                    </div>
+                                </div>
                             </div>
-                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                              <div class="card-body">
-                               <app-dup-customer-new-all></app-dup-customer-new-all>
-                              </div>
-                            </div>
-                          </div> 
                         </div>
                     </div>
 
@@ -677,51 +689,10 @@
                 </div>
             </div>
         </div>
-        <!-------------------ActionIdxxModalAll-Global Search--Ends  ------------------------->
+        <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Ends  ------------------------->
 
 
 
-        <!------------------ActionIdxx1-Global Search-Starts  ---------------------->
-        <div class="modal fade" data-backdrop="false" id="ActionIdxx3" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content addcustomernewallcss">
-                    <div class="modal-header">
-                        <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
-                            style="color: black !important;">Global Search
-                        </h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
-                    </div>
-                    <div class="modal-body mousepoint">
-                        <a href="" (click)="gotoCustomerMaster()">Customer Result</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">Quotation List</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">Proforma Invoice</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">Invoice List</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">Credit Note List</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">Prepaid List</a><br>
-
-                        <a href="" (click)="gotoCustomerMaster()">License Key List</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">DID Number</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">Customer Project</a><br>
-                        <a href="" (click)="gotoCustomerMaster()">VS Provisioning</a><br>
-
-                    </div>
-
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">
-                            Cancel
-                        </button>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-------------------ActionIdxx3-Global Search--Ends  ------------------------->
 
         <div class="navbar-right">
             <ul class="navbar-right__menu">
@@ -741,7 +712,7 @@
                         <!-- <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:50px" alt="img"
                     data-toggle="modal" data-target="#ActionIdxx2"></a> -->
                         <img class="svg" src="assets/img/icon2/Global_Searc.png" style="height: 30px;width:30px"
-                            alt="img" title="Global Search" data-toggle="modal" data-target="#ActionIdxx2"></a>
+                        (click)="showFunction()"    alt="img" title="Global Search" data-toggle="modal" data-target="#ActionIdxx2"></a>
                 </li>
                 <li> <a href="#" class="navbar-brand">
                         <img class="svg" src="assets/img/icon2/checklist.png" title="Task List"

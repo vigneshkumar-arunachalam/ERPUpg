@@ -34,12 +34,16 @@ export class ResellerPaymentComponent implements OnInit {
   masterSelected: boolean;
   checklist: any;
   checkedList: any;
+  referallAmountDetails: any;
+  payoutAmountDetails: any;
+  payCurrencyName: any;
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
 
   }
 
   ngOnInit(): void {
+    this.spinner.show();
    
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.PI_list = [{
@@ -153,6 +157,52 @@ export class ResellerPaymentComponent implements OnInit {
     list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
+  }
+
+  getResellerPaymentdetails(customerid: any) {
+
+    this.spinner.show();
+ 
+    let api_req: any = new Object();
+    let api_getReseller: any = new Object();
+    api_req.moduleType = "reseller";
+    api_req.api_url = "reseller/getResellerPaymentDetails";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getReseller.action = "getResellerPaymentDetails";
+
+    api_getReseller.reseller_id = customerid;
+    api_getReseller.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_getReseller;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response!= '') {
+        
+      this.referallAmountDetails=response.referral_amount_details;
+
+      this.payoutAmountDetails=response.payout_amount_details;
+      this.payCurrencyName=response.currencyName;
+        this.spinner.hide();
+
+        
+      } else {
+
+     
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
 }

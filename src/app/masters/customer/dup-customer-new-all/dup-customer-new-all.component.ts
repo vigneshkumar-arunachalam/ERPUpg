@@ -298,17 +298,18 @@ export class DupCustomerNewAllComponent implements OnInit {
   
 
   constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-   alert("hhhhh")
+  
     this.serverService.global_search_customer.subscribe((val:any)=>{
-      console.log("before parse",val)
-      this.formGroup.get('customer').setValue(val);
+      console.log("Received value from observable:Customer Master",val)
+   
       // var k = JSON.parse(val);
       // console.log("after parse",val)
       // this.customer_list=k;
       console.log("k in customer",val)
-      console.log("k length in customer",val.length)
+      console.log("k length in customer",val.length);
+      this.customer_list=JSON.parse(val);
     
-    
+      console.log("this.customer_list in customer",this.customer_list);
       if(val!=null || val!='null'){
         this.Global_search_filter = true;
         
@@ -1707,7 +1708,7 @@ this.cmsDepartmentList1();
 
   }
   searchCustomerList() {
-    $('#searchCustomerFormId').modal('hide');
+    $('#dupCussearchCustomerFormId').modal('hide');
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
 
     
@@ -1744,7 +1745,7 @@ this.cmsDepartmentList1();
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.spinner.hide();
       console.log('12345678')
-      $('#searchCustomerFormId').modal('hide');
+      $('#dupCussearchCustomerFormId').modal('hide');
       if (response.total_cnt == 0) {
         iziToast.warning({
           message: "No Matching Records",
@@ -1756,12 +1757,12 @@ this.cmsDepartmentList1();
         Swal.close();
         this.QuickSearchResultList = response.user_list;
         this.customer_list = response.customer_details;
-        console.log("customer_list",this.customer_list);
+        console.log("customer_list in quick search",this.customer_list);
       
         
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
-        $('#searchCustomerFormId').modal('hide');
+        $('#dupCussearchCustomerFormId').modal('hide');
        
 
       }
@@ -1794,7 +1795,7 @@ this.cmsDepartmentList1();
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log('hgyrdrrd')
-      $('#searchCustomerFormId').modal('hide');
+      $('#dupCussearchCustomerFormId').modal('hide');
       this.spinner.hide();
 
       if (response.total_cnt == 0) {
@@ -1806,6 +1807,7 @@ this.cmsDepartmentList1();
       if (response != '') {
       
         this.customer_list = response.customer_details;    
+        console.log("this.customer_list----main list",this.customer_list);
         // this.customer_list_colorcode=response.customer_details.biller_details[0].colorCodes;
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
@@ -2333,7 +2335,7 @@ this.cmsDepartmentList1();
   // }
 
   viewCustomer(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     this.spinner.show();
     let api_req: any = new Object();
     let view_customer_req: any = new Object();
@@ -2601,7 +2603,7 @@ this.cmsDepartmentList1();
       if (response.status == true) {
         this.customerslist({});
         Swal.close();
-        $('#addCustomerFormId').modal('hide');
+        $('#dupCusaddCustomerFormId').modal('hide');
 
         iziToast.success({
           message: "Customer Added successfully,Send to Approval",
@@ -2631,7 +2633,7 @@ this.cmsDepartmentList1();
   }
 
   editCustomer(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     this.pageEditLoad();
     console.log("id", id)
     this.get_cust_type = [];
@@ -2836,7 +2838,7 @@ this.cmsDepartmentList1();
 
         })
         console.log(this.editCustomerForm.value);
-        $('#editCustomerFormId').modal('show');
+        $('#dupCuseditCustomerFormId').modal('show');
         //    this.customerslist({});
       } else {
         iziToast.warning({
@@ -3064,7 +3066,7 @@ this.cmsDepartmentList1();
           message: "Customer Updated successfully",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#dupCuseditCustomerFormId').modal('hide');
         this.customerslist({});
 
       } else {
@@ -3072,7 +3074,7 @@ this.cmsDepartmentList1();
           message: "Customer not updated. Please try again",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#dupCuseditCustomerFormId').modal('hide');
         this.customerslist({});
       }
     }),
@@ -3126,14 +3128,14 @@ this.cmsDepartmentList1();
           message: "Customer Updated successfully",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#dupCuseditCustomerFormId').modal('hide');
 
       } else {
         iziToast.warning({
           message: "Customer not updated. Please try again",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#dupCuseditCustomerFormId').modal('hide');
       }
     }),
       (error: any) => {
@@ -3147,7 +3149,7 @@ this.cmsDepartmentList1();
 
 
   specialEditCustomer(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
 
     this.specialEditId = id;
     let api_req: any = new Object();
@@ -3184,7 +3186,7 @@ this.cmsDepartmentList1();
         } else {
           $('#status').prop('checked', false);
         }
-        $('#specialEditCustomerFormId').modal('show');
+        $('#dupCusspecialEditCustomerFormId').modal('show');
         this.customerslist({});
 
       } else {
@@ -3230,14 +3232,14 @@ this.cmsDepartmentList1();
     console.log(this.specialEditCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#specialEditCustomerFormId").modal("hide");
+      $("#dupCusspecialEditCustomerFormId").modal("hide");
       this.spinner.hide();
       console.log(response);
       var update_result = response;
       console.log("special update", update_result);
       if (response != '') {
         this.spinner.hide();
-        $("#specialEditCustomerFormId").modal("hide");
+        $("#dupCusspecialEditCustomerFormId").modal("hide");
         iziToast.success({
           message: "Special Update of Customer Updated successfully",
           position: 'topRight'
@@ -3245,7 +3247,7 @@ this.cmsDepartmentList1();
 
       } else {
         this.spinner.hide();
-        $("#specialEditCustomerFormId").modal("hide");
+        $("#dupCusspecialEditCustomerFormId").modal("hide");
         iziToast.warning({
           message: "Special Update of Customer not updated. Please try again",
           position: 'topRight'
@@ -3254,7 +3256,7 @@ this.cmsDepartmentList1();
     }),
       (error: any) => {
         this.spinner.hide();
-        $("#specialEditCustomerFormId").modal("hide");
+        $("#dupCusspecialEditCustomerFormId").modal("hide");
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -3263,7 +3265,7 @@ this.cmsDepartmentList1();
       };
   }
   deleteCustomer(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Delete?',
       text: "You won't be able to revert this!",
@@ -3313,10 +3315,10 @@ this.cmsDepartmentList1();
  
 
   fileAttachmentEdit(ID: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
 
     this.myFiles = [];
-    $("#fileAttachmentFormId").modal("show");
+    $("#dupCusfileAttachmentFormId").modal("show");
     $("#file1").val('')
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttachCustomerID = ID;
@@ -3386,7 +3388,7 @@ this.cmsDepartmentList1();
               message: "File Attachment Deleted successfully",
               position: 'topRight'
             });
-            $("#fileAttachmentFormId").modal("hide");
+            $("#dupCusfileAttachmentFormId").modal("hide");
 
           } else {
             iziToast.warning({
@@ -3446,7 +3448,7 @@ this.cmsDepartmentList1();
             self.customerslist({});
             console.log(result);
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#dupCusfileAttachmentFormId").modal("hide");
 
             iziToast.success({
               message: "File Attachment Saved successfully",
@@ -3455,7 +3457,7 @@ this.cmsDepartmentList1();
           }
           else {
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#dupCusfileAttachmentFormId").modal("hide");
             iziToast.warning({
               message: "File Attachment not Saved",
               position: 'topRight'
@@ -3470,7 +3472,7 @@ this.cmsDepartmentList1();
             position: 'topRight'
           });
           Swal.close();
-          $("#fileAttachmentFormId").modal("hide");
+          $("#dupCusfileAttachmentFormId").modal("hide");
         }
 
       })
@@ -3479,7 +3481,7 @@ this.cmsDepartmentList1();
     }
   }
   mconnect_address_getList(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
 
     this.mconnectCustomerForm.reset();
     this.mconnect_Logo_Image = '';
@@ -3565,7 +3567,7 @@ this.cmsDepartmentList1();
           Swal.close();
           
           console.log(result);
-          $("#mconnectPartnerDetailsFormId").modal("hide")
+          $("#dupCusmconnectPartnerDetailsFormId").modal("hide")
 
           iziToast.success({
             message: "mconnect details Saved successfully",
@@ -3576,7 +3578,7 @@ this.cmsDepartmentList1();
         }
         else {
           Swal.close();
-          $("#mconnectPartnerDetailsFormId").modal("hide")
+          $("#dupCusmconnectPartnerDetailsFormId").modal("hide")
           iziToast.warning({
             message: "mconnect details not Saved",
             position: 'topRight'
@@ -3591,7 +3593,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
         Swal.close();
-        $("#mconnectPartnerDetailsFormId").modal("hide")
+        $("#dupCusmconnectPartnerDetailsFormId").modal("hide")
       }
 
     })
@@ -3601,7 +3603,7 @@ this.cmsDepartmentList1();
   }
 
   mrvoip_address_getList(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     this.mrvoipCustomerForm.reset();
     this.mrvoip_Logo_Image = '';
     this.mrvoipParameter = id;
@@ -3683,7 +3685,7 @@ this.cmsDepartmentList1();
           Swal.close();
          
           console.log(result);
-          $("#MrvoipPartnerDetailsFormId").modal("hide")
+          $("#DupCusMrvoipPartnerDetailsFormId").modal("hide")
 
           iziToast.success({
             message: "MrVoip details Saved successfully",
@@ -3694,7 +3696,7 @@ this.cmsDepartmentList1();
         }
         else {
           Swal.close();
-          $("#MrvoipPartnerDetailsFormId").modal("hide")
+          $("#DupCusMrvoipPartnerDetailsFormId").modal("hide")
           iziToast.warning({
             message: "MrVoip details not Saved",
             position: 'topRight'
@@ -3709,14 +3711,14 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
         Swal.close();
-        $("#MrvoipPartnerDetailsFormId").modal("hide")
+        $("#DupCusMrvoipPartnerDetailsFormId").modal("hide")
       }
 
     })
   }
 
   call4tel_address_getList(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     this.Call4telCustomerForm.reset();
     this.C4T_Logo_Image = '';
     this.Call4telParameter = id;
@@ -3795,7 +3797,7 @@ this.cmsDepartmentList1();
           Swal.close();
          
           console.log(result);
-          $("#call4tellPartnerDetailsFormId").modal("hide")
+          $("#dupCuscall4tellPartnerDetailsFormId").modal("hide")
 
           iziToast.success({
             message: "call4tell details Saved successfully",
@@ -3805,7 +3807,7 @@ this.cmsDepartmentList1();
         }
         else {
           Swal.close();
-          $("#call4tellPartnerDetailsFormId").modal("hide")
+          $("#dupCuscall4tellPartnerDetailsFormId").modal("hide")
           iziToast.warning({
             message: "call4tell details not Saved",
             position: 'topRight'
@@ -3820,7 +3822,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
         Swal.close();
-        $("#call4tellPartnerDetailsFormId").modal("hide")
+        $("#dupCuscall4tellPartnerDetailsFormId").modal("hide")
       }
 
     })
@@ -3830,7 +3832,7 @@ this.cmsDepartmentList1();
   }
 
   nx32CustomerCreate(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to create NX32 Customer?',
       text: "You won't be able to revert this!",
@@ -3884,7 +3886,7 @@ this.cmsDepartmentList1();
 
 
   invoiceShare_edit(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
 
 
     this.invoice_shareCustomerPermission_ID = id;
@@ -3978,7 +3980,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
 
-        $('#invoiceSharedCustomerFormId').modal('hide');
+        $('#dupCusinvoiceSharedCustomerFormId').modal('hide');
         $("#sel_check").val('');
         this.typeConvertionString_invoice_Shared_Permission = [];
       } else {
@@ -4035,7 +4037,7 @@ this.cmsDepartmentList1();
 
   // }
   quickMail(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Send Quick Mail?',
       text: "You won't be able to revert this!",
@@ -4088,7 +4090,7 @@ this.cmsDepartmentList1();
     })
   }
   shareCustomerPermission_edit(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
 
     this.shareCustomerPermission_ID = id;
     let api_req: any = new Object();
@@ -4160,7 +4162,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
 
-        $('#SharedCustomerPermissionFormId').modal('hide');
+        $('#DupCusSharedCustomerPermissionFormId').modal('hide');
         $("#sel_check").val('');
         this.CheckBox_DynamicArrayList_shareCustomerPermission = [];
       }
@@ -4182,7 +4184,7 @@ this.cmsDepartmentList1();
 
 
   customer_status(id: any, Status_variable: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Customer status?',
       text: "You won't be able to revert this!",
@@ -4246,7 +4248,7 @@ this.cmsDepartmentList1();
 
   }
   employee_status(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Employee status?',
       text: "You won't be able to revert this!",
@@ -4301,7 +4303,7 @@ this.cmsDepartmentList1();
 
   }
   reseller_statusMethod(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Reseller status?',
       text: "You won't be able to revert this!",
@@ -4356,7 +4358,7 @@ this.cmsDepartmentList1();
 
   }
   customer_NX32PermissionDisplay(id: any, nx32id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     console.log("checkbox result", this.checkbox_NX32Permission)
     this.NX32SharePermissionParameter = id;
     this.nx32permissionStatus = nx32id;
@@ -4424,7 +4426,7 @@ this.cmsDepartmentList1();
       this.checkbox_status_nx32Permission = response.status;
       console.log("customer nx32 permission response.status", response.status);
       if (response.status == true) {
-        $('#customer_NX32PermissionFormId').modal('hide');
+        $('#dupcuscustomer_NX32PermissionFormId').modal('hide');
         this.customerslist({});
 
         iziToast.success({
@@ -4449,7 +4451,7 @@ this.cmsDepartmentList1();
       };
   }
   billCodeAttachmentEdit(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     // this.billCodeEditForm2.reset();
     let api_req: any = new Object();
     let api_billCodeEdit_req: any = new Object();
@@ -4680,7 +4682,7 @@ this.cmsDepartmentList1();
           showConfirmButton: false,
           timer: 1200,
         });
-        $("#billCodeFormId").modal("hide");
+        $("#dupCusbillCodeFormId").modal("hide");
 
         this.customerslist({});
       }
@@ -4691,7 +4693,7 @@ this.cmsDepartmentList1();
           showConfirmButton: false,
           timer: 1200,
         });
-        $("#billCodeFormId").modal("hide");
+        $("#dupCusbillCodeFormId").modal("hide");
       }
 
     });
@@ -4785,7 +4787,7 @@ console.log("this.cmslistadd",this.cmslistadd);
         
   }
   AssignAccountManager_edit(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
 
     this.AssignAccountManager_CustomerID = id;
     let api_req: any = new Object();
@@ -4841,7 +4843,7 @@ console.log("this.cmslistadd",this.cmslistadd);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-        $("#AssignAccountManager").modal("hide");
+        $("#DupCusAssignAccountManager").modal("hide");
         Swal.close();
         iziToast.success({
           message: "Account Manager Updated Successfully",
@@ -4865,7 +4867,7 @@ console.log("this.cmslistadd",this.cmslistadd);
       };
   }
   landscapeEmailEdit(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     this.landscapeEmailForm.reset();
     this.landscapeEmail_Customer_ID = id;
     let api_req: any = new Object();
@@ -5019,7 +5021,7 @@ console.log("this.cmslistadd",this.cmslistadd);
         $('#subjLandscape').val('');
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
-        $("#landscapeEmailFormId").modal("hide");
+        $("#dupCuslandscapeEmailFormId").modal("hide");
         Swal.close();
         iziToast.success({
           message: "Email Notification Sent Successfully",
@@ -5034,7 +5036,7 @@ console.log("this.cmslistadd",this.cmslistadd);
         $('#subjLandscape').val('');
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
-        $("#landscapeEmailFormId").modal("hide");
+        $("#dupCuslandscapeEmailFormId").modal("hide");
         Swal.close();
         iziToast.success({
           message: "Email Notification not Sent !!!!",
@@ -5060,9 +5062,9 @@ console.log("this.cmslistadd",this.cmslistadd);
     this.addCustomer.def_payment_via = '';
   }
   GoogleAuthenticationId(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+    $("#ActionIdCustDup" + i).modal("hide");
     this.GoogleAuthenticationForm.reset();
-    $('#GoogleAuthentication').modal("show");
+    $('#DupCusGoogleAuthentication').modal("show");
 
     this.googleAuthent_CustomerId = id;
 
@@ -5111,7 +5113,7 @@ this.spinner.show();
 
       } else {
 
-        $('#GoogleAuthentication').modal("hide");
+        $('#DupCusGoogleAuthentication').modal("hide");
         iziToast.warning({
           message: "Invalid Google Authentication. Please try again",
           position: 'topRight'

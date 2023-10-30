@@ -213,7 +213,7 @@
                                     </li>
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_payment_process==1)">
                                       <a *ngIf="(billStatus=='3')" class="hover4" title="Payment Process"
-                                        data-toggle="modal" data-target="#processPaymentFormId"
+                                        data-toggle="modal" data-target="#processPaymentIdinv"
                                         (click)="processPaymentEdit(list.billId,i)">
                                         <img class="show" src="assets/img/icon2/P-red.png">
                                         <img class="hide" src="assets/img/icon2/P-black.png">
@@ -221,7 +221,7 @@
                                         <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
                                       </a>
                                       <a *ngIf="(billStatus!='3')" class="hover4" title="Payment Process"
-                                        data-toggle="modal" data-target="#processPaymentFormId"
+                                        data-toggle="modal" data-target="#processPaymentIdinv"
                                         (click)="processPaymentEdit(list.billId,i)">
                                         <img class="show" src="assets/img/icon2/P-blue.png">
                                         <img class="hide" src="assets/img/icon2/P-black.png">
@@ -644,7 +644,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<!-- <div class="modal fade" id="processPaymentFormId1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<!-- <div class="modal fade" id="processPaymentIdinv1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -870,7 +870,7 @@
 <!----------Modal Pop Up (END) for Invoice Show Permission------------------>
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="processPaymentIdinv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

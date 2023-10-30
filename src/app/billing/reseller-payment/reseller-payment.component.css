@@ -470,7 +470,8 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
 
 
   #main {
-    margin: 50px 0;
+    /* margin: 50px 0; */
+    margin: 0;
     }
     
     #main #faq .card {
