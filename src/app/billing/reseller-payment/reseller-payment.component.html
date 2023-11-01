@@ -73,7 +73,7 @@
                                                       <thead>
                                                         <tr class="userDatatable-header" >
                                       
-                                                          <th style="background-color: brown !important;">
+                                                          <th style="background:linear-gradient(to bottom, #FF9966 42%, #FF5E62 93%);">
                                                             <span class="userDatatable-title">{{dis.date_year}}</span><br>
                                                             <span class="userDatatable-title">{{dis.date_month_name}}</span><br>
                                                             <span class="userDatatable-title">{{dis.commission_amt}}</span>
@@ -176,7 +176,7 @@
                                                         </tr>
                                                       </thead>
                                                       
-                                                      <tbody *ngFor="let list of resellerCommission_list; let i = index">
+                                                      <tbody *ngFor="let list of resellerList; let i = index">
                                                      
                                                         <tr>
                                                                                                             
@@ -198,21 +198,23 @@
                               
                                                           </div>
                                                           </td>
-                                                          <td>{{ list.reseller_id}}</td>
+                                                          <td>{{ list.r_code}}</td>
                                                           <td>{{ list.invoice_no}}</td>
                                                           <td>{{ list.reseller_comm_dt_show}}</td>
                                                           <td>{{ list.billDate_show}}</td>
                                                           <td><span>{{ list.customer_name}}</span></td>
-                                                          <td>
-                                                            {{ list.commission_type}}
+                                                          <td>{{ list.commission_type_name}}
                                                           </td>
-                                                          <td>{{ list.grossAmount}}</td>
-                                                          <td>{{ list.grossAmount}}</td>
-                                                          <td>{{ list.grossAmount}}</td>
-                                                          <td>{{ list.grossAmount}}</td>
-                                                          <td>{{ list.grossAmount}}</td>
-                                                          <td>{{ list.grossAmount}}</td>
-                                                          <td>{{ list.grossAmount}}</td>
+                                                          <td>{{ list.invoice_amt}}</td>
+                                                          <td>{{ list.fixed_amt}}</td>
+                                                          <td>{{ list.usage_amt}}</td>
+                                                          <td>{{ list.currency_name}}</td>
+                                                          <td>{{ list.commission_amt}}</td>
+                                                          <td>{{ list.conversion_amt}}({{ list.conversionRate}})</td>
+                                                          <!-- <td>{{ list.conversionRate}}</td> -->
+                                                          <td>{{ list.paid_status}}
+                                                            <br>{{list.processDate}}
+                                                          </td>
                                                           <td>
                                                             <div class="page">
                                       

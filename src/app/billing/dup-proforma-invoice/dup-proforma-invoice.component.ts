@@ -119,18 +119,17 @@ export class DupProformaInvoiceComponent implements OnInit {
   quotationId_new: any;
   searchResult_CustomerName: any;
   Global_search_filter = false;
+  pi_list_search: any;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) {
     // alert("Pi constructor")
     this.serverService.global_search.subscribe((val: any) => {
       // alert("Pi-observable inside")
       console.log("Received value from observable:Proforma Invoice", val)
       try {
-        var k = JSON.parse(val);
-        console.log("after parse", k)
-        this.PI_list = k;
-        console.log(k.type)
-        console.log(k.proformalist)
-        if (k != '') {
+        this.pi_list_search = val;
+        console.log("after parse", this.pi_list_search)
+        this.PIList_Dup(this.pi_list_search)
+        if (this.pi_list_search != '') {
           this.Global_search_filter = true;
         } else {
           this.Global_search_filter = false;
@@ -207,6 +206,16 @@ export class DupProformaInvoiceComponent implements OnInit {
       'company_Name': new FormControl(null),
 
     });
+    setTimeout(() => {
+      let api_reqs:any = {type: "pi_list"};
+      this.serverService.callbackfun.next(api_reqs);
+    }, 1000);
+
+  }
+
+  closeModal(){
+    let api_reqs:any = {type: "quotation_list"};
+    this.serverService.closemodal.next(api_reqs);
   }
   selectEventCustomer(item: any) {
     console.log(item)
@@ -842,6 +851,16 @@ export class DupProformaInvoiceComponent implements OnInit {
     list_data.limit = list_data.limit == undefined ? this.pageLimit : list_data.limit;
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
+  }
+  PIList_Dup(data: any) {
+  
+        this.PI_list = data.PI_list_send;
+        this.biller_list = data.PI_per_send;
+        console.log("proforma_details list", this.PI_list)
+        console.log("this.biller_list", this.biller_list)
+
+        // this.payLink=response.proforma_details[0].payment_link;
+      
   }
   paymentLink(paylink_id: any, i: any) {
     $("#ActionIdDupDup" + i).modal("hide");

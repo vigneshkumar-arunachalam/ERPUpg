@@ -37,6 +37,7 @@ export class ResellerPaymentComponent implements OnInit {
   referallAmountDetails: any;
   payoutAmountDetails: any;
   payCurrencyName: any;
+  resellerList: any;
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
 
@@ -184,6 +185,7 @@ export class ResellerPaymentComponent implements OnInit {
 
       this.payoutAmountDetails=response.payout_amount_details;
       this.payCurrencyName=response.currencyName;
+      this.resellerList=response.reseller_list;
         this.spinner.hide();
 
         

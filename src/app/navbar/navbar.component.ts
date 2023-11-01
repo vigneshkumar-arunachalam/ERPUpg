@@ -64,7 +64,7 @@ export class NavbarComponent implements OnInit {
   Quotation_list_send: any;
   Customer_list_send: any;
   Invoice_list_send: any;
-contract_filter=false;
+  contract_filter = false;
   PG_LicenseKey: any;
   PG_DIDNumbers: any;
   componentDynamic: any;
@@ -72,7 +72,10 @@ contract_filter=false;
   Quot_UI_Show: any;
   Cust_UI_Show: any;
   Invoice_UI_Show: any;
-  show: boolean=true;
+  show: boolean = true;
+  Quotation_per_send: any;
+  PI_per_send: any;
+  Invoice_per_send: any;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -85,7 +88,39 @@ contract_filter=false;
         this.user_ProfileImage = localStorage.getItem('profile_image');
       }
     });
+    this.serverService.closemodal.subscribe((res: any) => {
+      console.log('val.type',res.type);
+      this.PageList();
+      setTimeout(() => {
+        this.functionclose();
+      }, 1000);
+    });
+    this.serverService.callbackfun.subscribe((val: any) => {
+      console.log('val.type',val.type);
+      if (val.type == 'quotation_list') {
+        console.log(this.Quotation_list_send);
+        let api_reqs: any = {
+          Quotation_list_send: this.Quotation_list_send,
+          Quotation_per_send: this.Quotation_per_send
+        };
+        this.serverService.global_search_quotation.next(api_reqs);
+      } else if (val.type == 'pi_list') {
+        let api_reqs: any = {
+          PI_list_send :this.PI_list_send,
+          PI_per_send : this.PI_per_send
+        };
+        this.serverService.global_search.next(api_reqs);
+      } else if (val.type == 'invoice_list') {
+        let api_reqs: any = {
+          Invoice_list_send :this.Invoice_list_send,
+          Invoice_per_send : this.Invoice_per_send
+        };
+        this.serverService.global_search_invoice.next(api_reqs);
+      } else if (val.type == 'customer_list') {
+        this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
+      }
 
+    })
 
   }
   keywordCompanyName = 'customerName';
@@ -93,13 +128,13 @@ contract_filter=false;
   keywordDIDNumber = 'did_numbers';
   keywordLicenseNumber = 'license_key';
   ngOnInit(): void {
-    this.show=true;
+    this.show = true;
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
-    this.resellerList_CurrencyName ='SGD';
-    this.resellerList_ResellerDiscount =0;
-    this.resellerList_ResellerId ='Empty';
-    this.addSelectPageListCheckboxID_array=["Customer New"];
-    console.log("addSelectPageListCheckboxID_array----initial on load",this.addSelectPageListCheckboxID_array);
+    this.resellerList_CurrencyName = 'SGD';
+    this.resellerList_ResellerDiscount = 0;
+    this.resellerList_ResellerId = 'Empty';
+    this.addSelectPageListCheckboxID_array = ["Customer New"];
+    console.log("addSelectPageListCheckboxID_array----initial on load", this.addSelectPageListCheckboxID_array);
     setTimeout(() => {
       this.userName = localStorage.getItem('user_name');
       this.userId = localStorage.getItem('erp_c4c_user_id');
@@ -125,26 +160,27 @@ contract_filter=false;
     this.ContractDetailsForm = new FormGroup({
       'contractColor': new FormControl(null),
     });
-    
+
   }
 
   selectEventCustomer(item: any) {
+    
     this.searchResultTest = item.customerName;
     this.PG_customerId = item.customerId;
     this.PG_customerName = item.customerName;
-    console.log(" this.PG_customerName-customer select change",this.PG_customerName);
+    console.log(" this.PG_customerName-customer select change", this.PG_customerName);
     console.log(item.customerId)
     console.log(item.customerName)
 
     this.CompanyName = item.customerName;
     // do something with selected item
   }
-  showFunction(){
-    this.show=true;
+  showFunction() {
+    this.show = true;
   }
   onFocusedCustomer(e: any) {
-   
-    this.show=false;
+
+    this.show = false;
     let api_req: any = new Object();
     let api_contract_req: any = new Object();
     api_req.moduleType = "global";
@@ -160,22 +196,22 @@ contract_filter=false;
 
 
       if (response != '') {
-       
-          this.contract_filter =  true;
-                  console.log("response.customer_contract.color",response.customer_contract.color)
-        
+
+        this.contract_filter = true;
+        console.log("response.customer_contract.color", response.customer_contract.color)
+
         this.customerContractlist = response.customer_contract;
         this.resellerList = response.reseller_info;
         this.resellerList_CurrencyName = response.reseller_info.currency_name;
         this.resellerList_ResellerDiscount = response.reseller_info.reseller_discount;
         this.resellerList_ResellerId = response.reseller_info.reseller_id;
-        
+
         this.ContractDetailsForm.patchValue({
-          'contractColor':response.customer_contract[0].color
+          'contractColor': response.customer_contract[0].color
         })
 
       } else {
-        this.contract_filter =  false;
+        this.contract_filter = false;
         Swal.close();
         iziToast.warning({
           message: "Response Failed",
@@ -249,7 +285,7 @@ contract_filter=false;
 
     }
     this.addSelectPageListCheckboxID_array.join(',');
-    console.log("addSelectPageListCheckboxID_array----after join",this.addSelectPageListCheckboxID_array);
+    console.log("addSelectPageListCheckboxID_array----after join", this.addSelectPageListCheckboxID_array);
 
   }
 
@@ -313,7 +349,7 @@ contract_filter=false;
 
   }
   searchGlobalList() {
-
+    this.spinner.show();
     this.onFocusedCustomer({});
     // $('#ActionIdxx3').modal('show');
 
@@ -336,7 +372,7 @@ contract_filter=false;
       api_schGlo_req.customer_id = this.PG_customerId;
     }
 
-    console.log(" this.PG_customerName-inside search global list",this.PG_customerName);
+    console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
     api_schGlo_req.customer_name = this.PG_customerName;
     api_schGlo_req.customer_code = this.PG_CustomerCode;
 
@@ -350,79 +386,98 @@ contract_filter=false;
       });
       return false;
     } else {
-      console.log("addSelectPageListCheckboxID_array----in search global list api-pagename",this.addSelectPageListCheckboxID_array)
+      console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
       api_schGlo_req.pagename = this.addSelectPageListCheckboxID_array;
     }
-    
+
 
     api_req.element_data = api_schGlo_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       // $('#ActionIdxx2').modal('hide');
       console.log(" response--pagelist", response)
       if (response != '') {
-        console.log("playboy",response.quotation_list)
+        console.log("playboy", response.quotation_list)
 
         this.SelectPageList = response.menuList;
         this.pageList = response.menuList;
-        this.componentDynamic=response.selected_menu;
-      
+        this.componentDynamic = response.selected_menu;
+
         this.PI_list = response.proforma_details;
         this.PI_list_send = response.proforma_invoice_list.proforma_details;
         this.Quotation_list_send = response.quotation_list.quotation_details;
+        this.Quotation_per_send = response.quotation_list.quotation_permission_arr;
         this.Customer_list_send = response.customer_list.customer_details;
         this.Invoice_list_send = response.invoice_list.proforma_details;
-        if(response.quotation_list!=0|| response.quotation_list!='0'){
-          this.Quotation_list_send = response.quotation_list.quotation_details;
-          this.Quot_UI_Show=response.quotation_list;
-          console.log("quotation-global-before send",JSON.stringify(this.Quotation_list_send));
-          this.serverService.global_search_quotation.next(JSON.stringify(this.Quotation_list_send));
-        }else{
-          this.Quot_UI_Show=response.quotation_list;
+        this.Invoice_per_send = response.invoice_list.invoice_permission_arr;
+
+        if (response.quotation_list != 0 || response.quotation_list != '0') {
+          this.Quot_UI_Show = response.quotation_list;
+          console.log("quotation-global-before send", JSON.stringify(this.Quotation_list_send));
+
+
+          let api_reqs: any = {
+            Quotation_list_send: this.Quotation_list_send,
+            Quotation_per_send: this.Quotation_per_send
+          };
+          this.serverService.global_search_quotation.next(api_reqs);
+        } else {
+          this.Quot_UI_Show = response.quotation_list;
           console.log("Quotation Skipped")
         }
-        if(response.proforma_invoice_list!=0|| response.proforma_invoice_list!='0'){
+        if (response.proforma_invoice_list != 0 || response.proforma_invoice_list != '0') {
           this.PI_list_send = response.proforma_invoice_list.proforma_details;
-          this.PI_UI_Show=response.proforma_invoice_list;
-          this.serverService.global_search.next(JSON.stringify(this.PI_list_send));
-        }else{
-          this.PI_UI_Show=response.proforma_invoice_list;
-          
+          this.PI_per_send = response.proforma_invoice_list.biller_details;
+          this.PI_UI_Show = response.proforma_invoice_list;
+
+          let api_reqs: any = {
+            PI_list_send :this.PI_list_send,
+            PI_per_send : this.PI_per_send
+          };
+          this.serverService.global_search.next(api_reqs);
+        } else {
+          this.PI_UI_Show = response.proforma_invoice_list;
+
           console.log("Performa invoice Skipped")
         }
 
-        if(response.customer_list!=0|| response.customer_list!='0'){
+        if (response.customer_list != 0 || response.customer_list != '0') {
           this.Customer_list_send = response.customer_list.customer_details;
-          this.Cust_UI_Show=response.customer_list;
+          this.Cust_UI_Show = response.customer_list;
           this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
-        }else{
-          this.Cust_UI_Show=response.customer_list;
+        } else {
+          this.Cust_UI_Show = response.customer_list;
           console.log("Customer List Skipped")
         }
 
 
-        if(response.invoice_list!=0|| response.invoice_list!='0'){
+        if (response.invoice_list != 0 || response.invoice_list != '0') {
           this.Invoice_list_send = response.invoice_list.proforma_details;
-          this.Invoice_UI_Show=response.invoice_list;
-          console.log("this.Invoice_list_send---before send",this.Invoice_list_send);
-          this.serverService.global_search_invoice.next(this.Invoice_list_send);
-        }else{
-          this.Invoice_UI_Show=response.invoice_list;
+          this.Invoice_UI_Show = response.invoice_list;
+          console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
+          let api_reqs: any = {
+            Invoice_list_send :this.Invoice_list_send,
+            Invoice_per_send : this.Invoice_per_send
+          };
+          this.serverService.global_search_invoice.next(api_reqs);
+        } else {
+          this.Invoice_UI_Show = response.invoice_list;
           console.log("Invoice List Skipped")
         }
-        
-        
+
+
         console.log(this.Quotation_list_send);
-       
-        console.log("without json stringfy,this.Customer_list_send",this.Customer_list_send);
-        console.log("with json stringfy,this.Customer_list_send",JSON.stringify(this.Customer_list_send));
+
+        console.log("without json stringfy,this.Customer_list_send", this.Customer_list_send);
+        console.log("with json stringfy,this.Customer_list_send", JSON.stringify(this.Customer_list_send));
         this.dashboard = true;
-      
-       
+
+
         var api_req: any = '{"type":"hello","proformalist":this.PI_list_send}';
 
         $('#ActionIdOutput').modal('show');
-      
+
 
       } else {
         Swal.close();
@@ -445,52 +500,57 @@ contract_filter=false;
 
 
   }
-  gotoRoot(){
+  gotoRoot() {
 
     $('#ActionIdxx2').modal('hide');
     // this.router.navigate(['/customernewall']);
     // window.location.reload();
   }
+  functionclose(){
+    console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
+    for (let i = 0; i < this.addSelectPageListCheckboxID_array.length; i++) {
+      console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
+      if (this.addSelectPageListCheckboxID_array[i] == "Credit Note") {
+        $("#check-grp-SelectPage-0").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Customer New") {
+        $("#check-grp-SelectPage-1").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Customer Project") {
+        $("#check-grp-SelectPage-2").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "DID Number") {
+        $("#check-grp-SelectPage-3").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Invoice") {
+        $("#check-grp-SelectPage-4").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "License Key New") {
+        $("#check-grp-SelectPage-5").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Prepaid Note") {
+        $("#check-grp-SelectPage-6").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Proforma Invoice") {
+        $("#check-grp-SelectPage-7").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Quotation New") {
+        $("#check-grp-SelectPage-8").prop('checked', true);
+      }
+      else if (this.addSelectPageListCheckboxID_array[i] == "Vs Provisioning") {
+        $("#check-grp-SelectPage-9").prop('checked', true);
+      }
+    }
+  }
   closeModal() {
     this.PageList();
     $('#ActionIdOutput').modal('hide');
     setTimeout(() => {
-      for(let i=0;i<this.addSelectPageListCheckboxID_array.length;i++){
-        console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
-        if(this.addSelectPageListCheckboxID_array[i] =="Credit Note"){
-          $("#check-grp-SelectPage-0").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Customer New"){
-          $("#check-grp-SelectPage-1").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Customer Project"){
-          $("#check-grp-SelectPage-2").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "DID Number"){
-          $("#check-grp-SelectPage-3").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Invoice"){
-          $("#check-grp-SelectPage-4").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "License Key New"){
-          $("#check-grp-SelectPage-5").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Prepaid Note"){
-          $("#check-grp-SelectPage-6").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Proforma Invoice"){
-          $("#check-grp-SelectPage-7").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Quotation New"){
-          $("#check-grp-SelectPage-8").prop('checked', true);
-        }
-        else if(this.addSelectPageListCheckboxID_array[i] == "Vs Provisioning"){
-          $("#check-grp-SelectPage-9").prop('checked', true);
-        }
-    }
-    
-    
+      this.functionclose();
     }, 1000);
+
+    // let api_reqs:any = JSON.stringify(this.Quotation_list_send);;
+    // this.serverService.callbackfun.next(api_reqs);
 
   }
   gotoCustomerMaster() {
@@ -642,8 +702,9 @@ contract_filter=false;
   }
 
   selected_CustomerCode(item: any) {
-    this.PG_CustomerCode = item;
-
+    this.PG_CustomerCode = item.customerCode;
+    this.PG_customerId=item.customerId;
+console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
     console.log(item)
 
   }
@@ -675,8 +736,11 @@ contract_filter=false;
   }
 
   selected_DIDNumber(item: any) {
-    this.PG_DIDNumber = item;
+    console.log("DID Number,item",item);
+    this.PG_DIDNumber = item.did_numbers;
+    console.log("this.PG_DIDNumber",this.PG_DIDNumber);
     console.log(item)
+    this.onout_DIDNumber();
 
   }
 
@@ -721,13 +785,13 @@ contract_filter=false;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
-      console.log(" this.PG_customerName-license number",this.PG_customerName);
+      console.log(" this.PG_customerName-license number", this.PG_customerName);
       this.PG_LicenseKey = response.license_key;
 
     });
   }
   onout_DIDNumber() {
-
+console.log("DIDnumber check ip",this.PG_DIDNumber)
     let api_req: any = new Object();
     let api_DIDCode_req: any = new Object();
     api_req.moduleType = "global";
@@ -741,7 +805,7 @@ contract_filter=false;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
-      console.log(" this.PG_customerName-DID number",this.PG_customerName);
+      console.log(" this.PG_customerName-DID number", this.PG_customerName);
       this.PG_DIDNumbers = response.did_numbers;
 
     });
@@ -754,7 +818,7 @@ contract_filter=false;
     this.onout_LicenseNumber();
 
   }
- 
+
   EditCHK(i: any, k: any) {
 
   }

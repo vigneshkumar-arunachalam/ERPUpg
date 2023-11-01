@@ -3312,6 +3312,10 @@ this.cmsDepartmentList1();
 
 
   }
+  closeModal(){
+    let api_reqs:any = {type: "quotation_list"};
+    this.serverService.closemodal.next(api_reqs);
+  }
  
 
   fileAttachmentEdit(ID: any,i:any) {

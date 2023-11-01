@@ -296,6 +296,7 @@ export class DupInvoiceComponent implements OnInit {
   testing = false;
   Global_search_filter = false;
   Global_search_filter_2: string;
+  datavalue: any;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -304,12 +305,9 @@ export class DupInvoiceComponent implements OnInit {
       revenueaddresses: this.fb.array([this.createrevenueAddress()])
     });
     this.serverService.global_search_invoice.subscribe((val: any) => {
-      console.log("before parse-global_search_invoice", val)
-      //  var k = JSON.parse(val);
-      //  console.log("after parse-global_search_invoice", k)
-      this.PI_list = val;
-     
-
+      console.log("before parse-global_search_invoice", val)    
+      this.datavalue = val;
+      this.getInvoice_Dup(this.datavalue)
       if (val != null || val != 'null') {
         this.Global_search_filter = true;
 
@@ -531,6 +529,7 @@ export class DupInvoiceComponent implements OnInit {
 
 
 
+  
   }
   // this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
 
@@ -1032,6 +1031,74 @@ export class DupInvoiceComponent implements OnInit {
         })
       }
     });
+  }
+  getInvoice_Dup(data: any) {
+    
+        this.PI_list = data.proforma_details;
+        // this.recurring_Status = data.proforma_details[0].recuring_status;
+        this.revenue_type_id = data.proforma_details[0].revenue_type_id;
+        this.revenue_individual_state = data.proforma_details[0].revenue_individual_state;
+        this.revenue_color = data.proforma_details[0].revenue_color;
+        this.share_access_state = data.proforma_details[0].share_access_state;
+        this.postal_send_color = data.proforma_details[0].postal_send_color;
+        this.post_send_status = data.proforma_details[0].post_send_status;
+        this.biller_list = data.biller_details;
+        this.invoicePermissionList = data.invoice_permission_arr;
+        this.invoicePermissionList_add = data.invoice_permission_arr.add;
+        this.invoicePermissionList_Search = data.invoice_permission_arr.search;
+        this.invoicePermissionList_all_invoice_show = data.invoice_permission_arr.all_invoice_show;
+        this.invoicePermissionList_all_tax_billing = data.invoice_permission_arr.all_tax_billing;
+        this.invoicePermissionList_comm_per = data.invoice_permission_arr.comm_per;
+        this.invoicePermissionList_date_filter_billing = data.invoice_permission_arr.date_filter_billing;
+        this.invoicePermissionList_delete = data.invoice_permission_arr.delete;
+        this.invoicePermissionList_did_to_inv = data.invoice_permission_arr.did_to_inv;
+        this.invoicePermissionList_duplicate = data.invoice_permission_arr.duplicate;
+        this.invoicePermissionList_edit = data.invoice_permission_arr.edit;
+        this.invoicePermissionList_export_billing = data.invoice_permission_arr.export_billing;
+        this.invoicePermissionList_file_attach = data.invoice_permission_arr.file_attach;
+        this.invoicePermissionList_inv_recurring = data.invoice_permission_arr.inv_recurring;
+        this.invoicePermissionList_inv_to_do = data.invoice_permission_arr.inv_to_do;
+        this.invoicePermissionList_inv_to_pi = data.invoice_permission_arr.inv_to_pi;
+        this.invoicePermissionList_inv_to_quotation = data.invoice_permission_arr.inv_to_quotation;
+        this.invoicePermissionList_inv_to_share = data.invoice_permission_arr.inv_to_share;
+        this.invoicePermissionList_invoice_alert = data.invoice_permission_arr.invoice_alert;
+
+        this.invoicePermissionList_list = data.invoice_permission_arr.list;
+        this.invoicePermissionList_mail = data.invoice_permission_arr.mail;
+        this.invoicePermissionList_monthly_turn = data.invoice_permission_arr.monthly_turn;
+        this.invoicePermissionList_online_pay_link = data.invoice_permission_arr.online_pay_link;
+        this.invoicePermissionList_payment_process = data.invoice_permission_arr.payment_process;
+        this.invoicePermissionList_pdf_view = data.invoice_permission_arr.pdf_view;
+        this.invoicePermissionList_sale_rep = data.invoice_permission_arr.sale_rep;
+        this.invoicePermissionList_search = data.invoice_permission_arr.search;
+
+        this.invoicePermissionList_sent_to_post = data.invoice_permission_arr.sent_to_post;
+        this.invoicePermissionList_set_invoice_revenue = data.invoice_permission_arr.set_invoice_revenue;
+        this.invoicePermissionList_set_invoice_type = data.invoice_permission_arr.set_invoice_type;
+        this.invoicePermissionList_set_prev_billing = data.invoice_permission_arr.set_prev_billing;
+        this.invoicePermissionList_set_terms_condition = data.invoice_permission_arr.set_terms_condition;
+        this.invoicePermissionList_sus_inv_list = data.invoice_permission_arr.sus_inv_list;
+        this.invoicePermissionList_ten_day_per_billing = data.invoice_permission_arr.ten_day_per_billing;
+        this.revenueTypeList = data.revenue_list;
+        this.taxAmtstate = data.proforma_details[0].taxAmtstate;
+
+        this.edit_array_SearchBiller_Checkbox = data.selected_billerId;
+
+        this.selected_billerId = data.selected_billerId;
+        this.invoicePermissionList_inv_to_did
+        this.invoicePermissionList_set_actual_cost
+
+
+        for (var j = 0; j < data.proforma_details.length; j++) {
+
+          this.reseller_commissionState = data.proforma_details[j].commission_state;
+          this.recurring_state_all = data.proforma_details[j].recuring_status;
+          console.log("this.reseller_commissionState", this.reseller_commissionState)
+          this.suspend_state = data.proforma_details[j].suspend;
+        }
+
+        console.log("proforma_details list", this.PI_list)
+        console.log("this.biller_list", this.biller_list)
   }
   getInvoice(data: any) {
     this.spinner.show();

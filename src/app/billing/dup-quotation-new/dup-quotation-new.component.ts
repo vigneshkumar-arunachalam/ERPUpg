@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 import { InputModalityDetector } from '@angular/cdk/a11y';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
+// import { settings } from 'cluster';
 
 @Component({
   selector: 'app-dup-quotation-new',
@@ -18,6 +19,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./dup-quotation-new.component.css']
 })
 export class DupQuotationNewComponent implements OnInit {
+  datavalue: any;
   //quotation version
   quotationVersion = '1.0';
   //add modal
@@ -166,6 +168,9 @@ export class DupQuotationNewComponent implements OnInit {
   user_ids: any;
   Global_search_filter = false;
   quotDelay: any;
+  searchdatavalue =false;
+  quotation_list1: any;
+  quotation_list2: any =[];
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       console.log(params)
@@ -178,28 +183,27 @@ export class DupQuotationNewComponent implements OnInit {
     }
     );
     $("body").removeClass("modal-open");
-    this.serverService.global_search_quotation.subscribe((val: any) => {
-      console.log("received data from Global search-before parse-Quotation", val)
-      var k = JSON.parse(val);
-      this.quotDelay=JSON.parse(val);
-      console.log("received data from Global search-after parse-Quotation", k);
+    this.setActualCost_FormGroup = this.fb.group({
+      addresses_actualCost: this.fb.array([this.createAddressActualCost()])
+    });
 
-      this.quotation_list = k;
-    
-      if (k != '') {
+    // Quatation_New
+    this.serverService.global_search_quotation.subscribe((val: any) => {
+      this.datavalue = val;
+      this.quotationList2(this.datavalue);
+      console.log("received data from Global search-after parse-Quotation", this.quotation_list);
+      if (this.quotation_list != '') {
         this.Global_search_filter = true;
       } else {
         this.Global_search_filter = false;
       }
-      return false;
-    });
-    
-    this.setActualCost_FormGroup = this.fb.group({
-      addresses_actualCost: this.fb.array([this.createAddressActualCost()])
     });
   }
   keywordCompanyName = 'customerName';
+  
+  // Function to call the subscription after ngOnInit
   ngOnInit(): void {
+    this.quotationList({});
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.searchBillerNameList = ["Cal4Care Pte Ltd", "Marshal System Consultancy", "Cal4Care", "Dcare Technologies Pte Ltd", "DCARE Technologies India Pvt Ltd.", "Cal4care Sdn.Bhd.", "Cal4Care Japan Co., Ltd", "1Msb IT Care Sdn. Bhd.", "Cal4care Telecommunication Services (I) PVT LTD"]
     this.addNewQuotationPopUpForm = new FormGroup({
@@ -280,15 +284,18 @@ export class DupQuotationNewComponent implements OnInit {
     this.addressControlsActualCost.controls.forEach((elt, index) => {
       this.test[index] = true;
     });
-    setTimeout(() => {
-      this.quotationList({});
-    }, 3000);
-    // setTimeout(() => {
-    //   this.quotation_list =  this.quotDelay;
-    // }, 4000);
-
     this.search_BillerList();
+    // setTimeout(() => {
+    //   this.globaldata1();
+    // }, 500);
+    let api_reqs:any = {type: "quotation_list"};
+    this.serverService.callbackfun.next(api_reqs);
   }
+  // globaldata1(){
+  //   alert('hai');
+    
+    
+  // }
   selectEventCustomer(item: any) {
     console.log(item)
     this.searchResult_CustomerID = item.customerId;
@@ -490,7 +497,10 @@ export class DupQuotationNewComponent implements OnInit {
     }
   }
 
-
+  closeModal(){
+    let api_reqs:any = {type: "quotation_list"};
+    this.serverService.closemodal.next(api_reqs);
+  }
 
   EditCHK_emailCC(data: any, event: any) {
     console.log("List - CheckBox ID", data);
@@ -580,43 +590,44 @@ export class DupQuotationNewComponent implements OnInit {
       }
     });
   }
-  quotationList1() {
-    console.log("Quotation List UI Display Data after OnInit ")
+  // quotationList1() {
+  //   console.log("Quotation List UI Display Data after OnInit ")
 
-    let api_req: any = new Object();
-    let api_quotationList: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/quotation_list"
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_quotationList.action = "quotation_list";
-    api_quotationList.user_id = this.user_ids;
-    api_quotationList.off_set = "0";
-    api_quotationList.limit_val = "50";
-    api_req.element_data = api_quotationList;
+  //   let api_req: any = new Object();
+  //   let api_quotationList: any = new Object();
+  //   api_req.moduleType = "quotation";
+  //   api_req.api_url = "quotation/quotation_list"
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_quotationList.action = "quotation_list";
+  //   api_quotationList.user_id = this.user_ids;
+  //   api_quotationList.off_set = "0";
+  //   api_quotationList.limit_val = "50";
+  //   api_req.element_data = api_quotationList;
 
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("qoutation list", response);
-      if (response) {
-        this.quotation_list = response.quotation_details;
-        console.log(this.quotation_list)
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     console.log("qoutation list", response);
+  //     if (response) {
+  //       this.quotation_list = response.quotation_details;
+  //       console.log(this.quotation_list)
 
-      }
-      else {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Your work has been saved',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    });
-  }
+  //     }
+  //     else {
+  //       Swal.fire({
+  //         position: 'top-end',
+  //         icon: 'success',
+  //         title: 'Your work has been saved',
+  //         showConfirmButton: false,
+  //         timer: 1500
+  //       })
+  //     }
+  //   });
+  // }
   quotationList(data: any) {
     // Swal.fire('Loading');
     // Swal.showLoading();
+    console.log(data);
     this.spinner.show();
     $("#searchQuotationFormIdDQ ").modal("hide");
 
@@ -673,6 +684,23 @@ export class DupQuotationNewComponent implements OnInit {
       }
     });
     this.spinner.hide();
+
+  }
+  quotationList2(data: any) {
+    // Swal.fire('Loading');
+    // Swal.showLoading();
+    console.log(data);
+        this.quotation_list = data.Quotation_list_send;
+        this.quotationPermission_Edit = data.Quotation_per_send.edit;
+        this.quotationPermission_Edit = data.Quotation_per_send.edit
+        this.quotationPermission_ActualPrice = data.Quotation_per_send.actual_price
+        this.quotationPermission_Add = data.Quotation_per_send.add
+        this.quotationPermission_Delete = data.Quotation_per_send.delete
+        this.quotationPermission_List = data.Quotation_per_send.list
+        this.quotationPermission_Mail = data.Quotation_per_send.mail
+        this.quotationPermission_Search = data.Quotation_per_send.search
+        this.quotationPermission_View = data.Quotation_per_send.view
+        this.quotationPermission_Share = data.Quotation_per_send.share
 
   }
   listDataInfo(list_data: any) {
