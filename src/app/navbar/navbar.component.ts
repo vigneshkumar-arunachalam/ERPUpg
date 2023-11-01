@@ -76,6 +76,8 @@ export class NavbarComponent implements OnInit {
   Quotation_per_send: any;
   PI_per_send: any;
   Invoice_per_send: any;
+  Invoice_biller_send: any;
+  Invoice_revenue_send: any;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -113,7 +115,9 @@ export class NavbarComponent implements OnInit {
       } else if (val.type == 'invoice_list') {
         let api_reqs: any = {
           Invoice_list_send :this.Invoice_list_send,
-          Invoice_per_send : this.Invoice_per_send
+          Invoice_per_send : this.Invoice_per_send,
+          Invoice_biller_send : this.Invoice_biller_send,
+          Invoice_revenue_send : this.Invoice_revenue_send,
         };
         this.serverService.global_search_invoice.next(api_reqs);
       } else if (val.type == 'customer_list') {
@@ -411,6 +415,8 @@ export class NavbarComponent implements OnInit {
         this.Customer_list_send = response.customer_list.customer_details;
         this.Invoice_list_send = response.invoice_list.proforma_details;
         this.Invoice_per_send = response.invoice_list.invoice_permission_arr;
+        this.Invoice_biller_send = response.invoice_list.biller_details;
+        this.Invoice_revenue_send = response.invoice_list.revenue_list;
 
         if (response.quotation_list != 0 || response.quotation_list != '0') {
           this.Quot_UI_Show = response.quotation_list;
@@ -458,7 +464,9 @@ export class NavbarComponent implements OnInit {
           console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
           let api_reqs: any = {
             Invoice_list_send :this.Invoice_list_send,
-            Invoice_per_send : this.Invoice_per_send
+            Invoice_per_send : this.Invoice_per_send,
+            Invoice_biller_send : this.Invoice_biller_send,
+            Invoice_revenue_send : this.Invoice_revenue_send
           };
           this.serverService.global_search_invoice.next(api_reqs);
         } else {
