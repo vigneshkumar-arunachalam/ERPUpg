@@ -180,7 +180,12 @@
                                                 <td>{{item.remark_desc}}</td>
                                                 <td>{{item.from_dt}}{{" "}}to {{" "}}{{item.to_dt}} </td>
                                                 <td>
-                                                    <input type="color" formControlName="contractColor" />{{" "}}{{item.classification_name}}
+                                                    {{item.classification_name}} <br>                                          
+                                                    <input type="color" value="{{item.color}}"  [disabled]="isColorInputDisabled"
+                                                    (click)="toggleColorInput()" />
+                                                    <!-- <input type="color" formControlName="contractColor"
+                                                    [disabled]="isColorInputDisabled"
+                                                    (click)="toggleColorInput()" /> -->
 
                                                 </td>
                                                 <!-- <td>  <input type="color" />{{'#'+item.color}} </td> -->

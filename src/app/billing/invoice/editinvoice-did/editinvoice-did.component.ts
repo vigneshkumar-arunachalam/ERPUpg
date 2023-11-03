@@ -1948,7 +1948,9 @@ export class EditinvoiceDIDComponent implements OnInit {
     api_updateDid_req.addName = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
     api_updateDid_req.shippingAmt = $('#shipping_amt_id').val();
     api_updateDid_req.add_amt = $('#bankingCharge_amt_id').val();
-    api_updateDid_req.netTotal = Math.round($('#section3_grand_total').val());
+    var netTotalT=$('#section3_grand_total').val();
+    var netTotalNumber = parseFloat(netTotalT);
+    api_updateDid_req.netTotal = (netTotalNumber.toFixed(2));
     api_updateDid_req.remarks = this.addDid_section3.value.section3_remarks;
     api_updateDid_req.previous_due_state = this.addDid_section3.value.section3_previousDue;
     api_updateDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;

@@ -78,6 +78,7 @@ export class NavbarComponent implements OnInit {
   Invoice_per_send: any;
   Invoice_biller_send: any;
   Invoice_revenue_send: any;
+  isColorInputDisabled = false;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -121,7 +122,11 @@ export class NavbarComponent implements OnInit {
         };
         this.serverService.global_search_invoice.next(api_reqs);
       } else if (val.type == 'customer_list') {
-        this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
+        let api_reqs: any = {
+          Customer_list_send :this.Customer_list_send,
+        };
+        this.serverService.global_search_customer.next(api_reqs);
+        // this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
       }
 
     })
@@ -210,9 +215,14 @@ export class NavbarComponent implements OnInit {
         this.resellerList_ResellerDiscount = response.reseller_info.reseller_discount;
         this.resellerList_ResellerId = response.reseller_info.reseller_id;
 
-        this.ContractDetailsForm.patchValue({
-          'contractColor': response.customer_contract[0].color
-        })
+        
+
+        // this.ContractDetailsForm.patchValue({
+        //   for(let i=0;i<response.customer_contract.length;i++){
+        //     'contractColor': response.customer_contract[i].color
+        //   }
+         
+        // })
 
       } else {
         this.contract_filter = false;
@@ -236,6 +246,9 @@ export class NavbarComponent implements OnInit {
   }
   CHKAll_BillerNameSelectAll(a: any) {
 
+  }
+  toggleColorInput(){
+    this.isColorInputDisabled = !this.isColorInputDisabled;
   }
   CHKAll_SelectPageSelectAll(event: any) {
 
@@ -356,6 +369,9 @@ export class NavbarComponent implements OnInit {
     this.spinner.show();
     this.onFocusedCustomer({});
     // $('#ActionIdxx3').modal('show');
+    if(this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined ){
+
+    }
 
     let api_req: any = new Object();
     let api_schGlo_req: any = new Object();
@@ -365,11 +381,16 @@ export class NavbarComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_schGlo_req.action = "globalSearchAll";
     api_schGlo_req.user_id = this.user_ids;
-    if (this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) {
-      // iziToast.error({
-      //   message: "Select Customer",
-      //   position: 'topRight'
-      // });
+    if ((this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) &&
+    (this.PG_customerName == '' || this.PG_customerName == 'undefined' || this.PG_customerName == undefined) &&
+    (this.PG_LicenseNum == '' || this.PG_LicenseNum == 'undefined' || this.PG_LicenseNum == undefined) &&
+    (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined) 
+    ) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Select Customer or license or DID or company",
+        position: 'topRight'
+      });
       return false;
 
     } else {
@@ -384,6 +405,7 @@ export class NavbarComponent implements OnInit {
     api_schGlo_req.did_number = this.PG_DIDNumber;
 
     if (this.addSelectPageListCheckboxID_array == '' || this.addSelectPageListCheckboxID_array == 'undefined' || this.addSelectPageListCheckboxID_array == undefined) {
+      this.spinner.hide();
       iziToast.error({
         message: "Select Page ",
         position: 'topRight'
@@ -421,6 +443,7 @@ export class NavbarComponent implements OnInit {
         if (response.quotation_list != 0 || response.quotation_list != '0') {
           this.Quot_UI_Show = response.quotation_list;
           console.log("quotation-global-before send", JSON.stringify(this.Quotation_list_send));
+          console.log("this.Customer_list_send-before send", JSON.stringify(this.Customer_list_send));
 
 
           let api_reqs: any = {

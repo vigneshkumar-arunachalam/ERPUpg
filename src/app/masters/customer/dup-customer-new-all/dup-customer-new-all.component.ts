@@ -999,6 +999,10 @@ this.cmsDepartmentList1();
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
     });
+    setTimeout(() => {
+      let api_reqs:any = {type: "customer_list"};
+      this.serverService.callbackfun.next(api_reqs);
+    }, 1000);
 
   }
 
