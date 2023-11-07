@@ -251,3 +251,27 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
 }
 
 /* ------------------------------------------ KS--CSS------------------------------------------ */
+
+
+
+.other-section{
+  position: relative;
+  display: flex;
+  border-radius: 25px;
+}
+.other-section::after{
+  position: absolute;
+  content: '';
+  background-color: #000;
+  width: 450px;
+  height: 2px;
+  left: 160px;
+}
+.other-section::before{
+  position: absolute;
+  content: '';
+  background-color: #000;
+  width: 450px;
+  height: 2px;
+  right: 160px;
+}

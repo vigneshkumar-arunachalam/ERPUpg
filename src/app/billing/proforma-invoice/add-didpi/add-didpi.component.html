@@ -95,7 +95,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
                         <div class="col-lg-12">
@@ -108,8 +108,37 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="billCode_0" class="col-lg-12 col-form-label">Bill Code</label>
+                        <div class="col-lg-12">
 
+                            <select id="billCode_0" class="form-control" formControlName="billCode_0"
+                                (change)="billCodeChange($event)">
+                                <option [ngValue]="null" selected>Select Bill Code</option>
+
+                                <option *ngFor="let bill of did_bill_codexx" value="{{bill.customer_bill_code_id}}">
+                                    {{bill.bill_code}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
+                        <div class="col-lg-12">
+                            
+                            <select id="Payment" class="form-control" formControlName="PaymentVia">
+                                <option [ngValue]="null" selected disabled>Select Payment Via</option>
+                                <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
+                                    {{payment.paymentvia_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-lg-12">
                     <div class="form-group">
@@ -357,20 +386,7 @@
                             </div>
                         </div>
         
-                        <div class="col-lg-12">
-                            <div class="form-group row">
-                                <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
-                                <div class="col-lg-12">
-                                    
-                                    <select id="Payment" class="form-control" formControlName="PaymentVia">
-                                        <option [ngValue]="null" selected disabled>Select Payment Via</option>
-                                        <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
-                                            {{payment.paymentvia_name}}
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
+                        
                       
                     </div>
                     
@@ -381,9 +397,9 @@
     <form [formGroup]="did_Invice_fixed_charges" >
         <div class="row">
             <div class="col-lg-12">
-                <div class="form-group row">
-                    <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
-                            class="col-lg-12 col-form-label">Product Details</h2>
+                <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+
+                    <button type="button" class="btn  btn-dark mt-2 mb-2 other-section">Product Details</button>
                 </div>
             </div>
             <div class="col-12">
@@ -403,10 +419,10 @@
                             </tr>
                             <tr>
                                 <td colspan="9">
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">              
-                                              <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: left;"
-                                        class="col-lg-12 col-form-label">Monthly Fixed Charges</h2>
+                                    <div class="col-lg-12" >
+                                        <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+        
+                                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2 " style="border-radius: 25px;">Monthly Fixed Charge</button>
                                     </div>
                                     </div>
                                 </td>
@@ -561,16 +577,16 @@
                             <form [formGroup]="did_Invice_usage_Charges" >
                             <table>
                                 <thead>
-                                <tr>
-                                    <td colspan="9">
-                                        <div class="col-lg-12">
-                                            <div class="form-group row">              
-                                                  <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: left;"
-                                            class="col-lg-12 col-form-label">Usage Charges</h2>
-                                        </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    <tr>
+                                        <td colspan="9">
+                                            <div class="col-lg-12" >
+                                                <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+                
+                                                <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2 other-section">Usage Charges</button>
+                                            </div>
+                                            </div>
+                                        </td>
+                                    </tr>
                             </thead>
                         
                             <tbody formArrayName="usageAddress" *ngFor="let usage of usageAddressControls.controls; let i = index;">
@@ -592,11 +608,22 @@
                                             <div class="form-group row">
                                                 <div class="col-lg-12">
                         
-                                                    <select id="billCode" class="form-control"  formControlName="billCode" >
+                                                    <!-- <select id="billCode" class="form-control"  formControlName="billCode" >
                                                         <option [ngValue]="null" selected disabled>Select Bill Code</option>
                                                         <option *ngFor="let bill of BillCodeList" value="{{bill.billCode}}">
                                                             {{bill.billCode}}
                                                         </option> 
+                                                    </select> -->
+
+                                                    <label for="billCode_1"></label>
+                                                    <select name="billCode_1" id="billCode" class="form-control"
+                                                        aria-label="Default select example" formControlName="billCode"
+                                                        (change)="billCodeChange_section1($event)">
+                                                        <option [ngValue]="null" selected>Select Bill Code</option>
+                                                        <option *ngFor="let bill of did_bill_code_section1"
+                                                            value="{{bill.customer_bill_code_id}}">
+                                                            {{bill.bill_code}}
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -729,16 +756,16 @@
                                 <form [formGroup]="did_Invice_other_charges">
                                 <table>
                                     <thead>
-                                    <tr>
-                                        <td colspan="9">
-                                            <div class="col-lg-12">
-                                                <div class="form-group row">              
-                                                      <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: left;"
-                                                class="col-lg-12 col-form-label">Other Charges</h2>
-                                            </div>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td colspan="9">
+                                                <div class="col-lg-12" >
+                                                    <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+                    
+                                                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2 other-section">Other Charges</button>
+                                                </div>
+                                                </div>
+                                            </td>
+                                        </tr>
                                 </thead>
                                 <tbody formArrayName="otherAddress" *ngFor="let other of otherAddressControls.controls; let i = index;">
                                   

@@ -188,6 +188,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   TaxValuEDIt: any;
   TaxAmtEDIt: any;
   netPaymentEDIt: any;
+  bill_fixed_details: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.route.queryParams
@@ -1050,15 +1051,15 @@ export class EditinvoiceDIDComponent implements OnInit {
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
-        if( this.TaxValuEDIt!=0){
+        if (this.TaxValuEDIt != 0) {
           setTimeout(() => {
             this.addDid_section3.patchValue({
               'section3_gst_dropdown': response.default_tax_id,
             });
-  
+
           }, 500);
         }
-       
+
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         console.log('response.default_tax_id', response.default_tax_id);
 
@@ -1470,6 +1471,7 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.section1_billcode = response.billing_pararent_details[0].did_bill_code
         this.TaxValuEDIt = response.billing_pararent_details[0].taxId;
         this.TaxAmtEDIt = response.billing_pararent_details[0].taxAmt;
+        this.bill_fixed_details = response.bill_fixed_details;
         this.netPaymentEDIt = response.billing_pararent_details[0].netPayment
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -1512,7 +1514,7 @@ export class EditinvoiceDIDComponent implements OnInit {
 
           $('#billerIDs').val(this.TaxValuEDIt);
           $('#Tax_amt_id').val(this.TaxAmtEDIt);
-          
+
           $('#section3_grand_total').val(this.netPaymentEDIt);
         }, 1000);
         console.log('billchild_details.length' + response.billing_pararent_details.length);
@@ -1597,7 +1599,7 @@ export class EditinvoiceDIDComponent implements OnInit {
         console.log(this.usageAddress);
 
 
-        // part-2
+        // part-3
 
         const formArray3 = new FormArray([]);
         var bill_Other_TotalSUBAmount = 0;
@@ -1711,8 +1713,8 @@ export class EditinvoiceDIDComponent implements OnInit {
       this.usageSaveDiscount();
       // this.totalCalculate_3();
     });
- 
-   
+
+
 
     this.spinner.hide();
 
@@ -1728,7 +1730,7 @@ export class EditinvoiceDIDComponent implements OnInit {
 
       $('#billerIDs').val(this.TaxValuEDIt);
       $('#Tax_amt_id').val(this.TaxAmtEDIt);
-      
+
       $('#section3_grand_total').val(this.netPaymentEDIt);
     }, 3000);
     this.spinner.hide();
@@ -1948,7 +1950,7 @@ export class EditinvoiceDIDComponent implements OnInit {
     api_updateDid_req.addName = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
     api_updateDid_req.shippingAmt = $('#shipping_amt_id').val();
     api_updateDid_req.add_amt = $('#bankingCharge_amt_id').val();
-    var netTotalT=$('#section3_grand_total').val();
+    var netTotalT = $('#section3_grand_total').val();
     var netTotalNumber = parseFloat(netTotalT);
     api_updateDid_req.netTotal = (netTotalNumber.toFixed(2));
     api_updateDid_req.remarks = this.addDid_section3.value.section3_remarks;
@@ -2151,7 +2153,8 @@ export class EditinvoiceDIDComponent implements OnInit {
     var enablePerFinal_1 = $('#enablePerFinal_1').val()
 
     var disType = $('input:radio[name=fix_DiscountTYpe]:checked').val();
-
+    var taxvalue =this.bill_fixed_details.length;
+    console.log(taxvalue);
     var final_tot = $('#sub_total_1').val();
     console.log('final_tot', final_tot);
     $('#sub_discount_type_1').val(disType);
@@ -2190,15 +2193,26 @@ export class EditinvoiceDIDComponent implements OnInit {
 
       }
     }
+   
     else {
-      for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
+      for (let a = 0; a < this.bill_fixed_details.length; a++) {
+        console.log($('#amt_1_'+a).val());
+        // console.log("fixedCharge_TotalAmount---to be in sum1", fixedCharge_TotalAmount);
+        // console.log("fixedCharge_TotalAmount---to be in sum1", typeof fixedCharge_TotalAmount);
+        // console.log("$('#amt_1_' + a).val()", typeof ($('#amt_1_' + a).val()));
+        fixedCharge_TotalAmount = (fixedCharge_TotalAmount + this.bill_fixed_details[a].total_amt);
 
-
-        fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
+        // console.log("a value",'#amt_1_' + a)
+        // console.log("$('#amt_1_' + a).val()1", $('#amt_1_' + a).val());
+  
+        //  fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
+  
 
         console.log("dummy inside", fixedCharge_TotalAmount)
 
       }
+
+      console.log("fixedCharge_TotalAmount" ,fixedCharge_TotalAmount);
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
       console.log('price_fin' + price);
       $('#sub_total_1').val(price);
@@ -2424,11 +2438,11 @@ export class EditinvoiceDIDComponent implements OnInit {
     var sub_total1, sub_total2, sub_total3: any = 0;
 
     sub_total1 = $('#sub_total_1').val();
-    console.log("sub_total1", sub_total1);
+    console.log("gross total-entry-sub_total1", sub_total1);
     sub_total2 = $('#sub_total_2').val();
-    console.log("sub_total2", sub_total2);
+    console.log("gross total-entry-sub_total2", sub_total2);
     sub_total3 = $('#sub_total_3').val();
-    console.log("sub_total3", sub_total3);
+    console.log("gross total-entry-sub_total3", sub_total3);
 
     if (sub_total1 == '' && sub_total2 == '' && sub_total3 == '') {
       total_amt = 0;
@@ -2453,6 +2467,7 @@ export class EditinvoiceDIDComponent implements OnInit {
       console.log("total amount 110", total_amt);
     } else {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
+      total_amt = total_amt.toFixed(2);
     }
     // total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     this.grossTotal_BeforeDiscount = total_amt
@@ -2548,6 +2563,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   }
 
   extraFees() {
+    console.log("extra fee ......................")
 
     var test;
     var getafterdiscountval;

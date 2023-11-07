@@ -2300,13 +2300,7 @@
                           <input type="text" class="form-control" formControlName="bill_code_750_8"
                             id="bill_code_750_8_{{i}}" />
                         </td>
-                        <td *ngIf="i>0">
-                          <div class="userDatatable-content d-inline-block">
-                            <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress1(i)">X</button>
-
-                          </div>
-                        </td>
-                        <td style="padding-right: 10px!important">
+                                 <td style="padding-right: 10px!important">
 
                           <input type="hidden" class="form-control" formControlName="customer_bill_code_id"
                             id="customer_bill_code_id{{i}}" />
@@ -2320,6 +2314,13 @@
                         <td style="padding-right: 10px!important">
                           <input type="hidden" class="form-control" formControlName="conn_state" id="conn_state{{i}}" />
                         </td>
+                        <td *ngIf="i>0">
+                          <div class="userDatatable-content d-inline-block">
+                            <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress1(i)">X</button>
+
+                          </div>
+                        </td>
+               
                       </tr>
                     </tbody>
                   </table>

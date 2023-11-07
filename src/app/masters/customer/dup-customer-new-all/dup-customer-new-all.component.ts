@@ -293,7 +293,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   existing_email: number;
 
   Global_search_filter =  false;
-  Global_search_filter_2: string;
+  Global_search_filter_2: string='';
   formGroup: any;
   
 
@@ -307,7 +307,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       // this.customer_list=k;
       console.log("k in customer",val)
       console.log("k length in customer",val.length);
-      this.customer_list=JSON.parse(val);
+      this.customer_list=val;
     
       console.log("this.customer_list in customer",this.customer_list);
       if(val!=null || val!='null'){
@@ -3317,7 +3317,7 @@ this.cmsDepartmentList1();
 
   }
   closeModal(){
-    let api_reqs:any = {type: "quotation_list"};
+    let api_reqs:any = {type: "customer_list"};
     this.serverService.closemodal.next(api_reqs);
   }
  

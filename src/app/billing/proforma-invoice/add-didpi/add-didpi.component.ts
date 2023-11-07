@@ -118,7 +118,10 @@ export class AddDidpiComponent implements OnInit {
   selectAdditionalSign: boolean = true;
   // singapore date & time
 formattedDate: string;
-
+  did_bill_code: any;
+  did_bill_codexx: any;
+  did_bill_code_section2: any;
+  did_bill_code_section1: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, 
     @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router) {
     this.did_Invice_fixed_charges = this.fb.group({
@@ -137,7 +140,10 @@ formattedDate: string;
    ngOnInit(): void {
    
     this.addDidLoad();
+    this.did_bill_codexx = [
+      { "customer_bill_code_id": 1445, "bill_code": -810 },
 
+    ];
     this.addDid_section1 = new FormGroup({
       'initial': new FormControl(),
       'companyName': new FormControl(),
@@ -163,6 +169,7 @@ formattedDate: string;
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
       'billCode': new FormControl(),
+      'billCode_0':new FormControl(),
       // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
@@ -175,6 +182,20 @@ formattedDate: string;
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
       'Jompay_logo': new FormControl(),
+
+// check below
+
+
+      'sub_total1': new FormControl(),
+      'sub_total2': new FormControl(),
+      'sub_total3': new FormControl(),
+      'sub_dis_amt1': new FormControl(),
+
+
+      'sub_dis_type1': new FormControl(),
+      'sub_dis_val1': new FormControl(),
+      'sub_dis_amt2': new FormControl(),
+
 
     });
 
@@ -413,7 +434,13 @@ formattedDate: string;
     console.log(this.mile_check_value);
   }
 
+  billCodeChange(event: any) {
 
+    this.did_bill_code = event.target.value;
+  }
+  billCodeChange_section1(event: any) {
+    this.did_bill_code_section2 = event.target.value;
+  }
   radioSelectCommissionType(event: any) {
     $('#CommissionValue').val('');
     $('#CommissionAmount').val('');
@@ -831,7 +858,8 @@ formattedDate: string;
           ship_address_str2 = response.customer_details[0].customerAddress2;
         }
 
-
+        this.did_bill_codexx = response.customer_billcode_arr;
+        this.did_bill_code_section1 = response.customer_billcode_arr;
 
         this.addDid_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,

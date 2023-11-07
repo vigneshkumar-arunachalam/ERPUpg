@@ -817,7 +817,7 @@ export class DupProformaInvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
 
-      $("#searchPIFormId").modal("hide");
+      $("#searchPIFormId_DupPI").modal("hide");
       console.log("PI list", response);
       if (response) {
 

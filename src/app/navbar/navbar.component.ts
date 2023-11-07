@@ -182,6 +182,9 @@ export class NavbarComponent implements OnInit {
     console.log(item.customerName)
 
     this.CompanyName = item.customerName;
+
+    this.onFocusedCustomer({});
+    // this.spinner.show();
     // do something with selected item
   }
   showFunction() {
@@ -190,6 +193,8 @@ export class NavbarComponent implements OnInit {
   onFocusedCustomer(e: any) {
 
     this.show = false;
+    this.spinner.show();
+ 
     let api_req: any = new Object();
     let api_contract_req: any = new Object();
     api_req.moduleType = "global";
@@ -200,12 +205,16 @@ export class NavbarComponent implements OnInit {
     api_contract_req.user_id = this.user_ids;
     api_contract_req.customer_id = this.PG_customerId;
     api_req.element_data = api_contract_req;
-
+    if( this.PG_customerId==undefined){
+      this.spinner.hide();
+      return false;
+    }
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
 
       if (response != '') {
-
+      
+        this.spinner.hide();
         this.contract_filter = true;
         console.log("response.customer_contract.color", response.customer_contract.color)
 
@@ -225,8 +234,10 @@ export class NavbarComponent implements OnInit {
         // })
 
       } else {
+      
         this.contract_filter = false;
         Swal.close();
+        this.spinner.hide();
         iziToast.warning({
           message: "Response Failed",
           position: 'topRight'
@@ -236,7 +247,8 @@ export class NavbarComponent implements OnInit {
 
     }),
       (error: any) => {
-
+     
+        this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -387,10 +399,10 @@ export class NavbarComponent implements OnInit {
     (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined) 
     ) {
       this.spinner.hide();
-      iziToast.error({
-        message: "Select Customer or license or DID or company",
-        position: 'topRight'
-      });
+      // iziToast.error({
+      //   message: "Select Customer or license or DID or company",
+      //   position: 'topRight'
+      // });
       return false;
 
     } else {
@@ -474,7 +486,7 @@ export class NavbarComponent implements OnInit {
         if (response.customer_list != 0 || response.customer_list != '0') {
           this.Customer_list_send = response.customer_list.customer_details;
           this.Cust_UI_Show = response.customer_list;
-          this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
+          this.serverService.global_search_customer.next(this.Customer_list_send);
         } else {
           this.Cust_UI_Show = response.customer_list;
           console.log("Customer List Skipped")
@@ -688,6 +700,7 @@ export class NavbarComponent implements OnInit {
       if (response != '') {
         this.searchResult = response.customerName;
         console.log(" this.searchResult", this.searchResult)
+        this.onFocusedCustomer({});
       } else {
         Swal.close();
         iziToast.warning({

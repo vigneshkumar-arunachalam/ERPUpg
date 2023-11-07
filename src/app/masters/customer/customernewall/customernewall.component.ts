@@ -293,6 +293,7 @@ export class CustomernewallComponent implements OnInit {
   existing_email: number;
 
   testing =  false;
+  customerIDBillCode: any;
   
 
   constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -1024,9 +1025,62 @@ this.cmsDepartmentList1();
     });
 
   }
-  removeAddress1(i: number) {
+  // removeAddress1(i: number) {
 
-    this.addresses.removeAt(i);
+  //   this.addresses.removeAt(i);
+
+
+  // }
+
+
+  removeAddress1(i: number) {
+   
+    console.log('iiii--' + i)
+    console.log(this.addresses)
+    var customer_bill_code_id= $('#customer_bill_code_id' + i).val();
+     var cust_id = $('#customer_id' + i).val();
+    // console.log('pd_billchild_id'+pd_billchild_id);
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+         this.addresses.removeAt(i);
+        // var addr = this.addPI_section2.value.addresses;
+        // var list_cnt = addr.length;
+       
+
+
+        let api_req: any = new Object();
+        let api_billCoDel_req: any = new Object();
+        api_req.moduleType = "customer";
+        api_req.api_url = "customer/customer_billcodeDeleteRow";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_billCoDel_req.action = "customer_billcodeDeleteRow";
+        api_billCoDel_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_billCoDel_req.customer_id = cust_id;
+        api_billCoDel_req.customer_bill_code_id = customer_bill_code_id;
+        api_req.element_data = api_billCoDel_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+          
+
+        });
+
+
+
+
+
+      }
+    })
 
 
   }
@@ -2669,7 +2723,7 @@ this.cmsDepartmentList1();
         this.editCustomerClassificationBillerCheckboxID_array = response.result.customer_details[0].cus_type.split(',');
         this.customerType_listEdit = response.result.cus_class_type;
         this.customerStatusEdit = response.result.customer_details[0].cust_status;
-
+        this.customerIDBillCode = response.result.customer_details[0].customerId;
         // console.log('selected_biller', response.result.billerId_det);
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
@@ -2948,20 +3002,27 @@ this.cmsDepartmentList1();
 
     // section - 2
 
-    var addr = this.billCodeEditForm3.value.addresses;
-    for (let i = 0; i < addr.length; i++) {
-      console.log(addr[i].bill_code_740)
-
-      addr[i].bill_code_name = $('#billCodeName' + i).val();
-      addr[i].bill_code_740 = $('#bill_code_740_' + i).val();
-      addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
-      addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
-      addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
-      addr[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
-      addr[i].conn_state = $('#conn_state' + i).val();
-      addr[i].customer_id = $('#customer_id' + i).val();
+    var addr23 = this.billCodeEditForm3.value.addresses;
+    for (let i = 1; i < addr23.length; i++) {
+     
+      addr23[i].bill_code_name = $('#billCodeName' + i).val();
+      console.log("$('#billCodeName' + i).val()",$('#billCodeName' + i).val());
+      addr23[i].bill_code_740 = $('#bill_code_740_' + i).val();
+      console.log("$('#bill_code_740_' + i).val()",$('#bill_code_740_' + i).val());
+      addr23[i].bill_code_kl = $('#bill_code_kl_' + i).val();
+      console.log("$('#bill_code_kl_' + i).val()",$('#bill_code_kl_' + i).val());
+      addr23[i].bill_code_750 = $('#bill_code_750_' + i).val();
+      console.log("$('#bill_code_750_' + i).val()",$('#bill_code_750_' + i).val());
+      addr23[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
+      console.log("$('#bill_code_750_8_' + i).val()",$('#bill_code_750_8_' + i).val());
+      addr23[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
+      console.log("$('#customer_bill_code_id' + i).val()",$('#customer_bill_code_id' + i).val());
+      addr23[i].conn_state = $('#conn_state' + i).val();
+      console.log("$('#conn_state' + i).val()",$('#conn_state' + i).val());
+      addr23[i].customer_id = $('#customer_id' + i).val();
+      console.log("$('#customer_id' + i).val()",$('#customer_id' + i).val());
     }
-    update_customer_req.billcode_value = addr;
+    update_customer_req.billcode_value = addr23;
 
     // section - 3
     var primary = this.billCodeEditForm2.value;

@@ -197,6 +197,8 @@ export class EditDidpiComponent implements OnInit {
       'PoNo': new FormControl(),
       'Attn_1': new FormControl(),
       'ship_to': new FormControl(),
+      'shipTo_2': new FormControl(),
+      'shipTo_3': new FormControl(),
       'ship_address_1': new FormControl(),
       'ship_address_2': new FormControl(),
       'ship_address_3': new FormControl(),

@@ -1,12 +1,15 @@
-<div class="contents-section">
-    <div class="col-lg-12 mb-30">
-        <div class="card">
-            <div class="card-header color-dark fw-500">
-                <h1 style="text-align: left;">Edit DID Invoice </h1>
-            </div>
+<div class="contents-section addquotation-section" style="cursor:pointer;" id="abc">
+    <div class="card">
+        <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active">Edit DID Invoice</span>
+            </h3>
+
         </div>
     </div>
-    <h2 style="text-align: center;">Enter Proforma Invoice Details</h2>
+
+    <div class="container-fluid">
+   
     <form [formGroup]="addDid_section1">
         <div class="row">
             <div class="col-lg-6">
@@ -108,7 +111,20 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
+                        <div class="col-lg-12">
 
+                            <select id="Payment" class="form-control" formControlName="PaymentVia">
+                                <option [ngValue]="null" selected disabled>Select Payment Via</option>
+                                <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
+                                    {{payment.paymentvia_name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="col-lg-12">
                     <label for="Payment" class="form-label">Select Export State</label>
@@ -118,7 +134,7 @@
                             <input class="form-check-input" type="radio" name="e_export_state" [value]="display1.id"
                                 checked="{{display1.id==exportState_value ? 'checked':''}}"
                                 (change)="handleChange(display1.billerId,$event)" />
-                            <label class="form-check-label" for="exampleRadios{{k}}" style="color:#009688 !important;">
+                            <label class="form-check-label" for="exampleRadios{{k}}" style="color:black !important;">
                                 {{display1.name}}
                             </label>
                         </div>
@@ -135,7 +151,7 @@
                             <input class="form-check-input" type="radio" name="bills_logo_id" [value]="display1.id"
                                 checked="{{display1.id==billsLogo_value ? 'checked':''}}"
                                 (change)="handleChange_Logo(display1.billerId,$event)" />
-                            <label class="form-check-label" for="exampleRadios{{k}}" style="color:#009688 !important;">
+                            <label class="form-check-label" for="exampleRadios{{k}}" style="color:black !important;">
                                 {{display1.name}}
                             </label>
                         </div>
@@ -155,6 +171,7 @@
                         </div>
                     </div>
                 </div>
+               
 
             </div>
             <div class="col-lg-6">
@@ -308,20 +325,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12">
-                    <div class="form-group row">
-                        <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
-                        <div class="col-lg-12">
-
-                            <select id="Payment" class="form-control" formControlName="PaymentVia">
-                                <option [ngValue]="null" selected disabled>Select Payment Via</option>
-                                <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
-                                    {{payment.paymentvia_name}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+              
 
 
             </div>
@@ -332,9 +336,9 @@
     <form [formGroup]="did_Invice_fixed_charges">
         <div class="row">
             <div class="col-lg-12">
-                <div class="form-group row">
-                    <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: center;"
-                        class="col-lg-12 col-form-label">Product Details</h2>
+                <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+
+                    <button type="button" class="btn  btn-dark mt-2 mb-2 other-section">Product Details</button>
                 </div>
             </div>
             <div class="col-12">
@@ -354,11 +358,11 @@
                             </tr>
                             <tr>
                                 <td colspan="9">
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: left;"
-                                                class="col-lg-12 col-form-label">Monthly Fixed Charges</h2>
-                                        </div>
+                                    <div class="col-lg-12" >
+                                        <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+        
+                                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2 " style="border-radius: 25px;">Monthly Fixed Charge</button>
+                                    </div>
                                     </div>
                                 </td>
                             </tr>
@@ -520,11 +524,11 @@
                     <thead>
                         <tr>
                             <td colspan="9">
-                                <div class="col-lg-12">
-                                    <div class="form-group row">
-                                        <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: left;"
-                                            class="col-lg-12 col-form-label">Usage Charges</h2>
-                                    </div>
+                                <div class="col-lg-12" >
+                                    <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+    
+                                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2 other-section">Usage Charges</button>
+                                </div>
                                 </div>
                             </td>
                         </tr>
@@ -678,11 +682,11 @@
                     <thead>
                         <tr>
                             <td colspan="9">
-                                <div class="col-lg-12">
-                                    <div class="form-group row">
-                                        <h2 style="color: black;background-color: #EFF0F3;font-size: larger;text-align: left;"
-                                            class="col-lg-12 col-form-label">Other Charges</h2>
-                                    </div>
+                                <div class="col-lg-12" >
+                                    <div class="form-group row" style="display: flex;align-items: center;justify-content: center;">              
+    
+                                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2 other-section">Other Charges</button>
+                                </div>
                                 </div>
                             </td>
                         </tr>
@@ -827,8 +831,6 @@
             </form>
         </div>
     </div>
-</div>
-<div class="content-section">
     <form [formGroup]="addDid_section3">
         <section class="overall">
             <!-- <section class="left_section">
@@ -1061,20 +1063,23 @@
 
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateDidInvoice()">
-                            Update
-                        </button>
-                        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="goBack()">
-                            Cancel
-                        </button>
-                    </div>
+                  
                 </div>
 
             </div>
         </section>
     </form>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateDidInvoice()">
+            Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="goBack()">
+            Cancel
+        </button>
+    </div>
 </div>
+</div>
+
 
 
 <!------------------------- fixed Discount popup start ------------------>
