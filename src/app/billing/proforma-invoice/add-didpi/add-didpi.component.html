@@ -604,7 +604,7 @@
                                         <div class="userDatatable-content"  >
                                         <input type="date" class="form-control" formControlName="fromdt2"   id="fromdt2_{{i}}"/>
                                         
-                                        <div class="userDatatable-content" *ngIf="1>i">
+                                        <div class="userDatatable-content" >
                                             <div class="form-group row">
                                                 <div class="col-lg-12">
                         
@@ -635,7 +635,8 @@
                                         <div class="userDatatable-content" >
                                             <br>
                                         <input type="date" class="form-control" formControlName="todt2" id="todt2_{{i}}"  />
-                                        <button type="button"  class=" btn-primary">Compute
+                                        <button type="button"  class=" btn-primary" 
+                                        (click)="computeUsageCharge(i)">Compute
                                      </button>
         
                                          </div>
@@ -786,8 +787,8 @@
                                             <div class="userDatatable-content" >
                                                 <br>
                                             <input type="date" class="form-control" formControlName="todt3" id="todt3_{{i}}"  />
-                                            <button  type="button"  class=" btn-primary">Compute
-                                         </button>
+                                            <!-- <button  type="button"  class=" btn-primary">Compute
+                                         </button> -->
             
                                              </div>
                                         </td>
@@ -1059,6 +1060,8 @@
                 
                                             </div>
                                         </div>
+
+
                 
                                         <div class="col-lg-12">
                                             <div class="form-group row">
@@ -1076,8 +1079,74 @@
                 
                                             </div>
                                         </div>
-                
+
+
                                         <div class="col-lg-12">
+                                            <div class="form-group row" *ngIf="(chkTermsandcondition==true)">
+                                                
+                                                    <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                                        <label>Terms and Conditions-1</label>
+                    
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" formControlName="section3_Terms1"
+                                                        value="{{this.section3_Terms1}}"     id="section3_Terms1" />
+                    
+                                                    </div>
+                    
+                                               
+                                               
+                                                    <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                                        <label>Terms and Conditions-2</label>
+                    
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" formControlName="section3_Terms2"
+                                                        value="{{this.section3_Terms2}}"    id="section3_Terms2" />
+                    
+                                                    </div>
+                    
+                                               
+                                                
+                                                    <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                                        <label>Terms and Conditions-3</label>
+                    
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" formControlName="section3_Terms3"
+                                                        value="{{this.section3_Terms3}}"    id="section3_Terms3" />
+                    
+                                                    </div>
+                    
+                                                
+                                              
+                                                    <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                                        <label>Terms and Conditions-4</label>
+                    
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" formControlName="section3_Terms4"
+                                                        value="{{this.section3_Terms4}}"    id="section3_Terms4" />
+                    
+                                                    </div>
+                    
+                                                
+                                                
+                                                    <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                                        <label>Terms and Conditions-5</label>
+                    
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" formControlName="section3_Terms5"
+                                                        value="{{this.section3_Terms5}}"    id="section3_Terms5" />
+                    
+                                                    </div>
+                    
+                                               
+                                            </div>
+                                        </div>
+                
+                                        <!-- <div class="col-lg-12">
                                             <div class="form-group row"  *ngIf="(quotationAddSignature_state==1)">
                 
                                                 <div class="col-lg-6">
@@ -1097,7 +1166,26 @@
                                                 </div>
                 
                                             </div>
+                                        </div> -->
+
+                                        <div class="col-lg-12">
+                                            <div class="form-group row">
+            
+                                                <div class="col-lg-6 " >
+                                                    <label>Add to Received and Authorized Signature/stamp</label>
+                                                </div>
+            
+                                                <div class="col-lg-6">
+                                                    <input type="checkbox" [(ngModel)]="chkReceivedAuthorizedSignature"
+                                                        formControlName="section3_receivedAuthorizedSignature"
+                                                        (change)="chkReceivedAuthorizedSignatureEvent($event)" />
+                                                </div>
+            
+            
+                                            </div>
                                         </div>
+
+
                                         <div class="col-lg-12">
                                             <div class="form-group">
                                                 <label style="font-style: italic;color:#009688">
@@ -1108,7 +1196,8 @@
             
                                             </div>
                                         </div>
-                
+
+                       
                                         <div class="col-lg-12">
                                             <div class="form-group row">
                 
@@ -1122,7 +1211,7 @@
                                                         (change)="chklogoAddressSignatureEvent($event)" />
                                                 </div>
                 
-                
+
                                             </div>
                                         </div>
                                         <div class="buttonAlign">

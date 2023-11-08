@@ -133,6 +133,11 @@ export class EditDidpiComponent implements OnInit {
    input2: string;
    input3: string;
    input4: string;
+  did_bill_code: any;
+  did_bill_codexx: any;
+  did_bill_code_index: any;
+  did_bill_code_section2: any;
+  did_bill_code_section1: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute) {
 
     this.route.queryParams
@@ -158,7 +163,10 @@ export class EditDidpiComponent implements OnInit {
   keywordUserName = 'reseller_name';
 
   ngOnInit(): void {
+    this.did_bill_codexx = [
+      { "customer_bill_code_id": 1445, "bill_code": -810 },
 
+    ];
     this.editDidInvice();
     this.addDidLoad();
 
@@ -298,6 +306,7 @@ export class EditDidpiComponent implements OnInit {
 
   fixedFormDid(): FormGroup {
     return this.fb.group({
+      billChildid1: '',
       particular1: '',
       fromdt1: '',
       todt1: '',
@@ -306,10 +315,12 @@ export class EditDidpiComponent implements OnInit {
       productDesc1: '',
       amt1: '',
       call_duration1: '',
-      sub_total1: '',
-      sub_dis_amt1: '',
-      sub_dis_type1: '',
-      sub_dis_val1: '',
+
+
+      // sub_total1: '',
+      // sub_dis_amt1: '',
+      // sub_dis_type1: '',
+      // sub_dis_val1: '',
 
 
     });
@@ -345,6 +356,7 @@ export class EditDidpiComponent implements OnInit {
 
   usageFormDid(): FormGroup {
     return this.fb.group({
+      billChildid2: '',
       particular2: '',
       fromdt2: '',
       todt2: '',
@@ -353,6 +365,7 @@ export class EditDidpiComponent implements OnInit {
       productDesc2: '',
       amt2: '',
       call_duration2: '',
+      did_bill_code_chd: '',
 
     });
   }
@@ -386,6 +399,7 @@ export class EditDidpiComponent implements OnInit {
 
   otherFormDid(): FormGroup {
     return this.fb.group({
+      billChildid3: '',
       particular3: '',
       fromdt3: '',
       todt3: '',
@@ -461,6 +475,15 @@ export class EditDidpiComponent implements OnInit {
   chkpreviousDueEvent(event: any) {
     this.previousDue = event.target.checked;
     console.log(this.previousDue)
+  }
+  billCodeChange(event: any) {
+
+    this.did_bill_code = event.target.value;
+  }
+  billCodeChange_section1(event: any, i: any) {
+    this.did_bill_code_index = i;
+    this.did_bill_code_section2 = event.target.value;
+  
   }
 
   getCustomerInvoiceDetails(event: any) {
@@ -873,7 +896,8 @@ export class EditDidpiComponent implements OnInit {
           ship_address_str2 = response.customer_details[0].customerAddress2;
         }
 
-
+        this.did_bill_codexx = response.customer_billcode_arr;
+        this.did_bill_code_section1 = response.customer_billcode_arr;
 
         this.addDid_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,
@@ -924,6 +948,9 @@ export class EditDidpiComponent implements OnInit {
 
 
       if (response.status == true) {
+        this.did_bill_code = response.customer_billcode_arr;
+        this.did_bill_code_section1 = response.customer_billcode_arr;
+        
         this.addDid_section1.patchValue({
           "customer_id_hd": response.customer_list.customerId,
           "b_name": response.customer_list.customerName,
@@ -987,7 +1014,7 @@ export class EditDidpiComponent implements OnInit {
           'ship_address_2': response.billing_pararent_details[0].s_address,
           // 'shpi_address_3': response.billing_pararent_details[0].s_address3,
           'Attn_2': response.billing_pararent_details[0].s_attn,
-
+          'billCode': response.billing_pararent_details[0].did_bill_code,
           'invoiceNo': response.billing_pararent_details[0].invoice_no,
           'cusInvoiceNo': response.billing_pararent_details[0].cus_invoice_no,
           'tin': response.billing_pararent_details[0].tinNo,
@@ -997,7 +1024,7 @@ export class EditDidpiComponent implements OnInit {
           'PoDate': response.billing_pararent_details[0].po_date,
           'salesRep': response.billing_pararent_details[0].sales_rep,
           'ShipBy': response.billing_pararent_details[0].ship_by,
-          'billCode': response.billing_pararent_details[0].billCode,
+          // 'billCode': response.billing_pararent_details[0].billCode,
           'ShipDate': response.billing_pararent_details[0].ship_date,
           'terms': response.billing_pararent_details[0].terms,
           'Currency': response.billing_pararent_details[0].currency,
@@ -1021,8 +1048,18 @@ export class EditDidpiComponent implements OnInit {
         // part-1
 
         const formArray1 = new FormArray([]);
+        var bill_fixedDetail_TotalSUBAmount = 0;
+        if (response.bill_fixed_details.length == 0) {
+          $('#sub_total_1').val(0);
+        }
+     
         for (let index = 0; index < response.bill_fixed_details.length; index++) {
+          bill_fixedDetail_TotalSUBAmount = Number(bill_fixedDetail_TotalSUBAmount) + Number(response.bill_fixed_details[index].total_amt);
 
+          $('#sub_total_1').val(bill_fixedDetail_TotalSUBAmount);
+          console.log('#sub_total_1', bill_fixedDetail_TotalSUBAmount);
+
+        
           console.log('bill_fixed_details++index' + index);
 
           formArray1.push(this.fb.group({
@@ -1051,12 +1088,22 @@ export class EditDidpiComponent implements OnInit {
         // part-2
 
         const formArray2 = new FormArray([]);
+        var bill_usage_TotalSUBAmount = 0;
+        if (response.bill_usage_details.length == 0) {
+          $('#sub_total_2').val(0);
+        }
         for (let index = 0; index < response.bill_usage_details.length; index++) {
+          bill_usage_TotalSUBAmount = Number(bill_usage_TotalSUBAmount) + Number(response.bill_usage_details[index].total_amt);
 
+          $('#sub_total_2').val(bill_usage_TotalSUBAmount);
+          console.log('#sub_total_2', bill_usage_TotalSUBAmount);
           console.log('bill_usage_details++index' + index);
 
           formArray2.push(this.fb.group({
+            "billChildid2": response.bill_usage_details[index].billChildid,
             "particular2": response.bill_usage_details[index].productName,
+            "did_bill_code_chd": response.bill_usage_details[index].did_bill_code_chd,
+          
             "fromdt2": response.bill_usage_details[index].fromDate,
             "todt2": response.bill_usage_details[index].toDate,
             "md_chk2": response.bill_usage_details[index].md_state,
@@ -1078,12 +1125,23 @@ export class EditDidpiComponent implements OnInit {
         console.log(this.usageAddress);
 
 
-        // part-2
+        // part-3
 
         const formArray3 = new FormArray([]);
+        var bill_Other_TotalSUBAmount = 0;
+        if (response.bill_other_details.length == 0) {
+          $('#sub_total_3').val(0);
+          this.totalCalculate_3;
+          this.gross_total();
+        }
         for (let index = 0; index < response.bill_other_details.length; index++) {
 
+          bill_Other_TotalSUBAmount = Number(bill_Other_TotalSUBAmount) + Number(response.bill_other_details[index].total_amt);
+
+          $('#sub_total_3').val(bill_Other_TotalSUBAmount);
+          console.log('#sub_total_3', bill_Other_TotalSUBAmount);
           console.log('bill_other_details++index' + index);
+
 
           formArray3.push(this.fb.group({
             "particular3": response.bill_other_details[index].productName,
@@ -1194,7 +1252,7 @@ export class EditDidpiComponent implements OnInit {
     api_updateDid_req.tinNo = this.addDid_section1.value.tin;
     api_updateDid_req.BillTo_customer_ID = this.customer_ID;
     api_updateDid_req.BillTo_customer_NAME = this.customer_NAME;
-
+    api_updateDid_req.did_bill_code = this.addDid_section1.value.billCode;
     api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
     api_updateDid_req.b_address1 = this.addDid_section1.value.address_1;
     api_updateDid_req.b_address2 = this.addDid_section1.value.address_2;
@@ -1254,6 +1312,7 @@ export class EditDidpiComponent implements OnInit {
     for (let i = 0; i < addr1.length; i++) {
 
       console.log(addr1)
+      addr1[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr1[i].particular1 = $('#particular_1_' + i).val();
       addr1[i].fromdt1 = $('#fromdt_1_' + i).val();
       addr1[i].todt1 = $('#todt_1_' + i).val();
@@ -1266,6 +1325,11 @@ export class EditDidpiComponent implements OnInit {
       addr1[i].sub_dis_amt1 = $('#sub_discount_1' + i).val();
       addr1[i].sub_dis_type1 = $('#sub_discount_type_1' + i).val();
       addr1[i].sub_dis_val1 = $('#sub_discount_val_1' + i).val();
+
+      addr1[i].dis_per1 = $('#enablePerFinal_1' + i).val();
+      addr1[i].dis_amt1 = $('#enablePriceFinal_1' + i).val();
+      addr1[i].dis_type1 = $('#fix_DiscountTYpe' + i).val();
+
     }
 
 
@@ -1282,6 +1346,7 @@ export class EditDidpiComponent implements OnInit {
     for (let i = 0; i < addr2.length; i++) {
 
       console.log(addr1[i].amt2)
+      addr2[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr2[i].particular2 = $('#particular2_' + i).val();
       addr2[i].fromdt2 = $('#fromdt2_' + i).val();
       addr2[i].todt2 = $('#todt_2' + i).val();
@@ -1290,6 +1355,13 @@ export class EditDidpiComponent implements OnInit {
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
+      addr2[i].did_bill_code_chd = $('#billCode' + i).val();
+    
+
+      addr2[i].dis_per2 = $('#enablePerFinal_2' + i).val();
+      addr2[i].dis_amt2 = $('#enablePriceFinal_2' + i).val();
+      addr2[i].dis_type2 = $('#use_DiscountTYpe_per' + i).val();
+
 
     }
 
@@ -1309,6 +1381,7 @@ export class EditDidpiComponent implements OnInit {
 
 
       console.log(addr3[i].amt3)
+      addr3[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
       addr3[i].particular3 = $('#particular3_' + i).val();
       addr3[i].fromdt3 = $('#fromdt_3' + i).val();
       addr3[i].todt3 = $('#todt_3' + i).val();
@@ -1318,12 +1391,18 @@ export class EditDidpiComponent implements OnInit {
       addr3[i].amt3 = $('#amt3_' + i).val();
       addr3[i].call_duration3 = $('#call_duration3_' + i).val();
 
+      addr3[i].dis_per3 = $('#enablePerFinal_3' + i).val();
+      addr3[i].dis_amt3 = $('#enablePriceFinal_3' + i).val();
+      addr3[i].dis_type3 = $('#oth_DiscountTYpe_per' + i).val();
+
     }
 
 
     api_updateDid_req.other_values = addr3;
 
-
+    api_updateDid_req.sub_total_1 = $('#sub_total_1').val();
+    api_updateDid_req.sub_total_2 = $('#sub_total_2').val();
+    api_updateDid_req.sub_total_3 = $('#sub_total_3').val();
 
     //section-3
     api_updateDid_req.grossTotal = this.addDid_section3.value.section3_gross_total;
@@ -1698,11 +1777,11 @@ export class EditDidpiComponent implements OnInit {
     sub_total2 = $('#sub_total_2').val();
     sub_total3 = $('#sub_total_3').val();
     total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-
+    total_amt =total_amt.toFixed(2);
     console.log(total_amt);
     gross_tot += parseFloat(total_amt);
-    $('#section3_gross_total').val(gross_tot);
-    $('#section3_grand_total').val(gross_tot);
+    $('#section3_gross_total').val((gross_tot).toFixed(2));
+    $('#section3_grand_total').val((gross_tot).toFixed(2));
     console.log('gross total =' + gross_tot);
 
     var tax_amt: any = 0;
@@ -1844,6 +1923,52 @@ export class EditDidpiComponent implements OnInit {
     this.totalCalculate_1();
     this.totalCalculate_2();
     this.totalCalculate_3();
+  }
+  computeUsageCharge(j: any) {
+    let api_req: any = new Object();
+    let api_computeUsage_req: any = new Object();
+    api_req.moduleType = "did";
+    api_req.api_url = "did/get_did_usage_charge";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_computeUsage_req.action = "get_did_usage_charge";
+    api_computeUsage_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_computeUsage_req.customerId = this.customer_ID;
+    api_computeUsage_req.did_bill_code = this.did_bill_code_section2;
+    api_computeUsage_req.fromdt = $('#fromdt2_' + j).val();
+    api_computeUsage_req.todt = $('#todt2_' + j).val();
+
+    api_req.element_data = api_computeUsage_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+
+      if (response != '') {
+
+        $('#amt2_' + j).val(response);
+        this.totalCalculate_2();
+        this.usageSaveDiscount();
+        this.getTaxCals();
+        this.extraFees();
+
+
+      }
+      else if (response == 0) {
+
+        $('#amt2_' + j).val(0);
+        this.totalCalculate_2();
+        this.usageSaveDiscount();
+        this.getTaxCals();
+        this.extraFees();
+
+
+      }
+      else {
+
+      }
+    });
+
   }
   set_display_none(cnt: any) {
     //PN

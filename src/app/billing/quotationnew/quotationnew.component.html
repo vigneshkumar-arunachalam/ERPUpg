@@ -277,6 +277,13 @@
                                                                         <img class="hide" src="assets/img/icon/pi.png">
                                                                         <span><b style="padding: 0px 20px;">-</b><strong>Proforma Invoice</strong></span>
                                                                       </a>
+                                                                  
+                                                                        <a class="hover2" title="Proforma Invoice PDF" *ngIf="(list.pi_convert_status!='0')" data-toggle="modal"
+                                                                          data-target="#PIPDFId" (click)="PIPDF(list.pi_convert_status,i)">
+                                                                          <img class="show" src="assets/img/icon2/pdf-search-black.png">
+                                                                          <img class="hide" src="assets/img/icon2/pdf-search-blue.png">
+                                                                          <span><b style="padding: 0px 20px;">-</b><strong>PI PDF</strong></span>
+                                                                        </a>
                                                                     </li>
                                                                    
                                                                   </ul>

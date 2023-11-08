@@ -97,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-12">
+                <!-- <div class="col-lg-12">
                     <div class="form-group row">
                         <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
                         <div class="col-lg-12">
@@ -106,6 +106,22 @@
                                 <option [ngValue]="null" selected disabled>Select Bill Code</option>
                                 <option *ngFor="let bill of BillCodeList" value="{{bill.billCode}}">
                                     {{bill.billCode}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-lg-12">
+                    <div class="form-group row">
+                        <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
+                        <div class="col-lg-12">
+
+                            <select id="billCode" class="form-control" formControlName="billCode" 
+                            (change)="billCodeChange($event)">
+                               
+                                <option [ngValue]="null" selected>Select Bill Code</option>
+                                <option *ngFor="let bill of did_bill_codexx" value="{{bill.customer_bill_code_id}}">
+                                    {{bill.bill_code}}
                                 </option>
                             </select>
                         </div>
@@ -549,6 +565,19 @@
                                 <div class="userDatatable-content">
                                     <input type="date" class="form-control" formControlName="fromdt2"
                                         id="fromdt2_{{i}}" />
+                                        <div class="userDatatable-content" >
+                                            <div class="form-group row">
+                                                <div class="col-lg-12">
+                        
+                                                    <select id="billCode{{i}}" class="form-control"  formControlName="did_bill_code_chd" (change)="billCodeChange_section1($event,i)" >
+                                                        <option [ngValue]="null" selected disabled>Select Bill Code</option>
+                                                        <option *ngFor="let bill of did_bill_code_section1" value="{{bill.customer_bill_code_id}}">
+                                                            {{bill.bill_code}}
+                                                        </option> 
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                             </td>
 
@@ -556,7 +585,7 @@
                                 <div class="userDatatable-content">
                                     <br>
                                     <input type="date" class="form-control" formControlName="todt2" id="todt2_{{i}}" />
-                                    <button type="button" class=" btn-primary">Compute
+                                    <button type="button" class=" btn-primary" (click)="computeUsageCharge(i)">Compute
                                     </button>
 
                                 </div>
@@ -713,8 +742,8 @@
                                 <div class="userDatatable-content">
                                     <br>
                                     <input type="date" class="form-control" formControlName="todt3" id="todt3_{{i}}" />
-                                    <button type="button" class=" btn-primary">Compute
-                                    </button>
+                                    <!-- <button type="button" class=" btn-primary">Compute
+                                    </button> -->
 
                                 </div>
                             </td>

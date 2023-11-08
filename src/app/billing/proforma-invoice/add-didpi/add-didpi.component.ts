@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 declare var $: any;
 declare var iziToast: any;
 import { CommonModule } from '@angular/common';
-import {  Inject, LOCALE_ID } from '@angular/core';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Inject, LOCALE_ID } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -103,7 +104,7 @@ export class AddDidpiComponent implements OnInit {
   export_state_ZeroValid: boolean = true;
   Jompay_logo_Value: boolean = true;
 
-  previousDue: boolean =true;
+  previousDue: boolean = true;
   chklogoAddressSignature: boolean = true;
   chkTermsandcondition: boolean = false;
   //extra logo
@@ -117,13 +118,20 @@ export class AddDidpiComponent implements OnInit {
   quotationAddSignature_filename: any;
   selectAdditionalSign: boolean = true;
   // singapore date & time
-formattedDate: string;
+  formattedDate: string;
   did_bill_code: any;
   did_bill_codexx: any;
   did_bill_code_section2: any;
   did_bill_code_section1: any;
-  constructor(private serverService: ServerService, private fb: FormBuilder, 
-    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router) {
+  //section 3 select terms condition
+  section3_Terms1: any;
+  section3_Terms2: any;
+  section3_Terms3: any;
+  section3_Terms4: any;
+  section3_Terms5: any;
+  chkReceivedAuthorizedSignature: boolean = true;
+  constructor(private serverService: ServerService, private fb: FormBuilder,
+    @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private router: Router, private spinner: NgxSpinnerService) {
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
     });
@@ -135,10 +143,10 @@ formattedDate: string;
     this.did_Invice_other_charges = this.fb.group({
       otherAddress: this.fb.array([this.otherFormDid()])
     });
-   }
-   keywordUserName = 'reseller_name';
-   ngOnInit(): void {
-   
+  }
+  keywordUserName = 'reseller_name';
+  ngOnInit(): void {
+
     this.addDidLoad();
     this.did_bill_codexx = [
       { "customer_bill_code_id": 1445, "bill_code": -810 },
@@ -169,7 +177,7 @@ formattedDate: string;
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
       'billCode': new FormControl(),
-      'billCode_0':new FormControl(),
+      'billCode_0': new FormControl(),
       // 'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
@@ -183,21 +191,26 @@ formattedDate: string;
       'ExtraLogo': new FormControl(),
       'Jompay_logo': new FormControl(),
 
-// check below
+      // check below
 
 
-      'sub_total1': new FormControl(),
-      'sub_total2': new FormControl(),
-      'sub_total3': new FormControl(),
-      'sub_dis_amt1': new FormControl(),
+      // 'sub_total1': new FormControl(),
+      // 'sub_total2': new FormControl(),
+      // 'sub_total3': new FormControl(),
+      // 'sub_dis_amt1': new FormControl(),
 
 
-      'sub_dis_type1': new FormControl(),
-      'sub_dis_val1': new FormControl(),
-      'sub_dis_amt2': new FormControl(),
+      // 'sub_dis_type1': new FormControl(),
+      // 'sub_dis_val1': new FormControl(),
+      // 'sub_dis_amt2': new FormControl(),
 
 
     });
+    this.section3_Terms1 = "Price Term: EXW SINGAPORE";
+    this.section3_Terms2 = "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3 = "Port of Discharge:";
+    this.section3_Terms4 = "Port of Loading: SINGAPORE";
+    this.section3_Terms5 = "Lead Time: 21 - 30 DAYS";
 
     this.addDid_section3 = new FormGroup({
 
@@ -217,6 +230,11 @@ formattedDate: string;
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_previousDue': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
@@ -254,10 +272,10 @@ formattedDate: string;
     const currentDate = new Date();
     this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
     setTimeout(() => {
-    
-         $('#datee').val(this.formattedDate);
-         $('#podatee').val(this.formattedDate);
-         $('#Ship_Date').val(this.formattedDate);
+
+      $('#datee').val(this.formattedDate);
+      $('#podatee').val(this.formattedDate);
+      $('#Ship_Date').val(this.formattedDate);
 
     }, 2000);
 
@@ -295,10 +313,10 @@ formattedDate: string;
       productDesc1: '',
       amt1: '',
       call_duration1: '',
-      sub_total1:'',
-      sub_dis_amt1:'',
-      sub_dis_type1:'',
-      sub_dis_val1:'',
+      sub_total1: '',
+      sub_dis_amt1: '',
+      sub_dis_type1: '',
+      sub_dis_val1: '',
 
 
     });
@@ -338,11 +356,12 @@ formattedDate: string;
       productDesc2: '',
       amt2: '',
       call_duration2: '',
+      did_bill_code_chd: '',
       billCode: '',
-      sub_total2:'',
-      sub_dis_amt2:'',
-      sub_dis_type2:'',
-      sub_dis_val2:'',
+      sub_total2: '',
+      sub_dis_amt2: '',
+      sub_dis_type2: '',
+      sub_dis_val2: '',
     });
   }
   removeDid2(i: number) {
@@ -379,10 +398,10 @@ formattedDate: string;
       productDesc3: '',
       amt3: '',
       call_duration3: '',
-      sub_total3:'',
-      sub_dis_amt3:'',
-      sub_dis_type3:'',
-      sub_dis_val3:'',
+      sub_total3: '',
+      sub_dis_amt3: '',
+      sub_dis_type3: '',
+      sub_dis_val3: '',
 
 
     });
@@ -420,7 +439,7 @@ formattedDate: string;
   handleChange(evt: any) {
     this.radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value",this.radioSelectFooter);
+    console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
@@ -465,6 +484,10 @@ formattedDate: string;
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
     console.log(this.chkTermsandcondition)
+  }
+  chkReceivedAuthorizedSignatureEvent(event: any) {
+    this.chkReceivedAuthorizedSignature = event.target.checked;
+    // console.log(this.chkReceivedAuthorizedSignature)
   }
 
   chkpreviousDueEvent(event: any) {
@@ -703,9 +726,16 @@ formattedDate: string;
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
+        this.tax_per_mod = response.percent_val;
+        $('#tax_per_hd_id').val(response.percent_val);
         setTimeout(() => {
           this.addDid_section3.patchValue({
             'section3_gst_dropdown': response.default_tax_id,
+            'section3_Terms1': "Price Term: EXW SINGAPORE",
+            'section3_Terms2': "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T",
+            'section3_Terms3': "Port of Discharge:",
+            'section3_Terms4': "Port of Loading: SINGAPORE",
+            'section3_Terms5': "Lead Time: 21 - 30 DAYS",
           });
 
         }, 500);
@@ -906,7 +936,7 @@ formattedDate: string;
     api_saveDid_req.company = this.addDid_section1.value.companyName;
     api_saveDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
 
-    api_saveDid_req.cusInvoiceNo = this.addDid_section1.value.customer_invoice_no;
+    api_saveDid_req.customer_invoice_no = this.addDid_section1.value.cusInvoiceNo;
     api_saveDid_req.customer_name = this.customerName_Data;
     api_saveDid_req.tinNo = this.addDid_section1.value.tin;
     api_saveDid_req.BillTo_customer_ID = this.customer_ID;
@@ -927,15 +957,29 @@ formattedDate: string;
 
     api_saveDid_req.cstNo = this.addDid_section1.value.cst;
     // api_saveDid_req.billDate = this.addDid_section1.value.Date;
-    api_saveDid_req.billDate =$('#datee').val();
+    api_saveDid_req.billDate = $('#datee').val();
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
+    if (this.did_bill_code === null) {
+
+      iziToast.warning({
+        message: "Fill Bill Code",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+
+      return false;
+
+
+    } else {
+      api_saveDid_req.did_bill_code = this.did_bill_code;
+    }
     api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
     // api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
     api_saveDid_req.po_date = $('#podatee').val();
     api_saveDid_req.sales_rep = this.addDid_section1.value.salesRep;
     api_saveDid_req.ship_by = this.addDid_section1.value.ShipBy;
     // api_saveDid_req.ship_date = this.addDid_section1.value.ShipDate;
-    api_saveDid_req.ship_date =$('#Ship_Date').val();
+    api_saveDid_req.ship_date = $('#Ship_Date').val();
     api_saveDid_req.s_attn = this.addDid_section1.value.ship_attn;
     api_saveDid_req.terms = this.addDid_section1.value.terms;
     api_saveDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
@@ -986,12 +1030,12 @@ formattedDate: string;
       addr1[i].productDesc1 = $('#productDesc1_' + i).val();
       addr1[i].amt1 = $('#amt_1_' + i).val();
       addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
-      addr1[i].sub_dis_type1 = $('#sub_discount_type_1' ).val();
-      addr1[i].sub_dis_val1 = $('#sub_discount_val_1' ).val();
-      addr1[i].sub_dis_amt1 = $('#sub_discount_1' ).val();
+      addr1[i].sub_dis_type1 = $('#sub_discount_type_1').val();
+      addr1[i].sub_dis_val1 = $('#sub_discount_val_1').val();
+      addr1[i].sub_dis_amt1 = $('#sub_discount_1').val();
       addr1[i].sub_total1 = $('#sub_total_1').val();
 
-     
+
 
     }
 
@@ -1006,18 +1050,20 @@ formattedDate: string;
     for (let i = 0; i < addr2.length; i++) {
 
 
-      console.log(addr1[i].amt2)
+
       addr2[i].particular2 = $('#particular2_' + i).val();
       addr2[i].fromdt2 = $('#fromdt2_' + i).val();
-      addr2[i].todt2 = $('#todt_2' + i).val();
+      addr2[i].todt2 = $('#todt2_' + i).val();
       addr2[i].md_chk2 = $('#md_chk2_' + i).val();
       addr2[i].did_diff_date2 = $('#did_diff_date2_' + i).val();
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].sub_dis_type2 = $('#sub_discount_type_2' ).val();
-      addr2[i].sub_dis_val2 = $('#sub_discount_val_2' ).val();
-      addr2[i].sub_dis_amt2 = $('#sub_discount_2' ).val();
+      addr2[i].did_bill_code_chd = this.did_bill_code_section2;
+
+      addr2[i].sub_dis_type2 = $('#sub_discount_type_2').val();
+      addr2[i].sub_dis_val2 = $('#sub_discount_val_2').val();
+      addr2[i].sub_dis_amt2 = $('#sub_discount_2').val();
       addr2[i].sub_total2 = $('#sub_total_2').val();
 
     }
@@ -1038,16 +1084,16 @@ formattedDate: string;
 
       console.log(addr3[i].amt3)
       addr3[i].particular3 = $('#particular3_' + i).val();
-      addr3[i].fromdt3 = $('#fromdt_3' + i).val();
-      addr3[i].todt3 = $('#todt_3' + i).val();
+      addr3[i].fromdt3 = $('#fromdt3_' + i).val();
+      addr3[i].todt3 = $('#todt3_' + i).val();
       addr3[i].md_chk3 = $('#md_chk3_' + i).val();
       addr3[i].did_diff_date3 = $('#did_diff_date3_' + i).val();
       addr3[i].productDesc3 = $('#productDesc3_' + i).val();
       addr3[i].amt3 = $('#amt3_' + i).val();
       addr3[i].call_duration3 = $('#call_duration3_' + i).val();
-      addr3[i].sub_dis_type3 = $('#sub_discount_type_3' ).val();
-      addr3[i].sub_dis_val3 = $('#sub_discount_val_3' ).val();
-      addr3[i].sub_dis_amt3 = $('#sub_discount_3' ).val();
+      addr3[i].sub_dis_type3 = $('#sub_discount_type_3').val();
+      addr3[i].sub_dis_val3 = $('#sub_discount_val_3').val();
+      addr3[i].sub_dis_amt3 = $('#sub_discount_3').val();
       addr3[i].sub_total3 = $('#sub_total_3').val();
 
     }
@@ -1058,7 +1104,9 @@ formattedDate: string;
 
 
     //section-3
-    api_saveDid_req.grossTotal = this.addDid_section3.value.section3_gross_total;
+    var Sec3_Gross_Total = this.addDid_section3.value.section3_gross_total;
+    Sec3_Gross_Total = Sec3_Gross_Total.toFixed(2)
+    api_saveDid_req.grossTotal = Sec3_Gross_Total;
     api_saveDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
     api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
     api_saveDid_req.taxAmt = this.addDid_section3.value.section3_taxAmt_txtbox;
@@ -1069,8 +1117,10 @@ formattedDate: string;
     api_saveDid_req.netTotal = this.addDid_section3.value.section3_grand_total;
     api_saveDid_req.remarks = this.addDid_section3.value.section3_remarks;
     api_saveDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
-    api_saveDid_req.received_signature = this.addDid_section3.value.section3_receivedAuthorizedSignature;
+    // api_saveDid_req.received_signature = this.addDid_section3.value.section3_receivedAuthorizedSignature;
     api_saveDid_req.logo = this.addDid_section3.value.section3_logo;
+    api_saveDid_req.previous_due_state = this.addDid_section3.value.section3_previousDue;
+    api_saveDid_req.received_signature = this.chkReceivedAuthorizedSignature;
     api_saveDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
     api_req.element_data = api_saveDid_req;
 
@@ -1083,7 +1133,7 @@ formattedDate: string;
           position: 'topRight'
         });
         this.redirecttoPI();
-       
+
       }
       else {
         iziToast.warning({
@@ -1143,7 +1193,7 @@ formattedDate: string;
   }
 
 
-  addButton3 = 0  ;
+  addButton3 = 0;
   plus3(v: any) {
 
     if (this.addButton3 != 50) {
@@ -1168,7 +1218,7 @@ formattedDate: string;
     var list_cnt = addr.length;
     var total_amt_tot = 0;
 
-    let discount_type:any;
+    let discount_type: any;
 
     for (let a = 0; a < list_cnt; a++) {
       total_amt = $('#amt_1_' + a).val();
@@ -1428,11 +1478,11 @@ formattedDate: string;
     sub_total2 = $('#sub_total_2').val();
     sub_total3 = $('#sub_total_3').val();
     total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-
+    total_amt =total_amt.toFixed(2);
     console.log(total_amt);
     gross_tot += parseFloat(total_amt);
-    $('#section3_gross_total').val(gross_tot);
-    $('#section3_grand_total').val(gross_tot);
+    $('#section3_gross_total').val((gross_tot).toFixed(2));
+    $('#section3_grand_total').val((gross_tot).toFixed(2));
     console.log('gross total =' + gross_tot);
 
     var tax_amt: any = 0;
@@ -1444,7 +1494,7 @@ formattedDate: string;
 
     this.net_amt = $('#section3_gross_total').val();
 
-    tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt) - parseFloat(this.finalDiscount))/ 100);
+    tax_amt = (parseFloat(this.tax_per_mod) * (parseFloat(this.net_amt) - parseFloat(this.finalDiscount)) / 100);
     grs_amt += gross_tot;
     net_tot = (parseFloat(tax_amt) + parseFloat(this.grossTotal)).toFixed(2);
 
@@ -1452,7 +1502,7 @@ formattedDate: string;
 
     net_price += parseFloat(net_tot);
     this.addDid_section3.value.section3_grand_total = net_price;
-    $('#section3_grand_total').val(this.addDid_section3.value.section3_grand_total);
+    $('#section3_grand_total').val((this.addDid_section3.value.section3_grand_total).toFixed(2));
 
     this.grandTotal = $('#section3_grand_total').val();
 
@@ -1507,7 +1557,7 @@ formattedDate: string;
         $('#final_discount_val').val(enablePerFinal_4);
         price = final_tot - price;
         console.log("percentage" + price);
-        $('#section3_grand_total').val(price);
+        $('#section3_grand_total').val((price).toFixed(2));
 
       } else {
         $('#finalDiscount_amt').val('');
@@ -1521,12 +1571,12 @@ formattedDate: string;
     else {
       price = final_tot - enablePriceFinal_4;
       console.log('price amount ' + price);
-      $('#section3_grand_total').val(price);
+      $('#section3_grand_total').val((price).toFixed(2));
       $('#finalDiscount_amt').val(enablePriceFinal_4);
       $('#final_discount_val').val(enablePriceFinal_4);
     }
 
-    $('#section3_grand_total').val(price)
+    $('#section3_grand_total').val((price).toFixed(2))
     var final_per_amt: any = 0
     final_per_amt += parseFloat($('#finalDiscount_amt').val());
 
@@ -1626,6 +1676,44 @@ formattedDate: string;
 
       }
     });
+  }
+  computeUsageCharge(j: any) {
+
+
+    let api_req: any = new Object();
+    let api_computeUsage_req: any = new Object();
+    api_req.moduleType = "did";
+    api_req.api_url = "did/get_did_usage_charge";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_computeUsage_req.action = "get_did_usage_charge";
+    api_computeUsage_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_computeUsage_req.customerId = this.customer_ID;
+    api_computeUsage_req.did_bill_code = this.did_bill_code_section2;
+
+
+    api_computeUsage_req.fromdt = $('#fromdt2_' + j).val();
+    api_computeUsage_req.todt = $('#todt2_' + j).val();
+
+
+
+    api_req.element_data = api_computeUsage_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      console.log("response", response)
+      console.log("response!=''", response)
+
+      $('#amt2_' + j).val(response);
+      console.log("'#amt2_'+a", $('#amt2_' + j).val(response))
+
+      this.totalCalculate_2();
+      this.usageSaveDiscount();
+      this.getTaxCals();
+      this.extraFees();
+    });
+
+
   }
 
 }

@@ -1959,6 +1959,17 @@ export class QuotationnewComponent implements OnInit {
   PIEdit1(quotationId: any) {
 
   }
+ 
+  PIPDF(pi_convert_status: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+ var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + pi_convert_status + "";
+//    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+    $('#PIPDFId').modal('hide');
+    // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
+  }
   PIEdit(quotationId: any,i:any) {
     $("#ActionId" + i).modal("hide");
     this.PIResult = [];//for refreshing we are emptying the variable
