@@ -238,7 +238,13 @@
                                   justify-content: space-between;">
                                     <ul>
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_edit==1)">
-                                        <a class="hover3" title="Edit" (click)="editPIGo(list.billId,i,list.did_invoice_state)">
+                                        <a  *ngIf="(list.billStatus!=3)"   class="hover3" title="Edit" (click)="editPIGo(list.billId,i,list.did_invoice_state)">
+                                          <img class="show" src="assets/img/icon2/edit-blue.png">
+                                          <img class="hide" src="assets/img/icon2/edit-black.png">
+
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
+                                        </a>
+                                        <a  *ngIf="((user_ids==2)||(user_ids==7))"   class="hover3" title="Edit" (click)="editPIGo(list.billId,i,list.did_invoice_state)">
                                           <img class="show" src="assets/img/icon2/edit-blue.png">
                                           <img class="hide" src="assets/img/icon2/edit-black.png">
 
@@ -257,13 +263,21 @@
 
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_delete==1)">
-                                        <a class="hover3" title="Delete" data-toggle="modal"
+                                        <a class="hover3" *ngIf="(list.billStatus!=3)" title="Delete" data-toggle="modal"
                                           (click)="deleteInvoice(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/delete-blue.png">
                                           <img class="hide" src="assets/img/icon2/delete-black.png">
 
                                           <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
                                         </a>
+                                        <a class="hover3" *ngIf="((user_ids==2)||(user_ids==7))" title="Delete" data-toggle="modal"
+                                        (click)="deleteInvoice(list.billId,i)">
+                                        <img class="show" src="assets/img/icon2/delete-blue.png">
+                                        <img class="hide" src="assets/img/icon2/delete-black.png">
+
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
+                                      </a>
+                                        
                                       </li>
 
 

@@ -23,7 +23,7 @@ export class ServerService {
         'Content-Type':  'application/json'
       })
     };
-     let url = "https://laravelapi.erp1.cal4care.com/api/"+postData.api_url;
+    let url = "https://laravelapi.erp1.cal4care.com/api/"+postData.api_url;
    // let url = "https://erp1.cal4care.com/api/"+postData.api_url;
   
       let posting :any[]= postData;

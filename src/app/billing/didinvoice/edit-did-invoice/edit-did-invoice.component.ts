@@ -64,7 +64,7 @@ export class EditDidInvoiceComponent implements OnInit {
   public FinalDiscountForm: FormGroup;
   // DID Commission popup
   public DidCommissionForm: FormGroup;
-
+  demo1='1900';
   //commision
   usersearchResult: any;
   //commission
@@ -145,7 +145,7 @@ export class EditDidInvoiceComponent implements OnInit {
   previousDue: boolean = true;
   chkReceivedAuthorizedSignature: boolean = true;
   cbk_previousDue: any;
-
+  did_bill_code_section15: any;
   //  quotationAddSignature
 
   sign_state: number;
@@ -178,7 +178,7 @@ export class EditDidInvoiceComponent implements OnInit {
   //billco
   grossTotal_BeforeDiscount: any;
   taxValue: any;
-  did_bill_code_section11: any;
+
   did_bill_codexx: any;
   FinalDiscount_DiscountType: any;
   did_bill_code_section2: any;
@@ -190,6 +190,10 @@ export class EditDidInvoiceComponent implements OnInit {
   subTotalForm2: FormGroup;
   subTotalForm3: FormGroup;
   TaxValuEDIt: any;
+  sub2Total_edit: any;
+  usage_Overall_edit: any;
+  selectedBillCode: any;
+  UID: string;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -215,7 +219,7 @@ export class EditDidInvoiceComponent implements OnInit {
   keywordUserName = 'reseller_name';
 
   ngOnInit(): void {
-
+    
 
     this.did_bill_code = 1445;
 
@@ -223,11 +227,7 @@ export class EditDidInvoiceComponent implements OnInit {
       { "customer_bill_code_id": 1445, "bill_code": -810 },
 
     ];
-    // this.did_bill_code_section1=1445;
-    // this.did_bill_code_section11 = [
-    //   { "customer_bill_code_id": 1445 ,"bill_code":-810},
-
-    // ];
+   
     this.did_bill_code_value = '';
 
     this.route.queryParams
@@ -265,6 +265,10 @@ export class EditDidInvoiceComponent implements OnInit {
     // setTimeout(() => {
     //   this.editDidInvice();
     // }, 1500)
+
+    //  setTimeout(() => {
+    //     $('#sub_total_2').val(this.sub2Total_edit);
+    //  }, 1500)
 
     this.addDidLoad();
 
@@ -319,7 +323,7 @@ export class EditDidInvoiceComponent implements OnInit {
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'billCode': new FormControl(null),
+      'billCodev': new FormControl(null),
       'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
@@ -420,7 +424,8 @@ export class EditDidInvoiceComponent implements OnInit {
     });
 
 
-
+    // $('#sub_total_2').val(this.sub2Total_edit);
+  
 
 
   }
@@ -825,6 +830,7 @@ export class EditDidInvoiceComponent implements OnInit {
   billCodeChange_section1(event: any) {
 
     this.did_bill_code_section2 = event.target.value;
+    this.selectedBillCode=this.did_bill_code_section2;
   }
   cbk_Fn_EditShipAddress(event: any) {
     this.EditShippingAddress = event.target.checked;
@@ -856,8 +862,8 @@ export class EditDidInvoiceComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/get_customer_inv_details";
+    api_req.moduleType = "did";
+    api_req.api_url = "did/get_customer_inv_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_customer_inv_details";
@@ -916,8 +922,8 @@ export class EditDidInvoiceComponent implements OnInit {
         this.addDid_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
-          'Currency': response.def_currency_id,
-          'PaymentVia': response.def_paymentvia_id,
+          // 'Currency': response.def_currency_id,
+          // 'PaymentVia': response.def_paymentvia_id,
 
         });
 
@@ -945,6 +951,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
   }
   getCurrencyValues(event: any) {
+    this.spinner.show();
     console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
     console.log("billerID check", this.billerID);
@@ -966,12 +973,12 @@ export class EditDidInvoiceComponent implements OnInit {
       if (response != '') {
         this.addDid_section1.patchValue({
           'CurrencyConversionRate': response.currency_live_val,
-
+          
         });
-
+        this.spinner.hide();
       }
       else {
-
+        this.spinner.hide();
       }
 
     });
@@ -1158,6 +1165,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
   }
   computeUsageCharge(j: any) {
+    console.log($('#billCode'+j).val())
     let api_req: any = new Object();
     let api_computeUsage_req: any = new Object();
     api_req.moduleType = "did";
@@ -1167,7 +1175,8 @@ export class EditDidInvoiceComponent implements OnInit {
     api_computeUsage_req.action = "get_did_usage_charge";
     api_computeUsage_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_computeUsage_req.customerId = this.customer_ID;
-    api_computeUsage_req.did_bill_code = this.did_bill_code_section2;
+   // api_computeUsage_req.did_bill_code = this.did_bill_code_section2;
+    api_computeUsage_req.did_bill_code = $('#billCode' + j).val();
     api_computeUsage_req.fromdt = $('#fromdt2_' + j).val();
     api_computeUsage_req.todt = $('#todt2_' + j).val();
 
@@ -1335,6 +1344,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
         this.did_bill_codexx = response.customer_billcode_arr;
         this.did_bill_code_section1 = response.customer_billcode_arr;
+        console.log('this.did_bill_code_section1',this.did_bill_code_section1);
 
         this.addDid_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,
@@ -1445,7 +1455,7 @@ export class EditDidInvoiceComponent implements OnInit {
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
-        Math.round($('#section3_grand_total').val(taxadd));
+        $('#section3_grand_total').val(taxadd.toFixed(2));
 
 
       } else {
@@ -1454,8 +1464,8 @@ export class EditDidInvoiceComponent implements OnInit {
         $('#Tax_amt_id').val(tax);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
-        $('#section3_grand_total').val(taxadd);
-        Math.round($('#section3_grand_total').val(taxadd));
+        $('#section3_grand_total').val(taxadd.toFixed(2));
+       $('#section3_grand_total').val(taxadd.toFixed(2));
       }
 
 
@@ -1494,10 +1504,19 @@ export class EditDidInvoiceComponent implements OnInit {
         this.exportState_value = response.billing_pararent_details[0].export_state;
 
         this.customer_ID = response.billing_pararent_details[0].custId;
-        this.section1_billcode = response.billing_pararent_details[0].did_bill_code
+        // this.section1_billcode = response.billing_pararent_details[0].did_bill_code
         this.Jompay_Value = response.billing_pararent_details[0].jom_pay_logo;
         this.export_state = response.billing_pararent_details[0].export_state;
         this.TaxValuEDIt = response.billing_pararent_details[0].taxId;
+        this.did_bill_codexx= response.bill_code_arr[0].customer_bill_code_id;
+        // this.sub2Total_edit= response.billusagechild_discount[0].usage_subtotal;
+        this.usage_Overall_edit=response.bill_usage_details;
+        this.did_bill_code_section15 = response.customer_billcode_arr;
+        console.log(this.did_bill_code_section15);
+       // alert(response.billing_pararent_details[0].did_bill_code)
+        $('#sub_total_1').val(response.fixed_subtotal.net_amt.toFixed(2));
+        $('#sub_total_2').val(response.usage_subtotal.net_amt.toFixed(2));
+        $('#sub_total_3').val(response.other_subtotal.net_amt.toFixed(2));
 
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -1526,7 +1545,7 @@ export class EditDidInvoiceComponent implements OnInit {
           'PoDate': response.billing_pararent_details[0].po_date,
           'salesRep': response.billing_pararent_details[0].sales_rep,
           'ShipBy': response.billing_pararent_details[0].ship_by,
-          'billCode': response.billing_pararent_details[0].did_bill_code,
+          'billCodev': response.bill_code_arr[0].customer_bill_code_id,
           'ShipDate': response.billing_pararent_details[0].ship_date,
           'terms': response.billing_pararent_details[0].terms,
           'Currency': response.billing_pararent_details[0].currency,
@@ -1536,7 +1555,7 @@ export class EditDidInvoiceComponent implements OnInit {
           'Jompay_logo': response.billing_pararent_details[0].jom_pay_logo,
 
         });
-        console.log('billchild_details.length' + response.billing_pararent_details.length);
+        console.log('billchild_details.length' ,response.billing_pararent_details.length);
         this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
 
         // section-2
@@ -1555,10 +1574,10 @@ export class EditDidInvoiceComponent implements OnInit {
           for (let index = 0; index < response.bill_fixed_details.length; index++) {
             bill_fixedDetail_TotalSUBAmount = Number(bill_fixedDetail_TotalSUBAmount) + Number(response.bill_fixed_details[index].total_amt);
   
-            $('#sub_total_1').val(bill_fixedDetail_TotalSUBAmount);
+           // $('#sub_total_1').val(bill_fixedDetail_TotalSUBAmount);
             console.log('#sub_total_1', bill_fixedDetail_TotalSUBAmount);
   
-            console.log('billchild_details++index' + index);
+            console.log('billchild_details++index' , index);
   
             formArray1.push(this.fb.group({
               "billChildid1": response.bill_fixed_details[index].billChildid,
@@ -1598,12 +1617,12 @@ export class EditDidInvoiceComponent implements OnInit {
         } else {
         for (let index = 0; index < response.bill_usage_details.length; index++) {
 
-          bill_usage_TotalSUBAmount = Number(bill_usage_TotalSUBAmount) + Number(response.bill_usage_details[index].total_amt);
+          bill_usage_TotalSUBAmount = (bill_usage_TotalSUBAmount) + (response.bill_usage_details[index].total_amt);
 
-          $('#sub_total_2').val(bill_usage_TotalSUBAmount);
+       //   $('#sub_total_2').val(bill_usage_TotalSUBAmount);
           console.log('#sub_total_2', bill_usage_TotalSUBAmount);
 
-          console.log('bill_usage_details++index' + index);
+          console.log('bill_usage_details++index' , index);
 
           formArray2.push(this.fb.group({
             "billChildid2": response.bill_usage_details[index].billChildid,
@@ -1616,8 +1635,6 @@ export class EditDidInvoiceComponent implements OnInit {
             "productDesc2": response.bill_usage_details[index].productDesc,
             "amt2": response.bill_usage_details[index].total_amt,
             "call_duration2": response.bill_usage_details[index].call_duration_state,
-
-
 
           })
 
@@ -1639,7 +1656,7 @@ export class EditDidInvoiceComponent implements OnInit {
         if (response.bill_other_details.length == 0) {
           $('#sub_total_3').val(0);
           this.totalCalculate_3();
-          this.gross_total();
+        //  this.gross_total();
           console.log("otherAddressControls",this.otherAddressControls)
           // this.otherCharges1();
           // this.addInvoice();
@@ -1649,9 +1666,9 @@ export class EditDidInvoiceComponent implements OnInit {
 
           bill_Other_TotalSUBAmount = Number(bill_Other_TotalSUBAmount) + Number(response.bill_other_details[index].total_amt);
 
-          $('#sub_total_3').val(bill_Other_TotalSUBAmount);
+         // $('#sub_total_3').val(bill_Other_TotalSUBAmount);
           console.log('#sub_total_3', bill_Other_TotalSUBAmount);
-          console.log('bill_other_details++index' + index);
+          console.log('bill_other_details++index' , index);
 
           formArray3.push(this.fb.group({
             "billChildid3": response.bill_other_details[index].billChildid,
@@ -1692,6 +1709,7 @@ export class EditDidInvoiceComponent implements OnInit {
           'section3_shipping_amt_name_txtbox': response.billing_pararent_details[0].shippingName,
           'section3_shipping_amt_txtbox': response.billing_pararent_details[0].shippingAmt,
           'section3_bankingCharge_amt_txtbox': response.billing_pararent_details[0].add_amt,
+          'section3_bankingCharge_amt_name_txtbox': response.billing_pararent_details[0].add_name,
           //row-5
           'section3_grand_total': response.billing_pararent_details[0].netPayment,
           //row-7
@@ -1741,6 +1759,7 @@ export class EditDidInvoiceComponent implements OnInit {
           'FinalDiscountForm_Percentage': response.billpardiscount[0].dis_per,
           'FinalDiscountForm_Direct': response.billpardiscount[0].dis_amt,
           'final_DiscountTYpe': response.billpardiscount[0].dis_type,
+
         });
 
 
@@ -1749,29 +1768,34 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
       }
+      $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
+      this.finalSaveDiscount();
+      this.grossTotalAfterDiscount();
+     // $("#finalDiscount_amt").val(response.billing_pararent_details[0].grossAmount);
       this.quotationAddSignature();
-      this.gross_total();
+   //   this.gross_total();
       this.getTaxCals();
       // 
-      this.fixedSaveDiscount();
+  //    this.fixedSaveDiscount();
 
-      this.otherSaveDiscount();
+    //  this.otherSaveDiscount();
       // this.totalCalculate_1();
-      this.totalCalculate_2();
-      this.usageSaveDiscount();
+     // this.totalCalculate_2();
+     // this.usageSaveDiscount();
       // this.totalCalculate_3();
     });
 
 
 
-    // setTimeout(() => {
+   
 
-    //   // $('#billCode').val(this.section1_billcode)
-    // }, 2000);
     setTimeout(() => {
 
-      $('#billerIDs').val(this.TaxValuEDIt)
+      $('#billerIDs').val(this.TaxValuEDIt);
     }, 3000);
+    
+    // $('#sub_total_2').val(this.sub2Total_edit);
+
     this.spinner.hide();
 
   }
@@ -1781,7 +1805,7 @@ export class EditDidInvoiceComponent implements OnInit {
     let api_req: any = new Object();
     let api_updateDid_req: any = new Object();
     api_req.moduleType = "did";
-
+    
     api_req.api_url = "did/update_invoice";
 
     api_req.api_type = "web";
@@ -1817,7 +1841,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.cstNo = this.addDid_section1.value.cst;
     api_updateDid_req.billDate = this.addDid_section1.value.Date;
     api_updateDid_req.b_attn = this.addDid_section1.value.Attn_1;
-    api_updateDid_req.did_bill_code = this.did_bill_code;
+    api_updateDid_req.did_bill_code = this.addDid_section1.value.billCodev;
     api_updateDid_req.po_no = this.addDid_section1.value.PoNo_edit;
     api_updateDid_req.po_date = this.addDid_section1.value.PoDate;
     api_updateDid_req.sales_rep = this.addDid_section1.value.salesRep;
@@ -1826,6 +1850,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.s_attn = this.addDid_section1.value.ship_attn;
     api_updateDid_req.terms = this.addDid_section1.value.terms;
     api_updateDid_req.currency = this.addDid_section1.value.Currency;
+    api_updateDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
     api_updateDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
     api_updateDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
     api_updateDid_req.bills_logo_id = this.ExtralogoValue;
@@ -1892,21 +1917,40 @@ export class EditDidInvoiceComponent implements OnInit {
 
     var addr2 = this.did_Invice_usage_Charges.value.usageAddress;
 
-
+    // console.log('sandy addr2',addr2);
+    
     for (let i = 0; i < addr2.length; i++) {
 
+      // "billChildid2": response.bill_usage_details[index].billChildid,
+      // "particular2": response.bill_usage_details[index].productName,
+      // "did_bill_code_chd": response.bill_usage_details[index].did_bill_code_chd,
+      // "fromdt2": response.bill_usage_details[index].fromDate,
+      // "todt2": response.bill_usage_details[index].toDate,
+      // "md_chk2": response.bill_usage_details[index].md_state,
+      // "did_diff_date2": response.bill_usage_details[index].did_diff_date,
+      // "productDesc2": response.bill_usage_details[index].productDesc,
+      // "amt2": response.bill_usage_details[index].total_amt,
+      // "call_duration2": response.bill_usage_details[index].call_duration_state,
 
-      addr2[i].pd_billchild_id = $('#pd_billchild_id_' + i).val();
-      addr2[i].particular2 = $('#particular2_' + i).val();
-      addr2[i].fromdt2 = $('#fromdt2_' + i).val();
-      addr2[i].todt2 = $('#todt2_' + i).val();
-      addr2[i].md_chk2 = $('#md_chk2_' + i).val();
-      addr2[i].did_diff_date2 = $('#did_diff_date2_' + i).val();
-      addr2[i].productDesc2 = $('#productDesc2_' + i).val();
+         
       addr2[i].amt2 = $('#amt2_' + i).val();
+      addr2[i].billChildid2 = $('#billChildid2' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      // addr2[i].did_bill_code_chd =this.did_bill_code_section2;
-      addr2[i].did_bill_code_chd = $('#billCode' + i).val();
+       addr2[i].did_bill_code_chd = $('#billCode'+i).val();
+      // addr2[i].did_bill_code_chd = $('#billChildid2' + i).val();
+      addr2[i].did_diff_date2 = $('#did_diff_date2_' + i).val();
+     
+      addr2[i].fromdt2 = $('#fromdt2_' + i).val();
+      addr2[i].md_chk2 = $('#md_chk2_' + i).val();
+     
+      addr2[i].particular2 = $('#particular2_' + i).val();
+      addr2[i].productDesc2 = $('#productDesc2_' + i).val();
+      addr2[i].todt2 = $('#todt2_' + i).val();
+     
+     
+   
+    
+       
 
 
 
@@ -1966,7 +2010,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.addName = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
     api_updateDid_req.shippingAmt = $('#shipping_amt_id').val();
     api_updateDid_req.add_amt = $('#bankingCharge_amt_id').val();
-    api_updateDid_req.netTotal = Math.round($('#section3_grand_total').val());
+    api_updateDid_req.netTotal = $('#section3_grand_total').val();
     api_updateDid_req.remarks = this.addDid_section3.value.section3_remarks;
     api_updateDid_req.previous_due_state = this.addDid_section3.value.section3_previousDue;
     api_updateDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
@@ -2179,7 +2223,7 @@ export class EditDidInvoiceComponent implements OnInit {
         for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
 
-          fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
+          fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
 
           console.log("dummy inside", fixedCharge_TotalAmount)
 
@@ -2187,13 +2231,13 @@ export class EditDidInvoiceComponent implements OnInit {
         console.log("dummy outside", fixedCharge_TotalAmount)
 
 
-        price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100).toFixed(2);
+        price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100);
         console.log(price);
-        $('#sub_discount_1').val(price);
+        $('#sub_discount_1').val(price.toFixed(2));
         $('#sub_discount_val_1').val(enablePerFinal_1);
         price = fixedCharge_TotalAmount - price;
         console.log("sub_total", price);
-        $('#sub_total_1').val(price);
+        $('#sub_total_1').val(price.toFixed(2));
         this.gross_total();
 
       } else {
@@ -2209,20 +2253,20 @@ export class EditDidInvoiceComponent implements OnInit {
       for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
 
-        fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
+        fixedCharge_TotalAmount +=parseFloat($('#amt_1_' + a).val());
 
         console.log("dummy inside", fixedCharge_TotalAmount)
 
       }
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
       console.log('price_fin' + price);
-      $('#sub_total_1').val(price);
-      $('#sub_discount_1').val(enablePriceFinal_1);
-      $('#sub_discount_val_1').val(enablePriceFinal_1);
+      $('#sub_total_1').val(price.toFixed(2));
+      $('#sub_discount_1').val(enablePriceFinal_1.toFixed(2));
+      $('#sub_discount_val_1').val(enablePriceFinal_1.toFixed(2));
       this.gross_total();
     }
 
-    $('#sub_total_1').val(price)
+    $('#sub_total_1').val(price.toFixed(2))
 
 
     this.getTaxCals();
@@ -2251,7 +2295,7 @@ export class EditDidInvoiceComponent implements OnInit {
       }
 
       this.sub_total_glb1 = total_amt_tot;
-      $('#sub_total_2').val(total_amt_tot);
+      $('#sub_total_2').val(total_amt_tot.toFixed(2));
       console.log('sub_total =' + total_amt_tot);
 
     }
@@ -2276,8 +2320,7 @@ export class EditDidInvoiceComponent implements OnInit {
       if (enablePerFinal_2 != '') {
         for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
-
-          usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val());
+          usageCharge_TotalAmount +=parseFloat($('#amt2_'+a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -2285,9 +2328,9 @@ export class EditDidInvoiceComponent implements OnInit {
         console.log("dummy outside", usageCharge_TotalAmount)
 
 
-        usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100).toFixed(2);
+        usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100);
         console.log(usage_price);
-        $('#sub_discount_2').val(usage_price);
+        $('#sub_discount_2').val(usage_price.toFixed(2));
         $('#sub_discount_val_2').val(enablePerFinal_2);
         usage_price = usageCharge_TotalAmount - usage_price;
         console.log("sub_total", usage_price);
@@ -2306,8 +2349,9 @@ export class EditDidInvoiceComponent implements OnInit {
     else {
       for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
+        // usageCharge_TotalAmount =Number((Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val())).toFixed(2));
 
-        usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val());
+         usageCharge_TotalAmount = usageCharge_TotalAmount + $('#amt2_' + a).val();
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -2351,7 +2395,7 @@ export class EditDidInvoiceComponent implements OnInit {
         total_amt_tot += parseFloat(total_amt);
       }
 
-      this.sub_total_glb1 = total_amt_tot;
+      this.sub_total_glb1 = total_amt_tot.toFixed(2);
       $('#sub_total_3').val(total_amt_tot);
       console.log('sub_total =' + total_amt_tot);
 
@@ -2378,7 +2422,7 @@ export class EditDidInvoiceComponent implements OnInit {
         for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-          usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt3_' + a).val());
+          usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -2386,8 +2430,8 @@ export class EditDidInvoiceComponent implements OnInit {
         console.log("dummy outside", usageCharge_TotalAmount)
 
 
-        other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100).toFixed(2);
-        console.log(other_price);
+        other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100);
+       
         $('#sub_discount_3').val(other_price);
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
@@ -2408,20 +2452,20 @@ export class EditDidInvoiceComponent implements OnInit {
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-        usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt3_' + a).val());
+        usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       other_price = usageCharge_TotalAmount - enablePriceFinal_3;
       console.log('other_price_fin' + other_price);
-      $('#sub_total_3').val(other_price);
+      $('#sub_total_3').val(other_price.toFixed(2));
       $('#sub_discount_3').val(enablePriceFinal_3);
       $('#sub_discount_val_3').val(enablePriceFinal_3);
       this.gross_total();
     }
 
-    $('#sub_total_3').val(other_price)
+    $('#sub_total_3').val(other_price.toFixed(2))
 
 
     this.getTaxCals();
@@ -2470,10 +2514,10 @@ export class EditDidInvoiceComponent implements OnInit {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
     }
     // total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total2)) + (parseFloat(sub_total3));
-    this.grossTotal_BeforeDiscount = total_amt
-    console.log("total_amt-gross", total_amt);
+    this.grossTotal_BeforeDiscount = total_amt.toFixed(2);
+    console.log("total_amt-gross", total_amt.toFixed(2));
     gross_tot += parseFloat(total_amt);
-    $('#section3_gross_total').val(gross_tot);
+    $('#section3_gross_total').val(gross_tot.toFixed(2));
 
     this.grossTotalAfterDiscount();
   }
@@ -2495,13 +2539,13 @@ export class EditDidInvoiceComponent implements OnInit {
 
       if (enablePerFinal_4 != '') {
 
-        dis_etr = (parseFloat(enablePerFinal_4) * parseFloat(final_tot) / 100).toFixed(2);
+        dis_etr = (parseFloat(enablePerFinal_4) * parseFloat(final_tot) / 100);
 
-        $('#finalDiscount_amt').val(dis_etr);
+        $('#finalDiscount_amt').val(dis_etr.toFixed(2));
 
         price = final_tot - dis_etr;
 
-        $('#section3_gross_total_afterDiscount').val(price);
+        $('#section3_gross_total_afterDiscount').val(price.toFixed(2));
 
 
 
@@ -2511,7 +2555,7 @@ export class EditDidInvoiceComponent implements OnInit {
       directFinal = final_tot - enablePriceFinal_4;
 
       $('#finalDiscount_amt').val(enablePriceFinal_4);
-      $('#section3_gross_total_afterDiscount').val(directFinal);
+      $('#section3_gross_total_afterDiscount').val(directFinal.toFixed(2));
 
     }
 
@@ -2538,20 +2582,20 @@ export class EditDidInvoiceComponent implements OnInit {
     var directFinal: any;
     if (disType == 'per' && enablePerFinal_4_AD != "") {
 
-      price = (parseFloat(enablePerFinal_4_AD) * parseFloat(final_tot) / 100).toFixed(2);
+      price = (parseFloat(enablePerFinal_4_AD) * parseFloat(final_tot) / 100);
       ept = final_tot - price;
 
-      $('#finalDiscount_amt').val(price);
-      $('#section3_gross_total_afterDiscount').val(ept);
-      getTax = (parseFloat(ept) * parseFloat(this.tax_per_mod) / 100).toFixed(2);
-      $('#tax_amt_id').val(getTax);
+      $('#finalDiscount_amt').val(price.toFixed(2));
+      $('#section3_gross_total_afterDiscount').val(ept.toFixed(2));
+      getTax = (parseFloat(ept) * parseFloat(this.tax_per_mod) / 100);
+      $('#tax_amt_id').val(getTax.toFixed(2));
 
     }
     else if (disType == 'amt' && enablePriceFinal_4_AD != "") {
       directFinal = final_tot - enablePriceFinal_4_AD;
 
-      $('#finalDiscount_amt').val(enablePriceFinal_4_AD);
-      $('#section3_gross_total_afterDiscount').val(directFinal);
+      $('#finalDiscount_amt').val(enablePriceFinal_4_AD.toFixed(2));
+      $('#section3_gross_total_afterDiscount').val(directFinal.toFixed(2));
 
 
     }
@@ -2571,13 +2615,13 @@ export class EditDidInvoiceComponent implements OnInit {
       getafterdiscountval = parseFloat($('#section3_gross_total').val());
       test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
       test = test.toFixed(2);
-      Math.round($('#section3_grand_total').val(test));
+     $('#section3_grand_total').val(test);
 
     } else {
       getafterdiscountval = $('#section3_gross_total_afterDiscount').val();
       test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
       test = test.toFixed(2);
-      Math.round($('#section3_grand_total').val(test));
+      $('#section3_grand_total').val(test);
 
     }
 

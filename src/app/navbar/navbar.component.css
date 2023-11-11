@@ -158,5 +158,6 @@
 .dropdown__item:hover .hide{display: block;}
 .dropdown__item:hover .show{display: none;}
 .userDatatable table td {border-bottom: 1px solid #ddd;}
+#suggestions{z-index: 99;}
 /* ---------------------------------KS-CODE--------------------------------- */
 

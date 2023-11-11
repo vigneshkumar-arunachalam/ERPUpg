@@ -989,6 +989,7 @@ formattedDate: string;
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
           'cusInvoiceNo': response.customer_invoice_no,
+          'terms':  response.customer_details[0].terms_condition,
         });
       }
       else {

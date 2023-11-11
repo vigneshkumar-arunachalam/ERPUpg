@@ -79,6 +79,7 @@ export class NavbarComponent implements OnInit {
   Invoice_biller_send: any;
   Invoice_revenue_send: any;
   isColorInputDisabled = false;
+  Customer_revenue_send: any;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -124,10 +125,10 @@ export class NavbarComponent implements OnInit {
       } else if (val.type == 'customer_list') {
         let api_reqs: any = {
           Customer_list_send :this.Customer_list_send,
+          Customer_revenue_send : this.Customer_revenue_send
         };
         this.serverService.global_search_customer.next(api_reqs);
-        // this.serverService.global_search_customer.next(JSON.stringify(this.Customer_list_send));
-      }
+      }
 
     })
 
@@ -485,8 +486,13 @@ export class NavbarComponent implements OnInit {
 
         if (response.customer_list != 0 || response.customer_list != '0') {
           this.Customer_list_send = response.customer_list.customer_details;
+          this.Customer_revenue_send = response.customer_list.revenue_list;
           this.Cust_UI_Show = response.customer_list;
-          this.serverService.global_search_customer.next(this.Customer_list_send);
+          let api_reqs: any = {
+            Customer_list_send :this.Customer_list_send,
+            Customer_revenue_send : this.Customer_revenue_send
+          };
+          this.serverService.global_search_customer.next(api_reqs);
         } else {
           this.Cust_UI_Show = response.customer_list;
           console.log("Customer List Skipped")

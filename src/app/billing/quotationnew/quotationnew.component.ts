@@ -195,6 +195,7 @@ export class QuotationnewComponent implements OnInit {
   }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
+    this.spinner.show();
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.searchBillerNameList = ["Cal4Care Pte Ltd", "Marshal System Consultancy", "Cal4Care", "Dcare Technologies Pte Ltd", "DCARE Technologies India Pvt Ltd.", "Cal4care Sdn.Bhd.", "Cal4Care Japan Co., Ltd", "1Msb IT Care Sdn. Bhd.", "Cal4care Telecommunication Services (I) PVT LTD"]
     this.addNewQuotationPopUpForm = new FormGroup({

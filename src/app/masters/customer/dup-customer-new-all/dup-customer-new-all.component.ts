@@ -293,8 +293,9 @@ export class DupCustomerNewAllComponent implements OnInit {
   existing_email: number;
 
   Global_search_filter =  false;
-  Global_search_filter_2: string='';
+  Global_search_filter_2: string;
   formGroup: any;
+  data_value: any;
   
 
   constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -307,8 +308,8 @@ export class DupCustomerNewAllComponent implements OnInit {
       // this.customer_list=k;
       console.log("k in customer",val)
       console.log("k length in customer",val.length);
-      this.customer_list=val;
-    
+      this.data_value=val;
+      this.customerslist_dup(this.data_value);
       console.log("this.customer_list in customer",this.customer_list);
       if(val!=null || val!='null'){
         this.Global_search_filter = true;
@@ -999,10 +1000,9 @@ this.cmsDepartmentList1();
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
     });
-    setTimeout(() => {
-      let api_reqs:any = {type: "customer_list"};
-      this.serverService.callbackfun.next(api_reqs);
-    }, 1000);
+
+    let api_reqs:any = {type: "customer_list"};
+    this.serverService.callbackfun.next(api_reqs);
 
   }
 
@@ -1832,6 +1832,16 @@ this.cmsDepartmentList1();
         });
         console.log("final error", error);
       };
+  }
+  customerslist_dup(data: any) {
+   
+        console.log(data);
+        
+        this.customer_list = data.Customer_list_send;    
+        console.log("this.customer_list----main list",this.customer_list);
+        // this.customer_list_colorcode=response.customer_details.biller_details[0].colorCodes;
+        this.revenue_list = data.Customer_revenue_send;
+       
   }
   listDataInfo(list_data: any) {
 
@@ -3317,7 +3327,7 @@ this.cmsDepartmentList1();
 
   }
   closeModal(){
-    let api_reqs:any = {type: "customer_list"};
+    let api_reqs:any = {type: "quotation_list"};
     this.serverService.closemodal.next(api_reqs);
   }
  
@@ -5140,6 +5150,51 @@ this.spinner.show();
   }
   gotoCustomerMasterList() {
     this.customerslist({});
+  }
+  closeview(){
+    $('#dupCusviewCustomerFormId').modal('hide');
+  }
+  closeedit(){
+    $('#dupCuseditCustomerFormId').modal('hide');
+  }
+  closeSpecialEdit(){
+    $('#dupCusspecialEditCustomerFormId').modal('hide');
+  }
+  mconnectClose(){
+    $('#dupCusmconnectPartnerDetailsFormId').modal('hide');
+  }
+  mrvoipClose(){
+    $('#DupCusMrvoipPartnerDetailsFormId').modal('hide');
+  }
+  call4tellClose(){
+    $('#dupCuscall4tellPartnerDetailsFormId').modal('hide');
+  }
+  invoiceSharedCustomerClose(){
+    $('#dupCusinvoiceSharedCustomerFormId').modal('hide');
+  }
+  SharedCustomerPermissionClose(){
+    $('#DupCusSharedCustomerPermissionFormId').modal('hide');
+  }
+  NX32PermissionClose(){
+    $('#dupcuscustomer_NX32PermissionFormId').modal('hide');
+  }
+  fileAttachmentClose(){
+    $('#dupCusfileAttachmentFormId').modal('hide');
+  }
+  billCodeClose(){
+    $('#dupCusbillCodeFormId').modal('hide');
+  }
+  landscapeEmailClose(){
+    $('#dupCuslandscapeEmailFormId').modal('hide');
+  }
+  searchCustomerClose(){
+    $('#dupCussearchCustomerFormId').modal('hide');
+  }
+  AssignAccountManagerClose(){
+    $('#DupCusAssignAccountManager').modal('hide');
+  }
+  GoogleAuthClose(){
+    $('#DupCusGoogleAuthentication').modal('hide');
   }
   initTiny() {
 
