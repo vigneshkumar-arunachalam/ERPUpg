@@ -293,6 +293,7 @@ export class InvoiceComponent implements OnInit {
   chart1: any;
   testing = false;
   Global_search_filter = false;
+  invoicePermissionList_suspend: any;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -973,6 +974,7 @@ export class InvoiceComponent implements OnInit {
         this.invoicePermissionList_pdf_view = response.invoice_permission_arr.pdf_view;
         this.invoicePermissionList_sale_rep = response.invoice_permission_arr.sale_rep;
         this.invoicePermissionList_search = response.invoice_permission_arr.search;
+        this.invoicePermissionList_suspend = response.invoice_permission_arr.sus_inv_list;
 
         this.invoicePermissionList_sent_to_post = response.invoice_permission_arr.sent_to_post;
         this.invoicePermissionList_set_invoice_revenue = response.invoice_permission_arr.set_invoice_revenue;

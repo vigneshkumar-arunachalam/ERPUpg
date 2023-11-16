@@ -85,6 +85,12 @@ export class EditPIComponent implements OnInit {
   itre = 0;
   //auto complete
   searchResult: any;
+   //section 3 select terms condition
+   section3_Terms1: any;
+   section3_Terms2: any;
+   section3_Terms3: any;
+   section3_Terms4: any;
+   section3_Terms5: any;
   //getProformaBillerDetails
   getProformaBillerDetails_BillerID: any;
   getProformaBillerDetails_tinName: any;
@@ -214,7 +220,11 @@ export class EditPIComponent implements OnInit {
     
     ];
 
-
+    this.section3_Terms1 = "Price Term: EXW SINGAPORE";
+    this.section3_Terms2 = "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3 = "Port of Discharge:";
+    this.section3_Terms4 = "Port of Loading: SINGAPORE";
+    this.section3_Terms5 = "Lead Time: 21 - 30 DAYS";
     this.addPI_section1 = new FormGroup({
       'initial': new FormControl(),
       'billId_edit': new FormControl(),
@@ -276,6 +286,11 @@ export class EditPIComponent implements OnInit {
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
       'section3_select_additional_signature': new FormControl({ value: '', disabled: false }, Validators.required),
@@ -832,10 +847,10 @@ export class EditPIComponent implements OnInit {
     let api_req: any = new Object();
     let api_editPI_req: any = new Object();
     api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/edit_profoma_invoice";
+    api_req.api_url = "proforma/edit_proforma_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_editPI_req.action = "edit_profoma_invoice";
+    api_editPI_req.action = "edit_proforma_invoice";
     api_editPI_req.user_id = localStorage.getItem('erp_c4c_user_id');
 
     api_editPI_req.billId = this.editbillerID;
@@ -993,11 +1008,19 @@ export class EditPIComponent implements OnInit {
           'section3_remarks': response.billing_pararent_details[0].remarks,
 
           //row-8
-          'section3_termCondition': response.billing_pararent_details[0].terms_cond_chk,
+          'section3_termCondition': response.billing_pararent_details[0].terms_condition_optional,
+          'section3_Terms1': response.billing_pararent_details[0].terms_cond1,
+          'section3_Terms2': response.billing_pararent_details[0].terms_cond2,
+          'section3_Terms3': response.billing_pararent_details[0].terms_cond3,
+          'section3_Terms4': response.billing_pararent_details[0].terms_cond4,
+          'section3_Terms5': response.billing_pararent_details[0].terms_cond5,
           //row-9
           'section3_receivedAuthorizedSignature': response.billing_pararent_details[0].received_signature,
+
           //row-10
           'section3_logo': response.billing_pararent_details[0].logo,
+          // 'section3_logo': response.billing_pararent_details[0].print_logo,
+          'section3_select_additional_signature': response.quot_signature_show_state,
         });
 
        this.received_signature_state = response.billing_pararent_details[0].received_signature;
@@ -1693,6 +1716,7 @@ export class EditPIComponent implements OnInit {
   }
 
   saveGrossDiscount() {
+   
     $('#discountFormFinal').modal('hide');
     this.finalDiscountCalc();
   }

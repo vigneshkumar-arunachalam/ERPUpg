@@ -144,6 +144,7 @@ export class AddInvoiceComponent implements OnInit {
   // singapore date & time
   formattedDate: string;
   formattedDate_FormArray: string;
+  billerIdCurrencyConv: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe, 
@@ -614,7 +615,8 @@ export class AddInvoiceComponent implements OnInit {
         });
 
         // alert('Test--00'+response.defaults_biller_id);
-        //   this.companyNameVal = response.defaults_biller_id;
+           this.companyNameVal = response.defaults_biller_id;
+           this.billerIdCurrencyConv = response.defaults_biller_id;
         this.tax_per_mod = response.percent_val;
         this.getProformaBillerDetails();
         this.TaxDropdown();
@@ -894,6 +896,9 @@ export class AddInvoiceComponent implements OnInit {
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
           'terms': response.customer_details[0].terms_condition,
+          'Currency': response.customer_details[0].def_currency_id,
+          'PaymentVia': response.customer_details[0].def_payment_via,
+          'CurrencyConversionRate': response.currencyValue,
         });
       }
       else {
@@ -908,6 +913,9 @@ export class AddInvoiceComponent implements OnInit {
           'ship_address_3': '',
           'ship_attn': '',
           'terms': '',
+         
+          'Currency': '',
+          'PaymentVia': '',
         });
       }
 
@@ -1201,6 +1209,8 @@ export class AddInvoiceComponent implements OnInit {
         this.addInvoice_section1.patchValue({
           'invoiceNo': response.invoice_no,
           // 'Currency': response.currency_id,
+          'CurrencyConversionRate':response.currencyValue
+
 
 
         });
@@ -1266,6 +1276,10 @@ export class AddInvoiceComponent implements OnInit {
 
 
   }
+  getEvent(event:any){
+  
+this.billerIdCurrencyConv=event.target.value;
+  }
   getCurrencyValues(event: any) {
     // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
@@ -1278,7 +1292,8 @@ export class AddInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_currency_values";
-    api_getInvoiceDetails_req.billerId = this.getProformaBillerDetails_BillerID;
+    // api_getInvoiceDetails_req.billerId = this.addInvoice_section1.value.companyName;
+    api_getInvoiceDetails_req.billerId = this.billerIdCurrencyConv;
     api_getInvoiceDetails_req.currency_code = this.getCurrencyCode;
     api_req.element_data = api_getInvoiceDetails_req;
 

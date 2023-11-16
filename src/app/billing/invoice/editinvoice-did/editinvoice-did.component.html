@@ -176,13 +176,15 @@
                             <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
                             <div class="col-lg-12">
 
-                                <select id="billCodev" class="form-control" formControlName="billCodev"
+                                <select id="billCodev1" class="form-control" formControlName="billCodev"
                                     (change)="billCodeChange($event)">
 
                                     <option [ngValue]="null" selected>Select Bill Code</option>
                                     <option *ngFor="let bill of did_bill_codexx" [ngValue]="bill.customer_bill_code_id">
                                         {{bill.bill_code}}
                                     </option>
+
+                                 
                                 </select>
                             </div>
                         </div>

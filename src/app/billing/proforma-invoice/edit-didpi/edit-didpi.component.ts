@@ -1020,7 +1020,7 @@ export class EditDidpiComponent implements OnInit {
 
 
         this.addDid_section1.patchValue({
-          'companyName': response.defaults_biller_id,
+          // 'companyName': response.defaults_biller_id,
         });
 
         //   this.companyNameVal = response.defaults_biller_id;
@@ -1484,11 +1484,11 @@ export class EditDidpiComponent implements OnInit {
     this.spinner.show();
     let api_req: any = new Object();
     let api_editDid_req: any = new Object();
-    api_req.moduleType = "profoma";
-    api_req.api_url = "profoma/edit_did_profoma_invoice";
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/edit_did_proforma_invoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_editDid_req.action = "edit_did_profoma_invoice";
+    api_editDid_req.action = "edit_did_proforma_invoice";
     api_editDid_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_editDid_req.billId = this.editbillerID;
     api_req.element_data = api_editDid_req;
@@ -1499,7 +1499,7 @@ export class EditDidpiComponent implements OnInit {
         console.log("response.bill_fixed_details.length", response.bill_fixed_details.length);
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
-
+        $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
         this.exportState_value = response.billing_pararent_details[0].export_state;
 
         this.customer_ID = response.billing_pararent_details[0].custId;
@@ -1513,9 +1513,9 @@ export class EditDidpiComponent implements OnInit {
         this.did_bill_code_section15 = response.customer_billcode_arr;
         console.log(this.did_bill_code_section15);
        // alert(response.billing_pararent_details[0].did_bill_code)
-        $('#sub_total_1').val(response.fixed_subtotal.net_amt.toFixed(2));
-        $('#sub_total_2').val(response.usage_subtotal.net_amt.toFixed(2));
-        $('#sub_total_3').val(response.other_subtotal.net_amt.toFixed(2));
+        $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
+        $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
+        $('#sub_total_3').val(response.other_subtotal.toFixed(2));
 
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -1768,6 +1768,7 @@ export class EditDidpiComponent implements OnInit {
 
       }
       $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
+      
       this.finalSaveDiscount();
       this.grossTotalAfterDiscount();
      // $("#finalDiscount_amt").val(response.billing_pararent_details[0].grossAmount);
@@ -2449,9 +2450,7 @@ export class EditDidpiComponent implements OnInit {
     }
     else {
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
-
-
-        usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
+usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 

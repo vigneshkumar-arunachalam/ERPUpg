@@ -18,7 +18,7 @@
                                 (change)="getProformaBillerDetails();getCustomerInvoiceDetails();TaxDropdown();invoiceAddSignature()">
                                 <option [ngValue]="null" selected disabled>Select Company Name</option>
                                 <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
-                                    {{comp_name.billerName}}
+                                    {{comp_name.billerName}}({{comp_name.billerName}})
                                 </option>
                             </select>
                         </div>
@@ -308,7 +308,7 @@
                         <label for="Ship_By" class="col-lg-12 col-form-label">Ship By</label>
                         <div class="col-lg-12">
                             <select id="Ship_By" class="form-control" formControlName="ShipBy">
-                                <option [ngValue]="null" selected disabled>Default Ship By</option>
+                                <option [ngValue]="null" selected disabled>Select Ship By</option>
                                 <option *ngFor="let ship of ShipByList" value="{{ship.shipById}}">
                                     {{ship.ship_name}}
                                 </option>
@@ -753,50 +753,71 @@
                                         formControlName="section3_termCondition" (click)="termConditionCheckList()" />
                                 </div>
 
-                                <div class="col-lg-12">
-                                    <div class="terms_con">
+                              
 
-                                        <table *ngIf="terms_condition_list">
-                                            <tbody>
-                                                <tr style="margin-left: 600px;">
-                                                    <td>
-                                                        1. <input type="text" class="form-control" name="terms_cond1"
-                                                            id="terms_cond1" value="Price Term: EXW SINGAPORE">
-                                                    </td>
-                                                </tr>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group row" *ngIf="(chkTermsandcondition==true)">
 
-                                                <tr>
-                                                    <td>
-                                                        2. <input type="text" class="form-control" name="terms_cond2"
-                                                            id="terms_cond2"
-                                                            value="Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T">
-                                                    </td>
-                                                </tr>
+                                <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                    <label>Terms and Conditions-1</label>
 
-                                                <tr>
-                                                    <td>
-                                                        3. <input type="text" class="form-control" name="terms_cond3"
-                                                            id="terms_cond3" value="Port of Discharge:">
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        4. <input type="text" class="form-control" name="terms_cond4"
-                                                            id="terms_cond4" value="Port of Loading: SINGAPORE">
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td>
-                                                        5. <input type="text" class="form-control" name="terms_cond5"
-                                                            id="terms_cond5" value="Lead Time: 21 - 30 DAYS">
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_Terms1"
+                                        value="{{this.section3_Terms1}}" id="section3_Terms1" />
+
+                                </div>
+
+
+
+                                <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                    <label>Terms and Conditions-2</label>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_Terms2"
+                                        value="{{this.section3_Terms2}}" id="section3_Terms2" />
+
+                                </div>
+
+
+
+                                <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                    <label>Terms and Conditions-3</label>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_Terms3"
+                                        value="{{this.section3_Terms3}}" id="section3_Terms3" />
+
+                                </div>
+
+
+
+                                <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                    <label>Terms and Conditions-4</label>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_Terms4"
+                                        value="{{this.section3_Terms4}}" id="section3_Terms4" />
+
+                                </div>
+
+
+
+                                <div class="col-lg-6" style="text-align: right;margin-bottom: 20px;">
+                                    <label>Terms and Conditions-5</label>
+
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="text" class="form-control" formControlName="section3_Terms5"
+                                        value="{{this.section3_Terms5}}" id="section3_Terms5" />
+
+                                </div>
+
 
                             </div>
                         </div>

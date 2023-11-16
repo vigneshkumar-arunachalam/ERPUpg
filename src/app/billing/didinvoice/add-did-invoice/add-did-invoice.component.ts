@@ -990,6 +990,9 @@ formattedDate: string;
           'ship_attn': response.customer_details[0].companyName,
           'cusInvoiceNo': response.customer_invoice_no,
           'terms':  response.customer_details[0].terms_condition,
+          'Currency': response.customer_details[0].def_currency_id,
+          'PaymentVia': response.customer_details[0].def_payment_via,
+          'CurrencyConversionRate': response.currencyValue,
         });
       }
       else {
@@ -1004,6 +1007,10 @@ formattedDate: string;
           'ship_address_3': '',
           'ship_attn': '',
           'cusInvoiceNo': '',
+          'terms': '',
+          'CurrencyConversionRate':'',
+         'Currency': '',
+         'PaymentVia': '',
         });
       }
 
@@ -1215,6 +1222,11 @@ formattedDate: string;
     //section-3
     api_saveDid_req.grossTotal = $('#section3_gross_total').val();
     api_saveDid_req.discountAmount = $('#finalDiscount_amt').val();
+    api_saveDid_req.terms_cond1 = this.addDid_section3.value.section3_Terms1;
+    api_saveDid_req.terms_cond2 = this.addDid_section3.value.section3_Terms2;
+    api_saveDid_req.terms_cond3 = this.addDid_section3.value.section3_Terms3;
+    api_saveDid_req.terms_cond4 = this.addDid_section3.value.section3_Terms4;
+    api_saveDid_req.terms_cond5 = this.addDid_section3.value.section3_Terms5;
     // api_saveDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
     api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
     api_saveDid_req.taxAmt = $('#Tax_amt_id').val();
@@ -1235,11 +1247,9 @@ formattedDate: string;
 
     api_saveDid_req.previous_due_state = this.addDid_section3.value.section3_previousDue;
     api_saveDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
-    api_saveDid_req.terms_cond1 = this.addDid_section3.value.section3_Terms1;
-    api_saveDid_req.terms_cond2 = this.addDid_section3.value.section3_Terms2;
-    api_saveDid_req.terms_cond3 = this.addDid_section3.value.section3_Terms3;
-    api_saveDid_req.terms_cond4 = this.addDid_section3.value.section3_Terms4;
-    api_saveDid_req.terms_cond5 = this.addDid_section3.value.section3_Terms5;
+  
+   
+   
 
     api_saveDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
     api_saveDid_req.received_signature = this.chkReceivedAuthorizedSignature;

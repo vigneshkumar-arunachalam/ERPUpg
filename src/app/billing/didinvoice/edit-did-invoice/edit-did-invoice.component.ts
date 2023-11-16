@@ -1497,6 +1497,7 @@ export class EditDidInvoiceComponent implements OnInit {
       this.spinner.hide();
       console.log("response-load-pi", response)
       if (response != '') {
+        $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
         console.log("response.bill_fixed_details.length", response.bill_fixed_details.length);
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
@@ -1514,9 +1515,9 @@ export class EditDidInvoiceComponent implements OnInit {
         this.did_bill_code_section15 = response.customer_billcode_arr;
         console.log(this.did_bill_code_section15);
        // alert(response.billing_pararent_details[0].did_bill_code)
-        $('#sub_total_1').val(response.fixed_subtotal.net_amt.toFixed(2));
-        $('#sub_total_2').val(response.usage_subtotal.net_amt.toFixed(2));
-        $('#sub_total_3').val(response.other_subtotal.net_amt.toFixed(2));
+        $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
+        $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
+        $('#sub_total_3').val(response.other_subtotal.toFixed(2));
 
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -1761,14 +1762,10 @@ export class EditDidInvoiceComponent implements OnInit {
           'final_DiscountTYpe': response.billpardiscount[0].dis_type,
 
         });
-
-
-
-
-
-
       }
       $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
+      var bb= $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
+      
       this.finalSaveDiscount();
       this.grossTotalAfterDiscount();
      // $("#finalDiscount_amt").val(response.billing_pararent_details[0].grossAmount);

@@ -53,17 +53,7 @@
                                                           </th>
                                                         </tr>
                                                       </thead>
-                                                      <!-- <tbody>
-                                                        <tr class="userDatatable-header" >
-                                      
-                                                          <th>
-                                                            <span class="userDatatable-title">{{dis.date_year}}</span><br>
-                                                            <span class="userDatatable-title">{{dis.date_month_name}}</span><br>
-                                                            <span class="userDatatable-title">{{dis.commission_amt}}</span>
-                                                          </th>
-                          
-                                                        </tr>
-                                                      </tbody> -->
+                                                   
                                                      
                                                     </table>
                                                   </div>
@@ -81,32 +71,109 @@
                                       
                                                         </tr>
                                                       </thead>
-                                                      <!-- <tbody *ngFor="let list of PI_list; let i = index">
-                                                     
-                                                        <tr>
-                                                     
-                                                          <td>
-                                                            <span>{{ list.apr}}</span>
-                                                          </td>
-                                                          <td><span>{{ list.may}}</span></td>
-                                                          <td><span>{{ list.june}}</span></td>
-                                                          <td><span>{{ list.july}}</span></td>
-                                                          <td><span>{{ list.aug}}</span></td>
-                                                          <td><span>{{ list.sep}}</span></td>
-                                                          <td>
-                                                            <span>{{ list.oct}}</span>
-                                                          </td>
-                                                          <td><span>{{ list.nov}}</span></td>
-                                                          <td><span>{{ list.dec}}</span></td>
-                                                          <td><span>{{ list.jan}}</span></td>
-                                                          <td><span>{{ list.feb}}</span></td>
-                                                          <td><span>{{ list.march}}</span></td>
+                             
+                                                    </table>
+                                                  </div>
+                                                  <div>
+                                                    <span>Unpaid Amount</span>
+                                                    <div> 
+                                                      <label>Check All</label>
+                                                      <input type="checkbox" name="UnpaidAll" id="check_all_86">
+                                                    </div>
+                                                    <div>
+                                                      <label>Paid Check All </label>
+                                                      <input type="checkbox" name="paid_check_all" id="paid_check_all_86">
+                                                    </div>
+                                                    <div style="float:right;padding-right:50px;font-size:14px;vertical-align:middle">Reseller Password : tqrmWlV$:8 &nbsp;&nbsp;&nbsp;<a href="javascript:popMenuMailLand(86)" id="sendMailInvoiceLink_86"><img src="images/icons/email.png" border="0" title="Landscap Mail"></a> &nbsp;&nbsp; <a id="invoice_share_follower_86" href="javascript:popupInvoiceShare(86)" style="background-color:#3F0;padding:3px;border-radius:8px; color:#000" title="Share Permission"><strong>S</strong></a>&nbsp;</div>
+                                                  </div>
+                                                  
+                                                  
+                                                  <div class="table-responsive" style="display: table-cell;width: 50%;line-height: 10px;">
+                                                    <table class="table mb-0 table-borderless">
+                                                      <thead>
+                                                        <tr class="userDatatable-header">
+                                                        
+
                                       
-                                                          
+                                                          <th>
+                                                            <span class="userDatatable-title">Currency</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Paid</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Unpaid</span>
+                                                          </th>
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">Def-Curr({{this.payCurrencyName}})</span>
+                                                          </th>
+                                          
                                                         </tr>
                                                       
+                                                      </thead>
+                                                      
+                                                      <tbody *ngFor="let list2 of CurrencyTotalList; let i = index">
+                                                     
+                                                        <tr>
+                                                                                                            
+                                                         <td>{{list2.currency_name}}</td>
+                                                         <td>{{list2.paid_amt}}</td>
+                                                         <td>{{list2.unpaid_amt}}</td>
+                                                         <td>{{list2.currency_price_val}}</td>
+                                                       
+                                                        </tr>
+                                                       
+                                                      
                                       
-                                                      </tbody> -->
+                                                      </tbody>
+                                                      <tbody>
+                                                        <tr>
+                                                          <td>Total</td>
+                                                          <td></td>
+                                                          <td></td>
+                                                          <td style="font-weight: bold;">{{this.CurrencyTotalAll}}</td>
+                                                        </tr>
+                                                      </tbody>
+                                                    </table>
+                                                  </div>
+                                                  <br>
+                                                  <div class="table-responsive" style="display: table-cell;width: 50%;line-height: 10px;">
+                                                    <table class="table mb-0 table-borderless">
+                                                      <thead>
+                                                        <tr class="userDatatable-header">
+                                                        
+
+                                      
+                                                          <th>
+                                                            <span class="userDatatable-title">Year</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Paid</span>
+                                                          </th>
+                                                          <th>
+                                                            <span class="userDatatable-title">Unpaid</span>
+                                                          </th>
+                                      
+                                                        </tr>
+                                                      
+                                                      </thead>
+                                                      
+                                                      <tbody *ngFor="let list3 of YearTotalList; let i = index">
+                                                     
+                                                        <tr>
+                                                                                                            
+                                                         <td>{{list3.curr_year}}</td>
+                                                         <td>{{list3.paid_amt_year}}</td>
+                                                         <td>{{list3.unpaid_amt_year}}</td>
+                                                 
+                                                       
+                                                        </tr>
+                                                       
+                                                      
+                                      
+                                                      </tbody>
+                                                    
                                                     </table>
                                                   </div>
                                                   <h1>List Details</h1>

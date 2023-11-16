@@ -74,6 +74,12 @@ export class AddPIComponent implements OnInit {
   net_amt: any;
   sub_dis_val: any;
   edit_array_ExtraLogo: any = [];
+    //section 3 select terms condition
+    section3_Terms1: any;
+    section3_Terms2: any;
+    section3_Terms3: any;
+    section3_Terms4: any;
+    section3_Terms5: any;
 
   // tax_amt_tot=0;  
 
@@ -117,6 +123,9 @@ export class AddPIComponent implements OnInit {
   terms_condition_list: boolean = false;
   // singapore date & time
   formattedDate: string;
+  getCurrencyCodeChange: any;
+  cusID: any;
+  CurID: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
@@ -214,6 +223,12 @@ export class AddPIComponent implements OnInit {
       'ExtraLogo': new FormControl(),
     });
 
+    this.section3_Terms1 = "Price Term: EXW SINGAPORE";
+    this.section3_Terms2 = "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T";
+    this.section3_Terms3 = "Port of Discharge:";
+    this.section3_Terms4 = "Port of Loading: SINGAPORE";
+    this.section3_Terms5 = "Lead Time: 21 - 30 DAYS";
+
 
     this.addPI_section3 = new FormGroup({
 
@@ -233,6 +248,11 @@ export class AddPIComponent implements OnInit {
       'section3_grand_total': new FormControl(null),
       'section3_remarks': new FormControl(null),
       'section3_termCondition': new FormControl(null),
+      'section3_Terms1': new FormControl(null),
+      'section3_Terms2': new FormControl(null),
+      'section3_Terms3': new FormControl(null),
+      'section3_Terms4': new FormControl(null),
+      'section3_Terms5': new FormControl(null),
       'section3_receivedAuthorizedSignature': new FormControl(null),
       'section3_logo': new FormControl(null),
       'section3_select_additional_signature': new FormControl({ value: '', disabled: false }, Validators.required),
@@ -510,6 +530,11 @@ export class AddPIComponent implements OnInit {
         setTimeout(() => {
           this.addPI_section3.patchValue({
             'section3_gst_dropdown': response.default_tax_id,
+            'section3_Terms1': "Price Term: EXW SINGAPORE",
+            'section3_Terms2': "Payment Term: 50% IN ADVANCE, 50% ON DELIVERY BY T/T",
+            'section3_Terms3': "Port of Discharge:",
+            'section3_Terms4': "Port of Loading: SINGAPORE",
+            'section3_Terms5': "Lead Time: 21 - 30 DAYS",
           });
 
         }, 1000);
@@ -653,7 +678,10 @@ export class AddPIComponent implements OnInit {
       console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
-
+   
+        this.cusID=response.customer_details[0].customerId;
+       
+        this.CurID=response.customer_details[0].def_currency_id;
 
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
@@ -720,7 +748,8 @@ export class AddPIComponent implements OnInit {
           ship_address_str2 = response.customer_details[0].customerAddress2;
           ship_address_str3 = address_3;
         }
-
+        this.getCurrencyCodeChange=response.customer_details[0].def_currency_id;
+        console.log("response.customer_details[0].def_currency_id",response.customer_details[0].def_currency_id)
 
 
         this.addPI_section1.patchValue({
@@ -734,6 +763,10 @@ export class AddPIComponent implements OnInit {
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
           'terms': response.customer_details[0].terms_condition,
+          'Currency': response.customer_details[0].def_currency_id,
+          'PaymentVia': response.customer_details[0].def_payment_via,
+          'CurrencyConversionRate': response.currencyValue,
+
         });
       }
       else {
@@ -748,11 +781,17 @@ export class AddPIComponent implements OnInit {
           'ship_address_3': '',
           'ship_attn': '',
           'terms': '',
+          'Currency': '',
+          'PaymentVia': '',
         });
       }
-
+      
     });
+    
+      
+    
   }
+ 
   gotoPIList() {
 
     this.router.navigate(['/ProformaInvoice']);
@@ -826,6 +865,7 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.ref = this.addPI_section1.value.Ref;
     api_savePI_req.terms = this.addPI_section1.value.terms;
     // api_savePI_req.terms_condition= this.addPI_section1.value.terms;
+   
     api_savePI_req.currency = this.addPI_section1.value.Currency;
     api_savePI_req.conversionRate = this.addPI_section1.value.CurrencyConversionRate;
     api_savePI_req.paymentVIA = this.addPI_section1.value.PaymentVia;
@@ -897,8 +937,19 @@ export class AddPIComponent implements OnInit {
     api_savePI_req.remarks = this.addPI_section3.value.section3_remarks;
     api_savePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
     api_savePI_req.terms_cond_chk = this.addPI_section3.value.section3_termCondition;
+    api_savePI_req.terms_cond1 = this.addPI_section3.value.section3_Terms1;
+    api_savePI_req.terms_cond2 = this.addPI_section3.value.section3_Terms2;
+    api_savePI_req.terms_cond3 = this.addPI_section3.value.section3_Terms3;
+    api_savePI_req.terms_cond4 = this.addPI_section3.value.section3_Terms4;
+    api_savePI_req.terms_cond5 = this.addPI_section3.value.section3_Terms5;
+
+ 
     api_savePI_req.received_signature = this.addPI_section3.value.section3_receivedAuthorizedSignature;
     api_savePI_req.logo = this.addPI_section3.value.section3_logo;
+
+    api_savePI_req.signatureId = this.addPI_section3.value.section3_select_additional_signature;
+    api_savePI_req.received_signature = this.chkReceivedAuthorizedSignature;
+  
 
     api_req.element_data = api_savePI_req;
     ($event.target as HTMLButtonElement).disabled = true;

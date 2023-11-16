@@ -20,7 +20,7 @@
                             <div class="col-lg-12">
                                 <select name="enqFormValue" id="cmp_name" class="form-control"
                                     formControlName="companyName"
-                                    (change)="getProformaBillerDetails();getCustomerInvoiceDetails();TaxDropdown();invoiceAddSignature()">
+                                    (change)="getEvent($event);getProformaBillerDetails();getCustomerInvoiceDetails();TaxDropdown();invoiceAddSignature()">
                                     <option [ngValue]="null" selected>Select Company Name</option>
                                     <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
                                         {{comp_name.billerName}}

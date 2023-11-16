@@ -8,17 +8,17 @@
               <span class="breadcrumb-item active">Proforma Invoice and Payment Process</span></h3>
             <div class="quotation-btn-section" >
               <button type="button" title="Add New Proforma Invoice" class="btn btn-primary btn-default btn-squared"
-                (click)="addPIGo()" style="margin-right: 30px"><i class="fas fa-plus" style="margin-right:0;"></i>
+                (click)="addPIGo()" *ngIf=" this.Add_Permission==1" style="margin-right: 30px"><i class="fas fa-plus" style="margin-right:0;"></i>
                 Add 
               </button>
 
-              <button type="button" title="Add New DID Proforma Invoice"
+              <button type="button" title="Add New DID Proforma Invoice" *ngIf=" (this.Add_Permission==1)"
                 class="btn btn-secondary btn-default btn-squared" (click)="addDidPIGo()" style="margin-right: 30px;"><i
                   class="fas fa-plus" style="margin-right:0;"></i> 
                   Add DID
               </button>
               <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
-                data-target="#searchPIFormId" (click)="clearSearch()">
+              *ngIf=" this.Search_Permission==1"  data-target="#searchPIFormId" (click)="clearSearch()">
                 <i class="fas fa-search" style="margin-right:0;"></i>
                 Search
               </button>
@@ -146,7 +146,7 @@
                                     <div class="row" style="display: flex;
                                     justify-content: space-between;">
                                       <ul>
-                                        <li class="dropdown__item">
+                                        <li class="dropdown__item"  *ngIf=" (this.Permission_edit==1)">
                                           <a class="hover3" title="Edit"
                                             (click)="list.did_invoice_state==0?editPIGo(list.billId):editDidPIGo(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/edit-blue.png">
@@ -154,7 +154,7 @@
                                             <span><b style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
                                           </a>
                                         </li>
-                                        <li class="dropdown__item">
+                                        <li class="dropdown__item" *ngIf=" (this.Permission_Delete==1)">
                                           <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
                                             (click)="deleteProformaInvoice(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/delete-blue.png">
@@ -162,7 +162,7 @@
                                             <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
                                           </a>
                                         </li>
-                                        <li class="dropdown__item">
+                                        <li class="dropdown__item" >
                                           <a class="hover3" title="Payment Link" data-toggle="modal" (click)="paymentLink(list.paylink_id,i)">
                                             <img class="show" src="assets/img/icon2/online-payment.png">
                                             <img class="hide" src="assets/img/icon2/online-payment.png">
@@ -190,7 +190,7 @@
                                             <span><b style="padding: 0px 20px;">-</b><strong>PDF</strong></span>
                                           </a>
                                         </li>
-                                        <li class="dropdown__item">
+                                        <li class="dropdown__item" *ngIf=" (this.Permission_share==1)">
                                           <a class="hover3" title="show permission" data-toggle="modal"
                                             data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/share-square-blue.png">
@@ -198,7 +198,7 @@
                                             <span><b style="padding: 0px 20px;">-</b><strong>Show Permission</strong></span>
                                           </a>
                                         </li>
-                                        <li class="dropdown__item">
+                                        <li class="dropdown__item" *ngIf=" (this.Permission_payment==1)">
                                           <a class="hover4" title="Payment Process" data-toggle="modal"
                                             data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/payment-method1.png">
@@ -218,7 +218,7 @@
   
                                       </ul>
                                       <ul>
-                                        <li class="dropdown__item">
+                                        <li class="dropdown__item" *ngIf=" (this.Permission_Mail==1)">
                                           <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
                                             (click)="getEmailDetails(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/gmail-blue.png">

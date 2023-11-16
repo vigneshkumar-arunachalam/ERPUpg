@@ -120,6 +120,16 @@ export class ProformaInvoiceComponent implements OnInit {
   quotationId_new: any;
   searchResult_CustomerName: any;
   Global_search_filter = false;
+  Add_Permission: any;
+  Search_Permission: any;
+  Permission_actual_price: any;
+  Permission_Delete: any;
+  Permission_edit: any;
+  Permission_list: any;
+  Permission_Mail: any;
+  Permission_payment: any;
+  Permission_share: any;
+  Permission_view: any;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) {
     this.serverService.global_search.subscribe((val:any)=>{
       console.log("before parse",val)
@@ -808,6 +818,22 @@ export class ProformaInvoiceComponent implements OnInit {
         this.PI_list = response.proforma_details;
 
         this.biller_list = response.biller_details;
+        this.Add_Permission = response.proforma_permission_arr.add;
+     
+        this.Permission_actual_price= response.proforma_permission_arr.actual_price;
+        this.Permission_Delete = response.proforma_permission_arr.delete;
+        this.Permission_edit = response.proforma_permission_arr.edit;
+        this.Permission_list = response.proforma_permission_arr.list;
+        this.Permission_Mail = response.proforma_permission_arr.mail;
+        this.Permission_payment = response.proforma_permission_arr.payment;
+        this.Search_Permission = response.proforma_permission_arr.search;
+        this.Permission_share= response.proforma_permission_arr.share;
+        this.Permission_view = response.proforma_permission_arr.view;
+       
+
+      
+       
+
         // this.payLink=response.proforma_details[0].payment_link;
 
        

@@ -236,7 +236,8 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.editbillerID = params['e_editBillID'];
         this.editDIDStateID = params['e_editDIDState'];
 
-
+        this.edit_Duplicate_ID = params['e_editDuplicateID'];
+    //     this.editDIDStateID = params['e_editDIDState'];       
 
         console.log("edit biller id", this.editbillerID);
         console.log("edit DID state id", this.editDIDStateID);
@@ -246,20 +247,20 @@ export class EditinvoiceDIDComponent implements OnInit {
       }
       );
 
-    this.route.queryParams
-      .subscribe(params => {
-        console.log("params output value", params);
+    // this.route.queryParams
+    //   .subscribe(params => {
+    //     console.log("params output value", params);
 
-        this.edit_Duplicate_ID = params['e_editDuplicateID'];
-        this.editDIDStateID = params['e_editDIDState'];
+    //     this.edit_Duplicate_ID = params['e_editDuplicateID'];
+    //     this.editDIDStateID = params['e_editDIDState'];
 
-        console.log("edit duplicate id", this.edit_Duplicate_ID);
-        console.log("edit DID state id", this.editDIDStateID);
+    //     console.log("edit duplicate id", this.edit_Duplicate_ID);
+    //     console.log("edit DID state id", this.editDIDStateID);
 
 
-       this.editDidInvice();
-      }
-      );
+    //    this.editDidInvice();
+    //   }
+    //   );
 
     // setTimeout(() => {
     //   this.editDidInvice();
@@ -858,7 +859,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   getCustomerInvoiceDetails(event: any) {
     this.billerID = event.target.value;
     console.log("billerID check", this.billerID);
-
+console.log("this.addDid_section1.value.companyName",this.addDid_section1.value.companyName)
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "did";
@@ -1020,7 +1021,7 @@ export class EditinvoiceDIDComponent implements OnInit {
 
 
         this.addDid_section1.patchValue({
-          'companyName': response.defaults_biller_id,
+          // 'companyName': response.defaults_biller_id,
         });
 
         //   this.companyNameVal = response.defaults_biller_id;
@@ -1496,6 +1497,7 @@ export class EditinvoiceDIDComponent implements OnInit {
       this.spinner.hide();
       console.log("response-load-pi", response)
       if (response != '') {
+        $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
         console.log("response.bill_fixed_details.length", response.bill_fixed_details.length);
         this.billsLogo_value = response.billing_pararent_details[0].bills_logo_id;
         this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
@@ -1513,9 +1515,9 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.did_bill_code_section15 = response.customer_billcode_arr;
         console.log(this.did_bill_code_section15);
        // alert(response.billing_pararent_details[0].did_bill_code)
-        $('#sub_total_1').val(response.fixed_subtotal.net_amt.toFixed(2));
-        $('#sub_total_2').val(response.usage_subtotal.net_amt.toFixed(2));
-        $('#sub_total_3').val(response.other_subtotal.net_amt.toFixed(2));
+        $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
+        $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
+        $('#sub_total_3').val(response.other_subtotal.toFixed(2));
 
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -2260,7 +2262,7 @@ export class EditinvoiceDIDComponent implements OnInit {
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
       console.log('price_fin' + price);
       $('#sub_total_1').val(price.toFixed(2));
-      $('#sub_discount_1').val(enablePriceFinal_1.toFixed(2));
+      $('#sub_discount_1').val(enablePriceFinal_1);
       $('#sub_discount_val_1').val(enablePriceFinal_1.toFixed(2));
       this.gross_total();
     }
