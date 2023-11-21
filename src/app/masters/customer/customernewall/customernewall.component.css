@@ -1,7 +1,7 @@
-#viewCustomerFormId{
+#viewCustomerFormId_CM{
   padding-right: 0px !important;
 }
-#viewCustomerFormId .modal-dialog{
+#viewCustomerFormId_CM .modal-dialog{
   max-width: 65%;
 }
  
@@ -41,27 +41,27 @@
   margin: 10px 15px !important;
   }
 
-#specialEditCustomerFormId .modal-body label{
+#specialEditCustomerFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
 
-#mconnectPartnerDetailsFormId .modal-dialog{
+#mconnectPartnerDetailsFormId_CM .modal-dialog{
   max-width: 65%;
 }
-#mconnectPartnerDetailsFormId .modal-body label{
+#mconnectPartnerDetailsFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
 
-#MrvoipPartnerDetailsFormId .modal-dialog{
+#MrvoipPartnerDetailsFormId_CM .modal-dialog{
   max-width: 65%;
 }
-#MrvoipPartnerDetailsFormId .modal-body label{
+#MrvoipPartnerDetailsFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
-#call4tellPartnerDetailsFormId .modal-body label{
+#call4tellPartnerDetailsFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
@@ -69,7 +69,7 @@
 .ckboxclass{
   margin-left: 10px;
 }
-#invoiceSharedCustomerFormId .modal-body label{
+#invoiceSharedCustomerFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
@@ -184,13 +184,13 @@
   border-color: rgb(14, 13, 13);
 } */
 
-#editCustomerFormId .modal-dialog{
+#editCustomerFormId_CM .modal-dialog{
     max-width: 80%;
 }
-#billCodeFormId .modal-dialog{
+#billCodeFormId_CM .modal-dialog{
   max-width: 60%;
 }
-#landscapeEmailFormId .modal-dialog{
+#landscapeEmailFormId_CM .modal-dialog{
   max-width: 60%;
  
 }

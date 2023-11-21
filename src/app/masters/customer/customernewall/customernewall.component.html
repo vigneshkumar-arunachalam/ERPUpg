@@ -262,7 +262,7 @@
                                     justify-content: space-between;">
                                       <ul>
                                         <li class="dropdown__item">
-                                          <a class="remove" title="View" data-toggle="modal" data-target="#viewCustomerFormId"
+                                          <a class="remove" title="View" data-toggle="modal" data-target="#viewCustomerFormId_CM"
                                             (click)="viewCustomer(list.customerId,i)">
           
                                             <img class="show" src="assets/img/icon2/eye-yellow.png">
@@ -271,7 +271,7 @@
                                           </a>
                                         </li>
                                         <li class="dropdown__item">
-                                          <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId"
+                                          <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId_CM"
                                             (click)="editCustomer(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/edit-blue.png">
                                             <img class="hide" src="assets/img/icon2/edit-black.png">
@@ -287,7 +287,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="view" title="Landscape Email" data-toggle="modal"
-                                            data-target="#landscapeEmailFormId" (click)="landscapeEmailEdit(list.customerId,i)">
+                                            data-target="#landscapeEmailFormId_CM" (click)="landscapeEmailEdit(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/gmail-blue.png">
                                             <img class="hide" src="assets/img/icon2/gmail-black.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Email-Landscape</strong></span>
@@ -302,7 +302,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="remove" title="Special Edit" data-toggle="modal"
-                                            data-target="#specialEditCustomerFormId"
+                                            data-target="#specialEditCustomerFormId_CM"
                                             (click)="specialEditCustomer(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/specialEdit-blue.png">
                                             <img class="hide" src="assets/img/icon2/specialEdit-black.png">
@@ -311,7 +311,7 @@
                                         </li>
                                     
                                         <li class="dropdown__item">
-                                          <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId"
+                                          <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId_CM"
                                             (click)="billCodeAttachmentEdit(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/digital-blue.png">
                                             <img class="hide" src="assets/img/icon2/digital-black.png">
@@ -356,7 +356,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="view" title="Share Customer Permission" data-toggle="modal"
-                                            data-target="#SharedCustomerPermissionFormId"
+                                            data-target="#SharedCustomerPermissionFormId_CM"
                                             (click)="shareCustomerPermission_edit(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/customer-service.png">
                                             <img class="hide" src="assets/img/icon2/customer-service.png">
@@ -365,7 +365,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="remove" title="Assign Account Manager" data-toggle="modal"
-                                            data-target="#AssignAccountManager"
+                                            data-target="#AssignAccountManager_CM"
                                             (click)="AssignAccountManager_edit(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/accountant.png">
                                             <img class="hide" src="assets/img/icon2/accountant.png">
@@ -374,7 +374,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="view" title="Invoice Share" data-toggle="modal"
-                                            data-target="#invoiceSharedCustomerFormId"
+                                            data-target="#invoiceSharedCustomerFormId_CM"
                                             (click)="invoiceShare_edit(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/share-square-blue.png">
                                             <img class="hide" src="assets/img/icon2/share-square-black.png">
@@ -384,7 +384,7 @@
           
                                         <li class="dropdown__item">
                                           <a class="remove" title="Google Authentication" data-toggle="modal"
-                                            data-target="#GoogleAuthentication" (click)="GoogleAuthenticationId(list.customerId,i)">
+                                            data-target="#GoogleAuthentication_CM" (click)="GoogleAuthenticationId(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/google.png">
                                             <img class="hide" src="assets/img/icon2/google.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Google Authentication</strong></span>
@@ -414,7 +414,7 @@
           
                                         <li class="dropdown__item">
                                           <a class="view" title="File Attachment" data-toggle="modal"
-                                            data-target="#fileAttachmentFormId" (click)="fileAttachmentEdit(list.customerId,i)">
+                                            data-target="#fileAttachmentFormId_CM" (click)="fileAttachmentEdit(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/fileAttach-blue.png">
                                             <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>File Attachment</strong></span>
@@ -432,7 +432,7 @@
           
                                         <li class="dropdown__item" *ngIf="list.nx32_state==1">
                                           <a class="view" title="NX32 Permission Status" data-toggle="modal"
-                                            data-target="#customer_NX32PermissionFormId"
+                                            data-target="#customer_NX32PermissionFormId_CM"
                                             (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
                                             <img class="show" src="assets/img/icon2/permis-blue.png">
                                             <img class="hide" src="assets/img/icon2/permis-black.png">
@@ -441,7 +441,7 @@
                                         </li>
                                         <li class="dropdown__item" *ngIf="list.nx32_state==0">
                                           <a class="view" title="NX32 Permission Status" data-toggle="modal"
-                                            data-target="#customer_NX32PermissionFormId"
+                                            data-target="#customer_NX32PermissionFormId_CM"
                                             (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
                                             <img class="show" src="assets/img/icon2/permis-red.png">
                                             <img class="hide" src="assets/img/icon2/userLock-black.png">
@@ -452,7 +452,7 @@
                                         
                                         <li class="dropdown__item">
                                           <a class="view" title="C4T Partner Details" data-toggle="modal"
-                                            data-target="#call4tellPartnerDetailsFormId"
+                                            data-target="#call4tellPartnerDetailsFormId_CM"
                                             (click)="call4tel_address_getList(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/call4tell-blue.png">
                                             <img class="hide" src="assets/img/icon2/call4tell-black.png">
@@ -461,7 +461,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="remove" title="MrVoip" data-toggle="modal"
-                                            data-target="#MrvoipPartnerDetailsFormId"
+                                            data-target="#MrvoipPartnerDetailsFormId_CM"
                                             (click)="mrvoip_address_getList(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/mrVoip-blue.png">
                                             <img class="hide" src="assets/img/icon2/mrVoip-black.png">
@@ -470,7 +470,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="view" title="MConnect" data-toggle="modal"
-                                            data-target="#mconnectPartnerDetailsFormId"
+                                            data-target="#mconnectPartnerDetailsFormId_CM"
                                             (click)="mconnect_address_getList(list.customerId,i)">
                                             <img class="show" src="assets/img/icon2/bird-blue.png">
                                             <img class="hide" src="assets/img/icon2/bird-black.png">
@@ -577,7 +577,7 @@
 </div>
 
 <!-- -----------------------Modal-View Customer begins-------------------------------- -->
-<div class="modal fade" id="viewCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="viewCustomerFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -1540,7 +1540,7 @@
 
 <!------------------------ Modal-Add New Customer-ends --------------------------------->
 <!--------------------- Modal- edit -customer starts------------------------------------>
-<div class="modal fade" id="editCustomerFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="editCustomerFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -1583,7 +1583,7 @@
                 <div class="col-lg-12">
                   <select id="biller_name" class="form-control" formControlName="edit_defaultBillerName">
                     <option value="0">Select Default Biller</option>
-                    <option *ngFor="let billname of billList" value="{{billname.billerId}}">
+                    <option *ngFor="let billname of geting_biller" value="{{billname.billerId}}">
                       {{billname.billerName}}
                     </option>
                   </select>
@@ -2663,7 +2663,7 @@
 <!-----------------vignesh --special edit/customer master starts--------->
 
 
-<div class="modal fade" id="specialEditCustomerFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="specialEditCustomerFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -2808,7 +2808,7 @@
 </div>
 <!------------vignesh --special edit/customer master ends-------------------------------------------->
 <!-- -------------------Modal-mconnect Partner details begins----------------------------------- -->
-<div class="modal fade" id="mconnectPartnerDetailsFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="mconnectPartnerDetailsFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -2929,7 +2929,7 @@
 <!-------------------------- Modal-mconnect Partner Details-ends-------------------------------------- -->
 
 <!-- -----------------------Modal-MrVoip Partner Details-begins---------------------------------------- -->
-<div class="modal fade" id="MrvoipPartnerDetailsFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="MrvoipPartnerDetailsFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3076,7 +3076,7 @@
 
 <!-------------------------- Modal-MrVoip Partner Details-ends-------------------------------------- -->
 <!-- Modal-Call4tel Partner Details-begins -->
-<div class="modal fade" id="call4tellPartnerDetailsFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="call4tellPartnerDetailsFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3223,7 +3223,7 @@
 </div>
 <!-- Modal-Call4tel Partner Details-ends -->
 <!-- -----------------------Modal-invoice shared---------------begins---------------------------------------- -->
-<div class="modal fade" id="invoiceSharedCustomerFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="invoiceSharedCustomerFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3312,7 +3312,7 @@
 <!-------------------------- ------Modal-invoice shared-- -ends-------------------------------------- -->
 
 <!-- -----------------------Modal-customer share permission begins-------------------------------- -->
-<div class="modal fade" id="SharedCustomerPermissionFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="SharedCustomerPermissionFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3379,7 +3379,7 @@
 
 
 <!-- -----------------------Modal-Customer NX32 Share permission begins-------------------------------- -->
-<div class="modal fade" id="customer_NX32PermissionFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="customer_NX32PermissionFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -3421,7 +3421,7 @@
 
 
 <!-- -----------------------Modal-Customer File Attachment begins-------------------------------- -->
-<div class="modal fade" id="fileAttachmentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="fileAttachmentFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -3490,7 +3490,7 @@
 <!-------------------------- ------Modal-Customer File Attachment ends-------------------------------------- -->
 
 <!-- -----------------------Modal-Customer Bill Code-Display begins-------------------------------- -->
-<div class="modal fade" id="billCodeFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="billCodeFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3810,7 +3810,7 @@
 <!-------------------------- ------Modal-Customer Bill Code Display ends-------------------------------------- -->
 
 <!-- --------------------------Modal-Quick Email begins------------------------------------------ -->
-<div class="modal fade" id="landscapeEmailFormId" tabindex="-1" role="dialog" aria-labelledby="landscapeEmailTitle"
+<div class="modal fade" id="landscapeEmailFormId_CM" tabindex="-1" role="dialog" aria-labelledby="landscapeEmailTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -4011,7 +4011,7 @@
 <!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Assign Account Manager in customer Contract------------------>
-<div class="modal fade" id="AssignAccountManager" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="AssignAccountManager_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -4106,7 +4106,7 @@
 <!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Google Authentication in customer Contract------------------>
-<div class="modal fade" id="GoogleAuthentication" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="GoogleAuthentication_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">

@@ -904,6 +904,7 @@ formattedDate: string;
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
     console.log("search data in dropdown", data)
@@ -923,7 +924,7 @@ formattedDate: string;
 
       console.log("customer_address_details---response", response)
       if (response.status == true) {
-
+        this.spinner.hide();
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
 
@@ -996,6 +997,7 @@ formattedDate: string;
         });
       }
       else {
+        this.spinner.hide();
         this.addDid_section1.patchValue({
           'address_1': '',
           'address_2': '',
@@ -1510,7 +1512,7 @@ formattedDate: string;
       if (enablePerFinal_1 != '') {
         for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
-          fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
+          fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
           console.log("dummy inside", fixedCharge_TotalAmount);
         }
         console.log("dummy outside", fixedCharge_TotalAmount)
@@ -1518,11 +1520,11 @@ formattedDate: string;
 
         price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100).toFixed(2);
         console.log(price);
-        $('#sub_discount_1').val(price);
+        $('#sub_discount_1').val(price.toFixed(2));
         $('#sub_discount_val_1').val(enablePerFinal_1);
         price = fixedCharge_TotalAmount - price;
         console.log("sub_total", price);
-        $('#sub_total_1').val(price);
+        $('#sub_total_1').val(price.toFixed(2));
         this.gross_total();
 
       } else {
@@ -1537,18 +1539,18 @@ formattedDate: string;
     else {
       for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
-        fixedCharge_TotalAmount = Number(fixedCharge_TotalAmount) + Number($('#amt_1_' + a).val());
+        fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
         console.log("dummy inside", fixedCharge_TotalAmount);
       }
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
       console.log('price_fin' + price);
-      $('#sub_total_1').val(price);
+      $('#sub_total_1').val(price.toFixed(2));
       $('#sub_discount_1').val(enablePriceFinal_1);
       $('#sub_discount_val_1').val(enablePriceFinal_1);
       this.gross_total();
     }
 
-    $('#sub_total_1').val(price)
+    $('#sub_total_1').val(price.toFixed(2))
 
     this.getTaxCals();
     this.extraFees();
@@ -1601,7 +1603,7 @@ formattedDate: string;
         for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
 
-          usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val());
+          usageCharge_TotalAmount +=parseFloat($('#amt2_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1611,11 +1613,11 @@ formattedDate: string;
 
         usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100).toFixed(2);
         console.log(usage_price);
-        $('#sub_discount_2').val(usage_price);
+        $('#sub_discount_2').val(usage_price.toFixed(2));
         $('#sub_discount_val_2').val(enablePerFinal_2);
         usage_price = usageCharge_TotalAmount - usage_price;
         console.log("sub_total", usage_price);
-        $('#sub_total_2').val(usage_price);
+        $('#sub_total_2').val(usage_price.toFixed(2));
         this.gross_total();
 
       } else {
@@ -1631,20 +1633,20 @@ formattedDate: string;
       for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
 
-        usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val());
+        usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       usage_price = usageCharge_TotalAmount - enablePriceFinal_2;
       console.log('usage_price_fin' + usage_price);
-      $('#sub_total_2').val(usage_price);
+      $('#sub_total_2').val(usage_price.toFixed(2));
       $('#sub_discount_2').val(enablePriceFinal_2);
       $('#sub_discount_val_2').val(enablePriceFinal_2);
       this.gross_total();
     }
 
-    $('#sub_total_2').val(usage_price)
+    $('#sub_total_2').val(usage_price.toFixed(2))
 
 
     this.getTaxCals();
@@ -1698,7 +1700,7 @@ formattedDate: string;
         for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-          usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt3_' + a).val());
+          usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1708,11 +1710,11 @@ formattedDate: string;
 
         other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100).toFixed(2);
         console.log(other_price);
-        $('#sub_discount_3').val(other_price);
+        $('#sub_discount_3').val(other_price.toFixed(2));
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
         console.log("sub_total", other_price);
-        $('#sub_total_3').val(other_price);
+        $('#sub_total_3').val(other_price.toFixed(2));
         this.gross_total();
 
       } else {
@@ -1728,20 +1730,20 @@ formattedDate: string;
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-        usageCharge_TotalAmount = Number(usageCharge_TotalAmount) + Number($('#amt3_' + a).val());
+        usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       other_price = usageCharge_TotalAmount - enablePriceFinal_3;
       console.log('other_price_fin' + other_price);
-      $('#sub_total_3').val(other_price);
+      $('#sub_total_3').val(other_price.toFixed(2));
       $('#sub_discount_3').val(enablePriceFinal_3);
       $('#sub_discount_val_3').val(enablePriceFinal_3);
       this.gross_total();
     }
 
-    $('#sub_total_3').val(other_price)
+    $('#sub_total_3').val(other_price.toFixed(2))
 
 
     this.getTaxCals();

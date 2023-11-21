@@ -98,6 +98,7 @@ export class AddquotationnewComponent implements OnInit {
   quotationAddSignature_filename: any;
   // singapore date & time
   formattedDate: string;
+  customerNameFlag: boolean;
 
 
   constructor(private serverService: ServerService, private fb: FormBuilder, 
@@ -767,6 +768,14 @@ export class AddquotationnewComponent implements OnInit {
         return false;
 
       }
+     
+      if(this.customerNameFlag==false){
+        iziToast.warning({
+          message: "Customer Name not registered with this Biller",
+          position: 'topRight'
+        });
+        return false;
+      }
 
       api_saveEnquiry_req.customer_id = this.addQuotationInvoice_section1.value.customerName;
       api_saveEnquiry_req.customerAddress1 = this.addQuotationInvoice_section1.value.cust_address1;
@@ -975,7 +984,7 @@ export class AddquotationnewComponent implements OnInit {
     });
   }
   searchCustomerData(data: any) {
-
+  
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -988,12 +997,24 @@ export class AddquotationnewComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if(response.status == false && data.length>5 ){
+        this.customerNameFlag=false;
+        iziToast.error({
+          message: "Customer Name not registered with this Biller",
+          position: 'topRight'
+        });
+        return false;
+      }
       console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
+        this.customerNameFlag=true;
 
+      }else{
+        
       }
+      
 
     });
 

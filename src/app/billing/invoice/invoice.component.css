@@ -164,7 +164,7 @@ tr:nth-child(odd) {background: #FFF}
   width: 90% !important;
 }
 
-#InvoiceRevenueFormId .modal-dialog{
+#InvoiceRevenueFormId_inv .modal-dialog{
   max-width: 70% !important;
 }
 
@@ -336,18 +336,18 @@ border-radius: 50%;
   line-height: 35px;
 }
 
-#processPaymentFormId .modal-dialog{
+#processPaymentId_inv .modal-dialog{
   max-width: 60% !important;
 }
-#processPaymentFormId label{
+#processPaymentId_inv label{
   color: rgb(27, 1, 121)!important;
   font-weight: 500!important;
 }
-#emailFormId .modal-dialog {
+#emailFormId_inv .modal-dialog {
   max-width: 65%;
 }
 
-#emailFormId label {
+#emailFormId_inv label {
   font-weight: 500;
 }
 .checkbox {
@@ -377,7 +377,7 @@ border-radius: 50%;
   background: #555; 
 }
 
-/* #emailFormId span{width: 138px;    display: inline-block;} */
+/* #emailFormId_inv span{width: 138px;    display: inline-block;} */
 label.col-lg-2.col-form-label{text-align: right;}
 
 
@@ -436,37 +436,37 @@ label.col-lg-2.col-form-label{text-align: right;}
 
 
 
-#setActualCostId .modal-dialog {
+#setActualCostId_inv .modal-dialog {
   max-width: 95%;
 }
 
-#setActualCostId tr th {
+#setActualCostId_inv tr th {
   border-right: 1px solid #ddd;
 }
 
-#LicenseDetailsFormId .modal-dialog{
+#LicenseDetailsFormId_inv .modal-dialog{
   max-width: 95%;
 }
 #searchInvoiceFormId .modal-dialog{
   max-width: 95%;
 }
 
-#setActualCostId .userDatatable table thead th:first-child{
+#setActualCostId_inv .userDatatable table thead th:first-child{
   width: 50px;
 }
-#setActualCostId .userDatatable table thead th:nth-child(2){
+#setActualCostId_inv .userDatatable table thead th:nth-child(2){
   width: 220px;
 }
-#setActualCostId .userDatatable table tr td:nth-child(2) span{
+#setActualCostId_inv .userDatatable table tr td:nth-child(2) span{
   width: 220px;
 }
-#setActualCostId .userDatatable table tr td, #setActualCostId .userDatatable table tr th{
+#setActualCostId_inv .userDatatable table tr td, #setActualCostId_inv .userDatatable table tr th{
   text-align: center;
 }
-#setActualCostId .userDatatable table tr td:nth-child(2) span{
+#setActualCostId_inv .userDatatable table tr td:nth-child(2) span{
   white-space: normal!important;
 }
-#setActualCostId .userDatatable table tr td:first-child span{
+#setActualCostId_inv .userDatatable table tr td:first-child span{
   width: 50px;
 }
 .buttonClass{border:none}
@@ -482,30 +482,30 @@ label.col-lg-2.col-form-label{text-align: right;}
 /* td {
   border-bottom: 1px solid #a8c91a!important;
 } */
-#InvoiceRevenueFormId tbody:nth-child(odd) {
+#InvoiceRevenueFormId_inv tbody:nth-child(odd) {
   background: rgb(239, 241, 238);
 }
-#InvoiceRevenueFormId tbody:nth-child(even) {
+#InvoiceRevenueFormId_inv tbody:nth-child(even) {
   background: rgb(255, 255, 228);
 }
-#InvoiceRevenueFormId tbody  tr:nth-child(odd) {
+#InvoiceRevenueFormId_inv tbody  tr:nth-child(odd) {
    background: transparent    
 }
-#InvoiceRevenueFormId .userDatatable table td:first-child span{
+#InvoiceRevenueFormId_inv .userDatatable table td:first-child span{
   display: inline-block;
   width: 60px;
 }
-#InvoiceRevenueFormId input  {
+#InvoiceRevenueFormId_inv input  {
   border-color: #ddd;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px 10px;
 }
-#InvoiceRevenueFormId .form-control {
+#InvoiceRevenueFormId_inv .form-control {
   border: 1px solid #e1e1e1;
   background: #fff;
 }
-#InvoiceRevenueFormId input:read-only {
+#InvoiceRevenueFormId_inv input:read-only {
   background-color: #ffefef;
   cursor: not-allowed;
 }

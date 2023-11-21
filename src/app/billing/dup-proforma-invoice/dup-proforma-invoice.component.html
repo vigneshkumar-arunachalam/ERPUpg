@@ -192,7 +192,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="hover3" title="show permission" data-toggle="modal"
-                                            data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId,i)">
+                                            data-target="#dup_PI_showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/share-square-blue.png">
                                             <img class="hide" src="assets/img/icon2/share-square-black.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Show Permission</strong></span>
@@ -200,7 +200,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="hover4" title="Payment Process" data-toggle="modal"
-                                            data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId,i)">
+                                            data-target="#processPaymentFormId_DupPI" (click)="processPaymentEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/payment-method1.png">
                                             <img class="hide" src="assets/img/icon2/payment-method.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
@@ -333,7 +333,7 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="processPaymentFormId_DupPI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -410,8 +410,7 @@
             <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment">
               <label class="mt-4">Payment Details</label>
               <!-- <input type="text" class="form-control" formControlName="paymentDetails" [readonly]="isReadOnly"> -->
-              {{pay.paidAmount}}&nbsp;&nbsp; {{pay.payment_type_name}}&nbsp;&nbsp; from &nbsp;&nbsp;
-              {{pay.firstName}}&nbsp;&nbsp; on &nbsp;&nbsp; {{pay.processDate}}
+              {{pay.paidAmount}}&nbsp;&nbsp; {{pay.payment_type_name}}&nbsp; {{pay.notes}}&nbsp;&nbsp; 
             </div>
 
           </div>
@@ -808,7 +807,7 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
-<div class="modal fade" id="showPerissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="dup_PI_showPerissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">

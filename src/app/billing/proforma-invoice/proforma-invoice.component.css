@@ -216,10 +216,10 @@ border-radius: 50%;
   color: rgba(0, 0, 0, 0.589) !important;
   font-weight: 400!important;
 }
-#processPaymentFormId .modal-dialog{
+#processPaymentFormId_PI .modal-dialog{
   max-width: 60% !important;
 }
-#processPaymentFormId label{
+#processPaymentFormId_PI label{
   color: rgb(27, 1, 121)!important;
   font-weight: 500!important;
 }
@@ -236,11 +236,11 @@ border-radius: 50%;
 #searchPIFormId .modal-dialog {
   max-width: 55%;
 }
-#emailFormId .modal-dialog {
+#emailFormId_ProfIn .modal-dialog {
   max-width: 65%;
 }
 
-#emailFormId label {
+#emailFormId_ProfIn label {
   font-weight: 500;
 }
 .card.quotation .card-header {
@@ -285,7 +285,7 @@ border-radius: 50%;
   background: #555; 
 }
 
-/* #emailFormId span{width: 138px;    display: inline-block;} */
+/* #emailFormId_ProfIn span{width: 138px;    display: inline-block;} */
 label.col-lg-2.col-form-label{text-align: right;}
 
 

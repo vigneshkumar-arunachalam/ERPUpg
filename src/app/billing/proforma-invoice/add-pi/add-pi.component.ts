@@ -770,6 +770,9 @@ export class AddPIComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
+
+
         this.addPI_section1.patchValue({
           'address_1': '',
           'address_2': '',

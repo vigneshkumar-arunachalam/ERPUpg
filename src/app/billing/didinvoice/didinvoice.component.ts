@@ -772,7 +772,7 @@ CBV_UsageChargeDt: any;
 
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Invoice Type Details not displayed. Please try again",
           position: 'topRight'
@@ -810,10 +810,10 @@ CBV_UsageChargeDt: any;
           position: 'topRight'
 
         });
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_DidInv').modal("hide");
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not Updated. Please try again",
           position: 'topRight'
@@ -952,7 +952,7 @@ CBV_UsageChargeDt: any;
 
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not displayed. Please try again",
           position: 'topRight'
@@ -991,10 +991,10 @@ CBV_UsageChargeDt: any;
           position: 'topRight'
 
         });
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_DidInv').modal("hide");
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not Updated. Please try again",
           position: 'topRight'
@@ -1081,10 +1081,10 @@ CBV_UsageChargeDt: any;
           position: 'topRight'
 
         });
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_DidInv').modal("hide");
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_DidInv').modal("hide");
         iziToast.warning({
           message: " Share Permission not Updated. Please try again",
           position: 'topRight'
@@ -1236,7 +1236,7 @@ CBV_UsageChargeDt: any;
         this.getInvoice({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1393,7 +1393,7 @@ CBV_UsageChargeDt: any;
           position: 'topRight'
         });
 
-        $("#emailFormId").modal("hide");
+        $("#emailFormId_DidInv").modal("hide");
         this.getInvoice({});
 
       }
@@ -1401,7 +1401,7 @@ CBV_UsageChargeDt: any;
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
-        $("#emailFormId").modal("hide");
+        $("#emailFormId_DidInv").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.getInvoice({});
@@ -1521,7 +1521,7 @@ CBV_UsageChargeDt: any;
         this.getInvoice({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1572,13 +1572,13 @@ CBV_UsageChargeDt: any;
     }
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
-    $("#processPaymentFormId").attr("disabled", true);
+    $("#processPaymentFormId_DidInv").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#processPaymentFormId").removeAttr("disabled");
+      $("#processPaymentFormId_DidInv").removeAttr("disabled");
       if (response.status == true) {
 
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DidInv').modal("hide");
         iziToast.success({
           message: "Payment Process Updated Successfully",
           position: 'topRight'
@@ -1588,7 +1588,7 @@ CBV_UsageChargeDt: any;
 
       } else {
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DidInv').modal("hide");
         iziToast.warning({
           message: "Payment Process not displayed. Please try again",
           position: 'topRight'
@@ -1668,7 +1668,7 @@ CBV_UsageChargeDt: any;
   }
 
   DeliveryOrderUpdate() {
-    $('#DeliveryOrderFormId').modal('hide');
+    $('#DeliveryOrderFormId_DidInv').modal('hide');
     Swal.fire({
       title: 'Are you sure to Change?',
       text: "You won't be able to revert this!",
@@ -1701,7 +1701,7 @@ CBV_UsageChargeDt: any;
               message: "Delivery Order Updated Successfully",
               position: 'topRight'
             });
-            $('#DeliveryOrderFormId').modal("hide");
+            $('#DeliveryOrderFormId_DidInv').modal("hide");
 
 
             this.getInvoice({});
@@ -1711,7 +1711,7 @@ CBV_UsageChargeDt: any;
               message: "Delivery Order not Updated. Please try again",
               position: 'topRight'
             });
-            $('#DeliveryOrderFormId').modal("hide");
+            $('#DeliveryOrderFormId_DidInv').modal("hide");
             this.getInvoice({});
           }
         }),
@@ -1792,7 +1792,7 @@ CBV_UsageChargeDt: any;
           message: "Invoice Send to post details Successful. ",
           position: 'topRight'
         });
-        $('#InvoiceSendingMethodFormId').modal('hide');
+        $('#InvoiceSendingMethodFormId_DidInv').modal('hide');
 
       } else {
 
@@ -1801,7 +1801,7 @@ CBV_UsageChargeDt: any;
           message: "Invoice Send to post details not Updated. Please try again",
           position: 'topRight'
         });
-        $('#InvoiceSendingMethodFormId').modal('hide');
+        $('#InvoiceSendingMethodFormId_DidInv').modal('hide');
       }
     }),
       (error: any) => {
@@ -1838,7 +1838,7 @@ CBV_UsageChargeDt: any;
 
       }
       else {
-        $("#InvoiceSendingMethodFormId").modal("hide");
+        $("#InvoiceSendingMethodFormId_DidInv").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1918,7 +1918,7 @@ CBV_UsageChargeDt: any;
           position: 'topRight'
         });
 
-        $('#sharPerissionFormId').modal('hide');
+        $('#sharPerissionFormId_DidInv').modal('hide');
         this.typeConvertionString_invoiceShowPermission = [];
       } else {
         iziToast.warning({
@@ -2021,7 +2021,7 @@ CBV_UsageChargeDt: any;
 
         })
 
-        // $('#RecurringFormId').modal("hide");
+        // $('#RecurringFormId_DidInv').modal("hide");
         this.getInvoice({});
 
       } else {
@@ -2031,7 +2031,7 @@ CBV_UsageChargeDt: any;
           message: "Recurring Details not displayed. Please try again",
           position: 'topRight'
         });
-        $('#RecurringFormId').modal("hide");
+        $('#RecurringFormId_DidInv').modal("hide");
       }
     }),
       (error: any) => {
@@ -2073,7 +2073,7 @@ CBV_UsageChargeDt: any;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $('#RecurringFormId').modal('hide');
+      $('#RecurringFormId_DidInv').modal('hide');
 
       if (response.status == true) {
         iziToast.success({
@@ -2171,7 +2171,7 @@ CBV_UsageChargeDt: any;
     $('#file').val('');
 
     this.myFiles = [];
-    $("#fileAttachmentFormId").modal("show");
+    $("#fileAttachmentFormId_DidInv").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttach_quotationID = ID;
     let api_req: any = new Object();
@@ -2249,7 +2249,7 @@ CBV_UsageChargeDt: any;
             self.getInvoice({});
            // console.log(result);
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_DidInv").modal("hide");
             this.edit_array_file = [];
 
             iziToast.success({
@@ -2259,7 +2259,7 @@ CBV_UsageChargeDt: any;
           }
           else {
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_DidInv").modal("hide");
 
             iziToast.warning({
               message: "File Attachment Update Failed",
@@ -2275,7 +2275,7 @@ CBV_UsageChargeDt: any;
             position: 'topRight'
           });
           Swal.close();
-          $("#fileAttachmentFormId").modal("hide");
+          $("#fileAttachmentFormId_DidInv").modal("hide");
         }
 
       })
@@ -2326,7 +2326,7 @@ CBV_UsageChargeDt: any;
               position: 'topRight'
             });
 
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_DidInv").modal("hide");
 
           } else {
             iziToast.warning({
@@ -2640,7 +2640,7 @@ CBV_UsageChargeDt: any;
           message: "Reseller Commission Details updated Successful",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#withoutFormArrayResellerCommissionFormId_DidInv').modal('hide');
 
 
       } else {
@@ -2650,7 +2650,7 @@ CBV_UsageChargeDt: any;
           message: "No Match. Please try again",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#withoutFormArrayResellerCommissionFormId_DidInv').modal('hide');
       }
     }),
       (error: any) => {
@@ -2659,7 +2659,7 @@ CBV_UsageChargeDt: any;
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#withoutFormArrayResellerCommissionFormId_DidInv').modal('hide');
         console.log("final error", error);
       };
 
@@ -2722,7 +2722,7 @@ CBV_UsageChargeDt: any;
   invoicetoQuotationEdit(id: any,i:any) {
      $("#ActionId" + i).modal("hide");
     this.billId_InvoicetoQuotation = id;
-    $("#InvoicetoQuotationFormId").modal("show");
+    $("#InvoicetoQuotationFormId_DidInv").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
@@ -2736,9 +2736,9 @@ CBV_UsageChargeDt: any;
     add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
     api_req.element_data = add_newQuotation_req;
-    $("#InvoicetoQuotationFormId").attr("disabled", true);
+    $("#InvoicetoQuotationFormId_DidInv").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#InvoicetoQuotationFormId").removeAttr("disabled");
+      $("#InvoicetoQuotationFormId_DidInv").removeAttr("disabled");
       // console.log(response);
 
       // console.log("pop up for add quotation", response);
@@ -2748,7 +2748,7 @@ CBV_UsageChargeDt: any;
         this.templateNameList = response.template_name_arr;
         // console.log("EnquiryFormList", this.enquiryFromList)
 
-        // $('#InvoicetoQuotationFormId').modal('hide');
+        // $('#InvoicetoQuotationFormId_DidInv').modal('hide');
         //this.contactsList({});
 
       }
@@ -2781,7 +2781,7 @@ CBV_UsageChargeDt: any;
           message: "Invoice to Quotation Conversion Successful",
           position: 'topRight'
         });
-        $('#InvoicetoQuotationFormId').modal('hide');
+        $('#InvoicetoQuotationFormId_DidInv').modal('hide');
 
 
       } else {

@@ -155,7 +155,7 @@
                                           </a>
                                         </li>
                                         <li class="dropdown__item" *ngIf=" (this.Permission_Delete==1)">
-                                          <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
+                                          <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice_ProfIn"
                                             (click)="deleteProformaInvoice(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/delete-blue.png">
                                             <img class="hide" src="assets/img/icon2/delete-black.png">
@@ -183,7 +183,7 @@
                                       </ul>
                                       <ul>
                                         <li class="dropdown__item">
-                                          <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId"
+                                          <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId_ProfIn"
                                             (click)="pdf(list.billId,list.did_invoice_state,i)">
                                             <img class="show" src="assets/img/icon2/pdf-blue.png">
                                             <img class="hide" src="assets/img/icon2/pdf-black.png">
@@ -192,7 +192,7 @@
                                         </li>
                                         <li class="dropdown__item" *ngIf=" (this.Permission_share==1)">
                                           <a class="hover3" title="show permission" data-toggle="modal"
-                                            data-target="#showPerissionFormId" (click)="invoiceShowPersonEdit(list.billId,i)">
+                                            data-target="#showPerissionFormId_ProfIn" (click)="invoiceShowPersonEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/share-square-blue.png">
                                             <img class="hide" src="assets/img/icon2/share-square-black.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Show Permission</strong></span>
@@ -200,7 +200,7 @@
                                         </li>
                                         <li class="dropdown__item" *ngIf=" (this.Permission_payment==1)">
                                           <a class="hover4" title="Payment Process" data-toggle="modal"
-                                            data-target="#processPaymentFormId" (click)="processPaymentEdit(list.billId,i)">
+                                            data-target="#processPaymentFormId_PI" (click)="processPaymentEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/payment-method1.png">
                                             <img class="hide" src="assets/img/icon2/payment-method.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Payment Process</strong></span>
@@ -208,7 +208,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="hover3" title="set Invoice Type Name" data-toggle="modal"
-                                            data-target="#setInvoiceTypeNameFormId" (click)="setInvoiceTypeNameEdit(list.billId,i)">
+                                            data-target="#setInvoiceTypeNameFormId_ProfIn" (click)="setInvoiceTypeNameEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon/gift-card-b.png">
                                             <img class="hide" src="assets/img/icon/gift-card.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Set Invoice Type Name</strong></span>
@@ -219,7 +219,7 @@
                                       </ul>
                                       <ul>
                                         <li class="dropdown__item" *ngIf=" (this.Permission_Mail==1)">
-                                          <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId"
+                                          <a class="hover3" title="Email" data-toggle="modal" data-target="#emailFormId_ProfIn"
                                             (click)="getEmailDetails(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/gmail-blue.png">
                                             <img class="hide" src="assets/img/icon2/gmail-black.png">
@@ -239,7 +239,7 @@
                                         </li>
                                         <li class="dropdown__item">
                                           <a class="hover3" title="Set Terms & Condition" data-toggle="modal"
-                                            data-target="#settermsConditionFormId" (click)="setTermsConditionEdit(list.billId,i)">
+                                            data-target="#settermsConditionFormId_ProfIn" (click)="setTermsConditionEdit(list.billId,i)">
                                             <img class="show" src="assets/img/icon2/TermsConditions-blue.png">
                                             <img class="hide" src="assets/img/icon2/TermsConditions-black.png">
                                             <span><b style="padding: 0px 20px;">-</b><strong>Set Terms & Condition</strong></span>
@@ -333,9 +333,9 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<div class="modal fade" id="processPaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="processPaymentFormId_PI" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h2 class="col-12 modal-title text-center">Process Payment
@@ -410,8 +410,7 @@
             <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment">
               <label class="mt-4">Payment Details</label>
               <!-- <input type="text" class="form-control" formControlName="paymentDetails" [readonly]="isReadOnly"> -->
-              {{pay.paidAmount}}&nbsp;&nbsp; {{pay.payment_type_name}}&nbsp;&nbsp; from &nbsp;&nbsp;
-              {{pay.firstName}}&nbsp;&nbsp; on &nbsp;&nbsp; {{pay.processDate}}
+              {{pay.paidAmount}}&nbsp;&nbsp; {{pay.payment_type_name}}&nbsp; {{pay.notes}}&nbsp;&nbsp; 
             </div>
 
           </div>
@@ -532,7 +531,7 @@
 
 <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
-<div class="modal fade" id="emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="emailFormId_ProfIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -718,7 +717,7 @@
 
 <!---------------------- set Invoice Type Name pop up start  -------------------------->
 
-<div class="modal fade" id="setInvoiceTypeNameFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="setInvoiceTypeNameFormId_ProfIn" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -764,7 +763,7 @@
 
 <!------------------------ set Terms & Condition pop up start  ---------->
 
-<div class="modal fade" id="settermsConditionFormId" tabindex="-1" role="dialog"
+<div class="modal fade" id="settermsConditionFormId_ProfIn" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -808,7 +807,7 @@
 
 
 <!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
-<div class="modal fade" id="showPerissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="showPerissionFormId_ProfIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">

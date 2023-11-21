@@ -2874,7 +2874,7 @@ this.cmsDepartmentList1();
 
         })
         console.log(this.editCustomerForm.value);
-        $('#editCustomerFormId').modal('show');
+        $('#editCustomerFormId_CM').modal('show');
         //    this.customerslist({});
       } else {
         iziToast.warning({
@@ -3109,7 +3109,7 @@ this.cmsDepartmentList1();
           message: "Customer Updated successfully",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#editCustomerFormId_CM').modal('hide');
         this.customerslist({});
 
       } else {
@@ -3117,7 +3117,7 @@ this.cmsDepartmentList1();
           message: "Customer not updated. Please try again",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#editCustomerFormId_CM').modal('hide');
         this.customerslist({});
       }
     }),
@@ -3171,14 +3171,14 @@ this.cmsDepartmentList1();
           message: "Customer Updated successfully",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#editCustomerFormId_CM').modal('hide');
 
       } else {
         iziToast.warning({
           message: "Customer not updated. Please try again",
           position: 'topRight'
         });
-        $('#editCustomerFormId').modal('hide');
+        $('#editCustomerFormId_CM').modal('hide');
       }
     }),
       (error: any) => {
@@ -3229,7 +3229,7 @@ this.cmsDepartmentList1();
         } else {
           $('#status').prop('checked', false);
         }
-        $('#specialEditCustomerFormId').modal('show');
+        $('#specialEditCustomerFormId_CM').modal('show');
         this.customerslist({});
 
       } else {
@@ -3275,14 +3275,14 @@ this.cmsDepartmentList1();
     console.log(this.specialEditCustomerForm.value);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#specialEditCustomerFormId").modal("hide");
+      $("#specialEditCustomerFormId_CM").modal("hide");
       this.spinner.hide();
       console.log(response);
       var update_result = response;
       console.log("special update", update_result);
       if (response != '') {
         this.spinner.hide();
-        $("#specialEditCustomerFormId").modal("hide");
+        $("#specialEditCustomerFormId_CM").modal("hide");
         iziToast.success({
           message: "Special Update of Customer Updated successfully",
           position: 'topRight'
@@ -3290,7 +3290,7 @@ this.cmsDepartmentList1();
 
       } else {
         this.spinner.hide();
-        $("#specialEditCustomerFormId").modal("hide");
+        $("#specialEditCustomerFormId_CM").modal("hide");
         iziToast.warning({
           message: "Special Update of Customer not updated. Please try again",
           position: 'topRight'
@@ -3299,7 +3299,7 @@ this.cmsDepartmentList1();
     }),
       (error: any) => {
         this.spinner.hide();
-        $("#specialEditCustomerFormId").modal("hide");
+        $("#specialEditCustomerFormId_CM").modal("hide");
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -3361,7 +3361,7 @@ this.cmsDepartmentList1();
     $("#ActionId" + i).modal("hide");
 
     this.myFiles = [];
-    $("#fileAttachmentFormId").modal("show");
+    $("#fileAttachmentFormId_CM").modal("show");
     $("#file1").val('')
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttachCustomerID = ID;
@@ -3431,7 +3431,7 @@ this.cmsDepartmentList1();
               message: "File Attachment Deleted successfully",
               position: 'topRight'
             });
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_CM").modal("hide");
 
           } else {
             iziToast.warning({
@@ -3491,7 +3491,7 @@ this.cmsDepartmentList1();
             self.customerslist({});
             console.log(result);
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_CM").modal("hide");
 
             iziToast.success({
               message: "File Attachment Saved successfully",
@@ -3500,7 +3500,7 @@ this.cmsDepartmentList1();
           }
           else {
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_CM").modal("hide");
             iziToast.warning({
               message: "File Attachment not Saved",
               position: 'topRight'
@@ -3515,7 +3515,7 @@ this.cmsDepartmentList1();
             position: 'topRight'
           });
           Swal.close();
-          $("#fileAttachmentFormId").modal("hide");
+          $("#fileAttachmentFormId_CM").modal("hide");
         }
 
       })
@@ -3610,7 +3610,7 @@ this.cmsDepartmentList1();
           Swal.close();
           
           console.log(result);
-          $("#mconnectPartnerDetailsFormId").modal("hide")
+          $("#mconnectPartnerDetailsFormId_CM").modal("hide")
 
           iziToast.success({
             message: "mconnect details Saved successfully",
@@ -3621,7 +3621,7 @@ this.cmsDepartmentList1();
         }
         else {
           Swal.close();
-          $("#mconnectPartnerDetailsFormId").modal("hide")
+          $("#mconnectPartnerDetailsFormId_CM").modal("hide")
           iziToast.warning({
             message: "mconnect details not Saved",
             position: 'topRight'
@@ -3636,7 +3636,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
         Swal.close();
-        $("#mconnectPartnerDetailsFormId").modal("hide")
+        $("#mconnectPartnerDetailsFormId_CM").modal("hide")
       }
 
     })
@@ -3728,7 +3728,7 @@ this.cmsDepartmentList1();
           Swal.close();
          
           console.log(result);
-          $("#MrvoipPartnerDetailsFormId").modal("hide")
+          $("#MrvoipPartnerDetailsFormId_CM").modal("hide")
 
           iziToast.success({
             message: "MrVoip details Saved successfully",
@@ -3739,7 +3739,7 @@ this.cmsDepartmentList1();
         }
         else {
           Swal.close();
-          $("#MrvoipPartnerDetailsFormId").modal("hide")
+          $("#MrvoipPartnerDetailsFormId_CM").modal("hide")
           iziToast.warning({
             message: "MrVoip details not Saved",
             position: 'topRight'
@@ -3754,7 +3754,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
         Swal.close();
-        $("#MrvoipPartnerDetailsFormId").modal("hide")
+        $("#MrvoipPartnerDetailsFormId_CM").modal("hide")
       }
 
     })
@@ -3840,7 +3840,7 @@ this.cmsDepartmentList1();
           Swal.close();
          
           console.log(result);
-          $("#call4tellPartnerDetailsFormId").modal("hide")
+          $("#call4tellPartnerDetailsFormId_CM").modal("hide")
 
           iziToast.success({
             message: "call4tell details Saved successfully",
@@ -3850,7 +3850,7 @@ this.cmsDepartmentList1();
         }
         else {
           Swal.close();
-          $("#call4tellPartnerDetailsFormId").modal("hide")
+          $("#call4tellPartnerDetailsFormId_CM").modal("hide")
           iziToast.warning({
             message: "call4tell details not Saved",
             position: 'topRight'
@@ -3865,7 +3865,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
         Swal.close();
-        $("#call4tellPartnerDetailsFormId").modal("hide")
+        $("#call4tellPartnerDetailsFormId_CM").modal("hide")
       }
 
     })
@@ -4023,7 +4023,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
 
-        $('#invoiceSharedCustomerFormId').modal('hide');
+        $('#invoiceSharedCustomerFormId_CM').modal('hide');
         $("#sel_check").val('');
         this.typeConvertionString_invoice_Shared_Permission = [];
       } else {
@@ -4205,7 +4205,7 @@ this.cmsDepartmentList1();
           position: 'topRight'
         });
 
-        $('#SharedCustomerPermissionFormId').modal('hide');
+        $('#SharedCustomerPermissionFormId_CM').modal('hide');
         $("#sel_check").val('');
         this.CheckBox_DynamicArrayList_shareCustomerPermission = [];
       }
@@ -4469,7 +4469,7 @@ this.cmsDepartmentList1();
       this.checkbox_status_nx32Permission = response.status;
       console.log("customer nx32 permission response.status", response.status);
       if (response.status == true) {
-        $('#customer_NX32PermissionFormId').modal('hide');
+        $('#customer_NX32PermissionFormId_CM').modal('hide');
         this.customerslist({});
 
         iziToast.success({
@@ -4725,7 +4725,7 @@ this.cmsDepartmentList1();
           showConfirmButton: false,
           timer: 1200,
         });
-        $("#billCodeFormId").modal("hide");
+        $("#billCodeFormId_CM").modal("hide");
 
         this.customerslist({});
       }
@@ -4736,7 +4736,7 @@ this.cmsDepartmentList1();
           showConfirmButton: false,
           timer: 1200,
         });
-        $("#billCodeFormId").modal("hide");
+        $("#billCodeFormId_CM").modal("hide");
       }
 
     });
@@ -4886,7 +4886,7 @@ console.log("this.cmslistadd",this.cmslistadd);
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
-        $("#AssignAccountManager").modal("hide");
+        $("#AssignAccountManager_CM").modal("hide");
         Swal.close();
         iziToast.success({
           message: "Account Manager Updated Successfully",
@@ -5064,7 +5064,7 @@ console.log("this.cmslistadd",this.cmslistadd);
         $('#subjLandscape').val('');
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
-        $("#landscapeEmailFormId").modal("hide");
+        $("#landscapeEmailFormId_CM").modal("hide");
         Swal.close();
         iziToast.success({
           message: "Email Notification Sent Successfully",
@@ -5079,7 +5079,7 @@ console.log("this.cmslistadd",this.cmslistadd);
         $('#subjLandscape').val('');
         $('#templateLandscape').val('');
         tinymce.activeEditor.setContent("");
-        $("#landscapeEmailFormId").modal("hide");
+        $("#landscapeEmailFormId_CM").modal("hide");
         Swal.close();
         iziToast.success({
           message: "Email Notification not Sent !!!!",
@@ -5107,7 +5107,7 @@ console.log("this.cmslistadd",this.cmslistadd);
   GoogleAuthenticationId(id: any,i:any) {
     $("#ActionId" + i).modal("hide");
     this.GoogleAuthenticationForm.reset();
-    $('#GoogleAuthentication').modal("show");
+    $('#GoogleAuthentication_CM').modal("show");
 
     this.googleAuthent_CustomerId = id;
 
@@ -5156,7 +5156,7 @@ this.spinner.show();
 
       } else {
 
-        $('#GoogleAuthentication').modal("hide");
+        $('#GoogleAuthentication_CM').modal("hide");
         iziToast.warning({
           message: "Invalid Google Authentication. Please try again",
           position: 'topRight'

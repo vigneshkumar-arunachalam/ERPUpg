@@ -1286,7 +1286,7 @@ export class EditInvoiceComponent implements OnInit {
 
 
   Customer_selectDropdownData(customerId: any) {
-
+  this.spinner.show();
     this.customerName_Data = customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1303,7 +1303,7 @@ export class EditInvoiceComponent implements OnInit {
       console.log("customer_address_details---response", response)
       if (response.status == true) {
 
-
+        this.spinner.hide();
 
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
@@ -1388,6 +1388,7 @@ export class EditInvoiceComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
         this.addPI_section1.patchValue({
           'address_1': '',
           'address_2': '',

@@ -343,7 +343,7 @@ export class InvoiceComponent implements OnInit {
       'customer': new FormControl(null),
       'owing': new FormControl(null),
       'amount': new FormControl(null),
-      'date': new FormControl(null),
+      'date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'paymenttype': new FormControl(null),
       'note': new FormControl(null),
       'paymentDetails': new FormControl(null),
@@ -1322,7 +1322,7 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $('#sharPerissionFormId').modal('hide');
+        $('#sharPerissionFormId_inv').modal('hide');
         this.typeConvertionString_invoiceShowPermission = [];
       } else {
         iziToast.warning({
@@ -1650,7 +1650,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice Send to post details Successful. ",
           position: 'topRight'
         });
-        $('#InvoiceSendingMethodFormId').modal('hide');
+        $('#InvoiceSendingMethodFormId_inv').modal('hide');
 
       } else {
 
@@ -1659,7 +1659,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice Send to post details not Updated. Please try again",
           position: 'topRight'
         });
-        $('#InvoiceSendingMethodFormId').modal('hide');
+        $('#InvoiceSendingMethodFormId_inv').modal('hide');
       }
     }),
       (error: any) => {
@@ -1696,7 +1696,7 @@ export class InvoiceComponent implements OnInit {
 
       }
       else {
-        $("#InvoiceSendingMethodFormId").modal("hide");
+        $("#InvoiceSendingMethodFormId_inv").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1759,7 +1759,7 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice1({});
       } else {
 
-        $('#processPaymentIdinv').modal("hide");
+        $('#processPaymentId_inv').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1774,75 +1774,75 @@ export class InvoiceComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  processPaymentUpdate() {
-    this.spinner.show();
-    let api_req: any = new Object();
-    let api_processpaymentUpdate: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/proforma_invoice_payment_update";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_processpaymentUpdate.action = "proforma_invoice_payment_update";
+  // processPaymentUpdate() {
+  //   this.spinner.show();
+  //   let api_req: any = new Object();
+  //   let api_processpaymentUpdate: any = new Object();
+  //   api_req.moduleType = "proforma";
+  //   api_req.api_url = "proforma/proforma_invoice_payment_update";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_processpaymentUpdate.action = "proforma_invoice_payment_update";
 
-    api_processpaymentUpdate.billId = this.billID_processPayment;
-    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
-    if (this.processPaymentForm.value.amount === null) {
-      this.spinner.hide();
-      iziToast.error({
-        message: "Amount Value missing",
-        position: 'topRight'
-      });
+  //   api_processpaymentUpdate.billId = this.billID_processPayment;
+  //   api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+  //   if (this.processPaymentForm.value.amount === null) {
+  //     this.spinner.hide();
+  //     iziToast.error({
+  //       message: "Amount Value missing",
+  //       position: 'topRight'
+  //     });
 
-      return false;
-    }
+  //     return false;
+  //   }
 
-    api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
-    api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
-    if (this.processPaymentForm.value.paymenttype === null) {
-      this.spinner.hide();
-      iziToast.error({
-        message: "Payment Type Missing",
-        position: 'topRight'
-      });
-      return false;
-    }
-    api_processpaymentUpdate.note = this.processPaymentForm.value.note;
-    api_req.element_data = api_processpaymentUpdate;
-    $("#processPaymentIdinv").attr("disabled", true);
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#processPaymentIdinv").removeAttr("disabled");
-      if (response.status == true) {
+  //   api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
+  //   api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+  //   api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+  //   if (this.processPaymentForm.value.paymenttype === null) {
+  //     this.spinner.hide();
+  //     iziToast.error({
+  //       message: "Payment Type Missing",
+  //       position: 'topRight'
+  //     });
+  //     return false;
+  //   }
+  //   api_processpaymentUpdate.note = this.processPaymentForm.value.note;
+  //   api_req.element_data = api_processpaymentUpdate;
+  //   $("#processPaymentId_inv").attr("disabled", true);
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     $("#processPaymentId_inv").removeAttr("disabled");
+  //     if (response.status == true) {
 
-        this.spinner.hide();
-        $('#processPaymentIdinv').modal("hide");
-        iziToast.success({
-          message: "Payment Process Updated Successfully",
-          position: 'topRight'
+  //       this.spinner.hide();
+  //       $('#processPaymentId_inv').modal("hide");
+  //       iziToast.success({
+  //         message: "Payment Process Updated Successfully",
+  //         position: 'topRight'
 
-        });
-        this.getInvoice1({});
+  //       });
+  //       this.getInvoice1({});
 
-      } else {
-        this.spinner.hide();
-        $('#processPaymentIdinv').modal("hide");
-        iziToast.warning({
-          message: "Payment Process not displayed. Please try again",
-          position: 'topRight'
-        });
+  //     } else {
+  //       this.spinner.hide();
+  //       $('#processPaymentId_inv').modal("hide");
+  //       iziToast.warning({
+  //         message: "Payment Process not displayed. Please try again",
+  //         position: 'topRight'
+  //       });
 
-      }
-    }),
-      (error: any) => {
+  //     }
+  //   }),
+  //     (error: any) => {
 
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
+  //       iziToast.error({
+  //         message: "Sorry, some server issue occur. Please contact admin",
+  //         position: 'topRight'
+  //       });
+  //       console.log("final error", error);
 
-      };
-  }
+  //     };
+  // }
   getEmailDetails(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.email_TemplateSelection = false;
@@ -1899,7 +1899,7 @@ export class InvoiceComponent implements OnInit {
         this.getInvoice1({});
       } else {
 
-        $('#processPaymentIdinv').modal("hide");
+        $('#processPaymentId_inv').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1920,6 +1920,138 @@ export class InvoiceComponent implements OnInit {
     this.getInvoice1({});
     tinymce.activeEditor.setContent("");
   }
+  processPaymentUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_processpaymentUpdate: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_processpaymentUpdate.action = "update_payment_process";
+    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_processpaymentUpdate.bill_payment_process_id = this.billID_processPayment;
+    if (this.processPaymentForm.value.paymenttype === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Payment Type Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else{
+      api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+    }
+    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+    
+ 
+ 
+    if (this.processPaymentForm.value.amount === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Amount Value missing",
+        position: 'topRight'
+      });
+
+      return false;
+    }
+    
+    api_processpaymentUpdate.total_bal_amount = 0;
+    api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
+    api_processpaymentUpdate.balAmt=0; 
+    api_processpaymentUpdate.note = this.processPaymentForm.value.note;
+    api_req.element_data = api_processpaymentUpdate;
+    
+    $("#processPaymentId_inv").attr("disabled", true);
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#processPaymentId_inv").removeAttr("disabled");
+      if (response.status == true) {
+
+        this.spinner.hide();
+        $('#processPaymentId_inv').modal("hide");
+        iziToast.success({
+          message: "Payment Process Updated Successfully",
+          position: 'topRight'
+
+        });
+        this.getInvoice1({});
+
+      } else {
+        this.spinner.hide();
+        $('#processPaymentId_inv').modal("hide");
+        iziToast.warning({
+          message: "Payment Process not displayed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  paymentProcessEditShow(i:any) {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_payprocessEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_edit_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_payprocessEdit.action = "get_edit_payment_process";
+    api_payprocessEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_payprocessEdit.processId =i;
+
+    api_req.element_data = api_payprocessEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.spinner.hide();
+        // $('#note').val(response.payment_edit[0].notes);
+        // $('#Paid').val(response.payment_edit[0].paidAmount);
+        // $('#paytype').val(response.payment_edit[0].paymentMode);
+        // $('#dateee').val(response.payment_edit[0].processDate_show);
+      
+          this.processPaymentForm.patchValue({
+           // 'date': response.payment_edit[0].processDate_show,
+            'paid': response.payment_edit[0].paidAmount,
+            'paymenttype': response.payment_edit[0].paymentMode,
+            'note': response.payment_edit[0].notes,
+            'amount': response.payment_edit[0].paidAmount,
+         
+  
+  
+          });
+        
+       
+
+      } else {
+        this.spinner.hide();
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
@@ -2056,7 +2188,7 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $("#emailFormId").modal("hide");
+        $("#emailFormId_inv").modal("hide");
         this.getInvoice1({});
 
       }
@@ -2064,7 +2196,7 @@ export class InvoiceComponent implements OnInit {
         $('#subject').val('');
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
-        $("#emailFormId").modal("hide");
+        $("#emailFormId_inv").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.getInvoice1({});
@@ -2271,7 +2403,7 @@ export class InvoiceComponent implements OnInit {
     $('#file').val('');
 
     this.myFiles = [];
-    $("#fileAttachmentFormId").modal("show");
+    $("#fileAttachmentFormId_inv").modal("show");
     // this.fileAttachContractID = fileAttachContractID;
     this.fileAttach_quotationID = ID;
     let api_req: any = new Object();
@@ -2349,7 +2481,7 @@ export class InvoiceComponent implements OnInit {
             self.getInvoice1({});
             console.log(result);
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_inv").modal("hide");
             this.edit_array = [];
 
             iziToast.success({
@@ -2359,7 +2491,7 @@ export class InvoiceComponent implements OnInit {
           }
           else {
             Swal.close();
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_inv").modal("hide");
 
             iziToast.warning({
               message: "File Attachment Update Failed",
@@ -2375,7 +2507,7 @@ export class InvoiceComponent implements OnInit {
             position: 'topRight'
           });
           Swal.close();
-          $("#fileAttachmentFormId").modal("hide");
+          $("#fileAttachmentFormId_inv").modal("hide");
         }
 
       })
@@ -2426,7 +2558,7 @@ export class InvoiceComponent implements OnInit {
               position: 'topRight'
             });
 
-            $("#fileAttachmentFormId").modal("hide");
+            $("#fileAttachmentFormId_inv").modal("hide");
 
           } else {
             iziToast.warning({
@@ -2474,7 +2606,7 @@ export class InvoiceComponent implements OnInit {
 
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_inv').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not displayed. Please try again",
           position: 'topRight'
@@ -2515,10 +2647,10 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_inv').modal("hide");
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_inv').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not Updated. Please try again",
           position: 'topRight'
@@ -2591,7 +2723,7 @@ export class InvoiceComponent implements OnInit {
 
         })
 
-        // $('#RecurringFormId').modal("hide");
+        // $('#RecurringFormId_inv').modal("hide");
         this.getInvoice1({});
 
       } else {
@@ -2601,7 +2733,7 @@ export class InvoiceComponent implements OnInit {
           message: "Recurring Details not displayed. Please try again",
           position: 'topRight'
         });
-        $('#RecurringFormId').modal("hide");
+        $('#RecurringFormId_inv').modal("hide");
       }
     }),
       (error: any) => {
@@ -2643,7 +2775,7 @@ export class InvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $('#RecurringFormId').modal('hide');
+      $('#RecurringFormId_inv').modal('hide');
 
       if (response.status == true) {
         iziToast.success({
@@ -2822,7 +2954,7 @@ export class InvoiceComponent implements OnInit {
           message: "Revenue Details Updated Successfully",
           position: 'topRight'
         });
-        $('#InvoiceRevenueFormId').modal("hide");
+        $('#InvoiceRevenueFormId_inv').modal("hide");
 
 
         this.getInvoice1({});
@@ -2832,7 +2964,7 @@ export class InvoiceComponent implements OnInit {
           message: "Revenue Details not Updated Successfully",
           position: 'topRight'
         });
-        $('#InvoiceRevenueFormId').modal("hide");
+        $('#InvoiceRevenueFormId_inv').modal("hide");
 
 
         this.getInvoice1({});
@@ -2845,7 +2977,7 @@ export class InvoiceComponent implements OnInit {
           message: "Network Error",
           position: 'topRight'
         });
-        $('#InvoiceRevenueFormId').modal("hide");
+        $('#InvoiceRevenueFormId_inv').modal("hide");
 
 
         this.getInvoice1({});
@@ -2908,7 +3040,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice Notes Updated Successfully",
           position: 'topRight'
         });
-        $('#NotesFormId').modal("hide");
+        $('#NotesFormId_inv').modal("hide");
 
 
         this.getInvoice1({});
@@ -2918,7 +3050,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice Notes not Updated. Check response",
           position: 'topRight'
         });
-        $('#NotesFormId').modal("hide");
+        $('#NotesFormId_inv').modal("hide");
 
 
         this.getInvoice1({});
@@ -2931,7 +3063,7 @@ export class InvoiceComponent implements OnInit {
           message: "Delivery Order not Updated. Check response",
           position: 'topRight'
         });
-        $('#NotesFormId').modal("hide");
+        $('#NotesFormId_inv').modal("hide");
 
 
         this.getInvoice1({});
@@ -3024,7 +3156,7 @@ export class InvoiceComponent implements OnInit {
   //         message: "Delivery Order Updated Successfully",
   //         position: 'topRight'
   //       });
-  //       $('#DeliveryOrderFormId').modal("hide");
+  //       $('#DeliveryOrderFormId_inv').modal("hide");
 
 
   //       this.getInvoice1({});
@@ -3033,7 +3165,7 @@ export class InvoiceComponent implements OnInit {
   //         message: "Delivery Order not Updated. Please try again",
   //         position: 'topRight'
   //       });
-  //       $('#DeliveryOrderFormId').modal("hide");
+  //       $('#DeliveryOrderFormId_inv').modal("hide");
   //       this.getInvoice1({});
   //     }
   //   }),
@@ -3078,7 +3210,7 @@ export class InvoiceComponent implements OnInit {
               message: "Delivery Order Updated Successfully",
               position: 'topRight'
             });
-            $('#DeliveryOrderFormId').modal("hide");
+            $('#DeliveryOrderFormId_inv').modal("hide");
 
 
             this.getInvoice1({});
@@ -3088,7 +3220,7 @@ export class InvoiceComponent implements OnInit {
               message: "Delivery Order not Updated. Please try again",
               position: 'topRight'
             });
-            $('#DeliveryOrderFormId').modal("hide");
+            $('#DeliveryOrderFormId_inv').modal("hide");
             this.getInvoice1({});
           }
         }),
@@ -3135,7 +3267,7 @@ export class InvoiceComponent implements OnInit {
 
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_inv').modal("hide");
         iziToast.warning({
           message: "Invoice Type Details not displayed. Please try again",
           position: 'topRight'
@@ -3176,10 +3308,10 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_inv').modal("hide");
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_inv').modal("hide");
         iziToast.warning({
           message: "Invoice Type Details not Updated. Please try again",
           position: 'topRight'
@@ -3311,7 +3443,7 @@ export class InvoiceComponent implements OnInit {
   invoicetoQuotationEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.billId_InvoicetoQuotation = id;
-    $("#InvoicetoQuotationFormId").modal("show");
+    $("#InvoicetoQuotationFormId_inv").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
     let api_req: any = new Object();
     let add_newQuotation_req: any = new Object();
@@ -3325,9 +3457,9 @@ export class InvoiceComponent implements OnInit {
     add_newQuotation_req.quot_validity = this.addNewQuotationPopUpForm.value.quotationValidity_addPopUP;
     add_newQuotation_req.quotationId = this.addNewQuotationPopUpForm.value.templateName_addPopUP;
     api_req.element_data = add_newQuotation_req;
-    $("#InvoicetoQuotationFormId").attr("disabled", true);
+    $("#InvoicetoQuotationFormId_inv").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#InvoicetoQuotationFormId").removeAttr("disabled");
+      $("#InvoicetoQuotationFormId_inv").removeAttr("disabled");
       console.log(response);
 
       console.log("pop up for add quotation", response);
@@ -3337,7 +3469,7 @@ export class InvoiceComponent implements OnInit {
         this.templateNameList = response.template_name_arr;
         console.log("EnquiryFormList", this.enquiryFromList)
 
-        // $('#InvoicetoQuotationFormId').modal('hide');
+        // $('#InvoicetoQuotationFormId_inv').modal('hide');
         //this.contactsList({});
 
       }
@@ -3370,7 +3502,7 @@ export class InvoiceComponent implements OnInit {
           message: "Invoice to Quotation Conversion Successful",
           position: 'topRight'
         });
-        $('#InvoicetoQuotationFormId').modal('hide');
+        $('#InvoicetoQuotationFormId_inv').modal('hide');
 
 
       } else {
@@ -3691,7 +3823,7 @@ export class InvoiceComponent implements OnInit {
           message: "Reseller Commission Details updated Successful",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#withoutFormArrayResellerCommissionFormId_inv').modal('hide');
 
 
       } else {
@@ -3701,7 +3833,7 @@ export class InvoiceComponent implements OnInit {
           message: "No Match. Please try again",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#withoutFormArrayResellerCommissionFormId_inv').modal('hide');
       }
     }),
       (error: any) => {
@@ -3710,7 +3842,7 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        $('#withoutFormArrayResellerCommissionFormId').modal('hide');
+        $('#withoutFormArrayResellerCommissionFormId_inv').modal('hide');
         console.log("final error", error);
       };
 
@@ -3819,7 +3951,7 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $("#setActualCostId").modal("hide");
+        $("#setActualCostId_inv").modal("hide");
 
 
       }

@@ -1808,6 +1808,61 @@ export class DupInvoiceComponent implements OnInit {
     $("#paytype").val('');
     $("#dateee").val('');
   }
+  paymentProcessEditShow(i:any) {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_payprocessEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_edit_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_payprocessEdit.action = "get_edit_payment_process";
+    api_payprocessEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_payprocessEdit.processId =i;
+
+    api_req.element_data = api_payprocessEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.spinner.hide();
+        // $('#note').val(response.payment_edit[0].notes);
+        // $('#Paid').val(response.payment_edit[0].paidAmount);
+        // $('#paytype').val(response.payment_edit[0].paymentMode);
+        // $('#dateee').val(response.payment_edit[0].processDate_show);
+      
+          this.processPaymentForm.patchValue({
+           // 'date': response.payment_edit[0].processDate_show,
+            'paid': response.payment_edit[0].paidAmount,
+            'paymenttype': response.payment_edit[0].paymentMode,
+            'note': response.payment_edit[0].notes,
+            'amount': response.payment_edit[0].paidAmount,
+         
+  
+  
+          });
+        
+       
+
+      } else {
+        this.spinner.hide();
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
   processPaymentEdit(id: any, i: any) {
     $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
@@ -1866,14 +1921,27 @@ export class DupInvoiceComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_processpaymentUpdate: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/proforma_invoice_payment_update";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_payment_process";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_processpaymentUpdate.action = "proforma_invoice_payment_update";
-
-    api_processpaymentUpdate.billId = this.billID_processPayment;
+    api_processpaymentUpdate.action = "update_payment_process";
     api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_processpaymentUpdate.bill_payment_process_id = this.billID_processPayment;
+    if (this.processPaymentForm.value.paymenttype === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Payment Type Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else{
+      api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+    }
+    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+    
+ 
+ 
     if (this.processPaymentForm.value.amount === null) {
       this.spinner.hide();
       iziToast.error({
@@ -1883,20 +1951,13 @@ export class DupInvoiceComponent implements OnInit {
 
       return false;
     }
-
+    
+    api_processpaymentUpdate.total_bal_amount = 0;
     api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
-    api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
-    if (this.processPaymentForm.value.paymenttype === null) {
-      this.spinner.hide();
-      iziToast.error({
-        message: "Payment Type Missing",
-        position: 'topRight'
-      });
-      return false;
-    }
+    api_processpaymentUpdate.balAmt=0; 
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
+    
     $("#processPaymentFormIdDI").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#processPaymentFormIdDI").removeAttr("disabled");
@@ -1931,6 +1992,76 @@ export class DupInvoiceComponent implements OnInit {
 
       };
   }
+  // processPaymentUpdate() {
+  //   this.spinner.show();
+
+  //   let api_req: any = new Object();
+  //   let api_processpaymentUpdate: any = new Object();
+  //   api_req.moduleType = "proforma";
+  //   api_req.api_url = "proforma/proforma_invoice_payment_update";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_processpaymentUpdate.action = "proforma_invoice_payment_update";
+
+  //   api_processpaymentUpdate.billId = this.billID_processPayment;
+  //   api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+  //   if (this.processPaymentForm.value.amount === null) {
+  //     this.spinner.hide();
+  //     iziToast.error({
+  //       message: "Amount Value missing",
+  //       position: 'topRight'
+  //     });
+
+  //     return false;
+  //   }
+
+  //   api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
+  //   api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+  //   api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+  //   if (this.processPaymentForm.value.paymenttype === null) {
+  //     this.spinner.hide();
+  //     iziToast.error({
+  //       message: "Payment Type Missing",
+  //       position: 'topRight'
+  //     });
+  //     return false;
+  //   }
+  //   api_processpaymentUpdate.note = this.processPaymentForm.value.note;
+  //   api_req.element_data = api_processpaymentUpdate;
+  //   $("#processPaymentFormIdDI").attr("disabled", true);
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     $("#processPaymentFormIdDI").removeAttr("disabled");
+  //     if (response.status == true) {
+
+  //       this.spinner.hide();
+  //       $('#processPaymentFormIdDI').modal("hide");
+  //       iziToast.success({
+  //         message: "Payment Process Updated Successfully",
+  //         position: 'topRight'
+
+  //       });
+  //       this.getInvoice1({});
+
+  //     } else {
+  //       this.spinner.hide();
+  //       $('#processPaymentFormIdDI').modal("hide");
+  //       iziToast.warning({
+  //         message: "Payment Process not displayed. Please try again",
+  //         position: 'topRight'
+  //       });
+
+  //     }
+  //   }),
+  //     (error: any) => {
+
+  //       iziToast.error({
+  //         message: "Sorry, some server issue occur. Please contact admin",
+  //         position: 'topRight'
+  //       });
+  //       console.log("final error", error);
+
+  //     };
+  // }
   getEmailDetails(id: any, i: any) {
     $("#ActionIdInvDup" + i).modal("hide");
     this.email_TemplateSelection = false;

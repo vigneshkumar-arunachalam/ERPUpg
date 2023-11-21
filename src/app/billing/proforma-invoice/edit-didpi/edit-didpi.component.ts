@@ -193,6 +193,7 @@ export class EditDidpiComponent implements OnInit {
   usage_Overall_edit: any;
   selectedBillCode: any;
   UID: string;
+  BillerID_CompanyName: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -857,6 +858,7 @@ export class EditDidpiComponent implements OnInit {
 
   getCustomerInvoiceDetails(event: any) {
     this.billerID = event.target.value;
+    this.BillerID_CompanyName=event.target.value;
     console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
@@ -867,7 +869,8 @@ export class EditDidpiComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_customer_inv_details";
     api_getInvoiceDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_getInvoiceDetails_req.billerId = this.addDid_section1.value.companyName;
+   // api_getInvoiceDetails_req.billerId = this.addDid_section1.value.companyName;
+    api_getInvoiceDetails_req.billerId =  this.BillerID_CompanyName;
     api_req.element_data = api_getInvoiceDetails_req;
 
 
@@ -906,7 +909,8 @@ export class EditDidpiComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     add_BillerDetails_req.action = "get_proforma_biller_details";
-    add_BillerDetails_req.billerId = this.addDid_section1.value.companyName;
+    add_BillerDetails_req.billerId = this.BillerID_CompanyName;
+    // add_BillerDetails_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log(response);
@@ -1090,7 +1094,8 @@ export class EditDidpiComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_TaxDropdown_req.action = "tax_dropdown";
     api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
+    api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
+   // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1234,7 +1239,8 @@ export class EditDidpiComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "quot_customer_name";
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_Search_req.billerId = this.addDid_section1.value.companyName;
+    api_Search_req.billerId = this.BillerID_CompanyName;
+    //api_Search_req.billerId = this.addDid_section1.value.companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1254,7 +1260,7 @@ export class EditDidpiComponent implements OnInit {
   }
 
   Customer_selectDropdownData(customerId: any) {
-
+    this.spinner.show();
     this.customerName_Data = customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1270,7 +1276,7 @@ export class EditDidpiComponent implements OnInit {
 
       console.log("customer_address_details---response", response)
       if (response.status == true) {
-
+this.spinner.hide();
 
 
         var address_3;
@@ -1358,6 +1364,7 @@ export class EditDidpiComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
         this.addDid_section1.patchValue({
           'address_1': '',
           'address_2': '',
@@ -1375,6 +1382,7 @@ export class EditDidpiComponent implements OnInit {
   }
 
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
     console.log("search data in dropdown", data)
@@ -1394,7 +1402,7 @@ export class EditDidpiComponent implements OnInit {
 
 
       if (response.status == true) {
-
+        this.spinner.hide();
         this.did_bill_code = response.customer_billcode_arr;
         this.did_bill_code_section1 = response.customer_billcode_arr;
         this.FinalDiscount_DiscountType = response.billpardiscount[0].dis_type
@@ -1418,6 +1426,7 @@ export class EditDidpiComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
         this.addDid_section1.patchValue({
 
 
@@ -1512,6 +1521,7 @@ export class EditDidpiComponent implements OnInit {
         this.usage_Overall_edit=response.bill_usage_details;
         this.did_bill_code_section15 = response.customer_billcode_arr;
         console.log(this.did_bill_code_section15);
+        this.BillerID_CompanyName =response.billing_pararent_details[0].billerId;
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
         $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
@@ -1816,8 +1826,10 @@ export class EditDidpiComponent implements OnInit {
     console.log('this.addPI_section3.value.billId_edit' + this.addDid_section1.value.billId_edit);
     //section-1
     api_updateDid_req.billId = this.addDid_section1.value.billId_edit;
-    api_updateDid_req.company = this.addDid_section1.value.companyName;
-    api_updateDid_req.billerId = this.addDid_section1.value.companyName;
+    // api_updateDid_req.company = this.addDid_section1.value.companyName;
+    // api_updateDid_req.billerId = this.addDid_section1.value.companyName;
+    api_updateDid_req.company = this.BillerID_CompanyName;
+    api_updateDid_req.billerId = this.BillerID_CompanyName;
     api_updateDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
     api_updateDid_req.customer_invoice_no = this.addDid_section1.value.cusInvoiceNo;
     api_updateDid_req.cus_invoice_no = this.addDid_section1.value.cusInvoiceNo;
@@ -2351,20 +2363,20 @@ export class EditDidpiComponent implements OnInit {
 
         // usageCharge_TotalAmount =Number((Number(usageCharge_TotalAmount) + Number($('#amt2_' + a).val())).toFixed(2));
 
-         usageCharge_TotalAmount = usageCharge_TotalAmount + $('#amt2_' + a).val();
+         usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       usage_price = usageCharge_TotalAmount - enablePriceFinal_2;
       console.log('usage_price_fin' + usage_price);
-      $('#sub_total_2').val(usage_price);
+      $('#sub_total_2').val(usage_price.toFixed(2));
       $('#sub_discount_2').val(enablePriceFinal_2);
       $('#sub_discount_val_2').val(enablePriceFinal_2);
       this.gross_total();
     }
 
-    $('#sub_total_2').val(usage_price)
+    $('#sub_total_2').val(usage_price.toFixed(2));
 
 
     this.getTaxCals();
@@ -2672,7 +2684,8 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationAddSignature_req.action = "quotation_add_signature";
     api_quotationAddSignature_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_quotationAddSignature_req.billerId = this.addDid_section1.value.companyName;
+    api_quotationAddSignature_req.billerId = this.BillerID_CompanyName;
+   // api_quotationAddSignature_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = api_quotationAddSignature_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -2701,8 +2714,8 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
     api_invoiceAddSignatureEdit_req.action = "invoice_add_signature_edit";
 
     api_invoiceAddSignatureEdit_req.user_id = this.addDid_section1.value.salesRep;
-
-    api_invoiceAddSignatureEdit_req.billerId = this.addDid_section1.value.companyName;
+    api_invoiceAddSignatureEdit_req.billerId = this.BillerID_CompanyName;
+   // api_invoiceAddSignatureEdit_req.billerId = this.addDid_section1.value.companyName;
     api_invoiceAddSignatureEdit_req.billId = this.editbillerID;
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 

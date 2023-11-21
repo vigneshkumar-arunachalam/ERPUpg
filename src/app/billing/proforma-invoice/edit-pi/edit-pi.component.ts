@@ -1081,6 +1081,7 @@ export class EditPIComponent implements OnInit {
     //   this.customer_NAME=data.customerName;
     //    console.log("search data in dropdown", data)
     //    console.log("search data-customer Id", data.customerId)
+    this.spinner.show();
     this.customerName_Data = customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1096,6 +1097,7 @@ export class EditPIComponent implements OnInit {
 
       console.log("customer_address_details---response", response)
       if (response.status == true) {
+        this.spinner.hide();
         // console.log('address'+response.customer_details[0].customerAddress1);
 
 
@@ -1184,6 +1186,7 @@ export class EditPIComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
         this.addPI_section1.patchValue({
           'address_1': '',
           'address_2': '',
@@ -1489,15 +1492,17 @@ export class EditPIComponent implements OnInit {
     if (this.bankingCharge == '') {
       this.bankingCharge = 0;
     }
-
-    if(this.finalDiscountType_model=='per'){
+// these lines commented by vignesh----revert it--- if any change
+    // if(this.finalDiscountType_model=='per'){
       
-      this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
+    //   this.finalDiscount = (((this.grossTotal* this.finalDiscountVal)/100)).toFixed(2);
+    //   console.log("this.finalDiscount",this.finalDiscount)
       
  
-     }else if(this.finalDiscountType_model=='amt'){
-       this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
-     }
+    //  }else if(this.finalDiscountType_model=='amt'){
+    //    this.finalDiscount = (this.grossTotal- this.finalDiscountVal);
+    //    console.log("this.finalDiscount",this.finalDiscount)
+    //  }
 
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)+ parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
@@ -1662,7 +1667,9 @@ export class EditPIComponent implements OnInit {
 
   finalDiscountCalc(){
     var enablePercentabeDiscont = $('#enableFinalPercent').val()
+    
     var enablePriceDiscont = $('#enableFinalDiscount').val()
+    
     var tax_amt = $('#tax_amt_id').val()
     var disType = $('input:radio[name=finaldiscountTYpe]:checked').val();
     var final_tot = this.grossTotal;
@@ -1677,8 +1684,13 @@ export class EditPIComponent implements OnInit {
       // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePercentabeDiscont != '') {
         //  console.log('3333'+final_tot);
+          console.log('3333-enablePercentabeDiscont',enablePercentabeDiscont);
+          console.log('3333-final_tot',final_tot);
+          
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
+        console.log('3333-final_tot',price);
         $('#final_discount').val(price);
+        $('#finalDiscount_amt').val(price);
         $('#final_discount_val').val(enablePercentabeDiscont);
         this.finalDiscountVal = enablePercentabeDiscont;
         //     price = final_tot - price;

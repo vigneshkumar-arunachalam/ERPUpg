@@ -406,10 +406,11 @@
 
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
+                            <label for="Payment4" class="col-lg-12 col-form-label">Payment Via</label>
                             <div class="col-lg-12">
 
-                                <select id="Payment" class="form-control" formControlName="PaymentVia">
+                                <select id="Payment4" class="form-control" 
+                                formControlName="PaymentVia" >
                                     <option [ngValue]="null" selected disabled>Select Payment Via</option>
                                     <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
                                         {{payment.paymentvia_name}}

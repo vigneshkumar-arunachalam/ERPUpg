@@ -422,7 +422,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_PI').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -687,7 +687,7 @@ export class ProformaInvoiceComponent implements OnInit {
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#emailFormId").modal("hide");
+        $("#emailFormId_ProfIn").modal("hide");
         tinymce.activeEditor.setContent("");
 
         Swal.close();
@@ -701,7 +701,7 @@ export class ProformaInvoiceComponent implements OnInit {
       else {
         $('#subject').val('');
         $('#emailto').val('');
-        $("#emailFormId").modal("hide");
+        $("#emailFormId_ProfIn").modal("hide");
         tinymce.activeEditor.setContent("");
         Swal.close();
         this.PIList({});
@@ -1078,7 +1078,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
       }
       else {
-        $("#showPerissionFormId").modal("hide");
+        $("#showPerissionFormId_ProfIn").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1114,7 +1114,7 @@ export class ProformaInvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $('#showPerissionFormId').modal('hide');
+        $('#showPerissionFormId_ProfIn').modal('hide');
         this.typeConvertionString_invoiceShowPermission = [];
       } else {
         iziToast.warning({
@@ -1201,7 +1201,7 @@ export class ProformaInvoiceComponent implements OnInit {
         this.PIList({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_PI').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1252,14 +1252,14 @@ export class ProformaInvoiceComponent implements OnInit {
     }
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
-    $("#processPaymentFormId").attr("disabled", true);
+    $("#processPaymentFormId_PI").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $("#processPaymentFormId").removeAttr("disabled");
+      $("#processPaymentFormId_PI").removeAttr("disabled");
       if (response.status == true) {
 
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_PI').modal("hide");
         iziToast.success({
           message: "Payment Process Updated Successfully",
           position: 'topRight'
@@ -1269,7 +1269,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
       } else {
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_PI').modal("hide");
         iziToast.warning({
           message: "Payment Process not displayed. Please try again",
           position: 'topRight'
@@ -1318,7 +1318,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_ProfIn').modal("hide");
         iziToast.warning({
           message: "Invoice Type Details not displayed. Please try again",
           position: 'topRight'
@@ -1357,10 +1357,10 @@ export class ProformaInvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_ProfIn').modal("hide");
       } else {
 
-        $('#setInvoiceTypeNameFormId').modal("hide");
+        $('#setInvoiceTypeNameFormId_ProfIn').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not Updated. Please try again",
           position: 'topRight'
@@ -1411,7 +1411,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_ProfIn').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not displayed. Please try again",
           position: 'topRight'
@@ -1452,10 +1452,10 @@ export class ProformaInvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_ProfIn').modal("hide");
       } else {
 
-        $('#settermsConditionFormId').modal("hide");
+        $('#settermsConditionFormId_ProfIn').modal("hide");
         iziToast.warning({
           message: "Term Condition Details not Updated. Please try again",
           position: 'topRight'

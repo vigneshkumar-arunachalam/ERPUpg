@@ -904,6 +904,9 @@ formattedDate: string;
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    this.spinner.show;
+
+
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
     console.log("search data in dropdown", data)
@@ -923,7 +926,7 @@ formattedDate: string;
 
       console.log("customer_address_details---response", response)
       if (response.status == true) {
-
+        this.spinner.hide;
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
 
@@ -977,6 +980,7 @@ formattedDate: string;
 
         this.did_bill_codexx = response.customer_billcode_arr;
         this.did_bill_code_section1 = response.customer_billcode_arr;
+        
 
         this.addDid_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,
@@ -992,11 +996,12 @@ formattedDate: string;
           'terms':  response.customer_details[0].terms_condition,
         
           'Currency': response.customer_details[0].def_currency_id,
-          'PaymentVia': response.customer_details[0].def_payment_via,
+         // 'PaymentVia': response.customer_details[0].def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
         });
       }
       else {
+        this.spinner.hide;
         this.addDid_section1.patchValue({
           'address_1': '',
           'address_2': '',
@@ -1010,10 +1015,11 @@ formattedDate: string;
           'cusInvoiceNo': '',
           
           'Currency': '',
-          'PaymentVia': '',
+          // 'PaymentVia': '',
           'CurrencyConversionRate':'',
         });
       }
+      $('#Payment4').val(response.customer_details[0].def_payment_via);
 
     });
   }
@@ -1549,8 +1555,8 @@ formattedDate: string;
      
         console.log('price_fin' + price);
       $('#sub_total_1').val(price.toFixed(2));
-      $('#sub_discount_1').val(enablePriceFinal_1.toFixed(2));
-      $('#sub_discount_val_1').val(enablePriceFinal_1.toFixed(2));
+      $('#sub_discount_1').val(enablePriceFinal_1);
+      $('#sub_discount_val_1').val(enablePriceFinal_1);
       this.gross_total();
     }
 
@@ -1605,14 +1611,13 @@ formattedDate: string;
       $('#sub_total_2').val('');
       if (enablePerFinal_2 != '') {
         for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
-
+        
             usageCharge_TotalAmount +=parseFloat($('#amt2_'+a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
         }
         console.log("dummy outside", usageCharge_TotalAmount)
-
 
         usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100);
         console.log(usage_price);
@@ -1635,22 +1640,22 @@ formattedDate: string;
     else {
       for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
-        
-         usageCharge_TotalAmount = usageCharge_TotalAmount + $('#amt2_' + a).val();
+         usageCharge_TotalAmount +=parseFloat($('#amt2_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       usage_price = usageCharge_TotalAmount - enablePriceFinal_2;
-      console.log('usage_price_fin-----tst' + usage_price);
+      console.log('usage_price_fin-----tst-II' + usage_price);
     
-           $('#sub_total_2').val(usage_price.toFixed(2));
+      $('#sub_total_2').val(usage_price.toFixed(2));
       $('#sub_discount_2').val(enablePriceFinal_2);
       $('#sub_discount_val_2').val(enablePriceFinal_2);
       this.gross_total();
     }
 
  
+    //  $('#sub_total_2').val(usage_price.toFixed(2));
      $('#sub_total_2').val(usage_price.toFixed(2));
 
 
@@ -1714,11 +1719,11 @@ formattedDate: string;
 
 
            other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100);
-        $('#sub_discount_3').val(other_price);
+        $('#sub_discount_3').val(other_price.toFixed(2));
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
         console.log("sub_total", other_price);
-        $('#sub_total_3').val(other_price);
+        $('#sub_total_3').val(other_price.toFixed(2));
         this.gross_total();
 
       } else {

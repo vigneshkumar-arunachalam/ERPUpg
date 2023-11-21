@@ -428,7 +428,7 @@ export class DupProformaInvoiceComponent implements OnInit {
 
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DupPI').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1078,7 +1078,7 @@ export class DupProformaInvoiceComponent implements OnInit {
 
       }
       else {
-        $("#showPerissionFormId").modal("hide");
+        $("#dup_PI_showPerissionFormId").modal("hide");
         iziToast.error({
           message: "Data Not Found",
           position: 'topRight'
@@ -1114,7 +1114,7 @@ export class DupProformaInvoiceComponent implements OnInit {
           position: 'topRight'
         });
 
-        $('#showPerissionFormId').modal('hide');
+        $('#dup_PI_showPerissionFormId').modal('hide');
         this.typeConvertionString_invoiceShowPermission = [];
       } else {
         iziToast.warning({
@@ -1201,7 +1201,7 @@ export class DupProformaInvoiceComponent implements OnInit {
         this.PIList({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DupPI').modal("hide");
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1252,14 +1252,14 @@ export class DupProformaInvoiceComponent implements OnInit {
     }
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
-    $("#processPaymentFormId").attr("disabled", true);
+    $("#processPaymentFormId_DupPI").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      $("#processPaymentFormId").removeAttr("disabled");
+      $("#processPaymentFormId_DupPI").removeAttr("disabled");
       if (response.status == true) {
 
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DupPI').modal("hide");
         iziToast.success({
           message: "Payment Process Updated Successfully",
           position: 'topRight'
@@ -1269,7 +1269,7 @@ export class DupProformaInvoiceComponent implements OnInit {
 
       } else {
         this.spinner.hide();
-        $('#processPaymentFormId').modal("hide");
+        $('#processPaymentFormId_DupPI').modal("hide");
         iziToast.warning({
           message: "Payment Process not displayed. Please try again",
           position: 'topRight'

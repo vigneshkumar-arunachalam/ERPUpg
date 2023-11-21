@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
     };
     this.websocket.onmessage = function (event: any) {
       s.getdatas = JSON.parse(event.data);
-      console.log('socket detail' + localStorage.getItem('erp_c4c_user_id'));
+      console.log('socket detail' , localStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
         if (localStorage.getItem('erp_c4c_user_id') == null) {
           s.qrLogin();
@@ -309,7 +309,7 @@ if($("#u_id").val()=='undefined') {
         localStorage.setItem('profile_image', response.profile_image)
         console.log("profile_image",alert);
 
-
+        
         if (this.userID != '') {
           Swal.close();
           this.router.navigate(['/']);
