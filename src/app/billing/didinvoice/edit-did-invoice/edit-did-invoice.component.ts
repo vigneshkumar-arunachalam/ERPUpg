@@ -267,18 +267,19 @@ export class EditDidInvoiceComponent implements OnInit {
           console.log("this.duplicate_flag", this.duplicate_flag);
           // making edit
         }
+        this.addDidLoad();
         this.editDidInvice();
         this.EditShippingAddress = true;
 
       }
       );
 
-      setTimeout(() => {
-        this.addDidLoad();
-            this.editDidInvice();
-          }, 1500)
+      // setTimeout(() => {
+      //   this.addDidLoad();
+      //       this.editDidInvice();
+      //     }, 1500)
 
-    this.addDidLoad();
+    // this.addDidLoad();
 
     this.SelectExtraLogoCheckboxwithKey = [
 
@@ -1062,7 +1063,7 @@ export class EditDidInvoiceComponent implements OnInit {
         //   this.companyNameVal = response.defaults_biller_id;
         this.tax_per_mod = response.percent_val;
         this.getProformaBillerDetails();
-        this.TaxDropdown();
+       // this.TaxDropdown();
         // this.getCustomerInvoiceDetails()
         // this.getCustomerInvoiceDetails(response.defaults_biller_id);
       }
@@ -1498,6 +1499,7 @@ export class EditDidInvoiceComponent implements OnInit {
       if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total').val()) / 100).toFixed(2);
         $('#Tax_amt_id').val(tax);
+        console.log("$('#Tax_amt_id').val(tax)",$('#Tax_amt_id').val(tax));
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
@@ -1508,6 +1510,7 @@ export class EditDidInvoiceComponent implements OnInit {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total_afterDiscount').val()) / 100).toFixed(2);
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax);
+        console.log("$('#Tax_amt_id').val(tax)",$('#Tax_amt_id').val(tax));
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
@@ -1551,6 +1554,7 @@ export class EditDidInvoiceComponent implements OnInit {
       if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (response.percent_val) * $('#section3_gross_total').val() / 100;
         $('#Tax_amt_id').val(tax.toFixed(2));
+        console.log("$('#Tax_amt_id').val(tax)",$('#Tax_amt_id').val(tax));
 
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
@@ -1563,6 +1567,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax.toFixed(2));
+        console.log("$('#Tax_amt_id').val(tax)",$('#Tax_amt_id').val(tax));
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));

@@ -1272,6 +1272,7 @@ export class AddDidpiComponent implements OnInit {
     //section-3
     api_saveDid_req.grossTotal = $('#section3_gross_total').val();
     api_saveDid_req.discountAmount = $('#finalDiscount_amt').val();
+    api_saveDid_req.grossAfterDiscount= $('#section3_gross_total_afterDiscount').val();
     api_saveDid_req.final_dis_type = $('#final_discount_type').val();
     // api_saveDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
     api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
