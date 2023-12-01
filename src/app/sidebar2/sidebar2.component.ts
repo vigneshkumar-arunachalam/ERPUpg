@@ -18,7 +18,7 @@ export class Sidebar2Component implements OnInit {
   public jsonData = data1;
   overallmenulist: any;
   roles: any;
-
+  GlobalSearchPermission:any;
   constructor(private router : Router) { }
 
   ngOnInit(): void {
@@ -26,8 +26,24 @@ export class Sidebar2Component implements OnInit {
     feather.replace();
     // console.log("menu list details", this.overallmenulist);
     this.roles = localStorage.getItem("role");
+    this.get_permission();
+    // let GlobalSearchPermission = k.filter((x: any) => x === 1148);
+    // console.log("GlobalSearchPermission",GlobalSearchPermission)
+    
     this.loadMenus()
 
+  }
+  get_permission(){
+
+    // console.log("this.roles",this.roles)
+    var k = this.roles.split(',');
+    for(var i=0; i<=k.length;i++)
+    {
+      if(k[i]==1148){
+        this.GlobalSearchPermission = k[i];
+      }
+    }
+    console.log(this.GlobalSearchPermission);
   }
   handleSelectedMenu(id: number) {
     this.overallmenulist.forEach((element: { menuId: number; isActive: boolean; }) => {

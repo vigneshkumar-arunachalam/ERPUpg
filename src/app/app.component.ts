@@ -11,7 +11,7 @@ declare var $:any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ERPUpdate';
+  title = 'ERP';
   code_val: any;
   uscode: any;
   public file_path: string = "";

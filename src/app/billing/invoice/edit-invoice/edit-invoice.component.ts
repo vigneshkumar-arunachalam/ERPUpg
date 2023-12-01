@@ -182,34 +182,35 @@ export class EditInvoiceComponent implements OnInit {
 
         this.editbillerID = params['e_editBillID'];
         this.editDIDStateID = params['e_editDIDState'];
-
+        this.edit_Duplicate_ID = params['e_editDuplicateID'];
 
 
         console.log("edit biller id", this.editbillerID);
         console.log("edit DID state id", this.editDIDStateID);
-
-
-      }
-      );
-
-    this.route.queryParams
-      .subscribe(params => {
-        console.log("params output value", params);
-
-        this.edit_Duplicate_ID = params['e_editDuplicateID'];
-        this.editDIDStateID = params['e_editDIDState'];
-
-
-
-
         console.log("edit duplicate id", this.edit_Duplicate_ID);
-        console.log("edit DID state id", this.editDIDStateID);
-
-
-
         this.editInvoice();
+
       }
       );
+
+    // this.route.queryParams
+    //   .subscribe(params => {
+    //     console.log("params output value", params);
+
+        
+    //     this.editDIDStateID = params['e_editDIDState'];
+
+
+
+
+     
+    //     console.log("edit DID state id", this.editDIDStateID);
+
+
+
+       
+    //   }
+    //   );
     this.loadADD();
 
     this.addressControls.controls.forEach((elt, index) => {
@@ -354,7 +355,7 @@ export class EditInvoiceComponent implements OnInit {
     console.log(this.addresses);
     console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
-      this.test[index] = true;
+      this.test[index] = false;
       console.log(this.test[index]);
 
 

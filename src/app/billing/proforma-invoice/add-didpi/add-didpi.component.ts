@@ -6,7 +6,7 @@ declare var $: any;
 declare var iziToast: any;
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
-import {  Inject, LOCALE_ID } from '@angular/core';
+import { Inject, LOCALE_ID } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -96,7 +96,7 @@ export class AddDidpiComponent implements OnInit {
   row_cnt_mod: any;
   sub_total_glb1: any;
   sub_total_glb2: any;
-  did_bill_codexx: any;
+  // did_bill_codexx: any;
 
   //export state-check box
   export_state: any;
@@ -149,17 +149,20 @@ export class AddDidpiComponent implements OnInit {
   section3_Terms4: any;
   section3_Terms5: any;
   getProformaBillerDetails_billerID: any;
-// subTotalForm
-subTotalForm:FormGroup;
-subTotalForm2:FormGroup;
-subTotalForm3:FormGroup;
-// singapore date & time
-formattedDate: string;
+  // subTotalForm
+  subTotalForm: FormGroup;
+  subTotalForm2: FormGroup;
+  subTotalForm3: FormGroup;
+  // singapore date & time
+  formattedDate: string;
+  fixedCharge_Flag: boolean=true;
+  usageCharge_Flag: boolean=true;
+  otherCharge_Flag: boolean=true;
 
 
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, 
-    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router, private spinner: NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder,
+    @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private router: Router, private spinner: NgxSpinnerService) {
 
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
@@ -182,10 +185,10 @@ formattedDate: string;
     // this.did_bill_code_section2=1445;
 
 
-    this.did_bill_codexx = [
-      { "customer_bill_code_id": 1445, "bill_code": -810 },
+    // this.did_bill_codexx = [
+    //   { "customer_bill_code_id": 1445, "bill_code": -810 },
 
-    ];
+    // ];
     // this.did_bill_code_section1=1445;
     // this.did_bill_code_section11 = [
     //   { "customer_bill_code_id": 1445 ,"bill_code":-810}
@@ -215,7 +218,7 @@ formattedDate: string;
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'billCode_0': new FormControl(),
+      // 'billCode_0': new FormControl(),
       'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
@@ -230,17 +233,17 @@ formattedDate: string;
       'Jompay_logo': new FormControl(),
 
     });
-    this.subTotalForm=new FormGroup({
+    this.subTotalForm = new FormGroup({
       'sub_total_1': new FormControl(),
-  
+
     });
-    this.subTotalForm2=new FormGroup({
+    this.subTotalForm2 = new FormGroup({
 
       'sub_total_2': new FormControl(),
 
     });
-    this.subTotalForm3=new FormGroup({
-   
+    this.subTotalForm3 = new FormGroup({
+
       'sub_total_3': new FormControl(),
     });
     this.section3_Terms1 = "Price Term: EXW SINGAPORE";
@@ -322,10 +325,10 @@ formattedDate: string;
     const currentDate = new Date();
     this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
     setTimeout(() => {
-    
-         $('#datee').val(this.formattedDate);
-         $('#podatee').val(this.formattedDate);
-         $('#Ship_Date').val(this.formattedDate);
+
+      $('#datee').val(this.formattedDate);
+      $('#podatee').val(this.formattedDate);
+      $('#Ship_Date').val(this.formattedDate);
 
     }, 2000);
 
@@ -366,7 +369,7 @@ formattedDate: string;
       dis_per1: '',
       dis_amt1: '',
       dis_type1: '',
-    
+
 
 
 
@@ -414,7 +417,7 @@ formattedDate: string;
       dis_per2: '',
       dis_amt2: '',
       dis_type2: '',
-    
+
 
 
     });
@@ -458,7 +461,7 @@ formattedDate: string;
       dis_per3: '',
       dis_amt3: '',
       dis_type3: '',
-    
+
 
 
     });
@@ -496,9 +499,10 @@ formattedDate: string;
     console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
+    this.radioSelectFooter = evt.target.value;
     var radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", radioSelectFooter);
+    console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
@@ -656,11 +660,11 @@ formattedDate: string;
         this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
         this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
         this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
-        this.getProformaBillerDetails_billerID=response.biller_details[0].billerId;
+        this.getProformaBillerDetails_billerID = response.biller_details[0].billerId;
         this.addDid_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
-           'Currency': response.def_currency_id,
+          'Currency': response.def_currency_id,
           'PaymentVia': response.def_paymentvia_id,
 
         });
@@ -837,7 +841,7 @@ formattedDate: string;
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
-      
+
         $("#section3_grand_total").val((taxadd).toFixed(2));
 
       } else {
@@ -861,12 +865,12 @@ formattedDate: string;
   }
   goBackInvoice() {
 
-    this.router.navigate(['/ProformaInvoice'])
+    this.router.navigate(['/invoice'])
   }
   goBackDIDInvoice() {
 
 
-    this.router.navigate(['/ProformaInvoice'])
+    this.router.navigate(['/didInvoice'])
   }
 
   keywordCustomerName = 'customerName';
@@ -978,9 +982,9 @@ formattedDate: string;
         }
 
 
-        this.did_bill_codexx = response.customer_billcode_arr;
+        // this.did_bill_codexx = response.customer_billcode_arr;
         this.did_bill_code_section1 = response.customer_billcode_arr;
-        
+
 
         this.addDid_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,
@@ -993,10 +997,10 @@ formattedDate: string;
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
           'cusInvoiceNo': response.customer_invoice_no,
-          'terms':  response.customer_details[0].terms_condition,
-        
+          'terms': response.customer_details[0].terms_condition,
+
           'Currency': response.customer_details[0].def_currency_id,
-         // 'PaymentVia': response.customer_details[0].def_payment_via,
+          // 'PaymentVia': response.customer_details[0].def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
         });
       }
@@ -1013,10 +1017,10 @@ formattedDate: string;
           'ship_address_3': '',
           'ship_attn': '',
           'cusInvoiceNo': '',
-          
+
           'Currency': '',
           // 'PaymentVia': '',
-          'CurrencyConversionRate':'',
+          'CurrencyConversionRate': '',
         });
       }
       $('#Payment4').val(response.customer_details[0].def_payment_via);
@@ -1063,23 +1067,23 @@ formattedDate: string;
     api_saveDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
 
     api_saveDid_req.cstNo = this.addDid_section1.value.cst;
-    api_saveDid_req.billDate =$('#datee').val();
+    api_saveDid_req.billDate = $('#datee').val();
     // api_saveDid_req.billDate = this.addDid_section1.value.Date;
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
 
-    if (this.did_bill_code === null) {
+    // if (this.did_bill_code === null) {
 
-      iziToast.warning({
-        message: "Fill Bill Code",
-        position: 'topRight'
-      });
-      this.spinner.hide();
-      return false;
+    //   iziToast.warning({
+    //     message: "Fill Bill Code",
+    //     position: 'topRight'
+    //   });
+    //   this.spinner.hide();
+    //   return false;
 
 
-    } else {
-      api_saveDid_req.did_bill_code = this.did_bill_code;
-    }
+    // } else {
+    //   api_saveDid_req.did_bill_code = this.did_bill_code;
+    // }
 
     api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
     // api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
@@ -1090,9 +1094,11 @@ formattedDate: string;
     api_saveDid_req.ship_date = $('#Ship_Date').val();
     api_saveDid_req.s_attn = this.addDid_section1.value.ship_attn;
     api_saveDid_req.terms = this.addDid_section1.value.terms;
-    api_saveDid_req.currency = this.addDid_section1.value.Currency;
+    api_saveDid_req.currency = $('#curren').val();
+    // api_saveDid_req.currency = this.addDid_section1.value.Currency;
     api_saveDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
-    api_saveDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
+    // api_saveDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
+    api_saveDid_req.paymentVIA = $('#Payment4').val();
     api_saveDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
     api_saveDid_req.bills_logo_id = this.ExtralogoValue;
     api_saveDid_req.export_state = this.radioSelectFooter;
@@ -1141,16 +1147,28 @@ formattedDate: string;
       addr1[i].productDesc1 = $('#productDesc1_' + i).val();
       addr1[i].amt1 = $('#amt_1_' + i).val();
       addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
-      
-      
+
+
       addr1[i].dis_per1 = $('#enablePerFinal_1' + i).val();
       addr1[i].dis_amt1 = $('#enablePriceFinal_1' + i).val();
       addr1[i].dis_type1 = $('#fix_DiscountTYpe' + i).val();
 
+      if ($('#particular_1_' + i).val() == '') {
+        this.fixedCharge_Flag = false;
+      }
     }
 
 
-    api_saveDid_req.fixed_value = addr1;
+    if (this.fixedCharge_Flag == true) {
+
+      api_saveDid_req.fixed_value = addr1;
+    } else {
+      // iziToast.error({
+      //   message: "Product Details missing in Fixed Charge",
+      //   position: 'topRight'
+      // });
+
+    }
 
     // usage charge
 
@@ -1169,29 +1187,42 @@ formattedDate: string;
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].did_bill_code_chd = this.did_bill_code_section2;
-     
+      addr2[i].did_bill_code_chd = $('#billCode' + i).val();
+
 
       addr2[i].dis_per2 = $('#enablePerFinal_2' + i).val();
       addr2[i].dis_amt2 = $('#enablePriceFinal_2' + i).val();
       addr2[i].dis_type2 = $('#use_DiscountTYpe_per' + i).val();
+      if ($('#particular2_' + i).val() == '') {
+        this.usageCharge_Flag = false;
+      }
+
+    }
+    if (this.usageCharge_Flag == true) {
+
+      api_saveDid_req.usage_value = addr2;
+    } else {
+      // iziToast.error({
+      //   message: "Product Details missing in Usage Charge",
+      //   position: 'topRight'
+      // });
 
     }
 
     console.log('addr2' + addr2);
 
-    api_saveDid_req.usage_value = addr2;
-    if (this.did_bill_code_section2 === null || this.did_bill_code_section2 == undefined || this.did_bill_code_section2 == '') {
 
-      iziToast.warning({
-        message: "Fill Usage Charge bill code",
-        position: 'topRight'
-      });
-      this.spinner.hide();
-      return false;
+    // if (this.did_bill_code_section2 === null || this.did_bill_code_section2 == undefined || this.did_bill_code_section2 == '') {
+
+    //   iziToast.warning({
+    //     message: "Fill Usage Charge bill code",
+    //     position: 'topRight'
+    //   });
+    //   this.spinner.hide();
+    //   return false;
 
 
-    }
+    // }
 
     // other charge
 
@@ -1212,23 +1243,36 @@ formattedDate: string;
       addr3[i].productDesc3 = $('#productDesc3_' + i).val();
       addr3[i].amt3 = $('#amt3_' + i).val();
       addr3[i].call_duration3 = $('#call_duration3_' + i).val();
-     
+
 
       addr3[i].dis_per3 = $('#enablePerFinal_3' + i).val();
       addr3[i].dis_amt3 = $('#enablePriceFinal_3' + i).val();
       addr3[i].dis_type3 = $('#oth_DiscountTYpe_per' + i).val();
+      if ($('#particular3_' + i).val() == '') {
+        this.otherCharge_Flag = false;
+      }
     }
-  
+    if (this.otherCharge_Flag == true) {
 
-    api_saveDid_req.other_values = addr3;
+      api_saveDid_req.other_values = addr3;
+    } else {
+      // iziToast.error({
+      //   message: "Product Details missing in other charge",
+      //   position: 'topRight'
+      // });
 
-    api_saveDid_req.sub_total_1= $('#sub_total_1' ).val();
-    api_saveDid_req.sub_total_2= $('#sub_total_2' ).val();
-    api_saveDid_req.sub_total_3= $('#sub_total_3' ).val();
+    }
+
+
+
+    api_saveDid_req.sub_total_1 = $('#sub_total_1').val();
+    api_saveDid_req.sub_total_2 = $('#sub_total_2').val();
+    api_saveDid_req.sub_total_3 = $('#sub_total_3').val();
 
     //section-3
     api_saveDid_req.grossTotal = $('#section3_gross_total').val();
     api_saveDid_req.discountAmount = $('#finalDiscount_amt').val();
+    api_saveDid_req.final_dis_type = $('#final_discount_type').val();
     // api_saveDid_req.discountAmount = this.addDid_section3.value.final_dis_val;
     api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
     api_saveDid_req.taxAmt = $('#Tax_amt_id').val();
@@ -1396,13 +1440,13 @@ formattedDate: string;
       console.log('subtotal 1...' + total_amt);
       if (!isNaN(total_amt) && total_amt != '') {
         total_amt_tot += parseFloat(total_amt);
-      
+
       }
 
       this.sub_total_glb1 = total_amt_tot;
-      console.log("before assigning to subtotal 1",total_amt_tot.toFixed(2))
+      console.log("before assigning to subtotal 1", total_amt_tot.toFixed(2))
       $('#sub_total_1').val((total_amt_tot).toFixed(2));
-      console.log("$('#sub_total_1')---now",$('#sub_total_1').val());
+      console.log("$('#sub_total_1')---now", $('#sub_total_1').val());
       console.log('sub_total =' + total_amt_tot);
 
     }
@@ -1517,21 +1561,21 @@ formattedDate: string;
       if (enablePerFinal_1 != '') {
         for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
 
-            fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
+          fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
 
           console.log("dummy inside", fixedCharge_TotalAmount)
         }
         console.log("dummy outside", fixedCharge_TotalAmount)
 
 
-      price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100);
-        console.log("price",price);
-         $('#sub_discount_1').val(price.toFixed(2));
+        price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100);
+        console.log("price", price);
+        $('#sub_discount_1').val(price.toFixed(2));
         $('#sub_discount_val_1').val(enablePerFinal_1);
         price = fixedCharge_TotalAmount - price;
-    
+
         console.log("sub_total after parse float", price);
-            $('#sub_total_1').val(price.toFixed(2));
+        $('#sub_total_1').val(price.toFixed(2));
         this.gross_total();
 
       } else {
@@ -1545,15 +1589,15 @@ formattedDate: string;
     }
     else {
       for (let a = 0; a < this.did_Invice_fixed_charges.value.fixedAddresses.length; a++) {
-        
-   fixedCharge_TotalAmount +=parseFloat($('#amt_1_' + a).val());
+
+        fixedCharge_TotalAmount += parseFloat($('#amt_1_' + a).val());
 
         console.log("dummy inside", fixedCharge_TotalAmount)
-      
+
       }
       price = fixedCharge_TotalAmount - enablePriceFinal_1;
-     
-        console.log('price_fin' + price);
+
+      console.log('price_fin' + price);
       $('#sub_total_1').val(price.toFixed(2));
       $('#sub_discount_1').val(enablePriceFinal_1);
       $('#sub_discount_val_1').val(enablePriceFinal_1);
@@ -1587,7 +1631,7 @@ formattedDate: string;
       }
 
       this.sub_total_glb1 = total_amt_tot;
-       $('#sub_total_2').val(total_amt_tot.toFixed(2));
+      $('#sub_total_2').val(total_amt_tot.toFixed(2));
       console.log('sub_total =' + total_amt_tot);
 
     }
@@ -1611,8 +1655,8 @@ formattedDate: string;
       $('#sub_total_2').val('');
       if (enablePerFinal_2 != '') {
         for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
-        
-            usageCharge_TotalAmount +=parseFloat($('#amt2_'+a).val());
+
+          usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1640,23 +1684,23 @@ formattedDate: string;
     else {
       for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
-         usageCharge_TotalAmount +=parseFloat($('#amt2_' + a).val());
+        usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       usage_price = usageCharge_TotalAmount - enablePriceFinal_2;
       console.log('usage_price_fin-----tst-II' + usage_price);
-    
+
       $('#sub_total_2').val(usage_price.toFixed(2));
       $('#sub_discount_2').val(enablePriceFinal_2);
       $('#sub_discount_val_2').val(enablePriceFinal_2);
       this.gross_total();
     }
 
- 
+
     //  $('#sub_total_2').val(usage_price.toFixed(2));
-     $('#sub_total_2').val(usage_price.toFixed(2));
+    $('#sub_total_2').val(usage_price.toFixed(2));
 
 
     this.getTaxCals();
@@ -1709,8 +1753,8 @@ formattedDate: string;
       if (enablePerFinal_3 != '') {
         for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
-      
-          usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
+
+          usageCharge_TotalAmount += parseFloat($('#amt3_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1718,7 +1762,7 @@ formattedDate: string;
         console.log("dummy outside", usageCharge_TotalAmount)
 
 
-           other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100);
+        other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100);
         $('#sub_discount_3').val(other_price.toFixed(2));
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
@@ -1738,14 +1782,14 @@ formattedDate: string;
     else {
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
-           usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
+        usageCharge_TotalAmount += parseFloat($('#amt3_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
       }
       other_price = usageCharge_TotalAmount - enablePriceFinal_3;
       console.log('other_price_fin' + other_price);
-       $('#sub_total_3').val(other_price.toFixed(2));
+      $('#sub_total_3').val(other_price.toFixed(2));
       $('#sub_discount_3').val(enablePriceFinal_3);
       $('#sub_discount_val_3').val(enablePriceFinal_3);
       this.gross_total();
@@ -1769,10 +1813,10 @@ formattedDate: string;
     var sub_total1, sub_total2, sub_total3: any = 0;
 
     sub_total1 = $('#sub_total_1').val();
-  
+
     console.log("sub_total1", sub_total1);
     sub_total2 = $('#sub_total_2').val();
- 
+
     console.log("sub_total2", sub_total2);
     sub_total3 = $('#sub_total_3').val();
 
@@ -1791,7 +1835,7 @@ formattedDate: string;
       total_amt = (parseFloat(sub_total2)) + (parseFloat(sub_total3));
       console.log("total amount 011", total_amt);
     } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 == '') {
-       total_amt = (parseFloat(sub_total1))
+      total_amt = (parseFloat(sub_total1))
       console.log("total amount 100", total_amt);
     } else if (sub_total1 !== '' && sub_total2 == '' && sub_total3 !== '') {
       total_amt = (parseFloat(sub_total1)) + (parseFloat(sub_total3));
@@ -1806,7 +1850,7 @@ formattedDate: string;
     this.grossTotal_BeforeDiscount = total_amt.toFixed(2);
     console.log("total_amt-gross", total_amt.toFixed(2));
     gross_tot += parseFloat(total_amt);
-   
+
     $('#section3_gross_total').val(gross_tot.toFixed(2));
 
     this.grossTotalAfterDiscount();
@@ -1829,13 +1873,13 @@ formattedDate: string;
 
       if (enablePerFinal_4 != '') {
 
-       dis_etr = (parseFloat(enablePerFinal_4) * parseFloat(final_tot) / 100);
+        dis_etr = (parseFloat(enablePerFinal_4) * parseFloat(final_tot) / 100);
 
-         $('#finalDiscount_amt').val(dis_etr.toFixed(2));
+        $('#finalDiscount_amt').val(dis_etr.toFixed(2));
 
         price = final_tot - dis_etr;
 
-         $('#section3_gross_total_afterDiscount').val(price.toFixed(2));
+        $('#section3_gross_total_afterDiscount').val(price.toFixed(2));
 
 
 
@@ -1845,7 +1889,7 @@ formattedDate: string;
       directFinal = final_tot - enablePriceFinal_4;
 
       $('#finalDiscount_amt').val(enablePriceFinal_4);
-       $('#section3_gross_total_afterDiscount').val(directFinal.toFixed(2));
+      $('#section3_gross_total_afterDiscount').val(directFinal.toFixed(2));
 
     }
 
@@ -1875,10 +1919,10 @@ formattedDate: string;
     var directFinal: any;
     if (disType == 'per' && enablePerFinal_4_AD != "") {
 
-        price = (parseFloat(enablePerFinal_4_AD) * parseFloat(final_tot) / 100);
+      price = (parseFloat(enablePerFinal_4_AD) * parseFloat(final_tot) / 100);
       ept = final_tot - price;
 
-       $('#finalDiscount_amt').val(price.toFixed(2));
+      $('#finalDiscount_amt').val(price.toFixed(2));
       $('#section3_gross_total_afterDiscount').val(ept.toFixed(2));
       getTax = (parseFloat(ept) * parseFloat(this.tax_per_mod) / 100);
       $('#tax_amt_id').val(getTax.toFixed(2));
@@ -1887,7 +1931,7 @@ formattedDate: string;
     else if (disType == 'amt' && enablePriceFinal_4_AD != "") {
       directFinal = final_tot - enablePriceFinal_4_AD;
 
-      $('#finalDiscount_amt').val(enablePriceFinal_4_AD.toFixed(2));
+      $('#finalDiscount_amt').val(enablePriceFinal_4_AD);
       $('#section3_gross_total_afterDiscount').val(directFinal.toFixed(2));
 
 
@@ -1907,14 +1951,14 @@ formattedDate: string;
     if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
       getafterdiscountval = parseFloat($('#section3_gross_total').val());
       test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
-  test = test.toFixed(2);
-     
-        $('#section3_grand_total').val(test);
+      test = test.toFixed(2);
+
+      $('#section3_grand_total').val(test);
 
     } else {
       getafterdiscountval = $('#section3_gross_total_afterDiscount').val();
       test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
- test = test.toFixed(2);
+      test = test.toFixed(2);
       $('#section3_grand_total').val(test);
 
 

@@ -161,3 +161,36 @@
 #suggestions{z-index: 99;}
 /* ---------------------------------KS-CODE--------------------------------- */
 
+
+
+#ActionIdxx1 .userDatatable table tbody tr:first-child td {
+  background-color: #FFDAB9;
+ 
+}
+#ActionIdxx1 .userDatatable table tbody tr:nth-child(2) td {
+  background-color: #98FB98;
+}
+#ActionIdxx1 .userDatatable table tbody tr:nth-child(3) td {
+  background-color: #C0C0C0;
+}
+#ActionIdxx1 .userDatatable table tbody tr:nth-child(4) td {
+  background-color: #fc9388;
+}
+#ActionIdxx1 .userDatatable table tbody tr:nth-child(5) td {
+  background-color: #FFF8DC;
+}
+#ActionIdxx1 .userDatatable table tbody tr:nth-child(6) td {
+  background-color: #8abdff;
+}
+#ActionIdxx1 .userDatatable table tbody tr:nth-child(7) td {
+  background-color: #FFC0CB;
+}
+#ActionIdxx1 .userDatatable table tbody tr:last-child td {
+  background-color: #f3c267;
+}
+#ActionIdxx1  .table-responsive   .table-borderless{
+  border: 2px dotted #000;
+}
+#ActionIdxx1  .userDatatable table td {border-bottom: 1px dotted #66278f;}
+
+

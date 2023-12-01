@@ -80,6 +80,8 @@ export class NavbarComponent implements OnInit {
   Invoice_revenue_send: any;
   isColorInputDisabled = false;
   Customer_revenue_send: any;
+  roles: string;
+  GlobalSearchPermission: any;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -153,7 +155,8 @@ export class NavbarComponent implements OnInit {
     }, 2000);
     this.PageList();
     this.searchGlobalList();
-
+    this.roles = localStorage.getItem("role");
+    this.get_permission();
     this.testVariable = [{ "id": 1, "name": "Credit Note" }, { "id": 2, "name": "Customer New" }, { "id": 3, "name": "Customer Project" }, { "id": 4, "name": " DID Number" }]
     console.log(this.testVariable)
     this.GlobalSearch = new FormGroup({
@@ -172,7 +175,16 @@ export class NavbarComponent implements OnInit {
     });
 
   }
-
+  get_permission(){
+    // console.log("this.roles",this.roles)
+    var k:any = this.roles.split(',');
+    for(var i=0; i<=k.length;i++){
+      if(k[i]==1148){
+        this.GlobalSearchPermission = k[i]
+      }
+    }
+    console.log(this.GlobalSearchPermission);
+  }
   selectEventCustomer(item: any) {
     
     this.searchResultTest = item.customerName;

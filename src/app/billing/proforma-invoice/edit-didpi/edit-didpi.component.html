@@ -171,7 +171,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-12">
+                    <!-- <div class="col-lg-12">
                         <div class="form-group row">
                             <label for="Ship_By" class="col-lg-12 col-form-label">Bill Code</label>
                             <div class="col-lg-12">
@@ -186,7 +186,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
 
@@ -373,7 +373,7 @@
                             <label for="curren" class="col-lg-12 col-form-label">Currency</label>
                             <div class="col-lg-12">
 
-                                <select id="curren" class="form-control" formControlName="Currency"
+                                <select id="curren5" class="form-control" formControlName="Currency"
                                     (change)="getCurrencyValues($event)">
                                     <option [ngValue]="null" selected disabled>Select Currency</option>
                                     <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
@@ -399,7 +399,7 @@
                             <label for="Payment" class="col-lg-12 col-form-label">Payment Via</label>
                             <div class="col-lg-12">
 
-                                <select id="Payment" class="form-control" formControlName="PaymentVia">
+                                <select id="Payment5" class="form-control" formControlName="PaymentVia">
                                     <option [ngValue]="null" selected disabled>Select Payment Via</option>
                                     <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
                                         {{payment.paymentvia_name}}
@@ -1207,7 +1207,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" formControlName="section3_Terms1"
-                                            value="{{this.section3_Terms1}}" id="section3_Terms1" />
+                                             id="section3_Terms1" />
 
                                     </div>
 
@@ -1219,7 +1219,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" formControlName="section3_Terms2"
-                                            value="{{this.section3_Terms2}}" id="section3_Terms2" />
+                                            id="section3_Terms2" />
 
                                     </div>
 
@@ -1231,7 +1231,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" formControlName="section3_Terms3"
-                                            value="{{this.section3_Terms3}}" id="section3_Terms3" />
+                                            id="section3_Terms3" />
 
                                     </div>
 
@@ -1243,7 +1243,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" formControlName="section3_Terms4"
-                                            value="{{this.section3_Terms4}}" id="section3_Terms4" />
+                                            id="section3_Terms4" />
 
                                     </div>
 
@@ -1255,7 +1255,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" formControlName="section3_Terms5"
-                                            value="{{this.section3_Terms5}}" id="section3_Terms5" />
+                                             id="section3_Terms5" />
 
                                     </div>
 
@@ -1297,11 +1297,11 @@
                                         <input type="checkbox" formControlName="section3_select_additional_signature"
                                             (change)="eventCheckSelectAdditionalSignature($event)"
                                             checked="{{this.invoiceAddSignatureCHKShowState==1?'checked':''}}" /><br>
-                                        <div id="signature_img_id" style="display:none">
+                                        <div id="signature_img_id"  *ngIf="this.checkbox_selectAdditionalSignature==true">
                                             <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
                                                 height="80px" width="100px">
                                         </div>
-                                        <div id="signature_message_id" style="display:none">
+                                        <div id="signature_message_id"  *ngIf="this.checkbox_selectAdditionalSignature==false">
                                             <label style="font-style: italic;color:#009688">
                                                 (Signature not available. Ask your administrator to upload your
                                                 signature if required)
@@ -1319,7 +1319,7 @@
                                     <div class="col-lg-6 mt-2" style="text-align: right;">
                                         <label>
                                             Add to Signature
-
+                                           
                                         </label>
                                     </div>
                                     <div class="col-lg-6">
@@ -1328,16 +1328,20 @@
                                             (change)="eventCheckSelectAdditionalSignature($event)"
                                             checked="{{this.invoiceAddSignatureCHKShowState==1?'checked':''}}" /><br>
                                         <div *ngIf="this.checkbox_selectAdditionalSignature==true">
-                                            <img src="{{this.invoiceAddSignature_filename}}" alt="No image to display "
+                                            <img src="{{invoiceAddSignature_filename}}" alt="No image to display "
                                                 height="80px" width="100px">
+                                        </div>
+                                        <div *ngIf="this.checkbox_selectAdditionalSignature==false">
+                                            <label style="font-style: italic;color:#009688">
+                                                (Signature not available. Ask your administrator to upload your
+                                                signature if required)
+                                            </label>
                                         </div>
 
                                     </div>
 
                                 </div>
                             </div>
-
-
 
 
                             <div class="col-lg-12">
@@ -1447,7 +1451,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="fixedSaveDiscount()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="fixedSaveDiscount();getTaxCals_2()">Save</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>
@@ -1630,7 +1634,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="usageSaveDiscount()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="usageSaveDiscount();getTaxCals_2()">Save</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>
@@ -1693,7 +1697,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="otherSaveDiscount()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="otherSaveDiscount();getTaxCals_2()">Save</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>
@@ -1760,7 +1764,7 @@
             </div>
             <div class="modal-footer">
 
-                <button type="button" class="btn btn-primary" (click)="finalSaveDiscount()">Save</button>
+                <button type="button" class="btn btn-primary" (click)="finalSaveDiscount();getTaxCals_2()">Save</button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>

@@ -50,6 +50,11 @@ export class ResellerPaymentComponent implements OnInit {
   edit_resellercomm_list: any;
   reseller_comm_id: any;
   reseller_id: any;
+  cust_password: any;
+  reseller_email: any;
+  unpaid_amount: any;
+  filterCommissionList: { id: number; value: string; }[];
+  RP_SharePermissionForm: FormGroup;
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
 
@@ -80,6 +85,15 @@ export class ResellerPaymentComponent implements OnInit {
       { id: 7, value: 'Aracely Renner DVM', isSelected: false },
       { id: 8, value: 'Genoveva Luettgen', isSelected: false }
     ];
+    this.filterCommissionList = [
+      { id: 1, value: '0-10' },
+      { id: 2, value: '10-15' },
+      { id: 3, value: '15-20' },
+      { id: 4, value: '20-25'},
+      { id: 5, value: '25-30' },
+      { id: 6, value: 'Above 30' },
+     
+    ];
     this.getCheckedItemList();
 
     this.resellerPaymentForm = new FormGroup({
@@ -98,7 +112,10 @@ export class ResellerPaymentComponent implements OnInit {
       'RP_pay_balance': new FormControl(null),
       'RP_pay_amount': new FormControl(null),
       'RP_pay_paymenttype': new FormControl(null)
-    })
+    });
+    this.RP_SharePermissionForm=new FormGroup({
+
+    });
 
     this.doubleArray = [
       [{ id: 1, value: 'Elenor Anderson', isSelected: false },
@@ -233,6 +250,9 @@ export class ResellerPaymentComponent implements OnInit {
         this.payoutAmountDetails = response.payout_amount_details;
         this.payCurrencyName = response.currencyName;
         this.resellerList = response.reseller_list;
+        this.cust_password = response.reseller_base_info.cust_password;
+        this.reseller_email = response.reseller_base_info.reseller_email;
+        this.unpaid_amount = response.reseller_base_info.unpaid_amount;
         this.CurrencyTotalList = response.reseller_payment_summary.currencyTotal;
         this.CurrencyTotalAll = response.reseller_payment_summary.currency_total_amt.total_price;
         this.YearTotalList = response.reseller_payment_summary.yearTotal;
@@ -506,6 +526,63 @@ export class ResellerPaymentComponent implements OnInit {
           position: 'topRight'
         });
         console.log("final error", error);
+      };
+  }
+
+ 
+
+  ResellerPaySharePermissionEdit(reseller_comm_id: any,reseller_id:any,i:any) {
+    $("#faqhead" + i).modal("hide");
+    this.spinner.show();
+  
+    let api_req: any = new Object();
+    let api_sharePer: any = new Object();
+    api_req.moduleType = "reseller";
+    api_req.api_url = "reseller/reseller_comm_shared_option_update";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_sharePer.action = "reseller_comm_shared_option_update";
+
+    api_sharePer.reseller_comm_id = reseller_comm_id;
+    api_sharePer.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_sharePer;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+
+       
+        this.resellerProcessPaymentIIForm.patchValue({
+          'RP_pay_total':response.conversionRate,
+          'RP_pay_paidAmount':response.paid_amt,
+          'RP_pay_balance':response.bal_amt_str,
+          'RP_pay_amount':response.bal_amt,
+          'RP_pay_paymenttype':response.paid_details,
+          'RP_pay_descr':response.paid_details,
+
+          // 'RP_pay_descr':response.paid_details,
+
+        })
+        this.spinner.hide();
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+        
       };
   }
 

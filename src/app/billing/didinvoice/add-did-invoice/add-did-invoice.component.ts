@@ -96,7 +96,7 @@ export class AddDidInvoiceComponent implements OnInit {
   row_cnt_mod: any;
   sub_total_glb1: any;
   sub_total_glb2: any;
-  did_bill_codexx: any;
+  // did_bill_codexx: any;
 
   //export state-check box
   export_state: any;
@@ -155,8 +155,11 @@ subTotalForm2:FormGroup;
 subTotalForm3:FormGroup;
 // singapore date & time
 formattedDate: string;
+ 
 
-
+  fixedCharge_Flag: boolean=true;
+  usageCharge_Flag: boolean=true;
+  otherCharge_Flag: boolean=true;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, 
     @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router, private spinner: NgxSpinnerService) {
@@ -182,10 +185,10 @@ formattedDate: string;
     // this.did_bill_code_section2=1445;
 
 
-    this.did_bill_codexx = [
-      { "customer_bill_code_id": 1445, "bill_code": -810 },
+    // this.did_bill_codexx = [
+    //   { "customer_bill_code_id": 1445, "bill_code": -810 },
 
-    ];
+    // ];
     // this.did_bill_code_section1=1445;
     // this.did_bill_code_section11 = [
     //   { "customer_bill_code_id": 1445 ,"bill_code":-810}
@@ -215,7 +218,7 @@ formattedDate: string;
       'salesRep': new FormControl(),
       'salesRep_id': new FormControl(null),
       'ShipBy': new FormControl(),
-      'billCode_0': new FormControl(),
+      // 'billCode_0': new FormControl(),
       'ShipDate': new FormControl((new Date()).toISOString().substring(0, 10)),
       'ship_attn': new FormControl(),
       'terms': new FormControl(),
@@ -496,9 +499,9 @@ formattedDate: string;
     console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
-    var radioSelectFooter = evt.target.value;
+     this.radioSelectFooter = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", radioSelectFooter);
+    console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
   }
   handleChangeExtraLogo(event: any) {
@@ -976,7 +979,7 @@ formattedDate: string;
         }
 
 
-        this.did_bill_codexx = response.customer_billcode_arr;
+        // this.did_bill_codexx = response.customer_billcode_arr;
         this.did_bill_code_section1 = response.customer_billcode_arr;
 
         this.addDid_section1.patchValue({
@@ -1062,19 +1065,19 @@ formattedDate: string;
     // api_saveDid_req.billDate = this.addDid_section1.value.Date;
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
 
-    if (this.did_bill_code === null) {
+    // if (this.did_bill_code === null) {
 
-      iziToast.warning({
-        message: "Fill Bill Code",
-        position: 'topRight'
-      });
-      this.spinner.hide();
-      return false;
+    //   iziToast.warning({
+    //     message: "Fill Bill Code",
+    //     position: 'topRight'
+    //   });
+    //   this.spinner.hide();
+    //   return false;
 
 
-    } else {
-      api_saveDid_req.did_bill_code = this.did_bill_code;
-    }
+    // } else {
+    //   api_saveDid_req.did_bill_code = this.did_bill_code;
+    // }
 
     api_saveDid_req.po_no = this.addDid_section1.value.PoNo;
     // api_saveDid_req.po_date = this.addDid_section1.value.PoDate;
@@ -1141,11 +1144,23 @@ formattedDate: string;
       addr1[i].dis_per1 = $('#enablePerFinal_1' + i).val();
       addr1[i].dis_amt1 = $('#enablePriceFinal_1' + i).val();
       addr1[i].dis_type1 = $('#fix_DiscountTYpe' + i).val();
+      if($('#particular_1_' + i).val()==''){
+        this.fixedCharge_Flag=false;
+      }
 
     }
+    if(this.fixedCharge_Flag==true){
+      
+      api_saveDid_req.fixed_value = addr1;
+      }else{
+        // iziToast.error({
+        //   message: "Product Details missing in Fixed Charge",
+        //   position: 'topRight'
+        // });
+        
+      } 
 
-
-    api_saveDid_req.fixed_value = addr1;
+    
 
     // usage charge
 
@@ -1164,18 +1179,31 @@ formattedDate: string;
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].did_bill_code_chd = this.did_bill_code_section2;
+      addr2[i].did_bill_code_chd = $('#billCode'+i).val();
      
 
       addr2[i].dis_per2 = $('#enablePerFinal_2' + i).val();
       addr2[i].dis_amt2 = $('#enablePriceFinal_2' + i).val();
       addr2[i].dis_type2 = $('#use_DiscountTYpe_per' + i).val();
+      if($('#particular2_' + i).val()==''){
+        this.usageCharge_Flag=false;
+      }
 
     }
+    if(this.usageCharge_Flag==true){
+      
+      api_saveDid_req.usage_value = addr2;
+      }else{
+        // iziToast.error({
+        //   message: "Product Details missing in Usage Charge",
+        //   position: 'topRight'
+        // });
+        
+      }
 
     console.log('addr2' + addr2);
 
-    api_saveDid_req.usage_value = addr2;
+   
     if (this.did_bill_code_section2 === null || this.did_bill_code_section2 == undefined || this.did_bill_code_section2 == '') {
 
       iziToast.warning({
@@ -1212,10 +1240,23 @@ formattedDate: string;
       addr3[i].dis_per3 = $('#enablePerFinal_3' + i).val();
       addr3[i].dis_amt3 = $('#enablePriceFinal_3' + i).val();
       addr3[i].dis_type3 = $('#oth_DiscountTYpe_per' + i).val();
+      if($('#particular3_' + i).val()==''){
+        this.otherCharge_Flag=false;
+      }
     }
+    if(this.otherCharge_Flag==true){
+      
+      api_saveDid_req.other_values = addr3;
+      }else{
+        // iziToast.error({
+        //   message: "Product Details missing in other charge",
+        //   position: 'topRight'
+        // });
+        
+      }
   
 
-    api_saveDid_req.other_values = addr3;
+ 
 
     api_saveDid_req.sub_total_1= $('#sub_total_1' ).val();
     api_saveDid_req.sub_total_2= $('#sub_total_2' ).val();
@@ -1233,6 +1274,7 @@ formattedDate: string;
     api_saveDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
     api_saveDid_req.taxAmt = $('#Tax_amt_id').val();
     api_saveDid_req.taxPer = $('#tax_per_hd_id').val();
+    api_saveDid_req.final_dis_type = $('#final_discount_type').val();
     api_saveDid_req.shippingName = this.addDid_section3.value.section3_shipping_amt_name_txtbox;
     api_saveDid_req.addName = this.addDid_section3.value.section3_bankingCharge_amt_name_txtbox;
     api_saveDid_req.shippingAmt = $('#shipping_amt_id').val();
@@ -1520,7 +1562,7 @@ formattedDate: string;
 
         price = (parseFloat(enablePerFinal_1) * (fixedCharge_TotalAmount) / 100).toFixed(2);
         console.log(price);
-        $('#sub_discount_1').val(price.toFixed(2));
+        $('#sub_discount_1').val(price);
         $('#sub_discount_val_1').val(enablePerFinal_1);
         price = fixedCharge_TotalAmount - price;
         console.log("sub_total", price);
@@ -1613,7 +1655,7 @@ formattedDate: string;
 
         usage_price = (parseFloat(enablePerFinal_2) * (usageCharge_TotalAmount) / 100).toFixed(2);
         console.log(usage_price);
-        $('#sub_discount_2').val(usage_price.toFixed(2));
+        $('#sub_discount_2').val(usage_price);
         $('#sub_discount_val_2').val(enablePerFinal_2);
         usage_price = usageCharge_TotalAmount - usage_price;
         console.log("sub_total", usage_price);
@@ -1710,7 +1752,7 @@ formattedDate: string;
 
         other_price = (parseFloat(enablePerFinal_3) * (usageCharge_TotalAmount) / 100).toFixed(2);
         console.log(other_price);
-        $('#sub_discount_3').val(other_price.toFixed(2));
+        $('#sub_discount_3').val(other_price);
         $('#sub_discount_val_3').val(enablePerFinal_3);
         other_price = usageCharge_TotalAmount - other_price;
         console.log("sub_total", other_price);

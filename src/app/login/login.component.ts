@@ -54,6 +54,7 @@ export class LoginComponent implements OnInit {
       );
     this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
     var s = this;
+    console.log('s',s); 
     this.websocket.onopen = function (event: any) {
       console.log('socket connected');
     };
