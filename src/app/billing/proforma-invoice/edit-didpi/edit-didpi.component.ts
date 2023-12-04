@@ -2042,7 +2042,9 @@ this.spinner.hide();
     api_updateDid_req.terms = this.addDid_section1.value.terms;
     // api_updateDid_req.currency = this.addDid_section1.value.Currency;
     api_updateDid_req.currency = $('#curren_editdidpi').val();
-    api_updateDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
+    
+    // api_updateDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
+    api_updateDid_req.conversionRate = $('#ccr_editdidpi').val();
     // api_updateDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
 
     api_updateDid_req.paymentVIA = $('#Payment_editdidpi').val();
