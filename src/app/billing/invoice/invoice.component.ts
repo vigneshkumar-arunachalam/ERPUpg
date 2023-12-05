@@ -291,6 +291,15 @@ export class InvoiceComponent implements OnInit {
   yValue: number = 10;
   newDataCount: number = 10;
   chart1: any;
+ PaymentProcessDatee: any;
+  pipe: any;
+  myFormattedDate: any;
+  myFormattedDate1: any;
+  paymentNotes: any;
+  PP_paymentMethod: any;
+  creditResponse: any;
+  PP_PaymentProcessID: any;
+  paymentDetails_paymentLength: any;
   testing = false;
   Global_search_filter = false;
   invoicePermissionList_suspend: any;
@@ -1723,7 +1732,25 @@ export class InvoiceComponent implements OnInit {
     $("#paytype").val('');
     $("#dateee").val('');
   }
+
+
   processPaymentEdit(id: any, i: any) {
+    $("#invoiceID").val('');
+    $("#toal").val('');
+    $("#biller").val('');
+    $("#paid").val('');
+    $("#customer").val('');
+    $("#owing").val('');
+    $("#amount").val('');
+    $("#note").val('');
+    $("#paytype").val('');
+    $("#dateee").val('');
+    this.invoiceDetails_payment = '';
+    this.paymentType_payment = '';
+    this.paymentDetails_payment = '';
+
+
+    
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.billID_processPayment = id;
@@ -1742,11 +1769,43 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       this.spinner.hide();
-      if (response.status == true) {
+      if (response != '') {
         this.invoiceDetails_payment = response.invoice_details;
         this.paymentType_payment = response.payment_type;
         this.paymentDetails_payment = response.payment_details;
+        this.paymentDetails_paymentLength=response.payment_details.length;
+       
+        if (this.paymentDetails_payment == '') {
+          $("#invoiceID").val('');
+          $("#toal").val('');
+          $("#biller").val('');
+          $("#paid").val('');
+          $("#customer").val('');
+          $("#owing").val('');
+          $("#amount").val('');
+          $("#note").val('');
+          $("#paytype").val('');
+          $("#dateee").val('');
+        }
+        if (response.payment_details != '') {
+          //  $("#dateee").val(response.invoice_details[0].billDate)
+          this.paymentNotes = response.payment_details[0].notes;
+          this.PP_PaymentProcessID = response.payment_details[0].processId;
+          this.processPaymentForm.patchValue({
+
+            'note': response.payment_details[0].notes,
+            // 'date': response.payment_details[0].processDate,
+            'paymenttype': response.payment_details[0].paymentMode,
+
+          });
+        }
+        //  this.PaymentProcessDatee = response.invoice_details[0].billDate;
+        const now = Date.now();
+        // this.myFormattedDate = this.pipe.transform(now, 'short');
+        // this.myFormattedDate1 = this.pipe.transform(this.PaymentProcessDatee, 'short');
+
         this.processPaymentForm.patchValue({
+          'date': response.invoice_details[0].billDate,
           'invoiceID': response.invoice_details[0].invoice_no,
           'toal': response.invoice_details[0].netPayment,
           'biller': response.invoice_details[0].billerName,
@@ -1755,13 +1814,16 @@ export class InvoiceComponent implements OnInit {
           'owing': response.owing_amount,
           'amount': response.owing_amount,
 
-        })
+
+        });
+
         this.spinner.hide();
 
         this.getInvoice1({});
       } else {
 
         $('#processPaymentId_inv').modal("hide");
+        
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1776,75 +1838,8 @@ export class InvoiceComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  // processPaymentUpdate() {
-  //   this.spinner.show();
-  //   let api_req: any = new Object();
-  //   let api_processpaymentUpdate: any = new Object();
-  //   api_req.moduleType = "proforma";
-  //   api_req.api_url = "proforma/proforma_invoice_payment_update";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   api_processpaymentUpdate.action = "proforma_invoice_payment_update";
 
-  //   api_processpaymentUpdate.billId = this.billID_processPayment;
-  //   api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
-  //   if (this.processPaymentForm.value.amount === null) {
-  //     this.spinner.hide();
-  //     iziToast.error({
-  //       message: "Amount Value missing",
-  //       position: 'topRight'
-  //     });
-
-  //     return false;
-  //   }
-
-  //   api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-  //   api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
-  //   api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
-  //   if (this.processPaymentForm.value.paymenttype === null) {
-  //     this.spinner.hide();
-  //     iziToast.error({
-  //       message: "Payment Type Missing",
-  //       position: 'topRight'
-  //     });
-  //     return false;
-  //   }
-  //   api_processpaymentUpdate.note = this.processPaymentForm.value.note;
-  //   api_req.element_data = api_processpaymentUpdate;
-  //   $("#processPaymentId_inv").attr("disabled", true);
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-  //     $("#processPaymentId_inv").removeAttr("disabled");
-  //     if (response.status == true) {
-
-  //       this.spinner.hide();
-  //       $('#processPaymentId_inv').modal("hide");
-  //       iziToast.success({
-  //         message: "Payment Process Updated Successfully",
-  //         position: 'topRight'
-
-  //       });
-  //       this.getInvoice1({});
-
-  //     } else {
-  //       this.spinner.hide();
-  //       $('#processPaymentId_inv').modal("hide");
-  //       iziToast.warning({
-  //         message: "Payment Process not displayed. Please try again",
-  //         position: 'topRight'
-  //       });
-
-  //     }
-  //   }),
-  //     (error: any) => {
-
-  //       iziToast.error({
-  //         message: "Sorry, some server issue occur. Please contact admin",
-  //         position: 'topRight'
-  //       });
-  //       console.log("final error", error);
-
-  //     };
-  // }
+ 
   getEmailDetails(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.email_TemplateSelection = false;
@@ -1922,6 +1917,49 @@ export class InvoiceComponent implements OnInit {
     this.getInvoice1({});
     tinymce.activeEditor.setContent("");
   }
+  PP_PaymentMethod(event: any) {
+    this.PP_paymentMethod = event.target.value;
+    console.log("this.PP_paymentMethod", this.PP_paymentMethod)
+    this.PP_PaymentMethodDropdown();
+  }
+  PP_PaymentMethodDropdown() {
+
+    let api_req: any = new Object();
+    let api_pay_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "invoice/get_credit_note_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_pay_req.action = "get_credit_note_details";
+    api_pay_req.user_id = this.user_ids;
+    api_pay_req.billId = this.billID_processPayment;
+
+    api_pay_req.paytype_id = this.PP_paymentMethod;
+    api_req.element_data = api_pay_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+
+      if (response.status== true) {
+       
+        this.creditResponse = response.credit_note;
+        console.log("this.creditResponse",this.creditResponse)
+        this.spinner.hide();
+      }
+      else {
+        // iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
+
+      }
+    });
+
+
+
+
+  }
   processPaymentUpdate() {
     this.spinner.show();
 
@@ -1941,7 +1979,7 @@ export class InvoiceComponent implements OnInit {
         position: 'topRight'
       });
       return false;
-    } else{
+    } else {
       api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
     }
     api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
@@ -1998,6 +2036,7 @@ export class InvoiceComponent implements OnInit {
 
       };
   }
+
   paymentProcessEditShow(i:any) {
 
     this.spinner.show();
@@ -2023,11 +2062,10 @@ export class InvoiceComponent implements OnInit {
         // $('#dateee').val(response.payment_edit[0].processDate_show);
       
           this.processPaymentForm.patchValue({
-           // 'date': response.payment_edit[0].processDate_show,
+            'date': response.payment_edit[0].processDate_show,
             'paid': response.payment_edit[0].paidAmount,
             'paymenttype': response.payment_edit[0].paymentMode,
             'note': response.payment_edit[0].notes,
-            'amount': response.payment_edit[0].paidAmount,
          
   
   
@@ -2053,6 +2091,8 @@ export class InvoiceComponent implements OnInit {
       };
 
   }
+  
+
 
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;

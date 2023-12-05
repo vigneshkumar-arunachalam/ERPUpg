@@ -1136,7 +1136,45 @@ export class EditDidpiComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_TaxDropdown_req.action = "tax_dropdown";
     api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
+    // api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
+    api_TaxDropdown_req.billerId =   $('#cmp_name_didpi').val();
+  
+   // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
+    api_req.element_data = api_TaxDropdown_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+         this.TaxDropdownList = response.tax_list;
+        // setTimeout(() => {
+        //   this.addDid_section3.patchValue({
+        //     'section3_gst_dropdown': response.default_tax_id,
+        //   });
+
+        // }, 500);
+         $('#billerID').val(response.default_tax_id)
+        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+        console.log('response.default_tax_id', response.default_tax_id);
+
+
+
+      }
+
+
+
+    });
+  }
+  TaxDropdown1(b:any) {
+
+    let api_req: any = new Object();
+    let api_TaxDropdown_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/tax_dropdown";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_TaxDropdown_req.action = "tax_dropdown";
+    api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_TaxDropdown_req.billerId = $('#cmp_name_didpi').val();
    // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
@@ -1672,6 +1710,7 @@ this.spinner.hide();
         this.did_bill_code_section15 = response.customer_billcode_arr;
         console.log(this.did_bill_code_section15);
         this.BillerID_CompanyName =response.billing_pararent_details[0].billerId;
+        this.TaxDropdown1(response.billing_pararent_details[0].billerId);
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));

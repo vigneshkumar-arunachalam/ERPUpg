@@ -269,47 +269,23 @@ export class EditinvoiceDIDComponent implements OnInit {
           // making edit
         }
        
-        this.editDidInvice();
+        
         this.EditShippingAddress = true;
 
       }
       );
-//  setTimeout(() => {
-//   this.addDidLoad();
-//       this.editDidInvice();
-//     }, 1500)
-
-    // this.route.queryParams
-    //   .subscribe(params => {
-    //     console.log("params output value", params);
-
-      
-    //     this.editDIDStateID = params['e_editDIDState'];
-
-    //     console.log("edit duplicate id", this.edit_Duplicate_ID);
-    //     console.log("edit DID state id", this.editDIDStateID);
+ this.addDidLoad();
+    this.editDidInvice();
 
 
-    //    this.editDidInvice();
-    //   }
-    //   );
 
     // setTimeout(() => {
     //   this.editDidInvice();
-    // }, 1500)
+    // }, 2000)
 
-    //  setTimeout(() => {
-    //     $('#sub_total_2').val(this.sub2Total_edit);
-    //  }, 1500)
-
+  
    
-    // setTimeout(() => {
-    //   this.addDidLoad();
-    //       this.editDidInvice();
-          
-    //     }, 1500)
-  this.addDidLoad();
-    this.editDidInvice();
+ 
     this.SelectExtraLogoCheckboxwithKey = [
 
       { name: 'IT Care', selected: false, id: 1 },
@@ -463,11 +439,7 @@ export class EditinvoiceDIDComponent implements OnInit {
 
 
     // $('#sub_total_2').val(this.sub2Total_edit);
-    setTimeout(() => {
-      $('#curren6').val(this.editCurrencyValue);
-    $('#Payment6').val(this.editpaymentVIAValue);
-          
-        }, 4500)
+ 
   
 
 
@@ -936,18 +908,21 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.addDid_section1.patchValue({
           // 'companyName':  this.billerID,
           'invoiceNo': response.invoice_no,
-          'Currency': response.currency_id,
+        //  'Currency': response.currency_id,
 
 
         });
 
-
+      $('#curren_editinvoicedid').val(response.currency_id);
+      $('#Payment_editinvoicedid').val(response.def_payment_via);
+      $('#ccr_editinvoicedid').val(response.conversionRate.currency_live_val);
+    
       }
       else {
         this.addDid_section1.patchValue({
 
           'invoiceNo': '',
-          'Currency': '',
+         // 'Currency': '',
         });
 
       }
@@ -1037,10 +1012,11 @@ export class EditinvoiceDIDComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
-        this.addDid_section1.patchValue({
-          'CurrencyConversionRate': response.currency_live_val,
+        $('#ccr_editinvoicedid').val(response.currency_live_val);
+        // this.addDid_section1.patchValue({
+        //   'CurrencyConversionRate': response.currency_live_val,
           
-        });
+        // });
         this.spinner.hide();
       }
       else {
@@ -1092,10 +1068,10 @@ export class EditinvoiceDIDComponent implements OnInit {
 
         //   this.companyNameVal = response.defaults_biller_id;
         this.tax_per_mod = response.percent_val;
-        this.getProformaBillerDetails();
+      
         this.TaxDropdown();
         // this.getCustomerInvoiceDetails()
-        // this.getCustomerInvoiceDetails(response.defaults_biller_id);
+         this.getCustomerInvoiceDetails(response.defaults_biller_id);
       }
     });
   }
@@ -1157,22 +1133,63 @@ export class EditinvoiceDIDComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_TaxDropdown_req.action = "tax_dropdown";
     api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
+    api_TaxDropdown_req.billerId = $('#cmp_name_inveditdid').val();
+   // api_TaxDropdown_req.billerId = this.BillerID_CompanyName;
    // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        this.TaxDropdownList = response.tax_list;
-         setTimeout(() => {
-          this.addDid_section3.patchValue({
-            'section3_gst_dropdown': response.default_tax_id,
-          });
+         this.TaxDropdownList = response.tax_list;
+        // setTimeout(() => {
+        //   this.addDid_section3.patchValue({
+        //     'section3_gst_dropdown': response.default_tax_id,
+        //   });
 
-        }, 500);
-       
-      
+        // }, 500);
+         $('#billerID').val(response.default_tax_id)
+        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+        console.log('response.default_tax_id', response.default_tax_id);
+
+
+
+      }
+
+
+
+    });
+  }
+  TaxDropdown1(d:any) {
+
+    let api_req: any = new Object();
+    let api_TaxDropdown_req: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/tax_dropdown";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_TaxDropdown_req.action = "tax_dropdown";
+    api_TaxDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_TaxDropdown_req.billerId = d;
+   // api_TaxDropdown_req.billerId = this.addDid_section1.value.companyName;
+    api_req.element_data = api_TaxDropdown_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+         this.TaxDropdownList = response.tax_list;
+        // setTimeout(() => {
+        //   this.addDid_section3.patchValue({
+        //     'section3_gst_dropdown': response.default_tax_id,
+        //   });
+
+        // }, 500);
+         $('#billerID').val(response.default_tax_id)
+        // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
+        console.log('response.default_tax_id', response.default_tax_id);
+
+
+
       }
 
 
@@ -1500,11 +1517,13 @@ this.spinner.hide();
 
 
     this.taxValue = (8 * Number($('#section3_gross_total').val()) / 100).toFixed(2);
-    var tax_id = this.addDid_section3.value.section3_gst_dropdown;
+    // var tax_id = this.addDid_section3.value.section3_gst_dropdown;
+    var tax_id = $('#billerIDs_editinvoicedid').val();
     var tax: any;
     let api_req: any = new Object();
     let api_data_req: any = new Object();
-    this.taxIDGET=this.addDid_section3.value.section3_gst_dropdown;
+    // this.taxIDGET=this.addDid_section3.value.section3_gst_dropdown;
+    this.taxIDGET=$('#billerIDs_editinvoicedid').val();;
 
 
     api_req.moduleType = "quotation";
@@ -1523,6 +1542,8 @@ this.spinner.hide();
       if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (Number(response.percent_val) * Number($('#section3_gross_total').val()) / 100).toFixed(2);
         $('#Tax_amt_id').val(tax);
+        var s=$('#Tax_amt_id').val();
+        console.log("s value",s);
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
@@ -1533,6 +1554,8 @@ this.spinner.hide();
         tax = (Number(response.percent_val) * Number($('#section3_gross_total_afterDiscount').val()) / 100).toFixed(2);
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax);
+        var s=$('#Tax_amt_id').val();
+        console.log("s value",s);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
@@ -1554,7 +1577,9 @@ this.spinner.hide();
 
 
     this.taxValue = (8 * Number($('#section3_gross_total').val()) / 100).toFixed(2);
-    var tax_id = this.addDid_section3.value.section3_gst_dropdown;
+    // this.taxValue = (($('#billerIDs_editinvoicedid').val()) * Number($('#section3_gross_total').val()) / 100).toFixed(2);
+    var tax_id = $('#billerIDs_didpi').val();
+    //var tax_id = this.addDid_section3.value.section3_gst_dropdown;
     var tax: any;
     let api_req: any = new Object();
     let api_data_req: any = new Object();
@@ -1576,6 +1601,8 @@ this.spinner.hide();
       if ($('#section3_gross_total_afterDiscount').val() == '' || $('#section3_gross_total_afterDiscount').val() == 0) {
         tax = (response.percent_val) * $('#section3_gross_total').val() / 100;
         $('#Tax_amt_id').val(tax.toFixed(2));
+        var s=$('#Tax_amt_id').val();
+        console.log("s value",s);
        
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
@@ -1588,6 +1615,8 @@ this.spinner.hide();
       
         this.taxValue = tax;
         $('#Tax_amt_id').val(tax.toFixed(2));
+        var s=$('#Tax_amt_id').val();
+        console.log("s value",s);
         var taxadd = Number($('#section3_gross_total_afterDiscount').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
         $('#section3_grand_total').val(taxadd.toFixed(2));
@@ -1609,7 +1638,9 @@ this.spinner.hide();
 
 
     this.taxValue = (8 * Number($('#section3_gross_total').val()) / 100).toFixed(2);
-    var tax_id = this.addDid_section3.value.section3_gst_dropdown;
+    var tax_id = $('#billerIDs_editinvoicedid').val();
+   // var tax_id = this.addDid_section3.value.section3_gst_dropdown;
+
     console.log("tax_id",tax_id)
     var grossTotal_aftDis=$('#section3_gross_total_afterDiscount').val();
     var taxValue1 = (tax_id/100)*grossTotal_aftDis;
@@ -1673,7 +1704,8 @@ this.spinner.hide();
         this.did_bill_code_section15 = response.customer_billcode_arr;
         console.log(this.did_bill_code_section15);
         this.BillerID_CompanyName =response.billing_pararent_details[0].billerId;
-     
+        this.TaxDropdown1(response.billing_pararent_details[0].billerId);
+        this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
         $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
@@ -1706,9 +1738,9 @@ this.spinner.hide();
           // 'billCodev': response.bill_code_arr[0].customer_bill_code_id,
           'ShipDate': response.billing_pararent_details[0].ship_date,
           'terms': response.billing_pararent_details[0].terms,
-          'Currency': response.billing_pararent_details[0].currency,
-          'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
-          'PaymentVia': response.billing_pararent_details[0].paymentVIA,
+         // 'Currency': response.billing_pararent_details[0].currency,
+        //  'CurrencyConversionRate': response.billing_pararent_details[0].conversionRate,
+         // 'PaymentVia': response.billing_pararent_details[0].paymentVIA,
           'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
           'Jompay_logo': response.billing_pararent_details[0].jom_pay_logo,
 
@@ -1864,7 +1896,7 @@ this.spinner.hide();
           // 'section3_gross_total': response.billing_pararent_details[0].grossAmount,
 
           //row-3
-          'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
+          // 'section3_gst_dropdown': response.billing_pararent_details[0].taxId,
           'section3_taxAmt_txtbox': response.billing_pararent_details[0].taxAmt,
           'section3_tax_per_hd': response.billing_pararent_details[0].taxPer,
           
@@ -1942,14 +1974,33 @@ this.spinner.hide();
 
 
       }
-      $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
       this.getProformaBillerDetails();
-      this.finalSaveDiscount();
-      this.grossTotalAfterDiscount();
-     // $("#finalDiscount_amt").val(response.billing_pararent_details[0].grossAmount);
-      this.quotationAddSignature();
+      $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
+      $("#finalDiscount_amt").val(response.billing_pararent_details[0].discountAmount);
+      $("#section3_gross_total_afterDiscount").val(response.billing_pararent_details[0].grossAfterDiscount);
+     
+      $("#curren_editinvoicedid").val(response.billing_pararent_details[0].currency);
+      $("#ccr_editinvoicedid").val(response.billing_pararent_details[0].conversionRate);
+      $('#Payment_editinvoicedid').val(response.billing_pararent_details[0].paymentVIA);
+      $("#Tax_amt_id").val(response.billing_pararent_details[0].taxAmt);
+      setTimeout(() => {
+    
+        $("#billerIDs_editinvoicedid").val(response.billing_pararent_details[0].taxId);
+        $("#curren_editinvoicedid").val(response.billing_pararent_details[0].currency);
+        $("#ccr_editinvoicedid").val(response.billing_pararent_details[0].conversionRate);
+        $('#Payment_editinvoicedid').val(response.billing_pararent_details[0].paymentVIA);
+       
+          
+        }, 2000)
+
+    
+     // this.getProformaBillerDetails();
+     // this.finalSaveDiscount();
+    //  this.grossTotalAfterDiscount();
+     // 
+    //  this.quotationAddSignature();
    //   this.gross_total();
-      this.getTaxCals();
+    //  this.getTaxCals();
       // 
   //    this.fixedSaveDiscount();
 
@@ -1964,10 +2015,6 @@ this.spinner.hide();
 
    
 
-    setTimeout(() => {
-
-      $('#billerIDs').val(this.TaxValuEDIt);
-    }, 3000);
     
     // $('#sub_total_2').val(this.sub2Total_edit);
 
@@ -2026,9 +2073,14 @@ this.spinner.hide();
     api_updateDid_req.ship_date = this.addDid_section1.value.ShipDate;
     api_updateDid_req.s_attn = this.addDid_section1.value.Attn_2;
     api_updateDid_req.terms = this.addDid_section1.value.terms;
-    api_updateDid_req.currency = this.addDid_section1.value.Currency;
-    api_updateDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
-    api_updateDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
+    // api_updateDid_req.currency = this.addDid_section1.value.Currency;
+    api_updateDid_req.currency = $('#curren_editinvoicedid').val();
+    
+    // api_updateDid_req.conversionRate = this.addDid_section1.value.CurrencyConversionRate;
+    api_updateDid_req.conversionRate = $('#ccr_editinvoicedid').val();
+    // api_updateDid_req.paymentVIA = this.addDid_section1.value.PaymentVia;
+
+    api_updateDid_req.paymentVIA = $('#Payment_editinvoicedid').val();
     api_updateDid_req.reference_reseller_name = this.addDid_section1.value.ReferenceResellerName;
     api_updateDid_req.bills_logo_id = this.ExtralogoValue;
     api_updateDid_req.export_state = this.export_state;
@@ -2207,8 +2259,9 @@ this.spinner.hide();
     //section-3
     api_updateDid_req.grossTotal = $('#section3_gross_total').val();
     api_updateDid_req.discountAmount = $('#finalDiscount_amt').val();
-
-    api_updateDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
+    api_updateDid_req.grossAfterDiscount= $('#section3_gross_total_afterDiscount').val();
+    // api_updateDid_req.taxId = this.addDid_section3.value.section3_gst_dropdown;
+    api_updateDid_req.taxId = $('#billerIDs_editinvoicedid').val();
     api_updateDid_req.taxAmt = $('#Tax_amt_id').val();
     api_updateDid_req.final_dis_type = $('#final_discount_type').val();
     api_updateDid_req.shippingName = this.addDid_section3.value.section3_shipping_amt_name_txtbox;
@@ -2253,7 +2306,7 @@ this.spinner.hide();
     api_updateDid_req.dis_amt3 = this.OtherDiscountForm.value.OtherDiscountForm_Direct;
     api_updateDid_req.dis_type3 = this.OtherDiscountForm.value.oth_DiscountTYpe;
     api_updateDid_req.discountPer = this.FinalDiscountForm.value.FinalDiscountForm_Percentage;
-    api_updateDid_req.discountAmount = this.FinalDiscountForm.value.FinalDiscountForm_Direct;
+    // api_updateDid_req.discountAmount = this.FinalDiscountForm.value.FinalDiscountForm_Direct;
     api_req.element_data = api_updateDid_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {

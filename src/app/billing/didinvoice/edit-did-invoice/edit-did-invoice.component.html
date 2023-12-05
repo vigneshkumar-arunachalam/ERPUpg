@@ -15,9 +15,9 @@
 
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="cmp_name" class="col-lg-12 col-form-label">Company Name</label>
+                            <label for="cmp_name_editdid" class="col-lg-12 col-form-label">Company Name</label>
                             <div class="col-lg-12">
-                                <select name="enqFormValue" id="cmp_name" class="form-control"
+                                <select name="enqFormValue" id="cmp_name_editdid" class="form-control"
                                     formControlName="companyName" (change)="getCustomerInvoiceDetails($event)"
                                     (change)="getProformaBillerDetails()">
                                     <option [ngValue]="null" selected disabled>Select Company Name</option>
@@ -370,10 +370,10 @@
 
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="curren7" class="col-lg-12 col-form-label">Currency</label>
+                            <label for="curren_editdid" class="col-lg-12 col-form-label">Currency</label>
                             <div class="col-lg-12">
 
-                                <select id="curren7" class="form-control" formControlName="Currency"
+                                <select id="curren_editdid" name="Currency" class="form-control" formControlName="Currency"
                                     (change)="getCurrencyValues($event)">
                                     <option [ngValue]="null" selected disabled>Select Currency</option>
                                     <option *ngFor="let comp_name of currencyNameList" value="{{comp_name.currencyId}}">
@@ -385,21 +385,21 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="ccr" class="col-lg-12 col-form-label">Currency Conversion Rate</label>
+                            <label for="ccr_editdid" class="col-lg-12 col-form-label">Currency Conversion Rate</label>
                             <div class="col-lg-12">
 
                                 <input type="text" class="form-control" formControlName="CurrencyConversionRate"
-                                    [(ngModel)]="CurrencyConversionRateDefault" id="ccr" />
+                                    [(ngModel)]="CurrencyConversionRateDefault" id="ccr_editdid" />
                             </div>
                         </div>
                     </div>
 
                     <div class="col-lg-12">
                         <div class="form-group row">
-                            <label for="Payment7" class="col-lg-12 col-form-label">Payment Via</label>
+                            <label for="Payment_editdid" class="col-lg-12 col-form-label">Payment Via</label>
                             <div class="col-lg-12">
 
-                                <select id="Payment7" class="form-control" formControlName="PaymentVia">
+                                <select id="Payment_editdid" name="PaymentVia" class="form-control" formControlName="PaymentVia">
                                     <option [ngValue]="null" selected disabled>Select Payment Via</option>
                                     <option *ngFor="let payment of paymentviaList" value="{{payment.paymentvia_id}}">
                                         {{payment.paymentvia_name}}
@@ -1068,7 +1068,7 @@
                                 <div class="form-group ml-2 mt-2">
 
 
-                                    <select name="billerID" id="billerIDs" class="form-control"
+                                    <select name="section3_gst_dropdown" id="billerIDs_editdid" class="form-control"
                                         aria-label="Default select example" formControlName="section3_gst_dropdown"
                                         (change)="getTaxCals();extraFees();">
                                         <option [ngValue]="null" selected disabled>Select Tax</option>

@@ -55,6 +55,7 @@ export class ResellerPaymentComponent implements OnInit {
   unpaid_amount: any;
   filterCommissionList: { id: number; value: string; }[];
   RP_SharePermissionForm: FormGroup;
+  getResellerPermissionList: any;
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
 
@@ -531,7 +532,80 @@ export class ResellerPaymentComponent implements OnInit {
 
  
 
-  ResellerPaySharePermissionEdit(reseller_comm_id: any,reseller_id:any,i:any) {
+  ResellerPaySharePermissionEdit(reseller_id:any,i:any) {
+    $("#faqhead" + i).modal("hide");
+    this.spinner.show();
+  
+    let api_req: any = new Object();
+    let api_sharePer: any = new Object();
+    api_req.moduleType = "reseller";
+    api_req.api_url = "reseller/getResellerPermissionList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_sharePer.action = "getResellerPermissionList";
+
+    api_sharePer.reseller_id = reseller_id;
+    api_sharePer.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_sharePer;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+
+       
+        this.getResellerPermissionList=response.result;
+        this.spinner.hide();
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+        
+      };
+  }
+  InvoiceShowCHK(data: any, event: any) {
+    // console.log("List - Checkbox ID", data);
+    // this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
+    // this.Checkbox_value_invoiceShow = event.target.checked;
+    // console.log(this.Checkbox_value_invoiceShow)
+    // if (this.Checkbox_value_invoiceShow) {
+
+    //   this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
+    //   this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
+    //   this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
+    //   console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+
+    // }
+    // else {
+    //   const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
+    //   console.log(index)
+    //   if (index == -1) {
+    //     this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
+    //   } else {
+    //     this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
+    //   }
+    //   console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+    // }
+    // this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
+
+    // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+
+  }
+  
+  ResellerPaySharePermissionUpdate(reseller_comm_id: any,reseller_id:any,i:any) {
     $("#faqhead" + i).modal("hide");
     this.spinner.show();
   

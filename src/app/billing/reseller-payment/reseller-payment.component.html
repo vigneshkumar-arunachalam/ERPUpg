@@ -405,7 +405,7 @@
                                           <li class="dropdown__item">
                                             <a class="hover3" title="Share Permission" data-toggle="modal"
                                               data-target="#RP_SharePermissionFormID"
-                                              (click)="ResellerPaySharePermissionEdit(list.reseller_comm_id,list.reseller_id,i)" >
+                                              (click)="ResellerPaySharePermissionEdit(list.reseller_id,i)" >
                                               <img class="show" src="assets/img/icon2/share-blue.png">
                                               <img class="hide" src="assets/img/icon2/share-black.png">
                                             </a>
@@ -653,42 +653,30 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       </button>
     </div>
     <div class="modal-body">
-      <form [formGroup]="RP_SharePermissionForm">
-        <!-- <div class="col-lg-12" *ngFor="let item of SharedCustomerPermission_List;let i=index">
-          <div class="row">
-            <label class="col-lg-4">{{item.firstName}}</label>
-
-            <div class="col-lg-4">
-              <input type="checkbox" id="{{ item.userId }}" [value]="item.userId"
-                checked="{{item.chk_val==1 ? 'checked':''}}"
-                (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">
-
-            </div>
-          </div>
-        </div> -->
-        <!-- <div class="row">
-          <div class="d-flex col-lg-4" *ngFor="let item of SharedCustomerPermission_List;let i=index">
+      <div class="">
+        <div class="row">
+          <div class="d-flex col-lg-6" *ngFor="let quot of getResellerPermissionList;let i =index">
             <div class="d-flex">
               <div class="">
                 <div class="checkbox-group-wrapper">
-                  <div class="checkbox-group">
-
-                    <input type="checkbox" id="{{ item.userId }}" [value]="item.userId"
-                      checked="{{item.chk_val==1 ? 'checked':''}}" class="chb chb-3"
-                      (change)="CheckboxValueChanges_shareCustomerPermission(item.userId,$event)">
-                    <label class="mt-2" for="{{ item.userId }}">{{item.firstName}}</label>
-
+                  <div class="checkbox-group d-flex">
+                    <div class="on-off-toggle">
+                      <input class="checkbox" type="checkbox" id="check-grp1-{{i}}"
+                        checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                        (change)="InvoiceShowCHK(quot.user_id,$event)">
+                      <label for="check-grp1-{{i}}"></label>
+                    </div>
                   </div>
                 </div>
               </div>
 
             </div>
 
-         
+            <span class="">{{quot.firstName}}</span>
 
           </div>
-        </div> -->
-      </form>
+        </div>
+      </div>
     </div>
     <div class="modal-footer">
 
@@ -703,3 +691,7 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 </div>
 
 <!-------------------------- ------Modal-customer share permission ends-------------------------------------- -->
+
+
+
+
