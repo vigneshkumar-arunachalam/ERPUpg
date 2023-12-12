@@ -291,7 +291,7 @@ export class InvoiceComponent implements OnInit {
   yValue: number = 10;
   newDataCount: number = 10;
   chart1: any;
- PaymentProcessDatee: any;
+  PaymentProcessDatee: any;
   pipe: any;
   myFormattedDate: any;
   myFormattedDate1: any;
@@ -303,12 +303,43 @@ export class InvoiceComponent implements OnInit {
   testing = false;
   Global_search_filter = false;
   invoicePermissionList_suspend: any;
+  search_values: any;
+  search_values1 = 0;
+  InvSearch_off_set: any;
+  InvSearch_Search_BillerId: any;
+  InvSearch_limit_val: any;
+  InvSearch_search_txt: any;
+  InvSearch_years: any;
+  InvSearch_invoiceType: any;
+  InvSearch_recurring_only: any;
+  InvSearch_dont_select_did_invoice: any;
+  InvSearch_revenue_typewise_show: any;
+  InvSearch_revenue_typewise_showID: any;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
     this.revenueaddressForm = this.fb.group({
       revenueaddresses: this.fb.array([this.createrevenueAddress()])
+    });
+    this.serverService.invoice_search1.subscribe((val: any) => {
+      console.log(val)
+      // alert(val.type)
+      // if (val.type == "search girlfriend") {
+      //   this.search_values1 == 1;
+      //   console.log(this.search_values1)
+      //   this.InvSearch_Search_BillerId = val.InvSearch_Search_BillerId;
+      //     this.InvSearch_off_set = val.InvSearch_off_set;
+      //     this.InvSearch_limit_val = val.InvSearch_limit_val;
+      //     this.InvSearch_search_txt = val.InvSearch_search_txt;
+      //     this.InvSearch_years = val.InvSearch_years;
+      //     this.InvSearch_invoiceType = val.InvSearch_invoiceType;
+      //     this.InvSearch_recurring_only = val.InvSearch_recurring_only;
+      //     this.InvSearch_dont_select_did_invoice = val.InvSearch_dont_select_did_invoice;
+      //     this.InvSearch_revenue_typewise_show = val.InvSearch_revenue_typewise_show;
+      //     this.InvSearch_revenue_typewise_showID = val.InvSearch_revenue_typewise_showID;
+  
+      // }
     });
     this.serverService.global_search_invoice.subscribe((val: any) => {
       console.log("before parse-global_search_invoice", val)
@@ -320,7 +351,7 @@ export class InvoiceComponent implements OnInit {
       } else {
         this.Global_search_filter = false;
       }
-     
+
     });
     $("body").removeClass("modal-open");
   }
@@ -328,7 +359,14 @@ export class InvoiceComponent implements OnInit {
   keywordResellerName = 'customerName';
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    this.getInvoice1({});
+    if (this.search_values1 == 1) {
+      // alert("inside");
+      this.getInvoice({});
+    } else {
+      // alert("outside");
+      this.getInvoice1({});
+    }
+
     this.commissionType_value = 1;
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
@@ -1040,17 +1078,36 @@ export class InvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "invoice_list";
     api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
-    api_quotationList.Search_BillerId = this.edit_array_SearchBiller_Checkbox;
-    api_quotationList.off_set = list_data.offset;
-    api_quotationList.limit_val = list_data.limit;
-    api_quotationList.search_txt = this.searchResult_CustomerName;
-    api_quotationList.years = this.edit_array_Years_Checkbox;
-    api_quotationList.invoiceType = this.invType_Search;
+    if (this.search_values1 == 1) {
+      // alert("this.search_values1 == 1")
+      api_quotationList.Search_BillerId = this.InvSearch_Search_BillerId;
+      api_quotationList.off_set = this.InvSearch_off_set;
+      api_quotationList.limit_val = this.InvSearch_limit_val;
+      api_quotationList.search_txt = this.InvSearch_search_txt;
+      api_quotationList.years = this.InvSearch_years;
+      api_quotationList.invoiceType = this.InvSearch_invoiceType;
 
-    api_quotationList.recurring_only = this.CBV_recurring_only;
-    api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
-    api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
-    api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+      api_quotationList.recurring_only = this.InvSearch_recurring_only;
+      api_quotationList.dont_select_did_invoice = this.InvSearch_dont_select_did_invoice;
+      api_quotationList.revenue_typewise_show = this.InvSearch_revenue_typewise_show;
+      api_quotationList.revenue_typewise_showID = this.InvSearch_revenue_typewise_showID;
+
+    } else {
+      // alert("this.search_values1 == 0")
+
+      api_quotationList.Search_BillerId = this.edit_array_SearchBiller_Checkbox;
+      api_quotationList.off_set = list_data.offset;
+      api_quotationList.limit_val = list_data.limit;
+      api_quotationList.search_txt = this.searchResult_CustomerName;
+      api_quotationList.years = this.edit_array_Years_Checkbox;
+      api_quotationList.invoiceType = this.invType_Search;
+
+      api_quotationList.recurring_only = this.CBV_recurring_only;
+      api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
+      api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
+      api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+    }
+
 
     api_quotationList.current_page = "";
 
@@ -1149,6 +1206,25 @@ export class InvoiceComponent implements OnInit {
         })
       }
     });
+
+    let api_reqs_invoice: any = {
+      InvSearch_Search_BillerId: this.edit_array_SearchBiller_Checkbox,
+      InvSearch_off_set: list_data.offset,
+      InvSearch_limit_val: list_data.limit,
+      InvSearch_search_txt: this.searchResult_CustomerName,
+      InvSearch_years: this.edit_array_Years_Checkbox,
+      InvSearch_invoiceType: this.invType_Search,
+      InvSearch_recurring_only: this.CBV_recurring_only,
+      InvSearch_dont_select_did_invoice: this.CBV_dont_select_did_invoice,
+      InvSearch_revenue_typewise_show: this.CBV_RevenueTypeWiseShow,
+      InvSearch_revenue_typewise_showID: this.revenueTypeWiseDropDownValue,
+      type: "search girlfriend",
+    };
+    // api_reqs_invoice = JSON.stringify(api_reqs_invoice)
+    this.serverService.invoice_search.next(api_reqs_invoice);
+    console.log("sending api_reqs_invoice", api_reqs_invoice)
+
+
   }
   listDataInfo(list_data: any) {
     // console.log(list_data)
@@ -1199,7 +1275,7 @@ export class InvoiceComponent implements OnInit {
 
 
     if (didState == '0') {
-     
+
 
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
@@ -1209,7 +1285,7 @@ export class InvoiceComponent implements OnInit {
       });
 
     } else {
-     
+
 
       this.router.navigate(['/InvoiceEditDID'], {
         queryParams: {
@@ -1750,7 +1826,7 @@ export class InvoiceComponent implements OnInit {
     this.paymentDetails_payment = '';
 
 
-    
+
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.billID_processPayment = id;
@@ -1773,8 +1849,8 @@ export class InvoiceComponent implements OnInit {
         this.invoiceDetails_payment = response.invoice_details;
         this.paymentType_payment = response.payment_type;
         this.paymentDetails_payment = response.payment_details;
-        this.paymentDetails_paymentLength=response.payment_details.length;
-       
+        this.paymentDetails_paymentLength = response.payment_details.length;
+
         if (this.paymentDetails_payment == '') {
           $("#invoiceID").val('');
           $("#toal").val('');
@@ -1819,11 +1895,11 @@ export class InvoiceComponent implements OnInit {
 
         this.spinner.hide();
 
-        this.getInvoice1({});
+        // this.getInvoice1({});
       } else {
 
         $('#processPaymentId_inv').modal("hide");
-        
+
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1839,7 +1915,7 @@ export class InvoiceComponent implements OnInit {
       };
   }
 
- 
+
   getEmailDetails(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.email_TemplateSelection = false;
@@ -1941,10 +2017,10 @@ export class InvoiceComponent implements OnInit {
 
 
 
-      if (response.status== true) {
-       
+      if (response.status == true) {
+
         this.creditResponse = response.credit_note;
-        console.log("this.creditResponse",this.creditResponse)
+        console.log("this.creditResponse", this.creditResponse)
         this.spinner.hide();
       }
       else {
@@ -1983,9 +2059,9 @@ export class InvoiceComponent implements OnInit {
       api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
     }
     api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
-    
- 
- 
+
+
+
     if (this.processPaymentForm.value.amount === null) {
       this.spinner.hide();
       iziToast.error({
@@ -1995,13 +2071,13 @@ export class InvoiceComponent implements OnInit {
 
       return false;
     }
-    
+
     api_processpaymentUpdate.total_bal_amount = 0;
     api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-    api_processpaymentUpdate.balAmt=0; 
+    api_processpaymentUpdate.balAmt = 0;
     api_processpaymentUpdate.note = this.processPaymentForm.value.note;
     api_req.element_data = api_processpaymentUpdate;
-    
+
     $("#processPaymentId_inv").attr("disabled", true);
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#processPaymentId_inv").removeAttr("disabled");
@@ -2014,7 +2090,7 @@ export class InvoiceComponent implements OnInit {
           position: 'topRight'
 
         });
-        this.getInvoice1({});
+        // this.getInvoice1({});
 
       } else {
         this.spinner.hide();
@@ -2037,7 +2113,7 @@ export class InvoiceComponent implements OnInit {
       };
   }
 
-  paymentProcessEditShow(i:any) {
+  paymentProcessEditShow(i: any) {
 
     this.spinner.show();
     let api_req: any = new Object();
@@ -2048,7 +2124,7 @@ export class InvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_payprocessEdit.action = "get_edit_payment_process";
     api_payprocessEdit.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_payprocessEdit.processId =i;
+    api_payprocessEdit.processId = i;
 
     api_req.element_data = api_payprocessEdit;
 
@@ -2060,18 +2136,18 @@ export class InvoiceComponent implements OnInit {
         // $('#Paid').val(response.payment_edit[0].paidAmount);
         // $('#paytype').val(response.payment_edit[0].paymentMode);
         // $('#dateee').val(response.payment_edit[0].processDate_show);
-      
-          this.processPaymentForm.patchValue({
-            'date': response.payment_edit[0].processDate_show,
-            'paid': response.payment_edit[0].paidAmount,
-            'paymenttype': response.payment_edit[0].paymentMode,
-            'note': response.payment_edit[0].notes,
-         
-  
-  
-          });
-        
-       
+
+        this.processPaymentForm.patchValue({
+          'date': response.payment_edit[0].processDate_show,
+          'paid': response.payment_edit[0].paidAmount,
+          'paymenttype': response.payment_edit[0].paymentMode,
+          'note': response.payment_edit[0].notes,
+
+
+
+        });
+
+
 
       } else {
         this.spinner.hide();
@@ -2091,7 +2167,7 @@ export class InvoiceComponent implements OnInit {
       };
 
   }
-  
+
 
 
   templateContentEmailDropdown(event: any) {

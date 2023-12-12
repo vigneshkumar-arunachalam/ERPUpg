@@ -2454,7 +2454,7 @@ this.cmsDepartmentList1();
 
 
 
-    if ($('#companyCode').val() ==null || $('#companyCode').val() =='' ) {
+    if ($('#companyCode1').val() ==null || $('#companyCode1').val() =='' ) {
 
       iziToast.warning({
         message: "Company Code Missing",
@@ -2463,7 +2463,7 @@ this.cmsDepartmentList1();
       Swal.close();
       return false;
     } else {
-      add_customer_req.customerCode = $('#companyCode').val();
+      add_customer_req.customerCode = $('#companyCode1').val();
     }
 
     if (this.searchResultTest === null || this.searchResultTest === undefined) {
@@ -4786,8 +4786,8 @@ console.log("this.cmslistadd",this.cmslistadd);
   //     type: 'GET',
   //     success: function(response:any) {
   //        this.companyCodeAddCustomer=response;
-  //       $('#companyCode').val(response);     
-  //       this.companyCodeAddCustomer=$('#companyCode').val(response);
+  //       $('#companyCode1').val(response);     
+  //       this.companyCodeAddCustomer=$('#companyCode1').val(response);
         
   //     }
   // });
@@ -4810,8 +4810,8 @@ console.log("this.cmslistadd",this.cmslistadd);
       if (response!='') {
 
         this.companyCodeAddCustomer=response.cuscode;
-         $('#companyCode').val(response.cuscode);     
-           this.companyCodeAddCustomer=$('#companyCode').val(response.cuscode);
+         $('#companyCode1').val(response.cuscode);     
+           this.companyCodeAddCustomer=$('#companyCode1').val(response.cuscode);
         
       } else {
         iziToast.warning({

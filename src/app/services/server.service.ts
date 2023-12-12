@@ -13,6 +13,8 @@ export class ServerService {
   global_search_quotation: Subject<any> = new Subject();
   callbackfun: Subject<any> = new Subject();
   closemodal: Subject<any> = new Subject();
+  invoice_search:Subject<any>=new Subject();
+  invoice_search1:Subject<any>=new Subject();
   constructor(private http:HttpClient) { 
     
   }

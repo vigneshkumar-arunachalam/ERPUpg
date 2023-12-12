@@ -32,7 +32,7 @@
                     <div class="card-header" [id]="'faqhead' + i" *ngFor="let name of name1">
                       <a href="#" class="btn btn-header-link collapsed" [attr.data-toggle]="'collapse'"
                         [attr.data-target]="'#faq' + i" aria-expanded="true"
-                        (click)="getResellerPaymentdetails(name.customerId)"
+                        (click)="getResellerPaymentdetails({},name.customerId)"
                         [attr.aria-controls]="'faq' + i">{{name.customerName}}
                       </a>
                     </div>
@@ -71,9 +71,8 @@
                               <tr class="userDatatable-header">
 
                                 <th
-
                                   style="background:linear-gradient(to right, #134E5E 42%, #71B280 93%);border-radius:0px 15px">
-                                                                     <!-- style="background:linear-gradient(to right, #C04848 42%, #480048 93%);border-radius:0px 15px" -->
+                                  <!-- style="background:linear-gradient(to right, #C04848 42%, #480048 93%);border-radius:0px 15px" -->
                                   <span class="userDatatable-title">{{dis.date_year}}</span>
                                   <span class="userDatatable-title">{{dis.date_month_name}}</span>
                                   <span class="userDatatable-title">{{dis.commission_amt}}</span>
@@ -99,18 +98,19 @@
                               <label class="mr-2">Paid Check All </label>
                               <input type="checkbox" name="paid_check_all" id="paid_check_all_86">
                             </div>
-                            <div class="form-group row ml-2" >
-                             <div>
-                              <label for="cmp_name" class="col-lg-12 col-form-label">Filter Commission</label>
-                             </div>
-                             <div class="mt-2">
-                              <select name="enqFormValue" id="filt_comm" class="form-control" style="height: 35px;border:1px solid #c4d2c7;">
-                                <option [ngValue]="null" selected disabled>Select Company Name</option>
-                                <option *ngFor="let com of filterCommissionList" value="{{com.id}}">
-                                          {{com.value}}
-                                      </option>
-                              </select>
-                             </div>                              
+                            <div class="form-group row ml-2">
+                              <div>
+                                <label for="cmp_name" class="col-lg-12 col-form-label">Filter Commission</label>
+                              </div>
+                              <div class="mt-2">
+                                <select name="enqFormValue" id="filt_comm" class="form-control"
+                                  style="height: 35px;border:1px solid #c4d2c7;">
+                                  <option [ngValue]="null" selected disabled>Select Company Name</option>
+                                  <option *ngFor="let com of filterCommissionList" value="{{com.id}}">
+                                    {{com.value}}
+                                  </option>
+                                </select>
+                              </div>
                             </div>
 
                             <div class="ml-2">
@@ -120,18 +120,20 @@
                             </div>
 
 
-                            <div class="ml-2">
-                              <a class="hover4" title="Email" data-toggle="modal" data-target="#RP_PaymentIIFormID">
+                            <div class="ml-2" *ngFor="let name of name1">
+                              <a class="hover4" title="Email" data-toggle="modal" data-target="#RP_landscapeEmailFormId"
+                                (click)="landscapeEmailEdit(name.customerId,i)">
                                 <img class="show" src="assets/img/icon2/gmail-blue.png"
                                   style="height: 20px;width: 20px;">
                                 <!-- <span><b style="padding: 0px 20px;">-</b><strong>Email</strong></span> -->
                               </a>
                             </div>
 
-                            <div class="ml-2">
+                            <div class="ml-2" *ngFor="let name of name1">
 
                               <a class="hover4" title="Share Permission" data-toggle="modal"
-                                data-target="#RP_PaymentIIFormID">
+                                (click)="ResellerPaySharePermissionEdit(name.customerId,i)"
+                                data-target="RP_SharePermissionFormID">
                                 <img class="show" src="assets/img/icon2/share-blue.png"
                                   style="height: 20px;width: 20px;">
                                 <!-- <span><b style="padding: 0px 20px;">-</b><strong>Share Permission</strong></span> -->
@@ -140,8 +142,9 @@
 
                           </div>
                           <div class="ml-2">
-                            <label class="col-lg-12 col-form-label">Reseller Email:<span style="color: #FF5E62;">{{this.reseller_email}}</span></label>
-                         
+                            <label class="col-lg-12 col-form-label">Reseller Email:<span
+                                style="color: #FF5E62;">{{this.reseller_email}}</span></label>
+
                           </div>
 
                           <div class="row">
@@ -150,9 +153,9 @@
                                 <table class="table mb-0 table-borderless">
                                   <thead>
                                     <tr class="userDatatable-header">
-    
-    
-    
+
+
+
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Currency</span>
                                       </th>
@@ -162,33 +165,37 @@
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Unpaid</span>
                                       </th>
-    
+
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Def-Curr({{this.payCurrencyName}})</span>
                                       </th>
-    
+
                                     </tr>
-    
+
                                   </thead>
-    
+                              
+
                                   <tbody *ngFor="let list2 of CurrencyTotalList; let i = index">
-    
+
                                     <tr>
-    
+
                                       <td style="border: 1px solid #e4ebf5;">{{list2.currency_name}}</td>
-                                      <td style="border: 1px solid #e4ebf5;">{{list2.paid_amt}}</td>
-                                      <td style="border: 1px solid #e4ebf5;">{{list2.unpaid_amt}}</td>
-                                      <td style="border: 1px solid #e4ebf5;">{{list2.currency_price_val}}</td>
-    
+                                      <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">{{list2.paid_amt}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">{{list2.unpaid_amt}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">{{list2.currency_price_val}}</td>
+
                                     </tr>
-    
-    
-    
+
+
+
                                   </tbody>
                                   <tbody>
                                     <tr>
-                                      <td style="font-weight: bold;border: 1px solid #e4ebf5;padding-right: 10px; text-align: right;" colspan="3">Total</td>
-                                      <td style="font-weight: bold;border: 1px solid #e4ebf5;" colspan="3">{{this.CurrencyTotalAll}}</td>
+                                      <td
+                                        style="font-weight: bold;border: 1px solid #e4ebf5;padding-right: 10px; text-align: right;"
+                                        colspan="3">Total</td>
+                                      <td style="font-weight: bold;border: 1px solid #e4ebf5;" colspan="3">
+                                        {{this.CurrencyTotalAll}}</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -199,9 +206,9 @@
                                 <table class="table mb-0 table-borderless">
                                   <thead>
                                     <tr class="userDatatable-header">
-    
-    
-    
+
+
+
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Year</span>
                                       </th>
@@ -211,31 +218,31 @@
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Unpaid</span>
                                       </th>
-    
+
                                     </tr>
-    
+
                                   </thead>
-    
+
                                   <tbody *ngFor="let list3 of YearTotalList; let i = index">
-    
+
                                     <tr>
-    
+
                                       <td style="border: 1px solid #e4ebf5;">{{list3.curr_year}}</td>
-                                      <td style="border: 1px solid #e4ebf5;">{{list3.paid_amt_year}}</td>
-                                      <td style="border: 1px solid #e4ebf5;">{{list3.unpaid_amt_year}}</td>
-    
-    
+                                      <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">{{list3.paid_amt_year}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">{{list3.unpaid_amt_year}}</td>
+
+
                                     </tr>
-    
-    
-    
+
+
+
                                   </tbody>
-    
+
                                 </table>
                               </div>
-                            </div>  
+                            </div>
                           </div>
-                          
+
                           <h1>List Details</h1>
                           <div class="table-responsive">
                             <table class="table mb-0 table-borderless">
@@ -246,8 +253,8 @@
                                       <div class="custom-checkbox  check-all">
 
                                         <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1"
-                                          id="check-3" (change)="checkUncheckAll()" />
-                                        <label for="check-3">
+                                          id="check-{i}" (change)="checkUncheckAll(i)" />
+                                        <label for="check-{i}">
 
                                         </label>
                                       </div>
@@ -339,7 +346,10 @@
                                   <td>{{ list.commission_amt}}</td>
                                   <td>{{ list.conversion_amt}}({{ list.conversionRate}})</td>
                                   <!-- <td>{{ list.conversionRate}}</td> -->
-                                  <td>{{ list.paid_status}}
+                                  <td *ngIf="(list.paid_status=='Paid')" style="background-color: #D0FFC3;">{{ list.paid_status}}
+                                    <br>{{list.processDate}}
+                                  </td>
+                                  <td *ngIf="(list.paid_status=='Not Paid')" style="background-color: #FFB8B8;">{{ list.paid_status}}
                                     <br>{{list.processDate}}
                                   </td>
                                   <td>
@@ -364,10 +374,22 @@
                                             </a>
                                           </li>
 
+                                          <li class="dropdown__item">
+                                            <a class="hover4" title="Reseller Payment Process"
+                                              (click)="ResellerPayProcessEdit(list.reseller_comm_id,list.reseller_id,i)"
+                                              data-toggle="modal" data-target="#RP_PaymentIIFormID">
+                                              <!-- <img class="hide" src="assets/img/icon2/P-red.png">
+                                              <img class="show" src="assets/img/icon2/P-black.png"> -->
+                                              <img class="show" src="assets/img/icon2/resellCommission-blue.png">
+                                              <img class="hide" src="assets/img/icon2/resellCommission-black.png">
+                                              <span><b style="padding: 0px 20px;">-</b><strong>Payment
+                                                  Process</strong></span>
+                                            </a>
 
+                                          </li>
 
                                           <li class="dropdown__item">
-                                            <a class="hover4" title="PDF" data-toggle="modal" data-target="#pdfFormId">
+                                            <a class="hover4" title="PDF" (click)="pdf(list.billId,i)">
                                               <img class="show" src="assets/img/icon2/pdf-blue.png">
                                               <img class="hide" src="assets/img/icon2/pdf-black.png">
                                             </a>
@@ -375,7 +397,8 @@
 
                                           <li class="dropdown__item">
                                             <a class="hover3" title="Email-Landscape" data-toggle="modal"
-                                              data-target="#emailFormId">
+                                              (click)="landscapeEmailEdit(list.customerId,i)"
+                                              data-target="#RP_landscapeEmailFormId">
                                               <img class="show" src="assets/img/icon2/gmail-blue.png">
                                               <img class="hide" src="assets/img/icon2/gmail-black.png">
                                             </a>
@@ -388,28 +411,30 @@
                                               <img class="hide" src="assets/img/icon2/delete-black.png">
                                             </a>
                                           </li>
-
-
                                           <li class="dropdown__item">
-                                            <a class="hover4" title="Reseller Payment Process"
-                                              (click)="ResellerPayProcessEdit(list.reseller_comm_id,list.reseller_id,i)"
-                                              data-toggle="modal" data-target="#RP_PaymentIIFormID">
-                                              <img class="show" src="assets/img/icon2/P-red.png">
-                                              <img class="hide" src="assets/img/icon2/P-black.png">
+                                            <a class="hover3" title="Set Reseller Commission" data-toggle="modal"
+                                              data-target="#RP_ResellerCommissionFormId"
+                                              (click)="get_WFA_ResellerCommission(list.billId,i)">
 
-                                              <span><b style="padding: 0px 20px;">-</b><strong>Payment
-                                                  Process</strong></span>
+                                              <img class="show" src="assets/img/icon2/C-red.png">
+                                              <img class="hide" src="assets/img/icon2/C-black.png">
+                                              <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
+                                                  Commission</strong></span>
                                             </a>
 
+
+
                                           </li>
-                                          <li class="dropdown__item">
+
+
+                                          <!-- <li class="dropdown__item">
                                             <a class="hover3" title="Share Permission" data-toggle="modal"
                                               data-target="#RP_SharePermissionFormID"
                                               (click)="ResellerPaySharePermissionEdit(list.reseller_id,i)" >
                                               <img class="show" src="assets/img/icon2/share-blue.png">
                                               <img class="hide" src="assets/img/icon2/share-black.png">
                                             </a>
-                                          </li>
+                                          </li> -->
 
                                         </ul>
                                       </div>
@@ -422,6 +447,44 @@
 
                               </tbody>
                             </table>
+                          </div>
+                          <div > 
+                            <nav class="atbd-page" >
+                       
+                              <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                                <li class="page-item">
+                                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.backtab=='show' ? getResellerPaymentdetails({'offset':paginationData.start},{}) : false"><i
+                                      class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                  <a class="page-link" href="javascript:void(0)" (click)="getResellerPaymentdetails({'offset':paginationData.back},{})"><i
+                                      class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                  *ngFor="let pagination of paginationData.data;let i=index">
+                                  <a class="page-link" href="javascript:void(0)"
+                                    (click)=" pagination.load ==true ? getResellerPaymentdetails({'offset':pagination.offset_count},{}) : false">{{pagination.btn_length}}
+                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                  <a class="page-link" href="javascript:void(0)" (click)="getResellerPaymentdetails({'offset':paginationData.next},{})"><i
+                                      class="fas fa-angle-double-right"></i></a>
+                                </li>
+                                <li class="page-item">
+                                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                    href="javascript:void(0)"
+                                    (click)="paginationData.nexttab =='show' ? getResellerPaymentdetails({'offset':paginationData.end},{}) : false"><i
+                                      class="fas fa-angle-right"></i></a>
+                                </li>
+                                <li class="dropdown__item">
+                                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+                  
+                                  </a>
+                                </li>
+                              </ul>
+                            </nav>
                           </div>
 
 
@@ -640,58 +703,277 @@
   <!-------------- Modal Pop Up (END) Reseller Just Payment Details------------------------------------------>
 
   <!-- -----------------------Modal-customer share permission begins-------------------------------- -->
-<div class="modal fade" id="RP_SharePermissionFormID" tabindex="-1" role="dialog"
-aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">
-        Select Shared Person</h2>
+  <div class="modal fade" id="RP_SharePermissionFormID" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">
+            Select Shared Person</h2>
 
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="">
-        <div class="row">
-          <div class="d-flex col-lg-6" *ngFor="let quot of getResellerPermissionList;let i =index">
-            <div class="d-flex">
-              <div class="">
-                <div class="checkbox-group-wrapper">
-                  <div class="checkbox-group d-flex">
-                    <div class="on-off-toggle">
-                      <input class="checkbox" type="checkbox" id="check-grp1-{{i}}"
-                        checked="{{quot.chk_val=='true' ? 'checked':''}}"
-                        (change)="InvoiceShowCHK(quot.user_id,$event)">
-                      <label for="check-grp1-{{i}}"></label>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="">
+            <div class="row">
+              <div class="d-flex col-lg-6" *ngFor="let quot of getResellerPermissionList;let i =index">
+                <div class="d-flex">
+                  <div class="">
+                    <div class="checkbox-group-wrapper">
+                      <div class="checkbox-group d-flex">
+                        <div class="on-off-toggle">
+                          <input class="checkbox" type="checkbox" id="check-grp8-{{i}}"
+                            checked="{{quot.chk_val=='true' ? 'checked':''}}"
+                            (change)="InvoiceShowCHK(quot.user_id,$event)">
+                          <label for="check-grp8-{{i}}"></label>
+                        </div>
+                      </div>
                     </div>
                   </div>
+
                 </div>
+
+                <span class="">{{quot.firstName}}</span>
+
               </div>
-
             </div>
-
-            <span class="">{{quot.firstName}}</span>
-
           </div>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" (click)=" ResellerPaySharePermissionUpdate()">Update</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
         </div>
       </div>
     </div>
-    <div class="modal-footer">
+  </div>
 
-      <button type="button" class="btn btn-primary"
-        >Update</button>
-      <button type="button" class="btn btn-dark" data-dismiss="modal">
-        Cancel
-      </button>
+  <!-------------------------- ------Modal-customer share permission ends-------------------------------------- -->
+
+
+  <!-- --------------------------Modal-Quick Email begins------------------------------------------ -->
+  <div class="modal fade" id="RP_landscapeEmailFormId" tabindex="-1" role="dialog" aria-labelledby="landscapeEmailTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center" id="quickEmailTitle">
+            Landscape Email</h2>
+
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="landscapeEmailForm">
+
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <label for="emailFromLandscape" class="col-lg-12 col-form-label">From</label>
+
+                <select name="landscapeEmail_From" id="emailFromLandscape_RP" class="form-control"
+                  aria-label="Default select example" formControlName="landscapeEmail_From">
+                  <option [ngValue]="null" selected disabled>Select From Address</option>
+                  <option *ngFor="let fromValue of From_List" value="{{fromValue.from_email}}">
+                    {{ fromValue.from_email }}
+                  </option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group row">
+
+                <label for="emailToLandscape_RP" class="col-lg-12 col-form-label">To</label>
+                <input type="email" id="emailToLandscape_RP" class="form-control" formControlName="landscapeEmail_To">
+
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <label for="templateLandscape_RP" class="col-lg-12 col-form-label">Select Template</label>
+
+                <select name="Template_name_1" id="templateLandscape_RP" class="form-control"
+                  (change)=" LandscapeEmailContentDropdown($event)" formControlName="landscapeEmail_Template">
+                  <option [ngValue]="null" selected disabled>Select Template</option>
+                  <option *ngFor="let templateValue of Template_List" value="{{templateValue.crm_template_id}}">
+                    {{templateValue.crm_template_name}}
+                  </option>
+                </select>
+
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group row">
+
+                <label for="subjLandscape_RP" class="col-lg-12 col-form-label">Subject</label>
+                <input type="email" id="subjLandscape_RP" class="form-control" formControlName="landscapeEmail_Subject">
+
+              </div>
+            </div>
+
+
+
+
+
+
+            <div class="col-lg-12">
+              <div class="form-group row">
+
+                <label for="message" class="col-lg-12 col-form-label">Message</label>
+                <editor id="RP_tinyLandscapeEmailID" formControlName='landscapeEmail_Message' [init]="{
+                    base_url: '/tinymce', 
+                    suffix: '.min',
+                    branding: false
+                           
+                }"></editor>
+
+              </div>
+            </div>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" (click)="sendLandscapeMail()">Send</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
     </div>
   </div>
-</div>
-</div>
 
-<!-------------------------- ------Modal-customer share permission ends-------------------------------------- -->
+  <!-------------------------- ------Modal-Quick Email  ends-------------------------------------- -->
 
 
+  <!------------------------  Reseller Commission Details start  ---------->
+
+  <div class="modal fade" id="RP_ResellerCommissionFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Reseller Commission Details
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form [formGroup]="resellerCommissionForm">
+            <div class="row">
+              <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
+                <div [formGroupName]="i">
+                  <div class="col-lg-12 mt-2" style="display: flex; ">
+                    <div class="col-lg-4 mt-2">
+                      <label>Reseller Name </label>
+                    </div>
+                    <div class="col-lg-8">
+                      <div class="form-group row">
+                        <div class="ng-autocomplete">
+
+                          <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" 
+                            formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                            (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                            [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                          </ng-autocomplete>
+
+                          <ng-template #itemTemplateCustomer let-item>
+                            <a [innerHTML]="item.customerName"></a>
+                          </ng-template>
+
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+
+                        </div>
 
 
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-4">
+                      <label>Commission Type </label>
+                    </div>
+                    <div class="col-lg-8">
+
+                      <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                        <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                       <input class="form-check-input" type="radio" name=CommissionType_{{i}} id="CommissionType_{{k}}"  checked="{{item.id==this.CommissionType1[i] ? 'checked':''}}" (change)="radio_commissionType($event)"
+                           value={{item.id}} >  
+                      
+                          <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                      </div>
+                   
+                    
+                      
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-4 mt-2">
+                      <label>Commission Value </label>
+                    </div>
+                    <div class="col-lg-8">
+                      <input type="number" class="form-control" formControlName="commission_value"
+                        id="CommissionValue_WFA_ID" (keyup)="commissionValueAutoFill()">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-4 mt-2">
+                      <label>Commission Amount </label>
+                    </div>
+                    <div class="col-lg-8">
+                      <input type="number" class="form-control" formControlName="commission_amt"
+                        id="CommissionAmount_WFA_ID">
+                        <input type="hidden" class="form-control" formControlName="reseller_comm_id">
+                        <input type="hidden" class="form-control" formControlName="reseller_id">
+                      
+                        <input type="hidden" class="form-control" formControlName="billId">
+                        <input type="hidden" class="form-control" formControlName="grossAmount">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-4 ">
+                      <label>PDF Show </label>
+                    </div>
+                    <div class="col-lg-8">
+                      <input type="checkbox" formControlName="pdf_show" (change)="CBF_PdfShow($event)">
+                    </div>
+                  </div>
+                  
+                  <div >
+                    <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                    (click)="addAddress()">Add </button>
+                    <button type="button" class="btn btn-danger btn-sm"
+                      (click)="removeAddress(i)">Remove </button>
+
+                    
+                  </div>
+                </div>
+              </section>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!----------Reseller Commission Details END ------------------>

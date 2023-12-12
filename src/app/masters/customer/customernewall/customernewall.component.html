@@ -772,11 +772,11 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
+                <label for="companyCode1 " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
                     *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control"  
-                    formControlName="company_Code" id="companyCode" />
+                    formControlName="company_Code" id="companyCode1" />
                 </div>
               </div>
             </div>
@@ -3829,7 +3829,7 @@
             <div class="form-group row">
               <label for="emailFromLandscape" class="col-lg-12 col-form-label">From</label>
 
-              <select name="From_name_1" id="emailFromLandscape" class="form-control"
+              <select name="landscapeEmail_From" id="emailFromLandscape" class="form-control"
                 aria-label="Default select example" formControlName="landscapeEmail_From">
                 <option [ngValue]="null" selected disabled>Select From Address</option>
                 <option *ngFor="let fromValue of From_List" value="{{fromValue.from_email}}">
@@ -3851,7 +3851,7 @@
             <div class="form-group row">
               <label for="templateLandscape" class="col-lg-12 col-form-label">Select Template</label>
 
-              <select name="Template_name_1" id="templateLandscape" class="form-control"
+              <select name="landscapeEmail_Template" id="templateLandscape" class="form-control"
                 (change)=" LandscapeEmailContentDropdown($event)" formControlName="landscapeEmail_Template">
                 <option [ngValue]="null" selected disabled>Select Template</option>
                 <option *ngFor="let templateValue of Template_List" value="{{templateValue.crm_template_id}}">

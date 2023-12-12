@@ -162,10 +162,25 @@ export class EditInvoiceComponent implements OnInit {
   billerID_Edit: any;
   userID_Edit: any;
   TaxAmtEDIt: any;
+  search_values:any
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.editAddress_FormControl()])
+    });
+    this.serverService.invoice_search.subscribe((val: any) => {
+      // alert("hi")
+    
+      console.log("before parse-invoice search-kavin", val.type) 
+      if(val.type=="search girlfriend"){
+        this.search_values = val;
+        console.log("invoice_search-val--------poda",val)
+      }
+      // var k = JSON.parse(val);
+      // console.log("kavin",k);
+    // console.log(val['type'])
+    // console.log(val.type)
+
     });
 
 
@@ -192,6 +207,7 @@ export class EditInvoiceComponent implements OnInit {
 
       }
       );
+     
 
     // this.route.queryParams
     //   .subscribe(params => {
@@ -1582,6 +1598,12 @@ export class EditInvoiceComponent implements OnInit {
           position: 'topRight',
           message: 'Invoice Updated Successfully !',
         });
+        setTimeout(() => {
+         
+          console.log("search_values",this.search_values)
+          this.serverService.invoice_search1.next(this.search_values);
+        }, 1000);
+      
 
       }
       else {
