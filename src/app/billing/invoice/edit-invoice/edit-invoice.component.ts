@@ -163,6 +163,9 @@ export class EditInvoiceComponent implements OnInit {
   userID_Edit: any;
   TaxAmtEDIt: any;
   search_values:any
+  searchFlag: any;
+  upd_flagName: any;
+  upd_search_name: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -198,11 +201,13 @@ export class EditInvoiceComponent implements OnInit {
         this.editbillerID = params['e_editBillID'];
         this.editDIDStateID = params['e_editDIDState'];
         this.edit_Duplicate_ID = params['e_editDuplicateID'];
-
+        this.searchFlag = params['e_searchFlag'];
+       
 
         console.log("edit biller id", this.editbillerID);
         console.log("edit DID state id", this.editDIDStateID);
         console.log("edit duplicate id", this.edit_Duplicate_ID);
+        console.log("edit searchFlag id", this.searchFlag);
         this.editInvoice();
 
       }
@@ -1475,6 +1480,7 @@ export class EditInvoiceComponent implements OnInit {
     api_updatePI_req.billDate = this.addPI_section1.value.Date;
     api_updatePI_req.b_attn = this.addPI_section1.value.Attn_1;
     api_updatePI_req.s_name = this.addPI_section1.value.ship_to;
+    api_updatePI_req.searchFlag =this.searchFlag;
 
     api_updatePI_req.ship_address_1 = this.addPI_section1.value.shipTo_1,
       api_updatePI_req.ship_address_2 = this.addPI_section1.value.shipTo_2,
@@ -1592,6 +1598,8 @@ export class EditInvoiceComponent implements OnInit {
       this.spinner.hide();
       console.log("add quotation new save", response);
       if (response.status == true) {
+        this.upd_flagName=response.searchFlag;
+        this.upd_search_name=response.search_name;
         this.spinner.hide();
         iziToast.success({
           title: 'Updated',
@@ -1603,6 +1611,14 @@ export class EditInvoiceComponent implements OnInit {
           console.log("search_values",this.search_values)
           this.serverService.invoice_search1.next(this.search_values);
         }, 1000);
+
+        this.router.navigate(['/invoice'], {
+          queryParams: {
+            upd_searchFlag: this.upd_flagName,
+            upd_search_name: this.upd_search_name
+          }
+        });
+      
       
 
       }

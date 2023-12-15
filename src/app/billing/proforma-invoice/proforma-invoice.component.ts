@@ -2,6 +2,7 @@ import { Component, OnInit,Input } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 declare var $: any
 declare var iziToast: any;
 declare var tinymce: any;
@@ -130,7 +131,10 @@ export class ProformaInvoiceComponent implements OnInit {
   Permission_payment: any;
   Permission_share: any;
   Permission_view: any;
-  constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) {
+  upd_searchName: any;
+  upd_searchFlag: any;
+  searchFlag: any;
+  constructor(private serverService: ServerService, private router: Router,private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.serverService.global_search.subscribe((val:any)=>{
       console.log("before parse",val)
       var k = JSON.parse(val);
@@ -210,6 +214,22 @@ export class ProformaInvoiceComponent implements OnInit {
       'company_Name': new FormControl(null),
 
     });
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);    
+      this.upd_searchName = params['upd_search_name'];
+      this.upd_searchFlag = params['upd_searchFlag'];
+      if(this.upd_searchFlag==1){
+        this.searchResult_CustomerName=  this.upd_searchName;
+        this.PIList({});
+      }
+    }
+    );
+    
+
+    console.log("checklist-this.upd_searchName",this.upd_searchName);
+    console.log("checklist-this.upd_searchFlag",this.upd_searchFlag);
+
   }
   selectEventCustomer(item: any) {
     console.log(item)
@@ -800,6 +820,12 @@ export class ProformaInvoiceComponent implements OnInit {
     api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
+   
+    // if(this.upd_searchFlag==1){
+    //   api_quotationList.search_txt = this.upd_searchName;
+    // }else{
+    //   api_quotationList.search_txt = this.searchResult_CustomerName;
+    // }
     api_quotationList.search_txt = this.searchResult_CustomerName;
     api_quotationList.search_biller_str=this.edit_array_SearchBiller_Checkbox;
    
@@ -814,7 +840,7 @@ export class ProformaInvoiceComponent implements OnInit {
       $("#searchPIFormId").modal("hide");
       console.log("PI list", response);
       if (response) {
-
+        this.searchFlag=response.searchFlag;
         this.PI_list = response.proforma_details;
 
         this.biller_list = response.biller_details;
@@ -920,6 +946,7 @@ export class ProformaInvoiceComponent implements OnInit {
     this.router.navigate(['/EditPI'], {
       queryParams: {
         e_editBillID: editbillID,
+        e_searchFlag:this.searchFlag
       }
     });
     $("body").removeClass("modal-open");
@@ -936,6 +963,7 @@ export class ProformaInvoiceComponent implements OnInit {
     this.router.navigate(['/EditDidPI'], {
       queryParams: {
         e_editBillID: editbillID,
+        e_searchFlag:this.searchFlag
       }
     });
     $("body").removeClass("modal-open");

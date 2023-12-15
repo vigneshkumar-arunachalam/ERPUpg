@@ -149,6 +149,9 @@ export class EditPIComponent implements OnInit {
   // input2: any;
  radio_Value_InvoiceType:any;
   radio_Value_ExportState:any;
+  searchFlag: any;
+  upd_flagName: any;
+  upd_search_name: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -168,10 +171,11 @@ export class EditPIComponent implements OnInit {
         console.log("params output value", params);
 
         this.editbillerID = params['e_editBillID'];
-
+        this.searchFlag = params['e_searchFlag'];
 
 
         console.log("edit biller id", this.editbillerID);
+        console.log("this.searchFlag id", this.searchFlag);
 
 
 
@@ -1250,7 +1254,7 @@ export class EditPIComponent implements OnInit {
     api_updatePI_req.export_state = this.radio_Value_ExportState;
     api_updatePI_req.mile_discount_state = this.radio_Value_InvoiceType;
     api_updatePI_req.mile_discount_display_state = this.MSDisplay_Value;
-
+    api_updatePI_req.searchFlag =this.searchFlag;
     //to check
    
    
@@ -1326,12 +1330,19 @@ export class EditPIComponent implements OnInit {
 
       console.log("add quotation new save", response);
       if (response.status == true) {
-
+        this.upd_flagName=response.searchFlag;
+        this.upd_search_name=response.search_name;
+        this.router.navigate(['/ProformaInvoice'], {
+          queryParams: {
+            upd_searchFlag: this.upd_flagName,
+            upd_search_name: this.upd_search_name
+          }
+        });
         iziToast.success({
           message: 'PI Updated Successfully !',
           position: 'topRight'
         });
-
+       
         this.gotoPIList();
         this.addPI_section1.reset();
         this.addPI_section2.reset();

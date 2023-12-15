@@ -3,6 +3,7 @@ import { ServerService } from '../../services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 declare var $: any
@@ -315,7 +316,10 @@ export class InvoiceComponent implements OnInit {
   InvSearch_dont_select_did_invoice: any;
   InvSearch_revenue_typewise_show: any;
   InvSearch_revenue_typewise_showID: any;
-  constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
+  searchFlag: any;
+  upd_searchName: any;
+  upd_searchFlag: any;
+  constructor(private serverService: ServerService, private http: HttpClient, private router: Router,private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -368,6 +372,26 @@ export class InvoiceComponent implements OnInit {
     }
 
     this.commissionType_value = 1;
+    this.route.queryParams
+      .subscribe(params => {
+        console.log("params output value", params);
+
+        
+        this.upd_searchName = params['upd_search_name'];
+      
+     
+        this.upd_searchFlag = params['upd_searchFlag'];
+
+        if(this.upd_searchFlag==1){
+        
+          this.searchResult_CustomerName=  this.upd_searchName;
+          this.getInvoice1({});
+        }
+
+        
+
+      }
+      );
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
     this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
@@ -943,6 +967,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice1(data: any) {
+ 
     this.spinner.show();
     var list_data = this.listDataInfo(data);
 
@@ -985,6 +1010,7 @@ export class InvoiceComponent implements OnInit {
       if (response) {
         this.spinner.hide();
         this.PI_list = response.proforma_details;
+        this.searchFlag=response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
         this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
@@ -1129,6 +1155,7 @@ export class InvoiceComponent implements OnInit {
       if (response) {
         this.spinner.hide();
         this.PI_list = response.proforma_details;
+        this.searchFlag=response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
         this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
@@ -1250,7 +1277,8 @@ export class InvoiceComponent implements OnInit {
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState: editDIDState
+          e_editDIDState: editDIDState,
+          e_searchFlag:this.searchFlag
         }
       });
     }
@@ -1258,7 +1286,8 @@ export class InvoiceComponent implements OnInit {
       this.router.navigate(['/InvoiceEditDID'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState: editDIDState
+          e_editDIDState: editDIDState,
+          e_searchFlag:this.searchFlag
         }
       });
 

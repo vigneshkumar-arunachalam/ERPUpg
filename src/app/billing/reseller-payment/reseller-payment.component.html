@@ -4,18 +4,24 @@
       <div class="card">
         <div class="card-header color-dark fw-500">
           <h3 class="card-header-section">
-            <a href="#" class="breadcrumb-item">
-              <i class="fas fa-home"></i>
-              Home
+              <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
               <span class="breadcrumb-item active">Reseller Payment</span>
-            </a>
-
           </h3>
+          <div style="display: flex;align-items: center;">
+          <a  style="cursor: pointer;" data-toggle="modal"  data-target="#RP_multipleResellerPaymentID">
+            <!-- <i style="font-size: 20px;color: #6c53f6;margin-right: 10px;" class="fa fa-coins"></i> -->
+            <img style="width: 30px;margin-right: 10px;" class="show" src="assets/img/icon2/hand.png">
+            <!-- <img class="hide" src="assets/img/icon2/salary-black.png"> -->
+          </a>
+          <h1 style="margin-bottom: 0;">  Unpaid Amaount in SGD ({{this.commission_amt}})</h1>
+        </div>
           <div class="quotation-btn-section">
-            <button type="button" class="btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
+            <button type="button" class="btn btn-primary btn-default btn-squared" (click)="addResellerPayment()"
+              style="margin-right: 10px;">
               <i class="fas fa-plus" style="margin-right: 5px;"></i>Add
             </button>
-            <button type="button" class=" btn btn-primary btn-default btn-squared" style="margin-right: 10px;">
+            <button type="button" class=" btn btn-primary btn-default btn-squared" (click)="searchResellerPayment()"
+              style="margin-right: 10px;">
               <i class="fas fa-search" style="margin-right: 5px;"></i>Search
 
             </button>
@@ -24,6 +30,7 @@
 
         </div>
         <div class="card-body">
+        
           <div class="userDatatable global-shadow border-0 bg-white w-100" style="padding: 0px 15px 1px;">
             <div id="main">
               <div>
@@ -84,26 +91,31 @@
                           </table>
                         </div>
                         <div>
-                          <div style="display:flex;    line-height: 50px;" class="ml-2">
+                          <div style="display:flex;    line-height: 50px;" class="ml-2 mt-4">
                             <div>
                               <label class="col-lg-12 col-form-label">Unpaid Amount:<span
                                   style="color: #FF5E62;">{{this.unpaid_amount}}</span></label>
                             </div>
 
                             <div class="ml-2">
-                              <label class="mr-2">Check All</label>
-                              <input type="checkbox" name="UnpaidAll" id="check_all_86">
+                              
+                              <input type="checkbox" name="UnpaidAll" id="check_all_86" [(ngModel)]="selectAllCheckbox"
+                                (change)="selectAll()">
+                                <label class="ml-2">Check All</label>
                             </div>
-                            <div class="ml-2">
-                              <label class="mr-2">Paid Check All </label>
-                              <input type="checkbox" name="paid_check_all" id="paid_check_all_86">
+                            <div class="ml-4">
+                              
+                              <input type="checkbox" name="paid_check_all" id="paid_check_all_86"
+                                [(ngModel)]="selectAllCheckbox_paid" (change)="selectAll_paid()">
+                                <label class="ml-2">Paid Check All </label>
                             </div>
                             <div class="form-group row ml-2">
                               <div>
-                                <label for="cmp_name" class="col-lg-12 col-form-label">Filter Commission</label>
+                                <label for="cmp_name" class="col-lg-12 col-form-label">Filter Commission %</label>
                               </div>
-                              <div class="mt-2">
+                              <div class="mt-2" *ngFor="let name2 of name1">
                                 <select name="enqFormValue" id="filt_comm" class="form-control"
+                                  (change)="filterCommissionListDropdown(($event),name2.customerId)"
                                   style="height: 35px;border:1px solid #c4d2c7;">
                                   <option [ngValue]="null" selected disabled>Select Company Name</option>
                                   <option *ngFor="let com of filterCommissionList" value="{{com.id}}">
@@ -173,16 +185,19 @@
                                     </tr>
 
                                   </thead>
-                              
+
 
                                   <tbody *ngFor="let list2 of CurrencyTotalList; let i = index">
 
                                     <tr>
 
                                       <td style="border: 1px solid #e4ebf5;">{{list2.currency_name}}</td>
-                                      <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">{{list2.paid_amt}}</td>
-                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">{{list2.unpaid_amt}}</td>
-                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">{{list2.currency_price_val}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">
+                                        {{list2.paid_amt}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">
+                                        {{list2.unpaid_amt}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">
+                                        {{list2.currency_price_val}}</td>
 
                                     </tr>
 
@@ -228,8 +243,10 @@
                                     <tr>
 
                                       <td style="border: 1px solid #e4ebf5;">{{list3.curr_year}}</td>
-                                      <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">{{list3.paid_amt_year}}</td>
-                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">{{list3.unpaid_amt_year}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">
+                                        {{list3.paid_amt_year}}</td>
+                                      <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">
+                                        {{list3.unpaid_amt_year}}</td>
 
 
                                     </tr>
@@ -249,19 +266,15 @@
                               <thead>
                                 <tr class="userDatatable-header">
                                   <th>
-                                    <div class="d-flex align-items-center">
-                                      <div class="custom-checkbox  check-all">
 
-                                        <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1"
-                                          id="check-{i}" (change)="checkUncheckAll(i)" />
-                                        <label for="check-{i}">
+                                    <div>
 
-                                        </label>
-                                      </div>
+                                      <input type="checkbox" [(ngModel)]="selectAllCheckbox" (change)="selectAll()" />
                                     </div>
 
-                                  </th>
 
+
+                                  </th>
 
                                   <th>
                                     <span class="userDatatable-title">R Code</span>
@@ -312,26 +325,22 @@
 
                               <tbody *ngFor="let list of resellerList; let f = index">
 
-                                <tr>
+                                <tr
+                                  [ngStyle]="{'background-color':(list.resellerFlag=='paid')? ('#D0FFC3') : ((list.resellerFlag=='not paid')? ('#FFB8B8') : ('#FCF55F'))}">
+                                  <td *ngIf=" list.checkbox === 1">
+                                    <!-- <div *ngFor="let item of items">
+                                      <input type="checkbox" [(ngModel)]="item.selected" />
+                                      {{ item.name }}
+                                    </div> -->
+                                    <input type="checkbox" [(ngModel)]="list.selected"
+                                      value="{{list.reseller_comm_id}}" />
 
-                                  <td>
-                                    <div class="d-flex">
-                                      <div class="userDatatable__imgWrapper d-flex align-items-center">
-                                        <div class="checkbox-group-wrapper">
-                                          <div class="checkbox-group d-flex">
-                                            <div
-                                              class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                              <input type="checkbox" [(ngModel)]="list.isSelected" name="list_name"
-                                                value="{{list.id}}" (change)="isAllSelected()" id="check-grp1-{{i}}" />
-
-                                              <label for="check-grp1-{{i}}"></label>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-
-                                    </div>
                                   </td>
+                                  <td *ngIf=" list.checkbox === 0">
+
+                                  </td>
+
+
                                   <td>{{ list.r_code}}</td>
                                   <td>{{ list.invoice_no}}</td>
                                   <td>{{ list.reseller_comm_dt_show}}</td>
@@ -339,17 +348,30 @@
                                   <td><span>{{ list.customer_name}}</span></td>
                                   <td>{{ list.commission_type_name}}
                                   </td>
-                                  <td>{{ list.invoice_amt}}</td>
+                                  <td
+                                    *ngIf="( list.resellerFlag=='not paid' && this.filterCommission_color==list.commissionValueMatch)"
+                                    style="background-color: #FF9900;">
+                                    {{ list.invoice_amt}}
+                                  </td>
+                                  <td
+                                    *ngIf="(list.resellerFlag=='not paid' && this.filterCommission_color!=list.commissionValueMatch)">
+                                    {{ list.invoice_amt}}
+                                  </td>
+                                  <td *ngIf="(list.resellerFlag!='not paid' )">
+                                    {{ list.invoice_amt}}
+                                  </td>
                                   <td>{{ list.fixed_amt}}</td>
                                   <td>{{ list.usage_amt}}</td>
                                   <td>{{ list.currency_name}}</td>
                                   <td>{{ list.commission_amt}}</td>
                                   <td>{{ list.conversion_amt}}({{ list.conversionRate}})</td>
                                   <!-- <td>{{ list.conversionRate}}</td> -->
-                                  <td *ngIf="(list.paid_status=='Paid')" style="background-color: #D0FFC3;">{{ list.paid_status}}
+                                  <td *ngIf="(list.paid_status=='Paid')" style="background-color: #D0FFC3;">{{
+                                    list.paid_status}}
                                     <br>{{list.processDate}}
                                   </td>
-                                  <td *ngIf="(list.paid_status=='Not Paid')" style="background-color: #FFB8B8;">{{ list.paid_status}}
+                                  <td *ngIf="(list.paid_status=='Not Paid')" style="background-color: #FFB8B8;">{{
+                                    list.paid_status}}
                                     <br>{{list.processDate}}
                                   </td>
                                   <td>
@@ -427,14 +449,13 @@
                                           </li>
 
 
-                                          <!-- <li class="dropdown__item">
-                                            <a class="hover3" title="Share Permission" data-toggle="modal"
-                                              data-target="#RP_SharePermissionFormID"
-                                              (click)="ResellerPaySharePermissionEdit(list.reseller_id,i)" >
-                                              <img class="show" src="assets/img/icon2/share-blue.png">
-                                              <img class="hide" src="assets/img/icon2/share-black.png">
+                                          <li class="dropdown__item">
+                                            <a class="hover3" title="Remark" *ngIf="(list.remarks!='')"
+                                              (click)="ResellerPayRemark(list.remarks,i)">
+                                              <img class="show" src="assets/img/icon/open-book-b.png">
+                                              <img class="hide" src="assets/img/icon/open-book.png">
                                             </a>
-                                          </li> -->
+                                          </li>
 
                                         </ul>
                                       </div>
@@ -448,9 +469,9 @@
                               </tbody>
                             </table>
                           </div>
-                          <div > 
-                            <nav class="atbd-page" >
-                       
+                          <div>
+                            <nav class="atbd-page">
+
                               <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
                                 <li class="page-item">
                                   <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
@@ -459,7 +480,8 @@
                                       class="fas fa-angle-left"></i></a>
                                 </li>
                                 <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                                  <a class="page-link" href="javascript:void(0)" (click)="getResellerPaymentdetails({'offset':paginationData.back},{})"><i
+                                  <a class="page-link" href="javascript:void(0)"
+                                    (click)="getResellerPaymentdetails({'offset':paginationData.back},{})"><i
                                       class="fas fa-angle-double-left"></i></a>
                                 </li>
                                 <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
@@ -469,7 +491,8 @@
                                     <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
                                 </li>
                                 <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                                  <a class="page-link" href="javascript:void(0)" (click)="getResellerPaymentdetails({'offset':paginationData.next},{})"><i
+                                  <a class="page-link" href="javascript:void(0)"
+                                    (click)="getResellerPaymentdetails({'offset':paginationData.next},{})"><i
                                       class="fas fa-angle-double-right"></i></a>
                                 </li>
                                 <li class="page-item">
@@ -480,7 +503,7 @@
                                 </li>
                                 <li class="dropdown__item">
                                   <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
-                  
+
                                   </a>
                                 </li>
                               </ul>
@@ -550,12 +573,24 @@
               </div>
 
               <div class="col-lg-6 mt-2">
-                <label for="RP_resellerName">Reseller Name</label>
-                <input type="text" class="form-control" formControlName="RP_resellerName">
-                <div
-                  *ngIf="resellerPaymentForm.controls['RP_resellerName'].invalid && (resellerPaymentForm.controls['RP_resellerName'].dirty || resellerPaymentForm.controls['RP_resellerName'].touched)"
-                  class="alert alert-danger alertdangerCustomCSS1 ">
-                  Reseller Name Required
+                <label for="RP_add_resellerName">Reseller Name</label>
+
+                <div class="ng-autocomplete">
+
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
+                    formControlName="RP_resellerName" (selected)='selectEventReseller($event)'
+                    (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+
                 </div>
 
               </div>
@@ -653,13 +688,13 @@
 
               <div class="col-lg-6">
                 <label class="mt-4">Payment Type/Method</label>
-                <select class="form-control" formControlName="RP_pay_paymenttype">
+                <select class="form-control" formControlName="RP_pay_paymenttype" name="RP_pay_paymenttype">
 
                   <option [ngValue]="null" selected>Select Payment Method</option>
 
-                  <!-- <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
+                  <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
                   {{term.payment_type_name}}
-                </option> -->
+                </option>
                 </select>
               </div>
               <div class="col-lg-12">
@@ -880,7 +915,7 @@
                       <div class="form-group row">
                         <div class="ng-autocomplete">
 
-                          <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" 
+                          <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
                             formControlName="reseller_name" (selected)='selectEventReseller($event)'
                             (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
                             [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
@@ -909,14 +944,15 @@
 
                       <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
                         <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
-                       <input class="form-check-input" type="radio" name=CommissionType_{{i}} id="CommissionType_{{k}}"  checked="{{item.id==this.CommissionType1[i] ? 'checked':''}}" (change)="radio_commissionType($event)"
-                           value={{item.id}} >  
-                      
-                          <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                        <input class="form-check-input" type="radio" name=CommissionType_{{i}} id="CommissionType_{{k}}"
+                          checked="{{item.id==this.CommissionType1[i] ? 'checked':''}}"
+                          (change)="radio_commissionType($event,i)" value={{item.id}}>
+
+                        <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
                       </div>
-                   
-                    
-                      
+
+
+
                     </div>
                   </div>
                   <div class="col-lg-12 mt-2" style="display: flex;">
@@ -935,11 +971,11 @@
                     <div class="col-lg-8">
                       <input type="number" class="form-control" formControlName="commission_amt"
                         id="CommissionAmount_WFA_ID">
-                        <input type="hidden" class="form-control" formControlName="reseller_comm_id">
-                        <input type="hidden" class="form-control" formControlName="reseller_id">
-                      
-                        <input type="hidden" class="form-control" formControlName="billId">
-                        <input type="hidden" class="form-control" formControlName="grossAmount">
+                      <input type="hidden" class="form-control" formControlName="reseller_comm_id">
+                      <input type="hidden" class="form-control" formControlName="reseller_id">
+
+                      <input type="hidden" class="form-control" formControlName="billId">
+                      <input type="hidden" class="form-control" formControlName="grossAmount">
                     </div>
                   </div>
                   <div class="col-lg-12 mt-2" style="display: flex;">
@@ -950,14 +986,13 @@
                       <input type="checkbox" formControlName="pdf_show" (change)="CBF_PdfShow($event)">
                     </div>
                   </div>
-                  
-                  <div >
-                    <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
-                    (click)="addAddress()">Add </button>
-                    <button type="button" class="btn btn-danger btn-sm"
-                      (click)="removeAddress(i)">Remove </button>
 
-                    
+                  <div>
+                    <button type="button" class="btn btn-success" style="margin-right: 10px; ;"
+                      (click)="addAddress()">Add </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress(i)">Remove </button>
+
+
                   </div>
                 </div>
               </section>
@@ -977,3 +1012,238 @@
 
 
   <!----------Reseller Commission Details END ------------------>
+
+
+  <!-----------------Modal Pop Up-add Reseller Payment  -Begin------------------>
+  <div class="modal fade" id="RP_AddResellerPaymentID" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Add Reseller Payment
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="resellerPayment_addForm">
+            <div class="row ">
+              <div class="col-lg-6 mt-2">
+                <label for="RP_add_billerName">Biller Name</label>
+                <select class="form-control" formControlName="RP_add_billerName">
+                  <option [ngValue]="null" selected>Select Biller Name
+
+                  </option>
+                  <option *ngFor="let bill of RPBiller_list" value="{{bill.billerId}}">
+                    {{bill.billerName}}
+
+                  </option>
+                  <div
+                    *ngIf="resellerPayment_addForm.controls['RP_add_billerName'].invalid && (resellerPayment_addForm.controls['RP_add_billerName'].dirty || resellerPayment_addForm.controls['RP_add_billerName'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 ">
+                    Biller Name Required
+                  </div>
+                </select>
+
+
+              </div>
+
+              <div class="col-lg-6 mt-2">
+                <label for="RP_add_resellerName">Reseller Name</label>
+                <!-- <input type="text" class="form-control" formControlName="RP_add_resellerName">
+                <div
+                  *ngIf="resellerPayment_addForm.controls['RP_add_resellerName'].invalid && (resellerPayment_addForm.controls['RP_add_resellerName'].dirty || resellerPayment_addForm.controls['RP_add_resellerName'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 ">
+                  Reseller Name Required
+                </div> -->
+                <div class="ng-autocomplete">
+
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
+                    formControlName="RP_add_resellerName" (selected)='selectEventReseller($event)'
+                    (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+
+                </div>
+
+              </div>
+              <div class="col-lg-6 mt-2">
+                <label for="RP_add_currencyName">Currency Name</label>
+                <select class="form-control" formControlName="RP_add_currencyName">
+                  <option [ngValue]="null" selected>Select Currency</option>
+                  <option *ngFor="let cur of RP_currencyList" value="{{cur.currencyId}}">
+                    {{cur.currency_name}}
+
+                  </option>
+                  <div
+                    *ngIf="resellerPayment_addForm.controls['RP_add_currencyName'].invalid && (resellerPayment_addForm.controls['RP_add_currencyName'].dirty || resellerPayment_addForm.controls['RP_add_currencyName'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 ">
+                    Currency Required
+                  </div>
+
+                </select>
+
+              </div>
+              <div class="col-lg-6 mt-2">
+                <label for="RP_add_commissionAmount">Commission Amount</label>
+                <input type="text" class="form-control" formControlName="RP_add_commissionAmount">
+              </div>
+
+              <div class="col-lg-12 mt-2">
+                <label for="RP_add_remarks">Remarks</label>
+                <input type="text" class="form-control" formControlName="RP_add_remarks">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-primary" (click)="saveResellerPayment()">Save
+
+          </button>
+
+
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-------------- Add Reseller Payment  Pop up ends------------------------------------------>
+
+
+  <!-----------------Modal Pop Up-Search Reseller Payment  -Begin------------------>
+  <div class="modal fade" id="RP_searchResellerPaymentID" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Search Reseller Payment
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="resellerPayment_searchForm">
+
+
+
+
+            <div class="col-lg-12 row">
+              <div class="col-lg-5">
+                <label for="RP_search_res_paymentName">Reseller Payment Name</label>
+              </div>
+              <div class="col-lg-7">
+                <select class="form-control" formControlName="RP_search_res_paymentName" (change)="RP_change($event)">
+                  <option [ngValue]="null" selected disabled>Select Reseller Payment Name</option>
+                  <option *ngFor="let res of RP_paymentNameList" value="{{res.reseller_id}}">
+                    {{res.reseller_name}}
+
+                  </option>
+                  <div
+                    *ngIf="resellerPayment_searchForm.controls['RP_search_res_paymentName'].invalid && (resellerPayment_searchForm.controls['RP_search_res_paymentName'].dirty || resellerPayment_searchForm.controls['RP_search_res_paymentName'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 ">
+                    Reseller Payment Required
+                  </div>
+
+                </select>
+              </div>
+
+
+
+            </div>
+
+
+          </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-primary" (click)="searchResPay()">Search
+
+          </button>
+
+
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-------------- Add Reseller Payment  Pop up ends------------------------------------------>
+
+
+
+    <!-----------------Modal Pop Up-Multiple Reseller Payment  -Begin------------------>
+    <div class="modal fade" id="RP_multipleResellerPaymentID" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Multiple Reseller Payment
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="multipleResellerPaymentForm">
+            <div class="row ">
+              <div class="col-lg-6 mt-2">
+                <label for="RP_multiple_date">Date </label>
+               
+                <input type="date" class="form-control" formControlName="RP_multiple_date">
+
+              </div>
+
+              <div class="col-lg-6 mt-2">
+                <label for="RP_multiple_amount">Amount</label>
+                 <input type="text" class="form-control" formControlName="RP_multiple_amount" 
+                 [style.pointer-events]="'none'" readonly="readValue">
+              </div>
+              <div class="col-lg-6 mt-2">
+                <label for="RP_multiple_paymentType">Payment Type/Method</label>
+                <select class="form-control" formControlName="RP_multiple_paymentType" name="RP_multiple_paymentType">
+                  <option [ngValue]="null" selected disabled>Select Payment</option>
+                  <option *ngFor="let cur of paymentType_payment" value="{{cur.payment_type_id}}">
+                    {{cur.payment_type_name}}
+                  </option>
+                </select>
+              </div>
+             
+              <div class="col-lg-6 mt-2">
+                <label for="RP_multiple_Description">Description</label>
+                <input type="text" class="form-control" formControlName="RP_multiple_Description">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-primary" (click)="saveMultipleResellerPayment()">Save
+
+          </button>
+
+
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-------------- Multiple Reseller Payment  Pop up ends------------------------------------------>

@@ -222,9 +222,9 @@
                                                                 <div
                                                                     class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
                                                                     <input class="checkbox" type="checkbox"
-                                                                        id="check-grp-{{i}}"
+                                                                        id="check-transapp-grp-{{i}}"
                                                                         (change)="EditCHK(list.transaction_approval_id,$event)">
-                                                                    <label for="check-grp-{{i}}"></label>
+                                                                    <label for="check-transapp-grp-{{i}}"></label>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -815,7 +815,7 @@
                                     <tbody class="userDatatable-header" *ngFor="let list of transApprovalList; let i = index" [ngSwitch]="list.approval_staus">
 
                                         <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;" >
-                                           
+                                                                                     
                                             <td>
                                                 <div class="d-flex">
                                                     <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -824,9 +824,9 @@
                                                                 <div
                                                                     class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
                                                                     <input class="checkbox" type="checkbox"
-                                                                        id="check-grp-{{i}}"
+                                                                        id="check-transapp-grp-{{i}}"
                                                                         (change)="EditCHK(list.transaction_approval_id,$event)">
-                                                                    <label for="check-grp-{{i}}"></label>
+                                                                    <label for="check-transapp-grp-{{i}}"></label>
                                                                 </div>
                                                             </div>
                                                         </div>

@@ -109,11 +109,11 @@ export class TransactionApprovalComponent implements OnInit {
     if (event.target.checked == true) {
 
       this.transApprovalList.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', true);
+        $("#check-transapp-grp-" + index).prop('checked', true);
       });
     } else {
       this.transApprovalList.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check-transapp-grp-" + index).prop('checked', false);
       });
 
     }
@@ -124,11 +124,11 @@ export class TransactionApprovalComponent implements OnInit {
     if (event.target.checked == true) {
 
       this.transApprovalList_Main.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', true);
+        $("#check-transapp-grp-" + index).prop('checked', true);
       });
     } else {
       this.transApprovalList_Main.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check-transapp-grp-" + index).prop('checked', false);
       });
 
     }
