@@ -549,12 +549,14 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
          border-color:   #3d0096!important;
       }
 
-      #RP_AddResellerPaymentID .modal-dialog,#RP_multipleResellerPaymentID .modal-dialog{
+      #RP_AddResellerPaymentID .modal-dialog,#RP_multipleResellerPaymentID .modal-dialog,
+      #RP_landscapeEmailFormId .modal-dialog,#RP_SharePermissionFormID .modal-dialog{
         max-width: 50% !important;
         max-height: fit-content !important;
       }
       #RP_ResellerCommissionFormId .modal-dialog{
         max-width: fit-content !important;
+        max-width: 50% !important;
         max-height: fit-content !important;
       }
 
@@ -562,7 +564,8 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
       #RP_ResellerPaymentID .btn-primary, #RP_PaymentIIFormID .btn-primary, 
       #searchQuotationFormId .btn-primary,#RP_landscapeEmailFormId .btn-primary,
       #RP_AddResellerPaymentID .btn-primary,#RP_searchResellerPaymentID .btn-primary,
-      #RP_ResellerCommissionFormId .btn-primary,#RP_multipleResellerPaymentID .btn-primary{
+      #RP_ResellerCommissionFormId .btn-primary,#RP_multipleResellerPaymentID .btn-primary,
+      #RP_SharePermissionFormID .btn-primary{
         grid-column: 1/2;
         grid-row: 4/5;
         background: #6d5dfc;
@@ -572,14 +575,17 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
       #RP_ResellerPaymentID .modal-content,  #RP_PaymentIIFormID .modal-content,  
       #searchQuotationFormId .modal-content,#RP_landscapeEmailFormId .modal-content,
       #RP_AddResellerPaymentID .modal-content,#RP_searchResellerPaymentID .modal-content,
-      #RP_ResellerCommissionFormId .modal-content,#RP_multipleResellerPaymentID .modal-content{ 
-        background: #e4ebf5;
+      #RP_ResellerCommissionFormId .modal-content,#RP_multipleResellerPaymentID .modal-content,
+      #RP_SharePermissionFormID .modal-content{ 
+         background: #e4ebf5; 
+    
       
       }
       #RP_ResellerPaymentID .modal-content label,  #RP_PaymentIIFormID .modal-content label,  
       #searchQuotationFormId .modal-content label,#RP_landscapeEmailFormId .modal-content label,
       #RP_AddResellerPaymentID .modal-content label,#RP_searchResellerPaymentID .modal-content label,
-      #RP_ResellerCommissionFormId .modal-content label,#RP_multipleResellerPaymentID .modal-content label{
+      #RP_ResellerCommissionFormId .modal-content label,#RP_multipleResellerPaymentID .modal-content label,
+      #RP_SharePermissionFormID .modal-content label{
         color: #5f63f2;
       }
       
@@ -587,7 +593,8 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
       #RP_ResellerPaymentID .modal-content .form-control, #RP_PaymentIIFormID .modal-content .form-control, 
       #searchQuotationFormId .modal-content .form-control,#RP_landscapeEmailFormId .modal-content .form-control,
       #RP_AddResellerPaymentID .modal-content .form-control,#RP_searchResellerPaymentID .modal-content .form-control,
-      #RP_ResellerCommissionFormId .modal-content .form-control,#RP_multipleResellerPaymentID .modal-content .form-control{
+      #RP_ResellerCommissionFormId .modal-content .form-control,#RP_multipleResellerPaymentID .modal-content .form-control
+      #RP_SharePermissionFormID .modal-content .form-control{
         border: none;
         padding-left: 1.4rem;
         box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
@@ -598,14 +605,16 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
       #RP_ResellerPaymentID .modal-content .form-control:focus, #RP_PaymentIIFormID .modal-content .form-control:focus, 
       #searchQuotationFormId .modal-content .form-control:focus, #RP_landscapeEmailFormId .modal-content .form-control:focus,
       #RP_AddResellerPaymentID .modal-content .form-control:focus, #RP_searchResellerPaymentID .modal-content .form-control:focus,
-      #RP_ResellerCommissionFormId .modal-content .form-control:focus,#RP_multipleResellerPaymentID .modal-content .form-control:focus {
+      #RP_ResellerCommissionFormId .modal-content .form-control:focus,#RP_multipleResellerPaymentID .modal-content .form-control:focus,
+      #RP_SharePermissionFormID .modal-content .form-control:focus {
         outline: none;
         box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
       }
       #RP_ResellerPaymentID .modal-content button.close, #RP_PaymentIIFormID .modal-content button.close, 
       #searchQuotationFormId .modal-content button.close,#RP_landscapeEmailFormId .modal-content button.close,
       #RP_AddResellerPaymentID .modal-content button.close,#RP_searchResellerPaymentID .modal-content button.close,
-      #RP_ResellerCommissionFormId .modal-content button.close,#RP_multipleResellerPaymentID .modal-content button.close{
+      #RP_ResellerCommissionFormId .modal-content button.close,#RP_multipleResellerPaymentID .modal-content button.close,
+      #RP_SharePermissionFormID .modal-content button.close{
         width: 2rem;
           height: 2rem;
           border-radius: 50%;
@@ -626,9 +635,11 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
       .form-control:disabled,
       .form-control[readonly] {
           /* background-color: #f3d2f0 !important; */
-          background-color: #f3d2f0 !important;
+          background-color: #f4e2f3 !important;
           opacity: 0.6;
           color: black!important;
+          cursor: pointer;
+         
       }
 
       .alertdangerCustomCSS1 {
@@ -720,5 +731,9 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
   margin-bottom: 20px;
   font-size: 22px;
 }
+#RP_multipleResellerPaymentID{width: 40%;height: auto;right: 0;margin: 0 auto;}
+#RP_multipleResellerPaymentID .modal-dialog{max-width: 100% !important;}
+.fsize tr td{font-size: 13px;}
 /* ------------KS-Code----------------------- */
+
 

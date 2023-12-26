@@ -5,11 +5,6 @@
 .userDatatable .d-flex{justify-content: center;margin-right: 0;}
 .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
 
-
-
-
-
-
 .dropdown {
   position: relative;
 }
@@ -476,7 +471,7 @@ th{
 td{border-bottom: 1px solid #c8e2fb!important;}
 
 .userDatatable table tr:nth-child(even) {background: rgb(241, 238, 241)}
-.userDatatable table tr:nth-child(odd) {background: #FFF}
+.userDatatable table tr:nth-child(odd) {background: #f0dfdf}
 
 .userDatatable .buttonClass{
   border: 1px solid #ddd;
@@ -486,4 +481,5 @@ td{border-bottom: 1px solid #c8e2fb!important;}
 ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
   padding: 0px 0px!important;
 }
+
 

@@ -904,12 +904,12 @@ export class ProformaInvoiceComponent implements OnInit {
 
       this.PI_list.forEach((element: any, index: any) => {
 
-        $("#check-grp1-" + index).prop('checked', true);
+        $("#check-pi-grp1-" + index).prop('checked', true);
       });
     } else {
       this.PI_list.forEach((element: any, index: any) => {
 
-        $("#check-grp1-" + index).prop('checked', false);
+        $("#check-pi-grp1-" + index).prop('checked', false);
       });
 
     }
