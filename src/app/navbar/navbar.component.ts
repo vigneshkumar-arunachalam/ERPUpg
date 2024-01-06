@@ -82,6 +82,7 @@ export class NavbarComponent implements OnInit {
   Customer_revenue_send: any;
   roles: string;
   GlobalSearchPermission: any;
+  payment_transaction_reports_Permission: string;
   constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       console.log(res);
@@ -152,6 +153,9 @@ export class NavbarComponent implements OnInit {
       this.userId = localStorage.getItem('erp_c4c_user_id');
       this.role_Permission = localStorage.getItem('role');
       this.user_ProfileImage = localStorage.getItem('profile_image');
+      this.user_ProfileImage = localStorage.getItem('profile_image');
+      this.payment_transaction_reports_Permission= localStorage.getItem('payment_transaction_reports');
+
     }, 2000);
     this.PageList();
     this.searchGlobalList();
@@ -389,6 +393,19 @@ export class NavbarComponent implements OnInit {
     })
 
 
+  }
+  PaymentTransactionReports(){
+    var userid=localStorage.getItem('erp_c4c_user_id');
+    var username=localStorage.getItem('user_name');
+   var payment_transaction_reports= localStorage.getItem('payment_transaction_reports');
+    console.log("userid",userid);
+    console.log("username",username);
+    console.log("userid+username",userid+username);
+    console.log("payment_transaction_reports",payment_transaction_reports);
+    var userDetails=btoa(userid+username)
+    console.log("userDetails",userDetails)
+    var url="https://paymentinbound.cal4care.com/verify?uid="+btoa(userid)+"&authToken="+btoa(userid+username);
+    window.open(url, '_blank');
   }
   searchGlobalList() {
     this.spinner.show();

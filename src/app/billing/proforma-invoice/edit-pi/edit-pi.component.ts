@@ -1332,21 +1332,29 @@ export class EditPIComponent implements OnInit {
       if (response.status == true) {
         this.upd_flagName=response.searchFlag;
         this.upd_search_name=response.search_name;
+        console.log("in edit PI-this.upd_flagName",this.upd_flagName);
+        console.log("in edit PI-this.upd_search_name",this.upd_search_name);
+      
+        iziToast.success({
+          message: 'PI Updated Successfully !',
+          position: 'topRight'
+        });
         this.router.navigate(['/ProformaInvoice'], {
           queryParams: {
             upd_searchFlag: this.upd_flagName,
             upd_search_name: this.upd_search_name
           }
         });
-        iziToast.success({
-          message: 'PI Updated Successfully !',
-          position: 'topRight'
-        });
-       
-        this.gotoPIList();
-        this.addPI_section1.reset();
-        this.addPI_section2.reset();
-        this.addPI_section3.reset();
+      
+            if(this.upd_flagName==1){
+
+            }else{
+                  this.gotoPIList();
+                  this.addPI_section1.reset();
+                  this.addPI_section2.reset();
+                  this.addPI_section3.reset();
+            }
+        
 
       }
       else {

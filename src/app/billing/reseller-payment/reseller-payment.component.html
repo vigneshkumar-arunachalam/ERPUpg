@@ -99,15 +99,17 @@
 
                             <div class="ml-2">
 
-                              <input type="checkbox" name="UnpaidAll" id="check_all_{{i}}" [(ngModel)]="selectAllCheckbox"
-                                (change)="selectAll()">
+                              <input type="checkbox" name="UnpaidAll" id="check_all_{{i}}" 
+                              [(ngModel)]="selectAllCheckbox"
+                                (change)="selectAll()"  [disabled]="selectAllCheckbox_paid">
                               <label class="ml-2">Check All</label>
                             </div>
                             <div class="ml-4">
 
 
                               <input type="checkbox" name="paid_check_all" id="paid_check_all_{{i}}"
-                                [(ngModel)]="selectAllCheckbox_paid" (change)="selectAll_paid1($event)">
+                                [(ngModel)]="selectAllCheckbox_paid" 
+                                (change)="selectAll_paid1($event)" [disabled]="selectAllCheckbox">
                               <label class="ml-2">Paid Check All </label>
                             </div>
                             <div class="form-group row ml-2">
@@ -473,7 +475,7 @@
                               </tbody>
                             </table>
                           </div>
-                          <div>
+                          <!-- <div>
                             <nav class="atbd-page">
 
                               <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
@@ -512,7 +514,7 @@
                                 </li>
                               </ul>
                             </nav>
-                          </div>
+                          </div> -->
 
 
 
@@ -616,11 +618,15 @@
 
               </div>
               <div class="col-lg-6 mt-2">
+                <label for="RP_edit_date">Date</label>
+                <input type="date" class="form-control" formControlName="RP_edit_date">
+              </div>
+              <div class="col-lg-6 mt-2">
                 <label for="RP_commissionAmount">Commission Amount</label>
                 <input type="text" class="form-control" formControlName="RP_commissionAmount">
               </div>
 
-              <div class="col-lg-12 mt-2">
+              <div class="col-lg-6 mt-2">
                 <label for="RP_remarks">Remarks</label>
                 <input type="text" class="form-control" formControlName="RP_remarks">
               </div>
@@ -996,7 +1002,7 @@
                     </div>
                     <div class="col-lg-9">
                       <input type="number" class="form-control" formControlName="commission_value"
-                        id="CommissionValue_WFA_ID" (keyup)="commissionValueAutoFill()">
+                        id="CommissionValue_WFA_ID_{{i}}" (keyup)="commissionValueAutoFill(i)">
                     </div>
                   </div>
                   <div class="col-lg-12 mt-2" style="display: flex;">
@@ -1005,7 +1011,7 @@
                     </div>
                     <div class="col-lg-9">
                       <input type="number" class="form-control" formControlName="commission_amt"
-                        id="CommissionAmount_WFA_ID">
+                        id="CommissionAmount_WFA_ID_{{i}}">
                       <input type="hidden" class="form-control" formControlName="reseller_comm_id">
                       <input type="hidden" class="form-control" formControlName="reseller_id">
 
@@ -1086,7 +1092,23 @@
 
 
               </div>
+              <div class="col-lg-6 mt-2">
+                <label for="RP_add_currencyName">Currency Name</label>
+                <select class="form-control" formControlName="RP_add_currencyName" id="RP_add_currencyName">
+                  <option [ngValue]="null" selected>Select Currency</option>
+                  <option *ngFor="let cur of RP_currencyList" value="{{cur.currencyId}}">
+                    {{cur.currency_name}}
 
+                  </option>
+                  <div
+                    *ngIf="resellerPayment_addForm.controls['RP_add_currencyName'].invalid && (resellerPayment_addForm.controls['RP_add_currencyName'].dirty || resellerPayment_addForm.controls['RP_add_currencyName'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 ">
+                    Currency Required
+                  </div>
+
+                </select>
+
+              </div>
               <div class="col-lg-6 mt-2">
                 <label for="RP_add_resellerName">Reseller Name</label>
                 <!-- <input type="text" class="form-control" formControlName="RP_add_resellerName">
@@ -1115,22 +1137,11 @@
 
               </div>
               <div class="col-lg-6 mt-2">
-                <label for="RP_add_currencyName">Currency Name</label>
-                <select class="form-control" formControlName="RP_add_currencyName" id="RP_add_currencyName">
-                  <option [ngValue]="null" selected>Select Currency</option>
-                  <option *ngFor="let cur of RP_currencyList" value="{{cur.currencyId}}">
-                    {{cur.currency_name}}
-
-                  </option>
-                  <div
-                    *ngIf="resellerPayment_addForm.controls['RP_add_currencyName'].invalid && (resellerPayment_addForm.controls['RP_add_currencyName'].dirty || resellerPayment_addForm.controls['RP_add_currencyName'].touched)"
-                    class="alert alert-danger alertdangerCustomCSS1 ">
-                    Currency Required
-                  </div>
-
-                </select>
-
+                <label for="RP_add_date">Date</label>
+                <input type="date" class="form-control" formControlName="RP_add_date"
+                  id="RP_add_date">
               </div>
+         
               <div class="col-lg-6 mt-2">
                 <label for="RP_add_commissionAmount">Commission Amount</label>
                 <input type="text" class="form-control" formControlName="RP_add_commissionAmount"

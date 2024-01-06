@@ -196,6 +196,7 @@ export class EditDidInvoiceComponent implements OnInit {
   UID: string;
   BillerID_CompanyName: any;
   taxIDGET: any;
+  edit_duplicate_flag: boolean;
   edit_flag: boolean;
   duplicate_flag: boolean;
   userID_Edit: any;
@@ -205,6 +206,10 @@ export class EditDidInvoiceComponent implements OnInit {
   otherCharge_Flag: boolean=true;
   editCurrencyValue: any;
   editpaymentVIAValue: any;
+  searchFlag: any;
+  upd_flagName: any;
+  upd_search_name: any;
+  
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -248,13 +253,16 @@ export class EditDidInvoiceComponent implements OnInit {
         this.editbillerID = params['e_editBillID'];
         this.edit_Duplicate_ID = params['e_editDuplicateID'];
         this.editDIDStateID = params['e_editDIDState'];
+        this.searchFlag = params['e_searchFlag'];
+       
 
         console.log("edit biller id", this.editbillerID);
         console.log("edit Duplicate id", this.edit_Duplicate_ID);
         console.log("edit DID state id", this.editDIDStateID);
-        if (this.editbillerID == undefined) {
-          this.edit_flag = false;
-          this.duplicate_flag = true;
+        console.log("edit searchFlag id", this.searchFlag);
+        if(this.editbillerID==undefined){
+          this.edit_flag=false;
+          this.duplicate_flag=true;
           console.log("if part");
           console.log("this.edit_flag", this.edit_flag);
           console.log("this.duplicate_flag", this.duplicate_flag);
@@ -2053,6 +2061,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.tinNo = this.addDid_section1.value.tin;
     api_updateDid_req.BillTo_customer_ID = this.customer_ID;
     api_updateDid_req.BillTo_customer_NAME = this.customer_NAME;
+    api_updateDid_req.searchFlag =this.searchFlag;
 
     // api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
     api_updateDid_req.b_name = this.addDid_section1.value.customer_name;
@@ -2060,7 +2069,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_updateDid_req.b_address2 = this.addDid_section1.value.address_2;
     api_updateDid_req.b_address3 = this.addDid_section1.value.address_3;
 
-    api_updateDid_req.s_name = this.addDid_section1.value.ship_to;
+    api_updateDid_req.s_name = $('#shipto_editDIDInv').val();
     api_updateDid_req.s_address1 = this.addDid_section1.value.ship_address_1;
     api_updateDid_req.s_address2 = this.addDid_section1.value.ship_address_2;
     api_updateDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
@@ -2313,11 +2322,20 @@ export class EditDidInvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
+        this.upd_flagName=response.searchFlag;
+        this.upd_search_name=response.search_name;
         iziToast.success({
           title: 'Updated',
           message: 'DID Invoice Updated Successfully !',
         });
         this.gotoDIDInvoiceList();
+
+        this.router.navigate(['/didInvoice'], {
+          queryParams: {
+            upd_searchFlag: this.upd_flagName,
+            upd_search_name: this.upd_search_name
+          }
+        });
         this.spinner.hide();
         // this.redirecttoQuotation();
         // this.addDid_section1.reset();

@@ -153,7 +153,7 @@ export class ProformaInvoiceComponent implements OnInit {
    }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    this.PIList({});
+   
     this.search_BillerList();
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
 
@@ -214,13 +214,20 @@ export class ProformaInvoiceComponent implements OnInit {
       'company_Name': new FormControl(null),
 
     });
+
+
     this.route.queryParams
     .subscribe(params => {
-      console.log("params output value", params);    
+      console.log("params after didpi",params)
       this.upd_searchName = params['upd_search_name'];
       this.upd_searchFlag = params['upd_searchFlag'];
+   
       if(this.upd_searchFlag==1){
         this.searchResult_CustomerName=  this.upd_searchName;
+        console.log("this.searchResult_CustomerName",this.searchResult_CustomerName)
+        this.PIList({});
+      }
+      else{
         this.PIList({});
       }
     }

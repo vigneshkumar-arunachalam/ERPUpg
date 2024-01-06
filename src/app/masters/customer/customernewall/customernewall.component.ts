@@ -23,6 +23,7 @@ export interface FinanceEmailArray {
   styleUrls: ['./customernewall.component.css']
 })
 export class CustomernewallComponent implements OnInit {
+  submitted = false;
   //view
   viewCustomerForm: FormGroup;
   isReadOnly: boolean = true;
@@ -294,6 +295,9 @@ export class CustomernewallComponent implements OnInit {
 
   testing =  false;
   customerIDBillCode: any;
+  chkAllStatus: any;
+  submit_status: boolean=false;
+  Clicked: boolean=false;
   
 
   constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -687,7 +691,7 @@ this.cmsDepartmentList1();
       'company_Code': new FormControl(null),
       'company_Name': new FormControl(null, [Validators.required]),
       'companyCode': new FormControl(null),
-      'defaultBillerName': new FormControl(null),
+      'defaultBillerName': new FormControl(null, [Validators.required]),
       'BA_countryname': new FormControl(null),
       // 'ESA_countryname': new FormControl(null),
       'bank_countryname': new FormControl(null),
@@ -699,7 +703,7 @@ this.cmsDepartmentList1();
       'dcipcountryform': new FormControl(null),
       'addCustomerStatus': new FormControl(null),
       'billername_vignesh': new FormControl(null),
-      'add_billerName': new FormControl(null),
+      'add_billerName': new FormControl(null, [Validators.required]),
       'add_customerClassification': new FormControl(null, [Validators.required]),
       'permissionFCAdd': new FormControl(null),
       'permission_vignesh': new FormControl(null),
@@ -1582,9 +1586,24 @@ this.cmsDepartmentList1();
     // do something when input is focused
     console.log(e)
   }
-
+  checkCustomerName(){
+    
+    if(this.addCustomer.value.company_Name=='' || this.addCustomer.value.company_Name=='null' || this.addCustomer.value.company_Name==null){
+      iziToast.error({
+        message: "Company Name Missing",
+        position: 'topRight'
+      });
+    }
+  }
   CustomerStatus_RadioEvent(evt: any) {
     this.customerStatus_radiobox_Value = evt.target.id;
+    if(evt.target.id=='P1'){
+      this.customerStatus_radiobox_Value='P';
+    }else if(evt.target.id=='N1'){
+      this.customerStatus_radiobox_Value='N';
+    }else{
+      this.customerStatus_radiobox_Value = evt.target.id;
+    }
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
   }
   handleChange(evt: any) {
@@ -1645,14 +1664,14 @@ this.cmsDepartmentList1();
 
       this.checkAll_GroupID_Array = [];//clear the selected array
       this.customer_list.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', true);
+        $("#check-grp-cusmas-" + index).prop('checked', true);
         console.log("this.customer_list", element.customerId)
         this.checkAll_GroupID_Array.push(element.customerId)
         console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
       });
     } else {
       this.customer_list.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check-grp-cusmas-" + index).prop('checked', false);
         this.checkAll_GroupID_Array = [];//empties the array
         console.log(" this.checkAll_GroupID_Array", this.checkAll_GroupID_Array)
       });
@@ -2144,13 +2163,13 @@ this.cmsDepartmentList1();
 
   CHKAll_BillerNameSelectAll(event: any) {
 
-
+    this.chkAllStatus=event.target.checked;
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
       console.log("this.billerNameList", this.billerNameList)
 
       this.billerNameList.forEach((element: any, index: any) => {
-        $("#check1-grp-" + index).prop('checked', true);
+        $("#check1-cus-grp-" + index).prop('checked', true);
         checkAll_ID.push(element.billerId);
       });
       this.addBillerNameCheckboxID_array = [];
@@ -2159,7 +2178,7 @@ this.cmsDepartmentList1();
       console.log("this.addBillerNameCheckboxID_array-Select All", this.addBillerNameCheckboxID_array)
     } else {
       this.billerNameList.forEach((element: any, index: any) => {
-        $("#check1-grp-" + index).prop('checked', false);
+        $("#check1-cus-grp-" + index).prop('checked', false);
 
       });
       this.addBillerNameCheckboxID_array = [];
@@ -2242,7 +2261,7 @@ this.cmsDepartmentList1();
       console.log("this.addCustomerClassificationBillerCheckboxID_array-Select All", this.addCustomerClassificationBillerCheckboxID_array)
     } else {
       this.customerType_list.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check-grp-cusmas-" + index).prop('checked', false);
 
       });
       this.addCustomerClassificationBillerCheckboxID_array = [];
@@ -2422,14 +2441,40 @@ this.cmsDepartmentList1();
   }
 
   clearcustomer() {
+    this.submitted=false;
+
     this.addCustomer.reset();
     // this.addCustomer.patchValue({
     //   'company_Code': 'D6387',
     // });
   }
 
-  addCustomerown() {
+  
+  get f() 
+  { return this.addCustomer.controls; 
+  }
 
+ 
+  addCustomerown(event:any) {
+    console.log("mouse event",event.pointerType)
+    if(event.pointerType=="mouse" || event.pointerType==""){
+      // this variable is used to find button click as mouse or kyboard enter
+      this.Clicked=true;
+    }
+
+    this.submitted = true;
+    if (this.addCustomer.valid) {
+      this.submit_status=true;
+    } else {
+      this.submit_status=false;
+      $("#company_Name").focus();
+   
+     
+    }
+    // if (this.addCustomer.invalid) {
+    //   return;
+    // }
+    
     Swal.fire('Saving Customer Data');
     Swal.showLoading();
 
@@ -2637,6 +2682,7 @@ this.cmsDepartmentList1();
       $("#addCustomerSave").removeAttr("disabled");
 
       if (response.status == true) {
+        this.submitted=false;
         this.customerslist({});
         Swal.close();
         $('#addCustomerFormId').modal('hide');
@@ -2667,6 +2713,7 @@ this.cmsDepartmentList1();
         console.log("final error", error);
       };
   }
+
 
   editCustomer(id: any,i:any) {
     $("#ActionId" + i).modal("hide");

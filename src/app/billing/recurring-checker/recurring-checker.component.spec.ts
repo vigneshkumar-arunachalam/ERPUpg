@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProformaInvoiceComponent } from './proforma-invoice.component';
+import { RecurringCheckerComponent } from './recurring-checker.component';
 
-describe('ProformaInvoiceComponent', () => {
-  let component: ProformaInvoiceComponent;
-  let fixture: ComponentFixture<ProformaInvoiceComponent>;
+describe('RecurringCheckerComponent', () => {
+  let component: RecurringCheckerComponent;
+  let fixture: ComponentFixture<RecurringCheckerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProformaInvoiceComponent ]
+      declarations: [ RecurringCheckerComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProformaInvoiceComponent);
+    fixture = TestBed.createComponent(RecurringCheckerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

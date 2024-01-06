@@ -25,7 +25,8 @@ export class ResellerPaymentComponent implements OnInit {
   doubleArray: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 40;
+  pageLimit = 44440;
+  // pageLimit = 40;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
 
@@ -94,7 +95,7 @@ export class ResellerPaymentComponent implements OnInit {
   //reseller commission details
   resellerCommissionList: any;
   resellercommissiontype: any;
-  commissionType_value: any;
+  commissionType_value: any = 2;
   commissionAmount_WFA: any;
   CBV_PdfShow: any;
   ResellerName_Customer: any;
@@ -136,7 +137,8 @@ export class ResellerPaymentComponent implements OnInit {
   balAmountForData: any;
   sum_bal: any = [];
   previousResellid: any;
-  filterCommission_color_status: boolean=false;
+  filterCommission_color_status: boolean = false;
+  commlistall1: any = [];
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.resellerCommissionForm = this.fb.group({
@@ -189,6 +191,7 @@ export class ResellerPaymentComponent implements OnInit {
       'RP_resellerName': new FormControl(null, [Validators.required]),
       'RP_currencyName': new FormControl(null, [Validators.required]),
       'RP_commissionAmount': new FormControl(null),
+      'RP_edit_date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'RP_remarks': new FormControl(null),
 
     });
@@ -197,6 +200,7 @@ export class ResellerPaymentComponent implements OnInit {
       'RP_add_resellerName': new FormControl(null, [Validators.required]),
       'RP_add_currencyName': new FormControl(null, [Validators.required]),
       'RP_add_commissionAmount': new FormControl(null),
+      'RP_add_date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'RP_add_remarks': new FormControl(null),
 
     });
@@ -319,27 +323,33 @@ export class ResellerPaymentComponent implements OnInit {
 
     if (this.filterCommission_value == 1) {
       this.filterCommission_color = 10;
-      this.filterCommission_color_status=true;
+      this.filterCommission_color_status = true;
+      this.selectAllCheckbox = !this.selectAllCheckbox;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 2) {
       this.filterCommission_color = 15;
-      this.filterCommission_color_status=true;
+      this.filterCommission_color_status = true;
+      this.selectAllCheckbox = !this.selectAllCheckbox;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 3) {
       this.filterCommission_color = 20;
-      this.filterCommission_color_status=true;
+      this.filterCommission_color_status = true;
+      this.selectAllCheckbox = !this.selectAllCheckbox;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 4) {
       this.filterCommission_color = 25;
-      this.filterCommission_color_status=true;
+      this.filterCommission_color_status = true;
+      this.selectAllCheckbox = !this.selectAllCheckbox;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 5) {
       this.filterCommission_color = 30;
-      this.filterCommission_color_status=true;
+      this.filterCommission_color_status = true;
+      this.selectAllCheckbox = !this.selectAllCheckbox;
       this.getResellerPaymentdetails({}, custId);
     } else {
       this.filterCommission_color = 35;
-      this.filterCommission_color_status=true;
+      this.filterCommission_color_status = true;
+      this.selectAllCheckbox = !this.selectAllCheckbox;
       this.getResellerPaymentdetails({}, custId);
     }
     // switch(this.filterCommission_value){
@@ -406,6 +416,8 @@ export class ResellerPaymentComponent implements OnInit {
   //   console.log("items select/deselect",this.items)
   // }
 
+
+  	
   // selectAll() { 
 
   //   this.resellerList.forEach((reseller: any) => {
@@ -417,7 +429,14 @@ export class ResellerPaymentComponent implements OnInit {
   // }
 
   selectAll() {
+
+ 
+  // $('input[name="paid_check_all"]').prop('checked', false);
+   
+    $('#RP_multiple_amount').val('');
+
     this.resellerList.forEach((reseller: any) => {
+      console.log("reseller response", reseller)
       // Check both conditions: checkbox === 1 and selectAllCheckbox is true
       if (reseller.checkbox == 1 && this.selectAllCheckbox) {
         reseller.selected = true;
@@ -431,9 +450,10 @@ export class ResellerPaymentComponent implements OnInit {
           var xy = this.selectedResellerCommIds_unpaid_all[i];
           this.sum_bal = this.sum_bal + xy;
         }
-        var toFixval=this.sum_bal;
+        var toFixval = this.sum_bal;
         $('#RP_multiple_amount').val(toFixval.toFixed(2));
-      //  $('#RP_multiple_amount').val(this.sum_bal);
+        console.log("If part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
+        //  $('#RP_multiple_amount').val(this.sum_bal);
       } else {
         reseller.selected = false;
         const indexOfId = this.selectedResellerCommIds_unpaid.indexOf(reseller.reseller_comm_id);
@@ -447,9 +467,10 @@ export class ResellerPaymentComponent implements OnInit {
           var xy = this.selectedResellerCommIds_unpaid_all[i];
           this.sum_bal = this.sum_bal + xy;
         }
-        var toFixval=this.sum_bal;
+        var toFixval = this.sum_bal;
         $('#RP_multiple_amount').val(toFixval.toFixed(2));
-      //  $('#RP_multiple_amount').val(this.sum_bal);
+        console.log("Else part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
+        //  $('#RP_multiple_amount').val(this.sum_bal);
 
       }
     });
@@ -513,6 +534,10 @@ export class ResellerPaymentComponent implements OnInit {
   //   console.log("this.selectedResellerCommIds", this.selectedResellerCommIds);
   // }
   selectAll_paid1(event: any) {
+   
+    //$('input[name="UnpaidAll"]').prop('checked', false);
+   
+   
     console.log(event.target.checked)
     if (event.target.checked) {
 
@@ -530,9 +555,9 @@ export class ResellerPaymentComponent implements OnInit {
             var xy = this.selectedResellerCommIds2[i];
             this.sum_bal = this.sum_bal + xy;
           }
-          var toFixval=this.sum_bal;
+          var toFixval = this.sum_bal;
           $('#RP_multiple_amount').val(toFixval.toFixed(2));
-         // $('#RP_multiple_amount').val(this.sum_bal);
+          // $('#RP_multiple_amount').val(this.sum_bal);
         }
         // {
         //   console.log("element",reseller)
@@ -558,9 +583,9 @@ export class ResellerPaymentComponent implements OnInit {
         var xy = this.selectedResellerCommIds2[i];
         this.sum_bal = this.sum_bal + xy;
       }
-      var toFixval=this.sum_bal;
-    $('#RP_multiple_amount').val(toFixval.toFixed(2));
-     //$('#RP_multiple_amount').val(this.sum_bal);
+      var toFixval = this.sum_bal;
+      $('#RP_multiple_amount').val(toFixval.toFixed(2));
+      //$('#RP_multiple_amount').val(this.sum_bal);
       console.log("Final Checkbox group all- de-selected list", this.selectedResellerCommIds)
 
     }
@@ -593,7 +618,7 @@ export class ResellerPaymentComponent implements OnInit {
       var xy = this.selectedResellerCommIds1[i];
       this.sum_bal = this.sum_bal + xy;
     }
-    var toFixval=this.sum_bal;
+    var toFixval = this.sum_bal;
     $('#RP_multiple_amount').val(toFixval.toFixed(2));
   }
 
@@ -609,39 +634,66 @@ export class ResellerPaymentComponent implements OnInit {
     console.log("this.commissionType_value", this.addr);
 
     if (this.commissionType_value == 1) {
-      var commvalue = $('#CommissionValue_WFA_ID').val();
-      $('#CommissionAmount_WFA_ID').val(commvalue);
+      var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
+      $('#CommissionAmount_WFA_ID_' + index).val(commvalue);
     }
     if (this.commissionType_value == 2) {
-      var commvalue = $('#CommissionValue_WFA_ID').val();
+      var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
       var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
 
-      $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
-      this.commissionAmount_WFA = $('#CommissionAmount_WFA_ID').val();
+      $('#CommissionAmount_WFA_ID_' + index).val(commvalue_Percentage);
+      this.commissionAmount_WFA = $('#CommissionAmount_WFA_ID_' + index).val();
 
     }
     if (this.commissionType_value == 4) {
-      $('#CommissionValue_WFA_ID').val('');
-      $('#CommissionAmount_WFA_ID').val('');
+      $('#CommissionValue_WFA_ID_' + index).val('');
+      $('#CommissionAmount_WFA_ID_' + index).val('');
 
     }
   }
 
-  commissionValueAutoFill() {
-    if (this.commissionType_value == 1) {
-      var commvalue = $('#CommissionValue_WFA_ID').val();
-      $('#CommissionAmount_WFA_ID').val(commvalue);
-    }
-    if (this.commissionType_value == 2) {
-      // alert(this.commissionType_value)
-      var commvalue = $('#CommissionValue_WFA_ID').val();
-      // alert(commvalue)
+  commissionValueAutoFill(h: any) {
+    for (let i = 0; i <= h; i++) {
 
-      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
-      // alert(commvalue_Percentage)
+      if (this.commissionType_value == 1) {
+        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        $('#CommissionAmount_WFA_ID_' + h).val(commvalue);
+      }
+      if (this.commissionType_value == 2) {
+        var com1 = this.resellerCommissionForm.value.commission_value;
 
-      $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
+        // alert(this.commissionType_value)
+        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        // alert(commvalue)
+
+
+        var k = this.commlistall1[h].grossAmount;
+
+        var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
+        // alert(commvalue_Percentage)
+        console.log("this.commvalue_Percentage", commvalue_Percentage);
+        $('#CommissionAmount_WFA_ID_' + h).val(commvalue_Percentage);
+
+      }
+
     }
+
+    // if (this.commissionType_value == 1) {
+    //   var commvalue = $('#CommissionValue_WFA_ID').val();
+    //   $('#CommissionAmount_WFA_ID').val(commvalue);
+    // }
+    // if (this.commissionType_value == 2) {
+
+    //   var commvalue = $('#CommissionValue_WFA_ID').val();
+
+    //   console.log("commvalue", commvalue);
+    //   console.log("this.commissionGrossAmount", this.commissionGrossAmount);
+    //   var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
+
+    //   console.log("this.commvalue_Percentage", commvalue_Percentage);
+    //   $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
+    //   alert($('#CommissionAmount_WFA_ID').val())
+    // }
 
   }
   selectEventReseller(item: any) {
@@ -804,6 +856,7 @@ export class ResellerPaymentComponent implements OnInit {
 
     console.log("data---in list", data);
     console.log("customerid---in list", customerid);
+    $('#RP_multiple_amount').val('');
 
     if (customerid !== '' && typeof customerid !== 'object') {
       this.custID = customerid;
@@ -912,11 +965,13 @@ export class ResellerPaymentComponent implements OnInit {
       if (response != '') {
 
         this.edit_resellercomm_list = response.edit_resellercomm_list;
+        const formattedDate = this.formatDate(response.edit_resellercomm_list.reseller_comm_dt);
         this.resellerPaymentForm.patchValue({
           'RP_billerName': response.edit_resellercomm_list.billerId,
           'RP_resellerName': response.edit_resellercomm_list.reseller_name,
           'RP_currencyName': response.edit_resellercomm_list.currencyId,
           'RP_commissionAmount': response.edit_resellercomm_list.commission_amt,
+          'RP_edit_date': formattedDate,
           'RP_remarks': response.edit_resellercomm_list.remarks,
 
         })
@@ -940,7 +995,10 @@ export class ResellerPaymentComponent implements OnInit {
         console.log("final error", error);
       };
   }
-
+  formatDate(dateString: string): string {
+    const [day, month, year] = dateString.split('-');
+    return `${year}-${month}-${day}`;
+  }
   UpdateResellerPayment() {
 
     this.spinner.show();
@@ -1006,6 +1064,7 @@ export class ResellerPaymentComponent implements OnInit {
 
 
     api_getReseller.commission_amt = this.resellerPaymentForm.value.RP_commissionAmount;;
+    api_getReseller.reseller_comm_dt = this.resellerPaymentForm.value.RP_edit_date;
     api_getReseller.remarks = this.resellerPaymentForm.value.RP_remarks;;
 
     api_req.element_data = api_getReseller;
@@ -1045,8 +1104,8 @@ export class ResellerPaymentComponent implements OnInit {
   }
 
   saveResellerPayment() {
-// alert(this.resellerPayment_addForm.value.RP_add_billerName)
-// alert(this.resellerPayment_addForm.value.RP_add_currencyName )
+    // alert(this.resellerPayment_addForm.value.RP_add_billerName)
+    // alert(this.resellerPayment_addForm.value.RP_add_currencyName )
     this.spinner.show();
 
     let api_req: any = new Object();
@@ -1120,8 +1179,8 @@ export class ResellerPaymentComponent implements OnInit {
     } else {
       api_getReseller.commission_amt = this.resellerPayment_addForm.value.RP_add_commissionAmount;
     }
-
-    api_getReseller.remarks = this.resellerPayment_addForm.value.RP_add_remarks;;
+    api_getReseller.reseller_comm_dt = this.resellerPayment_addForm.value.RP_add_date;
+    api_getReseller.remarks = this.resellerPayment_addForm.value.RP_add_remarks;
 
     api_req.element_data = api_getReseller;
 
@@ -1196,8 +1255,8 @@ export class ResellerPaymentComponent implements OnInit {
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           this.spinner.hide();
           if (response != '') {
-              this.spinner.hide();
-            this.getResellerPaymentdetails({},{});
+            this.spinner.hide();
+            this.getResellerPaymentdetails({}, {});
             iziToast.success({
               message: " Reseller payment Deleted Successfully",
               position: 'topRight'
@@ -1260,13 +1319,13 @@ export class ResellerPaymentComponent implements OnInit {
           'RP_pay_amount': response.bal_amt,
           'RP_pay_paymenttype': response.paid_details,
           'RP_pay_descr': '',
-            
+
           // 'RP_pay_descr':response.paid_details,
 
         })
         //var removeBrTags=response.paid_details.replace(/<br\s*\/?>/gi, '');
         $('.paidDet').html(response.paid_details);
-        
+
         this.spinner.hide();
 
 
@@ -1289,8 +1348,8 @@ export class ResellerPaymentComponent implements OnInit {
   }
 
   ResellerPayProcessUpdate() {
-   
-  
+
+
     let api_req: any = new Object();
     let api_getReseller: any = new Object();
     api_req.moduleType = "reseller";
@@ -1300,15 +1359,15 @@ export class ResellerPaymentComponent implements OnInit {
     api_getReseller.action = "reseller_payment_process_update";
     api_getReseller.reseller_paid_amt = this.resellerProcessPaymentIIForm.value.RP_pay_paidAmount;
     api_getReseller.paymentDate = this.resellerProcessPaymentIIForm.value.RP_pay_date;
-    api_getReseller.payment_details =this.resellerProcessPaymentIIForm.value.RP_pay_descr;
+    api_getReseller.payment_details = this.resellerProcessPaymentIIForm.value.RP_pay_descr;
 
     api_getReseller.payment_method = this.resellerProcessPaymentIIForm.value.RP_pay_paymenttype;
     api_getReseller.reseller_comm_id = this.reseller_comm_id;
     api_getReseller.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_getReseller.bal_amt =this.resellerProcessPaymentIIForm.value.RP_pay_balance;
-  
+    api_getReseller.bal_amt = this.resellerProcessPaymentIIForm.value.RP_pay_balance;
 
- 
+
+
     api_req.element_data = api_getReseller;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1320,7 +1379,7 @@ export class ResellerPaymentComponent implements OnInit {
           message: "Updated",
           position: 'topRight'
         });
-       $('#RP_PaymentIIFormID').modal('hide');
+        $('#RP_PaymentIIFormID').modal('hide');
         this.spinner.hide();
 
 
@@ -1521,7 +1580,7 @@ export class ResellerPaymentComponent implements OnInit {
     this.resellerID_search = event.target.value;
     console.log("this.resellerID_search", this.resellerID_search)
   }
-  search_reload(){
+  search_reload() {
     this.resellerPaymentList({});
 
   }
@@ -1553,7 +1612,7 @@ export class ResellerPaymentComponent implements OnInit {
           });
         }
         this.resellerPayment_searchForm.controls['RP_search_res_paymentName'].reset();
-       
+
       } else {
         iziToast.warning({
           message: "No Match",
@@ -1740,12 +1799,13 @@ export class ResellerPaymentComponent implements OnInit {
       this.spinner.hide();
       // this.CommissionType = response;
       this.resellercommissiontype = response.commission_type
-      this.commissionGrossAmount = response.grossAmount;
+      this.commlistall1 = response.editcommList;
 
       if (response != '') {
         this.resellercommissiontype2 = response;
         for (let i = 0; i < response.editcommList.length; i++) {
           var gh = response.editcommList[i].commIndex;
+          this.commissionGrossAmount = response.editcommList[i].grossAmount;
           this.resellercommissiontype1.push({ val: gh });
           console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
         }

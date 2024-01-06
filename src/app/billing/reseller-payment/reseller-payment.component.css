@@ -737,3 +737,10 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
 /* ------------KS-Code----------------------- */
 
 
+input[type="checkbox"]:disabled {
+  /* Add your desired styles for disabled checkboxes */
+  opacity: 0.5; /* Example: Reducing opacity for disabled effect */
+  cursor: not-allowed; /* Example: Changing cursor for disabled effect */
+}
+
+

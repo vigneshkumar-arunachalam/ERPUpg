@@ -714,6 +714,14 @@
                 <!-- ends: .nav-flag-select -->
                 <li>
 
+                    <a href="javascript:;" class="navbar-brand" (click)="PaymentTransactionReports()" *ngIf="(this.payment_transaction_reports_Permission=='1')">
+                        <!-- <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:50px" alt="img"
+                    data-toggle="modal" data-target="#ActionIdxx2"></a> -->
+                        <img class="svg" src="assets/img/icon2/paymentp.png" style="height: 30px;width:30px"
+                           alt="img" title="Payment Transaction Reports"></a>
+                </li>
+                <li>
+
                     <a href="javascript:;" class="navbar-brand" (click)="PageList()" *ngIf="(this.GlobalSearchPermission==1148)">
                         <!-- <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:50px" alt="img"
                     data-toggle="modal" data-target="#ActionIdxx2"></a> -->

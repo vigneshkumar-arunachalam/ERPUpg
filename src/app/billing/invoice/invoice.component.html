@@ -134,13 +134,23 @@
                         <div class="dropdown">
                           <div style="display: flex;align-items: center;">
                             <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
-                              (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i></button>
+                              (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i>
+                            </button>
                             
-                              <span class="recurring-Status" *ngIf="(recurring_state_all==1)">R</span>
-                            
+                              <span class="recurring-Status" *ngIf="(recurring_state_all==1)" 
+                              [ngStyle]="{'color': list.recuring_status== '1' ? 'red' : 'blue'}">
+                               R</span>
+                               <span class="recurring-Status" *ngIf="(list.commission_state==1)" 
+                               [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
+                                C</span>
+                               <!-- <span class="recurring-Status" *ngIf="(list.commission_state==1)" 
+                               [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
+                                C</span> -->
+                              
                               <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                                 src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                           </div>
+                      
                           <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ActionId" role="document"
@@ -192,7 +202,7 @@
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                       <a *ngIf="(reseller_commissionState=='1')" class="hover3"
                                         title="Set Reseller Commission" data-toggle="modal"
-                                        data-target="#withoutFormArrayResellerCommissionFormId_inv"
+                                        data-target="#inv_ResellerCommissionFormId"
                                         (click)="get_WFA_ResellerCommission(list.billId,i)">
 
                                         <img class="show" src="assets/img/icon2/C-red.png">
@@ -202,7 +212,7 @@
                                       </a>
                                       <a *ngIf="(reseller_commissionState=='0')" class="hover3"
                                         title="Set Reseller Commission" data-toggle="modal"
-                                        data-target="#withoutFormArrayResellerCommissionFormId_inv"
+                                        data-target="#inv_ResellerCommissionFormId"
                                         (click)="get_WFA_ResellerCommission(list.billId,i)">
                                         <img class="show" src="assets/img/icon2/C-blue.png">
                                         <img class="hide" src="assets/img/icon2/C-black.png">
@@ -362,10 +372,6 @@
                                         </a>
 
                                       </li>
-
-
-
-
                                     </ul>
                                     <ul>
 
@@ -1041,11 +1047,15 @@
             <div class="form-group row">
               <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
               <div class="col-lg-10">
-                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
-                  <option [ngValue]="null" selected disabled>Select From</option>
-                  <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
+                change="handle__email_from($event)">
+                  <option [ngValue]="null" selected >Select From</option>
+                  <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
                     {{ from.from_email }}
                   </option>
+                  <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                    {{ from.from_email }}
+                  </option> -->
                 </select>
                 <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
                   *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
@@ -1101,8 +1111,8 @@
 
               <div class="col-lg-10 email-cc-template">
                 <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
-                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}" formControlName="email_cc"
-                    (change)=" EditCHK_emailCC(display1.userId,$event)" />{{display1.group_name}}
+                  <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}" formControlName="email_cc"
+                    (change)=" EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
                 </div>
               </div>
             </div>
@@ -1471,7 +1481,7 @@
                 <label>Terms Condition </label>
               </div>
               <div class="col-lg-6">
-                <select class="form-control" formControlName="setTerm">
+                <select class="form-control" formControlName="setTerm" name="setTerm">
                   <option [ngValue]="null" selected>Select term Condition</option>
 
                   <option *ngFor="let term of TermDetailsList" value="{{term}}">
@@ -1724,7 +1734,7 @@
                 <label>Select Invoice Type</label>
               </div>
               <div class="col-lg-6">
-                <select class="form-control" formControlName="setInvoice">
+                <select class="form-control" formControlName="setInvoice" name="setInvoice">
                   <option [ngValue]="null" selected>Select invoice From</option>
 
                   <option *ngFor="let invTy of InvoiceTypeList" value="{{invTy}}">
@@ -1793,320 +1803,135 @@
 
 <!------------------------  Reseller Commission Details start  ---------->
 
-<div class="modal fade" id="withoutFormArrayResellerCommissionFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Reseller Commission Details
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+<div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog"
+aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="col-12 modal-title text-center">Reseller Commission Details
+      </h2>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body" style="padding-top: 0;">
 
-        <form [formGroup]="withoutFormArrayResellerCommissionForm">
-          <div class="row">
-            <div class="col-lg-12 mt-2" style="display: flex; ">
-              <div class="col-lg-4 mt-2">
-                <label>Reseller Name </label>
+      <form [formGroup]="resellerCommissionForm">
+        <div class="row">
+          <section formArrayName="addresses_rc">
+            <div *ngFor="let address of addressControls_rc.controls; let i = index;" style="    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 0.25);
+            border-radius: 10px;
+            padding: 20px;margin:0px 20px 20px;">
+            <div [formGroupName]="i" >
+               
+              <div class="col-lg-12 mt-2" style="display: flex; ">
+                <div class="col-lg-3 mt-2">
+                  <label>Reseller Name </label>
+                </div>
+                <div class="col-lg-9">
+                  <div class="form-group row">
+                    <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+
+                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
+                        formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                        (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                        [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate" style="padding: 4px 5px !important;">
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplateCustomer let-item>
+                        <a [innerHTML]="item.customerName"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+
+                    </div>
+
+
+                  </div>
+                </div>
               </div>
-              <div class="col-lg-8">
-                <div class="form-group row">
-                  <div class="ng-autocomplete">
 
-                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
-                      formControlName="ResellerName_WFA" (selected)='selectEventReseller($event)'
-                      (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
-                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                    </ng-autocomplete>
+              <div class="col-lg-12 mt-2" style="display: flex;">
+                <div class="col-lg-3">
+                  <label>Commission Type </label>
+                </div>
+                <div class="col-lg-9">
 
-                    <ng-template #itemTemplateCustomer let-item>
-                      <a [innerHTML]="item.customerName"></a>
-                    </ng-template>
+                  <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                    <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                    <input class="form-check-input" type="radio" name=CommissionType_{{i}} id="CommissionType_{{k}}"
+                      checked="{{item.id==this.CommissionType1[i] ? 'checked':''}}"
+                      (change)="radio_commissionType($event,i)" value={{item.id}}>
 
-                    <ng-template #notFoundTemplate let-notFound>
-                      <div [innerHTML]="notFound"></div>
-                    </ng-template>
-
+                    <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
                   </div>
 
 
+
                 </div>
               </div>
-            </div>
-
-            <div class="col-lg-12 mt-2" style="display: flex;">
-              <div class="col-lg-4">
-                <label>Commission Type </label>
-              </div>
-              <div class="col-lg-8">
-
-                <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let i=index">
-                  <input class="form-check-input" type="radio" name="CommissionType_WFA"
-                    checked="{{item.id==CommissionType ? 'checked':''}}" (change)="radio_commissionType($event)"
-                    id="{{item.id}}" value="{{item.id}}">
-
-                  <!-- <input class="form-check-input" type="radio" name="e_editCustomerStatus"
-                    id="{{display1.values1}}" formControlName="e_editCustomerStatus"
-                    value="option1"  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
-                    (change)="handleChange($event)" /> -->
-                  <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+              <div class="col-lg-12 mt-2" style="display: flex;">
+                <div class="col-lg-3 mt-2">
+                  <label>Commission Value </label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="number" class="form-control" formControlName="commission_value"
+                    id="CommissionValue_WFA_ID_{{i}}" (keyup)="commissionValueAutoFill(i)">
                 </div>
               </div>
-            </div>
-            <div class="col-lg-12 mt-2" style="display: flex;">
-              <div class="col-lg-4 mt-2">
-                <label>Commission Value </label>
-              </div>
-              <div class="col-lg-8">
-                <input type="number" class="form-control" formControlName="CommissionValue_WFA"
-                  id="CommissionValue_WFA_ID" (keyup)="commissionValueAutoFill()">
-              </div>
-            </div>
-            <div class="col-lg-12 mt-2" style="display: flex;">
-              <div class="col-lg-4 mt-2">
-                <label>Commission Amount </label>
-              </div>
-              <div class="col-lg-8">
-                <input type="number" class="form-control" formControlName="CommissionAmount_WFA"
-                  id="CommissionAmount_WFA_ID">
-              </div>
-            </div>
-            <div class="col-lg-12 mt-2" style="display: flex;">
-              <div class="col-lg-4 ">
-                <label>PDF Show </label>
-              </div>
-              <div class="col-lg-8">
-                <input type="checkbox" formControlName="PdfShow_WFA" (change)="CBF_PdfShow($event)">
-              </div>
-            </div>
+              <div class="col-lg-12 mt-2" style="display: flex;">
+                <div class="col-lg-3 mt-2">
+                  <label>Commission Amount </label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="number" class="form-control" formControlName="commission_amt"
+                    id="CommissionAmount_WFA_ID_{{i}}">
+                  <input type="hidden" class="form-control" formControlName="reseller_comm_id">
+                  <input type="hidden" class="form-control" formControlName="reseller_id">
 
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="set_WFA_ResellerCommission()">Save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
+                  <input type="hidden" class="form-control" formControlName="billId">
+                  <input type="hidden" class="form-control" formControlName="grossAmount">
+                </div>
+              </div>
+              <div class="col-lg-12 mt-2" style="display: flex;">
+                <div class="col-lg-3 ">
+                  <label>PDF Show </label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="checkbox" formControlName="pdf_show" (change)="CBF_PdfShow($event)">
+                </div>
+              </div>
+       
+              <div style="display: inline-block;width: 100%;" >
+                
+                <button *ngIf="(i!=0)" type="button" class="btn btn-danger btn-sm" (click)="removeAddress_rc(i)" style="display: block;float: right;border-radius: 25px ;">Remove </button>
 
-      </div>
+
+              </div>
+             
+            </div>
+           </div>
+          </section>
+        </div>
+      </form>
+      <button  type="button" class="btn btn-success" style="margin-right: 10px;border-radius: 25px ;"
+                  (click)="addAddress_rc()">Add </button>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
+      <button type="button" class="btn btn-dark" data-dismiss="modal">
+        Cancel
+      </button>
+
     </div>
   </div>
+</div>
 </div>
 
 
 <!----------Reseller Commission Details END ------------------>
-
-
-<!-----------------Modal Pop Up (BEGIN) reseller commission------------------>
-<div class="modal fade" id="ResellerCommissionFormId" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center">Reseller Commission Details</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <form [formGroup]="addressForm">
-          <div class="row">
-            <div class="col-12">
-              <section formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
-                <div [formGroupName]="i">
-                  <div class="row">
-                    <div class="col-12">
-                      <h3 style="text-align:left;color:rgb(202, 13, 13);font-weight: 500;">
-                        Reseller Commission Details {{i +
-                        1}}</h3>&nbsp;
-                    </div>
-
-                  </div>
-                  <div class="table-responsive">
-                    <table class="add-reseller-table-section">
-
-                      <tbody>
-
-                        <tr>
-                          <th>
-                            Reseller Name
-                          </th>
-                          <td>
-
-                            <!-- <input type="text" class="form-control" formControlName="ResellerName"> -->
-                            <div class="col-lg-12">
-                              <div class="form-group row">
-                                <div class="ng-autocomplete">
-                                  <!-- <label for="ResellerName" class="col-lg-12 col-form-label">Reseller Name</label> -->
-                                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
-                                    formControlName="ResellerName" (selected)='selectEventReseller($event)'
-                                    (inputChanged)='searchResellerData($event)'
-                                    (inputFocused)='onFocusedReseller($event)' [itemTemplate]="itemTemplateCustomer"
-                                    [notFoundTemplate]="notFoundTemplate">
-                                  </ng-autocomplete>
-
-                                  <ng-template #itemTemplateCustomer let-item>
-                                    <a [innerHTML]="item.customerName"></a>
-                                  </ng-template>
-
-                                  <ng-template #notFoundTemplate let-notFound>
-                                    <div [innerHTML]="notFound"></div>
-                                  </ng-template>
-
-                                </div>
-
-
-                              </div>
-                            </div>
-
-
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>
-                            Commission Type
-                          </th>
-                          <td>
-
-                            <div class="form-check form-check-inline"
-                              *ngFor="let item of resellercommissiontype;let j=index">
-
-                              <input class="form-check-input" type="radio" name="CommissionType"
-                                formControlName="CommissionType" [(ngModel)]="radioSelected" (change)="onItemChange()"
-                                value="{{item.id}}">
-
-                              <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
-                            </div>
-
-                          </td>
-
-                          <!-- <td>
-
-                            <div class="form-check form-check-inline"
-                              *ngFor="let item of resellercommissiontype;let j=index">
-                              <input class="form-check-input" type="radio" name="CommissionType"
-                                (change)="radio_commissionType($event)"
-                                [checked]="item.commission_type"
-                                id="CommissionType_{{j}}" value="{{item.id}}">
-
-                                <input class="form-check-input" type="radio" name="CommissionType"
-                                id="CommissionType_{{i}}_{{j}}" value="{{item.id}}"> 
-                                
-
-                                <input class="form-check-input" type="radio" name="e_editCustomerStatus"
-                                id="{{display1.values1}}" formControlName="e_editCustomerStatus"
-                                value="option1"  checked="{{display1.values1==customerStatusEdit ? 'checked':''}}" value="{{display1.values1}}"
-                                (change)="handleChange($event)" />
-                              <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
-                            </div>
-
-                          </td> -->
-
-
-                          <!-- <td>
-
-                            <div class="form-check form-check-inline"
-                              *ngFor="let item of resellercommissiontype;let j=index">
-                              <input class="form-check-input" type="radio" name="CommissionType"
-                                formControlName="CommissionType" id="CommissionType_{{i}}_{{j}}"
-                                [checked]="CommissionType" value="{{item.id}}">
-
-                              <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
-                            </div>
-
-                          </td> -->
-                        </tr>
-
-
-
-                        <tr>
-                          <th>
-                            Commission Value
-                          </th>
-                          <td>
-
-                            <input type="text" class="form-control" formControlName="CommissionValue">
-
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>
-                            Commission Amount
-                          </th>
-                          <td>
-
-                            <input type="number" class="form-control" formControlName="CommissionAmount">
-
-                          </td>
-                        </tr>
-
-                        <tr>
-                          <th>
-                            PDF Show
-                          </th>
-                          <td>
-
-                            <input type="checkbox" formControlName="PdfShow" (change)="CBF_PdfShow($event)"
-                              id="pdfshow{{i}}">
-                            <!-- <input type="checkbox" formControlName="PdfShow"  checked="{{address.pdf_show==0 ? 'checked':''}}" (change)="CBF_PdfShow($event)" id="pdfshow{{i}}"> -->
-
-                          </td>
-                        </tr>
-
-
-                        <tr *ngIf="i>0">
-                          <th>
-                            Action
-                          </th>
-                          <td *ngIf="i>0">
-                            <div class="userDatatable-content d-inline-block">
-                              <button type="button" class="btn btn-danger btn-sm" (click)="removeAddress(i)"
-                                title="Delete Reseller Commission">X</button>
-
-
-                            </div>
-                          </td>
-                        </tr>
-                        &nbsp;&nbsp;
-
-                      </tbody>
-                    </table>
-                  </div>
-
-
-
-                </div>
-              </section>
-
-              <div class="text-right">
-                <button type="button" class="btn btn-success" style="margin-right: 10px; ;" (click)="addAddress()"
-                  title="Add Reseller Commission  "><i class="fas fa-plus" style="margin-right:0;"></i> </button>
-
-              </div>
-
-            </div>
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-primary" (click)="setResellerCommission()">
-          Save
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-----------------Modal Pop Up (END) reseller commission--------------->
 
 
 
@@ -2563,7 +2388,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced search
+        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced Search
         </h2>
 
 
@@ -2611,9 +2436,9 @@
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Years</label>
                 <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
-                  <input type="checkbox" id="{{yrs}}" formControlName="years" (change)="yearsCHK(yrs,$event)">
+                  <input type="checkbox" id="{{yrs.year}}" formControlName="years" (change)="yearsCHK(yrs.year,$event)">
 
-                  {{yrs}}
+                  {{yrs.year}}
                 </div>
               </div>
             </div>

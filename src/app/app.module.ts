@@ -102,6 +102,8 @@ import { DupCustomerNewAllComponent } from './masters/customer/dup-customer-new-
 import { DupQuotationNewComponent } from './billing/dup-quotation-new/dup-quotation-new.component';
 import { DupAddQuotationNewComponent } from './billing/dup-quotation-new/dup-add-quotation-new/dup-add-quotation-new.component';
 import { DupEditQuotationNewComponent } from './billing/dup-quotation-new/dup-edit-quotation-new/dup-edit-quotation-new.component';
+import { RecurringCheckerComponent } from './billing/recurring-checker/recurring-checker.component';
+import { RecurringDateupdateComponent } from './billing/recurring-dateupdate/recurring-dateupdate.component';
 
 
 
@@ -187,7 +189,9 @@ import { DupEditQuotationNewComponent } from './billing/dup-quotation-new/dup-ed
      DupCustomerNewAllComponent,
      DupQuotationNewComponent,
      DupAddQuotationNewComponent,
-     DupEditQuotationNewComponent
+     DupEditQuotationNewComponent,
+     RecurringCheckerComponent,
+     RecurringDateupdateComponent
      
     
   ],

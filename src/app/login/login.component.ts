@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
   code_val: any;
   uscode: any;
   page_url: any;
-  constructor(private router: Router, private route: ActivatedRoute,private serverService: ServerService, private bnIdle: BnNgIdleService,private spinner:NgxSpinnerService) {
+  constructor(private router: Router, private route: ActivatedRoute, private serverService: ServerService, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams
       .subscribe(params => {
         console.log("params output value", params);
@@ -49,18 +49,18 @@ export class LoginComponent implements OnInit {
         if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
           this.old_erp_login();
         }
-     
+
       }
       );
     this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
     var s = this;
-    console.log('s',s); 
+    console.log('s', s);
     this.websocket.onopen = function (event: any) {
       console.log('socket connected');
     };
     this.websocket.onmessage = function (event: any) {
       s.getdatas = JSON.parse(event.data);
-      console.log('socket detail' , localStorage.getItem('erp_c4c_user_id'));
+      console.log('socket detail', localStorage.getItem('erp_c4c_user_id'));
       if (s.getdatas['0'].userId) {
         if (localStorage.getItem('erp_c4c_user_id') == null) {
           s.qrLogin();
@@ -128,31 +128,32 @@ export class LoginComponent implements OnInit {
     api_req.element_data = addAPI;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-$("#u_id").val(response.userId);
-console.log("response",response);
+      $("#u_id").val(response.userId);
+      console.log("response", response);
       this.loginDetails = response;
       this.userID = response.userId;
       this.userName = response.firstName;
       this.role = response.role;
 
-console.log($("#u_id").val());
-// return false;
-if($("#u_id").val()!='') {
-  localStorage.setItem('access_token', 'test')
-  localStorage.setItem('login_status', '1')
-  localStorage.setItem('erp_c4c_user_id', response.userId)
-  localStorage.setItem('user_name', response.firstName)
-  localStorage.setItem('role', response.role)
-  localStorage.setItem('profile_image', response.profile_image)
-  
-  console.log("profile_image",alert);
-  this.router.navigate(['/']);
-}
-      
-if($("#u_id").val()=='undefined') {
-  localStorage.clear();
+      console.log($("#u_id").val());
+      // return false;
+      if ($("#u_id").val() != '') {
+        localStorage.setItem('access_token', 'test')
+        localStorage.setItem('login_status', '1')
+        localStorage.setItem('erp_c4c_user_id', response.userId)
+        localStorage.setItem('user_name', response.firstName)
+        localStorage.setItem('role', response.role)
+        localStorage.setItem('profile_image', response.profile_image)
+        localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
+
+        console.log("profile_image", alert);
+        this.router.navigate(['/']);
+      }
+
+      if ($("#u_id").val() == 'undefined') {
+        localStorage.clear();
         this.router.navigate(['/logout']);
-}
+      }
 
       // if (this.userID != '') {
       //   this.router.navigate(['/']);
@@ -167,44 +168,45 @@ if($("#u_id").val()=='undefined') {
 
 
   }
-  old_erp_login(){
+  old_erp_login() {
     let api_req: any = new Object();
-      let addAPI: any = new Object();
-      api_req.moduleType = "login";
-      api_req.api_url = "login_olderp";
-      api_req.api_type = "web";
-      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-      addAPI.action = "login_olderp";
-      addAPI.uscode = this.uscode;
+    let addAPI: any = new Object();
+    api_req.moduleType = "login";
+    api_req.api_url = "login_olderp";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addAPI.action = "login_olderp";
+    addAPI.uscode = this.uscode;
 
-      addAPI.code_val = this.code_val;
-      api_req.element_data = addAPI;
+    addAPI.code_val = this.code_val;
+    api_req.element_data = addAPI;
 
-      this.serverService.sendServer(api_req).subscribe((response: any) => {
-        localStorage.setItem('access_token', 'test')
-        localStorage.setItem('login_status', '1')
-        localStorage.setItem('erp_c4c_user_id', response.userId)
-        localStorage.setItem('user_name', response.firstName)
-        localStorage.setItem('role', response.role)
-        localStorage.setItem('profile_image', response.profile_image)
-        console.log("profile_image",alert);
-        console.log(response)
-        if (response.userId != '') { 
-          setTimeout(()=>{
-            var k = '{"data":"reload_profile_data"}';
-            this.serverService.reload_profile.next(k);
-            // var v = btoa(this.page_url);
-            console.log('/'+this.page_url);
-            // return false;
-            this.router.navigate(['/'+this.page_url],{ queryParams: { ids: btoa(response.userId)}});
-            // this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
-          },1000) 
-        }
-        if (response.userId == 'undefined' || response.userId === null || response.userId=='' ) {
-          localStorage.clear();
-          this.router.navigate(['/logout']);
-        }
-      });
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      localStorage.setItem('access_token', 'test')
+      localStorage.setItem('login_status', '1')
+      localStorage.setItem('erp_c4c_user_id', response.userId)
+      localStorage.setItem('user_name', response.firstName)
+      localStorage.setItem('role', response.role)
+      localStorage.setItem('profile_image', response.profile_image);
+    //  localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
+      console.log("profile_image", alert);
+      console.log("olderp-login response", response)
+      if (response.userId != '') {
+        setTimeout(() => {
+          var k = '{"data":"reload_profile_data"}';
+          this.serverService.reload_profile.next(k);
+          // var v = btoa(this.page_url);
+          console.log('/' + this.page_url);
+          // return false;
+          this.router.navigate(['/' + this.page_url], { queryParams: { ids: btoa(response.userId) } });
+          // this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
+        }, 1000)
+      }
+      if (response.userId == 'undefined' || response.userId === null || response.userId == '') {
+        localStorage.clear();
+        this.router.navigate(['/logout']);
+      }
+    });
   }
   qrcodes() {
     this.count = ++this.count;
@@ -308,9 +310,10 @@ if($("#u_id").val()=='undefined') {
         localStorage.setItem('user_name', response.firstName)
         localStorage.setItem('role', response.role)
         localStorage.setItem('profile_image', response.profile_image)
-        console.log("profile_image",alert);
+        localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
+        console.log("profile_image", alert);
 
-        
+
         if (this.userID != '') {
           Swal.close();
           this.router.navigate(['/']);

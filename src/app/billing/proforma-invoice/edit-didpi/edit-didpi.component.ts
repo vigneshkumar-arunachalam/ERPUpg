@@ -2329,17 +2329,24 @@ this.spinner.hide();
       if (response.status == true) {
         this.upd_flagName=response.searchFlag;
         this.upd_search_name=response.search_name;
-        iziToast.success({
-          title: 'Updated',
-          message: 'DID Invoice Updated Successfully !',
-        });
-        this.gotoDIDInvoiceList();
+
         this.router.navigate(['/ProformaInvoice'], {
           queryParams: {
             upd_searchFlag: this.upd_flagName,
             upd_search_name: this.upd_search_name
           }
         });
+        iziToast.success({
+          title: 'Updated',
+          message: 'DID Invoice Updated Successfully !',
+        });
+        if(this.upd_flagName==1){
+
+        }else{
+           this.gotoDIDInvoiceList();
+        }
+       
+       
         this.spinner.hide();
         // this.redirecttoQuotation();
         // this.addDid_section1.reset();

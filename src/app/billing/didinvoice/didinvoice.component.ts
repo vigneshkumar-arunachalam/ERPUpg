@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../../services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 declare var $: any
 declare var iziToast: any;
 import Swal from 'sweetalert2';
@@ -199,6 +200,11 @@ export class DidinvoiceComponent implements OnInit {
   invoiceShowPermission_List1: any;
   invoiceShowResult: any;
   ShowPermission_BillID: any;
+  //same page search
+  search_values1 = 0;
+  searchFlag: any;
+  upd_searchName: any;
+  upd_searchFlag: any;
 //recurring
 
 recurring_Status:any;
@@ -245,8 +251,8 @@ CBV_UsageChargeDt: any;
     todayDate : Date = new Date();
     todayString : string = new Date().toDateString();
     todayISOString : string = new Date().toISOString();
-
-  constructor(private serverService: ServerService, private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService,) { 
+  
+  constructor(private serverService: ServerService, private router: Router,  private route: ActivatedRoute,private fb: FormBuilder, private spinner: NgxSpinnerService,) { 
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -254,7 +260,28 @@ CBV_UsageChargeDt: any;
   keywordCompanyName = 'customerName';
   keywordResellerName = 'customerName';
   ngOnInit(): void {
+    this.route.queryParams
+    .subscribe(params => {
+      console.log("params output value", params);
+
+      
+      this.upd_searchName = params['upd_search_name'];
+    
    
+      this.upd_searchFlag = params['upd_searchFlag'];
+      // alert(this.upd_searchName)
+      // alert(this.upd_searchFlag)
+      if(this.upd_searchFlag==1){
+      
+        this.searchResult_CustomerName=  this.upd_searchName;
+        // alert(this.searchResult_CustomerName)
+      //  this.getInvoice({});
+      }
+
+      
+
+    }
+    );
 
     this.getInvoice({});
     this.yearsList = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"];

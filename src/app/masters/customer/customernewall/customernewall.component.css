@@ -497,7 +497,9 @@ label {
 .form-control:disabled,
 .form-control[readonly] {
     /* background-color: #f3d2f0 !important; */
-    background-color: #f7f1f6 !important;
+    
+    /* background-color: #f7f1f6 !important; */
+    background-color: #f7e4f4 !important;
     opacity: 0.6;
     color: black!important;
 }
@@ -976,4 +978,16 @@ th{
 .email-tag .tags .col-lg-2 {
   flex: 0 0 16.66667%;
   max-width: fit-content;
+}
+
+
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+.ng-autocomplete .mandatoryRed.is-invalid{
+  border: none!important;
+}
+.ng-autocomplete 
+::ng-deep  .is-invalid .autocomplete-container .input-container input{
+  border: 1px solid #dc3545!important; 
 }

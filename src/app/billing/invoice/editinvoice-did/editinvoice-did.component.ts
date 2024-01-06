@@ -208,6 +208,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   searchFlag: any;
   upd_flagName: any;
   upd_search_name: any;
+  send_cusName: any;
   
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
@@ -1712,6 +1713,7 @@ this.spinner.hide();
         this.BillerID_CompanyName =response.billing_pararent_details[0].billerId;
         this.TaxDropdown1(response.billing_pararent_details[0].billerId);
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
+        this.send_cusName=response.billing_pararent_details[0].b_name;
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
         $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
@@ -2936,7 +2938,14 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
   }
 
   goBack() {
-    this.router.navigate(['/invoice']);
+   
+
+    this.router.navigate(['/invoice'], {
+      queryParams: {
+        upd_searchFlag:  this.searchFlag,
+        upd_search_name: this.send_cusName
+      }
+    });
 
   }
   quotationAddSignature() {

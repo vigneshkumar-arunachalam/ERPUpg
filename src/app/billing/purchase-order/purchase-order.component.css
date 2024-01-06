@@ -299,13 +299,31 @@ border-radius: 50%;
 label.col-lg-2.col-form-label{text-align: right;}
 
 
-/* #delivery-order-section .userDatatable table td, #delivery-order-section .userDatatable table th {
+#delivery-order-section .userDatatable table td, #delivery-order-section .userDatatable table th {
   padding: 4px 0px 4px!important;
   white-space: normal;
-  width: 25%;
+  width: 28%;
 }
+#delivery-order-section .userDatatable table td:first-child, #delivery-order-section .userDatatable table th:first-child{
+  width: 10%;
+  text-align: left;
+ 
+}
+#delivery-order-section .userDatatable table td:nth-child(2), #delivery-order-section .userDatatable table th:nth-child(2)
 
-#delivery-order-section .userDatatable table td:nth-child(5), #delivery-order-section .userDatatable table th:nth-child(5),
+{
+  width: 10%;
+  text-align: left;
+
+}
+#delivery-order-section .userDatatable  table tr td span{
+  display: block;  
+  white-space: nowrap; 
+  width: 220px; 
+  overflow:   hidden;
+  text-overflow: ellipsis; 
+}
+/* #delivery-order-section .userDatatable table td:nth-child(5), #delivery-order-section .userDatatable table th:nth-child(5),
 #delivery-order-section .userDatatable table td:last-child, #delivery-order-section .userDatatable table th:last-child {
   width: 12%;
 }
