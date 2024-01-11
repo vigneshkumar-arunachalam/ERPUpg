@@ -991,3 +991,8 @@ th{
 ::ng-deep  .is-invalid .autocomplete-container .input-container input{
   border: 1px solid #dc3545!important; 
 }
+.mat-form-field-appearance-outline .mat-form-field-wrapper{
+  margin: 0;
+  padding: 0;
+}
+

@@ -11,11 +11,10 @@
 
 
           <div class="quotation-btn-section">
-          
+
             <button type="button" title="Chart" *ngIf="(  this.invoicePermissionList_suspend==1)"
-            class="btn btn-primary btn-default btn-squared"
-              (click)="suspendInvoiceGo()" style="margin-right: 10px;"><i class="fas  fa-archive"
-                style="margin-right:10;"></i>Suspend
+              class="btn btn-primary btn-default btn-squared" (click)="suspendInvoiceGo()"
+              style="margin-right: 10px;"><i class="fas  fa-archive" style="margin-right:10;"></i>Suspend
             </button>
             <!-- <button type="button" title="Monthly Turn Over" class="btn btn-primary btn-default btn-squared"
             data-toggle="modal" data-target="#monthlyTurnOverChartFormId" style="margin-right: 10px;"><i
@@ -92,24 +91,30 @@
                   ( (list.suspend=='1') ? ('#ff0000') : ('#d0ffc3') ) )}"> -->
                     <td>
                       <span>{{ list.invoice_no}}</span>
-                     
+
                       <!-- <span><button type="button" class="buttonClass"
                             [ngStyle]="{backgroundColor: list.colorCodes}">{{
                             list.billerCode}}</button></span> -->
                       <span><button type="button" class="btn_new buttonClass {{
                               list.billerCode}}">{{
                           list.billerCode}}</button></span>
-                          <span *ngIf="(list.taxAmtstate=='0')" style=" padding-top: 4px;border-bottom: 4px solid rgb(251, 4, 4);" ></span>
+                      <span *ngIf="(list.taxAmtstate=='0')"
+                        style=" padding-top: 4px;border-bottom: 4px solid rgb(251, 4, 4);"></span>
                     </td>
                     <td><span>{{ list.cus_invoice_no}}</span>
-                      <span *ngIf="(list.his_invoice_no!='')" style="font-size: 12px;background-color: #f1f2f6;    width: 70px;">{{ list.his_invoice_no}}</span></td>
+                      <span *ngIf="(list.his_invoice_no!='')"
+                        style="font-size: 12px;background-color: #f1f2f6;    width: 70px;">{{
+                        list.his_invoice_no}}</span>
+                    </td>
                     <td><span>{{ list.billDate}}</span></td>
                     <td><span>{{ list.customerName}}</span>
-                      <span style="background-color: #dcf156;font-size: smaller;width: fit-content;">{{ list.reference_reseller_str}}</span>
+                      <span style="background-color: #dcf156;font-size: smaller;width: fit-content;">{{
+                        list.reference_reseller_str}}</span>
                     </td>
                     <td>
                       <span>{{ list.netPayment}}</span>
-                      <span style="background-color: #75ef93;font-size: smaller;width: fit-content;">{{ list.usage_chargeAmt}}</span>
+                      <span style="background-color: #75ef93;font-size: smaller;width: fit-content;">{{
+                        list.usage_chargeAmt}}</span>
                     </td>
                     <td>
                       <span>{{ list.currency_name}}</span>
@@ -136,21 +141,21 @@
                             <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
                               (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i>
                             </button>
-                            
-                              <span class="recurring-Status" *ngIf="(recurring_state_all==1)" 
+
+                            <span class="recurring-Status" *ngIf="(list.recuring_status==1)"
                               [ngStyle]="{'color': list.recuring_status== '1' ? 'red' : 'blue'}">
-                               R</span>
-                               <span class="recurring-Status" *ngIf="(list.commission_state==1)" 
-                               [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
-                                C</span>
-                               <!-- <span class="recurring-Status" *ngIf="(list.commission_state==1)" 
+                              R</span>
+                            <span class="recurring-Status" *ngIf="(list.commission_state==1)"
+                              [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
+                              C</span>
+                            <!-- <span class="recurring-Status" *ngIf="(list.commission_state==1)" 
                                [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
                                 C</span> -->
-                              
-                              <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
+
+                            <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                                 src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                           </div>
-                      
+
                           <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered ActionId" role="document"
@@ -249,13 +254,16 @@
                                   justify-content: space-between;">
                                     <ul>
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_edit==1)">
-                                        <a  *ngIf="(list.billStatus!=3)"   class="hover3" title="Edit" (click)="editPIGo(list.billId,i,list.did_invoice_state)">
+                                        <a *ngIf="(list.billStatus!=3)" class="hover3" title="Edit"
+                                          (click)="editPIGo(list.billId,i,list.did_invoice_state)">
                                           <img class="show" src="assets/img/icon2/edit-blue.png">
                                           <img class="hide" src="assets/img/icon2/edit-black.png">
 
                                           <span><b style="padding: 0px 20px;">-</b><strong>Edit</strong></span>
                                         </a>
-                                        <a  *ngIf="((list.billStatus==3 )&&((user_ids==2)||(user_ids==7) || (user_ids==39) ))"  class="hover3" title="Edit" (click)="editPIGo(list.billId,i,list.did_invoice_state)">
+                                        <a *ngIf="((list.billStatus==3 )&&((user_ids==2)||(user_ids==7) || (user_ids==39) ))"
+                                          class="hover3" title="Edit"
+                                          (click)="editPIGo(list.billId,i,list.did_invoice_state)">
                                           <img class="show" src="assets/img/icon2/edit-blue.png">
                                           <img class="hide" src="assets/img/icon2/edit-black.png">
 
@@ -274,21 +282,22 @@
 
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_delete==1)">
-                                        <a class="hover3" *ngIf="(list.billStatus!=3)" title="Delete" data-toggle="modal"
-                                          (click)="deleteInvoice(list.billId,i)">
+                                        <a class="hover3" *ngIf="(list.billStatus!=3)" title="Delete"
+                                          data-toggle="modal" (click)="deleteInvoice(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/delete-blue.png">
                                           <img class="hide" src="assets/img/icon2/delete-black.png">
 
                                           <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
                                         </a>
-                                        <a class="hover3" *ngIf="((list.billStatus==3 )&&((user_ids==2)||(user_ids==7) || (user_ids==39) ))" title="Delete" data-toggle="modal"
-                                        (click)="deleteInvoice(list.billId,i)">
-                                        <img class="show" src="assets/img/icon2/delete-blue.png">
-                                        <img class="hide" src="assets/img/icon2/delete-black.png">
+                                        <a class="hover3"
+                                          *ngIf="((list.billStatus==3 )&&((user_ids==2)||(user_ids==7) || (user_ids==39) ))"
+                                          title="Delete" data-toggle="modal" (click)="deleteInvoice(list.billId,i)">
+                                          <img class="show" src="assets/img/icon2/delete-blue.png">
+                                          <img class="hide" src="assets/img/icon2/delete-black.png">
 
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
-                                      </a>
-                                        
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Delete</strong></span>
+                                        </a>
+
                                       </li>
 
 
@@ -344,8 +353,8 @@
 
 
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_mail==1)">
-                                        <a class="hover4" title="Email" data-toggle="modal" data-target="#emailFormId_inv"
-                                          (click)="getEmailDetails(list.billId,i)">
+                                        <a class="hover4" title="Email" data-toggle="modal"
+                                          data-target="#emailFormId_inv" (click)="getEmailDetails(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/gmail-blue.png">
                                           <img class="hide" src="assets/img/icon2/gmail-black.png">
 
@@ -482,8 +491,8 @@
 
                                       </li>
                                       <li class="dropdown__item">
-                                        <a class="hover3" title="Notes" data-toggle="modal" data-target="#NotesFormId_inv"
-                                          (click)="getNotes(list.billId,i)">
+                                        <a class="hover3" title="Notes" data-toggle="modal"
+                                          data-target="#NotesFormId_inv" (click)="getNotes(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/notepad.png">
                                           <img class="hide" src="assets/img/icon2/notepad-black.png">
                                           <span><b style="padding: 0px 20px;">-</b><strong>Notes</strong></span>
@@ -551,7 +560,8 @@
                                       </li>
                                       <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_to_do==1)">
                                         <a class="hover4" title="Delivery Order" data-toggle="modal"
-                                          data-target="#DeliveryOrderFormId_inv" (click)="DeliveryOrderEdit(list.billId,i)">
+                                          data-target="#DeliveryOrderFormId_inv"
+                                          (click)="DeliveryOrderEdit(list.billId,i)">
                                           <img class="show" src="assets/img/icon2/delivery-blue.png">
                                           <img class="hide" src="assets/img/icon2/delivery-black.png">
 
@@ -596,7 +606,7 @@
             </div>
           </div>
           <br>
-          <div *ngIf="this.Global_search_filter==false"> 
+          <div *ngIf="this.Global_search_filter==false">
             <nav class="atbd-page" *ngIf="(response_total_cnt>0)">
               <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
                 <li class="page-item">
@@ -627,13 +637,13 @@
                 </li>
                 <li class="dropdown__item">
                   <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
-  
+
                   </a>
                 </li>
               </ul>
             </nav>
           </div>
-         
+
           <br>
           <br>
           <table border="0" cellspacing="0" cellpadding="0">
@@ -815,8 +825,8 @@
 <!-------------- -Modal Pop Up-ENDS-Invoice Sending Method------------------------------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
-<div class="modal fade" id="sharPerissionFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="sharPerissionFormId_inv" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -905,37 +915,32 @@
           <div class="row">
             <div class="col-lg-6">
               <label>Invoice Id</label>
-              <input type="text" class="form-control" formControlName="invoiceID" 
-              id="invoiceID"  [readonly]="isReadOnly">
+              <input type="text" class="form-control" formControlName="invoiceID" id="invoiceID"
+                [readonly]="isReadOnly">
 
             </div>
 
             <div class="col-lg-6">
               <label>Total</label>
-              <input type="text" class="form-control" formControlName="toal"
-              id="toal" [readonly]="isReadOnly">
+              <input type="text" class="form-control" formControlName="toal" id="toal" [readonly]="isReadOnly">
 
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Biller</label>
-              <input type="text" class="form-control" formControlName="biller" 
-              id="biller" [readonly]="isReadOnly">
+              <input type="text" class="form-control" formControlName="biller" id="biller" [readonly]="isReadOnly">
 
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Paid</label>
-              <input type="text" class="form-control"  id="Paid"
-               formControlName="paid" [readonly]="isReadOnly">
+              <input type="text" class="form-control" id="Paid" formControlName="paid" [readonly]="isReadOnly">
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Customer</label>
-              <input type="text" class="form-control" id="Customer"
-              formControlName="customer" [readonly]="isReadOnly">
+              <input type="text" class="form-control" id="Customer" formControlName="customer" [readonly]="isReadOnly">
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Owing</label>
-              <input type="text" class="form-control" id="Owing"
-              formControlName="owing" [readonly]="isReadOnly">
+              <input type="text" class="form-control" id="Owing" formControlName="owing" [readonly]="isReadOnly">
 
             </div>
             <div class="col-lg-6">
@@ -955,7 +960,8 @@
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Payment Type/Method</label>
-              <select class="form-control" formControlName="paymenttype" id="paytype" (change)="PP_PaymentMethod($event)">
+              <select class="form-control" formControlName="paymenttype" id="paytype"
+                (change)="PP_PaymentMethod($event)">
 
                 <option [ngValue]="null" selected>Select Payment Method</option>
 
@@ -963,25 +969,23 @@
                   {{term.payment_type_name}}
                 </option>
               </select>
-              <select *ngIf="(PP_paymentMethod==7)" 
-              class="form-control" formControlName="paymenttype1" id="paytype1">
+              <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1" id="paytype1">
 
                 <option [ngValue]="null" selected>Select credit note</option>
 
                 <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
                   {{term1.tot_amt}}
                 </option>
-                
+
               </select>
-              <select *ngIf="(PP_paymentMethod==8)" 
-              class="form-control" formControlName="paymenttype2" id="paytype2">
+              <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2" id="paytype2">
 
                 <option [ngValue]="null" selected>Select prepaid note</option>
 
                 <option *ngFor="let term2 of creditResponse" value="{{term2.credit_note_id}}">
                   {{term2.tot_amt}}
                 </option>
-                
+
               </select>
             </div>
             <div class="col-lg-6">
@@ -992,16 +996,16 @@
             </div>
             <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment;let i=index">
               <label class="mt-4">Payment Details</label>
-             
+
 
               {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
               {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
               &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
-              <button type="button" style="margin-left: 10px;"   *ngIf="(invoicePermissionList_add==1)" title="Edit"
-              class=" btn-warning btn-default btn-squared"  style="margin-right: 10px;"
-              (click)="paymentProcessEditShow(pay.processId)"><i
-                class="fa fa-pencil-square-o" style="margin-right:10;"></i>
-            </button>
+              <button type="button" style="margin-left: 10px;" *ngIf="(invoicePermissionList_add==1)" title="Edit"
+                class=" btn-warning btn-default btn-squared" style="margin-right: 10px;"
+                (click)="paymentProcessEditShow(pay.processId)"><i class="fa fa-pencil-square-o"
+                  style="margin-right:10;"></i>
+              </button>
             </div>
 
           </div>
@@ -1048,8 +1052,8 @@
               <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
               <div class="col-lg-10">
                 <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
-                change="handle__email_from($event)">
-                  <option [ngValue]="null" selected >Select From</option>
+                  change="handle__email_from($event)">
+                  <option [ngValue]="null" selected>Select From</option>
                   <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
                     {{ from.from_email }}
                   </option>
@@ -1388,8 +1392,8 @@
 
 
 <!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
-<div class="modal fade" id="fileAttachmentFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="fileAttachmentFormId_inv" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1509,8 +1513,8 @@
 
 
 <!----------------------Revenue Details Modal Pop Up Starts------------------------------->
-<div class="modal fade" id="InvoiceRevenueFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="InvoiceRevenueFormId_inv" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1667,8 +1671,8 @@
 
 <!------------------------ Delivery Order start  ---------->
 
-<div class="modal fade" id="DeliveryOrderFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="DeliveryOrderFormId_inv" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1803,133 +1807,257 @@
 
 <!------------------------  Reseller Commission Details start  ---------->
 
-<div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog"
-aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 class="col-12 modal-title text-center">Reseller Commission Details
-      </h2>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body" style="padding-top: 0;">
+<div class="modal fade" id="inv_ResellerCommissionFormId1" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Reseller Commission Details
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="padding-top: 0;">
 
-      <form [formGroup]="resellerCommissionForm">
-        <div class="row">
-          <section formArrayName="addresses_rc">
-            <div *ngFor="let address of addressControls_rc.controls; let i = index;" style="    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 0.25);
+        <form [formGroup]="resellerCommissionForm">
+          <div class="row">
+            <section formArrayName="addresses_rc">
+              <div *ngFor="let address of addressControls_rc.controls; let i = index;" style="    box-shadow: 1px 1px 1px 1px rgb(0 0 0 / 0.25);
             border-radius: 10px;
             padding: 20px;margin:0px 20px 20px;">
-            <div [formGroupName]="i" >
-               
-              <div class="col-lg-12 mt-2" style="display: flex; ">
-                <div class="col-lg-3 mt-2">
-                  <label>Reseller Name </label>
-                </div>
-                <div class="col-lg-9">
-                  <div class="form-group row">
-                    <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+                <div [formGroupName]="i">
 
-                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
-                        formControlName="reseller_name" (selected)='selectEventReseller($event)'
-                        (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
-                        [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate" style="padding: 4px 5px !important;">
-                      </ng-autocomplete>
-
-                      <ng-template #itemTemplateCustomer let-item>
-                        <a [innerHTML]="item.customerName"></a>
-                      </ng-template>
-
-                      <ng-template #notFoundTemplate let-notFound>
-                        <div [innerHTML]="notFound"></div>
-                      </ng-template>
-
+                  <div class="col-lg-12 mt-2" style="display: flex; ">
+                    <div class="col-lg-3 mt-2">
+                      <label>Reseller Name </label>
                     </div>
+                    <div class="col-lg-9">
+                      <div class="form-group row">
+                        <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+
+                          <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
+                            id="reseller_name{{i}}" formControlName="reseller_name"
+                            (selected)='selectEventReseller($event)' (inputChanged)='searchResellerData($event)'
+                            (inputFocused)='onFocusedReseller($event)' [itemTemplate]="itemTemplateCustomer"
+                            [notFoundTemplate]="notFoundTemplate" style="padding: 4px 5px !important;">
+                          </ng-autocomplete>
+
+                          <ng-template #itemTemplateCustomer let-item>
+                            <a [innerHTML]="item.customerName"></a>
+                          </ng-template>
+
+                          <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                          </ng-template>
+
+                        </div>
+
+
+                      </div>
+                    </div>
+                    <input type="hidden" formControlName="billChildid1" id="billChildid1{{i}}" />
+                  </div>
+
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-3">
+                      <label>Commission Type </label>
+                    </div>
+                    <div class="col-lg-9">
+
+                      <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                        <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                        <input class="form-check-input" type="radio" name=CommissionType_{{i}} id="CommissionType_{{k}}"
+                          checked="{{item.id==this.CommissionType1[i] ? 'checked':''}}"
+                          (change)="radio_commissionType_formArray($event,i)" value={{item.id}}>
+
+                        <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-3 mt-2">
+                      <label>Commission Value </label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input type="number" class="form-control" formControlName="commission_value"
+                        id="CommissionValue_WFA_ID_{{i}}" (keyup)="commissionValueAutoFill_formArray(i)">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-3 mt-2">
+                      <label>Commission Amount </label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input type="number" class="form-control" formControlName="commission_amt"
+                        id="CommissionAmount1_WFA_ID_{{i}}">
+                      <input type="hidden" class="form-control" id="reseller_comm_id{{i}}"
+                        formControlName="reseller_comm_id">
+                      <input type="hidden" class="form-control" id="commIndex{{i}}" formControlName="commIndex">
+                      <input type="hidden" class="form-control" id="reseller_id{{i}}" formControlName="reseller_id">
+
+                      <input type="hidden" class="form-control" id="billId{{i}}" formControlName="billId">
+                      <input type="hidden" class="form-control" id="grossAmount{{i}}" formControlName="grossAmount">
+                    </div>
+                  </div>
+                  <div class="col-lg-12 mt-2" style="display: flex;">
+                    <div class="col-lg-3 ">
+                      <label>PDF Show </label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input type="checkbox" formControlName="pdf_show" id="pdf_show{{i}}"
+                        (change)="CBF_PdfShow($event)">
+                    </div>
+                  </div>
+
+                  <div style="display: inline-block;width: 100%;">
+
+                    <button *ngIf="(i!=0)" type="button" class="btn btn-danger btn-sm" (click)="removeAddress_rc(i)"
+                      style="display: block;float: right;border-radius: 25px ;">Remove </button>
 
 
                   </div>
-                </div>
-              </div>
-
-              <div class="col-lg-12 mt-2" style="display: flex;">
-                <div class="col-lg-3">
-                  <label>Commission Type </label>
-                </div>
-                <div class="col-lg-9">
-
-                  <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
-                    <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
-                    <input class="form-check-input" type="radio" name=CommissionType_{{i}} id="CommissionType_{{k}}"
-                      checked="{{item.id==this.CommissionType1[i] ? 'checked':''}}"
-                      (change)="radio_commissionType($event,i)" value={{item.id}}>
-
-                    <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
-                  </div>
-
-
 
                 </div>
               </div>
-              <div class="col-lg-12 mt-2" style="display: flex;">
-                <div class="col-lg-3 mt-2">
-                  <label>Commission Value </label>
-                </div>
-                <div class="col-lg-9">
-                  <input type="number" class="form-control" formControlName="commission_value"
-                    id="CommissionValue_WFA_ID_{{i}}" (keyup)="commissionValueAutoFill(i)">
-                </div>
-              </div>
-              <div class="col-lg-12 mt-2" style="display: flex;">
-                <div class="col-lg-3 mt-2">
-                  <label>Commission Amount </label>
-                </div>
-                <div class="col-lg-9">
-                  <input type="number" class="form-control" formControlName="commission_amt"
-                    id="CommissionAmount_WFA_ID_{{i}}">
-                  <input type="hidden" class="form-control" formControlName="reseller_comm_id">
-                  <input type="hidden" class="form-control" formControlName="reseller_id">
+            </section>
+          </div>
+        </form>
+        <button type="button" class="btn btn-success" style="margin-right: 10px;border-radius: 25px ;"
+          (click)="addAddress_rc()">Add </button>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission_formArray()">Update</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
 
-                  <input type="hidden" class="form-control" formControlName="billId">
-                  <input type="hidden" class="form-control" formControlName="grossAmount">
-                </div>
-              </div>
-              <div class="col-lg-12 mt-2" style="display: flex;">
-                <div class="col-lg-3 ">
-                  <label>PDF Show </label>
-                </div>
-                <div class="col-lg-9">
-                  <input type="checkbox" formControlName="pdf_show" (change)="CBF_PdfShow($event)">
-                </div>
-              </div>
-       
-              <div style="display: inline-block;width: 100%;" >
-                
-                <button *ngIf="(i!=0)" type="button" class="btn btn-danger btn-sm" (click)="removeAddress_rc(i)" style="display: block;float: right;border-radius: 25px ;">Remove </button>
-
-
-              </div>
-             
-            </div>
-           </div>
-          </section>
-        </div>
-      </form>
-      <button  type="button" class="btn btn-success" style="margin-right: 10px;border-radius: 25px ;"
-                  (click)="addAddress_rc()">Add </button>
-    </div>
-    <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
-      <button type="button" class="btn btn-dark" data-dismiss="modal">
-        Cancel
-      </button>
-
+      </div>
     </div>
   </div>
 </div>
-</div>
 
+
+<!----------Reseller Commission Details END ------------------>
+<!------------------------  Reseller Commission Details start  ---------->
+
+<div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content addcontractmastercss">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addModalLongTitle">Reseller Commission Details</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"   >&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+             
+                <form [formGroup]="inv_resellerCommissionForm" >
+                    <div class="row">
+                      <div class="col-lg-12 mt-2" style="display: flex; ">
+                        <div class="col-lg-3 mt-2">
+                          <label>Reseller Name </label>
+                        </div>
+                        <div class="col-lg-9">
+                          <div class="form-group row">
+                            <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+    
+                              <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
+                                id="reseller_name" formControlName="reseller_name"
+                                (selected)='selectEventReseller($event)' (inputChanged)='searchResellerData($event)'
+                                (inputFocused)='onFocusedReseller($event)' [itemTemplate]="itemTemplateCustomer"
+                                [notFoundTemplate]="notFoundTemplate" style="padding: 4px 5px !important;">
+                              </ng-autocomplete>
+    
+                              <ng-template #itemTemplateCustomer let-item>
+                                <a [innerHTML]="item.customerName"></a>
+                              </ng-template>
+    
+                              <ng-template #notFoundTemplate let-notFound>
+                                <div [innerHTML]="notFound"></div>
+                              </ng-template>
+    
+                            </div>
+    
+    
+                          </div>
+                        </div>
+                        <input type="hidden" formControlName="billChildid1" id="billChildid1" />
+                      </div>
+                      <div class="col-lg-12 mt-2" style="display: flex;">
+                        <div class="col-lg-3">
+                          <label>Commission Type </label>
+                        </div>
+                        <div class="col-lg-9">
+    
+                          <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                            <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                            <input class="form-check-input" type="radio" name=CommissionType_ id="CommissionType_{{k}}"
+                              checked="{{item.id==this.CommissionType1 ? 'checked':''}}"
+                              (change)="radio_commissionType($event)" value={{item.id}}>
+    
+                            <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 mt-2" style="display: flex;">
+                        <div class="col-lg-3 mt-2">
+                          <label>Commission Value </label>
+                        </div>
+                        <div class="col-lg-9">
+                          <input type="number" class="form-control" formControlName="commission_value"
+                            id="CommissionValue_WFA_ID_" (keyup)="commissionValueAutoFill()">
+                        </div>
+                      </div>
+                      <div class="col-lg-12 mt-2" style="display: flex;">
+                        <div class="col-lg-3 mt-2">
+                          <label>Commission Amount </label>
+                        </div>
+                        <div class="col-lg-9">
+                          <input type="number" class="form-control" formControlName="commission_amt"
+                            id="CommissionAmount1_WFA_ID_">
+                          <input type="hidden" class="form-control" id="reseller_comm_id"
+                            formControlName="reseller_comm_id">
+                          <input type="hidden" class="form-control" id="commIndex" 
+                          formControlName="commIndex">
+                          <input type="hidden" class="form-control" id="reseller_id" 
+                          formControlName="reseller_id">
+    
+                          <input type="hidden" class="form-control" id="billId" 
+                          formControlName="billId">
+                          <input type="hidden" class="form-control" id="grossAmount" 
+                          formControlName="grossAmount">
+                        </div>
+                      </div>
+                      <div class="col-lg-12 mt-2" style="display: flex;">
+                        <div class="col-lg-3 ">
+                          <label>PDF Show </label>
+                        </div>
+                        <div class="col-lg-9">
+                          <input type="checkbox" formControlName="pdf_show" id="pdf_show"
+                            (change)="CBF_PdfShow($event)">
+                        </div>
+                      </div>
+
+                    
+                      
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
+              <button type="button" class="btn btn-dark" data-dismiss="modal">
+                Cancel
+              </button>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <!----------Reseller Commission Details END ------------------>
 
@@ -2134,8 +2262,8 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
 
 <!-----------------Modal Pop Up (BEGIN) Licence Details ------------------>
-<div class="modal fade" id="LicenseDetailsFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="LicenseDetailsFormId_inv" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -2660,13 +2788,13 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
 
 <!----------Modal Pop Up (BEGIN)  for Monthly Turn Over Chart ------------------>
-<div class="modal fade" id="monthlyTurnOverChartFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="monthlyTurnOverChartFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " 
-        id="invoiceAttachModalLongTitle">Monthly Turn Over
+        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Monthly Turn
+          Over
         </h2>
 
 
@@ -2677,8 +2805,8 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-body">
 
         <div>
-          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>    
-      </div> 
+          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>
+        </div>
 
       </div>
       <div class="modal-footer">
@@ -2697,13 +2825,12 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <!----------Modal Pop Up (END)  for Monthly Turn Over Chart  ------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Daily Payment Chart ------------------>
-<div class="modal fade" id="DailyPaymentChartFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="DailyPaymentChartFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " 
-        id="invoiceAttachModalLongTitle">Daily Payment
+        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Daily Payment
         </h2>
 
 
@@ -2714,8 +2841,8 @@ aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
       <div class="modal-body">
 
         <div>
-          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>    
-      </div> 
+          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>
+        </div>
 
       </div>
       <div class="modal-footer">

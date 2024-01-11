@@ -1,7 +1,7 @@
-#viewCustomerFormId_RM{
+#viewCustomerFormId_CM{
   padding-right: 0px !important;
 }
-#viewCustomerFormId_RM .modal-dialog{
+#viewCustomerFormId_CM .modal-dialog{
   max-width: 65%;
 }
  
@@ -41,27 +41,27 @@
   margin: 10px 15px !important;
   }
 
-#specialEditCustomerFormId_RM .modal-body label{
+#specialEditCustomerFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
 
-#mconnectPartnerDetailsFormId_RM .modal-dialog{
+#mconnectPartnerDetailsFormId_CM .modal-dialog{
   max-width: 65%;
 }
-#mconnectPartnerDetailsFormId_RM .modal-body label{
+#mconnectPartnerDetailsFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
 
-#MrvoipPartnerDetailsFormId_RM .modal-dialog{
+#MrvoipPartnerDetailsFormId_CM .modal-dialog{
   max-width: 65%;
 }
-#MrvoipPartnerDetailsFormId_RM .modal-body label{
+#MrvoipPartnerDetailsFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
-#call4tellPartnerDetailsFormId_RM .modal-body label{
+#call4tellPartnerDetailsFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
@@ -69,7 +69,7 @@
 .ckboxclass{
   margin-left: 10px;
 }
-#invoiceSharedCustomerFormId_RM .modal-body label{
+#invoiceSharedCustomerFormId_CM .modal-body label{
   font-weight:500;
   color: black;
 }
@@ -184,13 +184,13 @@
   border-color: rgb(14, 13, 13);
 } */
 
-#editCustomerFormId_RM .modal-dialog{
+#editCustomerFormId_CM .modal-dialog{
     max-width: 80%;
 }
-#billCodeFormId_RM .modal-dialog{
+#billCodeFormId_CM .modal-dialog{
   max-width: 60%;
 }
-#landscapeEmailFormId_RM .modal-dialog{
+#landscapeEmailFormId_CM .modal-dialog{
   max-width: 60%;
  
 }
@@ -497,7 +497,9 @@ label {
 .form-control:disabled,
 .form-control[readonly] {
     /* background-color: #f3d2f0 !important; */
-    background-color: #f7f1f6 !important;
+    
+    /* background-color: #f7f1f6 !important; */
+    background-color: #f7e4f4 !important;
     opacity: 0.6;
     color: black!important;
 }
@@ -977,3 +979,20 @@ th{
   flex: 0 0 16.66667%;
   max-width: fit-content;
 }
+
+
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+.ng-autocomplete .mandatoryRed.is-invalid{
+  border: none!important;
+}
+.ng-autocomplete 
+::ng-deep  .is-invalid .autocomplete-container .input-container input{
+  border: 1px solid #dc3545!important; 
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper{
+  margin: 0;
+  padding: 0;
+}
+

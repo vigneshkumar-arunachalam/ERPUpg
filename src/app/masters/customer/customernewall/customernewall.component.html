@@ -832,21 +832,14 @@
                     [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate" class="mandatoryRed">
                     [ngClass]="{ 'is-invalid': submitted && f.defaultBillerName.errors }"
                   </ng-autocomplete> -->
-                  <ng-autocomplete 
-                  [data]="searchResult" 
-                  [searchKeyword]="keywordCompanyName" 
-                  id="company_Name"
-                  formControlName="company_Name" 
-                  (selected)='selectEventCustomer($event)'
-                  (inputChanged)='searchCustomerData($event)' 
-                  (inputFocused)='onFocusedCustomer($event)'
-                  [itemTemplate]="itemTemplateCustomer" 
-                  [notFoundTemplate]="notFoundTemplate" 
-                  [ngClass]="{ 'is-invalid': submitted && f.company_Name.errors }" 
-                  class="mandatoryRed">
-                
-                </ng-autocomplete>
-                
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName" id="company_Name"
+                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                    (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                    [ngClass]="{ 'is-invalid': submitted && f.company_Name.errors }" class="mandatoryRed">
+
+                  </ng-autocomplete>
+
                   <ng-template #itemTemplateCustomer let-item>
                     <a [innerHTML]="item.customerName"></a>
                   </ng-template>
@@ -856,35 +849,14 @@
                   </ng-template>
 
                 </div>
-                <div *ngIf="submitted && f.company_Name.errors"  class="alert alert-danger alertdangerCustomCSS mt-2">
-                  <div *ngIf="f.company_Name.errors.required" >Company Name is required</div>
+                <div *ngIf="submitted && f.company_Name.errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.company_Name.errors.required">Company Name is required</div>
                 </div>
 
               </div>
             </div>
 
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span
-                    class="mandatoryField">*</span></label>
-                <div class="col-lg-12">
-                  <select name="biller_name_1" id="biller_name_1" class="form-control mandatoryRed"
-                  [ngClass]="{ 'is-invalid': submitted && f.defaultBillerName.errors }"
-                    (change)="checkCustomerName()" aria-label="Default select example"
-                    formControlName="defaultBillerName">
-                    <option [ngValue]="null" selected disabled>Select Default Biller</option>
-                    <option *ngFor="let e_billname of billList" value="{{ e_billname.billerId }}">
-                      {{ e_billname.billerName }}
-                    </option>
-                  </select>
-                
-                </div>
-                <div *ngIf="submitted && f.defaultBillerName.errors"  class="alert alert-danger alertdangerCustomCSS mt-2">
-                  <div *ngIf="f.defaultBillerName.errors.required" >Biller Name is required</div>
-                </div>
 
-              </div>
-            </div>
 
 
             <!-- <div class="col-lg-6">
@@ -926,68 +898,99 @@
             </div> -->
 
             <div class="col-lg-6">
-              <label> Biller Name<span class="mandatoryField">*</span></label>
-              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                (change)="CHKAll_BillerNameSelectAll($event)">
-              <div class="CheckboxScroll">
-                <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
+              <div class="form-group row">
+                <div class="col-lg-12 col-form-label">
+                  <label> Biller Name<span class="mandatoryField">*</span></label>
+                  <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                    (change)="CHKAll_BillerNameSelectAll($event)">
+                </div>
+                <div class="col-lg-12">
+                  <div class="CheckboxScroll">
+                    <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
 
-                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-cus-grp-{{i}}"
-                    formControlName="add_billerName" 
-                    [ngClass]="{ 'is-invalid': submitted && f.add_billerName.errors }"
-                     (change)="addBillerNameCHK(display.billerId,$event)">
-                  {{display.billerName}}
+                      <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-cus-grp-{{i}}"
+                        formControlName="add_billerName"
+                        [ngClass]="{ 'is-invalid': submitted && f.add_billerName.errors }"
+                        (change)="addBillerNameCHK(display.billerId,$event)">
+                      {{display.billerName}}
 
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-lg-6" *ngIf="submitted && f.add_billerName.errors && this.chkAllStatus!=true"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.add_billerName.errors.required">Biller Name is required</div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-12 col-form-label">
+                  <div>
+                    <label> Customer Classification<span class="mandatoryField">
+                        *</span></label>
+                  </div>
+
+                  <!-- <div class="ml-4">
+                    <input class="checkbox" type="checkbox" id="check-5" (change)="CHKAll_CustomerClassifSelectAll($event)">
+                    <label>All</label>
+                  </div> -->
+                  <div class="CheckboxScroll">
+                    <div *ngFor="let cust of customerType_list;let j =index;"
+                      style="display: flex;padding-left: 30px;align-items: center;">
+
+                      <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp1-{{j}}"
+                        formControlName="add_customerClassification"
+                        [ngClass]="{ 'is-invalid': submitted && f.add_customerClassification.errors }"
+                        (change)="addCustomerClassificationCHK(cust,$event)">
+                      {{cust}}
+
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-lg-6" *ngIf="submitted && f.add_customerClassification.errors"
+                  class=" alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.add_customerClassification.errors.required">Customer Classification is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span
+                    class="mandatoryField">*</span></label>
+                <div class="col-lg-12">
+                  <select name="biller_name_1" id="biller_name_1" class="form-control mandatoryRed"
+                    [ngClass]="{ 'is-invalid': submitted && f.defaultBillerName.errors }" (change)="checkCustomerName()"
+                    aria-label="Default select example" formControlName="defaultBillerName">
+                    <option [ngValue]="null" selected disabled>Select Default Biller</option>
+                    <option *ngFor="let e_billname of billList" value="{{ e_billname.billerId }}">
+                      {{ e_billname.billerName }}
+                    </option>
+                  </select>
+
+                </div>
+                <div *ngIf="submitted && f.defaultBillerName.errors"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.defaultBillerName.errors.required">Biller Name is required</div>
                 </div>
 
               </div>
-              <div class="col-lg-6" *ngIf="submitted && f.add_billerName.errors && this.chkAllStatus!=true"  class="alert alert-danger alertdangerCustomCSS mt-2">
-                <div *ngIf="f.add_billerName.errors.required" >Biller Name is required</div>
-              </div>
-              
-             
             </div>
-           
-
-            <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
-              <div>
-                <label style="margin-bottom: 0px;"> Customer Classification<span class="mandatoryField">
-                    *</span></label>
-              </div>
-
-              <!-- <div class="ml-4">
-                <input class="checkbox" type="checkbox" id="check-5" (change)="CHKAll_CustomerClassifSelectAll($event)">
-                <label>All</label>
-              </div> -->
-
-              <div *ngFor="let cust of customerType_list;let j =index;"
-                style="display: flex;padding-left: 30px;align-items: center;">
-
-                <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp1-{{j}}"
-                  formControlName="add_customerClassification"
-                  [ngClass]="{ 'is-invalid': submitted && f.add_customerClassification.errors }"
-                  (change)="addCustomerClassificationCHK(cust,$event)">
-                {{cust}}
-
-              </div>
-              <div class="col-lg-6" *ngIf="submitted && f.add_customerClassification.errors"  class="alert alert-danger alertdangerCustomCSS mt-2">
-                <div *ngIf="f.add_customerClassification.errors.required" >Customer Classification is required</div>
-              </div>
 
 
-            </div>
-            
-
-
-            <div class="col-lg-6 mt-2">
+            <div class="col-lg-12 mt-2">
 
               <label style="color: rgb(233, 13, 24)!important;">Billing Address<span
                   class="mandatoryField">*</span></label>
 
             </div>
-            <div class="col-lg-6">
 
-            </div>
 
             <div class="col-lg-6">
               <div class="form-group row">
@@ -995,12 +998,13 @@
                     *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="billingAddress_contactPerson"
-                  [ngClass]="{ 'is-invalid': submitted && f.billingAddress_contactPerson.errors }"
+                    [ngClass]="{ 'is-invalid': submitted && f.billingAddress_contactPerson.errors }"
                     id="contactPerson" />
-                  
+
                 </div>
-                <div *ngIf="submitted && f.billingAddress_contactPerson.errors"  class="alert alert-danger alertdangerCustomCSS mt-2">
-                  <div *ngIf="f.billingAddress_contactPerson.errors.required" >Contact Person is required</div>
+                <div *ngIf="submitted && f.billingAddress_contactPerson.errors"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.billingAddress_contactPerson.errors.required">Contact Person is required</div>
                 </div>
 
               </div>
@@ -1088,11 +1092,11 @@
                     *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="ESA_cntPerson"
-                  [ngClass]="{ 'is-invalid': submitted && f.ESA_cntPerson.errors }" id="cntPerson " />
-                 
+                    [ngClass]="{ 'is-invalid': submitted && f.ESA_cntPerson.errors }" id="cntPerson " />
+
                 </div>
-                <div *ngIf="submitted && f.ESA_cntPerson.errors"  class="alert alert-danger alertdangerCustomCSS mt-2">
-                  <div *ngIf="f.ESA_cntPerson.errors.required" >Contact Person is required</div>
+                <div *ngIf="submitted && f.ESA_cntPerson.errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.ESA_cntPerson.errors.required">Contact Person is required</div>
                 </div>
 
               </div>
@@ -1232,7 +1236,8 @@
                 <label for="Email" class="col-lg-12 col-form-label">
                   Email<span class="mandatoryField">
                     *</span></label>
-                <mat-form-field class="col-lg-12 example-chip-list " appearance="outline">
+
+                <mat-form-field class="col-lg-12 example-chip-list" appearance="outline">
                   <mat-label>Email</mat-label>
                   <mat-chip-list #chipListEmail aria-label="Email selection">
                     <mat-chip *ngFor="let emailDisplay of emailList" (removed)="removeEmail(emailDisplay)">
@@ -1246,9 +1251,17 @@
                       (matChipInputTokenEnd)="addEmail($event)">
                   </mat-chip-list>
                   <br>
-                  <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
+                  <!-- <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p> -->
+
 
                 </mat-form-field>
+
+
+                <div class="col-lg-6" *ngIf="this.email_alert==false"
+                  class=" alert alert-danger alertdangerCustomCSS mt-2">
+                  <div>Email required
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -1273,9 +1286,15 @@
                       [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addFinanceEmail($event)">
                   </mat-chip-list>
                   <br>
-                  <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
-                  </p>
+                  <!-- <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
+                  </p> -->
                 </mat-form-field>
+
+                <div class="col-lg-6" *ngIf="this.finance_email_alert==false"
+                  class=" alert alert-danger alertdangerCustomCSS mt-2">
+                  <div>Finance Email required
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1689,9 +1708,9 @@
               </div>
             </div>
 
-            <div *ngIf="(submit_status==false && Clicked==true)"  class="alert alert-danger alertdangerCustomCSS mt-2">
+            <!-- <div *ngIf="(submit_status==false && Clicked==true)"  class="alert alert-danger alertdangerCustomCSS mt-2">
               <div >Mandatory Fields required</div>
-            </div>
+            </div> -->
 
 
           </div>

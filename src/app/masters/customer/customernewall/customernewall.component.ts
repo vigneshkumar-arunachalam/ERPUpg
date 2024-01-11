@@ -23,7 +23,7 @@ export interface FinanceEmailArray {
   styleUrls: ['./customernewall.component.css']
 })
 export class CustomernewallComponent implements OnInit {
-  submitted = false;
+  submitted = true;
   //view
   viewCustomerForm: FormGroup;
   isReadOnly: boolean = true;
@@ -73,8 +73,12 @@ export class CustomernewallComponent implements OnInit {
   searchResult: any;
   searchResultTest: any;
   billerNameList: any;
-  errMsg = true;
-  emailErrMsg = true;
+  errMsg = false;
+  //errMsg = true;
+ // emailErrMsg = true;
+  emailErrMsg = false;
+  email_alert:boolean=false;
+  finance_email_alert:boolean=false;
   checked: boolean = true;
   isDisabled: boolean = true;
   customerStatus_radiobox_Value: any = '';
@@ -375,6 +379,7 @@ export class CustomernewallComponent implements OnInit {
     }
   ];
   addEmail(event: MatChipInputEvent): void {
+    this.email_alert=true;
     console.log(event.value);
  
     let api_req: any = new Object();
@@ -394,7 +399,7 @@ export class CustomernewallComponent implements OnInit {
        
         if(this.existing_email>=1){
           iziToast.error({
-            message: "Email already exists",
+            message: "Email exists",
             position: 'topRight'
           });
           Swal.close();
@@ -447,7 +452,7 @@ export class CustomernewallComponent implements OnInit {
     event.chipInput!.clear();
   }
   addFinanceEmail(event: MatChipInputEvent): void {
-
+    this.finance_email_alert=true;
     console.log(event.value)
     
     let api_req: any = new Object();
@@ -2441,7 +2446,7 @@ this.cmsDepartmentList1();
   }
 
   clearcustomer() {
-    this.submitted=false;
+    // this.submitted=false;
 
     this.addCustomer.reset();
     // this.addCustomer.patchValue({

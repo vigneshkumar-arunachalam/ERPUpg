@@ -1479,8 +1479,10 @@ export class EditDidInvoiceComponent implements OnInit {
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/customer_address_details";
+    // api_req.moduleType = "proforma";
+    // api_req.api_url = "proforma/customer_address_details";
+    api_req.moduleType = "quotation";
+    api_req.api_url = "quotation/quot_customer_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
@@ -1491,10 +1493,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
       if (response.status == true) {
-        this.spinner.hide();
-        // this.did_bill_code = response.customer_billcode_arr;
-        // this.did_bill_code_section1 = response.customer_billcode_arr;
-        this.FinalDiscount_DiscountType = response.billpardiscount[0].dis_type
+      
 
         this.addDid_section1.patchValue({
           "customer_id_hd": response.customer_list.customerId,
@@ -1508,11 +1507,12 @@ export class EditDidInvoiceComponent implements OnInit {
           "shipTo_1": response.customer_list.ship_customerAddress1,
           "shipTo_2": response.customer_list.ship_customerAddress2,
           "shipTo_3": response.customer_list.ship_customerAddress3,
-
-
-
-
         });
+
+        this.spinner.hide();
+        // this.did_bill_code = response.customer_billcode_arr;
+        // this.did_bill_code_section1 = response.customer_billcode_arr;
+        this.FinalDiscount_DiscountType = response.billpardiscount[0].dis_type
       }
       else {
         this.spinner.hide();

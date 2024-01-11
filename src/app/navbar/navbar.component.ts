@@ -153,7 +153,6 @@ export class NavbarComponent implements OnInit {
       this.userId = localStorage.getItem('erp_c4c_user_id');
       this.role_Permission = localStorage.getItem('role');
       this.user_ProfileImage = localStorage.getItem('profile_image');
-      this.user_ProfileImage = localStorage.getItem('profile_image');
       this.payment_transaction_reports_Permission= localStorage.getItem('payment_transaction_reports');
 
     }, 2000);

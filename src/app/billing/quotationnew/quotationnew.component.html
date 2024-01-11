@@ -439,13 +439,14 @@
             </div>
             <div class="modal-body">
                 <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2>
-                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm">
+                <form [formGroup]="addNewQuotationPopUpForm" id="ngForm" (ngSubmit)="AddQuotationGo($event)">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group row">
                                 <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
                                 <div class="col-lg-12">
                                     <select name="enqFormValue" id="enq_From" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f['enquiryFrom_addPopUP'].errors }"
                                         formControlName="enquiryFrom_addPopUP">
                                         <option [ngValue]="null" selected>Select Enquiry From</option>
 
@@ -455,10 +456,9 @@
 
                                     </select>
                                 </div>
-                                <div *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
-                                    class="alert alert-danger alertdangerCustomCSS">
-                                    * Required *
-                                </div>
+                                <div *ngIf="submitted && f['enquiryFrom_addPopUP'].errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    <div *ngIf="f['enquiryFrom_addPopUP'].errors['required']">Enquiry From is required</div>
+                                  </div>
                             </div>
                         </div>
 
@@ -467,13 +467,15 @@
                             <div class="form-group row">
                                 <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
                                 <div class="col-lg-12">
-                                    <input type="text" class="form-control" formControlName="enquirySubject_addPopUP"
+                                    <input type="text" class="form-control" 
+                                    [ngClass]="{ 'is-invalid': submitted && f['enquirySubject_addPopUP'].errors }"
+                                    formControlName="enquirySubject_addPopUP"
                                         id="enq_subject" />
                                 </div>
-                                <div *ngIf="addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].touched)"
-                                    class="alert alert-danger alertdangerCustomCSS">
-                                 * Required *
+                                <div *ngIf="submitted && f['enquirySubject_addPopUP'].errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    <div *ngIf="f['enquirySubject_addPopUP'].errors['required']">Enquiry Subject is required</div>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -481,6 +483,7 @@
                                 <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && f['quotationValidity_addPopUP'].errors }"
                                         formControlName="quotationValidity_addPopUP">
                                         <option [ngValue]="null" selected >Select Quotation Validity</option>
                                         <option *ngFor="let validity of quotationValidityList" value="{{validity}}">
@@ -488,9 +491,8 @@
                                         </option>
                                     </select>
                                 </div>
-                                <div *ngIf="addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].dirty || addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].touched)"
-                                    class="alert alert-danger alertdangerCustomCSS">
-                                    * Required *
+                                <div *ngIf="submitted && f['quotationValidity_addPopUP'].errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                                    <div *ngIf="f['quotationValidity_addPopUP'].errors['required']">Enquiry Subject is required</div>
                                 </div>
                             </div>
                         </div>
@@ -532,7 +534,7 @@
             <div class="modal-footer">
 
                 <button type="submit" class="btn btn-primary" form="ngForm" 
-                (click)="AddQuotationGo()" >Go>></button>
+                (click)="AddQuotationGo($event)" >Go>></button>
 
 
                 <button type="button" class="btn btn-dark" 

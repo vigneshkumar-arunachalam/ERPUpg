@@ -1,54 +1,56 @@
 <div class="contents-section">
   <div class="row no-gutters">
-    
-      <div class="col-lg-12 mb-30">
-        <div class="card">
-          <div class="card-header color-dark fw-500">
-            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-              <span class="breadcrumb-item active">Reseller Details</span></h3>
-           
+
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">Reseller Details</span>
+          </h3>
 
 
-            <!-- <input type="search" class="form-control searchTop" placeholder="Quick Search"
+
+          <!-- <input type="search" class="form-control searchTop" placeholder="Quick Search"
               (keyup)="CustomerListQuickSearch($event)" style="height: 40px;width: 160px;" /> -->
 
-            <!-- <input type="text" placeholder="Search Shared Person"  class="form-control" (keyup)="quotationSharedPersonNameSearch($event)">
+          <!-- <input type="text" placeholder="Search Shared Person"  class="form-control" (keyup)="quotationSharedPersonNameSearch($event)">
             <p>{{values}}</p> -->
-            <div class="quotation-btn-section">
+          <div class="quotation-btn-section">
 
-              <div class="search-bar-section">
-                <input type="search" id="box" placeholder="Quick Search anything..." title="Quick Search"
-                  (mouseleave)="CustomerListQuickSearch($event)" (keyup)="CustomerListQuickSearch($event)"
-                  class="search__box">
-                <i class="fas fa-search search__icon" id="icon" onclick="toggleShow()"></i>
-              </div>
-
-              <button type="button" title="Add New Customer" class="btn btn-primary btn-default btn-squared"
-                data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()" (click)="getCustomerCode()"
-                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"></i> Add
-              </button>
-
-              <button type="button" class="btn btn-primary" data-toggle="modal" title="Advanced Search"
-                data-target="#searchCustomerFormId">
-                <i class="fas fa-search" style="margin-right:0;"></i> Search
-              </button>
+            <div class="search-bar-section">
+              <input type="search" id="box" placeholder="Quick Search anything..." title="Quick Search"
+                (mouseleave)="CustomerListQuickSearch($event)" (keyup)="CustomerListQuickSearch($event)"
+                class="search__box">
+              <i class="fas fa-search search__icon" id="icon" onclick="toggleShow()"></i>
             </div>
-            <!-- <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+
+            <button type="button" title="Add New Customer" class="btn btn-primary btn-default btn-squared"
+              data-toggle="modal" data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()"
+              (click)="getCustomerCode()" style="margin-right: 10px;"><i class="fas fa-plus"
+                style="margin-right:0;"></i> Add
+            </button>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" title="Advanced Search"
+              data-target="#searchCustomerFormId">
+              <i class="fas fa-search" style="margin-right:0;"></i> Search
+            </button>
+          </div>
+          <!-- <button type="button" class="btn btn-primary btn-default btn-squared" data-toggle="modal"
               data-target="#addCustomerFormId" (click)="clearCustomerAdd()" (click)="pageLoad()">
               Add Customer
             </button> -->
 
-          </div>
-          <div class="card-body">
+        </div>
+        <div class="card-body">
 
 
-            <div class="userDatatable global-shadow border-0 bg-white w-100">
-              <div class="table-responsive">
-                <table class="table mb-0 table-borderless">
-                  <thead>
-                    <tr class="userDatatable-header">
-                      <th>
-                        <!-- <div class="d-flex align-items-center">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+                    <th>
+                      <!-- <div class="d-flex align-items-center">
                             <div class="custom-checkbox  check-all">
                                 <input class="checkbox" type="checkbox" id="check-3"
                                     (change)="selectAll($event)">
@@ -57,494 +59,529 @@
                                 </label>
                             </div>
                         </div> -->
-                      </th>
-                      <th >
-                        <span class="userDatatable-title">Customer Id</span>
-                      </th>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Customer Id</span>
+                    </th>
 
-                      <th>
-                        <span class="userDatatable-title">Company Name</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Address</span>
-                      </th>
-                      <!-- <th>
+                    <th>
+                      <span class="userDatatable-title">Company Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Address</span>
+                    </th>
+                    <!-- <th>
                         <span class="userDatatable-title">Customer Address1</span>
                       </th>
                       <th>
                         <span class="userDatatable-title">Customer Address2</span>
                       </th> -->
-                      <!-- <th>
+                    <!-- <th>
                         <span class="userDatatable-title">PhoneNo</span>
                       </th> -->
-                      <th>
-                        <span class="userDatatable-title">Biller Name</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Contact Person</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title"> Email</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Fin Email</span>
-                      </th>
-                      <th style="display:none;">
-                        <span class="userDatatable-title">Customer Type</span>
-                      </th>
-                      <th style="width: 90px;">
-                        <span class="userDatatable-title">Gen By</span>
-                      </th>
-                     
-                    
-                      <th>
-                        <span class="userDatatable-title">Created Date</span>
-                      </th>
-                     
-                      <th style="width: 70px;">
-                        <span class="userDatatable-title">Credit</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Classify</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Action</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="customerlist-section">
-                    <tr *ngFor="let list of customer_list; let i = index">
-                      <td>
-                        <div class="d-flex">
-                          <div class="userDatatable__imgWrapper d-flex align-items-center">
-                            <div class="checkbox-group-wrapper">
-                              <div class="checkbox-group d-flex">
-                                <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                  <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
-                                    (change)="EditCHK(list.customerId,$event)">
-                                  <label for="check-grp-{{i}}"></label>
-                                </div>
+                    <th>
+                      <span class="userDatatable-title">Biller Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Contact Person</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title"> Email</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Fin Email</span>
+                    </th>
+                    <th style="display:none;">
+                      <span class="userDatatable-title">Customer Type</span>
+                    </th>
+                    <th style="width: 90px;">
+                      <span class="userDatatable-title">Gen By</span>
+                    </th>
+
+
+                    <th>
+                      <span class="userDatatable-title">Created Date</span>
+                    </th>
+
+                    <th style="width: 70px;">
+                      <span class="userDatatable-title">Credit</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Classify</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="customerlist-section">
+                  <tr *ngFor="let list of customer_list; let i = index">
+                    <td>
+                      <div class="d-flex">
+                        <div class="userDatatable__imgWrapper d-flex align-items-center">
+                          <div class="checkbox-group-wrapper">
+                            <div class="checkbox-group d-flex">
+                              <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                <input class="checkbox" type="checkbox" id="check-grp-cusmas-{{i}}"
+                                  (change)="EditCHK(list.customerId,$event)">
+                                <label for="check-grp-cusmas-{{i}}"></label>
                               </div>
                             </div>
                           </div>
-
                         </div>
-                      </td>
-                      <td >
-                        {{ list.cus_account_no }}
-                      </td>
 
-                      <td>
-                     {{ list.customerName }}
-                      </td>
-                      <td [innerHTML]="list.address " style="width: 150px;">
-                      </td>
-                      <!-- <td>
+                      </div>
+                    </td>
+                    <td>
+                      {{ list.cus_account_no }}
+                    </td>
+
+                    <td>
+                      {{ list.customerName }}
+                    </td>
+                    <td [innerHTML]="list.address " style="width: 150px;">
+                    </td>
+                    <!-- <td>
                         <span>{{ list.customerAddress1 }}</span>
                       </td>
                       <td>
                         <span>{{ list.customerAddress2 }}</span> 
                       </td> -->
-                      <!-- <td>
+                    <!-- <td>
                         <span>{{ list.customerPhone }}</span>
                       </td> -->
-                  
 
-                        <td >
-                          <div class="tag-section">
-                            <div class="tags-list" *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
-                            <!-- <span >{{list1.billerCode}}</span> -->
-                            <span><button type="button" class="btn_new buttonClass {{
+
+                    <td>
+                      <div class="tag-section">
+                        <div class="tags-list" *ngFor="let list1 of list.biller_details; let j = index"
+                          style="margin:2px 0px;">
+                          <!-- <span >{{list1.billerCode}}</span> -->
+                          <span><button type="button" class="btn_new buttonClass {{
                               list1.billerCode}}">{{
-                                list1.billerCode}}</button><br></span>
-                                
-                            </div>
-                            <button type="button" class="tag-btn" *ngIf="list.biller_details.length>1">{{list.biller_details.length-1}}+</button>
-                            <div class="tags"  *ngIf="list.biller_details.length>1">
-                              <div class="row">
-                              <div  class="tags-list-section col-lg-2" *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
-                                <span><button type="button" class="btn_new buttonClass {{
-                                  list1.billerCode}}">{{
-                                    list1.billerCode}}</button><br></span>
-                              </div>
-                              </div>
-                            </div>
+                              list1.billerCode}}</button><br></span>
+
                         </div>
-                      </td>
-                      <td>
-                        <span>{{ list.companyName}}</span>
-                      </td>
-                   
-                      
-                      <td >
-                        <div class="tag-section email-tag">
-                          <div class="tags-list" *ngFor="let listm of (list.email.split(',')); let j = index" style="margin:2px 0px;">
-                          <span>{{
-                              listm}}<br></span>
-                              
-                          </div>
-                          <button type="button" class="tag-btn" *ngIf="list.email.split(',').length>1">{{list.email.split(',').length}}+</button>
-                          <div class="tags"  *ngIf="(list.email.split(',').length)>1">
-                            <div class="row">
-                            <div  class="tags-list-section col-lg-2" *ngFor="let listm of (list.email.split(',')); let j = index" style="margin:2px 0px;">
-                              <span>{{
-                                  listm}}<br></span>
-                            </div>
+                        <button type="button" class="tag-btn"
+                          *ngIf="list.biller_details.length>1">{{list.biller_details.length-1}}+</button>
+                        <div class="tags" *ngIf="list.biller_details.length>1">
+                          <div class="row">
+                            <div class="tags-list-section col-lg-2"
+                              *ngFor="let list1 of list.biller_details; let j = index" style="margin:2px 0px;">
+                              <span><button type="button" class="btn_new buttonClass {{
+                                  list1.billerCode}}">{{
+                                  list1.billerCode}}</button><br></span>
                             </div>
                           </div>
+                        </div>
                       </div>
                     </td>
-                    <td >
-                      <div class="tag-section email-tag">
-                        <div class="tags-list" *ngFor="let listm of (list.finance_email.split(',')); let j = index" style="margin:2px 0px;">
-                        <span>{{
-                            listm}}</span>
-                            
-                        </div>
-                        <button type="button" class="tag-btn" *ngIf="list.finance_email.split(',').length>1">{{list.finance_email.split(',').length}}+</button>
-                        <div class="tags"  *ngIf="(list.finance_email.split(',').length)>1">
-                          <div class="row">
-                          <div  class="tags-list-section col-lg-2" *ngFor="let listm of (list.finance_email.split(',')); let j = index" style="margin:2px 0px;">
-                            <span>{{
-                                listm}}</span>
-                          </div>
-                          </div>
-                        </div>
-                    </div>
-                  </td>
+                    <td>
+                      <span>{{ list.companyName}}</span>
+                    </td>
 
-                      <!-- <td>
+
+                    <td>
+                      <div class="tag-section email-tag">
+                        <div class="tags-list" *ngFor="let listm of (list.email.split(',')); let j = index"
+                          style="margin:2px 0px;">
+                          <span>{{
+                            listm}}<br></span>
+
+                        </div>
+                        <button type="button" class="tag-btn"
+                          *ngIf="list.email.split(',').length>1">{{list.email.split(',').length}}+</button>
+                        <div class="tags" *ngIf="(list.email.split(',').length)>1">
+                          <div class="row">
+                            <div class="tags-list-section col-lg-2"
+                              *ngFor="let listm of (list.email.split(',')); let j = index" style="margin:2px 0px;">
+                              <span>{{
+                                listm}}<br></span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="tag-section email-tag">
+                        <div class="tags-list" *ngFor="let listm of (list.finance_email.split(',')); let j = index"
+                          style="margin:2px 0px;">
+                          <span>{{
+                            listm}}</span>
+
+                        </div>
+                        <button type="button" class="tag-btn"
+                          *ngIf="list.finance_email.split(',').length>1">{{list.finance_email.split(',').length}}+</button>
+                        <div class="tags" *ngIf="(list.finance_email.split(',').length)>1">
+                          <div class="row">
+                            <div class="tags-list-section col-lg-2"
+                              *ngFor="let listm of (list.finance_email.split(',')); let j = index"
+                              style="margin:2px 0px;">
+                              <span>{{
+                                listm}}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+
+                    <!-- <td>
                         <span title="{{ list.finance_email}}">{{ list.finance_email }}</span>
                       </td> -->
-                      <!-- <td style="display:none;">
+                    <!-- <td style="display:none;">
                         <span>{{ list.cus_type }}</span>
                       </td> -->
-                      <td>
-                        <span>{{ list.userName }}</span>
-                      </td>
-                      <td >
-                        <span >{{ list.created_dt }}</span>
-                      </td>
-                      <td>
-                        <span style="width:70px;">{{ list.credit_amt  }}</span>
-                      </td>
-                      <td>
-                        <span title="{{ list.cus_type }}">{{ list.cus_type }}</span>
-                      </td>
+                    <td>
+                      <span>{{ list.userName }}</span>
+                    </td>
+                    <td>
+                      <span>{{ list.created_dt }}</span>
+                    </td>
+                    <td>
+                      <span style="width:70px;">{{ list.credit_amt }}</span>
+                    </td>
+                    <td>
+                      <span title="{{ list.cus_type }}">{{ list.cus_type }}</span>
+                    </td>
 
-                      <td>
+                    <td>
 
-                        <div class="page">
+                      <div class="page">
 
-                          <div class="dropdown">
-                            <div style="display: flex;align-items: center;">
-                              <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"
-                                ><i class="fa fa-bars"></i></button>
-                             
-                            </div>
-                            <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
-                              aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                              <div class="modal-dialog modal-dialog-centered ActionId" role="document"
-                                style="max-width: 1000px;">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <span class="col-12 modal-title text-center"
-                                      style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
-                                    </span>
-                                    <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true"
-                                        style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
-                                    </h6>
-                                  </div>
-                                  <div class="modal-body">
-                            
-                                    <div class="row" style="display: flex;
+                        <div class="dropdown">
+                          <div style="display: flex;align-items: center;">
+                            <button class="btn1" data-toggle="modal" attr.data-target="#ActionId{{i}}"><i
+                                class="fa fa-bars"></i></button>
+
+                          </div>
+                          <div class="modal fade" data-backdrop="false" id="ActionId{{i}}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered ActionId" role="document"
+                              style="max-width: 1000px;">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <span class="col-12 modal-title text-center"
+                                    style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Action
+                                  </span>
+                                  <h6 type="button" class="" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"
+                                      style="    font-size: 30px; position: absolute;          top: 23px;right:-60px">&times;</span>
+                                  </h6>
+                                </div>
+                                <div class="modal-body">
+
+                                  <div class="row" style="display: flex;
                                     justify-content: space-between;">
-                                      <ul>
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="View" data-toggle="modal" data-target="#viewCustomerFormId_RM"
-                                            (click)="viewCustomer(list.customerId,i)">
-          
-                                            <img class="show" src="assets/img/icon2/eye-yellow.png">
-                                            <img class="hide" src="assets/img/icon2/eye-black1.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>View Customer</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="view" title="Edit" data-toggle="modal" data-target="#editCustomerFormId_RM"
-                                            (click)="editCustomer(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/edit-blue.png">
-                                            <img class="hide" src="assets/img/icon2/edit-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Edit Customer</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="Delete" (click)="deleteCustomer(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/delete-blue.png">
-                                            <img class="hide" src="assets/img/icon2/delete-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Delete Customer</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="view" title="Landscape Email" data-toggle="modal"
-                                            data-target="#landscapeEmailFormId_RM" (click)="landscapeEmailEdit(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                            <img class="hide" src="assets/img/icon2/gmail-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Email-Landscape</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="view" title="Quick Mail" (click)="quickMail(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/Atsign-blue.png">
-                                            <img class="hide" src="assets/img/icon2/Atsign-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Quick Mail</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="Special Edit" data-toggle="modal"
-                                            data-target="#specialEditCustomerFormId_RM"
-                                            (click)="specialEditCustomer(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/specialEdit-blue.png">
-                                            <img class="hide" src="assets/img/icon2/specialEdit-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Special Edit</strong></span>
-                                          </a>
-                                        </li>
-                                    
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="Bill Code" data-toggle="modal" data-target="#billCodeFormId_RM"
-                                            (click)="billCodeAttachmentEdit(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/digital-blue.png">
-                                            <img class="hide" src="assets/img/icon2/digital-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Bill Code</strong></span>
-                                          </a>
-                                        </li>
-          
-              
-                                      </ul>
-                                      <ul>
-                                      
-                                        <li class="dropdown__item">
-                                          <a *ngIf="this.isResllerStatus==false" class="view" title="Reseller Status" data-toggle="modal"
-                                            (click)="reseller_statusMethod(list.customerId,i)" >
-                                            <img class="show" src="assets/img/icon2/reseller-red.png">
-                                            <img class="hide" src="assets/img/icon2/reseller-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Reseller Status</strong></span>
-                                          </a>
-                                      
-                                          <a *ngIf="this.isResllerStatus==true" class="view" title="Reseller Status" data-toggle="modal"
-                                            (click)="reseller_statusMethod(list.customerId,i)" >
-                                            <img class="show" src="assets/img/icon2/reseller-blue.png">
-                                            <img class="hide" src="assets/img/icon2/reseller-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Reseller Status</strong></span>
-          
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a *ngIf="this.isEmployeeStatus==true" class="remove" title="Employee Status" data-toggle="modal"
-                                            (click)="employee_status(list.customerId,i)" >
-                                            <img class="show" src="assets/img/icon2/employee-blue.png">
-                                            <img class="hide" src="assets/img/icon2/employee-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Employee Status</strong></span>
-                                          </a>
-                                      
-                                          <a *ngIf="this.isEmployeeStatus==false" class="remove" title="Employee Status" data-toggle="modal"
-                                            (click)="employee_status(list.customerId,i)" >
-                                            <img class="show" src="assets/img/icon2/employee-red.png">
-                                            <img class="hide" src="assets/img/icon2/employee-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Employee Status</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="view" title="Share Customer Permission" data-toggle="modal"
-                                            data-target="#SharedCustomerPermissionFormId_RM"
-                                            (click)="shareCustomerPermission_edit(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/customer-service.png">
-                                            <img class="hide" src="assets/img/icon2/customer-service.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Share Customer Permission</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="Assign Account Manager" data-toggle="modal"
-                                            data-target="#AssignAccountManager_RM"
-                                            (click)="AssignAccountManager_edit(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/accountant.png">
-                                            <img class="hide" src="assets/img/icon2/accountant.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Assign Account Manager</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="view" title="Invoice Share" data-toggle="modal"
-                                            data-target="#invoiceSharedCustomerFormId_RM"
-                                            (click)="invoiceShare_edit(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/share-square-blue.png">
-                                            <img class="hide" src="assets/img/icon2/share-square-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Invoice Share</strong></span>
-                                          </a>
-                                        </li>
-          
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="Google Authentication" data-toggle="modal"
-                                            data-target="#GoogleAuthentication_RM" (click)="GoogleAuthenticationId(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/google.png">
-                                            <img class="hide" src="assets/img/icon2/google.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Google Authentication</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a *ngIf="list.cust_status =='P'" class="remove" title="Customer Status" data-toggle="modal"
-                                            (click)="customer_status(list.customerId,list.cust_status,i)">
-                                            <img class="show" src="assets/img/icon2/customer-blue.png">
-                                            <img class="hide" src="assets/img/icon2/customer-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
-                                          </a>
-                                      
-                                       
-                                          <a  *ngIf="list.cust_status == 'N'" class="remove" title="Customer Status" data-toggle="modal"
-                                            (click)="customer_status(list.customerId,list.cust_status,i)">
-                                            <img class="show" src="assets/img/icon2/customer-red.png">
-                                            <img class="hide" src="assets/img/icon2/customer-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Customer Status</strong></span>
-                                          </a>
-                                        </li>
-  
-                                      </ul>
-                                      <ul>
-  
-                                    
-          
-                                        <li class="dropdown__item">
-                                          <a class="view" title="File Attachment" data-toggle="modal"
-                                            data-target="#fileAttachmentFormId_RM" (click)="fileAttachmentEdit(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/fileAttach-blue.png">
-                                            <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>File Attachment</strong></span>
-                                          </a>
-                                        </li>
-  
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="Create a Call4Tel Customer"
-                                            (click)="nx32CustomerCreate(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/add-user-blue.png">
-                                            <img class="hide" src="assets/img/icon2/add-user-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Create a Call4Tel Customer</strong></span>
-                                          </a>
-                                        </li>
-          
-                                        <li class="dropdown__item" *ngIf="list.nx32_state==1">
-                                          <a class="view" title="NX32 Permission Status" data-toggle="modal"
-                                            data-target="#customer_NX32PermissionFormId_RM"
-                                            (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
-                                            <img class="show" src="assets/img/icon2/permis-blue.png">
-                                            <img class="hide" src="assets/img/icon2/permis-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>NX32 Permission Status</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item" *ngIf="list.nx32_state==0">
-                                          <a class="view" title="NX32 Permission Status" data-toggle="modal"
-                                            data-target="#customer_NX32PermissionFormId_RM"
-                                            (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
-                                            <img class="show" src="assets/img/icon2/permis-red.png">
-                                            <img class="hide" src="assets/img/icon2/userLock-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>NX32 Permission Status</strong></span>
-                                          </a>
-                                        </li>
-  
-                                        
-                                        <li class="dropdown__item">
-                                          <a class="view" title="C4T Partner Details" data-toggle="modal"
-                                            data-target="#call4tellPartnerDetailsFormId_RM"
-                                            (click)="call4tel_address_getList(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/call4tell-blue.png">
-                                            <img class="hide" src="assets/img/icon2/call4tell-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Call4tel Partner Details</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="remove" title="MrVoip" data-toggle="modal"
-                                            data-target="#MrvoipPartnerDetailsFormId_RM"
-                                            (click)="mrvoip_address_getList(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/mrVoip-blue.png">
-                                            <img class="hide" src="assets/img/icon2/mrVoip-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>MrVoip Partner Details</strong></span>
-                                          </a>
-                                        </li>
-                                        <li class="dropdown__item">
-                                          <a class="view" title="MConnect" data-toggle="modal"
-                                            data-target="#mconnectPartnerDetailsFormId_RM"
-                                            (click)="mconnect_address_getList(list.customerId,i)">
-                                            <img class="show" src="assets/img/icon2/bird-blue.png">
-                                            <img class="hide" src="assets/img/icon2/bird-black.png">
-                                            <span><b style="padding: 0px 20px;">-</b><strong>Mconnect Partner Details</strong></span>
-                                          </a>
-                                        </li>
-                                      
-  
-                                  
-                                      
-                                       
-                                      </ul>
-                                    </div>
-  
+                                    <ul>
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="View" data-toggle="modal"
+                                          data-target="#viewCustomerFormId_CM"
+                                          (click)="viewCustomer(list.customerId,i)">
+
+                                          <img class="show" src="assets/img/icon2/eye-yellow.png">
+                                          <img class="hide" src="assets/img/icon2/eye-black1.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>View Customer</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="view" title="Edit" data-toggle="modal"
+                                          data-target="#editCustomerFormId_CM"
+                                          (click)="editCustomer(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/edit-blue.png">
+                                          <img class="hide" src="assets/img/icon2/edit-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Edit Customer</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="Delete" (click)="deleteCustomer(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/delete-blue.png">
+                                          <img class="hide" src="assets/img/icon2/delete-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Delete
+                                              Customer</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="view" title="Landscape Email" data-toggle="modal"
+                                          data-target="#landscapeEmailFormId_CM"
+                                          (click)="landscapeEmailEdit(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                          <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                          <span><b
+                                              style="padding: 0px 20px;">-</b><strong>Email-Landscape</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="view" title="Quick Mail" (click)="quickMail(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/Atsign-blue.png">
+                                          <img class="hide" src="assets/img/icon2/Atsign-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Quick Mail</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="Special Edit" data-toggle="modal"
+                                          data-target="#specialEditCustomerFormId_CM"
+                                          (click)="specialEditCustomer(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/specialEdit-blue.png">
+                                          <img class="hide" src="assets/img/icon2/specialEdit-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Special Edit</strong></span>
+                                        </a>
+                                      </li>
+
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="Bill Code" data-toggle="modal"
+                                          data-target="#billCodeFormId_CM"
+                                          (click)="billCodeAttachmentEdit(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/digital-blue.png">
+                                          <img class="hide" src="assets/img/icon2/digital-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Bill Code</strong></span>
+                                        </a>
+                                      </li>
+
+
+                                    </ul>
+                                    <ul>
+
+                                      <li class="dropdown__item">
+                                        <a *ngIf="this.isResllerStatus==false" class="view" title="Reseller Status"
+                                          data-toggle="modal" (click)="reseller_statusMethod(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/reseller-red.png">
+                                          <img class="hide" src="assets/img/icon2/reseller-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Reseller
+                                              Status</strong></span>
+                                        </a>
+
+                                        <a *ngIf="this.isResllerStatus==true" class="view" title="Reseller Status"
+                                          data-toggle="modal" (click)="reseller_statusMethod(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/reseller-blue.png">
+                                          <img class="hide" src="assets/img/icon2/reseller-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Reseller
+                                              Status</strong></span>
+
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a *ngIf="this.isEmployeeStatus==true" class="remove" title="Employee Status"
+                                          data-toggle="modal" (click)="employee_status(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/employee-blue.png">
+                                          <img class="hide" src="assets/img/icon2/employee-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Employee
+                                              Status</strong></span>
+                                        </a>
+
+                                        <a *ngIf="this.isEmployeeStatus==false" class="remove" title="Employee Status"
+                                          data-toggle="modal" (click)="employee_status(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/employee-red.png">
+                                          <img class="hide" src="assets/img/icon2/employee-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Employee
+                                              Status</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="view" title="Share Customer Permission" data-toggle="modal"
+                                          data-target="#SharedCustomerPermissionFormId_CM"
+                                          (click)="shareCustomerPermission_edit(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/customer-service.png">
+                                          <img class="hide" src="assets/img/icon2/customer-service.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Share Customer
+                                              Permission</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="Assign Account Manager" data-toggle="modal"
+                                          data-target="#AssignAccountManager_CM"
+                                          (click)="AssignAccountManager_edit(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/accountant.png">
+                                          <img class="hide" src="assets/img/icon2/accountant.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Assign Account
+                                              Manager</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="view" title="Invoice Share" data-toggle="modal"
+                                          data-target="#invoiceSharedCustomerFormId_CM"
+                                          (click)="invoiceShare_edit(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/share-square-blue.png">
+                                          <img class="hide" src="assets/img/icon2/share-square-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Invoice Share</strong></span>
+                                        </a>
+                                      </li>
+
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="Google Authentication" data-toggle="modal"
+                                          data-target="#GoogleAuthentication_CM"
+                                          (click)="GoogleAuthenticationId(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/google.png">
+                                          <img class="hide" src="assets/img/icon2/google.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Google
+                                              Authentication</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a *ngIf="list.cust_status =='P'" class="remove" title="Customer Status"
+                                          data-toggle="modal"
+                                          (click)="customer_status(list.customerId,list.cust_status,i)">
+                                          <img class="show" src="assets/img/icon2/customer-blue.png">
+                                          <img class="hide" src="assets/img/icon2/customer-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Customer
+                                              Status</strong></span>
+                                        </a>
+
+
+                                        <a *ngIf="list.cust_status == 'N'" class="remove" title="Customer Status"
+                                          data-toggle="modal"
+                                          (click)="customer_status(list.customerId,list.cust_status,i)">
+                                          <img class="show" src="assets/img/icon2/customer-red.png">
+                                          <img class="hide" src="assets/img/icon2/customer-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Customer
+                                              Status</strong></span>
+                                        </a>
+                                      </li>
+
+                                    </ul>
+                                    <ul>
+
+
+
+                                      <li class="dropdown__item">
+                                        <a class="view" title="File Attachment" data-toggle="modal"
+                                          data-target="#fileAttachmentFormId_CM"
+                                          (click)="fileAttachmentEdit(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/fileAttach-blue.png">
+                                          <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>File
+                                              Attachment</strong></span>
+                                        </a>
+                                      </li>
+
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="Create a Call4Tel Customer"
+                                          (click)="nx32CustomerCreate(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/add-user-blue.png">
+                                          <img class="hide" src="assets/img/icon2/add-user-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Create a Call4Tel
+                                              Customer</strong></span>
+                                        </a>
+                                      </li>
+
+                                      <li class="dropdown__item" *ngIf="list.nx32_state==1">
+                                        <a class="view" title="NX32 Permission Status" data-toggle="modal"
+                                          data-target="#customer_NX32PermissionFormId_CM"
+                                          (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
+                                          <img class="show" src="assets/img/icon2/permis-blue.png">
+                                          <img class="hide" src="assets/img/icon2/permis-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>NX32 Permission
+                                              Status</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item" *ngIf="list.nx32_state==0">
+                                        <a class="view" title="NX32 Permission Status" data-toggle="modal"
+                                          data-target="#customer_NX32PermissionFormId_CM"
+                                          (click)="customer_NX32PermissionDisplay(list.customerId,list.nx32_state,i)">
+                                          <img class="show" src="assets/img/icon2/permis-red.png">
+                                          <img class="hide" src="assets/img/icon2/userLock-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>NX32 Permission
+                                              Status</strong></span>
+                                        </a>
+                                      </li>
+
+
+                                      <li class="dropdown__item">
+                                        <a class="view" title="C4T Partner Details" data-toggle="modal"
+                                          data-target="#call4tellPartnerDetailsFormId_CM"
+                                          (click)="call4tel_address_getList(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/call4tell-blue.png">
+                                          <img class="hide" src="assets/img/icon2/call4tell-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Call4tel Partner
+                                              Details</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="remove" title="MrVoip" data-toggle="modal"
+                                          data-target="#MrvoipPartnerDetailsFormId_CM"
+                                          (click)="mrvoip_address_getList(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/mrVoip-blue.png">
+                                          <img class="hide" src="assets/img/icon2/mrVoip-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>MrVoip Partner
+                                              Details</strong></span>
+                                        </a>
+                                      </li>
+                                      <li class="dropdown__item">
+                                        <a class="view" title="MConnect" data-toggle="modal"
+                                          data-target="#mconnectPartnerDetailsFormId_CM"
+                                          (click)="mconnect_address_getList(list.customerId,i)">
+                                          <img class="show" src="assets/img/icon2/bird-blue.png">
+                                          <img class="hide" src="assets/img/icon2/bird-black.png">
+                                          <span><b style="padding: 0px 20px;">-</b><strong>Mconnect Partner
+                                              Details</strong></span>
+                                        </a>
+                                      </li>
+
+
+
+
+
+                                    </ul>
                                   </div>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-dark" style="line-height: 10px;"
-                                      data-dismiss="modal">
-                                      Cancel
-                                    </button>
-  
-                                  </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-dark" style="line-height: 10px;"
+                                    data-dismiss="modal">
+                                    Cancel
+                                  </button>
+
                                 </div>
                               </div>
                             </div>
                           </div>
-
                         </div>
 
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                      </div>
+
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
-            <br>
-            <nav class="atbd-page">
-           
-              <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+          </div>
+          <br>
+          <nav class="atbd-page">
 
-                <li class="page-item">
-                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                    href="javascript:void(0)"
-                    (click)="paginationData.backtab=='show' ? customerslist({'offset':paginationData.start}) : false"><i
-                      class="fas fa-angle-left"></i></a>
-                </li>
-                <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                  <a class="page-link" href="javascript:void(0)"
-                    (click)="customerslist({'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
-                </li>
-                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                  *ngFor="let pagination of paginationData.data;let i=index">
-                  <a class="page-link" href="javascript:void(0)"
-                    (click)=" pagination.load ==true ? customerslist({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                </li>
+            <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
 
-                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                  <a class="page-link" href="javascript:void(0)"
-                    (click)="customerslist({'offset':paginationData.next})"><i
-                      class="fas fa-angle-double-right"></i></a>
-                </li>
+              <li class="page-item">
+                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                  href="javascript:void(0)"
+                  (click)="paginationData.backtab=='show' ? customerslist({'offset':paginationData.start}) : false"><i
+                    class="fas fa-angle-left"></i></a>
+              </li>
+              <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)="customerslist({'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+              </li>
+              <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                *ngFor="let pagination of paginationData.data;let i=index">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)=" pagination.load ==true ? customerslist({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                  <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+              </li>
 
-                <li class="page-item">
-                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                    href="javascript:void(0)"
-                    (click)="paginationData.nexttab =='show' ? customerslist({'offset':paginationData.end}) : false"><i
-                      class="fas fa-angle-right"></i></a>
-                </li>
-              </ul>
+              <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)="customerslist({'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+              </li>
 
-            </nav>
+              <li class="page-item">
+                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                  href="javascript:void(0)"
+                  (click)="paginationData.nexttab =='show' ? customerslist({'offset':paginationData.end}) : false"><i
+                    class="fas fa-angle-right"></i></a>
+              </li>
+            </ul>
 
-            <!-- <nav class="atbd-page">
+          </nav>
+
+          <!-- <nav class="atbd-page">
               <ul class="atbd-pagination d-flex">
                 <li class="atbd-pagination__item">
                   <a href="#" class="atbd-pagination__link pagination-control"><span
@@ -569,15 +606,15 @@
                 </li>
               </ul>
             </nav> -->
-          </div>
         </div>
       </div>
-   
+    </div>
+
   </div>
 </div>
 
 <!-- -----------------------Modal-View Customer begins-------------------------------- -->
-<div class="modal fade" id="viewCustomerFormId_RM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="viewCustomerFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -590,7 +627,7 @@
         </button>
       </div>
       <div class="modal-body">
-       
+
         <form [formGroup]="viewCustomerForm">
 
           <div class="row">
@@ -767,16 +804,19 @@
 
       </div>
       <div class="modal-body mousepoint">
-        <form [formGroup]="addCustomer" (ngSubmit)="addCustomerown()">
+        <form [formGroup]="addCustomer" (ngSubmit)="addCustomerown($event)">
 
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="companyCode " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
+                <label for="companyCode1 " class="col-lg-12 col-form-label">Company Code<span class="mandatoryField">
                     *</span></label>
                 <div class="col-lg-12">
-                  <input type="text" class="form-control"  
-                    formControlName="company_Code" id="companyCode" />
+                  <input type="text" class="form-control mandatoryRed" formControlName="company_Code"
+                    [ngClass]="{ 'is-invalid': submitted && f.company_Code.errors }" id="companyCode1" />
+                  <div *ngIf="submitted && f.company_Code.errors" class="invalid-feedback">
+                    <div *ngIf="f.company_Code.errors.required">company Code is required</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -786,10 +826,18 @@
                 <div class="ng-autocomplete">
                   <label for="companyName" class="col-lg-12 col-form-label">Company Name<span class="mandatoryField">
                       *</span></label>
-                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                  <!-- <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName" id="company_Name"
                     formControlName="company_Name" (selected)='selectEventCustomer($event)'
                     (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate" class="mandatoryRed">
+                    [ngClass]="{ 'is-invalid': submitted && f.defaultBillerName.errors }"
+                  </ng-autocomplete> -->
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName" id="company_Name"
+                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                    (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                    [ngClass]="{ 'is-invalid': submitted && f.company_Name.errors }" class="mandatoryRed">
+
                   </ng-autocomplete>
 
                   <ng-template #itemTemplateCustomer let-item>
@@ -801,30 +849,14 @@
                   </ng-template>
 
                 </div>
-                <div
-                  *ngIf="addCustomer.controls['company_Name'].invalid && (addCustomer.controls['company_Name'].dirty || addCustomer.controls['company_Name'].touched)"
-                  class="alert alert-danger alertdangerCustomCSS mt-2">
-                  Company Name is Required
+                <div *ngIf="submitted && f.company_Name.errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.company_Name.errors.required">Company Name is required</div>
                 </div>
 
               </div>
             </div>
 
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span
-                    class="mandatoryField">*</span></label>
-                <div class="col-lg-12">
-                  <select name="biller_name_1" id="biller_name_1" class="form-control"
-                    aria-label="Default select example" formControlName="defaultBillerName">
-                    <option [ngValue]="null" selected disabled>Select Default Biller</option>
-                    <option *ngFor="let e_billname of billList" value="{{ e_billname.billerId }}">
-                      {{ e_billname.billerName }}
-                    </option>
-                  </select>
-                </div>
-              </div>
-            </div>
+
 
 
             <!-- <div class="col-lg-6">
@@ -866,54 +898,99 @@
             </div> -->
 
             <div class="col-lg-6">
-              <label> Biller Name<span class="mandatoryField">*</span></label>
-              <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                (change)="CHKAll_BillerNameSelectAll($event)">
-              <div class="CheckboxScroll">
-                <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
+              <div class="form-group row">
+                <div class="col-lg-12 col-form-label">
+                  <label> Biller Name<span class="mandatoryField">*</span></label>
+                  <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                    (change)="CHKAll_BillerNameSelectAll($event)">
+                </div>
+                <div class="col-lg-12">
+                  <div class="CheckboxScroll">
+                    <div *ngFor="let display of billerNameList;let i =index;" style="padding-left: 30px;">
 
-                  <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp-{{i}}"
-                    formControlName="add_billerName" (change)="addBillerNameCHK(display.billerId,$event)">
-                  {{display.billerName}}
+                      <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-cus-grp-{{i}}"
+                        formControlName="add_billerName"
+                        [ngClass]="{ 'is-invalid': submitted && f.add_billerName.errors }"
+                        (change)="addBillerNameCHK(display.billerId,$event)">
+                      {{display.billerName}}
 
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-lg-6" *ngIf="submitted && f.add_billerName.errors && this.chkAllStatus!=true"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.add_billerName.errors.required">Biller Name is required</div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-12 col-form-label">
+                  <div>
+                    <label> Customer Classification<span class="mandatoryField">
+                        *</span></label>
+                  </div>
+
+                  <!-- <div class="ml-4">
+                    <input class="checkbox" type="checkbox" id="check-5" (change)="CHKAll_CustomerClassifSelectAll($event)">
+                    <label>All</label>
+                  </div> -->
+                  <div class="CheckboxScroll">
+                    <div *ngFor="let cust of customerType_list;let j =index;"
+                      style="display: flex;padding-left: 30px;align-items: center;">
+
+                      <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp1-{{j}}"
+                        formControlName="add_customerClassification"
+                        [ngClass]="{ 'is-invalid': submitted && f.add_customerClassification.errors }"
+                        (change)="addCustomerClassificationCHK(cust,$event)">
+                      {{cust}}
+
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col-lg-6" *ngIf="submitted && f.add_customerClassification.errors"
+                  class=" alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.add_customerClassification.errors.required">Customer Classification is required</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="biller_name_1" class="col-lg-12 col-form-label">Default Biller Name<span
+                    class="mandatoryField">*</span></label>
+                <div class="col-lg-12">
+                  <select name="biller_name_1" id="biller_name_1" class="form-control mandatoryRed"
+                    [ngClass]="{ 'is-invalid': submitted && f.defaultBillerName.errors }" (change)="checkCustomerName()"
+                    aria-label="Default select example" formControlName="defaultBillerName">
+                    <option [ngValue]="null" selected disabled>Select Default Biller</option>
+                    <option *ngFor="let e_billname of billList" value="{{ e_billname.billerId }}">
+                      {{ e_billname.billerName }}
+                    </option>
+                  </select>
+
+                </div>
+                <div *ngIf="submitted && f.defaultBillerName.errors"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.defaultBillerName.errors.required">Biller Name is required</div>
                 </div>
 
               </div>
             </div>
 
-            <div class="col-lg-12" style="display: flex;margin: 15px 0px;">
-              <div>
-                <label style="margin-bottom: 0px;"> Customer Classification<span class="mandatoryField">
-                    *</span></label>
-              </div>
 
-              <!-- <div class="ml-4">
-                <input class="checkbox" type="checkbox" id="check-5" (change)="CHKAll_CustomerClassifSelectAll($event)">
-                <label>All</label>
-              </div> -->
-
-              <div *ngFor="let cust of customerType_list;let j =index;"
-                style="display: flex;padding-left: 30px;align-items: center;">
-
-                <input class="checkbox" style="margin-right:5px ;" type="checkbox" id="check1-grp1-{{j}}"
-                  formControlName="add_customerClassification" (change)="addCustomerClassificationCHK(cust,$event)">
-                {{cust}}
-
-              </div>
-
-
-            </div>
-
-
-            <div class="col-lg-6 mt-2">
+            <div class="col-lg-12 mt-2">
 
               <label style="color: rgb(233, 13, 24)!important;">Billing Address<span
                   class="mandatoryField">*</span></label>
 
             </div>
-            <div class="col-lg-6">
 
-            </div>
 
             <div class="col-lg-6">
               <div class="form-group row">
@@ -921,12 +998,13 @@
                     *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="billingAddress_contactPerson"
+                    [ngClass]="{ 'is-invalid': submitted && f.billingAddress_contactPerson.errors }"
                     id="contactPerson" />
-                  <div
-                    *ngIf="addCustomer.controls['billingAddress_contactPerson'].invalid && (addCustomer.controls['billingAddress_contactPerson'].dirty || addCustomer.controls['billingAddress_contactPerson'].touched)"
-                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                    Contact Person is Required
-                  </div>
+
+                </div>
+                <div *ngIf="submitted && f.billingAddress_contactPerson.errors"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.billingAddress_contactPerson.errors.required">Contact Person is required</div>
                 </div>
 
               </div>
@@ -990,15 +1068,20 @@
 
             </div>
 
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: left;">
 
 
 
-                <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;" id="sesa"
+                <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" style="margin-left:30px;" id="sesa_12"
                   class="chb chb-3" formControlName="edit_ship_address" (change)="eventCheck($event)" />
-                <label style="color: rgb(233, 13, 24)!important;" for="sesa">Edit Shipping Address </label>
+                <label style="color: rgb(233, 13, 24)!important;" for="sesa_12">Edit Shipping Address </label>
               </div>
+            </div> -->
+            <div class="col-lg-6" style="color: rgb(233, 13, 24);
+            font-weight: 600!important">
+              <input type="checkbox" [(ngModel)]=" checkbox_EditShippingAddress" formControlName="edit_ship_address"
+                (change)="eventCheck($event)" /><span style="margin-left: 10px;">Edit Shipping Address</span>
             </div>
             <div class="col-lg-6">
 
@@ -1008,14 +1091,12 @@
                 <label for="cntPerson" class="col-lg-12 col-form-label">Contact Person<span class="mandatoryField">
                     *</span></label>
                 <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="ESA_cntPerson" id="cntPerson " />
-                  <div *ngIf="
-                      addCustomer.controls['ESA_cntPerson'].invalid &&
-                      (addCustomer.controls['ESA_cntPerson'].dirty ||
-                        addCustomer.controls['ESA_cntPerson'].touched)
-                    " class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                    Contact Person is Required
-                  </div>
+                  <input type="text" class="form-control" formControlName="ESA_cntPerson"
+                    [ngClass]="{ 'is-invalid': submitted && f.ESA_cntPerson.errors }" id="cntPerson " />
+
+                </div>
+                <div *ngIf="submitted && f.ESA_cntPerson.errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                  <div *ngIf="f.ESA_cntPerson.errors.required">Contact Person is required</div>
                 </div>
 
               </div>
@@ -1095,12 +1176,23 @@
             </div>
 
 
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
 
                 <input type="checkbox" formControlName="ESA_premiumStatus" (change)="eventCheckPremiumStatus($event)"
-                  id="prest" class="chb1 chb1-altered" style="margin-left: 30px;" />
-                <label class="col-lg-12 col-form-label" for="prest">Premium Status</label>
+                  id="prest_1" class="chb1 chb1-altered" style="margin-left: 30px;" />
+                <label class="col-lg-12 col-form-label" for="prest_1">Premium Status</label>
+              </div>
+            </div> -->
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="prest_1">Premium Status</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" formControlName="ESA_premiumStatus"
+                    (change)="eventCheckPremiumStatus($event)" />
+                </div>
               </div>
             </div>
 
@@ -1144,7 +1236,8 @@
                 <label for="Email" class="col-lg-12 col-form-label">
                   Email<span class="mandatoryField">
                     *</span></label>
-                <mat-form-field class="col-lg-12 example-chip-list " appearance="outline">
+
+                <mat-form-field class="col-lg-12 example-chip-list" appearance="outline">
                   <mat-label>Email</mat-label>
                   <mat-chip-list #chipListEmail aria-label="Email selection">
                     <mat-chip *ngFor="let emailDisplay of emailList" (removed)="removeEmail(emailDisplay)">
@@ -1158,9 +1251,17 @@
                       (matChipInputTokenEnd)="addEmail($event)">
                   </mat-chip-list>
                   <br>
-                  <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p>
+                  <!-- <p *ngIf="this.emailErrMsg==false" style="color: red !important;">Enter Email in valid mail Format</p> -->
+
 
                 </mat-form-field>
+
+
+                <div class="col-lg-6" *ngIf="this.email_alert==false"
+                  class=" alert alert-danger alertdangerCustomCSS mt-2">
+                  <div>Email required
+                  </div>
+                </div>
 
               </div>
             </div>
@@ -1185,9 +1286,15 @@
                       [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addFinanceEmail($event)">
                   </mat-chip-list>
                   <br>
-                  <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
-                  </p>
+                  <!-- <p *ngIf="this.errMsg==false" style="color: red !important;">Enter Finance Email in valid mail Format
+                  </p> -->
                 </mat-form-field>
+
+                <div class="col-lg-6" *ngIf="this.finance_email_alert==false"
+                  class=" alert alert-danger alertdangerCustomCSS mt-2">
+                  <div>Finance Email required
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -1227,7 +1334,7 @@
 
             <div class="col-lg-6">
               <label>CMS Options</label>
-              
+
               <div class="CheckboxScroll">
                 <div *ngFor="let cu of customerPermissionList;let k =index;" style="padding-left: 30px;">
 
@@ -1266,10 +1373,12 @@
                 <label for="cmsdepartmentAdd" class="col-lg-12 col-form-label">CMS Default
                   Department</label>
                 <div class="col-lg-12">
-                  <select name="cmsdepartmentAdd" id="cmsdepartment_name1 " class="form-control" aria-label="Default select example"
-                    formControlName="cmsdepartment_add" (change)="cmsdepartmentADD($event)">
+                  <select name="cmsdepartmentAdd" id="cmsdepartment_name1 " class="form-control"
+                    aria-label="Default select example" formControlName="cmsdepartment_add"
+                    (change)="cmsdepartmentADD($event)">
                     <option [ngValue]="null" selected disabled>Select Department</option>
-                    <option *ngFor="let cmsdept of cmslistadd" value="{{ cmsdept.dept_id }},{{cmsdept.department_name }}">
+                    <option *ngFor="let cmsdept of cmslistadd"
+                      value="{{ cmsdept.dept_id }},{{cmsdept.department_name }}">
                       {{ cmsdept.department_name }}
                     </option>
                   </select>
@@ -1277,7 +1386,7 @@
               </div>
             </div>
 
-<!-- 
+            <!-- 
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="cmsdepartmentAdd" class="col-lg-12 col-form-label">CMS Default
@@ -1365,40 +1474,99 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
 
-                <input type="checkbox" formControlName="stripe_recurr_payment" style="margin-left:30px;" id="srp"
+                <input type="checkbox" formControlName="stripe_recurr_payment" style="margin-left:30px;" id="srp_cus1"
                   class="chb1 chb1-altered" (change)="eventCheckSRP($event)" />
-                <label class="col-lg-12 col-form-label" for="srp">Stripe recurring payment </label>
+                <label class="col-lg-12 col-form-label" for="srp_cus1">Stripe recurring payment </label>
+              </div>
+            </div> -->
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="srp_cus1">Stripe recurring payment</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" formControlName="stripe_recurr_payment" (change)="eventCheckSRP($event)" />
+                </div>
               </div>
             </div>
-            <div class="col-lg-6">
+
+
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
 
-                <input type="checkbox" formControlName="c3cx_system_discount" style="margin-left:30px;" id="3cxsd"
+                <input type="checkbox" formControlName="c3cx_system_discount" style="margin-left:30px;" id="3cxsd_cus1"
                   class="chb1 chb1-altered" (change)="eventCheck3CXSD($event)" />
-                <label class="col-lg-12 col-form-label" for="3cxsd">3CX System Discount</label>
+                <label class="col-lg-12 col-form-label" for="3cxsd_cus1">3CX System Discount</label>
+              </div>
+            </div> -->
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="3cxsd_cus1">3CX System Discount</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" formControlName="c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
+                </div>
               </div>
             </div>
-            <div class="col-lg-6">
+
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
 
-                <input type="checkbox" formControlName="shopping_gst" style="margin-left:30px;" id="ssgst"
+                <input type="checkbox" formControlName="shopping_gst" style="margin-left:30px;" id="ssgst_cus1"
                   class="chb1 chb1-altered" (change)="eventCheckshoppingGST($event)" />
-                <label class="col-lg-12 col-form-label" for="ssgst">Select Shopping GST</label>
+                <label class="col-lg-12 col-form-label" for="ssgst_cus1">Select Shopping GST</label>
+              </div>
+            </div> -->
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="ssgst_cus1">Select Shopping GST</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" formControlName="shopping_gst" (change)="eventCheckshoppingGST($event)" />
+                </div>
               </div>
             </div>
-            <div class="col-lg-6">
+
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
 
                 <input type="checkbox" [(ngModel)]="checked" style="margin-left:30px;" formControlName="send_invoice"
-                  id="sic" class="chb1 chb1-altered" (change)="eventCheckIncoice($event)" />
-                <label class="col-lg-12 col-form-label" for="sic">Send invoice to customer</label>
+                  id="sic_cus1" class="chb1 chb1-altered" (change)="eventCheckIncoice($event)" />
+                <label class="col-lg-12 col-form-label" for="sic_cus1">Send invoice to customer</label>
+              </div>
+            </div> -->
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="sic_cus1">Send invoice to customer</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" formControlName="send_invoice" [(ngModel)]="checked"
+                    (change)="eventCheckIncoice($event)" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="resstat_cus1">Reseller Status</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" formControlName="reseller_status" (change)="eventCheckRS($event)" />
+                </div>
               </div>
             </div>
 
@@ -1419,25 +1587,44 @@
               </div>
             </div>
 
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
 
-                <input type="checkbox" formControlName="reseller_status" style="margin-left:30px;" id="resstat"
+                <input type="checkbox" formControlName="reseller_status" style="margin-left:30px;" id="resstat_cus1"
                   class="chb1 chb1-altered" (change)="eventCheckRS($event)" />
-                <label class="col-lg-12 col-form-label" for="resstat">Reseller Status</label>
+                <label class="col-lg-12 col-form-label" for="resstat_cus1">Reseller Status</label>
               </div>
-            </div>
-            <div class="col-lg-6">
+            </div> -->
+
+
+
+
+            <!-- <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
 
                 <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit"
-                  id="voipSC" class="chb1 chb1-altered" title="Disabled" (change)="eventCheckVSC($event)"
+                  id="voipSC_cus11" class="chb1 chb1-altered" title="Disabled" (change)="eventCheckVSC($event)"
                   style="margin-left:30px;" />
-                <label class="col-lg-12 col-form-label" for="voipSC">Voip switch credit</label>
+                <label class="col-lg-12 col-form-label" for="voipSC_cus11">Voip switch credit</label>
+              </div>
+            </div> -->
+
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="col-lg-4">
+                  <label for="voipSC_cus11">Voip switch credit</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="checkbox" [attr.disabled]="isDisabled ? true : null" formControlName="voip_switch_credit"
+                    title="Disabled" (change)="eventCheckVSC($event)" />
+                </div>
               </div>
             </div>
+
+
             <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="customer_status" class="col-lg-12 col-form-label">Customer Status</label>
@@ -1462,26 +1649,25 @@
 
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
-                <label for="customerstatus" class="col-lg-4 col-form-label">Customer Status</label>
+                <label for="customerstatus" class="col-lg-2 col-form-label">Customer Status</label>
                 <div style="display: flex;align-items: center;">
                   <div style="margin-right:20px;">
 
 
-                    <label class="sq-radio" for="N">
-                      <input type="radio" name="addCustomerStatus" id="N" [checked]="true"
-                        (change)="CustomerStatus_RadioEvent($event)" />
-                      <span class="checkmark"></span>
-                      New
-                    </label>
+
+                    <input type="radio" name="addCustomerStatus" id="N1" [checked]="true"
+                      (change)="CustomerStatus_RadioEvent($event)" />
+                    <span style="margin-top: 4px;"> New</span>
+
+
                   </div>
 
                   <div style="margin-right:20px;">
-                    <label class="sq-radio" for="P">
-                      <input type="radio" name="addCustomerStatus" id="P"
-                        (change)="CustomerStatus_RadioEvent($event)" />
-                      <span class="checkmark"></span>
-                      Permanent
-                    </label>
+
+                    <input type="radio" name="addCustomerStatus" id="P1" (change)="CustomerStatus_RadioEvent($event)" />
+                    <span style="margin-top: 4px;"> Permanent</span>
+
+
                   </div>
                 </div>
               </div>
@@ -1522,11 +1708,16 @@
               </div>
             </div>
 
+            <!-- <div *ngIf="(submit_status==false && Clicked==true)"  class="alert alert-danger alertdangerCustomCSS mt-2">
+              <div >Mandatory Fields required</div>
+            </div> -->
+
+
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="addCustomerSave" (click)="addCustomerown()">
+        <button type="button" class="btn btn-primary" id="addCustomerSave" (click)="addCustomerown($event)">
           Save
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1540,7 +1731,7 @@
 
 <!------------------------ Modal-Add New Customer-ends --------------------------------->
 <!--------------------- Modal- edit -customer starts------------------------------------>
-<div class="modal fade" id="editCustomerFormId_RM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="editCustomerFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
 
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -1753,9 +1944,9 @@
             <div class="col-lg-6">
               <div class="form-group row" style="display: flex;align-items: center;">
 
-                <input type="checkbox" [(ngModel)]="checkbox_EdShippingAddress" style="margin-left:30px;" id="esa2"
+                <input type="checkbox" [(ngModel)]="checkbox_EdShippingAddress" style="margin-left:30px;" id="esa22"
                   class="chb chb-3" (change)="edit_eventCheck($event)" />
-                <label style="color: rgb(233, 13, 24)!important;" for="esa2">Edit Shipping Address
+                <label style="color: rgb(233, 13, 24)!important;" for="esa22">Edit Shipping Address
                 </label>
               </div>
             </div>
@@ -1848,9 +2039,9 @@
             <div class="col-lg-6">
               <div class="form-group row" style="display:flex;align-items: center;">
 
-                <input type="checkbox" formControlName="e_ESA_premiumStatus" id="eprestat" class="chb1 chb1-altered"
+                <input type="checkbox" formControlName="e_ESA_premiumStatus" id="eprestat1" class="chb1 chb1-altered"
                   (change)="eventCheckPremiumStatus($event)" style="margin-left:30px;" />
-                <label class="col-lg-12 col-form-label" for="eprestat">Premium Status </label>
+                <label class="col-lg-12 col-form-label" for="eprestat1">Premium Status </label>
               </div>
             </div>
 
@@ -1974,10 +2165,11 @@
                 <label for="cmsdepartment" class="col-lg-12 col-form-label">CMS Default
                   Department</label>
                 <div class="col-lg-12">
-                  <select id="cmsdepartment_name_edit" class="form-control"
-                    formControlName="edit_cmsdepartment" (change)="cmsdepartmentEdit($event)">
+                  <select id="cmsdepartment_name_edit" class="form-control" formControlName="edit_cmsdepartment"
+                    (change)="cmsdepartmentEdit($event)">
                     <option [ngValue]="null" selected disabled>Select Department</option>
-                    <option *ngFor="let cmsdept of cmsDepartmentList" value="{{ cmsdept.dept_id }},{{cmsdept.department_name }}">
+                    <option *ngFor="let cmsdept of cmsDepartmentList"
+                      value="{{ cmsdept.dept_id }},{{cmsdept.department_name }}">
                       {{ cmsdept.department_name }}
                     </option>
                   </select>
@@ -1995,7 +2187,7 @@
                 </div>
               </div>
             </div>
-          
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="ESA_c3cxResellerId" class="col-lg-12 col-form-label">3CX Reseller Id</label>
@@ -2090,10 +2282,10 @@
 
 
 
-                <input class="ml-4" id="esrp" class="chb1 chb1-altered" type="checkbox"
+                <input class="ml-4" id="esrp1" class="chb1 chb1-altered" type="checkbox"
                   formControlName="e_stripe_recurr_payment" (change)="eventCheckSRP($event)" />
 
-                <label class="col-lg-12 col-form-label" for="esrp">Stripe recurring payment</label>
+                <label class="col-lg-12 col-form-label" for="esrp1">Stripe recurring payment</label>
 
               </div>
             </div>
@@ -2101,9 +2293,9 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="e3cxsd" class="chb1 chb1-altered" type="checkbox"
+                <input class="ml-4" id="e3cxsd1" class="chb1 chb1-altered" type="checkbox"
                   formControlName="e_c3cx_system_discount" (change)="eventCheck3CXSD($event)" />
-                <label class="col-lg-12 col-form-label" for="e3cxsd">3CX System Discount</label>
+                <label class="col-lg-12 col-form-label" for="e3cxsd1">3CX System Discount</label>
               </div>
             </div>
             <div class="col-lg-6">
@@ -2113,10 +2305,10 @@
 
 
 
-                <input class="ml-4" id="esgst" class="chb1 chb1-altered" type="checkbox"
+                <input class="ml-4" id="esgst1" class="chb1 chb1-altered" type="checkbox"
                   formControlName="e_shopping_gst" (change)="eventCheckshoppingGST($event)" />
 
-                <label class="col-lg-12 col-form-label" for="esgst">Select Shopping GST</label>
+                <label class="col-lg-12 col-form-label" for="esgst1">Select Shopping GST</label>
 
               </div>
             </div>
@@ -2124,9 +2316,9 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="esic" class="chb1 chb1-altered" type="checkbox" formControlName="e_send_invoice"
-                  (change)="eventCheckIncoice($event)" />
-                <label class="col-lg-12 col-form-label" for="esic">Send invoice to customer</label>
+                <input class="ml-4" id="esic1" class="chb1 chb1-altered" type="checkbox"
+                  formControlName="e_send_invoice" (change)="eventCheckIncoice($event)" />
+                <label class="col-lg-12 col-form-label" for="esic1">Send invoice to customer</label>
               </div>
             </div>
 
@@ -2134,9 +2326,9 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="erss" class="chb1 chb1-altered" type="checkbox"
+                <input class="ml-4" id="erss1" class="chb1 chb1-altered" type="checkbox"
                   formControlName="e_reseller_status" (change)="eventCheckRS($event)" />
-                <label class="col-lg-12 col-form-label" for="erss">Reseller Status </label>
+                <label class="col-lg-12 col-form-label" for="erss1">Reseller Status </label>
               </div>
             </div>
 
@@ -2146,9 +2338,9 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="ecbc" type="checkbox" formControlName="e_custBankingCharge"
+                <input class="ml-4" id="ecbc1" type="checkbox" formControlName="e_custBankingCharge"
                   class="chb1 chb1-altered" (change)="eventCheck_CustBankingCharge($event)" />
-                <label class="col-lg-12 col-form-label" for="ecbc">Customer Banking Charge</label>
+                <label class="col-lg-12 col-form-label" for="ecbc1">Customer Banking Charge</label>
               </div>
             </div>
 
@@ -2156,9 +2348,9 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="evsc" class="chb1 chb1-altered" type="checkbox" [readonly]="isReadOnly"
+                <input class="ml-4" id="evsc1" class="chb1 chb1-altered" type="checkbox" [readonly]="isReadOnly"
                   formControlName="e_voip_switch_credit" (change)="eventCheckVSC($event)" />
-                <label class="col-lg-12 col-form-label" for="evsc">Voip switch credit </label>
+                <label class="col-lg-12 col-form-label" for="evsc1">Voip switch credit </label>
               </div>
             </div>
 
@@ -2166,9 +2358,9 @@
               <div class="form-group row">
 
 
-                <input class="ml-4" id="caus" class="chb1 chb1-altered" type="checkbox"
+                <input class="ml-4" id="caus1" class="chb1 chb1-altered" type="checkbox"
                   formControlName="e_custAddressUpdateState" (change)="eventCheckCAUS($event)" />
-                <label class="col-lg-12 col-form-label" for="caus"> Address Update State</label>
+                <label class="col-lg-12 col-form-label" for="caus1"> Address Update State</label>
               </div>
             </div>
 
@@ -2300,7 +2492,7 @@
                           <input type="text" class="form-control" formControlName="bill_code_750_8"
                             id="bill_code_750_8_{{i}}" />
                         </td>
-                                 <td style="padding-right: 10px!important">
+                        <td style="padding-right: 10px!important">
 
                           <input type="hidden" class="form-control" formControlName="customer_bill_code_id"
                             id="customer_bill_code_id{{i}}" />
@@ -2320,7 +2512,7 @@
 
                           </div>
                         </td>
-               
+
                       </tr>
                     </tbody>
                   </table>
@@ -2342,7 +2534,7 @@
 
 
           <div class="row">
-            
+
             <!-- formArrayName="TestPrimary" -->
             <div class="col-lg-12">
               <form [formGroup]="billCodeEditForm2">
@@ -2663,7 +2855,7 @@
 <!-----------------vignesh --special edit/customer master starts--------->
 
 
-<div class="modal fade" id="specialEditCustomerFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="specialEditCustomerFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -2741,33 +2933,59 @@
             <div class="col-lg-6">
               <div class="form-group row">
 
-                <input type="checkbox" formControlName="spedit_stripe_recurr_payment" id="su_srp"
-                  class="chb1 chb1-altered" (change)="eventCheck_spedit_SRP($event)" />
-                <label class="col-lg-12 col-form-label" for="su_srp">Stripe recurring payment </label>
+                <div class="col-lg-8">
+                  <label>Stripe recurring payment </label>
+                </div>
+                <div class="col-lg-4">
+                  <input type="checkbox" formControlName="spedit_stripe_recurr_payment"
+                    (change)="eventCheck_spedit_SRP($event)" />
+                </div>
               </div>
             </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+
+                <div class="col-lg-8">
+                  <label>3CX System Discount </label>
+                </div>
+                <div class="col-lg-4">
+                  <input type="checkbox" formControlName="spedit_c3cx_system_discount"
+                    (change)="eventCheck_spedit_systemDiscount($event)" />
+                </div>
+              </div>
+            </div>
+
 
 
             <div class="col-lg-6">
               <div class="form-group row">
 
-                <input type="checkbox" formControlName="spedit_c3cx_system_discount" id="su_3cxsd"
-                  class="chb1 chb1-altered" (change)="eventCheck_spedit_systemDiscount($event)" />
-                <label class="col-lg-12 col-form-label" for="su_3cxsd">3CX System Discount</label>
+                <div class="col-lg-8">
+                  <label>3CX Buy Special Option </label>
+                </div>
+                <div class="col-lg-4">
+                  <input type="checkbox" formControlName="spedit_3cx_BuySpecial"
+                    checked="{{checkbox_specialEdit3cxSpecialOption =='1'? 'checked' : ''}}"
+                    (change)="eventCheck_spedit_3cxspecialOption($event)" />
+                </div>
               </div>
             </div>
 
 
 
-
-            <div class="col-lg-12">
+            <!-- <div class="col-lg-12">
               <div class="form-group row">
-               
 
-                <input type="checkbox" formControlName="spedit_3cx_BuySpecial" id="su_bso" class="chb1 chb1-altered"
-                checked="{{checkbox_specialEdit3cxSpecialOption =='1'? 'checked' : ''}}"  (change)="eventCheck_spedit_3cxspecialOption($event)" />
-                <label class="col-lg-12 col-form-label" for="su_bso">3CX Buy Special Option</label>
+
+                <input type="checkbox" formControlName="spedit_3cx_BuySpecial" 
+                  checked="{{checkbox_specialEdit3cxSpecialOption =='1'? 'checked' : ''}}"
+                  (change)="eventCheck_spedit_3cxspecialOption($event)" />
+                <label class="col-lg-12 col-form-label" >3CX Buy Special Option</label>
               </div>
+            </div> -->
+            <div class="col-lg-6">
+
             </div>
 
             <div class="col-lg-6">
@@ -2808,7 +3026,7 @@
 </div>
 <!------------vignesh --special edit/customer master ends-------------------------------------------->
 <!-- -------------------Modal-mconnect Partner details begins----------------------------------- -->
-<div class="modal fade" id="mconnectPartnerDetailsFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="mconnectPartnerDetailsFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -2843,9 +3061,9 @@
                 </div>
                 <div class="col-lg-6">
 
-                  <input type="checkbox" formControlName="a_mconnectAddressShow" id="check_mconn1" class="chb chb-3"
+                  <input type="checkbox" formControlName="a_mconnectAddressShow"
                     (change)="eventCheckmconnectAddressShow($event)" />
-                  <label class="col-form-label call4tel-address-show" for="check_mconn1"></label>
+                  <label class="col-form-label call4tel-address-show"></label>
                 </div>
 
               </div>
@@ -2929,7 +3147,7 @@
 <!-------------------------- Modal-mconnect Partner Details-ends-------------------------------------- -->
 
 <!-- -----------------------Modal-MrVoip Partner Details-begins---------------------------------------- -->
-<div class="modal fade" id="MrvoipPartnerDetailsFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="MrvoipPartnerDetailsFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -2952,9 +3170,9 @@
                 </div>
                 <div class="col-lg-6">
 
-                  <input type="checkbox" formControlName="a_MrvoipAddressShow" id="adsh1" class="chb chb-3"
+                  <input type="checkbox" formControlName="a_MrvoipAddressShow"
                     (change)="eventCheckMrvoipAddressShow($event)" />
-                  <label class="col-form-label call4tel-address-show" for="adsh1"></label>
+                  <label class="col-form-label call4tel-address-show"></label>
                 </div>
 
               </div>
@@ -3028,12 +3246,12 @@
                 </div>
                 <div class="col-lg-6">
                   <div class="form-check form-check-inline" *ngFor='let item of radioDynamic;let c=index'>
-                   
-                      <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType"
-                        value="{{item.values}}" (change)="handleChange($event)" />
-                      <label for="premiumPartner_id{{c}}" class="col-lg-6 col-form-label">
-                        {{item.alicename}}
-                      </label>
+
+                    <input type="radio" id="{{item.values}}" formControlName="a_MrvoipPartnerType"
+                      value="{{item.values}}" (change)="handleChange($event)" />
+                    <label for="premiumPartner_id{{c}}" class="col-lg-6 col-form-label">
+                      {{item.alicename}}
+                    </label>
 
                   </div>
                 </div>
@@ -3076,7 +3294,7 @@
 
 <!-------------------------- Modal-MrVoip Partner Details-ends-------------------------------------- -->
 <!-- Modal-Call4tel Partner Details-begins -->
-<div class="modal fade" id="call4tellPartnerDetailsFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="call4tellPartnerDetailsFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3099,9 +3317,9 @@
                 </div>
                 <div class="col-lg-6">
 
-                  <input type="checkbox" formControlName="a_C4TAddressShow" id="adsh" class="chb chb-3"
+                  <input type="checkbox" formControlName="a_C4TAddressShow"
                     (change)="eventCheckC4TAddressShow($event)" />
-                  <label class="col-form-label call4tel-address-show" for="adsh"></label>
+                  <label class="col-form-label call4tel-address-show"></label>
                 </div>
 
               </div>
@@ -3223,7 +3441,7 @@
 </div>
 <!-- Modal-Call4tel Partner Details-ends -->
 <!-- -----------------------Modal-invoice shared---------------begins---------------------------------------- -->
-<div class="modal fade" id="invoiceSharedCustomerFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="invoiceSharedCustomerFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3312,7 +3530,7 @@
 <!-------------------------- ------Modal-invoice shared-- -ends-------------------------------------- -->
 
 <!-- -----------------------Modal-customer share permission begins-------------------------------- -->
-<div class="modal fade" id="SharedCustomerPermissionFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="SharedCustomerPermissionFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3379,7 +3597,7 @@
 
 
 <!-- -----------------------Modal-Customer NX32 Share permission begins-------------------------------- -->
-<div class="modal fade" id="customer_NX32PermissionFormId_RM" tabindex="-1" role="dialog"
+<div class="modal fade" id="customer_NX32PermissionFormId_CM" tabindex="-1" role="dialog"
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -3421,8 +3639,8 @@
 
 
 <!-- -----------------------Modal-Customer File Attachment begins-------------------------------- -->
-<div class="modal fade" id="fileAttachmentFormId_RM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="fileAttachmentFormId_CM" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -3490,7 +3708,7 @@
 <!-------------------------- ------Modal-Customer File Attachment ends-------------------------------------- -->
 
 <!-- -----------------------Modal-Customer Bill Code-Display begins-------------------------------- -->
-<div class="modal fade" id="billCodeFormId_RM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="billCodeFormId_CM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3810,7 +4028,7 @@
 <!-------------------------- ------Modal-Customer Bill Code Display ends-------------------------------------- -->
 
 <!-- --------------------------Modal-Quick Email begins------------------------------------------ -->
-<div class="modal fade" id="landscapeEmailFormId_RM" tabindex="-1" role="dialog" aria-labelledby="landscapeEmailTitle"
+<div class="modal fade" id="landscapeEmailFormId_CM" tabindex="-1" role="dialog" aria-labelledby="landscapeEmailTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
@@ -3829,7 +4047,7 @@
             <div class="form-group row">
               <label for="emailFromLandscape" class="col-lg-12 col-form-label">From</label>
 
-              <select name="From_name_1" id="emailFromLandscape" class="form-control"
+              <select name="landscapeEmail_From" id="emailFromLandscape" class="form-control"
                 aria-label="Default select example" formControlName="landscapeEmail_From">
                 <option [ngValue]="null" selected disabled>Select From Address</option>
                 <option *ngFor="let fromValue of From_List" value="{{fromValue.from_email}}">
@@ -3851,7 +4069,7 @@
             <div class="form-group row">
               <label for="templateLandscape" class="col-lg-12 col-form-label">Select Template</label>
 
-              <select name="Template_name_1" id="templateLandscape" class="form-control"
+              <select name="landscapeEmail_Template" id="templateLandscape" class="form-control"
                 (change)=" LandscapeEmailContentDropdown($event)" formControlName="landscapeEmail_Template">
                 <option [ngValue]="null" selected disabled>Select Template</option>
                 <option *ngFor="let templateValue of Template_List" value="{{templateValue.crm_template_id}}">
@@ -4011,8 +4229,8 @@
 <!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Assign Account Manager in customer Contract------------------>
-<div class="modal fade" id="AssignAccountManager_RM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="AssignAccountManager_CM" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -4106,8 +4324,8 @@
 <!----------Modal Pop Up (END)  for Quotation Shared  Attachment in customer Contract------------------>
 
 <!----------Modal Pop Up (BEGIN)  for Google Authentication in customer Contract------------------>
-<div class="modal fade" id="GoogleAuthentication_RM" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="GoogleAuthentication_CM" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

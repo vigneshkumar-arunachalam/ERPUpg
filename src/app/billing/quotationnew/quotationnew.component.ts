@@ -20,6 +20,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class QuotationnewComponent implements OnInit {
   //quotation version
   quotationVersion = '1.0';
+  //validation
+  submitted:boolean=true;
   //add modal
   quotation_list: any;
   addNewQuotationPopUpForm: FormGroup;
@@ -504,6 +506,10 @@ export class QuotationnewComponent implements OnInit {
       console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
+  }
+
+  get f() 
+  { return this.addNewQuotationPopUpForm.controls; 
   }
   QuotationSearchCHK(data: any, event: any) {
     console.log("List - CheckBox ID", data);
@@ -2161,7 +2167,10 @@ this.spinner.show();
 
 
 
-  AddQuotationGo() {
+  AddQuotationGo(e:any) {
+
+    this.submitted = true;
+
 
     if (this.addNewQuotationPopUpForm.value.enquiryFrom_addPopUP === null) {
 

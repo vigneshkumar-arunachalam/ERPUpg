@@ -72,6 +72,10 @@ export class AddquotationnewComponent implements OnInit {
   net_amt: any;
   shipping_amt: any;
   FINALDISCTYPEGlobal: any;
+  //validation
+  submitted:boolean = true;
+  submittedcheck:boolean=true;
+  submitted_radio:boolean=true;
 
   // tax_amt_tot=0;  
   selectedTax = true;
@@ -258,6 +262,7 @@ export class AddquotationnewComponent implements OnInit {
   }
 
   termsCondition_DontShow_eventCheck(e: any) {
+    this.submittedcheck=false;
     this.checkbox_termsCondition_DontShow = e.target.checked;
     console.log(this.checkbox_termsCondition_DontShow);
   }
@@ -282,6 +287,11 @@ export class AddquotationnewComponent implements OnInit {
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
     this.radioSelectFooterChecked = evt.target.checked;
+    if(this.radioSelectFooterChecked ==true){
+      this.submitted_radio=false;
+    }else{
+      this.submitted_radio=true;
+    }
     console.log("event only", evt)
     console.log("evt.target", evt.target)
     console.log("evt.target.checked", evt.target.checked)
@@ -365,6 +375,9 @@ export class AddquotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       this.FooterDetails = response.footer_details;
+      if(response.footer_details==''){
+        this.submitted_radio=false;
+      }
       console.log("dynamic Dropdown change response", response)
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
@@ -720,7 +733,13 @@ export class AddquotationnewComponent implements OnInit {
     });
 
   }
+
+  get f() 
+  { return this.addQuotationInvoice_section1.controls; 
+  }
+
   saveQuotationEnquiry($event: MouseEvent) {
+    this.submitted=true;
 
     console.log("this.checkbox_termsCondition_DontShow", this.checkbox_termsCondition_DontShow);
     console.log("this.checkbox_descriptionDetails_DontShow", this.checkbox_descriptionDetails_DontShow);

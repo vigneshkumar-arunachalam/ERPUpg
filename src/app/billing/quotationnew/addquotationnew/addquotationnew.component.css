@@ -681,3 +681,46 @@ button.btn.btn-primary{
     border-width: 2px;
   }
 }
+
+
+.alertdangerCustomCSS {
+  /* color: #ff4d4f; */
+  color: rgb(12, 1, 1)!important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+  margin: 10px 15px !important;
+ 
+  outline: none;
+  border: 2px solid transparent;
+  /* background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), 
+  linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27)); */
+  /* background-image: linear-gradient(rgb(255, 214, 214), rgb(255, 204, 204)),
+                  linear-gradient(315deg, rgb(255, 218, 204), rgb(255, 210, 206), rgb(255, 196, 196)); */
+                  /* background-image: linear-gradient(rgb(173, 216, 230), rgb(135, 206, 250)),
+                  linear-gradient(315deg, rgb(255, 204, 153), rgb(255, 178, 102), rgb(255, 153, 51)); */
+
+                  /* background-image: linear-gradient(rgb(173, 216, 230), rgb(135, 206, 250)),
+                  linear-gradient(315deg, rgb(255, 204, 204), rgb(255, 153, 153), rgb(255, 102, 102)); */
+/* background-image: linear-gradient(rgb(173, 216, 230), rgb(135, 206, 250)),
+linear-gradient(315deg, rgb(255, 255, 204), rgb(255, 235, 153), rgb(255, 204, 102)); */
+background-image: linear-gradient(rgb(173, 216, 230), rgb(135, 206, 250)),
+                  linear-gradient(315deg, rgb(144, 238, 144), rgb(34, 139, 34), rgb(0, 128, 128));
+
+
+
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+.ng-autocomplete .mandatoryRed.is-invalid {
+  border: none!important;
+}
+.ng-autocomplete 
+::ng-deep  .is-invalid .autocomplete-container .input-container input{
+  border: 1px solid #dc3545!important; 
+}

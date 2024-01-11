@@ -883,3 +883,8 @@ label {
 }
 
 
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+
+
