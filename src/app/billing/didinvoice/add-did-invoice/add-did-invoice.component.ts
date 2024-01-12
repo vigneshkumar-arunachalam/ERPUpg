@@ -6,7 +6,7 @@ declare var $: any;
 declare var iziToast: any;
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CommonModule } from '@angular/common';
-import {  Inject, LOCALE_ID } from '@angular/core';
+import { Inject, LOCALE_ID } from '@angular/core';
 import { DatePipe } from '@angular/common';
 
 
@@ -149,20 +149,21 @@ export class AddDidInvoiceComponent implements OnInit {
   section3_Terms4: any;
   section3_Terms5: any;
   getProformaBillerDetails_billerID: any;
-// subTotalForm
-subTotalForm:FormGroup;
-subTotalForm2:FormGroup;
-subTotalForm3:FormGroup;
-// singapore date & time
-formattedDate: string;
- 
+  // subTotalForm
+  subTotalForm: FormGroup;
+  subTotalForm2: FormGroup;
+  subTotalForm3: FormGroup;
+  // singapore date & time
+  formattedDate: string;
 
-  fixedCharge_Flag: boolean=true;
-  usageCharge_Flag: boolean=true;
-  otherCharge_Flag: boolean=true;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, 
-    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe,private router: Router, private spinner: NgxSpinnerService) {
+  fixedCharge_Flag: boolean = true;
+  usageCharge_Flag: boolean = true;
+  otherCharge_Flag: boolean = true;
+  //validation
+  submitted = true;
+  constructor(private serverService: ServerService, private fb: FormBuilder,
+    @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private router: Router, private spinner: NgxSpinnerService) {
 
     this.did_Invice_fixed_charges = this.fb.group({
       fixedAddresses: this.fb.array([this.fixedFormDid()])
@@ -233,17 +234,17 @@ formattedDate: string;
       'Jompay_logo': new FormControl(),
 
     });
-    this.subTotalForm=new FormGroup({
+    this.subTotalForm = new FormGroup({
       'sub_total_1': new FormControl(),
-  
+
     });
-    this.subTotalForm2=new FormGroup({
+    this.subTotalForm2 = new FormGroup({
 
       'sub_total_2': new FormControl(),
 
     });
-    this.subTotalForm3=new FormGroup({
-   
+    this.subTotalForm3 = new FormGroup({
+
       'sub_total_3': new FormControl(),
     });
     this.section3_Terms1 = "Price Term: EXW SINGAPORE";
@@ -325,10 +326,10 @@ formattedDate: string;
     const currentDate = new Date();
     this.formattedDate = this.datePipe.transform(currentDate, 'yyyy-MM-dd');
     setTimeout(() => {
-    
-         $('#datee').val(this.formattedDate);
-         $('#podatee').val(this.formattedDate);
-         $('#Ship_Date').val(this.formattedDate);
+
+      $('#datee').val(this.formattedDate);
+      $('#podatee').val(this.formattedDate);
+      $('#Ship_Date').val(this.formattedDate);
 
     }, 2000);
 
@@ -369,7 +370,7 @@ formattedDate: string;
       dis_per1: '',
       dis_amt1: '',
       dis_type1: '',
-    
+
 
 
 
@@ -417,7 +418,7 @@ formattedDate: string;
       dis_per2: '',
       dis_amt2: '',
       dis_type2: '',
-    
+
 
 
     });
@@ -461,7 +462,7 @@ formattedDate: string;
       dis_per3: '',
       dis_amt3: '',
       dis_type3: '',
-    
+
 
 
     });
@@ -499,7 +500,7 @@ formattedDate: string;
     console.log("radio button id value", abc);
   }
   handleChange(evt: any) {
-     this.radioSelectFooter = evt.target.value;
+    this.radioSelectFooter = evt.target.value;
     // var xyz = id;
     console.log("radio button value", this.radioSelectFooter);
     // console.log("radio button id value", xyz);
@@ -659,7 +660,7 @@ formattedDate: string;
         this.getProformaBillerDetails_tinNo = response.biller_details[0].tinNo;
         this.getProformaBillerDetails_cstName = response.biller_details[0].cstName;
         this.getProformaBillerDetails_cstNo = response.biller_details[0].cstNo;
-        this.getProformaBillerDetails_billerID=response.biller_details[0].billerId;
+        this.getProformaBillerDetails_billerID = response.biller_details[0].billerId;
         this.addDid_section1.patchValue({
           'tin': response.biller_details[0].tinNo,
           'cst': response.biller_details[0].cstNo,
@@ -840,7 +841,7 @@ formattedDate: string;
         this.taxValue = tax;
         var taxadd = Number($('#section3_gross_total').val()) + Number(tax) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
-      
+
         $("#section3_grand_total").val((taxadd).toFixed(2));
 
       } else {
@@ -993,7 +994,7 @@ formattedDate: string;
           'ship_address_3': ship_address_str3,
           'ship_attn': response.customer_details[0].companyName,
           'cusInvoiceNo': response.customer_invoice_no,
-          'terms':  response.customer_details[0].terms_condition,
+          'terms': response.customer_details[0].terms_condition,
           'Currency': response.customer_details[0].def_currency_id,
           'PaymentVia': response.customer_details[0].def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
@@ -1013,9 +1014,9 @@ formattedDate: string;
           'ship_attn': '',
           'cusInvoiceNo': '',
           'terms': '',
-          'CurrencyConversionRate':'',
-         'Currency': '',
-         'PaymentVia': '',
+          'CurrencyConversionRate': '',
+          'Currency': '',
+          'PaymentVia': '',
         });
       }
 
@@ -1061,7 +1062,7 @@ formattedDate: string;
     api_saveDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
 
     api_saveDid_req.cstNo = this.addDid_section1.value.cst;
-    api_saveDid_req.billDate =$('#datee').val();
+    api_saveDid_req.billDate = $('#datee').val();
     // api_saveDid_req.billDate = this.addDid_section1.value.Date;
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
 
@@ -1139,28 +1140,28 @@ formattedDate: string;
       addr1[i].productDesc1 = $('#productDesc1_' + i).val();
       addr1[i].amt1 = $('#amt_1_' + i).val();
       addr1[i].call_duration1 = $('#call_duration_1_' + i).val();
-      
-      
+
+
       addr1[i].dis_per1 = $('#enablePerFinal_1' + i).val();
       addr1[i].dis_amt1 = $('#enablePriceFinal_1' + i).val();
       addr1[i].dis_type1 = $('#fix_DiscountTYpe' + i).val();
-      if($('#particular_1_' + i).val()==''){
-        this.fixedCharge_Flag=false;
+      if ($('#particular_1_' + i).val() == '') {
+        this.fixedCharge_Flag = false;
       }
 
     }
-    if(this.fixedCharge_Flag==true){
-      
-      api_saveDid_req.fixed_value = addr1;
-      }else{
-        // iziToast.error({
-        //   message: "Product Details missing in Fixed Charge",
-        //   position: 'topRight'
-        // });
-        
-      } 
+    if (this.fixedCharge_Flag == true) {
 
-    
+      api_saveDid_req.fixed_value = addr1;
+    } else {
+      // iziToast.error({
+      //   message: "Product Details missing in Fixed Charge",
+      //   position: 'topRight'
+      // });
+
+    }
+
+
 
     // usage charge
 
@@ -1179,31 +1180,31 @@ formattedDate: string;
       addr2[i].productDesc2 = $('#productDesc2_' + i).val();
       addr2[i].amt2 = $('#amt2_' + i).val();
       addr2[i].call_duration2 = $('#call_duration2_' + i).val();
-      addr2[i].did_bill_code_chd = $('#billCode'+i).val();
-     
+      addr2[i].did_bill_code_chd = $('#billCode' + i).val();
+
 
       addr2[i].dis_per2 = $('#enablePerFinal_2' + i).val();
       addr2[i].dis_amt2 = $('#enablePriceFinal_2' + i).val();
       addr2[i].dis_type2 = $('#use_DiscountTYpe_per' + i).val();
-      if($('#particular2_' + i).val()==''){
-        this.usageCharge_Flag=false;
+      if ($('#particular2_' + i).val() == '') {
+        this.usageCharge_Flag = false;
       }
 
     }
-    if(this.usageCharge_Flag==true){
-      
+    if (this.usageCharge_Flag == true) {
+
       api_saveDid_req.usage_value = addr2;
-      }else{
-        // iziToast.error({
-        //   message: "Product Details missing in Usage Charge",
-        //   position: 'topRight'
-        // });
-        
-      }
+    } else {
+      // iziToast.error({
+      //   message: "Product Details missing in Usage Charge",
+      //   position: 'topRight'
+      // });
+
+    }
 
     console.log('addr2' + addr2);
 
-   
+
     if (this.did_bill_code_section2 === null || this.did_bill_code_section2 == undefined || this.did_bill_code_section2 == '') {
 
       iziToast.warning({
@@ -1235,32 +1236,32 @@ formattedDate: string;
       addr3[i].productDesc3 = $('#productDesc3_' + i).val();
       addr3[i].amt3 = $('#amt3_' + i).val();
       addr3[i].call_duration3 = $('#call_duration3_' + i).val();
-     
+
 
       addr3[i].dis_per3 = $('#enablePerFinal_3' + i).val();
       addr3[i].dis_amt3 = $('#enablePriceFinal_3' + i).val();
       addr3[i].dis_type3 = $('#oth_DiscountTYpe_per' + i).val();
-      if($('#particular3_' + i).val()==''){
-        this.otherCharge_Flag=false;
+      if ($('#particular3_' + i).val() == '') {
+        this.otherCharge_Flag = false;
       }
     }
-    if(this.otherCharge_Flag==true){
-      
+    if (this.otherCharge_Flag == true) {
+
       api_saveDid_req.other_values = addr3;
-      }else{
-        // iziToast.error({
-        //   message: "Product Details missing in other charge",
-        //   position: 'topRight'
-        // });
-        
-      }
-  
+    } else {
+      // iziToast.error({
+      //   message: "Product Details missing in other charge",
+      //   position: 'topRight'
+      // });
 
- 
+    }
 
-    api_saveDid_req.sub_total_1= $('#sub_total_1' ).val();
-    api_saveDid_req.sub_total_2= $('#sub_total_2' ).val();
-    api_saveDid_req.sub_total_3= $('#sub_total_3' ).val();
+
+
+
+    api_saveDid_req.sub_total_1 = $('#sub_total_1').val();
+    api_saveDid_req.sub_total_2 = $('#sub_total_2').val();
+    api_saveDid_req.sub_total_3 = $('#sub_total_3').val();
 
     //section-3
     api_saveDid_req.grossTotal = $('#section3_gross_total').val();
@@ -1291,9 +1292,9 @@ formattedDate: string;
 
     api_saveDid_req.previous_due_state = this.addDid_section3.value.section3_previousDue;
     api_saveDid_req.terms_cond_chk = this.addDid_section3.value.section3_termCondition;
-  
-   
-   
+
+
+
 
     api_saveDid_req.signatureId = this.addDid_section3.value.section3_select_additional_signature;
     api_saveDid_req.received_signature = this.chkReceivedAuthorizedSignature;
@@ -1535,7 +1536,9 @@ formattedDate: string;
   //   }
 
   // }
-
+  get f() {
+    return this.addDid_section1.controls;
+  }
 
   fixedSaveDiscount() {
 
@@ -1645,7 +1648,7 @@ formattedDate: string;
         for (let a = 0; a < this.did_Invice_usage_Charges.value.usageAddress.length; a++) {
 
 
-          usageCharge_TotalAmount +=parseFloat($('#amt2_' + a).val());
+          usageCharge_TotalAmount += parseFloat($('#amt2_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1742,7 +1745,7 @@ formattedDate: string;
         for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-          usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
+          usageCharge_TotalAmount += parseFloat($('#amt3_' + a).val());
 
           console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1772,7 +1775,7 @@ formattedDate: string;
       for (let a = 0; a < this.did_Invice_other_charges.value.otherAddress.length; a++) {
 
 
-        usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
+        usageCharge_TotalAmount += parseFloat($('#amt3_' + a).val());
 
         console.log("dummy inside", usageCharge_TotalAmount)
 
@@ -1837,7 +1840,7 @@ formattedDate: string;
     this.grossTotal_BeforeDiscount = total_amt
     console.log("total_amt-gross", total_amt);
     gross_tot += parseFloat(total_amt);
-   
+
     $("#section3_gross_total").val((gross_tot).toFixed(2));
 
     this.grossTotalAfterDiscount();
@@ -1939,14 +1942,14 @@ formattedDate: string;
       getafterdiscountval = parseFloat($('#section3_gross_total').val());
       test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
-     
+
       $("#section3_grand_total").val((test).toFixed(2));
 
     } else {
       getafterdiscountval = $('#section3_gross_total_afterDiscount').val();
       test = Number(getafterdiscountval) + Number($("#Tax_amt_id").val()) + Number($('#shipping_amt_id').val()) + Number($('#bankingCharge_amt_id').val());
 
-  
+
       $("#section3_grand_total").val((test).toFixed(2));
 
     }

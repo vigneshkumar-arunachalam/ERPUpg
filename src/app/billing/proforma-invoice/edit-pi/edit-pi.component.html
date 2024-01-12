@@ -36,7 +36,8 @@
                             <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                 formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
                                 (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
-                                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                                [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                                [ngClass]="{ 'is-invalid': submitted && f['BillTo'].errors }" class="mandatoryRed">
                             </ng-autocomplete>
 
 
@@ -52,6 +53,9 @@
                                     Customer Name is Required
                                 </div> -->
                         </div>
+                        <div *ngIf="submitted && f['BillTo'].errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                            <div *ngIf="f['BillTo'].errors['required']">Company Name is required</div>
+                          </div>
                         <input type="hidden" formControlName="customer_id_hd" />
                         <input type="hidden" formControlName="billId_edit" />
                     </div>

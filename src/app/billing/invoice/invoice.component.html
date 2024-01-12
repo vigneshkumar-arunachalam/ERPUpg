@@ -12,7 +12,7 @@
 
           <div class="quotation-btn-section">
 
-            <button type="button" title="Chart" *ngIf="(  this.invoicePermissionList_suspend==1)"
+            <button type="button" title="Suspend" *ngIf="(  this.invoicePermissionList_suspend==1)"
               class="btn btn-primary btn-default btn-squared" (click)="suspendInvoiceGo()"
               style="margin-right: 10px;"><i class="fas  fa-archive" style="margin-right:10;"></i>Suspend
             </button>
@@ -906,7 +906,7 @@
       <div class="modal-header">
         <h2 class="col-12 modal-title text-center">Payment Process
         </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearPayProcess()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -969,24 +969,32 @@
                   {{term.payment_type_name}}
                 </option>
               </select>
-              <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1" id="paytype1">
-
-                <option [ngValue]="null" selected>Select credit note</option>
-
-                <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
-                  {{term1.tot_amt}}
-                </option>
-
-              </select>
-              <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2" id="paytype2">
-
-                <option [ngValue]="null" selected>Select prepaid note</option>
-
-                <option *ngFor="let term2 of creditResponse" value="{{term2.credit_note_id}}">
-                  {{term2.tot_amt}}
-                </option>
-
-              </select>
+              <div *ngIf="(flg==true)" class="mt-2">
+                <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1" 
+                (change)="changeCreditNote($event)" id="paytype1">
+  
+                  <option [ngValue]="null" selected>Select credit note</option>
+  
+                  <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
+                    {{term1.tot_amt}}
+                  </option>
+  
+                </select>
+              </div>
+             
+              <div *ngIf="(flg==true)" class="mt-2">
+                <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2"
+                (change)="changePrepaidNote($event)"  id="paytype2">
+  
+                  <option [ngValue]="null" selected>Select prepaid note</option>
+  
+                  <option *ngFor="let term2 of creditResponse" value="{{term2.prepaid_id}}">
+                    {{term2.tot_amt}}
+                  </option>
+  
+                </select>
+              </div>
+             
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Note</label>
@@ -1021,10 +1029,13 @@
         </button>
 
 
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPaymentProcess()">
+        <!-- <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPaymentProcess()">
+          Cancel
+        </button> -->
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
           Cancel
         </button>
-
+        
       </div>
     </div>
   </div>

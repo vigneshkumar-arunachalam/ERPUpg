@@ -45,7 +45,8 @@
                                     formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
                                     (inputChanged)='searchCustomerData($event)'
                                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
-                                    [notFoundTemplate]="notFoundTemplate">
+                                    [notFoundTemplate]="notFoundTemplate"
+                                    [ngClass]="{ 'is-invalid': submitted && f['BillTo'].errors }" class="mandatoryRed">
                                 </ng-autocomplete>
 
 
@@ -56,11 +57,11 @@
                                 <ng-template #notFoundTemplate let-notFound>
                                     <div [innerHTML]="notFound"></div>
                                 </ng-template>
-                                <!-- <div *ngIf="addQuotationInvoice_section1.controls['customerName'].invalid && (addQuotationInvoice_section1.controls['customerName'].dirty || addQuotationInvoice_section1.controls['customerName'].touched)"
-                                class=" mt-2 ml-2 mr-2 alert alert-danger">
-                                Customer Name is Required
-                            </div> -->
+                                
                             </div>
+                            <div *ngIf="submitted && f['BillTo'].errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                                <div *ngIf="f['BillTo'].errors['required']">Company Name is required</div>
+                              </div>
                             <input type="hidden" formControlName="customer_id_hd" />
                             <input type="hidden" formControlName="billId_edit" />
                         </div>

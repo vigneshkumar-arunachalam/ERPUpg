@@ -126,7 +126,8 @@ export class AddPIComponent implements OnInit {
   getCurrencyCodeChange: any;
   cusID: any;
   CurID: any;
-
+  //validation
+  submitted = true;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
@@ -187,7 +188,7 @@ export class AddPIComponent implements OnInit {
       'initial': new FormControl(),
       'companyName': new FormControl(),
       'invoiceNo': new FormControl(),
-      'BillTo': new FormControl(),
+      'BillTo': new FormControl(null,[Validators.required]),
       'tin': new FormControl(),
       'cst': new FormControl(),
       'Reg': new FormControl(),
@@ -275,6 +276,9 @@ export class AddPIComponent implements OnInit {
    
 
 
+  }
+  get f() {
+    return this.addPI_section1.controls;
   }
   get addressControls() {
     return this.addPI_section2.get('addresses') as FormArray

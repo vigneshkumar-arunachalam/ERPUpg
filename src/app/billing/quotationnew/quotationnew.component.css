@@ -888,3 +888,12 @@ label {
 }
 
 
+
+
+tr:hover {
+  background-color: rgb(211, 244, 102)!important;
+  /* -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear; */
+}
+

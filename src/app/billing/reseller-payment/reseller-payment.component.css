@@ -744,3 +744,6 @@ input[type="checkbox"]:disabled {
 }
 
 
+
+tr:hover {background-color: rgb(246, 236, 233)!important;}
+

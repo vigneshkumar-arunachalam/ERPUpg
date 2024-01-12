@@ -452,3 +452,43 @@ table th, table td{padding: 10px;}
     transition: all 0.5s ease;
 }
 
+
+/* css for validation starts */
+
+.alertdangerCustomCSS {
+  /* color: #ff4d4f; */
+  color: rgb(12, 1, 1) !important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+  margin: 10px 15px !important;
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(rgb(173, 216, 230), rgb(135, 206, 250)),
+    linear-gradient(315deg, rgb(144, 238, 144), rgb(34, 139, 34), rgb(0, 128, 128));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid,
+.is-invalid {
+  border: 1px solid #dc3545 !important;
+}
+
+.ng-autocomplete .mandatoryRed.is-invalid {
+  border: none !important;
+}
+
+.ng-autocomplete::ng-deep .is-invalid .autocomplete-container .input-container input {
+  border: 1px solid #dc3545 !important;
+}
+
+    /* form array color change */
+    .add-did-table-section tbody:hover {
+      background-color: rgb(248, 249, 239);
+    }
+
+/* css for validation ends */
+

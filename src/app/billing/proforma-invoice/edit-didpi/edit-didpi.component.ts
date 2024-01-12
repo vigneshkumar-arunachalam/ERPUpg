@@ -25,6 +25,8 @@ export class EditDidpiComponent implements OnInit {
   public usageAddress: FormArray;
   public otherAddress: FormArray;
   isReadOnly: boolean = false;
+  //validation
+  submitted = true;
 
   editbillerID: any;
   companyNameList: any
@@ -318,7 +320,7 @@ export class EditDidpiComponent implements OnInit {
       'customer_name': new FormControl(),
       'invoiceNo': new FormControl(),
       'customer_id_hd': new FormControl(),
-      'BillTo': new FormControl(),
+      'BillTo':  new FormControl(null, [Validators.required]),
       'cusInvoiceNo': new FormControl(),
       'tin': new FormControl(null, [Validators.required]),
       'cst': new FormControl(),
@@ -439,18 +441,14 @@ export class EditDidpiComponent implements OnInit {
       'CommissionAmount': new FormControl(null),
 
     });
-
-
     // $('#sub_total_2').val(this.sub2Total_edit);
-  
-
- 
-
-
   }
 
 
   // FIXED CHARGES
+  get f() {
+    return this.addDid_section1.controls;
+  }
 
   get addressControls() {
     return this.did_Invice_fixed_charges.get('fixedAddresses') as FormArray

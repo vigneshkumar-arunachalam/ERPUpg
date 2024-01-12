@@ -166,6 +166,8 @@ export class EditInvoiceComponent implements OnInit {
   searchFlag: any;
   upd_flagName: any;
   upd_search_name: any;
+  //validation
+  submitted = true;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -362,6 +364,9 @@ export class EditInvoiceComponent implements OnInit {
     });
 
 
+  }
+  get f() {
+    return this.addPI_section1.controls;
   }
   get addressControls() {
     return this.addPI_section2.get('addresses') as FormArray

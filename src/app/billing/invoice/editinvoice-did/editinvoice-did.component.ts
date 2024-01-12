@@ -209,7 +209,8 @@ export class EditinvoiceDIDComponent implements OnInit {
   upd_flagName: any;
   upd_search_name: any;
   send_cusName: any;
-  
+    //validation
+    submitted = true;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -322,7 +323,7 @@ export class EditinvoiceDIDComponent implements OnInit {
       'customer_name': new FormControl(),
       'invoiceNo': new FormControl(),
       'customer_id_hd': new FormControl(),
-      'BillTo': new FormControl(),
+      'BillTo': new FormControl(null, [Validators.required]),
       'cusInvoiceNo': new FormControl(),
       'tin': new FormControl(null, [Validators.required]),
       'cst': new FormControl(),
@@ -452,7 +453,9 @@ export class EditinvoiceDIDComponent implements OnInit {
 
   }
 
-
+  get f() {
+    return this.addDid_section1.controls;
+  }
   // FIXED CHARGES
 
   get addressControls() {

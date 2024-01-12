@@ -145,9 +145,10 @@ export class AddInvoiceComponent implements OnInit {
   formattedDate: string;
   formattedDate_FormArray: string;
   billerIdCurrencyConv: any;
-
+  //validation
+  submitted = true;
   constructor(private serverService: ServerService, private fb: FormBuilder,
-    @Inject(LOCALE_ID) private locale: string,private datePipe: DatePipe, 
+    @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe,
     private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -213,8 +214,8 @@ export class AddInvoiceComponent implements OnInit {
     this.addInvoice_section1 = new FormGroup({
       'initial': new FormControl(),
       'companyName': new FormControl(),
-      'invoiceNo': new FormControl(),
-      'BillTo': new FormControl(),
+      'invoiceNo': new FormControl(),   
+      'BillTo': new FormControl(null,[Validators.required]),
       'cusInvoiceNo': new FormControl(),
       'tin': new FormControl(),
       'cst': new FormControl(),
@@ -299,12 +300,12 @@ export class AddInvoiceComponent implements OnInit {
       'CommissionAmount': new FormControl(null),
     });
     setTimeout(() => {
-    
+
       $('#datee').val(this.formattedDate);
       $('#podatee').val(this.formattedDate);
       $('#Ship_Date').val(this.formattedDate);
 
- }, 2000);
+    }, 2000);
 
 
 
@@ -321,7 +322,7 @@ export class AddInvoiceComponent implements OnInit {
     this.itre = this.itre + 1;
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      this.test_CMon[index]=true;
+      this.test_CMon[index] = true;
 
     });
   }
@@ -341,11 +342,11 @@ export class AddInvoiceComponent implements OnInit {
       pd_CMon: '',
       pd_selectTax: '',
 
-      pd_billchild_id:'',
-   
-      sub_dis_type:'',
-      sub_dis_val:'',
-      sub_discount:'',
+      pd_billchild_id: '',
+
+      sub_dis_type: '',
+      sub_dis_val: '',
+      sub_discount: '',
 
     });
 
@@ -414,11 +415,6 @@ export class AddInvoiceComponent implements OnInit {
 
       }
     })
-
-
-
-
-
   }
 
 
@@ -452,10 +448,10 @@ export class AddInvoiceComponent implements OnInit {
     $('#CommissionValue').val('');
     $('#CommissionAmount').val('');
   }
-  getCurrMonth(){
+  getCurrMonth() {
     for (let a = 0; a < this.addPI_section2.value.addresses.length; a++) {
       $('#pd_CMon_' + a).val(this.formattedDate_FormArray);
-     }
+    }
   }
 
   // EditCHK_MileDiscount(data: any, event: any) {
@@ -575,6 +571,10 @@ export class AddInvoiceComponent implements OnInit {
     // do something when input is focused
   }
 
+  get f() {
+    return this.addInvoice_section1.controls;
+  }
+
   loadADD() {
     let api_req: any = new Object();
     let addAPI: any = new Object();
@@ -615,8 +615,8 @@ export class AddInvoiceComponent implements OnInit {
         });
 
         // alert('Test--00'+response.defaults_biller_id);
-           this.companyNameVal = response.defaults_biller_id;
-           this.billerIdCurrencyConv = response.defaults_biller_id;
+        this.companyNameVal = response.defaults_biller_id;
+        this.billerIdCurrencyConv = response.defaults_biller_id;
         this.tax_per_mod = response.percent_val;
         this.getProformaBillerDetails();
         this.TaxDropdown();
@@ -913,7 +913,7 @@ export class AddInvoiceComponent implements OnInit {
           'ship_address_3': '',
           'ship_attn': '',
           'terms': '',
-         
+
           'Currency': '',
           'PaymentVia': '',
         });
@@ -1021,7 +1021,7 @@ export class AddInvoiceComponent implements OnInit {
 
 
     api_saveInvoice_req.cstNo = this.addInvoice_section1.value.cst;
-    api_saveInvoice_req.billDate=$('#datee').val();
+    api_saveInvoice_req.billDate = $('#datee').val();
     // api_saveInvoice_req.billDate = this.addInvoice_section1.value.Date;
     api_saveInvoice_req.b_attn = this.addInvoice_section1.value.Attn_1;
     api_saveInvoice_req.po_no = this.addInvoice_section1.value.PoNo;
@@ -1209,7 +1209,7 @@ export class AddInvoiceComponent implements OnInit {
         this.addInvoice_section1.patchValue({
           'invoiceNo': response.invoice_no,
           // 'Currency': response.currency_id,
-          'CurrencyConversionRate':response.currencyValue
+          'CurrencyConversionRate': response.currencyValue
 
 
 
@@ -1276,9 +1276,9 @@ export class AddInvoiceComponent implements OnInit {
 
 
   }
-  getEvent(event:any){
-  
-this.billerIdCurrencyConv=event.target.value;
+  getEvent(event: any) {
+
+    this.billerIdCurrencyConv = event.target.value;
   }
   getCurrencyValues(event: any) {
     // console.log("event.target;", event.target);

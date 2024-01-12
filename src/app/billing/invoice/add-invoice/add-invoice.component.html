@@ -42,7 +42,8 @@
                                     formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
                                     (inputChanged)='searchCustomerData($event)'
                                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
-                                    [notFoundTemplate]="notFoundTemplate">
+                                    [notFoundTemplate]="notFoundTemplate"
+                                    [ngClass]="{ 'is-invalid': submitted && f['BillTo'].errors }" class="mandatoryRed">
                                 </ng-autocomplete>
 
                                 <ng-template #itemTemplateCustomer let-item>
@@ -54,7 +55,10 @@
                                 </ng-template>
 
                             </div>
-
+                            
+                            <div *ngIf="submitted && f['BillTo'].errors" class="alert alert-danger alertdangerCustomCSS mt-2">
+                                <div *ngIf="f['BillTo'].errors['required']">Company Name is required</div>
+                              </div>
                         </div>
                     </div>
 

@@ -159,7 +159,8 @@ export class AddDidpiComponent implements OnInit {
   usageCharge_Flag: boolean=true;
   otherCharge_Flag: boolean=true;
 
-
+  //validation
+  submitted = true;
 
   constructor(private serverService: ServerService, private fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private router: Router, private spinner: NgxSpinnerService) {
@@ -335,7 +336,9 @@ export class AddDidpiComponent implements OnInit {
 
 
   }
-
+  get f() {
+    return this.addDid_section1.controls;
+  }
 
   // FIXED CHARGES
 
