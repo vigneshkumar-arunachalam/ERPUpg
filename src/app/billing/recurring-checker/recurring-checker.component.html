@@ -12,9 +12,9 @@
                     </h3>
                     <div class="quotation-btn-section">
                         <button type="button" class="btn btn-primary">
-                            <i class="fas fa-line-chart" style="margin-right: 10px;"></i>PDF
+                            <i class="fas fa-line-chart" style="margin-right: 10px;"></i>Multiple Address Print
                         </button>
-                        <button type="button" class="btn btn-warning">
+                        <button type="button" class="btn btn-warning ml-4" (click)="multipleRecurring()">
                             <i class="fas fa-archive"></i>Multiple Recurring
 
                         </button>
@@ -44,7 +44,7 @@
                                 
                        
                                         <th class="userDatatable-title">
-                                            customer Invoice No
+                                            cus Inv No
                                         </th>
                                  
                          
@@ -85,21 +85,234 @@
                                     </tr>
 
                                 </thead> 
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>2</td>
-                                        <td>3</td>
-                                        <td>4</td>
-                                        <td>5</td>
-                                        <td>6</td>
-                                        <td>7</td>
-                                        <td>8</td>
-                                        <td>9</td>
-                                        <td>10</td>
-                                        <td>11</td>
-                                        <td>12</td>
+                                <tr >
+                                    <td colspan="12" style="background-color: rgb(18,18,64);color: aliceblue;
+                                    text-align: left;">DID Invoice</td>
                                     </tr>
+                                <tbody *ngFor="let rec of recurringCheckList;let i=index">
+                                    <tr  *ngIf="(rec.biller_color_state==1)">
+                                        <td  colspan="12"
+                                          [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left'}">
+                                          {{rec.billerCode}}</td>
+                                      </tr>
+                                    <tr  *ngIf="(rec.did_invoice_state==1)">
+                                        <td>
+                                            <ng-container *ngIf="rec.checker_state == 0 && (rec.checkerUser1 == this.user_Ids)">
+                                                <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                              
+                                            </ng-container>
+                                            <ng-container *ngIf="rec.checker_state == 1 && (rec.checkerUser2 == this.user_Ids)">
+                                                <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                            </ng-container>
+                                            <ng-container *ngIf="rec.checker_state == 2 && (rec.checkerUser3 == this.user_Ids)">
+                                                <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                            </ng-container>
+                                            <ng-container >
+                                                <ng-container *ngIf="rec.checker_state == 0 && !(rec.checkerUser1 == this.user_Ids)" >
+                                                    <span>CH-I</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="rec.checker_state == 1 &&  !(rec.checkerUser2 == this.user_Ids)">
+                                                    <span>CH-II</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="rec.checker_state == 2 &&  !(rec.checkerUser3 == this.user_Ids)">
+                                                    <span>CH-III</span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </td>
+                                        
+                                        
+                                        
+                                        
+                                        <td style="background-color:#f1edf1">
+                                            <div class="d-flex">
+                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                  <div class="checkbox-group-wrapper">
+                                                    <div class="checkbox-group d-flex">
+                                                      <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                        <input class="checkbox" type="checkbox" id="check-rc2-gr-{{i}}"
+                                                          (change)="EditCHK(rec.billId,$event)">
+                                                        <label for="check-rc2-gr-{{i}}"></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                        </td>
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            <span>
+                                                {{rec.cus_invoice_no}}
+                                            </span>
+                                            <span *ngIf="(rec.post_send_status==0)" style="background-color: rgb(243 202 199);width: fit-content!important;">None</span>
+                                            <span *ngIf="(rec.post_send_status==1)" style="background-color: rgb(243 202 199);width: fit-content!important;">Post</span>
+                                            <span *ngIf="(rec.post_send_status==3)" style="background-color: rgb(243 202 199);width: fit-content!important;">Email</span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                {{rec.billDate}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                {{rec.customerName}}
+                                            </span>
+                                            <span style="background-color: rgb(251, 255, 131);width: fit-content!important;"> {{rec.reference_reseller_name_str}}</span>
+                                        </td>
+                                        
+                                        <td>{{rec.fixed_total_amt}}</td>
+                                        <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
+                                        <td>{{rec.usage_total_amt}}</td>
+                                        <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
+                                        <td>{{rec.netPayment}}</td>
+                                        <td>
+                                            <div class="page">
+
+                                                <div class="dropdown">
+                                                  <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                  <ul class="dropdown__list">
+                      
+                      
+                      
+                      
+                                                    <li class="dropdown__item">
+                                                      <a class="hover3" title="Invoice send to Post" data-toggle="modal"
+                                                        data-target="#RC_invoiceSendtoPost" (click)="get_invSendPost(rec.billId)">
+                                                        <img class="show" src="assets/img/icon2/letter-p-blue.png">
+                                                        <img class="hide" src="assets/img/icon2/letter-p-black.png">
+                      
+                                                      </a>
+                                                    </li>
+                      
+                                                    <li class="dropdown__item">
+                                                      <a class="hover3" title="PDF" (click)="pdf(rec.billId)">
+                                                        <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                        <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                      </a>
+                                                     
+                                                    </li>
+            
+                      
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                        
+
+                                        </td>
+                                    </tr>
+                                
+
+                                </tbody> 
+                                <tr  >
+                                    <td colspan="12" style="background-color: rgb(18,18,64);color: aliceblue;text-align: left;">Normal Invoice</td></tr>
+                                <tbody *ngFor="let rec of recurringCheckList;let i=index">
+                                    <tr  *ngIf="(rec.biller_color_state==1)">
+                                        <td  colspan="12"
+                                          [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left'}">
+                                          {{rec.billerCode}}</td>
+                                      </tr>
+                                    <tr  *ngIf="(rec.did_invoice_state==0)">
+                                        <td>
+                                            <ng-container *ngIf="rec.checker_state == 0 && (rec.checkerUser1 == this.user_Ids)">
+                                                <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                              
+                                            </ng-container>
+                                            <ng-container *ngIf="rec.checker_state == 1 && (rec.checkerUser2 == this.user_Ids)">
+                                                <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                            </ng-container>
+                                            <ng-container *ngIf="rec.checker_state == 2 && (rec.checkerUser3 == this.user_Ids)">
+                                                <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                            </ng-container>
+                                            <ng-container >
+                                                <ng-container *ngIf="rec.checker_state == 0 && !(rec.checkerUser1 == this.user_Ids)" >
+                                                    <span>CH-I</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="rec.checker_state == 1 &&  !(rec.checkerUser2 == this.user_Ids)">
+                                                    <span>CH-II</span>
+                                                </ng-container>
+                                                <ng-container *ngIf="rec.checker_state == 2 &&  !(rec.checkerUser3 == this.user_Ids)">
+                                                    <span>CH-III</span>
+                                                </ng-container>
+                                            </ng-container>
+                                        </td>
+                                        
+                                        
+                                        <td style="background-color:#f1edf1">
+                                            <div class="d-flex">
+                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                  <div class="checkbox-group-wrapper">
+                                                    <div class="checkbox-group d-flex">
+                                                      <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                        <input class="checkbox" type="checkbox" id="check-rc-grp1-{{i}}"
+                                                          (change)="EditCHK(rec.billId,$event)">
+                                                        <label for="check-rc-grp1-{{i}}"></label>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                        </td>
+                                        <td>{{i+1}}</td>
+                                        <td>
+                                            <span>
+                                                {{rec.cus_invoice_no}}
+                                            </span>
+                                            <span *ngIf="(rec.post_send_status==0)" style="background-color: rgb(243 202 199);width: fit-content!important;">None</span>
+                                            <span *ngIf="(rec.post_send_status==1)" style="background-color: rgb(243 202 199);width: fit-content!important;">Post</span>
+                                            <span *ngIf="(rec.post_send_status==3)" style="background-color: rgb(243 202 199);width: fit-content!important;">Email</span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                {{rec.billDate}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <span>
+                                                {{rec.customerName}}
+                                            </span>
+                                            <span style="background-color: rgb(251, 255, 131);width: fit-content!important;"> {{rec.reference_reseller_name_str}}</span>
+                                        </td>
+                                        
+                                        <td>{{rec.fixed_total_amt}}</td>
+                                        <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
+                                        <td>{{rec.usage_total_amt}}</td>
+                                        <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
+                                        <td>{{rec.netPayment}}</td>
+                                        <td>
+                                            <div class="page">
+
+                                                <div class="dropdown">
+                                                  <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                  <ul class="dropdown__list">
+                      
+                      
+                      
+                      
+                                                    <li class="dropdown__item">
+                                                      <a class="hover3" title="Invoice send to Post" data-toggle="modal"
+                                                        data-target="#RC_invoiceSendtoPost" (click)="get_invSendPost(rec.billId)">
+                                                        <img class="show" src="assets/img/icon2/letter-p-blue.png">
+                                                        <img class="hide" src="assets/img/icon2/letter-p-black.png">
+                      
+                                                      </a>
+                                                    </li>
+                      
+                                                    <li class="dropdown__item">
+                                                      <a class="hover3" title="PDF" (click)="pdf(rec.billId)">
+                                                        <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                        <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                      </a>
+                                                     
+                                                    </li>
+            
+                      
+                                                  </ul>
+                                                </div>
+                                              </div>
+                                        
+
+                                        </td>
+                                    </tr>
+                                   
                                 </tbody> 
 
                             </table>
@@ -117,3 +330,107 @@
     </div>
 
 </div>
+
+
+
+<!-- Modal-Start-Invoice Send to Post -->
+
+<div class="modal fade" id="RC_invoiceSendtoPost" tabindex="-1"
+role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title text-center">Invoice Sending Method</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="InvoiceSendingMethodForm">
+                    <div class="row">
+                        <div>
+                            <label>Invoice Sending Method</label>
+                        </div>
+                        <div class="ml-4">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                                name="InvoiceSendingInput" id="1" value="1" (click)=" radio_InvoiceSendingInput($event)">
+                                <label class="form-check-label" style="color: #960057 !important;">By Post</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                                name="InvoiceSendingInput" id="3" value="3" (click)=" radio_InvoiceSendingInput($event)">
+                                <label class="form-check-label" style="color: #960057 !important;">By Email</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                                name="InvoiceSendingInput" id="0" value="0" (click)=" radio_InvoiceSendingInput($event)">
+                                <label class="form-check-label" style="color: #960057 !important;">None</label>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="set_invPost()">Save
+
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+
+</div>
+
+</div>
+
+<!-- Modal-Ends-Invoice Send to Post -->
+
+
+<!-- Modal-Start-Multiple Recurring -->
+
+<div class="modal fade" id="RC_multipleRecurrDateUpdate" tabindex="-1"
+role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="col-12 modal-title text-center">Multiple Recurring Date Update</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="multipleRecurrDateUpdateForm">
+                    <div class="row">
+                        <div class="col-lg-3 mt-2">
+                            <label>Recurring Date</label>
+                        </div>
+                        <div class="col-lg-6">
+                       <input type="date" class="form-control" formControlName="mr_date">
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="set_multipleRecurrDate()">Save
+
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+
+</div>
+
+</div>
+
+<!-- Modal-Ends-Multiple Recurring -->

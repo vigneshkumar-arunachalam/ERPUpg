@@ -337,7 +337,7 @@
                                     </div> -->
                                     <input type="checkbox" [(ngModel)]="list.selected" id="check-rp-grp1-{{f}}"
                                       value="{{list.reseller_comm_id}}"
-                                      (change)="selectAll_paid(list.balAmount,list.reseller_comm_id,$event,list.reseller_id)" />
+                                      (change)="selectAll_paid(list.balAmount,list.reseller_comm_id,$event,list.reseller_id,list.paid_status)" />
 
                                   </td>
                                   <td *ngIf=" list.checkbox === 0">

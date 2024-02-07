@@ -1836,6 +1836,12 @@ this.cmsDepartmentList1();
       }
     });
   }
+ 
+  clearSelection(event:any){
+  
+   this.searchResultTest='';
+  
+  }
   customerslist(data: any) {
    
     this.spinner.show();

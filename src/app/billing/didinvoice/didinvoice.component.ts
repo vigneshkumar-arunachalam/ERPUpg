@@ -251,6 +251,11 @@ CBV_UsageChargeDt: any;
     todayDate : Date = new Date();
     todayString : string = new Date().toDateString();
     todayISOString : string = new Date().toISOString();
+  yearsID: any;
+  selected_billerId: any=[];
+  years_id: any;
+  					
+getSearch:boolean=false;
   
   constructor(private serverService: ServerService, private router: Router,  private route: ActivatedRoute,private fb: FormBuilder, private spinner: NgxSpinnerService,) { 
     this.addressForm = this.fb.group({
@@ -293,6 +298,7 @@ CBV_UsageChargeDt: any;
       { name: 'Zero Valid', selected: false, id: 3 },
 
     ];
+    this.yearsAPI();
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.setInvoiceType = new FormGroup({
       'setInvoice': new FormControl(null),
@@ -587,10 +593,61 @@ CBV_UsageChargeDt: any;
     window.open(url, '_blank');
    // console.log("url", url)
   }
+  yearsAPI() {
+
+    let api_req: any = new Object();
+    let api_year: any = new Object();
+    api_req.moduleType = "did";
+    api_req.api_url = "did/yearValueFilter_did";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_year.action = "yearValueFilter_did";
+    api_year.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_year;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+
+        this.yearsList = response;
+
+      } else {
+
+
+
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
+
+getSearch1(){
+
+this.getSearch=true;
+}
+clearSelection(event:any){
+  console.log("clear selection",event)
+  // console.log("event.customerId",event.customerId)
+  // console.log("event.customerName",event.customerName)
+  this.searchResult_CustomerID='';
+  this.searchResult_CustomerName='';
+  console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+  console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+}
 
   getInvoice(data: any) {
   
-   
+    console.log("billerid",this.edit_array_SearchBiller_Checkbox);
+    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox);
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -613,6 +670,7 @@ CBV_UsageChargeDt: any;
     api_DidList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_DidList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
     api_DidList.did_month=this.currentMonthSelection;
+    api_DidList.getSearch = this.getSearch;
     
     // var list_data = this.listDataInfo(data);
 
@@ -685,8 +743,22 @@ CBV_UsageChargeDt: any;
         this.invoicePermissionList_set_terms_condition = response.invoice_permission_arr.set_terms_condition;
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
+        if (response.selected_filtervalues[0].biller_ids != '') {
+          this.selected_billerId = response.selected_billerId;
+          this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
+          this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+          
+        }
 
-      
+        if (response.selected_filtervalues[0].year_filter != '') {
+          this.years_id=response.selected_filtervalues[0].year_filter;
+          this.edit_array_Years_Checkbox=this.years_id.split(',');
+          this.edit_array_Years_Checkbox =this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
+          console.log("this.edit_array_Years_Checkbox-after list load",this.edit_array_Years_Checkbox);
+        }
+       
+
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
@@ -861,41 +933,57 @@ CBV_UsageChargeDt: any;
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    // console.log("this.searchBILLERID", this.searchBILLERID);
+    console.log("this.edit_array_SearchBiller_Checkbox",this.edit_array_SearchBiller_Checkbox)
+    console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
+      if (!this.edit_array_SearchBiller_Checkbox) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+  
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
+      if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
   }
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
+    this.yearsID = data;
+    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox)
+    console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
-
+      if (!this.edit_array_Years_Checkbox) {
+        this.edit_array_Years_Checkbox = [];
+      }
       this.edit_array_Years_Checkbox.push(data);
       this.edit_array_Years_Checkbox.join(',');
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
     }
     else {
+      if (!Array.isArray(this.edit_array_Years_Checkbox)) {
+        this.edit_array_Years_Checkbox = [];
+      }
       const index = this.edit_array_Years_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
-    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
-
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+  
     }
-
+  
   }
   recurring_onlyCHK(event: any) {
     this.CBV_recurring_only = event.target.checked;

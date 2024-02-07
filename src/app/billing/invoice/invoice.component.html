@@ -1134,7 +1134,7 @@
           </div>
           <div class="col-md-12 col-12">
             <div class="form-group row">
-              <label for="emailPDFType" class="col-lg-2 col-form-label"><span> PDF Type</span> :</label>
+              <label for="emailPDFType" class="col-lg-2 col-form-label"><span> Payment</span> :</label>
               <div class="col-lg-10 mt-2">
 
                 <div class="form-check form-check-inline">
@@ -1198,7 +1198,7 @@
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
               <div class="col-lg-10">
-                <editor id="tinyID" [init]="{
+                <editor id="tinyID1" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'
@@ -2543,7 +2543,9 @@
                 <label for="temp5" class="col-lg-12 ">Biller Name</label>
                 <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
                   <input type="checkbox" id="{{biller.billerId}}"
+                  [value]="biller.billerId" checked="{{biller.chk_val=='true' ? 'checked':''}}"
                     (change)="searchBillerNameCHK(biller.billerId,$event)">
+                
 
                   {{biller.billerName}}
                 </div>
@@ -2556,9 +2558,11 @@
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     formControlName="company_Name" (selected)='selectEventCustomer($event)'
                     (inputChanged)='searchCustomerData($event)' (keyup)="keysearch($event)"
+                    (inputCleared)="clearSelection($event)"
                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
                     [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
+                  <!-- <div class="x ng-star-inserted" (click)="clearSelection()"><i aria-label="Close" class="material-icons">close</i></div> -->
 
                   <ng-template #itemTemplateCustomer let-item>
                     <a [innerHTML]="item.customerName"></a>
@@ -2575,10 +2579,13 @@
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Years</label>
                 <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
-                  <input type="checkbox" id="{{yrs.year}}" formControlName="years" (change)="yearsCHK(yrs.year,$event)">
+                  <input type="checkbox" id="{{yrs.year}}"  [value]="yrs.year"
+                  [checked]="yrs.chk_val === 'true'"
+                   (change)="yearsCHK(yrs.year,$event)">
 
                   {{yrs.year}}
                 </div>
+              
               </div>
             </div>
             <div class="col-lg-2 searchScrollCss">
@@ -2635,7 +2642,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" (click)="getInvoice({})">
+        <button type="button" class="btn btn-primary" (click)="getSearch1();getInvoice1({});">
           Search
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearSearch()">

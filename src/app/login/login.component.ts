@@ -36,6 +36,8 @@ export class LoginComponent implements OnInit {
   code_val: any;
   uscode: any;
   page_url: any;
+  paramesh_ipAddress: any;
+  qr_unique:any;
   constructor(private router: Router, private route: ActivatedRoute, private serverService: ServerService, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams
       .subscribe(params => {
@@ -53,16 +55,20 @@ export class LoginComponent implements OnInit {
       }
       );
     this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
+    console.log("this.websocket",this.websocket)
     var s = this;
     console.log('s', s);
     this.websocket.onopen = function (event: any) {
       console.log('socket connected');
     };
     this.websocket.onmessage = function (event: any) {
+      console.log(event.data)
       s.getdatas = JSON.parse(event.data);
       console.log('socket detail', localStorage.getItem('erp_c4c_user_id'));
+      console.log(s.getdatas['0'])
       if (s.getdatas['0'].userId) {
         if (localStorage.getItem('erp_c4c_user_id') == null) {
+          // s.qr_unique = s.getdatas['0'].unique_id_en;
           s.qrLogin();
         }
         this.websocket.onclose;
@@ -89,7 +95,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
 
-
+    this.getIPAddress();
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
@@ -112,9 +118,46 @@ export class LoginComponent implements OnInit {
   unsubscribe() {
     this.subscription.unsubscribe();
   }
+ 
+  getIPAddress() {
+   
+    let api_req: any = new Object();
+    let rc_api: any = new Object();
+    api_req.moduleType = "getUniqueId";
+    api_req.api_url = "getUniqueId";
+    api_req.access_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    rc_api.action = "getUniqueId";
+    api_req.element_data = rc_api;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.paramesh_ipAddress=response;
+        console.log(" this.paramesh_ipAddress", this.paramesh_ipAddress)
+
+      } else {
+        iziToast.warning({
+          message: "update failed",
+          position: 'topRight'
+        });
+      }
+
+    }), (error: any) => {
+      iziToast.error({
+        message: "Error",
+        position: 'topRight'
+      });
+      console.log("error",error)
+
+    };
+
+  }
   qrLogin() {
-
-
+// console.log(this.qr_unique);
+// console.log(this.paramesh_ipAddress);
+// if(this.qr_unique!=this.paramesh_ipAddress){
+// return false;
+// }
     let api_req: any = new Object();
     let addAPI: any = new Object();
     api_req.moduleType = "login";
@@ -215,6 +258,7 @@ export class LoginComponent implements OnInit {
       this.level = 'M';
       this.width = 256;
       this.datas = uuidv4();
+      console.log("unique id from angular", this.datas)
       this.typess = btoa('erp');
 
       const data = [

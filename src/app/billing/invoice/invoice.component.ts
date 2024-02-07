@@ -213,7 +213,7 @@ export class InvoiceComponent implements OnInit {
   billId_InvoicetoQuotation: any;
   //notes
   billId_notes: any;
-  selected_billerId: any;
+  selected_billerId: any=[];
 
   datePipe: DatePipe = new DatePipe('en-US');
   transformDate: any;
@@ -339,6 +339,9 @@ export class InvoiceComponent implements OnInit {
   creditShowFlag: boolean = false;
   prepaidShowFlag: boolean = false;
   flg: boolean = false;
+  years_id: any;
+  yearsID: any;
+  getSearch:boolean=false;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -948,6 +951,15 @@ export class InvoiceComponent implements OnInit {
     console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
 
   }
+  clearSelection(event:any){
+    console.log("clear selection",event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID='';
+    this.searchResult_CustomerName='';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+  }
   selectEventCustomer(item: any) {
     console.log(item)
     this.searchResult_CustomerID = item.customerId;
@@ -998,15 +1010,23 @@ export class InvoiceComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
+    console.log("this.edit_array_SearchBiller_Checkbox",this.edit_array_SearchBiller_Checkbox)
     console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
+      if (!this.edit_array_SearchBiller_Checkbox) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+  
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
       console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
+      if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
@@ -1018,41 +1038,31 @@ export class InvoiceComponent implements OnInit {
   }
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
+    this.yearsID = data;
+    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox)
     console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
-
+      if (!this.edit_array_Years_Checkbox) {
+        this.edit_array_Years_Checkbox = [];
+      }
       this.edit_array_Years_Checkbox.push(data);
       this.edit_array_Years_Checkbox.join(',');
       console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
     }
     else {
+      if (!Array.isArray(this.edit_array_Years_Checkbox)) {
+        this.edit_array_Years_Checkbox = [];
+      }
       const index = this.edit_array_Years_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
       console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
-
+  
     }
-
+  
   }
-  SearchOtherCheckAllCHK(data: any, event: any) {
-    this.CBV_others_All = event.target.checked;
-    if (this.CBV_others_All) {
-
-      this.edit_array_others_Checkbox.push(data);
-      this.edit_array_others_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_others_Checkbox);
-    }
-    else {
-      const index = this.edit_array_others_Checkbox.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array_others_Checkbox.splice(index, 1);
-      }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_others_Checkbox)
-
-    }
-
-  }
+  
   addAddress(): void {
     this.addresses = this.addressForm.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
@@ -1185,8 +1195,14 @@ export class InvoiceComponent implements OnInit {
     this.invType_Search = event.target.value;
     console.log("invoice type search", this.invType_Search);
   }
+  getSearch1(){
 
+    this.getSearch=true;
+  }
   getInvoice1(data: any) {
+   
+    console.log("billerid",this.edit_array_SearchBiller_Checkbox);
+    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox);
     //  alert("getInvoice-1")
     this.spinner.show();
     var list_data = this.listDataInfo(data);
@@ -1210,6 +1226,8 @@ export class InvoiceComponent implements OnInit {
     api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
     api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+    api_quotationList.getSearch = this.getSearch;
+    
 
     api_quotationList.current_page = "";
 
@@ -1279,13 +1297,23 @@ export class InvoiceComponent implements OnInit {
         this.revenueTypeList = response.revenue_list;
         this.taxAmtstate = response.proforma_details[0].taxAmtstate;
 
-        this.edit_array_SearchBiller_Checkbox = response.selected_billerId;
+       
+        if (response.selected_filtervalues[0].biller_ids != '') {
+          this.selected_billerId = response.selected_billerId;
+          this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
+          this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+          
 
-        this.selected_billerId = response.selected_billerId;
-        this.invoicePermissionList_inv_to_did
-        this.invoicePermissionList_set_actual_cost
+        }
+        if (response.selected_filtervalues[0].year_filter != '') {
+          this.years_id=response.selected_filtervalues[0].year_filter;
+          this.edit_array_Years_Checkbox=this.years_id.split(',');
+          this.edit_array_Years_Checkbox =this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
+          console.log("this.edit_array_Years_Checkbox-after list load",this.edit_array_Years_Checkbox);
+        }
 
-
+     
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
@@ -1293,7 +1321,11 @@ export class InvoiceComponent implements OnInit {
           console.log("this.reseller_commissionState", this.reseller_commissionState)
           this.suspend_state = response.proforma_details[j].suspend;
         }
-
+        // this.searchInvoiceForm.patchValue({
+        //   'search_billerName':response.selected_filtervalues[0].biller_ids,
+        //   'company_Name':response.selected_filtervalues[0].name_serach,
+        //   'years':response.selected_filtervalues[0].year_filter,
+        // });
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
@@ -1314,6 +1346,7 @@ export class InvoiceComponent implements OnInit {
   }
   getInvoice(data: any) {
     this.spinner.show();
+    console.log("billerid",this.edit_array_SearchBiller_Checkbox);
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -1338,7 +1371,7 @@ export class InvoiceComponent implements OnInit {
     api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
     api_quotationList.current_page = "";
-
+    api_quotationList.getSearch = this.getSearch;
     api_req.element_data = api_quotationList;
 
 
@@ -1422,7 +1455,11 @@ export class InvoiceComponent implements OnInit {
         // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
-
+        // this.searchInvoiceForm.patchValue({
+        //   'search_billerName':response.selected_filtervalues[0].biller_ids,
+        //   'company_Name':response.selected_filtervalues[0].name_serach,
+        //   'years':response.selected_filtervalues[0].year_filter,
+        // });
         $("#searchInvoiceFormId").modal("hide");
       }
       else {
@@ -2190,10 +2227,10 @@ export class InvoiceComponent implements OnInit {
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
-        this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+        this.mailContent = tinymce.get('tinyID1').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID': this.mailContent,
+          'tinyID1': this.mailContent,
           'Subject_Content': response.subject,
 
 
@@ -2201,13 +2238,13 @@ export class InvoiceComponent implements OnInit {
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID': this.mailContent,
+            'tinyID1': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID': this.mailContent,
+            'tinyID1': this.mailContent,
           })
         }
 
@@ -2581,28 +2618,28 @@ export class InvoiceComponent implements OnInit {
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/get_email_quotation_template";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_email_invoice_template";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
+    api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID
+    api_quotationTemplateDropdown_req.billId = this.Email_BillId;
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content;
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyID1').setContent("<p>" + this.messageContent + "</p>");
       $('#subject').val(response.crm_subject_name);
-      $('#tinyID').val(this.mailContent);
+      $('#tinyID1').val(this.mailContent);
       if (response != '') {
         this.emailForm.patchValue({
 
           // 'Subject_Content': response.crm_subject_name,
 
-          // 'tinyID': this.mailContent,
+          // 'tinyID1': this.mailContent,
 
         });
 
@@ -2632,7 +2669,7 @@ export class InvoiceComponent implements OnInit {
     this.emailTo = this.emailForm.value.email_to;
     // this.subjectValue = $('#subject').val();
     this.subjectValue = this.emailForm.value.Subject_Content;
-    this.msg_id = tinymce.get('tinyID').getContent();
+    this.msg_id = tinymce.get('tinyID1').getContent();
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)

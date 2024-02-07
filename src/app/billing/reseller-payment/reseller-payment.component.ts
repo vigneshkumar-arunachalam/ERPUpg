@@ -139,8 +139,14 @@ export class ResellerPaymentComponent implements OnInit {
   previousResellid: any;
   filterCommission_color_status: boolean = false;
   commlistall1: any = [];
+  paidCheck_Unpaid_status: boolean = false;
+  paidCheck_Unpaid_value: any;
+  sum_bal2: number;
+  unpaid_status: boolean = false;
 
-  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
+  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, 
+    private route: ActivatedRoute, private router: Router, private fb: FormBuilder, 
+    private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.resellerCommissionForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -324,32 +330,38 @@ export class ResellerPaymentComponent implements OnInit {
     if (this.filterCommission_value == 1) {
       this.filterCommission_color = 10;
       this.filterCommission_color_status = true;
-      this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox_paid=! this.selectAllCheckbox_paid;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 2) {
       this.filterCommission_color = 15;
       this.filterCommission_color_status = true;
-      this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox_paid=! this.selectAllCheckbox_paid;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 3) {
       this.filterCommission_color = 20;
       this.filterCommission_color_status = true;
-      this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox_paid=! this.selectAllCheckbox_paid;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 4) {
       this.filterCommission_color = 25;
       this.filterCommission_color_status = true;
-      this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox_paid=! this.selectAllCheckbox_paid;
       this.getResellerPaymentdetails({}, custId);
     } else if (this.filterCommission_value == 5) {
       this.filterCommission_color = 30;
       this.filterCommission_color_status = true;
-      this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox_paid=! this.selectAllCheckbox_paid;
       this.getResellerPaymentdetails({}, custId);
     } else {
       this.filterCommission_color = 35;
       this.filterCommission_color_status = true;
-      this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox = !this.selectAllCheckbox;
+      // this.selectAllCheckbox_paid=! this.selectAllCheckbox_paid;
       this.getResellerPaymentdetails({}, custId);
     }
     // switch(this.filterCommission_value){
@@ -409,32 +421,11 @@ export class ResellerPaymentComponent implements OnInit {
     // this.checkedList = JSON.stringify(this.checkedList);
     console.log("this.checkedList", this.checkedList)
   }
-  // selectAll() {
-  //   const allSelected = this.items.every((item: { selected: any; }) => item.selected);
-
-  //   this.items.forEach((item: { selected: boolean; }) => (item.selected = !allSelected));
-  //   console.log("items select/deselect",this.items)
-  // }
-
-
-  	
-  // selectAll() { 
-
-  //   this.resellerList.forEach((reseller: any) => {
-  //     if (reseller.checkbox === 1) {
-  //       reseller.selected = this.selectAllCheckbox;
-  //     }
-  //   });
-  //   console.log("this.selectAllCheckbox", this.selectAllCheckbox)
-  // }
 
   selectAll() {
-
- 
-  // $('input[name="paid_check_all"]').prop('checked', false);
-   
+    this.selectedResellerCommIds_unpaid_all=[];
+    this.unpaid_status = !this.unpaid_status;
     $('#RP_multiple_amount').val('');
-
     this.resellerList.forEach((reseller: any) => {
       console.log("reseller response", reseller)
       // Check both conditions: checkbox === 1 and selectAllCheckbox is true
@@ -442,8 +433,8 @@ export class ResellerPaymentComponent implements OnInit {
         reseller.selected = true;
         this.selectedResellerCommIds_unpaid.push(reseller.reseller_comm_id);
         this.selectedResellerCommIds_unpaid_all.push(reseller.balAmount);
-        console.log("checkbox-all-unpaid", this.selectedResellerCommIds_unpaid)
-        console.log("checkbox-selectedResellerCommIds_unpaid_all", this.selectedResellerCommIds_unpaid_all)
+        // console.log("checkbox-all-unpaid", this.selectedResellerCommIds_unpaid)
+        // console.log("checkbox-selectedResellerCommIds_unpaid_all", this.selectedResellerCommIds_unpaid_all)
         this.sum_bal = 0;
         $('#RP_multiple_amount').val('');
         for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
@@ -453,8 +444,10 @@ export class ResellerPaymentComponent implements OnInit {
         var toFixval = this.sum_bal;
         $('#RP_multiple_amount').val(toFixval.toFixed(2));
         console.log("If part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
-        //  $('#RP_multiple_amount').val(this.sum_bal);
-      } else {
+        
+      }
+      
+      else {
         reseller.selected = false;
         const indexOfId = this.selectedResellerCommIds_unpaid.indexOf(reseller.reseller_comm_id);
         if (indexOfId > -1) {
@@ -470,106 +463,51 @@ export class ResellerPaymentComponent implements OnInit {
         var toFixval = this.sum_bal;
         $('#RP_multiple_amount').val(toFixval.toFixed(2));
         console.log("Else part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
-        //  $('#RP_multiple_amount').val(this.sum_bal);
+     
 
       }
     });
     console.log("this.selectedResellerCommIds_unpaid", this.selectedResellerCommIds_unpaid);
   }
 
-  // selectAll_paid() {
-
-  //   this.resellerList.forEach((reseller: any) => {
-  //     if (reseller.checkbox === 1 && reseller.paid_status === 'Paid') {
-  //       reseller.selected = this.selectAllCheckbox_paid;
-  //     }
-  //   });
-  //   console.log("this.selectAllCheckbox_paid", this.selectAllCheckbox_paid)
-  // }
-
-  // selectAll_paid(event:any) {
-
-  //   if (!this.selectAllCheckbox_paid) {
-  //     this.selectedResellerCommIds = [];
-  //   } else {
-
-  //     this.resellerList.forEach((reseller: any) => {
-  //       if (reseller.checkbox === 1 && reseller.paid_status === 'Paid') {
-
-  //         reseller.selected = this.selectAllCheckbox_paid;
-
-  //         if (reseller.selected) {
-
-  //           this.selectedResellerCommIds.push(reseller.reseller_comm_id);
-  //         } else {
-  //             const index = this.selectedResellerCommIds.findIndex((el: any) => el === reseller.reseller_comm_id)
-  //           const index = this.selectedResellerCommIds.indexOf(reseller.reseller_comm_id);
-  //           if (index !== -1) {
-  //             this.selectedResellerCommIds.splice(index, 1);
-  //           }
-  //         }
-  //       }
-  //     });
-  //   }
-  //   console.log("this.selectedResellerCommIds", this.selectedResellerCommIds);
-  // }
-
-  // selectAll_paid(data:any,event:any) {
-  //   this.selectedResellerCommIds = []; 
-
-  //   this.resellerList.forEach((reseller: any) => {
-
-  //     if (reseller.checkbox === 1 && reseller.paid_status === 'Paid' && this.selectAllCheckbox_paid) {
-  //       reseller.selected = true;
-  //       this.selectedResellerCommIds.push(reseller.reseller_comm_id);
-  //     } else {
-  //       reseller.selected = false;
-  //        const index = this.selectedResellerCommIds.findIndex((el: any) => el === data)
-  //           if (index !== -1) {
-  //             this.selectedResellerCommIds.splice(index, 1);
-  //           }
-  //     }
-  //   });
-
-  //   console.log("this.selectedResellerCommIds", this.selectedResellerCommIds);
-  // }
   selectAll_paid1(event: any) {
-   
-    //$('input[name="UnpaidAll"]').prop('checked', false);
-   
-   
+    this.paidCheck_Unpaid_value = '';
+    this.selectedResellerCommIds1 = [];
+    this.selectedResellerCommIds2 = [];
     console.log(event.target.checked)
     if (event.target.checked) {
-
-
       this.resellerList.forEach((reseller: any, index: any) => {
         if (reseller.checkbox === 1 && reseller.paid_status === 'Paid'
           && !this.selectedResellerCommIds.includes(reseller.reseller_comm_id)) {
           reseller.selected = true;
-
+          this.paidCheck_Unpaid_status = true;
           this.selectedResellerCommIds.push(reseller.reseller_comm_id);
           this.selectedResellerCommIds2.push(reseller.balAmount);
           this.sum_bal = 0;
+          this.paidCheck_Unpaid_value = 0;
+          var xy = 0;
           $('#RP_multiple_amount').val('');
           for (let i = 0; i < this.selectedResellerCommIds2.length; i++) {
-            var xy = this.selectedResellerCommIds2[i];
+            xy = this.selectedResellerCommIds2[i];
+          //   console.log("xy",xy)
+           //  console.log(" this.sum_bal-before", this.sum_bal)
             this.sum_bal = this.sum_bal + xy;
+           //  console.log(" this.sum_bal-last", this.sum_bal)
           }
           var toFixval = this.sum_bal;
+          this.paidCheck_Unpaid_value = this.sum_bal;
+          this.sum_bal = '';
           $('#RP_multiple_amount').val(toFixval.toFixed(2));
-          // $('#RP_multiple_amount').val(this.sum_bal);
+         
         }
-        // {
-        //   console.log("element",reseller)
-        //   console.log("index",index)
-        //     $("#check-pi-grp1-" + index).prop('checked', true);
-        // }
+        
 
       });
       console.log("Final Checkbox group all- selected list", this.selectedResellerCommIds)
     } else {
       this.resellerList.forEach((reseller: any, index: any) => {
         reseller.selected = false;
+        this.paidCheck_Unpaid_status = true;
         const indexOfId = this.selectedResellerCommIds.indexOf(reseller.reseller_comm_id);
         if (indexOfId > -1) {
           this.selectedResellerCommIds.splice(indexOfId, 1);
@@ -578,12 +516,16 @@ export class ResellerPaymentComponent implements OnInit {
 
       });
       this.sum_bal = 0;
+      this.paidCheck_Unpaid_value = 0;
       $('#RP_multiple_amount').val('');
       for (let i = 0; i < this.selectedResellerCommIds2.length; i++) {
         var xy = this.selectedResellerCommIds2[i];
         this.sum_bal = this.sum_bal + xy;
       }
       var toFixval = this.sum_bal;
+      this.paidCheck_Unpaid_value = toFixval;
+      this.paidCheck_Unpaid_value = this.sum_bal;
+      this.sum_bal = '';
       $('#RP_multiple_amount').val(toFixval.toFixed(2));
       //$('#RP_multiple_amount').val(this.sum_bal);
       console.log("Final Checkbox group all- de-selected list", this.selectedResellerCommIds)
@@ -592,35 +534,134 @@ export class ResellerPaymentComponent implements OnInit {
   }
 
 
-  selectAll_paid(balAmount: any, data: any, event: any, reseller_id: any) {
+  selectAll_paid(balAmount: any, data: any, event: any, reseller_id: any, paid_status: any) {
 
+    console.log("balAmount", balAmount)
     this.checkbox_value = event.target.checked;
     if (this.checkbox_value) {
+   //  alert("if part")
       this.selectedResellerCommIds.push(data);
-      this.selectedResellerCommIds1.push(balAmount);
-      console.log("Checkbox-selected", this.selectedResellerCommIds)
-      this.updateSumBalance();
+      if (this.paidCheck_Unpaid_status == true && paid_status == 'Not Paid') {
+        // paid check all value aded if some value added in not paid also have to add remove
+        this.selectedResellerCommIds1.push(this.paidCheck_Unpaid_value);
+        this.paidCheck_Unpaid_value = '';
+        this.selectedResellerCommIds1.push(balAmount);
+        this.updateSumBalance();
+
+      } else if (this.paidCheck_Unpaid_status == true && paid_status == 'Paid') {
+        this.selectedResellerCommIds1.push(balAmount);
+        this.updateSumBalance();
+      }else if (this.unpaid_status==true) {
+       
+        this.selectedResellerCommIds_unpaid_all.push(balAmount);
+        this.updateSumBalance2();
+      }
+
+       else {
+        this.selectedResellerCommIds1.push(balAmount);
+        console.log("Checkbox-selected", this.selectedResellerCommIds)
+        this.updateSumBalance();
+      }
+
     }
     else {
-      const index = this.selectedResellerCommIds.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.selectedResellerCommIds.splice(index, 1);
-        this.selectedResellerCommIds1.pop();
+      // alert("else part")
+       if(this.unpaid_status==true){
+       //  alert("paid/unpaid uncheck part")
+        const index2 = this.selectedResellerCommIds_unpaid_all.findIndex((el: any) => el === balAmount);
+          console.log("index2",index2)
+        if (index2 > -1) {
+          this.selectedResellerCommIds_unpaid_all.splice(index2, 1);
+          // this.selectedResellerCommIds_unpaid_all.pop();
+            console.log("Checkbox-before calculation-after uncheck", this.selectedResellerCommIds_unpaid_all)
+        }
+        this.updateSumBalance2();
+      }else if(paid_status == 'Paid'){
+       // alert("Paid part uncheck")
+        const index1 = this.selectedResellerCommIds2.findIndex((el: any) => el === balAmount)
+        // console.log("index1",index1)
+        // console.log("Checkbox-Deselected-before", this.selectedResellerCommIds2)
+        if (index1 > -1) {
+          //  alert("yes delete")
+          this.selectedResellerCommIds2.splice(index1, 1);
+          // this.selectedResellerCommIds2.pop();
+        }
+        // console.log("Checkbox-Deselected-after", this.selectedResellerCommIds2)
+        this.selectedResellerCommIds1 = this.selectedResellerCommIds2
+        this.updateSumBalance1();
       }
-      console.log("Checkbox-Deselected", this.selectedResellerCommIds)
-      this.updateSumBalance();
+      else {
+        // alert("paid/unpaid uncheck-other part")
+        const index = this.selectedResellerCommIds.findIndex((el: any) => el === data)
+        if (index > -1) {
+          this.selectedResellerCommIds.splice(index, 1);
+          this.selectedResellerCommIds1.pop();
+        }
+        console.log("Checkbox-Deselected", this.selectedResellerCommIds)
+        this.updateSumBalance();
+      }
     }
 
   }
   updateSumBalance() {
-    this.sum_bal = 0;
+    this.sum_bal2 = 0;
+    var toFixval = 0;
+    var xy = 0;
     for (let i = 0; i < this.selectedResellerCommIds1.length; i++) {
-      var xy = this.selectedResellerCommIds1[i];
-      this.sum_bal = this.sum_bal + xy;
+      // console.log("this.selectedResellerCommIds1",this.selectedResellerCommIds1)
+      xy = this.selectedResellerCommIds1[i];
+      // console.log("xy-selectedResellerCommIds1",xy);
+      // console.log("this.sum_bal2-before-selectedResellerCommIds1",this.sum_bal2);
+      this.sum_bal2 = this.sum_bal2 + xy;
+      // console.log("this.sum_bal2-after-selectedResellerCommIds1",this.sum_bal2);
     }
-    var toFixval = this.sum_bal;
+    toFixval = this.sum_bal2;
+    console.log("toFixval", toFixval)
+    this.sum_bal2 = 0;
     $('#RP_multiple_amount').val(toFixval.toFixed(2));
+    this.paidCheck_Unpaid_status = false;
   }
+  updateSumBalance1() {
+    this.sum_bal2 = 0;
+    var toFixval = 0;
+    var xy = 0;
+    for (let i = 0; i < this.selectedResellerCommIds2.length; i++) {
+      // console.log("this.selectedResellerCommIds2",this.selectedResellerCommIds2)
+      xy = this.selectedResellerCommIds2[i];
+      // console.log("xy-selectedResellerCommIds2di ",xy);
+      // console.log("this.sum_bal2-before-selectedResellerCommIds2",this.sum_bal2);
+      this.sum_bal2 = this.sum_bal2 + xy;
+      // console.log("this.sum_bal2-after-selectedResellerCommIds2",this.sum_bal2);
+    }
+    toFixval = this.sum_bal2;
+    console.log("toFixval", toFixval)
+    this.sum_bal2 = 0;
+    // toFixval=6.61+toFixval;
+    $('#RP_multiple_amount').val(toFixval.toFixed(2));
+    this.paidCheck_Unpaid_status = false;
+  }
+
+  updateSumBalance2() {
+    this.sum_bal2 = 0;
+    var toFixval = 0;
+    var xy = 0;
+    for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
+     //  console.log("this.selectedResellerCommIds_unpaid_all",this.selectedResellerCommIds_unpaid_all)
+      xy = this.selectedResellerCommIds_unpaid_all[i];
+     //  console.log("xy-selectedResellerCommIds_unpaid_all ",xy);
+     //  console.log("this.sum_bal2-before-selectedResellerCommIds_unpaid_all",this.sum_bal2);
+      this.sum_bal2 = this.sum_bal2 + xy;
+     //  console.log("this.sum_bal2-after-selectedResellerCommIds_unpaid_all",this.sum_bal2);
+    }
+    toFixval = this.sum_bal2;
+    console.log("toFixval", toFixval)
+    this.sum_bal2 = 0;
+    // toFixval=6.61+toFixval;
+    $('#RP_multiple_amount').val(toFixval.toFixed(2));
+    this.paidCheck_Unpaid_status = false;
+   
+  }
+
 
 
   radio_commissionType(event: any, index: any) {
@@ -1972,7 +2013,9 @@ export class ResellerPaymentComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
+
         this.spinner.hide();
+        this.getResellerPaymentdetails({}, {});
         $('#RP_multipleResellerPaymentID').modal('hide');
         $('#RP_multiple_amount').val('');
         $('#RP_multiple_paymentType').val('');

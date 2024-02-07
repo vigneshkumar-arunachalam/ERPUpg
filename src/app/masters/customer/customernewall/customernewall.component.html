@@ -4174,6 +4174,7 @@
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     (selected)='selectEventCustomer($event)' (inputChanged)='searchCustomerData($event)'
                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
+                    (inputCleared)="clearSelection($event)"
                     [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
 

@@ -796,8 +796,10 @@
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Biller Name</label>
                 <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
-                  <input type="checkbox" id="{{biller.billerId}}" formControlName="search_billerName"
+                  <input type="checkbox" id="{{biller.billerId}}"
+                  [value]="biller.billerId" checked="{{biller.chk_val=='true' ? 'checked':''}}"
                     (change)="searchBillerNameCHK(biller.billerId,$event)">
+                
 
                   {{biller.billerName}}
                 </div>
@@ -809,6 +811,7 @@
                   <label for="companyName" class="col-lg-12 ">Search Text</label>
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                    (inputCleared)="clearSelection($event)"
                     (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
                     [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
@@ -828,11 +831,13 @@
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Years</label>
                 <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
-                  <input type="checkbox" id="{{yrs}}" formControlName="years" (change)="yearsCHK(yrs,$event)">
-                  <!-- <input type="checkbox"> -->
+                  <input type="checkbox" id="{{yrs.year}}"  [value]="yrs.year"
+                  [checked]="yrs.chk_val === 'true'"
+                   (change)="yearsCHK(yrs.year,$event)">
 
-                  {{yrs}}
+                  {{yrs.year}}
                 </div>
+              
               </div>
             </div>
 
@@ -878,7 +883,7 @@
       </div>
       <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" (click)="getInvoice({})">
+        <button type="button" class="btn btn-primary" (click)="getSearch1();getInvoice({});">
           Search
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">

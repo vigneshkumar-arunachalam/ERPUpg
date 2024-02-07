@@ -30,7 +30,10 @@ export class Sidebar2Component implements OnInit {
     // let GlobalSearchPermission = k.filter((x: any) => x === 1148);
     // console.log("GlobalSearchPermission",GlobalSearchPermission)
     
-    this.loadMenus()
+    this.loadMenus();
+    setTimeout(() => {
+      this.loadMenus();
+    },3000);
 
   }
   get_permission(){

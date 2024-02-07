@@ -134,6 +134,9 @@ export class ProformaInvoiceComponent implements OnInit {
   upd_searchName: any;
   upd_searchFlag: any;
   searchFlag: any;
+
+  selected_billerId: any=[];
+  getSearch:boolean=false;
   constructor(private serverService: ServerService, private router: Router,private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.serverService.global_search.subscribe((val:any)=>{
       console.log("before parse",val)
@@ -269,17 +272,26 @@ export class ProformaInvoiceComponent implements OnInit {
     this.CBV_PaymentLink = event.target.checked;
     console.log(this.CBV_PaymentLink);
 
-  } searchBillerNameCHK(data: any, event: any) {
+  } 
+  searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
+    console.log("this.edit_array_SearchBiller_Checkbox",this.edit_array_SearchBiller_Checkbox)
     console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
+      if (!this.edit_array_SearchBiller_Checkbox) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+  
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
       console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
+      if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
@@ -287,7 +299,7 @@ export class ProformaInvoiceComponent implements OnInit {
       console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
-    
+
   }
   EditCHK_emailCC(data: any, event: any) {
     console.log("List - CheckBox ID", data);
@@ -812,9 +824,23 @@ export class ProformaInvoiceComponent implements OnInit {
     this.searchPIForm.get('company_Name').setValue('');
 
   }
+  getSearch1(){
+
+    this.getSearch=true;
+    }
+
+    clearSelection(event:any){
+      console.log("clear selection",event)
+      // console.log("event.customerId",event.customerId)
+      // console.log("event.customerName",event.customerName)
+      this.searchResult_CustomerID='';
+      this.searchResult_CustomerName='';
+      console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+      console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    }
   PIList(data: any) {
     this.spinner.show();
-
+  console.log("billerid",this.edit_array_SearchBiller_Checkbox);
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -827,6 +853,7 @@ export class ProformaInvoiceComponent implements OnInit {
     api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
+    api_quotationList.getSearch = this.getSearch;
    
     // if(this.upd_searchFlag==1){
     //   api_quotationList.search_txt = this.upd_searchName;
@@ -863,7 +890,14 @@ export class ProformaInvoiceComponent implements OnInit {
         this.Permission_share= response.proforma_permission_arr.share;
         this.Permission_view = response.proforma_permission_arr.view;
        
-
+        if (response.selected_filtervalues[0].biller_ids != '') {
+          this.selected_billerId = response.selected_filtervalues[0].biller_ids;
+          this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
+          this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_SearchBiller_Checkbox = Array.from(new Set(this.edit_array_SearchBiller_Checkbox));
+      
+        }
+        
       
        
 

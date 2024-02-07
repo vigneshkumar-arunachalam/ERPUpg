@@ -1,1 +1,193 @@
-<p>recurring-dateupdate works!</p>
+<div class="contents-section">
+    <div class="no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+                <div class="card-header color-dark">
+                    <h3 class="card-header-section">
+                        <a href="#" class="breadcrumb-item">
+                            <i class="fas  fa-home"></i>Home
+                        </a>
+                        <span class="breadcrumb-item active">Recurring Date Update
+                        </span>
+                    </h3>
+                </div>
+
+
+                <div class="card-body">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#dateUpdate">Date Update</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#newRecurringList">New Recurring List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#newRecurringTempList">New Recurring Temp List</a>
+                        </li>
+                    </ul>
+
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="dateUpdate">
+                            <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                <div class="table-responsive">
+                                    <table class="table mb-0 table-borderless">
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th class="userDatatable-title">
+                                                    checkbox
+                                                </th>
+
+
+                                               
+
+
+                                                <th class="userDatatable-title">
+                                                    S.No
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    cus Inv No
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    Invoice Date
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    Customer
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    Fixed Charge
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    Fixed Next Rec Dt
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    Usage Charge
+                                                </th>
+
+
+                                                <th class="userDatatable-title">
+                                                    Usage Next Rec Dt
+                                                </th>
+
+
+                                                <th class="userDatatable-title">Net Amount</th>
+
+
+                                                <th class="userDatatable-title">Action</th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody *ngFor="let rec of recurDateList;let i=index">
+                                            <tr>
+                                                <td>CH-III</td>
+                                         
+                                                <td>{{i+1}}</td>
+                                                <td>
+                                                    <span>
+                                                        {{rec.cus_invoice_no}}
+                                                    </span>
+                                                    <span *ngIf="(rec.post_send_status==0)"
+                                                        style="background-color: rgb(243 202 199);width: fit-content!important;">None</span>
+                                                    <span *ngIf="(rec.post_send_status==1)"
+                                                        style="background-color: rgb(243 202 199);width: fit-content!important;">Post</span>
+                                                    <span *ngIf="(rec.post_send_status==3)"
+                                                        style="background-color: rgb(243 202 199);width: fit-content!important;">Email</span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        {{rec.billDate}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        {{rec.customername}}
+                                                    </span>
+                                                    <span
+                                                        style="background-color: rgb(251, 255, 131);width: fit-content!important;">
+                                                        {{rec.reference_reseller_name_str}}</span>
+                                                </td>
+
+                                                <td>{{rec.fixed_total_amt}}</td>
+                                                <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
+                                                <td>{{rec.usage_total_amt}}</td>
+                                                <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
+                                                <td>{{rec.netPayment}}</td>
+                                                <td>
+                                                    <div class="page">
+
+                                                        <div class="dropdown">
+                                                            <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                            <ul class="dropdown__list">
+
+
+
+
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover3" title="Invoice send to Post"
+                                                                        data-toggle="modal"
+                                                                        data-target="#RC_invoiceSendtoPost"
+                                                                       >
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/letter-p-blue.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/letter-p-black.png">
+
+                                                                    </a>
+                                                                </li>
+
+                                                                <li class="dropdown__item">
+                                                                    <a class="hover3" title="PDF"
+                                                                        >
+                                                                        <img class="show"
+                                                                            src="assets/img/icon2/pdf-blue.png">
+                                                                        <img class="hide"
+                                                                            src="assets/img/icon2/pdf-black.png">
+                                                                    </a>
+
+                                                                </li>
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="newRecurringList">
+                            <p>hello</p>
+                        </div>
+                        <div class="tab-pane fade" id="newRecurringTempList">
+                            <p>sss</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

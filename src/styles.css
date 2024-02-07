@@ -1511,6 +1511,7 @@ a:hover h6 {
 .wizard7 .checkout-shipping-form .custom-checkbox input[type="checkbox"]:checked + label:after,
 .wizard9 .checkout-progress2 .step.completed span:first-child {
     background: #20c997;
+    
 }
 
 .iborder-success {
@@ -2724,7 +2725,8 @@ table.table-rounded tbody tr td {
 .custom-radio input[type="radio"] + label:after,
 .custom-radio.disabled input[type="radio"]:checked + label:after,
 .size-control-nav .nav-item .nav-link {
-    border: 1px solid #c6d0dc;
+    /* border: 1px solid #c6d0dc; */
+    border: 1px solid #2784f5;
 }
 
 .border-color {
