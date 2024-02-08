@@ -11,7 +11,7 @@
                         </span>
                     </h3>
                     <div class="quotation-btn-section">
-                        <button type="button" class="btn btn-primary">
+                        <button type="button" class="btn btn-primary" (click)="multipleAddressPrint()">
                             <i class="fas fa-line-chart" style="margin-right: 10px;"></i>Multiple Address Print
                         </button>
                         <button type="button" class="btn btn-warning ml-4" (click)="multipleRecurring()">
@@ -85,14 +85,22 @@
                                     </tr>
 
                                 </thead> 
+                                <br>
                                 <tr >
-                                    <td colspan="12" style="background-color: rgb(18,18,64);color: aliceblue;
-                                    text-align: left;">DID Invoice</td>
+                                    <td colspan="12" style="background-color: #fae9e9;
+                                  
+                                    text-align: center;
+                                    font-weight: 600;
+                                    color: #121240;
+                                    border-radius: 24px;
+                                    border: 1px dotted;">DID Invoice
+                                    </td>
                                     </tr>
+                                    <br>
                                 <tbody *ngFor="let rec of recurringCheckList;let i=index">
-                                    <tr  *ngIf="(rec.biller_color_state==1)">
+                                    <tr  *ngIf="(rec.biller_color_state==1 && rec.did_invoice_state==1)">
                                         <td  colspan="12"
-                                          [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left'}">
+                                          [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left','opacity':'0.8'}">
                                           {{rec.billerCode}}</td>
                                       </tr>
                                     <tr  *ngIf="(rec.did_invoice_state==1)">
@@ -123,7 +131,7 @@
                                         
                                         
                                         
-                                        <td style="background-color:#f1edf1">
+                                        <td style="background-color:#f4f9b7">
                                             <div class="d-flex">
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
                                                   <div class="checkbox-group-wrapper">
@@ -159,11 +167,11 @@
                                             <span style="background-color: rgb(251, 255, 131);width: fit-content!important;"> {{rec.reference_reseller_name_str}}</span>
                                         </td>
                                         
-                                        <td>{{rec.fixed_total_amt}}</td>
+                                        <td>{{rec.fixed_total_amt| number:'1.2-2'}}</td>
                                         <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
-                                        <td>{{rec.usage_total_amt}}</td>
+                                        <td>{{rec.usage_total_amt| number:'1.2-2'}}</td>
                                         <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
-                                        <td>{{rec.netPayment}}</td>
+                                        <td>{{rec.netPayment| number:'1.2-2'}}</td>
                                         <td>
                                             <div class="page">
 
@@ -202,12 +210,22 @@
                                 
 
                                 </tbody> 
+                                <br>
                                 <tr  >
-                                    <td colspan="12" style="background-color: rgb(18,18,64);color: aliceblue;text-align: left;">Normal Invoice</td></tr>
+                                    <td colspan="12" style="background-color: #fae9e9;
+                                  
+                                    text-align: center;
+                                    font-weight: 600;
+                                    color: #121240;
+                                    border-radius: 24px;
+                                    border: 1px dotted;"> Normal Invoice
+                                    </td>
+                                </tr>
+                                <br>
                                 <tbody *ngFor="let rec of recurringCheckList;let i=index">
-                                    <tr  *ngIf="(rec.biller_color_state==1)">
+                                    <tr  *ngIf="(rec.biller_color_state==1 &&  rec.did_invoice_state==0)">
                                         <td  colspan="12"
-                                          [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left'}">
+                                          [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left','opacity':'0.8'}">
                                           {{rec.billerCode}}</td>
                                       </tr>
                                     <tr  *ngIf="(rec.did_invoice_state==0)">
@@ -236,7 +254,7 @@
                                         </td>
                                         
                                         
-                                        <td style="background-color:#f1edf1">
+                                        <td style="background-color:#f4f9b7">
                                             <div class="d-flex">
                                                 <div class="userDatatable__imgWrapper d-flex align-items-center">
                                                   <div class="checkbox-group-wrapper">
@@ -272,11 +290,11 @@
                                             <span style="background-color: rgb(251, 255, 131);width: fit-content!important;"> {{rec.reference_reseller_name_str}}</span>
                                         </td>
                                         
-                                        <td>{{rec.fixed_total_amt}}</td>
+                                        <td>{{rec.fixed_total_amt| number:'1.2-2'}}</td>
                                         <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
-                                        <td>{{rec.usage_total_amt}}</td>
+                                        <td>{{rec.usage_total_amt| number:'1.2-2'}}</td>
                                         <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
-                                        <td>{{rec.netPayment}}</td>
+                                        <td>{{rec.netPayment| number:'1.2-2'}}</td>
                                         <td>
                                             <div class="page">
 
@@ -340,7 +358,7 @@ role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title text-center">Invoice Sending Method</h2>
+                <h2 class="col-lg-12 modal-title text-center">Invoice Sending Method</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

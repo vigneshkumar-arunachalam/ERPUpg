@@ -1199,6 +1199,9 @@ export class InvoiceComponent implements OnInit {
 
     this.getSearch=true;
   }
+  isArray(variable: any): boolean {
+    return Array.isArray(variable);
+  }
   getInvoice1(data: any) {
    
     console.log("billerid",this.edit_array_SearchBiller_Checkbox);
@@ -1301,7 +1304,11 @@ export class InvoiceComponent implements OnInit {
         if (response.selected_filtervalues[0].biller_ids != '') {
           this.selected_billerId = response.selected_billerId;
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
-          this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+        //  this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',').map((str: any) => parseInt(str, 10));
+          console.log("changed value doubt",this.edit_array_SearchBiller_Checkbox);
+          var check=this.isArray(this.edit_array_SearchBiller_Checkbox);
+          console.log("check doubt",check)
           
 
         }
@@ -1344,11 +1351,22 @@ export class InvoiceComponent implements OnInit {
       }
     });
   }
+  convertTupleToArray(y: [string, string, ...string[]]): string[] {
+    // Filter out any commas from the array
+    return y.filter(element => element !== ',');
+}
+
   getInvoice(data: any) {
     this.spinner.show();
     console.log("billerid",this.edit_array_SearchBiller_Checkbox);
+    var da=this.edit_array_SearchBiller_Checkbox;
+    if(this.isArray(this.edit_array_SearchBiller_Checkbox)==false){
+      this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array",this.edit_array_SearchBiller_Checkbox)
+    }
     var list_data = this.listDataInfo(data);
-
+    console.log("getdata",this.edit_array_SearchBiller_Checkbox);
+    
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
     api_req.moduleType = "invoice";

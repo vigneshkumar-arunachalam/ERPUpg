@@ -1,11 +1,10 @@
 /* .userDatatable table td{padding:4px 0px 4px!important;} */
-.userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
 /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
 .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
 .userDatatable .d-flex{justify-content: center;margin-right: 0;}
 .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
 
-.userDatatable  table  td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
+.userDatatable  table  td span{display: block; }
 
 
 
@@ -116,8 +115,8 @@ i.fa.fa-bars {
   color: #fff!important;
 }
 
-tr:nth-child(even) {background: rgb(241, 238, 241)}
-tr:nth-child(odd) {background: #FFF}
+/* tr:nth-child(even) {background: rgb(241, 238, 241)}
+tr:nth-child(odd) {background: #FFF} */
 
 .add-reseller-table-section tr:nth-child(even) {background: #fff;line-height: 44px;}
 .add-reseller-table-section tr:nth-child(odd) {background:#fff;line-height: 44px;}
@@ -515,28 +514,6 @@ label.col-lg-2.col-form-label{text-align: right;}
   background-color: #ffefef;
   cursor: not-allowed;
 }
-
-.userDatatable table tr td span{
-  white-space: normal;
-}
-.userDatatable table tr td:nth-child(4) {
-  width: 25%;
-}
-.userDatatable table tr td:nth-child(4) span{
-  width: 90%;
-}
-.userDatatable table tr td:nth-child(5) span,.userDatatable table tr td:nth-child(6) span,
-.userDatatable table tr td:nth-child(7) span,.userDatatable table tr td:nth-child(3) span,
-.userDatatable table tr td:nth-child(8) span{
-  width: 100%;
-}
-.userDatatable table tr td:nth-child(5),.userDatatable table tr td:nth-child(6){
-  width: 10%;
-}
-#suspendInvoiceFormId .userDatatable table tr td:nth-child(4) {width: 15%;}
-#suspendInvoiceFormId .userDatatable table tr td:nth-child(2) span{
-  width: 100%;
-}
 #suspendInvoiceFormId .userDatatable table tr th{padding: 10px 4px;}
 .userDatatable-header th{
   background: #6d5dfc;
@@ -587,7 +564,6 @@ label.col-lg-2.col-form-label{text-align: right;}
 }
 
 
-tr:hover {background-color: rgb(174, 242, 140)!important;}
 
 
 
@@ -599,8 +575,16 @@ tr:hover {background-color: rgb(174, 242, 140)!important;}
   height: 170%;
 }
 
+tbody:nth-child(even) {
+  background-color: rgb(241, 238, 241)!important;
+}
 
+/* Styles for odd tbody elements */
+tbody:nth-child(odd) {
+  background-color: #fff !important;
+}
 
+tbody:hover {background-color: rgb(174, 242, 140)!important;}
 
 
 /* search starts */
@@ -672,7 +656,14 @@ tr:hover {background-color: rgb(174, 242, 140)!important;}
   color:#daddf5!important;
 }
 
-
-
+.userDatatable td:nth-child(4){
+  width: 15%;
+}
+.userDatatable td:nth-child(6){
+  width: 25%;
+}
+.userDatatable table td{
+  white-space: normal;
+}
 
 

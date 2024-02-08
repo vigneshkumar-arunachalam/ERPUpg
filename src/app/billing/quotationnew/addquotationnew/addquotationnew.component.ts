@@ -881,7 +881,7 @@ export class AddquotationnewComponent implements OnInit {
 
       for (let i = 0; i < addr.length; i++) {
 
-        if ($('#pd_productName_txtbox_' + i).val() == '') {
+        if ($('#pd_productName_txtbox_' + i).val() == '' && ($('#pd_productName_txtArea_'+i).val()=='')) {
           iziToast.warning({
             message: "Select Minimum 1 Product Details",
             position: 'topRight'

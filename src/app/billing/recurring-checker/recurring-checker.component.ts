@@ -148,15 +148,76 @@ export class RecurringCheckerComponent implements OnInit {
     };
 
   }
+  multipleAddressPrint(){
+    var url = " https://laravelapi.erp1.cal4care.com/api/recurring_date_update/getaddresspdfShow?billId=" +  btoa(this.ckbx_array) + "";
+    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+
+
+   
+  }
+  // multipleAddressPrint(){
+  //   this.spinner.show();
+  //   let api_req: any = new Object();
+  //   let rc1_api: any = new Object();
+  //   api_req.moduleType = "recurring_date_update";
+  //   api_req.api_url = "recurring_date_update/getaddresspdfShow";
+  //   api_req.access_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   rc1_api.action = "getaddresspdfShow";
+  //   rc1_api.user_id = localStorage.getItem('erp_c4c_user_id');
+  //   if(this.ckbx_array==undefined || this.ckbx_array==''|| this.ckbx_array=='undefined'){
+  //     iziToast.error({
+  //       message: "Choose Bill Id",
+  //       position: 'topRight'
+  //     });
+  //   }else{
+  //     rc1_api.billId = this.ckbx_array;
+  //   }
+   
+  //   api_req.element_data = rc1_api;
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //    console.log("response--print",response)
+  //     if (response != '') {
+
+  //       this.spinner.hide();
+  //       var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + 62723 + "";
+  //       window.open(url, '_blank');
+  //       iziToast.success({
+  //         message: "Success",
+  //         position: 'topRight'
+  //       });
+
+  //     } else {
+  //       this.spinner.hide();
+  //       iziToast.warning({
+  //         message: "update failed",
+  //         position: 'topRight'
+  //       });
+  //     }
+
+  //   }), (error: any) => {
+  //     this.spinner.hide();
+  //     iziToast.error({
+      
+  //       message: "Error",
+  //       position: 'topRight'
+  //     });
+  //     console.log("error",error)
+
+  //   };
+
+  // }
   recurringStatusChecked(billid: any,chk_state:any) {
     Swal.fire({
-      title: 'Are you sure to Delete?',
+      title: 'Are you sure to Update to next level?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete it!'
+      confirmButtonText: 'Yes, Update it!'
     }).then((result: any) => {
       if (result.value) {
 

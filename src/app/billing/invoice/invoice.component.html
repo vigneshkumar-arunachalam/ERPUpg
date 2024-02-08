@@ -2592,7 +2592,7 @@
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Invoice Type</label>
                 <div class="col-lg-12">
-                  <select id="Payment" class="form-control" formControlName="InvType">
+                  <select id="Payment" class="form-control" formControlName="InvType" (change)="dynamicChange($event)">
                     <option [ngValue]="null" selected>Select Invoice Type</option>
                     <option *ngFor="let exp of exportState_Radio" value="{{exp.id}}">
                       {{exp.name}}

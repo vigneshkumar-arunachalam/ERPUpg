@@ -37,73 +37,129 @@
                                                 <th class="userDatatable-title">
                                                     checkbox
                                                 </th>
-
-
-                                               
-
-
+                                       
+                                       
+                                                <th class="userDatatable-title">
+                                                    A.Print
+                                                </th>
+                                        
+                                   
                                                 <th class="userDatatable-title">
                                                     S.No
                                                 </th>
-
-
+                                        
+                               
                                                 <th class="userDatatable-title">
                                                     cus Inv No
                                                 </th>
-
-
+                                         
+                                 
                                                 <th class="userDatatable-title">
                                                     Invoice Date
                                                 </th>
-
-
+                                    
+                                     
                                                 <th class="userDatatable-title">
                                                     Customer
                                                 </th>
-
-
+                                     
+                                     
                                                 <th class="userDatatable-title">
                                                     Fixed Charge
                                                 </th>
-
-
+                                     
+                                          
                                                 <th class="userDatatable-title">
-                                                    Fixed Next Rec Dt
+                                                    Fixed Charge Charges
                                                 </th>
-
-
+                                      
+                                
                                                 <th class="userDatatable-title">
                                                     Usage Charge
                                                 </th>
-
-
+                                            
+                                       
                                                 <th class="userDatatable-title">
-                                                    Usage Next Rec Dt
+                                                    Usage charge uu 
                                                 </th>
-
-
+                                       
+                                        
                                                 <th class="userDatatable-title">Net Amount</th>
-
-
+                                        
+                                        
                                                 <th class="userDatatable-title">Action</th>
                                             </tr>
-
-                                        </thead>
-                                        <tbody *ngFor="let rec of recurDateList;let i=index">
-                                            <tr>
-                                                <td>CH-III</td>
-                                         
+        
+                                        </thead> 
+                                        <br>
+                                        <tr >
+                                            <td colspan="12" style="background-color: #fae9e9;
+                                          
+                                            text-align: center;
+                                            font-weight: 600;
+                                            color: #121240;
+                                            border-radius: 24px;
+                                            border: 1px dotted;">DID Invoice
+                                            </td>
+                                            </tr>
+                                            <br>
+                                        <tbody *ngFor="let rec of recurringCheckList;let i=index">
+                                            <tr  *ngIf="(rec.biller_color_state==1 && rec.did_invoice_state==1)">
+                                                <td  colspan="12"
+                                                  [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left','opacity':'0.8'}">
+                                                  {{rec.billerCode}}</td>
+                                              </tr>
+                                            <tr  *ngIf="(rec.did_invoice_state==1)">
+                                                <td>
+                                                    <ng-container *ngIf="rec.checker_state == 0 && (rec.checkerUser1 == this.user_Ids)">
+                                                        <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                                      
+                                                    </ng-container>
+                                                    <ng-container *ngIf="rec.checker_state == 1 && (rec.checkerUser2 == this.user_Ids)">
+                                                        <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                                    </ng-container>
+                                                    <ng-container *ngIf="rec.checker_state == 2 && (rec.checkerUser3 == this.user_Ids)">
+                                                        <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                                    </ng-container>
+                                                    <ng-container >
+                                                        <ng-container *ngIf="rec.checker_state == 0 && !(rec.checkerUser1 == this.user_Ids)" >
+                                                            <span>CH-I</span>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="rec.checker_state == 1 &&  !(rec.checkerUser2 == this.user_Ids)">
+                                                            <span>CH-II</span>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="rec.checker_state == 2 &&  !(rec.checkerUser3 == this.user_Ids)">
+                                                            <span>CH-III</span>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </td>
+                                                
+                                                
+                                                
+                                                
+                                                <td style="background-color:#f4f9b7">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                          <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                              <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                <input class="checkbox" type="checkbox" id="check-rc2-gr-{{i}}"
+                                                                  (change)="EditCHK(rec.billId,$event)">
+                                                                <label for="check-rc2-gr-{{i}}"></label>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                </td>
                                                 <td>{{i+1}}</td>
                                                 <td>
                                                     <span>
                                                         {{rec.cus_invoice_no}}
                                                     </span>
-                                                    <span *ngIf="(rec.post_send_status==0)"
-                                                        style="background-color: rgb(243 202 199);width: fit-content!important;">None</span>
-                                                    <span *ngIf="(rec.post_send_status==1)"
-                                                        style="background-color: rgb(243 202 199);width: fit-content!important;">Post</span>
-                                                    <span *ngIf="(rec.post_send_status==3)"
-                                                        style="background-color: rgb(243 202 199);width: fit-content!important;">Email</span>
+                                                    <span *ngIf="(rec.post_send_status==0)" style="background-color: rgb(243 202 199);width: fit-content!important;">None</span>
+                                                    <span *ngIf="(rec.post_send_status==1)" style="background-color: rgb(243 202 199);width: fit-content!important;">Post</span>
+                                                    <span *ngIf="(rec.post_send_status==3)" style="background-color: rgb(243 202 199);width: fit-content!important;">Email</span>
                                                 </td>
                                                 <td>
                                                     <span>
@@ -112,62 +168,191 @@
                                                 </td>
                                                 <td>
                                                     <span>
-                                                        {{rec.customername}}
+                                                        {{rec.customerName}}
                                                     </span>
-                                                    <span
-                                                        style="background-color: rgb(251, 255, 131);width: fit-content!important;">
-                                                        {{rec.reference_reseller_name_str}}</span>
+                                                    <span style="background-color: rgb(251, 255, 131);width: fit-content!important;"> {{rec.reference_reseller_name_str}}</span>
                                                 </td>
-
-                                                <td>{{rec.fixed_total_amt}}</td>
+                                                
+                                                <td>{{rec.fixed_total_amt| number:'1.2-2'}}</td>
                                                 <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
-                                                <td>{{rec.usage_total_amt}}</td>
+                                                <td>{{rec.usage_total_amt| number:'1.2-2'}}</td>
                                                 <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
-                                                <td>{{rec.netPayment}}</td>
+                                                <td>{{rec.netPayment| number:'1.2-2'}}</td>
                                                 <td>
                                                     <div class="page">
-
+        
                                                         <div class="dropdown">
-                                                            <button class="btn1"><i class="fa fa-bars"></i></button>
-                                                            <ul class="dropdown__list">
-
-
-
-
-                                                                <li class="dropdown__item">
-                                                                    <a class="hover3" title="Invoice send to Post"
-                                                                        data-toggle="modal"
-                                                                        data-target="#RC_invoiceSendtoPost"
-                                                                       >
-                                                                        <img class="show"
-                                                                            src="assets/img/icon2/letter-p-blue.png">
-                                                                        <img class="hide"
-                                                                            src="assets/img/icon2/letter-p-black.png">
-
-                                                                    </a>
-                                                                </li>
-
-                                                                <li class="dropdown__item">
-                                                                    <a class="hover3" title="PDF"
-                                                                        >
-                                                                        <img class="show"
-                                                                            src="assets/img/icon2/pdf-blue.png">
-                                                                        <img class="hide"
-                                                                            src="assets/img/icon2/pdf-black.png">
-                                                                    </a>
-
-                                                                </li>
-
-
-                                                            </ul>
+                                                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                          <ul class="dropdown__list">
+                              
+                              
+                              
+                              
+                                                            <li class="dropdown__item">
+                                                              <a class="hover3" title="Invoice send to Post" data-toggle="modal"
+                                                                data-target="#RC_invoiceSendtoPost" (click)="get_invSendPost(rec.billId)">
+                                                                <img class="show" src="assets/img/icon2/letter-p-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/letter-p-black.png">
+                              
+                                                              </a>
+                                                            </li>
+                              
+                                                            <li class="dropdown__item">
+                                                              <a class="hover3" title="PDF" (click)="pdf(rec.billId)">
+                                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                              </a>
+                                                             
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="PDF" (click)="skip(rec.billId)">
+                                                                  <img class="show" src="assets/img/icon2/skip-blue.png">
+                                                                  <img class="hide" src="assets/img/icon2/skip-black.png">
+                                                                </a>
+                                                               
+                                                              </li>
+                    
+                              
+                                                          </ul>
                                                         </div>
-                                                    </div>
-
-
+                                                      </div>
+                                                
+        
                                                 </td>
                                             </tr>
-                                        </tbody>
-
+                                        
+        
+                                        </tbody> 
+                                        <br>
+                                        <tr  >
+                                            <td colspan="12" style="background-color: #fae9e9;
+                                          
+                                            text-align: center;
+                                            font-weight: 600;
+                                            color: #121240;
+                                            border-radius: 24px;
+                                            border: 1px dotted;"> Normal Invoice
+                                            </td>
+                                        </tr>
+                                        <br>
+                                        <tbody *ngFor="let rec of recurringCheckList;let i=index">
+                                            <tr  *ngIf="(rec.biller_color_state==1 &&  rec.did_invoice_state==0)">
+                                                <td  colspan="12"
+                                                  [ngStyle]="{'backgroundColor': rec.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px','text-align':'left','opacity':'0.8'}">
+                                                  {{rec.billerCode}}</td>
+                                              </tr>
+                                            <tr  *ngIf="(rec.did_invoice_state==0)">
+                                                <td>
+                                                    <ng-container *ngIf="rec.checker_state == 0 && (rec.checkerUser1 == this.user_Ids)">
+                                                        <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                                      
+                                                    </ng-container>
+                                                    <ng-container *ngIf="rec.checker_state == 1 && (rec.checkerUser2 == this.user_Ids)">
+                                                        <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                                    </ng-container>
+                                                    <ng-container *ngIf="rec.checker_state == 2 && (rec.checkerUser3 == this.user_Ids)">
+                                                        <input type="checkbox" (change)="recurringStatusChecked(rec.billId,rec.checker_state)">
+                                                    </ng-container>
+                                                    <ng-container >
+                                                        <ng-container *ngIf="rec.checker_state == 0 && !(rec.checkerUser1 == this.user_Ids)" >
+                                                            <span>CH-I</span>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="rec.checker_state == 1 &&  !(rec.checkerUser2 == this.user_Ids)">
+                                                            <span>CH-II</span>
+                                                        </ng-container>
+                                                        <ng-container *ngIf="rec.checker_state == 2 &&  !(rec.checkerUser3 == this.user_Ids)">
+                                                            <span>CH-III</span>
+                                                        </ng-container>
+                                                    </ng-container>
+                                                </td>
+                                                
+                                                
+                                                <td style="background-color:#f4f9b7">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                          <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                              <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                <input class="checkbox" type="checkbox" id="check-rc-grp1-{{i}}"
+                                                                  (change)="EditCHK(rec.billId,$event)">
+                                                                <label for="check-rc-grp1-{{i}}"></label>
+                                                              </div>
+                                                            </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                </td>
+                                                <td>{{i+1}}</td>
+                                                <td>
+                                                    <span>
+                                                        {{rec.cus_invoice_no}}
+                                                    </span>
+                                                    <span *ngIf="(rec.post_send_status==0)" style="background-color: rgb(243 202 199);width: fit-content!important;">None</span>
+                                                    <span *ngIf="(rec.post_send_status==1)" style="background-color: rgb(243 202 199);width: fit-content!important;">Post</span>
+                                                    <span *ngIf="(rec.post_send_status==3)" style="background-color: rgb(243 202 199);width: fit-content!important;">Email</span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        {{rec.billDate}}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <span>
+                                                        {{rec.customerName}}
+                                                    </span>
+                                                    <span style="background-color: rgb(251, 255, 131);width: fit-content!important;"> {{rec.reference_reseller_name_str}}</span>
+                                                </td>
+                                                
+                                                <td>{{rec.fixed_total_amt| number:'1.2-2'}}</td>
+                                                <td>{{rec.fixed_next_rec_date}}({{rec.fixed_duration}})</td>
+                                                <td>{{rec.usage_total_amt| number:'1.2-2'}}</td>
+                                                <td>{{rec.usage_next_rec_date}}({{rec.usage_duration}})</td>
+                                                <td>{{rec.netPayment| number:'1.2-2'}}</td>
+                                                <td>
+                                                    <div class="page">
+        
+                                                        <div class="dropdown">
+                                                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                          <ul class="dropdown__list">
+                              
+                              
+                              
+                              
+                                                            <li class="dropdown__item">
+                                                              <a class="hover3" title="Invoice send to Post" data-toggle="modal"
+                                                                data-target="#RC_invoiceSendtoPost" (click)="get_invSendPost(rec.billId)">
+                                                                <img class="show" src="assets/img/icon2/letter-p-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/letter-p-black.png">
+                              
+                                                              </a>
+                                                            </li>
+                              
+                                                            <li class="dropdown__item">
+                                                              <a class="hover3" title="PDF" (click)="pdf(rec.billId)">
+                                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                                              </a>
+                                                             
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="PDF" (click)="skip(rec.billId)">
+                                                                  <img class="show" src="assets/img/icon2/skip-blue.png">
+                                                                  <img class="hide" src="assets/img/icon2/skip-black.png">
+                                                                </a>
+                                                               
+                                                              </li>
+                    
+                              
+                                                          </ul>
+                                                        </div>
+                                                      </div>
+                                                
+        
+                                                </td>
+                                            </tr>
+                                           
+                                        </tbody> 
+        
                                     </table>
 
                                 </div>
