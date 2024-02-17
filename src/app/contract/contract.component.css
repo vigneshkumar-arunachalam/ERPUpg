@@ -1,125 +1,99 @@
-#addCustomerContractId{
-    padding-right: 0px !important;
-}
-#addCustomerContractId .modal-dialog{
-    max-width: 97%;
-}
-#addCustomerContractId tr th{
-    width: 200px;
-    margin: 0px 10px;
+.btn.btn-primary[disabled] {
+  background-color: #0c08e6f5;
 }
 
-#editCustomerContractId{
-    padding-right: 0px !important;
+.userDatatable table td {
+  /* padding: 4px 0px 0px !important; */
+  padding: 6px 14px!important;
 }
-#editCustomerContractId .modal-dialog{
-    max-width: 57%;
+
+.userDatatable table tr td span {
+  display: block;
+  white-space: nowrap;
+  /* width: 120px; */
+  width: auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-#editCustomerContractId .tr .th{
-    width: 200px;
-    margin: 0px 10px;
+
+/* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
+.userDatatable__imgWrapper.d-flex.align-items-center {
+  justify-content: center;
 }
-/* #fileAttachmentCustomerContractId{
-    padding-right: 0px !important;
-    max-width: 85%;
-} */
-.contractFileAttachmentCSS{
-  width: 80%;
+
+.userDatatable .d-flex {
+  justify-content: center;
+  margin-right: 0;
+}
+
+.userDatatable tbody .custom-checkbox input[type="checkbox"]+label {
+  margin-right: 0px !important;
+}
+
+/* .add-contact-table-section  table tr th span{color: black;} */
+
+.userDatatable-title {
+  text-align: left !important;
+  cursor: pointer !important;
 }
 
 
-/* #fileAttachmentCustomerContractId .tr .th{
-    width: 200px;
-    margin: 0px 10px;
-} */
-/* #fileContractGenerateId .tr .th{
-    width: 200px;
-    margin: 0px 10px;
-} */
-/* #fileContractGenerateId.td .th{
-    padding-right: 0px !important;
-} */
-#fileContractTemporaryId{
-    padding-right: 0px !important;
-}
-#fileContractTemporaryId .modal-dialog{
-    max-width: 97%;
-    max-height: 95%;
-    
-}
-.temporaryFileGenerateCSS {
-  height: 550px;
-  max-width: 97%;
-  max-height: 95%;
-  
-}
-.demoTable{
-    /* border: 1px solid black; */
-    width: 100%;
-   
-  
-}
-.userDatatable table td{padding:4px 0px 0px!important;}
-  .userDatatable  table tr td span{display: block;  white-space: nowrap; width: 120px; overflow: hidden;text-overflow: ellipsis; }
-  /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
-  .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
-  .userDatatable .d-flex{justify-content: center;margin-right: 0;}
-  .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
-  
-  /* .add-contact-table-section  table tr th span{color: black;} */
-
-
-  
-
-  .dropdown {
-    position: relative;
-  }
-  .dropdown__list {
-    z-index:2;
-    position: absolute;
-    display: none;
-    padding: 10px;
-    min-width: 100%;
-    background: #fff;
-    border: 1px solid;
-    text-align: center;
-    cursor: pointer;
-  }
-  .dropdown__item {
-    list-style-type: none;
-  }
-  .dropdown__link {
-    display: block;
-    padding: 0.3em 1em;
-    background: white;
-    color: var(--dropdown__link_clr);
-    text-decoration: none;
-  }
-  .dropdown__link:hover {
-    opacity: 0.9;
-  }
-  .dropdown:hover .button {
-    opacity: 0.9;
-  }
-  .dropdown:hover .dropdown__list {
-    display: flex;
-    position: absolute;
-    top: 0;
-    right: 31px;
-   
-  }
-  .view:hover {
-    background: rgba(224, 71, 166, 0.1);
-      -webkit-border-radius: 50%;
-      border-radius: 50%;
-  }
-  .remove:hover {
-   
-    background: rgba(10, 41, 2, 0.1);
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
+.dropdown {
+  position: relative;
 }
 
+.dropdown__list {
+  z-index: 2;
+  position: absolute;
+  display: none;
+  padding: 10px;
+  min-width: 100%;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid;
+  text-align: center;
+}
+
+.dropdown__item {
+  list-style-type: none;
+}
+
+.dropdown__link {
+  display: block;
+  padding: 0.3em 1em;
+  background: white;
+  color: var(--dropdown__link_clr);
+  text-decoration: none;
+}
+
+.dropdown__link:hover {
+  opacity: 0.9;
+}
+
+.dropdown:hover .button {
+  opacity: 0.9;
+}
+
+.dropdown:hover .dropdown__list {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 31px;
+
+}
+
+.view:hover {
+  background: rgba(71, 2, 45, 0.3);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+
+.remove:hover {
+
+  background: rgba(17, 71, 3, 0.3);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
 
 .hover1:hover {
    
@@ -135,277 +109,306 @@ border-radius: 50%;
 }
 .hover3:hover {
 
-background: rgba(5, 58, 71, 0.5);
+background: rgba(255, 228, 196, 0.9);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover4:hover {
 
-background: rgba(91, 114, 7, 0.5);
+  background: rgba(243, 215, 247, 0.549);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover5:hover {
 
-background: rgba(12, 1, 39, 0.973);
+background: rgba(12, 1, 39, 0.773);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover6:hover {
-   
-  background: rgba(228, 231, 14, 0.973);
+  background: rgba(234, 238, 33, 0.5);
+ 
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
 .hover7:hover {
 
-background: rgb(34, 46, 32);
+/* background: rgba(121, 141, 117, 0.5); */
+background: rgba(54, 174, 204, 0.219);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover8:hover {
 
-background: rgba(23, 198, 241, 0.973);
+
+background: rgb(247, 36, 36,0.75);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover9:hover {
 
-background: rgba(212, 157, 219, 0.849);
+  background: rgba(20, 175, 66, 0.549);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover10:hover {
 
-background: rgba(36, 22, 153, 0.555);
+background: rgb(245, 152, 31,0.6);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover11:hover {
-   
-  background: rgba(219, 136, 138, 0.5);
+  background: rgba(95, 158, 160, 0.5);
+ 
   -webkit-border-radius: 50%;
   border-radius: 50%;
 }
 .hover12:hover {
 
-background: rgba(151, 179, 144, 0.5);
+background: rgba(184, 167, 15, 0.9);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 .hover13:hover {
 
-background: rgba(59, 79, 83, 0.5);
+  background: rgba(14, 21, 26, 0.736);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
 
 
-  
-  .dropdown a {
-    font-size: 14px;
-    /* margin: 5px 8px!important; */
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 37px;
-    width: 37px;
-  }
-  /* .dropdown:hover .dropdown__list {
+.dropdown a {
+  font-size: 14px;
+  /* margin: 5px 8px!important; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 37px;
+  width: 37px;
+}
+
+/* .dropdown:hover .dropdown__list {
     display: block;
   }
   .view:hover{background-color: rgb(52, 74, 172);} */
-  
-  .button {
-    padding: 0.6em 1.5em;
-  
-  }
-  .btn1 {
-    background-color: 	 #20c997;
-    border: none;
-    color: white;
-    padding: 0;
-    font-size: 16px;
-    width: 30px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
-    border-radius: 50%;
-  }
-  .btn1:hover {
-    background-color: rgb(221, 109, 152);
-  }
-  i.fa.fa-bars {
-    color: #fff!important;
+
+.button {
+  padding: 0.6em 1.5em;
+
 }
 
-tr:nth-child(even) {background: rgb(239, 241, 238)}
-tr:nth-child(odd) {background: #FFF}
-
-
-
-
-
-
-
-
-
-
-
-/* Contract File Attachment modal css */
-.contractcss .modal-header .modal-title {
-  color:#ffff;
+.btn1 {
+  background-color: #007cbc;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 16px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-radius: 50%;
 }
-.contractcss .modal-header  {
 
-  background-color: rgb(91, 148, 84);
+.btn1:hover {
+  background-color: rgb(221, 109, 152);
 }
- .contractcss .modal-body label{
-  color:#131212;
 
- }
- #fileAttachmentCustomerContractId .modal-dialog{
-  max-width: 47%;
+i.fa.fa-bars {
+  color: #fff !important;
 }
- .contractcss .modal-body select{
-  color:#beb8b8;
-  
- }
- .contractcss .modal-body select option{
-  margin: 40px;
-  background: rgba(0, 0, 0, 0.3);
-  color: #fff;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 
-  
- }
+tr:nth-child(even) {
+  background: rgb(239, 241, 238)
+}
+
+tr:nth-child(odd) {
+  background: #FFF
+}
+
+.addcontractmastercss {
+  font-weight: 500;
+}
+/* .addcontractmastercss .form-control {
+  border: 1px solid   #beeaca!important;
+}
+.addcontractmastercss .form-control:focus {
+  color: #495057;
+  background-color: #fff;
+    border-color:   #3d0096!important;
+  outline: 0;
+  box-shadow: 0 0, 0 5px 20px #5f63f21a;
+  padding-left: 4px !important;
+} */
+.addcontractmastercss select{
+  /* padding: 0 !important; */
+  padding-left: 4px !important;
+}
+.alertdangerCustomCSS {
+  /* color: #ff4d4f; */
+  color: white!important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+  margin: 10px 15px !important;
  
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+
+.alertdangerCustomCSS1 {
+  /* color: #ff4d4f; */
+  color: white!important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+
+
+
+
+
+
+
+
+
+table.add-contact-table-section {
+  width: 100%;
+}
+
+
+.userDatatable-content .form-control {
+  width: 100%;
+}
+
+.userDatatable-content,
+.userDatatable-inline-title h6 {
+  padding: 5px 10px;
+}
+
+.userDatatable-title {
+  text-align: right;
+  display: block;
+  padding-right: 10px;
+}
+
+
+
+label.col-form-label {
+  padding-right: 10px;
+}
+
+/* .col-form-label {
+  width: 120px;
+} */
+
+section.right_section {
+  padding: 20px;
+}
+
+
+
+input.form-control {
+  padding: 4px 8px;
+}
+
+
+.userDatatable-content .form-control {
+  width: 100%;
+}
+
+.userDatatable-content,
+.userDatatable-inline-title h6 {
+  padding: 5px 10px;
+}
+
+.userDatatable-title {
+  text-align: right;
+  display: block;
+  padding-right: 10px;
+}
+
+.add-contact-table-section tr {
+  height: 50px;
+  border: 1px solid #ddd;
+}
+
+
+
+#TextEditorId .modal-dialog {
+  max-width: 65%;
+}
+
+#TextEditorId label {
+  font-weight: 500;
+}
+.card.quotation .card-header {
+  display: flex;
+}
+.userDatatable button {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.checkbox {
+  margin-right: 10px;
+}
+.email-cc-template{
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.email-cc-template::-webkit-scrollbar {
+  width: 4px;
+}
+
+/* Track */
+.email-cc-template::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
  
-
-
-/* Contract File Attachment modal css */
-.contractgeneratecss .modal-header .modal-title {
-  color:#ffff;
-}
-.contractgeneratecss .modal-header  {
-
-  background-color: rgb(29, 78, 97);
-}
-.contractgeneratecss .modal-header h2 {
-
-  color:#ffff;
-}
- .contractgeneratecss .modal-body label{
-  color:#131212;
-
- }
- #fileAttachmentCustomerContractId .modal-dialog{
-  max-width: 67%;
-}
- .contractgeneratecss .modal-body select{
-  color:#161515;
-  
- }
- .contractgeneratecss .modal-body select option{
-  margin: 40px;
-  background: rgba(59, 54, 53, 0.966);
-  color: #fff;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.651);
-
-  
- }
- .headingLabel{
-  font-weight:540;
-  font-size:medium;
- }
-
- .remarkcss{
-  
-  font-size: medium;
-  font-weight:normal;
- }
-
-
- .invoicecss  .modal-header .modal-title {
-  color:#ffff;
-}
-.invoicecss .modal-header  {
-
-  background-color: rgb(29, 78, 97);
-}
-.invoicecss .modal-header h2 {
-
-  color:#ffff;
-}
-.invoicecss .modal-body label{
-  color:#131212;
-
- }
- .invoicecss  .modal-header .modal-title {
-  color:#ffff;
-}
-.invoicecss .modal-header  {
-
-  background-color: rgb(29, 78, 97);
-}
-.invoicecss .modal-header h2 {
-
-  color:#ffff;
-}
-.invoicecss .modal-body label{
-  color:#131212;
-
- }
-
- .add-contact-table-section tr{
-  border: 1px solid #ddd;
- }
- .add-contact-table-section tr th,  .add-contact-table-section tr td{
-  padding: 10px 15px;
-  border: 1px solid #ddd;
- }
- #addCustomerContractId .modal-dialog{
-  width: 60%;
- }
- .add-contact-table-section tr:nth-child(even) {background: #fff}
- .add-contact-table-section tr:nth-child(odd) {background:#fff}
-
-
- .abc input {
- height: 200px !important;
- width: 20% !important;
+/* Handle */
+.email-cc-template::-webkit-scrollbar-thumb {
+  background: #888; 
 }
 
-#TextEditorId  label{
-  color:#131212;
-  font-weight:600;
- }
+/* Handle on hover */
+.email-cc-template::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
 
- #ApproveStatusId .modal-dialog{
-  width: 30%;
-  max-height: 30%;
- }
- #ApproveStatusId  label{
-  color:#131212;
-  font-weight:500;
- }
- #BizzFileTextEditorId label{
-  color:#131212;
-  font-weight:600;
- }
- .swal2-container{
-  z-index: 9999 !important;
- }
+/* #TextEditorId span{width: 138px;    display: inline-block;} */
+label.col-lg-2.col-form-label{text-align: right;}
 
 
 
 
+ /* .textareaformcontrol{
+  border: 1px solid   #0c7027!important;
+ } */
 
- .ng-autocomplete 
+
+
+
+ /* .ng-autocomplete 
  ::ng-deep .autocomplete-container .input-container input{
+  border: 1px solid #274f99!important;
    background: transparent;
  }
  .ng-autocomplete 
@@ -416,7 +419,29 @@ tr:nth-child(odd) {background: #FFF}
    background-origin: border-box;
    background-clip: padding-box, border-box;
    animation: bg-hue 2s linear infinite;
+ } */
+ .ng-autocomplete{
+  padding: 0!important;
  }
+ .contents-section .form-control,  .ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+} 
+.contents-section .form-control:focus,  .ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input:focus{
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+  border: 2px solid transparent!important;
+    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+}
 
  .form-control{
   border: 1px solid #e1e1e1;
@@ -440,24 +465,236 @@ tr:nth-child(odd) {background: #FFF}
 
 label {
     font-weight: 600;
-    color: #009688!important;
+    /* color: #009688!important; */
+}
+.head-depart-per-section{display:flex;}
+.head-depart-per{
+  background: linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  width: 100px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  margin-right:20px;
+}
+#setActualCostId .form-control{
+  height: auto;
 }
 
-ng-autocomplete.ng-autocomplete.ng-untouched.ng-pristine.ng-valid, ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
-  padding: 0px;
+
+.form-control:disabled,
+.form-control[readonly] {
+    background-color: #f3d2f0 !important;
+    opacity: 0.6;
+    color: black!important;
 }
 
-.alertdangerCustomCSS1 {
-  /* color: #ff4d4f; */
-  color: white!important;
-  background-color: #ffe5e5;
-  border-color: #ffe5e5;
-  width: 100% !important;
+/* .tox-statusbar__branding a{
+  display:none ;
+} */
 
+.nameCSS{
+  font-weight: 400;
+  color: #020096!important;
+
+
+}
+.heightCSS{
+  line-height: 35px;
+}
+
+
+
+
+
+
+
+/*** CSS FOR SEARCH IN SHARED QUOTATION-START **/
+.search{
+  position: relative;
+  box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+    
+  }
+
+  .search input{
+
+   height: 60px;
+   text-indent: 25px;
+   border: 2px solid #d6d4d4;
+
+
+  }
+
+
+  .search input:focus{
+
+   box-shadow: none;
+   border: 2px solid blue;
+
+
+  }
+
+  .search .fa-search{
+
+   position: absolute;
+   top: 20px;
+   left: 16px;
+
+  }
+
+  .search button{
+
+   position: absolute;
+   top: 5px;
+   right: 5px;
+   height: 50px;
+   width: 110px;
+   /* background: rgb(33, 33, 80); */
+   background: #009688;
+  }
+  /*** CSS FOR SEARCH IN SHARED QUOTATION-END **/
+  .userDatatable .page .dropdown button{
+    border-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.userDatatable-header th{
+  background: #6d5dfc;
+}
+.userDatatable-header th span{
+  color: #e4ebf5;
+}
+
+#addCustomerContractId .modal-dialog,#editCustomerContractId .modal-dialog{
+  min-width: 50%!important;
+}
+#fileAttachmentCustomerContractId .modal-dialog{
+  min-width: 60%!important;
+}
+
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+
+
+#addCustomerContractId , #editCustomerContractId, 
+#fileAttachmentCustomerContractId , #invoiceAttachmentId , 
+#contractRemarksId  , #ApproveStatusId ,
+#fileContractGenerateId  {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+}
+
+#addCustomerContractId  .btn-primary, #editCustomerContractId .btn-primary, 
+#fileAttachmentCustomerContractId  .btn-primary, #invoiceAttachmentId .btn-primary, 
+#contractRemarksId  .btn-primary, #ApproveStatusId .btn-primary,
+#fileContractGenerateId .btn-primary {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+}
+#addCustomerContractId .modal-content,  #editCustomerContractId .modal-content, 
+#fileAttachmentCustomerContractId .modal-content,  #invoiceAttachmentId .modal-content,
+#contractRemarksId .modal-content,  #ApproveStatusId .modal-content,#fileContractGenerateId .modal-content   { 
+  background: #e4ebf5;
+
+}
+#addCustomerContractId .modal-content label,  #editCustomerContractId .modal-content label, 
+#fileAttachmentCustomerContractId .modal-content label,  #invoiceAttachmentId .modal-content label,
+#contractRemarksId .modal-content label,  #ApproveStatusId .modal-content label,#fileContractGenerateId .modal-content label{
+  color: #5f63f2;
+}
+
+
+#addCustomerContractId .modal-content .form-control, #editCustomerContractId .modal-content .form-control, 
+#fileAttachmentCustomerContractId .modal-content .form-control, #invoiceAttachmentId .modal-content .form-control, 
+#contractRemarksId .modal-content .form-control, #ApproveStatusId .modal-content .form-control, 
+#fileContractGenerateId .modal-content .form-control {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+} 
+#addCustomerContractId .modal-content .form-control:focus, #editCustomerContractId .modal-content .form-control:focus,
+#fileAttachmentCustomerContractId .modal-content .form-control:focus, #invoiceAttachmentId .modal-content .form-control:focus,
+#contractRemarksId .modal-content .form-control:focus, #ApproveStatusId .modal-content .form-control:focus,
+#fileContractGenerateId .modal-content .form-control:focus {
   outline: none;
-  border: 2px solid transparent;
-  background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
-  animation: bg-hue 2s linear infinite;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+}
+#addCustomerContractId .modal-content button.close, #editCustomerContractId .modal-content button.close,
+#fileAttachmentCustomerContractId .modal-content button.close, #invoiceAttachmentId .modal-content button.close,
+#contractRemarksId .modal-content button.close, #ApproveStatusId .modal-content button.close,
+#fileContractGenerateId .modal-content button.close,#TextEditorId .modal-content button.close{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+
+
+/* ------------ks--------------------- */
+.dropdown__item{
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.dropdown img, .dropdown svg {
+  width: 24px;
+
+}
+.dropdown__item span strong{
+  font-size: 18px;
+}
+.dropdown__item span {width: 100%!important;}
+
+.ActionId li span{
+  overflow: visible!important;
+}
+.ActionId li{cursor: pointer;}
+.dropdown a{
+  width: auto;
+  border-radius: 5px;
+}
+
+
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+
+
+
+
+tr:hover {
+  background-color: rgb(247, 228, 242)!important;
+  /* -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear; */
+}
+
+.userDatatable-title{
+  color: #5f63f2 !important;
+    font-weight: 500 !important;
+}
+
+.ml-4.ng-star-inserted{
+  line-height: 2.65rem;
+}
+#fileAttachmentCustomerContractId .modal-content.contractcss{
+  overflow: scroll;
 }

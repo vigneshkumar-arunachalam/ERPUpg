@@ -252,6 +252,7 @@ export class LoginComponent implements OnInit {
     });
   }
   qrcodes() {
+    // need api to get unique id from paramesh,,,, store unique id in seperate variable(local storage),,while scan local id from mobile app should equal this id
     this.count = ++this.count;
 
     if (this.count < 5) {

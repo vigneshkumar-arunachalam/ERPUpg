@@ -945,7 +945,7 @@
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Amount</label>
-              <input type="number" class="form-control" formControlName="amount" id="amount">
+              <input type="text" class="form-control" formControlName="amount" id="amount">
               <div
                 *ngIf="processPaymentForm.controls['amount'].invalid && (processPaymentForm.controls['amount'].dirty || processPaymentForm.controls['amount'].touched)"
                 class="alert alert-danger alertdangerCustomCSS mt-2">

@@ -125,6 +125,10 @@ export class ContractComponent implements OnInit {
       'firstName': new FormControl(null),
       'cust_Date': new FormControl(null),
       'cust_remark': new FormControl(null),
+
+      'remark_firstName': new FormControl(null),
+      'remark_dt': new FormControl(null),
+      'remark_desc': new FormControl(null),
     });
     this.editInvoiceGroupForm = new FormGroup({
       'checkbox_invoice': new FormControl(null),
@@ -459,7 +463,9 @@ export class ContractComponent implements OnInit {
 
 
   }
-  deleteContract(id: any) {
+  deleteContract(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -551,7 +557,8 @@ export class ContractComponent implements OnInit {
     }
   }
 
-  contractfileAttachment(fileAttachContractID: any, fileAttachCustomerID: any) {
+  contractfileAttachment(fileAttachContractID: any, fileAttachCustomerID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     $("#fileAttachmentCustomerContractId").modal("show");
     this.fileAttachContractID = fileAttachContractID;
     this.fileAttachCustomerID = fileAttachCustomerID;
@@ -605,13 +612,17 @@ export class ContractComponent implements OnInit {
         api_req.element_data = delete_contractAttach_req;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            // $("#fileAttachmentCustomerContractId").modal("hide");
+            
             iziToast.success({
               message: "Contract attachment deleted successfully",
               position: 'topRight'
             });
-            this.contractfileAttachment(this.fileAttachContractID, this.fileAttachCustomerID);
+            $("#fileAttachmentCustomerContractId").modal("hide");
+            this.contractfileAttachment(this.fileAttachContractID, this.fileAttachCustomerID,{});
+         
+            
           }
+         
         }),
           (error: any) => {
             console.log(error);
@@ -622,6 +633,7 @@ export class ContractComponent implements OnInit {
 
 
   }
+
 
   // contractAttachmentDelete(id:any){
   //   var id = id;
@@ -692,7 +704,8 @@ export class ContractComponent implements OnInit {
       }
     })
   }
-  invoiceAttachment(CustomerContractid: any, customerID: any) {
+  invoiceAttachment(CustomerContractid: any, customerID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.invoiceResult=[];//for refreshing we are emptying the variable
     // this.invoiceCheckboxID_array=[];
     //for refreshing we are emptying the variable
@@ -791,7 +804,8 @@ export class ContractComponent implements OnInit {
   contractFileGenerateEdit(id: any) {
     // $("#fileContractGenerateId").modal("show");
   }
-  fileContractGenerateRowID(id: any) {
+  fileContractGenerateRowID(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     this.fileContractGenerate_row_id = id;
   }
   dropdowncontractfileGenerate() {
@@ -848,7 +862,8 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  dropdownGenerateTemporaryMasterFile(id: any) {
+  dropdownGenerateTemporaryMasterFile(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
 
     let api_req: any = new Object();
     let fileGenerate1_req: any = new Object();
@@ -883,7 +898,8 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  contractRemarksEdit(id: any) {
+  contractRemarksEdit(id: any,i:any) {
+    $("#ActionId" + i).modal("hide");
     //$("#contractRemarksId").modal("show");
     this.contractRemarksEditId = id;
 
@@ -1084,11 +1100,11 @@ export class ContractComponent implements OnInit {
     if (event.target.checked == true) {
 
       this.result.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', true);
+        $("#check-grp-Con" + index).prop('checked', true);
       });
     } else {
       this.result.forEach((element: any, index: any) => {
-        $("#check-grp-" + index).prop('checked', false);
+        $("#check-grp-Con" + index).prop('checked', false);
       });
 
     }
@@ -1151,7 +1167,9 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  Email(EmailID: any) {
+  Email(EmailID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+
     this.emailForm.reset();
     this.EmailCustomerContractID = EmailID;
    
@@ -1170,7 +1188,7 @@ export class ContractComponent implements OnInit {
     //   alert("Give Subject")
 
     // }
-    this.msg_id = tinymce.get('tinyID').getContent();
+    this.msg_id = tinymce.get('tinyID_con').getContent();
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
@@ -1223,7 +1241,9 @@ export class ContractComponent implements OnInit {
       this.contractList()
     });
   }
-  bizzFileContractEdit(EmailID: any) {
+  bizzFileContractEdit(EmailID: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+
     this.EmailBizzFileID = EmailID;
     this.subjectValue = $('#subject_bizz').val();
     this.emailTo = $('#emailto_bizz').val();
@@ -1364,7 +1384,9 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  customerContractApproveStatus(customerContractId: any) {
+  customerContractApproveStatus(customerContractId: any,i:any) {
+    $("#ActionId" + i).modal("hide");
+
     this.customerContractIDApproveStatus = customerContractId;
     let api_req: any = new Object();
     let api_ApproveStatus_req: any = new Object();

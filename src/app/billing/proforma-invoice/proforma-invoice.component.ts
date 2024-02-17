@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -23,8 +23,8 @@ export class ProformaInvoiceComponent implements OnInit {
   biller_temp: any;
   //advance search biller checkbox
   edit_array_SearchBiller_Checkbox: any = [];
-  CBV_BillerName_All:any;
- 
+  CBV_BillerName_All: any;
+
   //list-checkbox all
   checkbox_value: any;
   edit_array: any = [];
@@ -135,28 +135,28 @@ export class ProformaInvoiceComponent implements OnInit {
   upd_searchFlag: any;
   searchFlag: any;
 
-  selected_billerId: any=[];
-  getSearch:boolean=false;
-  constructor(private serverService: ServerService, private router: Router,private route: ActivatedRoute, private spinner: NgxSpinnerService) {
-    this.serverService.global_search.subscribe((val:any)=>{
-      console.log("before parse",val)
+  selected_billerId: any = [];
+  getSearch: boolean = false;
+  constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
+    this.serverService.global_search.subscribe((val: any) => {
+      console.log("before parse", val)
       var k = JSON.parse(val);
-      console.log("after parse",k)
-      this.PI_list=k;
+      console.log("after parse", k)
+      this.PI_list = k;
       console.log(k.type)
       console.log(k.proformalist)
-      if(k!=''){
-        this.Global_search_filter =  true;
+      if (k != '') {
+        this.Global_search_filter = true;
       } else {
-        this.Global_search_filter =  false;
+        this.Global_search_filter = false;
       }
       console.log(this.Global_search_filter)
     });
     $("body").removeClass("modal-open");
-   }
+  }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-   
+
     this.search_BillerList();
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
 
@@ -220,25 +220,25 @@ export class ProformaInvoiceComponent implements OnInit {
 
 
     this.route.queryParams
-    .subscribe(params => {
-      console.log("params after didpi",params)
-      this.upd_searchName = params['upd_search_name'];
-      this.upd_searchFlag = params['upd_searchFlag'];
-   
-      if(this.upd_searchFlag==1){
-        this.searchResult_CustomerName=  this.upd_searchName;
-        console.log("this.searchResult_CustomerName",this.searchResult_CustomerName)
-        this.PIList({});
-      }
-      else{
-        this.PIList({});
-      }
-    }
-    );
-    
+      .subscribe(params => {
+        console.log("params after didpi", params)
+        this.upd_searchName = params['upd_search_name'];
+        this.upd_searchFlag = params['upd_searchFlag'];
 
-    console.log("checklist-this.upd_searchName",this.upd_searchName);
-    console.log("checklist-this.upd_searchFlag",this.upd_searchFlag);
+        if (this.upd_searchFlag == 1) {
+          this.searchResult_CustomerName = this.upd_searchName;
+          console.log("this.searchResult_CustomerName", this.searchResult_CustomerName)
+          this.PIList({});
+        }
+        else {
+          this.PIList({});
+        }
+      }
+      );
+
+
+    console.log("checklist-this.upd_searchName", this.upd_searchName);
+    console.log("checklist-this.upd_searchFlag", this.upd_searchFlag);
 
   }
   selectEventCustomer(item: any) {
@@ -272,17 +272,18 @@ export class ProformaInvoiceComponent implements OnInit {
     this.CBV_PaymentLink = event.target.checked;
     console.log(this.CBV_PaymentLink);
 
-  } 
+  }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.edit_array_SearchBiller_Checkbox",this.edit_array_SearchBiller_Checkbox)
+    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
     console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
       if (!this.edit_array_SearchBiller_Checkbox) {
         this.edit_array_SearchBiller_Checkbox = [];
+      
       }
-  
+
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
@@ -291,6 +292,8 @@ export class ProformaInvoiceComponent implements OnInit {
     else {
       if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
         this.edit_array_SearchBiller_Checkbox = [];
+       
+        
       }
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
@@ -411,7 +414,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
     }
   }
-  getEmailDetails(id: any,i:any) {
+  getEmailDetails(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.Email_BillId = id;
@@ -516,7 +519,7 @@ export class ProformaInvoiceComponent implements OnInit {
 
     });
   }
-  PItoInvoiceConversion(Id: any,$event: MouseEvent,i:any) {
+  PItoInvoiceConversion(Id: any, $event: MouseEvent, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
@@ -579,7 +582,7 @@ export class ProformaInvoiceComponent implements OnInit {
       }
     })
   }
-  InvoicetoDIDConversion(Id: any,i:any) {
+  InvoicetoDIDConversion(Id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
@@ -818,29 +821,40 @@ export class ProformaInvoiceComponent implements OnInit {
     this.PIList({});
     tinymce.activeEditor.setContent("");
   }
-  clearSearch(){
-    this.edit_array_SearchBiller_Checkbox=[];
-    this.searchResult_CustomerName='';
-    this.searchPIForm.get('company_Name').setValue('');
+  clearSearch() {
+  //  this.edit_array_SearchBiller_Checkbox = [];
+    this.searchResult_CustomerName = '';
+   //    this.searchPIForm.get('company_Name').setValue('');
 
   }
-  getSearch1(){
+  getSearch1() {
 
-    this.getSearch=true;
-    }
+    this.getSearch = true;
+  }
 
-    clearSelection(event:any){
-      console.log("clear selection",event)
-      // console.log("event.customerId",event.customerId)
-      // console.log("event.customerName",event.customerName)
-      this.searchResult_CustomerID='';
-      this.searchResult_CustomerName='';
-      console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-      console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
-    }
+  clearSelection(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+  }
+  convertTupleToArray(y: string): string[] {
+    // Split the string by comma and filter out empty strings
+    return y.split(',').filter(element => element.trim() !== '');
+  }
+  isArray(variable: any): boolean {
+    return Array.isArray(variable);
+  }
   PIList(data: any) {
     this.spinner.show();
-  console.log("billerid",this.edit_array_SearchBiller_Checkbox);
+    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
+      this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+    }
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -854,15 +868,15 @@ export class ProformaInvoiceComponent implements OnInit {
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
     api_quotationList.getSearch = this.getSearch;
-   
+
     // if(this.upd_searchFlag==1){
     //   api_quotationList.search_txt = this.upd_searchName;
     // }else{
     //   api_quotationList.search_txt = this.searchResult_CustomerName;
     // }
     api_quotationList.search_txt = this.searchResult_CustomerName;
-    api_quotationList.search_biller_str=this.edit_array_SearchBiller_Checkbox;
-   
+    api_quotationList.search_biller_str = this.edit_array_SearchBiller_Checkbox;
+
     api_quotationList.current_page = "";
 
     api_req.element_data = api_quotationList;
@@ -874,41 +888,47 @@ export class ProformaInvoiceComponent implements OnInit {
       $("#searchPIFormId").modal("hide");
       console.log("PI list", response);
       if (response) {
-        this.searchFlag=response.searchFlag;
+        this.searchFlag = response.searchFlag;
         this.PI_list = response.proforma_details;
 
         this.biller_list = response.biller_details;
         this.Add_Permission = response.proforma_permission_arr.add;
-     
-        this.Permission_actual_price= response.proforma_permission_arr.actual_price;
+
+        this.Permission_actual_price = response.proforma_permission_arr.actual_price;
         this.Permission_Delete = response.proforma_permission_arr.delete;
         this.Permission_edit = response.proforma_permission_arr.edit;
         this.Permission_list = response.proforma_permission_arr.list;
         this.Permission_Mail = response.proforma_permission_arr.mail;
         this.Permission_payment = response.proforma_permission_arr.payment;
         this.Search_Permission = response.proforma_permission_arr.search;
-        this.Permission_share= response.proforma_permission_arr.share;
+        this.Permission_share = response.proforma_permission_arr.share;
         this.Permission_view = response.proforma_permission_arr.view;
-       
+
         if (response.selected_filtervalues[0].biller_ids != '') {
           this.selected_billerId = response.selected_filtervalues[0].biller_ids;
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
-          this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_SearchBiller_Checkbox = this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_SearchBiller_Checkbox = Array.from(new Set(this.edit_array_SearchBiller_Checkbox));
-      
+
         }
-        
-      
-       
+        if(response.selected_filtervalues[0].name_serach != ''){
+          this.searchPIForm.patchValue({
+            'company_Name':response.selected_filtervalues[0].name_serach
+          })
+        }
+
+
+
 
         // this.payLink=response.proforma_details[0].payment_link;
 
-       
+
 
 
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        console.log("end of list",this.edit_array_SearchBiller_Checkbox)
       }
       else {
         Swal.fire({
@@ -929,7 +949,7 @@ export class ProformaInvoiceComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  paymentLink(paylink_id: any,i:any) {
+  paymentLink(paylink_id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
@@ -987,16 +1007,16 @@ export class ProformaInvoiceComponent implements OnInit {
     this.router.navigate(['/EditPI'], {
       queryParams: {
         e_editBillID: editbillID,
-        e_searchFlag:this.searchFlag
+        e_searchFlag: this.searchFlag
       }
     });
     $("body").removeClass("modal-open");
   }
 
 
-  editDidPIGo(id: any,i:any) {
+  editDidPIGo(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
- 
+
 
     var editbillID = id;
     this.router.navigate(['/EditDidPI'])
@@ -1004,7 +1024,7 @@ export class ProformaInvoiceComponent implements OnInit {
     this.router.navigate(['/EditDidPI'], {
       queryParams: {
         e_editBillID: editbillID,
-        e_searchFlag:this.searchFlag
+        e_searchFlag: this.searchFlag
       }
     });
     $("body").removeClass("modal-open");
@@ -1056,9 +1076,9 @@ export class ProformaInvoiceComponent implements OnInit {
     })
   }
 
-  deleteProformaInvoice(billId: any,i:any) {
+  deleteProformaInvoice(billId: any, i: any) {
     $("#ActionId" + i).modal("hide");
-  
+
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1117,7 +1137,7 @@ export class ProformaInvoiceComponent implements OnInit {
   EmailEdit(a: any) {
 
   }
-  invoiceShowPersonEdit(Id: any,i:any) {
+  invoiceShowPersonEdit(Id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.ShowPermission_BillID = Id;
@@ -1201,7 +1221,7 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
 
-  pdf(billId: any, did_invoice_state: any,i:any) {
+  pdf(billId: any, did_invoice_state: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     if (did_invoice_state == 1) {
@@ -1209,10 +1229,10 @@ export class ProformaInvoiceComponent implements OnInit {
     } else {
       var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
 
-    //    if (did_invoice_state == 1) {
-    //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
-    // } else {
-    //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+      //    if (did_invoice_state == 1) {
+      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getDidBillpdf?billId=" + billId + "";
+      // } else {
+      //   var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
 
 
     }
@@ -1233,7 +1253,7 @@ export class ProformaInvoiceComponent implements OnInit {
     $("#paytype").val('');
     $("#dateee").val('');
   }
-  processPaymentEdit(id: any,i:any) {
+  processPaymentEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.spinner.show();
@@ -1357,7 +1377,7 @@ export class ProformaInvoiceComponent implements OnInit {
       };
   }
 
-  setInvoiceTypeNameEdit(id: any,i:any) {
+  setInvoiceTypeNameEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.InvoiceType_BillerID = id;
@@ -1450,7 +1470,7 @@ export class ProformaInvoiceComponent implements OnInit {
   }
 
 
-  setTermsConditionEdit(id: any,i:any) {
+  setTermsConditionEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     // this.setInvoiceType.reset();
     this.spinner.show();

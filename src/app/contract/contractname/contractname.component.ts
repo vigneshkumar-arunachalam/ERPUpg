@@ -78,6 +78,7 @@ export class ContractnameComponent implements OnInit {
       };
   }
   addContract() {
+    this.addContractNameForm.reset();
 
     let api_req: any = new Object();
     let contractNameAdd_req: any = new Object();
@@ -258,6 +259,7 @@ export class ContractnameComponent implements OnInit {
     this.editContractNameForm.reset();
   }
   updateContractName() {
+    alert(this.editContractNameForm.value.e_create_contract_name)
     let api_req: any = new Object();
     let contractNameUpdate_req: any = new Object();
     api_req.moduleType = "customer_contract";
@@ -266,10 +268,30 @@ export class ContractnameComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     contractNameUpdate_req.action = "contract_details_update";
     contractNameUpdate_req.contract_id = this.contract_id;
-    contractNameUpdate_req.contract_name = this.editContractNameForm.value.e_create_contract_name;
+    if(this.editContractNameForm.value.e_create_contract_name=='' || this.editContractNameForm.value.e_create_contract_name==undefined || 
+    this.editContractNameForm.value.e_create_contract_name=='undefined'){
+      iziToast.error({
+        message: "Contract Name has not been Updated",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      contractNameUpdate_req.contract_name = this.editContractNameForm.value.e_create_contract_name;
+    }
+    
     contractNameUpdate_req.contract_description = this.editContractNameForm.value.e_create_contract_description_name;
     contractNameUpdate_req.contract_summary = this.editContractNameForm.value.e_create_contract_summary_name;
-    contractNameUpdate_req.contract_classification_id = this.editContractNameForm.value.e_create_classification;
+    if(this.editContractNameForm.value.e_create_classification==''||this.editContractNameForm.value.e_create_classification==undefined ||
+    this.editContractNameForm.value.e_create_classification=='undefined'){
+      iziToast.error({
+        message: "Contract Classification has not been Updated",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      contractNameUpdate_req.contract_classification_id = this.editContractNameForm.value.e_create_classification;
+    }
+    
     contractNameUpdate_req.user_id = 2;
     api_req.element_data = contractNameUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {

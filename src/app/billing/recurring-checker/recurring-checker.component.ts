@@ -74,6 +74,7 @@ export class RecurringCheckerComponent implements OnInit {
     }
   }
   recurringCheckerList() {
+    this.spinner.show();
     let api_req: any = new Object();
     let rc_api: any = new Object();
     api_req.moduleType = "recurring_date_update";
@@ -86,10 +87,12 @@ export class RecurringCheckerComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
+        this.spinner.hide();
         this.recurringCheckList=response.recurring_list;
         console.log(" this.recurringCheckerList", this.recurringCheckerList)
 
       } else {
+        this.spinner.hide();
         iziToast.warning({
           message: "update failed",
           position: 'topRight'
@@ -97,6 +100,7 @@ export class RecurringCheckerComponent implements OnInit {
       }
 
     }), (error: any) => {
+      this.spinner.hide();
       iziToast.error({
         message: "Error",
         position: 'topRight'

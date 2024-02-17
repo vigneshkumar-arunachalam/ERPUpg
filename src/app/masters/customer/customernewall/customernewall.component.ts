@@ -913,6 +913,13 @@ this.cmsDepartmentList1();
       'retail_low_credit_kl': new FormControl(null),
       'retail_high_credit_kl': new FormControl(null),
 
+      'primary_code_sg': new FormControl(null),
+      'primary_code_retail_sg': new FormControl(null),
+      'low_credit_sg': new FormControl(null),
+      'high_credit_sg': new FormControl(null),
+      'retail_low_credit_sg': new FormControl(null),
+      'retail_high_credit_sg': new FormControl(null),
+
       'primary_code_auto_credit': new FormControl(null),
 
 
@@ -927,6 +934,11 @@ this.cmsDepartmentList1();
       'server_name_kl': new FormControl(null),
       'pbx_threshold_limit_kl': new FormControl(null),
       'retail_threshold_limit_kl': new FormControl(null),
+
+      'server_name_sg': new FormControl(null),
+      'pbx_threshold_limit_sg': new FormControl(null),
+      'retail_threshold_limit_sg': new FormControl(null),
+
       'manual_credit': new FormControl(null),
 
     });
@@ -957,6 +969,13 @@ this.cmsDepartmentList1();
       'popup_retail_low_credit_kl': new FormControl(null),
       'popup_retail_high_credit_kl': new FormControl(null),
 
+      'popup_primary_code_sg': new FormControl(null),
+      'popup_primary_code_retail_sg': new FormControl(null),
+      'popup_low_credit_sg': new FormControl(null),
+      'popup_high_credit_sg': new FormControl(null),
+      'popup_retail_low_credit_sg': new FormControl(null),
+      'popup_retail_high_credit_sg': new FormControl(null),
+
       'popup_primary_code_auto_credit': new FormControl(null),
 
 
@@ -972,6 +991,11 @@ this.cmsDepartmentList1();
       'popup_server_name_kl': new FormControl(null),
       'popup_pbx_threshold_limit_kl': new FormControl(null),
       'popup_retail_threshold_limit_kl': new FormControl(null),
+
+      'popup_server_name_sg': new FormControl(null),
+      'popup_pbx_threshold_limit_sg': new FormControl(null),
+      'popup_retail_threshold_limit_sg': new FormControl(null),
+
       'popup_customerId': new FormControl(null),
       'popup_manual_credit': new FormControl(null),
 
@@ -1028,6 +1052,7 @@ this.cmsDepartmentList1();
       bill_code_kl: '',
       bill_code_750: '',
       bill_code_750_8: '',
+      bill_code_sg: '',
       customer_bill_code_id: '',
       conn_state: '',
       customer_id: '',
@@ -1124,6 +1149,8 @@ this.cmsDepartmentList1();
       popup_bill_code_kl: '',
       popup_bill_code_750: '',
       popup_bill_code_750_8: '',
+      popup_bill_code_sg: '',
+    
       popup_customer_bill_code_id: '',
       popup_conn_state: '',
       popup_customer_id: '',
@@ -2873,6 +2900,7 @@ this.cmsDepartmentList1();
             "bill_code_kl": response.result.customer_bill_code_arr[index].bill_code_kl,
             "bill_code_750": response.result.customer_bill_code_arr[index].bill_code_750,
             "bill_code_750_8": response.result.customer_bill_code_arr[index].bill_code_750_8,
+            "bill_code_sg": response.result.customer_bill_code_arr[index].bill_code_vs_sg,
             "customer_bill_code_id": response.result.customer_bill_code_arr[index].customer_bill_code_id,
             "conn_state": response.result.customer_bill_code_arr[index].conn_state,
             "customer_id": response.result.customer_bill_code_arr[index].customer_id,
@@ -2928,6 +2956,16 @@ this.cmsDepartmentList1();
           'retail_threshold_limit_kl': response.result.customer_primary_code_arr[0].retail_threshold_limit_kl,
 
           'manual_credit': response.result.customer_primary_code_arr[0].manual_credit,
+
+
+
+         
+          'primary_code_sg': response.result.customer_primary_code_arr[0].bill_code_vs_sg,
+          'primary_code_retail_sg': response.result.customer_primary_code_arr[0].primary_code_retail_vs_sg,
+          'low_credit_sg': response.result.customer_primary_code_arr[0].low_credit_vs_sg,
+          'high_credit_sg': response.result.customer_primary_code_arr[0].high_credit_vs_sg,
+          'retail_low_credit_sg': response.result.customer_primary_code_arr[0].retail_low_credit_vs_sg,
+          'retail_high_credit_sg': response.result.customer_primary_code_arr[0].retail_high_credit_vs_sg,
 
 
         })
@@ -3069,6 +3107,8 @@ this.cmsDepartmentList1();
       console.log("$('#bill_code_740_' + i).val()",$('#bill_code_740_' + i).val());
       addr23[i].bill_code_kl = $('#bill_code_kl_' + i).val();
       console.log("$('#bill_code_kl_' + i).val()",$('#bill_code_kl_' + i).val());
+      addr23[i].bill_code_vs_sg = $('#bill_code_sg_' + i).val();
+      console.log("$('#bill_code_sg_' + i).val()",$('#bill_code_sg_' + i).val());
       addr23[i].bill_code_750 = $('#bill_code_750_' + i).val();
       console.log("$('#bill_code_750_' + i).val()",$('#bill_code_750_' + i).val());
       addr23[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
@@ -3103,6 +3143,13 @@ this.cmsDepartmentList1();
     update_customer_req.retail_low_credit_750 = this.billCodeEditForm2.value.retail_low_credit_750;
     update_customer_req.retail_high_credit_750 = this.billCodeEditForm2.value.retail_high_credit_750;
 
+
+    update_customer_req.bill_code_vs_sg = this.billCodeEditForm2.value.primary_code_sg;
+    update_customer_req.primary_code_retail_sg = this.billCodeEditForm2.value.primary_code_retail_sg;
+    update_customer_req.low_credit_sg = this.billCodeEditForm2.value.low_credit_sg;
+    update_customer_req.high_credit_sg = this.billCodeEditForm2.value.high_credit_sg;
+    update_customer_req.retail_low_credit_sg = this.billCodeEditForm2.value.retail_low_credit_sg;
+    update_customer_req.retail_high_credit_sg = this.billCodeEditForm2.value.retail_high_credit_sg;
 
     update_customer_req.bill_code_kl = this.billCodeEditForm2.value.primary_code_kl;
     update_customer_req.primary_code_retail_kl = this.billCodeEditForm2.value.primary_code_retail_kl;
@@ -3209,6 +3256,7 @@ this.cmsDepartmentList1();
     addCredit_customer_req.bill_code_750 = this.billCodeEditForm2.value.primary_code_750;
     addCredit_customer_req.bill_code_retail_750 = this.billCodeEditForm2.value.primary_code_retail_750;
     addCredit_customer_req.bill_code_kl = this.billCodeEditForm2.value.primary_code_kl;
+    addCredit_customer_req.bill_code_vs_sg = this.billCodeEditForm2.value.primary_code_sg;
     addCredit_customer_req.bill_code_retail_kl = this.billCodeEditForm2.value.primary_code_retail_kl;
 
 
@@ -4588,6 +4636,7 @@ this.cmsDepartmentList1();
             "popup_billCodeName": response.customer_bill_code_arr[index].bill_code_name,
             "popup_bill_code_740": response.customer_bill_code_arr[index].bill_code_740,
             "popup_bill_code_kl": response.customer_bill_code_arr[index].bill_code_kl,
+            "popup_bill_code_sg": response.customer_bill_code_arr[index].bill_code_vs_sg,
             "popup_bill_code_750": response.customer_bill_code_arr[index].bill_code_750,
             "popup_bill_code_750_8": response.customer_bill_code_arr[index].bill_code_750_8,
             "popup_conn_state": response.customer_bill_code_arr[index].conn_state,
@@ -4628,6 +4677,13 @@ this.cmsDepartmentList1();
         'popup_high_credit_kl': response.customer_primary_code_arr[0].high_credit_kl,
         'popup_retail_low_credit_kl': response.customer_primary_code_arr[0].retail_low_credit_kl,
         'popup_retail_high_credit_kl': response.customer_primary_code_arr[0].retail_high_credit_kl,
+
+        'popup_primary_code_sg': response.customer_primary_code_arr[0].bill_code_vs_sg,
+        'popup_primary_code_retail_sg': response.customer_primary_code_arr[0].primary_code_retail_sg,
+        'popup_low_credit_sg': response.customer_primary_code_arr[0].low_credit_sg,
+        'popup_high_credit_sg': response.customer_primary_code_arr[0].high_credit_sg,
+        'popup_retail_low_credit_sg': response.customer_primary_code_arr[0].retail_low_credit_sg,
+        'popup_retail_high_credit_sg': response.customer_primary_code_arr[0].retail_high_credit_sg,
 
         'popup_primary_code_auto_credit': response.customer_primary_code_arr[0].auto_credit,
 
@@ -4686,6 +4742,7 @@ this.cmsDepartmentList1();
       addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
       addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
       addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
+      addr[i].bill_code_sg = $('#bill_code_sg_' + i).val();
       addr[i].conn_state = $('#conn_state' + i).val();
       addr[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
       addr[i].customer_id = $('#customer_id' + i).val();
@@ -4726,6 +4783,12 @@ this.cmsDepartmentList1();
     updateBillCode_req.retail_low_credit_kl = this.popupBillCodeForm2.value.popup_retail_low_credit_kl;
     updateBillCode_req.retail_high_credit_kl = this.popupBillCodeForm2.value.popup_retail_high_credit_kl;
 
+    updateBillCode_req.bill_code_vs_sg = this.popupBillCodeForm2.value.popup_primary_code_sg;
+    updateBillCode_req.primary_code_retail_sg = this.popupBillCodeForm2.value.popup_primary_code_retail_sg;
+    updateBillCode_req.low_credit_sg = this.popupBillCodeForm2.value.popup_low_credit_sg;
+    updateBillCode_req.high_credit_sg = this.popupBillCodeForm2.value.popup_high_credit_sg;
+    updateBillCode_req.retail_low_credit_sg = this.popupBillCodeForm2.value.popup_retail_low_credit_sg;
+    updateBillCode_req.retail_high_credit_sg = this.popupBillCodeForm2.value.popup_retail_high_credit_sg;
 
     updateBillCode_req.auto_credit = this.popupBillCodeForm2.value.popup_primary_code_auto_credit;
 

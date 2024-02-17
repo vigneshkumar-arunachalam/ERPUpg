@@ -26,13 +26,37 @@ export class ContractmasterfileComponent implements OnInit {
     
     });
   }
+  clearAdd(){
+    this.addContractmasterForm.reset();
+  }
   send_file()
   {
+  
         var contract_name= $("#contractName").val();
+
         var contract_master_file = $("#contractfile").val();
+        var file_f=$("#contractfile")[0].files[0];
         var data = new FormData();
+        if(contract_name==''||contract_name==null||contract_name==undefined || contract_name=='undefined'){
+          iziToast.error({
+            message: "Name Missing",
+            position: 'topRight'
+          });
+          return false;
+        }else{
           data.append('contract_name', contract_name);
-          data.append('contract_master_file', $("#contractfile")[0].files[0]);
+        }
+          if(file_f==undefined){
+            iziToast.error({
+              message: "File Missing",
+              position: 'topRight'
+            });
+            return false;
+
+          }else{
+            data.append('contract_master_file', $("#contractfile")[0].files[0]);
+          }
+        
           data.append('action', "contract_master_file_add");
   
             var self = this;
@@ -153,7 +177,7 @@ export class ContractmasterfileComponent implements OnInit {
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, Approve it!'
+    confirmButtonText: 'Yes, Delete it!'
   }).then((result:any) => {
     if (result.value) {
 

@@ -55,14 +55,14 @@ export class DidinvoiceComponent implements OnInit {
   groupSelect_emailCCId: any;
   email_checkbox_value: any;
   checkbox_value1: any;
-    //invoice to quotation 
-    addNewQuotationPopUpForm: FormGroup;
-    enquiryFromList: any;
-    quotationValidityList: any;
-    templateNameList: any;
-    isReadonly: boolean = true;
-    quotationVersion = '1.0';
-    billId_InvoicetoQuotation: any;
+  //invoice to quotation 
+  addNewQuotationPopUpForm: FormGroup;
+  enquiryFromList: any;
+  quotationValidityList: any;
+  templateNameList: any;
+  isReadonly: boolean = true;
+  quotationVersion = '1.0';
+  billId_InvoicetoQuotation: any;
 
   // invoice Share Permission
   SharePermission_BillerID: any;
@@ -205,23 +205,23 @@ export class DidinvoiceComponent implements OnInit {
   searchFlag: any;
   upd_searchName: any;
   upd_searchFlag: any;
-//recurring
+  //recurring
 
-recurring_Status:any;
-billStatus:any;
-//recurring
-recurringDetails: any;
-reccuringDuration: any;
-recurringDetails_fixed_next_dt: any;
-recurringDetails_usage_next_dt: any;
-recuringStatus: any;
-recurring_BillerID: any;
-//recurring
-RecurringForm: FormGroup;
-recurringState: any;
-recurring_State_value: any;
-CBV_FixedChargeDt: any;
-CBV_UsageChargeDt: any;
+  recurring_Status: any;
+  billStatus: any;
+  //recurring
+  recurringDetails: any;
+  reccuringDuration: any;
+  recurringDetails_fixed_next_dt: any;
+  recurringDetails_usage_next_dt: any;
+  recuringStatus: any;
+  recurring_BillerID: any;
+  //recurring
+  RecurringForm: FormGroup;
+  recurringState: any;
+  recurring_State_value: any;
+  CBV_FixedChargeDt: any;
+  CBV_UsageChargeDt: any;
 
   //file attachment
   fileAttach_quotationID: any;
@@ -234,30 +234,30 @@ CBV_UsageChargeDt: any;
   commonAttachmentID: any;
   checkboxAdding: any = [];
 
-    //reseller commission details-without form array
-    withoutFormArrayResellerCommissionForm: FormGroup;
-    commissionGrossAmount: any;
-    //
-    recurring_state_all:any;
-    suspend_state:any;
-    reseller_comm_id: any;
-    commissionAmount_WFA: any;
-    ResellerId_Customer: any;
+  //reseller commission details-without form array
+  withoutFormArrayResellerCommissionForm: FormGroup;
+  commissionGrossAmount: any;
+  //
+  recurring_state_all: any;
+  suspend_state: any;
+  reseller_comm_id: any;
+  commissionAmount_WFA: any;
+  ResellerId_Customer: any;
 
-    public addresses: FormArray;
-    public addressForm: FormGroup;
-    currentMonthSelection:any;
-    todayNumber: number = Date.now();
-    todayDate : Date = new Date();
-    todayString : string = new Date().toDateString();
-    todayISOString : string = new Date().toISOString();
+  public addresses: FormArray;
+  public addressForm: FormGroup;
+  currentMonthSelection: any;
+  todayNumber: number = Date.now();
+  todayDate: Date = new Date();
+  todayString: string = new Date().toDateString();
+  todayISOString: string = new Date().toISOString();
   yearsID: any;
-  selected_billerId: any=[];
+  selected_billerId: any = [];
   years_id: any;
-  					
-getSearch:boolean=false;
-  
-  constructor(private serverService: ServerService, private router: Router,  private route: ActivatedRoute,private fb: FormBuilder, private spinner: NgxSpinnerService,) { 
+
+  getSearch: boolean = false;
+
+  constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService,) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -266,27 +266,27 @@ getSearch:boolean=false;
   keywordResellerName = 'customerName';
   ngOnInit(): void {
     this.route.queryParams
-    .subscribe(params => {
-      console.log("params output value", params);
+      .subscribe(params => {
+        console.log("params output value", params);
 
-      
-      this.upd_searchName = params['upd_search_name'];
-    
-   
-      this.upd_searchFlag = params['upd_searchFlag'];
-      // alert(this.upd_searchName)
-      // alert(this.upd_searchFlag)
-      if(this.upd_searchFlag==1){
-      
-        this.searchResult_CustomerName=  this.upd_searchName;
-        // alert(this.searchResult_CustomerName)
-      //  this.getInvoice({});
+
+        this.upd_searchName = params['upd_search_name'];
+
+
+        this.upd_searchFlag = params['upd_searchFlag'];
+        // alert(this.upd_searchName)
+        // alert(this.upd_searchFlag)
+        if (this.upd_searchFlag == 1) {
+
+          this.searchResult_CustomerName = this.upd_searchName;
+          // alert(this.searchResult_CustomerName)
+          //  this.getInvoice({});
+        }
+
+
+
       }
-
-      
-
-    }
-    );
+      );
 
     this.getInvoice({});
     this.yearsList = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"];
@@ -320,7 +320,7 @@ getSearch:boolean=false;
       'fixedChargeDtCBX': new FormControl(null),
       'usageChargeDuration': new FormControl(null),
       'fixedChargeDuration': new FormControl(null),
-      
+
       'usageChargeDtCBX': new FormControl(null),
       'usageChargeDt_value': new FormControl(null),
 
@@ -354,18 +354,18 @@ getSearch:boolean=false;
       'email_template_selection': new FormControl(null),
       'email_payment_link': new FormControl(null),
       // 'radio_ApprovalBy': new FormControl(null, Validators.required),
-      
+
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
-     
+
 
     });
     this.showPerissionForm = new FormGroup({
-      
+
     });
     this.withoutFormArrayResellerCommissionForm = new FormGroup({
       'ResellerName_WFA': new FormControl(null),
-  
+
       'CommissionValue_WFA': new FormControl(null),
       'CommissionAmount_WFA': new FormControl(null),
       'PdfShow_WFA': new FormControl(null),
@@ -389,14 +389,14 @@ getSearch:boolean=false;
       'date': new FormControl(null),
       'paymenttype': new FormControl(null),
       'note': new FormControl(null),
-   
+
 
     });
     this.FileAttachmentForm = new FormGroup({
       'file': new FormControl(null),
     });
 
-    
+
   }
   addAddress(): void {
     this.addresses = this.addressForm.get('addresses') as FormArray;
@@ -414,15 +414,15 @@ getSearch:boolean=false;
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-  
+
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
-   
+
   }
   CBF_TemplateSelection(event: any) {
     this.CBV_TemplateSelection = event.target.checked;
-  
+
   }
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
@@ -431,7 +431,7 @@ getSearch:boolean=false;
   }
   radio_recurring(event: any) {
     this.recurring_State_value = event.target.id;
-  
+
 
   }
   CBF_FixedChargeDtFn(event: any) {
@@ -452,57 +452,57 @@ getSearch:boolean=false;
     this.CBV_PdfShow = event.target.checked;
 
   }
-  button12(){
-    this.currentMonthSelection=12;
+  button12() {
+    this.currentMonthSelection = 12;
     this.getInvoice({});
-      }
-      button11(){
-        this.currentMonthSelection=11;
-        this.getInvoice({});
-      }
-      button10(){
-        this.currentMonthSelection=10;
-        this.getInvoice({});
-      }
-      button9(){
-        this.currentMonthSelection=9;
-        this.getInvoice({});
-      }
-      button8(){
-        this.currentMonthSelection=8;
-        this.getInvoice({});
-      }
-      button7(){
-        this.currentMonthSelection=7;
-        this.getInvoice({});
-      }
-      button6(){
-        this.currentMonthSelection=6;
-        this.getInvoice({});
-      }
-      button5(){
-        this.currentMonthSelection=5;
-        this.getInvoice({});
-      }
-      button4(){
-        this.currentMonthSelection=4;
-        this.getInvoice({});
-      }
-      button3(){
-        this.currentMonthSelection=3;
-        this.getInvoice({});
-      }
-      button2(){
-        this.currentMonthSelection=2;
-        this.getInvoice({});
-      }
-      button1(){
-        this.currentMonthSelection=1;
-        this.getInvoice({});
-      }
+  }
+  button11() {
+    this.currentMonthSelection = 11;
+    this.getInvoice({});
+  }
+  button10() {
+    this.currentMonthSelection = 10;
+    this.getInvoice({});
+  }
+  button9() {
+    this.currentMonthSelection = 9;
+    this.getInvoice({});
+  }
+  button8() {
+    this.currentMonthSelection = 8;
+    this.getInvoice({});
+  }
+  button7() {
+    this.currentMonthSelection = 7;
+    this.getInvoice({});
+  }
+  button6() {
+    this.currentMonthSelection = 6;
+    this.getInvoice({});
+  }
+  button5() {
+    this.currentMonthSelection = 5;
+    this.getInvoice({});
+  }
+  button4() {
+    this.currentMonthSelection = 4;
+    this.getInvoice({});
+  }
+  button3() {
+    this.currentMonthSelection = 3;
+    this.getInvoice({});
+  }
+  button2() {
+    this.currentMonthSelection = 2;
+    this.getInvoice({});
+  }
+  button1() {
+    this.currentMonthSelection = 1;
+    this.getInvoice({});
+  }
   radio_commissionType(event: any) {
     this.commissionType_value = event.target.id;
-  
+
     if (this.commissionType_value == 1) {
       var commvalue = $('#CommissionValue_WFA_ID').val();
       $('#CommissionAmount_WFA_ID').val(commvalue);
@@ -548,34 +548,34 @@ getSearch:boolean=false;
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-     // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+      // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
- 
+
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+      // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
     this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
 
-   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+    // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
 
   }
   EditCHK_emailCC(data: any, event: any) {
-  
+
     this.groupSelect_emailCCId = data;
     this.checkbox_value1 = event.target.checked;
-  
+
     if (this.checkbox_value1) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-     
+
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
@@ -588,10 +588,10 @@ getSearch:boolean=false;
   }
   pdf(billId: any) {
 
-     var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + ""; 
-   //  var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    //  var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
-   // console.log("url", url)
+    // console.log("url", url)
   }
   yearsAPI() {
 
@@ -630,24 +630,34 @@ getSearch:boolean=false;
 
   }
 
-getSearch1(){
+  getSearch1() {
 
-this.getSearch=true;
-}
-clearSelection(event:any){
-  console.log("clear selection",event)
-  // console.log("event.customerId",event.customerId)
-  // console.log("event.customerName",event.customerName)
-  this.searchResult_CustomerID='';
-  this.searchResult_CustomerName='';
-  console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-  console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
-}
-
+    this.getSearch = true;
+  }
+  clearSelection(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+  }
+  convertTupleToArray(y: string): string[] {
+    // Split the string by comma and filter out empty strings
+    return y.split(',').filter(element => element.trim() !== '');
+  }
+  isArray(variable: any): boolean {
+    return Array.isArray(variable);
+  }
   getInvoice(data: any) {
-  
-    console.log("billerid",this.edit_array_SearchBiller_Checkbox);
-    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox);
+
+    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
+      this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+    }
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -669,9 +679,9 @@ clearSelection(event:any){
     api_DidList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
     api_DidList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_DidList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
-    api_DidList.did_month=this.currentMonthSelection;
+    api_DidList.did_month = this.currentMonthSelection;
     api_DidList.getSearch = this.getSearch;
-    
+
     // var list_data = this.listDataInfo(data);
 
     // let api_req: any = new Object();
@@ -689,8 +699,8 @@ clearSelection(event:any){
     api_req.element_data = api_DidList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      
-  
+
+
       if (response.total_cnt == 0) {
         // iziToast.warning({
         //   message: "Sorry, No Matching Data",
@@ -746,25 +756,31 @@ clearSelection(event:any){
         if (response.selected_filtervalues[0].biller_ids != '') {
           this.selected_billerId = response.selected_billerId;
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
-          this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
-          
+          this.edit_array_SearchBiller_Checkbox = this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+
+        }
+        if(response.selected_filtervalues[0].name_serach != ''){
+          this.searchResult_CustomerName=response.selected_filtervalues[0].name_serach;
+          this.searchInvoiceForm.patchValue({
+            'company_Name':response.selected_filtervalues[0].name_serach
+          })
         }
 
         if (response.selected_filtervalues[0].year_filter != '') {
-          this.years_id=response.selected_filtervalues[0].year_filter;
-          this.edit_array_Years_Checkbox=this.years_id.split(',');
-          this.edit_array_Years_Checkbox =this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
+          this.years_id = response.selected_filtervalues[0].year_filter;
+          this.edit_array_Years_Checkbox = this.years_id.split(',');
+          this.edit_array_Years_Checkbox = this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
-          console.log("this.edit_array_Years_Checkbox-after list load",this.edit_array_Years_Checkbox);
+          console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
         }
-       
+
 
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
           this.recurring_state_all = response.proforma_details[j].recuring_status;
-          
-      
+
+
           this.suspend_state = response.proforma_details[j].suspend;
         }
 
@@ -796,32 +812,32 @@ clearSelection(event:any){
     this.router.navigate(['/addDidInvoice'])
   }
 
-  editDidGo(id: any,i: any,didState:any) {
- 
+  editDidGo(id: any, i: any, didState: any) {
+
     $("#ActionId" + i).modal("hide");
     var editbillID = id;
-    var editDIDState=didState;
-    
+    var editDIDState = didState;
 
-    if(didState=='0'){
+
+    if (didState == '0') {
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState:editDIDState
+          e_editDIDState: editDIDState
         }
       });
     }
-    else{
+    else {
       this.router.navigate(['/editDidInvoice'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState:editDIDState
+          e_editDIDState: editDIDState
         }
       });
 
     }
 
-   
+
     $("body").removeClass("modal-open");
 
   }
@@ -839,7 +855,7 @@ clearSelection(event:any){
   }
 
 
-  setInvoiceTypeNameEdit(id: any,i:any) {
+  setInvoiceTypeNameEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.InvoiceType_BillerID = id;
 
@@ -858,7 +874,7 @@ clearSelection(event:any){
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
-     
+
         this.setInvoiceType.patchValue({
           'setInvoice': response.selected_invoice_type
         })
@@ -883,7 +899,7 @@ clearSelection(event:any){
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        
+
       };
   }
   setInvoiceTypeNameUpdate() {
@@ -933,14 +949,14 @@ clearSelection(event:any){
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.edit_array_SearchBiller_Checkbox",this.edit_array_SearchBiller_Checkbox)
+    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
     console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
       if (!this.edit_array_SearchBiller_Checkbox) {
         this.edit_array_SearchBiller_Checkbox = [];
       }
-  
+
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
@@ -962,7 +978,7 @@ clearSelection(event:any){
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
     this.yearsID = data;
-    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox)
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
     console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
       if (!this.edit_array_Years_Checkbox) {
@@ -981,9 +997,9 @@ clearSelection(event:any){
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
       console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
-  
+
     }
-  
+
   }
   recurring_onlyCHK(event: any) {
     this.CBV_recurring_only = event.target.checked;
@@ -1023,10 +1039,10 @@ clearSelection(event:any){
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-   
+
 
       this.searchResult = response.customer_names;
-     // console.log("vignesh-advanced search result", this.searchResult);
+      // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -1035,7 +1051,7 @@ clearSelection(event:any){
     // do something when input is focused
   }
 
-  setTermsConditionEdit(id: any,i:any) {
+  setTermsConditionEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     // this.setInvoiceType.reset();
     this.TermCondition_BillerID = id;
@@ -1216,14 +1232,14 @@ clearSelection(event:any){
 
   }
   EditCHK(billId: any, event: any) {
-   // console.log("List - CheckBox ID", billId);
+    // console.log("List - CheckBox ID", billId);
     // this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array.push(billId);
-     // console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array);
 
     }
     else {
@@ -1231,14 +1247,14 @@ clearSelection(event:any){
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-    //  console.log("Final Checkbox After Deselected selected list", this.edit_array)
+      //  console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
 
 
-  deleteDIDInvoice(billId: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  deleteDIDInvoice(billId: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -1295,8 +1311,8 @@ clearSelection(event:any){
     })
   }
 
-  getEmailDetails(id: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  getEmailDetails(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     this.email_TemplateSelection = false;
     $('#temp').val('');
 
@@ -1374,7 +1390,7 @@ clearSelection(event:any){
   }
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+    // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1388,7 +1404,7 @@ clearSelection(event:any){
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-  
+
       this.messageContent = response.crm_template_content
       this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
@@ -1495,7 +1511,7 @@ clearSelection(event:any){
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-     
+
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -1597,8 +1613,8 @@ clearSelection(event:any){
     $("#paytype").val('');
     $("#dateee").val('');
   }
-  processPaymentEdit(id: any,i:any) {
-         $("#ActionId" + i).modal("hide");
+  processPaymentEdit(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
 
     this.spinner.show();
     this.billID_processPayment = id;
@@ -1721,8 +1737,8 @@ clearSelection(event:any){
 
       };
   }
-  InvoicetoProforma(id: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  InvoicetoProforma(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to convert Invoice to Proforma?',
       text: "You won't be able to revert this!",
@@ -1776,10 +1792,10 @@ clearSelection(event:any){
 
 
   }
-  DeliveryOrderEdit(id: any,i:any) {
+  DeliveryOrderEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.billerId_deliveryOrder = id;
- 
+
   }
 
   DeliveryOrderUpdate() {
@@ -1842,8 +1858,8 @@ clearSelection(event:any){
 
 
   }
-  getInvoice_Post(id: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  getInvoice_Post(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     this.billId_InvoicePost = id;
     this.getInvoice({});
     let api_req: any = new Object();
@@ -1969,8 +1985,8 @@ clearSelection(event:any){
     }
 
   }
-  invoiceSharPersonEdit(Id: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  invoiceSharPersonEdit(Id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     this.getInvoice({});
     this.ShowPermission_BillID = Id;
     let api_req: any = new Object();
@@ -2092,9 +2108,9 @@ clearSelection(event:any){
 
   }
 
-  RecurringEdit(id: any,i:any) {
+  RecurringEdit(id: any, i: any) {
 
-     $("#ActionId" + i).modal("hide");
+    $("#ActionId" + i).modal("hide");
     this.spinner.show();
     this.recurring_BillerID = id;
     this.getInvoice({});
@@ -2115,7 +2131,7 @@ clearSelection(event:any){
       this.spinner.hide();
       if (response.status == true) {
         var date = response.reccuring_details.recured_date_show;
-      
+
         // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
@@ -2217,8 +2233,8 @@ clearSelection(event:any){
 
 
   }
-  setPreviousDue(id: any, Status_variable: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  setPreviousDue(id: any, Status_variable: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Previous Due status?',
       text: "You won't be able to revert this!",
@@ -2280,8 +2296,8 @@ clearSelection(event:any){
 
   }
 
-  fileAttachmentEdit(ID: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  fileAttachmentEdit(ID: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     $('#file').val();
     $('#file').val('');
 
@@ -2301,7 +2317,7 @@ clearSelection(event:any){
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    
+
       this.getFileAttachmentResult = response.inv_attachment_details;
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
@@ -2362,7 +2378,7 @@ clearSelection(event:any){
           if (result.status == true) {
 
             self.getInvoice({});
-           // console.log(result);
+            // console.log(result);
             Swal.close();
             $("#fileAttachmentFormId_DidInv").modal("hide");
             this.edit_array_file = [];
@@ -2384,7 +2400,7 @@ clearSelection(event:any){
         },
         error: function (err: any) {
 
-        //  console.log("err", err)
+          //  console.log("err", err)
           iziToast.error({
             message: "Server Side Error",
             position: 'topRight'
@@ -2521,12 +2537,12 @@ clearSelection(event:any){
 
   }
 
-  get_WFA_ResellerCommission(id: any,i:any) {
+  get_WFA_ResellerCommission(id: any, i: any) {
 
     this.billId_ResellerCommissionId = id;
-     $("#ActionId" + i).modal("hide");
-     $("body").removeClass("modal-open");
-     $("#ActionId" ,i).modal("hide")
+    $("#ActionId" + i).modal("hide");
+    $("body").removeClass("modal-open");
+    $("#ActionId", i).modal("hide")
 
     this.withoutFormArrayResellerCommissionForm.reset();
 
@@ -2834,8 +2850,8 @@ clearSelection(event:any){
 
 
   }
-  invoicetoQuotationEdit(id: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  invoicetoQuotationEdit(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     this.billId_InvoicetoQuotation = id;
     $("#InvoicetoQuotationFormId_DidInv").modal("show");
     // this.addNewQuotationPopUpForm.value.reset();
@@ -2917,8 +2933,8 @@ clearSelection(event:any){
       };
 
   }
-  setLocaltoExport(id: any, export_state: any,i:any) {
-     $("#ActionId" + i).modal("hide");
+  setLocaltoExport(id: any, export_state: any, i: any) {
+    $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Change?',
       text: "You won't be able to revert this!",

@@ -54,6 +54,22 @@
             "subchild": [],
             "isVisible": true,
             "value": "/resellerPayment"
+        },{
+            "name": "Recurring Date Update",
+            "icon": "slack",
+            "IDs": [2036],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/recurringDateupdate"
+        },{
+            "name": "Recurring Checker",
+            "icon": "life-buoy",
+            "IDs": [2036],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/recurringChecker"
         }
         
       

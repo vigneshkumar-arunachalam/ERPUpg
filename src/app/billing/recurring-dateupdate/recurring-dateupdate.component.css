@@ -655,16 +655,24 @@ tbody:hover {background-color: rgb(174, 242, 140)!important;}
  .userDatatable table thead tr:not(.footable-filtering) th {
   color:#daddf5!important;
 }
+.userDatatable td:nth-child(3){
+  width: 20%;
+}
 
 .userDatatable td:nth-child(4){
-  width: 15%;
+  width: 20%;
+}
+.userDatatable td:nth-child(5){
+  width: 30%;
 }
 .userDatatable td:nth-child(6){
-  width: 25%;
+  width: 10%;
 }
 .userDatatable table td{
   white-space: normal;
 }
+
+
 
 
 a.nav-link.active {

@@ -322,7 +322,7 @@
                         <div class="form-group row">
                             <label for="cusInvoiceNo" class="col-lg-12 col-form-label">Cus Invoice No.</label>
                             <div class="col-lg-12">
-                                <input type="text" class="form-control" formControlName="cusInvoiceNo" />
+                                <input type="text" class="form-control" [attr.readonly]="isReadOnly" formControlName="cusInvoiceNo" />
                             </div>
                         </div>
                     </div>

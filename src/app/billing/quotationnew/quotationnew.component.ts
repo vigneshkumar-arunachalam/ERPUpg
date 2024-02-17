@@ -637,6 +637,14 @@ export class QuotationnewComponent implements OnInit {
       this.searchResult_CustomerName='';
    
     }
+    convertTupleToArray(y: string): string[] {
+      // Split the string by comma and filter out empty strings
+      return y.split(',').filter(element => element.trim() !== '');
+    }
+    isArray(variable: any): boolean {
+      return Array.isArray(variable);
+    }
+
   quotationList(data: any) {
     $("#searchQuotationFormId ").modal("hide");
     this.spinner.show();
@@ -645,7 +653,10 @@ export class QuotationnewComponent implements OnInit {
     console.log("billerid", this.quotationSearchCheckboxID_array);
     this.quotationSearchCheckboxID_array = this.quotationSearchCheckboxID_array.filter((item: null) => item !== null);
   
-    
+       if (this.isArray(this.quotationSearchCheckboxID_array) == false) {
+      this.quotationSearchCheckboxID_array = this.convertTupleToArray(this.quotationSearchCheckboxID_array); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array", this.quotationSearchCheckboxID_array)
+    }
 
     console.log("Quotation List UI Display Data after OnInit ")
     var list_data = this.listDataInfo(data);
@@ -692,6 +703,12 @@ export class QuotationnewComponent implements OnInit {
 
           console.log("inside list response.selected_filtervalues[0].biller_ids", response.selected_filtervalues[0].biller_ids)
           console.log("inside list this.quotationSearchCheckboxID_array", this.quotationSearchCheckboxID_array)
+        }
+        if(response.selected_filtervalues[0].name_serach != ''){
+          this.searchResult_CustomerName=response.selected_filtervalues[0].name_serach;
+          this.searchQuotationForm.patchValue({
+            'company_Name':response.selected_filtervalues[0].name_serach
+          })
         }
 
 

@@ -213,7 +213,7 @@ export class InvoiceComponent implements OnInit {
   billId_InvoicetoQuotation: any;
   //notes
   billId_notes: any;
-  selected_billerId: any=[];
+  selected_billerId: any = [];
 
   datePipe: DatePipe = new DatePipe('en-US');
   transformDate: any;
@@ -341,7 +341,7 @@ export class InvoiceComponent implements OnInit {
   flg: boolean = false;
   years_id: any;
   yearsID: any;
-  getSearch:boolean=false;
+  getSearch: boolean = false;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -625,7 +625,7 @@ export class InvoiceComponent implements OnInit {
   }
   // this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
 
- 
+
   get addressControls_rc() {
     return this.resellerCommissionForm.get('addresses_rc') as FormArray
   }
@@ -951,12 +951,12 @@ export class InvoiceComponent implements OnInit {
     console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
 
   }
-  clearSelection(event:any){
-    console.log("clear selection",event)
+  clearSelection(event: any) {
+    console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
-    this.searchResult_CustomerID='';
-    this.searchResult_CustomerName='';
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
     console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
     console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
   }
@@ -1010,14 +1010,14 @@ export class InvoiceComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.edit_array_SearchBiller_Checkbox",this.edit_array_SearchBiller_Checkbox)
+    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
     console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
       if (!this.edit_array_SearchBiller_Checkbox) {
         this.edit_array_SearchBiller_Checkbox = [];
       }
-  
+
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
@@ -1027,7 +1027,8 @@ export class InvoiceComponent implements OnInit {
       if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
         this.edit_array_SearchBiller_Checkbox = [];
       }
-      const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
+     // const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data);
+      const index = this.edit_array_SearchBiller_Checkbox.indexOf(data);
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
@@ -1039,7 +1040,7 @@ export class InvoiceComponent implements OnInit {
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
     this.yearsID = data;
-    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox)
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
     console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
       if (!this.edit_array_Years_Checkbox) {
@@ -1058,11 +1059,11 @@ export class InvoiceComponent implements OnInit {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
       console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
-  
+
     }
-  
+
   }
-  
+
   addAddress(): void {
     this.addresses = this.addressForm.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
@@ -1195,17 +1196,19 @@ export class InvoiceComponent implements OnInit {
     this.invType_Search = event.target.value;
     console.log("invoice type search", this.invType_Search);
   }
-  getSearch1(){
+  getSearch1() {
 
-    this.getSearch=true;
+    this.getSearch = true;
   }
-  isArray(variable: any): boolean {
-    return Array.isArray(variable);
-  }
+
   getInvoice1(data: any) {
-   
-    console.log("billerid",this.edit_array_SearchBiller_Checkbox);
-    console.log("this.edit_array_Years_Checkbox",this.edit_array_Years_Checkbox);
+
+    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
+    if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
+      this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+    }
     //  alert("getInvoice-1")
     this.spinner.show();
     var list_data = this.listDataInfo(data);
@@ -1230,7 +1233,7 @@ export class InvoiceComponent implements OnInit {
     api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
     api_quotationList.getSearch = this.getSearch;
-    
+
 
     api_quotationList.current_page = "";
 
@@ -1300,27 +1303,34 @@ export class InvoiceComponent implements OnInit {
         this.revenueTypeList = response.revenue_list;
         this.taxAmtstate = response.proforma_details[0].taxAmtstate;
 
-       
+
         if (response.selected_filtervalues[0].biller_ids != '') {
           this.selected_billerId = response.selected_billerId;
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
-        //  this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+            this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',').map((str: any) => parseInt(str, 10));
-          console.log("changed value doubt",this.edit_array_SearchBiller_Checkbox);
-          var check=this.isArray(this.edit_array_SearchBiller_Checkbox);
-          console.log("check doubt",check)
-          
+          console.log("changed value doubt", this.edit_array_SearchBiller_Checkbox);
+          var check = this.isArray(this.edit_array_SearchBiller_Checkbox);
+          console.log("check doubt", check)
+
 
         }
+        if(response.selected_filtervalues[0].name_serach != ''){
+          this.searchResult_CustomerName=response.selected_filtervalues[0].name_serach;
+          this.searchInvoiceForm.patchValue({
+            'company_Name':response.selected_filtervalues[0].name_serach
+          })
+        }
+        console.log("this.edit_array_SearchBiller_Checkbox-list complete",this.edit_array_SearchBiller_Checkbox);
         if (response.selected_filtervalues[0].year_filter != '') {
-          this.years_id=response.selected_filtervalues[0].year_filter;
-          this.edit_array_Years_Checkbox=this.years_id.split(',');
-          this.edit_array_Years_Checkbox =this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
+          this.years_id = response.selected_filtervalues[0].year_filter;
+          this.edit_array_Years_Checkbox = this.years_id.split(',');
+          this.edit_array_Years_Checkbox = this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
-          console.log("this.edit_array_Years_Checkbox-after list load",this.edit_array_Years_Checkbox);
+          console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
         }
 
-     
+
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
@@ -1351,22 +1361,27 @@ export class InvoiceComponent implements OnInit {
       }
     });
   }
-  convertTupleToArray(y: [string, string, ...string[]]): string[] {
-    // Filter out any commas from the array
-    return y.filter(element => element !== ',');
-}
+  convertTupleToArray(y: string): string[] {
+    // Split the string by comma and filter out empty strings
+    return y.split(',').filter(element => element.trim() !== '');
+  }
+  isArray(variable: any): boolean {
+    return Array.isArray(variable);
+  }
 
   getInvoice(data: any) {
     this.spinner.show();
-    console.log("billerid",this.edit_array_SearchBiller_Checkbox);
-    var da=this.edit_array_SearchBiller_Checkbox;
-    if(this.isArray(this.edit_array_SearchBiller_Checkbox)==false){
+    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    var da = this.edit_array_SearchBiller_Checkbox;
+    console.log(this.isArray(this.edit_array_SearchBiller_Checkbox));
+    
+    if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
       this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
-      console.log("after conversion to array",this.edit_array_SearchBiller_Checkbox)
+      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
     }
     var list_data = this.listDataInfo(data);
-    console.log("getdata",this.edit_array_SearchBiller_Checkbox);
-    
+    console.log("getdata", this.edit_array_SearchBiller_Checkbox);
+
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
     api_req.moduleType = "invoice";
@@ -1459,9 +1474,8 @@ export class InvoiceComponent implements OnInit {
         this.edit_array_SearchBiller_Checkbox = response.selected_billerId;
 
         this.selected_billerId = response.selected_billerId;
-        this.invoicePermissionList_inv_to_did
-        this.invoicePermissionList_set_actual_cost
-
+     
+        console.log("this.edit_array_SearchBiller_Checkbox-getInvoice-list complete",this.edit_array_SearchBiller_Checkbox);
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
@@ -2334,8 +2348,16 @@ export class InvoiceComponent implements OnInit {
       }
       else {
         var bal_amt = $('#Owing').val()
-        this.processPaymentForm.patchValue({
-          'amount': bal_amt,
+        var vh=$('#amount').val();
+        // alert(vh)
+        var ff=this.processPaymentForm.value.amount;
+        // alert(ff)
+        // this.processPaymentForm.patchValue({
+        //   'amount': $('#Owing').val(),
+
+        // })
+         this.processPaymentForm.patchValue({
+          'amount':this.processPaymentForm.value.amount ,
 
         })
 
@@ -2384,7 +2406,7 @@ export class InvoiceComponent implements OnInit {
           // console.log("if this.owingAmt >= res=amount value=res",res)
           this.processPaymentForm.patchValue({
 
-            'amount': res,
+            'amount': $('#Owing').val(),
 
 
           });
