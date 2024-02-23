@@ -78,13 +78,15 @@ import { DupEditQuotationNewComponent } from './billing/dup-quotation-new/dup-ed
 
 import { RecurringCheckerComponent } from './billing/recurring-checker/recurring-checker.component';
 import { RecurringDateupdateComponent } from './billing/recurring-dateupdate/recurring-dateupdate.component';
-
+import { MultipleInvPaymentComponent } from './billing/multiple-inv-payment/multiple-inv-payment.component';
 
 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'multipleInvPayment', component: MultipleInvPaymentComponent
   },{
     path: 'recurringChecker', component: RecurringCheckerComponent
   },{

@@ -452,6 +452,9 @@ export class EditInvoiceComponent implements OnInit {
   }
 
   removeParticular(i: number) {
+  
+    console.log('Attempting to remove address at index', i);
+  console.log('Form array:', this.addresses); 
 
     var pd_billchild_id = $('#pd_billchild_id_' + i).val();
 

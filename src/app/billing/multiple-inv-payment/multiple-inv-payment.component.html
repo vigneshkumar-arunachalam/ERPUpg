@@ -1,0 +1,370 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card quotation">
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+                            Home</a>
+                        <span class="breadcrumb-item active"> Invoice Payment Entry Management</span>
+                    </h3>
+                    <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
+                    <div class="quotation-btn-section">
+                        <button type="button" title="Add New Customer Contract"
+                            class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+                            data-target="#addMulInvPayId" (click)="addMulInvPay()"
+                            style="margin-right: 10px;">
+                            <i class="fas fa-plus" style="margin-right:0;"></i>
+                            Add Payment Entry
+                        </button>
+
+                        <button type="button" title="Edit Customer Contract"
+                            class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+                            (click)="editMulInvPayGroup()" style="margin-right: 10px;">
+                            <i class="fa fa-pencil-square-o" style="margin-right:0;"></i>
+                            Edit Group Payment Entry
+                        </button>
+                        <button type="button" title="Delete  Contract" class="btn btn-primary btn-default btn-squared"
+                            data-toggle="modal" data-target="#deleteCustomerContractId" (click)="deleteMulInvPayGroup()"
+                            style="margin-right: 10px;">
+                            <i class="fa fa-times" style="margin-right:0;"></i>
+                            Delete Group Payment Entry
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive ">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+
+
+                                        <th>
+                                            <div class="d-flex align-items-center">
+                                                <div class="custom-checkbox  check-all">
+                                                    <input class="checkbox" type="checkbox" id="check-30"
+                                                        (change)="selectAll($event)">
+                                                    <label for="check-30">
+
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title" style="color: aliceblue;">Payment Entry No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Payment Entry Date</span>
+                                        </th>
+
+
+                                        <th>
+                                            <span class="userDatatable-title">Customer Name</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Invoice No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Generate By</span>
+                                        </th>
+
+
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr *ngFor="let list of mulInvPay_list ; let i = index">
+
+                                        <td>
+                                            <div class="d-flex">
+                                                <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                    <div class="checkbox-group-wrapper">
+                                                        <div class="checkbox-group d-flex">
+                                                            <div
+                                                                class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                <input class="checkbox" type="checkbox"
+                                                                    id="check-grp-mulInv{{i}}"
+                                                                    (change)="EditCHK(list.payment_entry_no,$event)">
+                                                                <label for="check-grp-mulInv{{i}}"></label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.payment_entry_no}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ list.payment_entry_dt}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ list.customer_name}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ list.invoice_no}}</span>
+                                        </td>
+                                        <td>
+                                            <span>{{ list.billGeneratedBy}}</span>
+                                        </td>
+                                        <td>
+
+                                            <a  title="Delete" (click)="deleteFile(list.payment_entry_no)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>                                                        
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div >
+                        <nav class="atbd-page" >
+                          <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                            <li class="page-item">
+                              <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                href="javascript:void(0)"
+                                (click)="paginationData.backtab=='show' ? mulInvPaymentList({'offset':paginationData.start}) : false"><i
+                                  class="fas fa-angle-left"></i></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                              <a class="page-link" href="javascript:void(0)" (click)="mulInvPaymentList({'offset':paginationData.back})"><i
+                                  class="fas fa-angle-double-left"></i></a>
+                            </li>
+                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                              *ngFor="let pagination of paginationData.data;let i=index">
+                              <a class="page-link" href="javascript:void(0)"
+                                (click)=" pagination.load ==true ? mulInvPaymentList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                            </li>
+                            <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                              <a class="page-link" href="javascript:void(0)" (click)="mulInvPaymentList({'offset':paginationData.next})"><i
+                                  class="fas fa-angle-double-right"></i></a>
+                            </li>
+                            <li class="page-item">
+                              <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                href="javascript:void(0)"
+                                (click)="paginationData.nexttab =='show' ? mulInvPaymentList({'offset':paginationData.end}) : false"><i
+                                  class="fas fa-angle-right"></i></a>
+                            </li>
+                            <li class="dropdown__item">
+                              <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+            
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      </div>
+                  
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="addMulInvPayId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class=" col-11 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Payment Entry Group Add
+        </h2>
+
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       
+        <form [formGroup]="addPI_section2">
+            <div class="row">
+            
+                <div class="col-12">
+
+                    <section>
+
+                        <div>
+
+                            <div class="table-responsive">
+                                <table class="add-contact-table-section">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+
+                                            <th><span class="userDatatable-title">Customer Name</span></th>
+
+
+                                            
+                                            <th><span class="userDatatable-title">Date </span></th>
+                                            <th><span class="userDatatable-title">Invoice Amount</span>
+                                            </th>
+                                            <th><span class="userDatatable-title">
+                                                Balance Amount</span></th>
+                                            <th><span class="userDatatable-title">
+                                                Paid Amount</span></th>
+                                            <th><span class="userDatatable-title">
+                                                Payment Type/Method</span></th>
+                                            <th><span class="userDatatable-title">
+                                                Note</span>
+                                            </th>
+                                            
+                                            <th>
+                                                <span class="userDatatable-title">Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody formArrayName="addresses"
+                                        *ngFor="let address of addressControls.controls; let i = index;">
+
+                                        <!-- <tr [formGroup]="addressControls.controls[i]" class="marginSpace"> -->
+                                        <tr [formGroupName]="i" class="marginSpace">
+
+                                            <td style="width: 240px;">
+                                                <div class="userDatatable-content ">
+
+                                                    <ng-autocomplete [data]="searchResult_add"
+                                                    [searchKeyword]="keywordCompanyName_add"
+                                                    formControlName="pd_company_Name"
+                                                    (selected)='selectEventCustomer_add($event)'
+                                                    (inputChanged)='searchCustomerData_add($event)'
+                                                    (inputCleared)="clearSelection1($event)"
+                                                    (inputFocused)='onFocusedCustomer_add($event)'
+                                                    [itemTemplate]="itemTemplateCustomer"
+                                                    [notFoundTemplate]="notFoundTemplate">
+                                                </ng-autocomplete>
+
+                                                <ng-template #itemTemplateCustomer let-item>
+                                                    <a [innerHTML]="item.customerName"></a>
+                                                </ng-template>
+
+                                                <ng-template #notFoundTemplate let-notFound>
+                                                    <div [innerHTML]="notFound"></div>
+                                                </ng-template>
+
+
+                                                </div>
+
+                                            </td>
+
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    <input type="date" class="form-control" 
+                                                        formControlName="pd_date" id="pd_date_{{i}}"
+                                                         />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+
+                                                    <input type="text" class="form-control" 
+                                                        formControlName="pd_invAmount" id="pd_invAmount_{{i}}" />
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    <input type="number" class="form-control" style="text-align: right;"
+                                                        formControlName="pd_balAmount" id="pd_balAmount_{{i}}"
+                                                         />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content" style="width: 160px;">
+                                                    <input type="number" class="form-control" 
+                                                    formControlName="pd_paidAmount"
+                                                        style="text-align: right;"
+                                                        id="pd_paidAmount_{{i}}" />
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content" style="width: 160px;">
+                                                    <select class="form-control" formControlName="pd_paymenttype" id="pd_paymenttype_{{i}}" name="pd_paymenttype">
+                                    
+                                                        <option [ngValue]="null" selected>Select Payment Method</option>
+                                      
+                                                        <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
+                                                          {{term.payment_type_name}}
+                                                        </option>
+                                                      </select>
+
+                                                </div>
+                                               
+                                            </td>
+                                            <td>
+                                                <div class="userDatatable-content">
+                                                    <input type="text" class="form-control"  style="text-align: right;"
+                                                        formControlName="pd_note"
+                                                        id="pd_note_{{i}}">
+
+                                                </div>
+                                            </td>
+                                        
+                                         
+                                            <td>
+                                                <div *ngIf="i>0" class="userDatatable-content d-inline-block">
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        (click)="removeAddress(i)">X</button>
+
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                       
+                                       
+                                    </tbody>
+
+                                </table>
+                            </div>
+
+
+
+                        </div>
+                    </section>
+
+                    <div class="text-right"  style="margin: 20px;">
+
+
+                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2"
+                            (click)="addAddress()" style="margin-right: 10px;"><i class="fas fa-plus"
+                                style="margin-right:0;"> Add Product</i>
+                        </button>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" >
+          Save
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
+
+
+

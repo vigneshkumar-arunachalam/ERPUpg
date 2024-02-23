@@ -342,6 +342,7 @@ export class InvoiceComponent implements OnInit {
   years_id: any;
   yearsID: any;
   getSearch: boolean = false;
+  showHi: boolean = false;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -1254,6 +1255,9 @@ export class InvoiceComponent implements OnInit {
       if (response) {
         this.spinner.hide();
         this.PI_list = response.proforma_details;
+        this.PI_list.forEach((item: { showHi: boolean; }) => {
+          item.showHi = false;
+        });
         this.searchFlag = response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
@@ -1423,6 +1427,9 @@ export class InvoiceComponent implements OnInit {
       if (response) {
         this.spinner.hide();
         this.PI_list = response.proforma_details;
+        this.PI_list.forEach((item: { showHi: boolean; }) => {
+          item.showHi = false;
+        });
         this.searchFlag = response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
         this.revenue_type_id = response.proforma_details[0].revenue_type_id;
@@ -4736,7 +4743,17 @@ export class InvoiceComponent implements OnInit {
     $('#file').val('');
 
   }
+  showTooltip() {
+    
+    var tooltip=$('#tooltip').val();
+    tooltip.style.visibility = "visible";
+}
 
+hideTooltip() {
+  var tooltip=$('#tooltip').val();
+   
+    tooltip.style.visibility = "hidden";
+}
 
 }
 

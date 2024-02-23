@@ -142,16 +142,19 @@
                               (click)="getInvoice_Permission(list.billId)"><i class="fa fa-bars"></i>
                             </button>
 
-                            <span class="recurring-Status" *ngIf="(list.recuring_status==1)"
+                            <div class="recurring-Status tooltip" *ngIf="(list.recuring_status==1)"
                               [ngStyle]="{'color': list.recuring_status== '1' ? 'red' : 'blue'}">
-                              R</span>
-                            <span class="recurring-Status" *ngIf="(list.commission_state==1)"
-                              [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
-                              C</span>
-                            <!-- <span class="recurring-Status" *ngIf="(list.commission_state==1)" 
-                               [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
-                                C</span> -->
-
+                              R
+                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;min-width: 160px;">Fixed Month Dur-{{ list.fixed_duration }}<br>Usage Month Dur-{{ list.usage_duration }}</span>
+                            </div>
+                      
+                            <div class="recurring-Status tooltip" *ngIf="(list.commission_state==1)"
+                            [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
+                              C
+                              <!-- Tooltip text -->
+                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;">{{ list.commission_info }}</span>
+                            </div>
+                        
                             <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                                 src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                           </div>
@@ -970,31 +973,31 @@
                 </option>
               </select>
               <div *ngIf="(flg==true)" class="mt-2">
-                <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1" 
-                (change)="changeCreditNote($event)" id="paytype1">
-  
+                <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1"
+                  (change)="changeCreditNote($event)" id="paytype1">
+
                   <option [ngValue]="null" selected>Select credit note</option>
-  
+
                   <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
                     {{term1.tot_amt}}
                   </option>
-  
+
                 </select>
               </div>
-             
+
               <div *ngIf="(flg==true)" class="mt-2">
                 <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2"
-                (change)="changePrepaidNote($event)"  id="paytype2">
-  
+                  (change)="changePrepaidNote($event)" id="paytype2">
+
                   <option [ngValue]="null" selected>Select prepaid note</option>
-  
+
                   <option *ngFor="let term2 of creditResponse" value="{{term2.prepaid_id}}">
                     {{term2.tot_amt}}
                   </option>
-  
+
                 </select>
               </div>
-             
+
             </div>
             <div class="col-lg-6">
               <label class="mt-4">Note</label>
@@ -1035,7 +1038,7 @@
         <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
           Cancel
         </button>
-        
+
       </div>
     </div>
   </div>
@@ -1938,7 +1941,8 @@
           (click)="addAddress_rc()">Add </button>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission_formArray()">Update</button>
+        <button type="submit" class="btn btn-primary"
+          (click)="update_WFA_ResellerCommission_formArray()">Update</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel
         </button>
@@ -1952,122 +1956,116 @@
 <!----------Reseller Commission Details END ------------------>
 <!------------------------  Reseller Commission Details start  ---------->
 
-<div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content addcontractmastercss">
-            <div class="modal-header">
-                <h2 class="modal-title" id="addModalLongTitle">Reseller Commission Details</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true"   >&times;</span>
-                </button>
+<div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content addcontractmastercss">
+      <div class="modal-header">
+        <h2 class="modal-title" id="addModalLongTitle">Reseller Commission Details</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="inv_resellerCommissionForm">
+          <div class="row">
+            <div class="col-lg-12 mt-2" style="display: flex; ">
+              <div class="col-lg-3 mt-2">
+                <label>Reseller Name </label>
+              </div>
+              <div class="col-lg-9">
+                <div class="form-group row">
+                  <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+
+                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
+                      formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                      (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                      style="padding: 4px 5px !important;">
+                    </ng-autocomplete>
+
+                    <ng-template #itemTemplateCustomer let-item>
+                      <a [innerHTML]="item.customerName"></a>
+                    </ng-template>
+
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+
+                  </div>
+
+
+                </div>
+              </div>
+              <input type="hidden" formControlName="billChildid1" id="billChildid1" />
             </div>
-            <div class="modal-body">
-             
-                <form [formGroup]="inv_resellerCommissionForm" >
-                    <div class="row">
-                      <div class="col-lg-12 mt-2" style="display: flex; ">
-                        <div class="col-lg-3 mt-2">
-                          <label>Reseller Name </label>
-                        </div>
-                        <div class="col-lg-9">
-                          <div class="form-group row">
-                            <div class="ng-autocomplete" style="padding: 4px 5px !important;">
-    
-                              <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName"
-                                id="reseller_name" formControlName="reseller_name"
-                                (selected)='selectEventReseller($event)' (inputChanged)='searchResellerData($event)'
-                                (inputFocused)='onFocusedReseller($event)' [itemTemplate]="itemTemplateCustomer"
-                                [notFoundTemplate]="notFoundTemplate" style="padding: 4px 5px !important;">
-                              </ng-autocomplete>
-    
-                              <ng-template #itemTemplateCustomer let-item>
-                                <a [innerHTML]="item.customerName"></a>
-                              </ng-template>
-    
-                              <ng-template #notFoundTemplate let-notFound>
-                                <div [innerHTML]="notFound"></div>
-                              </ng-template>
-    
-                            </div>
-    
-    
-                          </div>
-                        </div>
-                        <input type="hidden" formControlName="billChildid1" id="billChildid1" />
-                      </div>
-                      <div class="col-lg-12 mt-2" style="display: flex;">
-                        <div class="col-lg-3">
-                          <label>Commission Type </label>
-                        </div>
-                        <div class="col-lg-9">
-    
-                          <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
-                            <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
-                            <input class="form-check-input" type="radio" name=CommissionType_ id="CommissionType_{{k}}"
-                              checked="{{item.id==this.CommissionType1 ? 'checked':''}}"
-                              (change)="radio_commissionType($event)" value={{item.id}}>
-    
-                            <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-lg-12 mt-2" style="display: flex;">
-                        <div class="col-lg-3 mt-2">
-                          <label>Commission Value </label>
-                        </div>
-                        <div class="col-lg-9">
-                          <input type="number" class="form-control" formControlName="commission_value"
-                            id="CommissionValue_WFA_ID_" (keyup)="commissionValueAutoFill()">
-                        </div>
-                      </div>
-                      <div class="col-lg-12 mt-2" style="display: flex;">
-                        <div class="col-lg-3 mt-2">
-                          <label>Commission Amount </label>
-                        </div>
-                        <div class="col-lg-9">
-                          <input type="number" class="form-control" formControlName="commission_amt"
-                            id="CommissionAmount1_WFA_ID_">
-                          <input type="hidden" class="form-control" id="reseller_comm_id"
-                            formControlName="reseller_comm_id">
-                          <input type="hidden" class="form-control" id="commIndex" 
-                          formControlName="commIndex">
-                          <input type="hidden" class="form-control" id="reseller_id" 
-                          formControlName="reseller_id">
-    
-                          <input type="hidden" class="form-control" id="billId" 
-                          formControlName="billId">
-                          <input type="hidden" class="form-control" id="grossAmount" 
-                          formControlName="grossAmount">
-                        </div>
-                      </div>
-                      <div class="col-lg-12 mt-2" style="display: flex;">
-                        <div class="col-lg-3 ">
-                          <label>PDF Show </label>
-                        </div>
-                        <div class="col-lg-9">
-                          <input type="checkbox" formControlName="pdf_show" id="pdf_show"
-                            (change)="CBF_PdfShow($event)">
-                        </div>
-                      </div>
+            <div class="col-lg-12 mt-2" style="display: flex;">
+              <div class="col-lg-3">
+                <label>Commission Type </label>
+              </div>
+              <div class="col-lg-9">
 
-                    
-                      
+                <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                  <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                  <input class="form-check-input" type="radio" name=CommissionType_ id="CommissionType_{{k}}"
+                    checked="{{item.id==this.CommissionType1 ? 'checked':''}}" (change)="radio_commissionType($event)"
+                    value={{item.id}}>
 
-                    </div>
-
-                </form>
-
+                  <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                </div>
+              </div>
             </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
-              <button type="button" class="btn btn-dark" data-dismiss="modal">
-                Cancel
-              </button>
-
+            <div class="col-lg-12 mt-2" style="display: flex;">
+              <div class="col-lg-3 mt-2">
+                <label>Commission Value </label>
+              </div>
+              <div class="col-lg-9">
+                <input type="number" class="form-control" formControlName="commission_value"
+                  id="CommissionValue_WFA_ID_" (keyup)="commissionValueAutoFill()">
+              </div>
             </div>
-        </div>
+            <div class="col-lg-12 mt-2" style="display: flex;">
+              <div class="col-lg-3 mt-2">
+                <label>Commission Amount </label>
+              </div>
+              <div class="col-lg-9">
+                <input type="number" class="form-control" formControlName="commission_amt"
+                  id="CommissionAmount1_WFA_ID_">
+                <input type="hidden" class="form-control" id="reseller_comm_id" formControlName="reseller_comm_id">
+                <input type="hidden" class="form-control" id="commIndex" formControlName="commIndex">
+                <input type="hidden" class="form-control" id="reseller_id" formControlName="reseller_id">
+
+                <input type="hidden" class="form-control" id="billId" formControlName="billId">
+                <input type="hidden" class="form-control" id="grossAmount" formControlName="grossAmount">
+              </div>
+            </div>
+            <div class="col-lg-12 mt-2" style="display: flex;">
+              <div class="col-lg-3 ">
+                <label>PDF Show </label>
+              </div>
+              <div class="col-lg-9">
+                <input type="checkbox" formControlName="pdf_show" id="pdf_show" (change)="CBF_PdfShow($event)">
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
     </div>
+  </div>
 </div>
 
 <!----------Reseller Commission Details END ------------------>
@@ -2542,10 +2540,10 @@
               <div class="form-group">
                 <label for="temp5" class="col-lg-12 ">Biller Name</label>
                 <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
-                  <input type="checkbox" id="{{biller.billerId}}"
-                  [value]="biller.billerId" checked="{{biller.chk_val=='true' ? 'checked':''}}"
+                  <input type="checkbox" id="{{biller.billerId}}" [value]="biller.billerId"
+                    checked="{{biller.chk_val=='true' ? 'checked':''}}"
                     (change)="searchBillerNameCHK(biller.billerId,$event)">
-                
+
 
                   {{biller.billerName}}
                 </div>
@@ -2558,9 +2556,8 @@
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     formControlName="company_Name" (selected)='selectEventCustomer($event)'
                     (inputChanged)='searchCustomerData($event)' (keyup)="keysearch($event)"
-                    (inputCleared)="clearSelection($event)"
-                    (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
-                    [notFoundTemplate]="notFoundTemplate">
+                    (inputCleared)="clearSelection($event)" (inputFocused)='onFocusedCustomer($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
                   <!-- <div class="x ng-star-inserted" (click)="clearSelection()"><i aria-label="Close" class="material-icons">close</i></div> -->
 
@@ -2579,13 +2576,12 @@
               <div class="form-group">
                 <label for="temp1" class="col-lg-12 ">Years</label>
                 <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
-                  <input type="checkbox" id="{{yrs.year}}"  [value]="yrs.year"
-                  [checked]="yrs.chk_val === 'true'"
-                   (change)="yearsCHK(yrs.year,$event)">
+                  <input type="checkbox" id="{{yrs.year}}" [value]="yrs.year" [checked]="yrs.chk_val === 'true'"
+                    (change)="yearsCHK(yrs.year,$event)">
 
                   {{yrs.year}}
                 </div>
-              
+
               </div>
             </div>
             <div class="col-lg-2 searchScrollCss">

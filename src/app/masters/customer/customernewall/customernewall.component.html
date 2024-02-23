@@ -1423,6 +1423,26 @@
                     id="ESA_c3cxResellerId" />
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-lg-12 col-form-label">3CX Reseller License API</label>
+                <div class="col-lg-12">
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" [checked]="cal4care1_sg_add" (change)="onCal4care1SgAddChange($event)">
+                        <label class="form-check-label" style="color: #252525;font-size: 14px;
+                        font-weight: 400!important;">Cal4care SG</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" [checked]="cal4care2_sdn_add" (change)="onCal4care2SdnAddChange($event)">
+                        <label class="form-check-label" style="color: #252525;font-size: 14px;
+                        font-weight: 400!important;">Cal4care SDN</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" [checked]="cal4care3_jp_add" (change)="onCal4care3JpAddChange($event)">
+                        <label class="form-check-label" style="color: #252525;font-size: 14px;
+                        font-weight: 400!important;">Cal4care JP</label>
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
@@ -2196,6 +2216,27 @@
                     id="ESA_c3cxResellerId1" />
                 </div>
               </div>
+              <div class="form-group row">
+                <label class="col-lg-12 col-form-label">3CX Reseller License API</label>
+                <div class="col-lg-12">
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" [checked]="cal4care1_sg" (change)="onCal4care1SgChange($event)">
+                        <label class="form-check-label" style="color: #252525;font-size: 14px;
+                        font-weight: 400!important;">Cal4care SG</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" [checked]="cal4care2_sdn" (change)="onCal4care2SdnChange($event)">
+                        <label class="form-check-label" style="color: #252525;font-size: 14px;
+                        font-weight: 400!important;">Cal4care SDN</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="checkbox" class="form-check-input" [checked]="cal4care3_jp" (change)="onCal4care3JpChange($event)">
+                        <label class="form-check-label" style="color: #252525;font-size: 14px;
+                        font-weight: 400!important;">Cal4care JP</label>
+                    </div>
+                </div>
+            </div>
+
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
@@ -2469,7 +2510,7 @@
                         <th> Action</th>
                         <th> </th>
                         <th> </th>
-                       
+
                       </tr>
                     </thead>
                     <tbody formArrayName="addresses" *ngFor="let address of addressControls.controls; let i = index;">
@@ -2496,7 +2537,7 @@
                         </td>
                         <td style="padding-right: 10px!important">
                           <input type="text" class="form-control" formControlName="bill_code_sg"
-                          id="bill_code_sg_{{i}}" />
+                            id="bill_code_sg_{{i}}" />
                         </td>
                         <td *ngIf="i>0">
                           <div class="userDatatable-content d-inline-block">
@@ -2518,7 +2559,7 @@
                         <td style="padding-right: 10px!important">
                           <input type="hidden" class="form-control" formControlName="conn_state" id="conn_state{{i}}" />
                         </td>
-                       
+
 
                       </tr>
                     </tbody>
@@ -2783,7 +2824,7 @@
                     </table>
                   </div>
                   <div>
-                    
+
                   </div>
                   <label class=" col-form-label">Manual Credit
                     <input type="checkbox" formControlName="manual_credit" (change)="manualCreditPermission($event)"
@@ -2793,7 +2834,7 @@
                   <div class="row">
                     <div class="col-lg-12">
                       <div>
-                    
+
                       </div>
                       <form [formGroup]="billCodeEditForm4">
                         <label class=" col-form-label">Add Credit Amount
@@ -2874,15 +2915,18 @@
                       </div>
                       <div class="form-check" style="margin-right: 30px;">
                         <input type="checkbox" name="addCustomerStatus" id="Singapore" class="form-check-input">
-                        <label for="Singapore" class="form-check-label" style="color:#495057!important">Singapore </label>
+                        <label for="Singapore" class="form-check-label" style="color:#495057!important">Singapore
+                        </label>
                       </div>
                       <div class="form-check" style="margin-right: 30px;">
                         <input type="checkbox" name="addCustomerStatus" id="Thailand " class="form-check-input">
-                        <label for="Thailand " class="form-check-label" style="color:#495057!important">Thailand </label>
+                        <label for="Thailand " class="form-check-label" style="color:#495057!important">Thailand
+                        </label>
                       </div>
                       <div class="form-check" style="margin-right: 30px;">
                         <input type="checkbox" name="addCustomerStatus" id="Malasiya " class="form-check-input">
-                        <label for="Malasiya " class="form-check-label" style="color:#495057!important">Malasiya </label>
+                        <label for="Malasiya " class="form-check-label" style="color:#495057!important">Malasiya
+                        </label>
                       </div>
                       <div class="form-check" style="margin-right: 30px;">
                         <input type="checkbox" name="addCustomerStatus" id="Vietnam " class="form-check-input">
@@ -4236,8 +4280,7 @@
                   <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
                     (selected)='selectEventCustomer($event)' (inputChanged)='searchCustomerData($event)'
                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
-                    (inputCleared)="clearSelection($event)"
-                    [notFoundTemplate]="notFoundTemplate">
+                    (inputCleared)="clearSelection($event)" [notFoundTemplate]="notFoundTemplate">
                   </ng-autocomplete>
 
                   <ng-template #itemTemplateCustomer let-item>

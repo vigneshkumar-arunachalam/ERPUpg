@@ -665,3 +665,34 @@ tr:hover {background-color: rgb(246, 236, 233)!important;}
 
  /* search ends */
 
+
+
+/* Styling for the tooltip */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* Add a dotted border bottom */
+  opacity: 5;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: #555;
+  color: #090000;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  /* Position the tooltip text */
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px; /* Use half of the width (to center the tooltip) */
+}
+
+/* Show the tooltip text when hovering over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

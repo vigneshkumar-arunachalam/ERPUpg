@@ -4,7 +4,7 @@ import { ServerService } from '../services/server.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import Swal from 'sweetalert2'
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 declare var $: any;
 declare var tinymce: any;
@@ -16,8 +16,8 @@ declare var iziToast: any;
 })
 export class ContractComponent implements OnInit {
   result: any;
-  pageLimit = 10;
-  offset_count = 0;
+
+
   resultSave: any;
   resultEditGroup: any;
   checkbox_value: any;
@@ -32,9 +32,13 @@ export class ContractComponent implements OnInit {
   invoiceContractID: any;
   contractRemarksEditId: any = [];
   CheckTest: any;
-  recordNotFound = false;
   firstResult: any;
   secondResult: any;
+
+  // pagination
+  offset_count = 0;
+  pageLimit = 50;
+  recordNotFound = false;
   paginationData: any = { "info": "hide" };
 
   public addresses: FormArray;
@@ -49,6 +53,7 @@ export class ContractComponent implements OnInit {
   emailForm: FormGroup;
   emailBizzFileForm: FormGroup;
   approveStatusForm: FormGroup;
+  searchContractForm: FormGroup;
 
 
   result1: any;
@@ -85,14 +90,21 @@ export class ContractComponent implements OnInit {
   emailToBizz: any;
   approveStatus: any;
   customerContractIDApproveStatus: any;
-  CustomerIDUpdate:any;
-  updateCustID:any;
-  customerIDJoin:any=[];
+  CustomerIDUpdate: any;
+  updateCustID: any;
+  customerIDJoin: any = [];
 
   formGroup = this.fb.group({
     features: this.fb.array([this.fb.control('', Validators.required)])
   });
-  constructor(private serverService: ServerService, public sanitizer: DomSanitizer, private router: Router, private fb: FormBuilder) {
+  contacts_list: any;
+  searchResult_CustomerID: any;
+  searchResult_CustomerName: any;
+  searchResult_CustomerID1: any = '';
+  searchResult_CustomerName1: any;
+  containsNullValues: any;
+  constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
+    private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
@@ -105,8 +117,8 @@ export class ContractComponent implements OnInit {
 
     // this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.FileURLDisplay);
 
-    if(localStorage.getItem('login_status')=='1'){
-      localStorage.setItem('login_status','0');
+    if (localStorage.getItem('login_status') == '1') {
+      localStorage.setItem('login_status', '0');
       window.location.reload();
     }
 
@@ -157,8 +169,12 @@ export class ContractComponent implements OnInit {
     this.approveStatusForm = new FormGroup({
       'cust_contract_status_approve': new FormControl(null),
     });
+    this.searchContractForm = new FormGroup({
+      'company_Name': new FormControl(null),
 
-    this.contractList()
+    });
+
+    this.contractList({})
     this.contractAdd()
     this.contractMasterFileList()
     // $('#invoiceAttachmentId').modal('show');
@@ -170,7 +186,10 @@ export class ContractComponent implements OnInit {
     return this.addressForm.get('addresses') as FormArray
   }
   get editaddressControls() {
-    return this.editContractGroupForm.get('edit_addresses') as FormArray
+    return this.editContractGroupForm.get('edit_addresses') as FormArray;
+
+
+
   }
   get primEmail() {
     return this.emailForm.get('email_to')
@@ -180,10 +199,15 @@ export class ContractComponent implements OnInit {
     this.addresses = this.addressForm.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
   }
+  edit_addresses1(): void {
+    this.edit_addresses = this.addressForm.get('edit_addresses') as FormArray;
+    this.edit_addresses.push(this.edit_createAddress());
+  }
 
   removeAddress(i: number) {
     this.addresses.removeAt(i);
   }
+
 
 
 
@@ -217,7 +241,7 @@ export class ContractComponent implements OnInit {
     return this.fb.group({
       e_company_Name: '',
       e_contractName: '',
-      e_contractID:'',
+      e_contractID: '',
       e_customer_contract_id: '',
       e_classificationName: '',
       e_fromDate: '',
@@ -284,7 +308,79 @@ export class ContractComponent implements OnInit {
       console.log(" contract bill details", this.contractClassification);
     });
   }
+  selectEventCustomer1(item: any) {
+    console.log(item)
+    this.searchResult_CustomerID1 = item.customerId;
+    this.searchResult_CustomerName1 = item.customerName;
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID1)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName1)
+
+  }
+  keysearch1(event: any) {
+    this.searchResult_CustomerName1 = event.target.value
+  }
+  clearSelection1(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID1 = '';
+    this.searchResult_CustomerName1 = '';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID1)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName1)
+  }
+  onFocusedCustomer1(e: any) {
+    // do something when input is focused
+  }
+  searchCustomerData1(data: any) {
+
+    if (data.length > 0) {
+      // this.spinner.show();
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/customer_name_search";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "customer_name_search";
+      api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_Search_req.customerName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        console.log("vignesh-customer_status response", response);
+        // this.searchResult = response[0];
+        this.searchResult = response.customer_names;
+        console.log("vignesh-advanced search result", this.searchResult);
+        if (response! = null) {
+          this.searchResult = response.customer_names;
+          this.spinner.hide();
+        }
+        else {
+          // iziToast.warning({
+          //   message: "Sorry, No Matching Data",
+          //   position: 'topRight'
+          // });
+
+        }
+      });
+
+    }
+
+
+  }
+  containsNullCompanyNames(addresses: any) {
+    for (let address of addresses) {
+      if (address.company_Name === null) {
+        return true; // Return true if any company_Name is null
+      }
+    }
+    return false; // Return false if no company_Name is null
+  }
   contractSave() {
+    this.spinner.show();
+    console.log("this.addressForm", this.addressForm);
+    console.log("this.addressForm.value.addresses", this.addressForm.value.addresses);
+    // console.log("this.addresses.value",this.addresses.value);
 
     // if($('#id').val()==''){
 
@@ -300,11 +396,22 @@ export class ContractComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     save_req.action = "customer_contract_save";
     save_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    const addressesArray = this.addressForm.get('addresses') as FormArray;
+    const hasNullCompanyNames = addressesArray.controls.some(control => control.get('company_Name').value === null);
+    if (hasNullCompanyNames) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Company Name Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    } 
+
     if (this.addressForm.value.addresses.length <= 1) {
       save_req.values = this.addressForm.value.addresses;
 
     } else {
-      save_req.values = this.addresses.value;
+        save_req.values = this.addresses.value;
     }
     api_req.element_data = save_req;
     console.log("check api req", api_req)
@@ -315,9 +422,9 @@ export class ContractComponent implements OnInit {
       console.log("save check", response)
       this.resultSave = response
       if (response.status = true) {
-
+        this.spinner.hide();
         $("#addCustomerContractId").modal("hide");
-        this.contractList()
+        this.contractList({})
         iziToast.success({
           title: 'Saved',
           message: 'Contract Saved Successfully !',
@@ -325,12 +432,13 @@ export class ContractComponent implements OnInit {
 
       }
       else {
+        this.spinner.hide();
         $("#addCustomerContractId").modal("hide");
         iziToast.error({
           title: 'Not Saved',
           message: 'Contract not Saved !',
         });
-        this.contractList()
+        this.contractList({})
       }
 
     });
@@ -338,11 +446,12 @@ export class ContractComponent implements OnInit {
   }
   check() { }
   contractEditGroup() {
+    this.spinner.show();
     this.editContractGroupForm.reset();
-    
+
     console.log(this.edit_array)
     if (this.edit_array == '') {
-      
+
       iziToast.error({
         title: 'Error',
         message: 'Atleast Select 1 Contract to Edit !',
@@ -369,41 +478,27 @@ export class ContractComponent implements OnInit {
     //return false
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      // this.contacts_list=response.result.data.list_data;
-      this.updateCustID=response.edit_contract_details;
-      console.log("test update customer id",this.updateCustID)
-  
-      this.updateCustID.forEach((Element: any) => {
-        console.log(Element.customer_id);
-        this.customerIDJoin.push(Element.customer_id);
-        
-        console.log("this.customerIDJoin",  this.customerIDJoin);
-      });
-      console.log("variable check",this.customerIDJoin.join(",") )
-      
-      //this.resultEditGroup = response.edit_contract_details
-      console.log("op", response.edit_contract_details)
-      console.log("op1", response.edit_contract_details[0].biller_id)
-      if (response != '') {
 
+      if (response != '') {
+        this.spinner.hide();
 
         const formArray = new FormArray([]);
         for (let index = 0; index < response.edit_contract_details.length; index++) {
-          this.CustomerIDUpdate=response.edit_contract_details[index].customer_id,
-          formArray.push(this.fb.group({
-            "e_company_Name": response.edit_contract_details[index].customerName,
-            "e_contractName": response.edit_contract_details[index].contract_id,
-            "e_contractID":response.edit_contract_details[index].customer_id,
-            "e_customer_contract_id": response.edit_contract_details[index].customer_contract_id,
-            "e_classificationName": response.edit_contract_details[index].contract_classification_id,
-            "e_fromDate": response.edit_contract_details[index].from_dt,
-            "e_toDate": response.edit_contract_details[index].to_dt,
-            "e_remarks": response.edit_contract_details[index].remark_desc,
-            "e_billerName": response.edit_contract_details[index].biller_id,
-           
+          this.CustomerIDUpdate = response.edit_contract_details[index].customer_id,
+            formArray.push(this.fb.group({
+              "e_company_Name": response.edit_contract_details[index].customerName,
+              "e_contractName": response.edit_contract_details[index].contract_id,
+              "e_contractID": response.edit_contract_details[index].customer_id,
+              "e_customer_contract_id": response.edit_contract_details[index].customer_contract_id,
+              "e_classificationName": response.edit_contract_details[index].contract_classification_id,
+              "e_fromDate": response.edit_contract_details[index].from_dt,
+              "e_toDate": response.edit_contract_details[index].to_dt,
+              "e_remarks": response.edit_contract_details[index].remark_desc,
+              "e_billerName": response.edit_contract_details[index].biller_id,
 
-          })
-          );
+
+            })
+            );
 
 
         }
@@ -421,7 +516,7 @@ export class ContractComponent implements OnInit {
 
   }
   contractUpdate() {
-   
+    this.spinner.show();
     $("#editCustomerContractId").modal("hide");
     console.log(this.editContractGroupForm.value)
     // console.log("group select id",this.edit_array)
@@ -443,16 +538,18 @@ export class ContractComponent implements OnInit {
 
       console.log("update response", response)
 
-      if (response.status== true) {
-        this.contractList(); 
+      if (response.status == true) {
+        this.spinner.hide();
+        this.contractList({});
         this.editContractGroupForm.reset();
         iziToast.success({
           title: 'Success',
           message: 'Contract has been updated!',
         });
-        this.contractList()
+        this.contractList({})
       }
       else {
+        this.spinner.hide();
         iziToast.error({
           title: 'Error',
           message: 'Contract has not been updated!',
@@ -463,8 +560,15 @@ export class ContractComponent implements OnInit {
 
 
   }
-  deleteContract(id: any,i:any) {
-    $("#ActionId" + i).modal("hide");
+  removeAddress_edit(i: number) {
+
+    console.log('Attempting to remove address at index', i);
+    console.log('Form array:', this.editContractGroupForm);
+    console.log('Form array-customer contract id at particular index:',
+      this.editContractGroupForm.value.edit_addresses[i].e_customer_contract_id);
+    // var pd_billchild_id = $('#pd_billchild_id_' + i).val();
+    var contractID = this.editContractGroupForm.value.edit_addresses[i].e_customer_contract_id;
+
 
     Swal.fire({
       title: 'Are you sure?',
@@ -476,7 +580,55 @@ export class ContractComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+        this.spinner.show();
+        const editAddresses = this.editContractGroupForm.get('edit_addresses') as FormArray;
+        editAddresses.removeAt(i);
+        // this.editContractGroupForm.value.edit_addresses.removeAt(i);
+        let api_req: any = new Object();
+        let api_ContDel_req: any = new Object();
+        api_req.moduleType = "customer_contract";
+        api_req.api_url = "customer_contract/child_customer_contract_delete";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ContDel_req.action = "child_customer_contract_delete";
+        api_ContDel_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ContDel_req.contract_id = contractID;
+        api_req.element_data = api_ContDel_req;
 
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.spinner.hide();
+            this.edit_array = [];
+            iziToast.success({
+              message: " Contract Deleted successfully",
+              position: 'topRight'
+            });
+            this.contractList({});
+          }
+          else {
+            this.spinner.hide();
+          }
+        });
+      }
+    })
+
+  }
+
+  deleteContract(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
         let api_req: any = new Object();
         let delete_contract_req: any = new Object();
         api_req.moduleType = "customer_contract";
@@ -489,12 +641,13 @@ export class ContractComponent implements OnInit {
         api_req.element_data = delete_contract_req;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
+            this.spinner.hide();
             // $("#fileAttachmentCustomerContractId").modal("hide");
             iziToast.success({
               message: " Contract Deleted successfully",
               position: 'topRight'
             });
-            this.contractList();
+            this.contractList({});
           }
         }),
           (error: any) => {
@@ -511,53 +664,55 @@ export class ContractComponent implements OnInit {
   contractDeleteGroup() {
     console.log(this.edit_array);
     if (this.edit_array == '') {
-      
+
       iziToast.error({
         title: 'Error',
         message: 'Atleast Select 1 Contract to Delete !',
       });
-      
-    }
-    else{
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.value) {
-        let api_req: any = new Object();
-        let GrpDelete_contract_req: any = new Object();
-        api_req.moduleType = "customer_contract";
-        api_req.api_url = "customer_contract/group_delete";
-        api_req.api_type = "web";
-        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        GrpDelete_contract_req.action = "group_delete";
-        GrpDelete_contract_req.contract_id = this.edit_array.join(',');
-        GrpDelete_contract_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_req.element_data = GrpDelete_contract_req;
-        this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-          if (response.status == true) {
-            iziToast.success({
-              message: "Contract attachment deleted successfully",
-              position: 'topRight'
-            });
-            this.contractList();
-          }
-        }),
-          (error: any) => {
-            console.log(error);
-          };
-      }
-    })
+    }
+    else {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          let api_req: any = new Object();
+          let GrpDelete_contract_req: any = new Object();
+          api_req.moduleType = "customer_contract";
+          api_req.api_url = "customer_contract/group_delete";
+          api_req.api_type = "web";
+          api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+          GrpDelete_contract_req.action = "group_delete";
+          GrpDelete_contract_req.contract_id = this.edit_array.join(',');
+          GrpDelete_contract_req.user_id = localStorage.getItem('erp_c4c_user_id');
+          api_req.element_data = GrpDelete_contract_req;
+          this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+            if (response.status == true) {
+              this.spinner.hide();
+              iziToast.success({
+                message: "Contract attachment deleted successfully",
+                position: 'topRight'
+              });
+              this.contractList({});
+            }
+          }),
+            (error: any) => {
+              console.log(error);
+            };
+        }
+      })
     }
   }
 
-  contractfileAttachment(fileAttachContractID: any, fileAttachCustomerID: any,i:any) {
+  contractfileAttachment(fileAttachContractID: any, fileAttachCustomerID: any, i: any) {
     $("#ActionId" + i).modal("hide");
     $("#fileAttachmentCustomerContractId").modal("show");
     this.fileAttachContractID = fileAttachContractID;
@@ -612,17 +767,17 @@ export class ContractComponent implements OnInit {
         api_req.element_data = delete_contractAttach_req;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            
+
             iziToast.success({
               message: "Contract attachment deleted successfully",
               position: 'topRight'
             });
             $("#fileAttachmentCustomerContractId").modal("hide");
-            this.contractfileAttachment(this.fileAttachContractID, this.fileAttachCustomerID,{});
-         
-            
+            this.contractfileAttachment(this.fileAttachContractID, this.fileAttachCustomerID, {});
+
+
           }
-         
+
         }),
           (error: any) => {
             console.log(error);
@@ -655,9 +810,9 @@ export class ContractComponent implements OnInit {
 
   //       this.contractfileAttachment(this.fileAttachContractID,this.fileAttachCustomerID );
 
-  //       // this.contractList()
+  //       // this.contractList({})
   //     }
-  //     // this.contractList()
+  //     // this.contractList({})
   //   });
 
   // }
@@ -680,7 +835,7 @@ export class ContractComponent implements OnInit {
       data: data,
       success: function (result: any) {
         if (result.status == true) {
-          self.contractList();
+          self.contractList({});
 
           $("#fileAttachmentCustomerContractId").modal("hide");
 
@@ -704,9 +859,9 @@ export class ContractComponent implements OnInit {
       }
     })
   }
-  invoiceAttachment(CustomerContractid: any, customerID: any,i:any) {
+  invoiceAttachment(CustomerContractid: any, customerID: any, i: any) {
     $("#ActionId" + i).modal("hide");
-    this.invoiceResult=[];//for refreshing we are emptying the variable
+    this.invoiceResult = [];//for refreshing we are emptying the variable
     // this.invoiceCheckboxID_array=[];
     //for refreshing we are emptying the variable
     this.invoiceContractID = CustomerContractid;
@@ -723,42 +878,42 @@ export class ContractComponent implements OnInit {
     invEdit_req.userId = "2";
     api_req.element_data = invEdit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status",response.status);     
-        if (response.status == true) {
-         
-          this.invoiceResult = response.customer_invoice_details;
-            // iziToast.success({
-            //     message: "Invoice attachment displayed successfully",
-            //     position: 'topRight'
-            // });
-            // this.editInvoiceGroupForm.reset();
-            console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
-            // this.contractList();
-        }
-        else {
-          $("#invoiceAttachmentId").modal("hide");
-            iziToast.error({
-                message: "Data Not Found",
-                position: 'topRight'
-            });
-            // this.editInvoiceGroupForm.reset();
-            // this.contractList();
-        }
-    }), (error: any) => {
+      console.log("response status", response.status);
+      if (response.status == true) {
+
+        this.invoiceResult = response.customer_invoice_details;
+        // iziToast.success({
+        //     message: "Invoice attachment displayed successfully",
+        //     position: 'topRight'
+        // });
+        // this.editInvoiceGroupForm.reset();
+        console.log("invoice checkbox array-invoice attachment", this.invoiceCheckboxID_array)
+        // this.contractList({});
+      }
+      else {
+        $("#invoiceAttachmentId").modal("hide");
         iziToast.error({
-            message: "Sorry, some server issue occur. Please contact admin",
-            position: 'topRight'
+          message: "Data Not Found",
+          position: 'topRight'
         });
-        console.log("final error", error);
+        // this.editInvoiceGroupForm.reset();
+        // this.contractList({});
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
     }
-}
-  
+  }
+
   chkFunction(item: any) {
 
   }
   invoiceUpdate() {
     // this.invoiceCheckboxID_array=[];
-    console.log("invoice checkbox array-on update click",this.invoiceCheckboxID_array)
+    console.log("invoice checkbox array-on update click", this.invoiceCheckboxID_array)
     let api_req: any = new Object();
     let invUpdate_req: any = new Object();
     api_req.moduleType = "customer_contract";
@@ -776,27 +931,27 @@ export class ContractComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("check invoice update", response)
- 
-      if (response.status==true) {
+
+      if (response.status == true) {
         this.invoiceResult = response.customer_invoice_details;
         $("#invoiceAttachmentId").modal("hide");
-        console.log("invoice checkbox array-after update click",this.invoiceCheckboxID_array)
+        console.log("invoice checkbox array-after update click", this.invoiceCheckboxID_array)
         iziToast.success({
           message: "Invoice has been Updated",
           position: 'topRight'
-      });
- 
+        });
+
       }
-      else{
-       
+      else {
+
         iziToast.error({
           message: "Invoice has not been Updated",
           position: 'topRight'
-      });
+        });
       }
-    
-     
-      // this.contractList()
+
+
+      // this.contractList({})
 
     });
 
@@ -804,7 +959,7 @@ export class ContractComponent implements OnInit {
   contractFileGenerateEdit(id: any) {
     // $("#fileContractGenerateId").modal("show");
   }
-  fileContractGenerateRowID(id: any,i:any) {
+  fileContractGenerateRowID(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.fileContractGenerate_row_id = id;
   }
@@ -862,7 +1017,7 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  dropdownGenerateTemporaryMasterFile(id: any,i:any) {
+  dropdownGenerateTemporaryMasterFile(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     let api_req: any = new Object();
@@ -898,7 +1053,7 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  contractRemarksEdit(id: any,i:any) {
+  contractRemarksEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     //$("#contractRemarksId").modal("show");
     this.contractRemarksEditId = id;
@@ -932,7 +1087,7 @@ export class ContractComponent implements OnInit {
         console.log(this.contractRemarkForm.value);
 
 
-        this.contractList()
+        this.contractList({})
       }
       else {
         this.contractRemarkForm.patchValue({
@@ -967,7 +1122,7 @@ export class ContractComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("contract remarks Update api", response)
       if (response.status == true) {
-        // this.contractList() 
+        // this.contractList({}) 
 
         this.editContractRemarkForm.reset()
 
@@ -975,8 +1130,8 @@ export class ContractComponent implements OnInit {
         iziToast.success({
           message: "Contract Remark has been Saved",
           position: 'topRight'
-      });
-        this.contractList()
+        });
+        this.contractList({})
       }
 
     });
@@ -990,7 +1145,7 @@ export class ContractComponent implements OnInit {
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
     api_req.moduleType = "customer";
-    api_req.api_url = "customer/cal/customer_name_search";
+    api_req.api_url = "customer/customer_name_search";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_Search_req.action = "customer_name_search";
@@ -1009,7 +1164,7 @@ export class ContractComponent implements OnInit {
     });
 
   }
- 
+
   selectEventCustomer(item: any) {
     console.log(item)
     this.cust_id = item;
@@ -1027,27 +1182,32 @@ export class ContractComponent implements OnInit {
   }
 
 
-
   EditCHK(data: any, event: any) {
     console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
-    if (this.checkbox_value) {
+    console.log(this.checkbox_value);
 
-      this.edit_array.push(data);
-      this.edit_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array);
-    }
-    else {
-      const index = this.edit_array.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array.splice(index, 1);
+    // Check if data is not undefined
+    if (data !== undefined) {
+      if (this.checkbox_value) {
+        // Check if data is not already in the array and is not undefined
+        if (!this.edit_array.includes(data)) {
+          this.edit_array.push(data);
+        }
+        console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      } else {
+        const index = this.edit_array.findIndex((el: any) => el === data);
+        if (index > -1) {
+          this.edit_array.splice(index, 1);
+        }
+        console.log("Final Checkbox After Deselected selected list", this.edit_array);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array)
-
     }
   }
+
+
+
   InvoiceCHK(data: any, event: any) {
     // this.invoiceCheckboxID_array=[];
     console.log("Invoice List - CheckBox ID", data);
@@ -1167,12 +1327,12 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  Email(EmailID: any,i:any) {
+  Email(EmailID: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.emailForm.reset();
     this.EmailCustomerContractID = EmailID;
-   
+
   }
   EmailBizzFile(EmailID: any) {
     this.EmailBizzFileID = EmailID;
@@ -1215,7 +1375,7 @@ export class ContractComponent implements OnInit {
         $('#emailto').val('');
         $("#TextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
-        this.contractList()
+        this.contractList({})
         Swal.fire({
           icon: 'error',
           title: 'Email Not Sent',
@@ -1229,7 +1389,7 @@ export class ContractComponent implements OnInit {
         $("#TextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
 
-        this.contractList()
+        this.contractList({})
         Swal.fire({
           icon: 'success',
           title: 'Email Notification Sent Successfully',
@@ -1238,10 +1398,10 @@ export class ContractComponent implements OnInit {
         });
       }
 
-      this.contractList()
+      this.contractList({})
     });
   }
-  bizzFileContractEdit(EmailID: any,i:any) {
+  bizzFileContractEdit(EmailID: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.EmailBizzFileID = EmailID;
@@ -1284,7 +1444,7 @@ export class ContractComponent implements OnInit {
         $('#emailto').val('');
         $("#BizzFileTextEditorId").modal("hide");
         // tinymce.activeEditor.setContent("");
-        this.contractList()
+        this.contractList({})
         // Swal.fire({
         //   icon: 'error',
         //   title: 'Email Not Sent',  
@@ -1301,7 +1461,7 @@ export class ContractComponent implements OnInit {
         $("#BizzFileTextEditorId").modal("hide");
         // tinymce.activeEditor.setContent("");
 
-        this.contractList()
+        this.contractList({})
         Swal.fire({
           icon: 'success',
           title: 'Email Notification Sent Successfully',
@@ -1316,7 +1476,7 @@ export class ContractComponent implements OnInit {
         'mailcontent': this.mailContent,
       });
 
-      this.contractList()
+      this.contractList({})
     });
   }
   bizzFileContractEmail() {
@@ -1353,7 +1513,7 @@ export class ContractComponent implements OnInit {
 
         $("#BizzFileTextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
-        this.contractList()
+        this.contractList({})
         // Swal.fire({
         //   icon: 'error',
         //   title: 'Email Not Sent',  
@@ -1370,7 +1530,7 @@ export class ContractComponent implements OnInit {
         $("#BizzFileTextEditorId").modal("hide");
         tinymce.activeEditor.setContent("");
 
-        this.contractList()
+        this.contractList({})
         Swal.fire({
           icon: 'success',
           title: 'Email Notification Sent Successfully',
@@ -1380,11 +1540,11 @@ export class ContractComponent implements OnInit {
       }
 
 
-      this.contractList()
+      this.contractList({})
     });
 
   }
-  customerContractApproveStatus(customerContractId: any,i:any) {
+  customerContractApproveStatus(customerContractId: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.customerContractIDApproveStatus = customerContractId;
@@ -1436,7 +1596,7 @@ export class ContractComponent implements OnInit {
       }
     });
     $('#ApproveStatusId').modal('hide');
-    this.contractList();
+    this.contractList({});
   }
 
   initTiny() {
@@ -1502,36 +1662,35 @@ export class ContractComponent implements OnInit {
     return list_data;
   }
 
-  contractList() {
-    
+  contractList(data: any) {
+
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let get_req: any = new Object();
     api_req.moduleType = "customer_contract";
     api_req.api_url = "customer_contract/customer_contract_list"
     api_req.api_type = "web";
-    api_req.search_text = list_data.search_text;
-    api_req.order_by_name = list_data.order_by_name;
-    api_req.order_by_type = list_data.order_by_type;
-    api_req.limit = list_data.limit;
-    api_req.offset = list_data.offset;
+
+
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     get_req.action = "customer_contract_list";
     get_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    get_req.search_txt = this.searchResult_CustomerID1;
+    get_req.off_set = list_data.offset;
+    get_req.limit_val = list_data.limit;
     api_req.element_data = get_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
+        $('#searchContractId').modal('hide');
         this.result = response.customer_contract_details;
-        // console.log("get customer contract details", this.result);
-        // this.contacts_list=response.result.data.list_data;
-        // this.offset_count = list_data.offset;
-        // this.paginationData = this.serverService.pagination({ 'offset': response.result.data.list_info.offset, 'total': response.result.data.list_info.total, 'page_limit': this.pageLimit });
-        // this.recordNotFound = this.result.length == 0 ? true : false;
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+
       } else {
         iziToast.warning({
-          message: "Please try again",
+          message: "Record Not found",
           position: 'topRight'
         });
+        $('#searchContractId').modal('hide');
       }
     }),
       (error: any) => {

@@ -104,6 +104,7 @@ import { DupAddQuotationNewComponent } from './billing/dup-quotation-new/dup-add
 import { DupEditQuotationNewComponent } from './billing/dup-quotation-new/dup-edit-quotation-new/dup-edit-quotation-new.component';
 import { RecurringCheckerComponent } from './billing/recurring-checker/recurring-checker.component';
 import { RecurringDateupdateComponent } from './billing/recurring-dateupdate/recurring-dateupdate.component';
+import { MultipleInvPaymentComponent } from './billing/multiple-inv-payment/multiple-inv-payment.component';
 
 
 
@@ -191,7 +192,8 @@ import { RecurringDateupdateComponent } from './billing/recurring-dateupdate/rec
      DupAddQuotationNewComponent,
      DupEditQuotationNewComponent,
      RecurringCheckerComponent,
-     RecurringDateupdateComponent
+     RecurringDateupdateComponent,
+     MultipleInvPaymentComponent
      
     
   ],
