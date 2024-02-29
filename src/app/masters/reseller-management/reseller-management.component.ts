@@ -4,7 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { COMMA, ENTER, } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
 import Swal from 'sweetalert2';
-import { HttpClient, HttpHeaders,HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 declare var $: any;
 declare var iziToast: any;
@@ -42,7 +42,7 @@ export class ResellerManagementComponent implements OnInit {
   groupSelectCommonId: any;
   checkbox_value: any;
   //add & list
-  companyCodeAddCustomer:any;
+  companyCodeAddCustomer: any;
   CompanyName: any;
   addCustomer: any;
   revenue_list: any;
@@ -75,10 +75,10 @@ export class ResellerManagementComponent implements OnInit {
   billerNameList: any;
   errMsg = false;
   //errMsg = true;
- // emailErrMsg = true;
+  // emailErrMsg = true;
   emailErrMsg = false;
-  email_alert:boolean=false;
-  finance_email_alert:boolean=false;
+  email_alert: boolean = false;
+  finance_email_alert: boolean = false;
   checked: boolean = true;
   isDisabled: boolean = true;
   customerStatus_radiobox_Value: any = '';
@@ -134,6 +134,15 @@ export class ResellerManagementComponent implements OnInit {
   editPermissionId: any;
   editPermission: any;
   editPermissionCheckboxID_array: any = [];
+  //edit checkbox-resellerid
+  cal4care1_sg: boolean = false;
+  cal4care2_sdn: boolean = false;
+  cal4care3_jp: boolean = false;
+  //edit checkbox-resellerid
+  cal4care1_sg_add: boolean = false;
+  cal4care2_sdn_add: boolean = false;
+  cal4care3_jp_add: boolean = false;
+
 
   //special edit
   specialEditCustomerForm: FormGroup;
@@ -263,7 +272,7 @@ export class ResellerManagementComponent implements OnInit {
   googleAuthentication_customerCode: any;
   googleAuthentication_password: any;
   //cms add
-  cmslistadd:any;
+  cmslistadd: any;
 
   //radio-mconnect,mrvoip,cal4tel
   Partnertype_C4T_radiobox_Value: any;
@@ -285,37 +294,37 @@ export class ResellerManagementComponent implements OnInit {
   typeConvertionString_invoice_Shared_Permission: any;
   // selectedValues
   selectedValues: any;
-  customer_list_billerDetails:any;
-  customer_list_billercode:any;
+  customer_list_billerDetails: any;
+  customer_list_billercode: any;
   customer_list_colorcode: any;
-  test123:any;
+  test123: any;
   //mail to button
-  vig_emailList:any;
-  vig_emailList_Array:any=[];
+  vig_emailList: any;
+  vig_emailList_Array: any = [];
   cmsdepartmentADD_val: any;
-  cmsdepartmentEdit_ID:any;
-  cmsdepartmentEdit_val:any;
+  cmsdepartmentEdit_ID: any;
+  cmsdepartmentEdit_val: any;
   existing_email: number;
 
-  testing =  false;
+  testing = false;
   customerIDBillCode: any;
   chkAllStatus: any;
-  submit_status: boolean=false;
-  Clicked: boolean=false;
-  
+  submit_status: boolean = false;
+  Clicked: boolean = false;
 
-  constructor(private http:HttpClient,private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
-    this.serverService.global_search_customer.subscribe((val:any)=>{
-      console.log("before parse",val)
+
+  constructor(private http: HttpClient, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+    this.serverService.global_search_customer.subscribe((val: any) => {
+      console.log("before parse", val)
       var k = JSON.parse(val);
-      console.log("after parse",k)
-      this.customer_list=k;
+      console.log("after parse", k)
+      this.customer_list = k;
       console.log(k.type)
       console.log(k.proformalist)
-      if(k.type=="hello"){
-        this.testing =  true;
+      if (k.type == "hello") {
+        this.testing = true;
       } else {
-        this.testing =  false;
+        this.testing = false;
       }
       console.log(this.testing)
     })
@@ -326,7 +335,7 @@ export class ResellerManagementComponent implements OnInit {
     this.popupBillCodeForm3 = this.fb.group({
       popupBillCode1: this.fb.array([this.popupBillCode_FormControl()])
     });
-    
+
 
   }
 
@@ -379,9 +388,9 @@ export class ResellerManagementComponent implements OnInit {
     }
   ];
   addEmail(event: MatChipInputEvent): void {
-    this.email_alert=true;
+    this.email_alert = true;
     console.log(event.value);
- 
+
     let api_req: any = new Object();
     let email_Validation: any = new Object();
     api_req.moduleType = "customer";
@@ -395,19 +404,19 @@ export class ResellerManagementComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        this.existing_email=response.email_count;
-       
-        if(this.existing_email>=1){
+        this.existing_email = response.email_count;
+
+        if (this.existing_email >= 1) {
           iziToast.error({
             message: "Email exists",
             position: 'topRight'
           });
           Swal.close();
           return 0;
-      
+
         }
       } else {
-      
+
       }
     }),
       (error: any) => {
@@ -418,7 +427,7 @@ export class ResellerManagementComponent implements OnInit {
         console.log("final error", error);
       };
 
-   
+
     if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
@@ -452,9 +461,9 @@ export class ResellerManagementComponent implements OnInit {
     event.chipInput!.clear();
   }
   addFinanceEmail(event: MatChipInputEvent): void {
-    this.finance_email_alert=true;
+    this.finance_email_alert = true;
     console.log(event.value)
-    
+
     let api_req: any = new Object();
     let email_Validation: any = new Object();
     api_req.moduleType = "customer";
@@ -468,19 +477,19 @@ export class ResellerManagementComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response.status == true) {
-        this.existing_email=response.email_count;
-        
-        if(this.existing_email>=1){
+        this.existing_email = response.email_count;
+
+        if (this.existing_email >= 1) {
           iziToast.error({
             message: "Email already exists",
             position: 'topRight'
           });
           Swal.close();
           return 0;
-      
+
         }
       } else {
-      
+
       }
     }),
       (error: any) => {
@@ -553,7 +562,7 @@ export class ResellerManagementComponent implements OnInit {
     this.getDynamicList();
     this.cmsDepartmentList1();
     this.getCustomerCode();
-this.cmsDepartmentList1();
+    this.cmsDepartmentList1();
     this.initTiny();
     // this.edit_eventCheck_auto_deselect();
     this.checkbox_EditShippingAddress = true;
@@ -577,7 +586,7 @@ this.cmsDepartmentList1();
     this.editCustomerValue = JSON.parse(this.editCustomerRaw);
     this.specialEditCustomerRaw = ['[ { "email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "finance_email": "vasant@voicetel.co.th,chanakan@voicetel.co.th,siraswaya@voicetel.co.th", "system_discount_3cx": 1, "stripe_recurring_state": 0, "licence_buy_override": 0 }, { "previous_invoice_bill": 7692.75 }, { "pending_bill_days": 20 } ]'];
     this.specialEditCustomerValue = JSON.parse(this.specialEditCustomerRaw);
-    this.radioDynamic = [{ "name": "Distributor","alicename":"PremiumPartner", "values": "prem" }, { "name": "Reseller","alicename":"AffiliatePartner", "values": "affi" }];
+    this.radioDynamic = [{ "name": "Distributor", "alicename": "PremiumPartner", "values": "prem" }, { "name": "Reseller", "alicename": "AffiliatePartner", "values": "affi" }];
     this.radioDynamic_Call4tel = [{ "nameCT": "Reseller", "valuesCT": "prem" }, { "nameCT": "Distributor", "valuesCT": "affi" }];
     this.dropdownSettings_billerName = {
       singleSelection: false,
@@ -913,6 +922,13 @@ this.cmsDepartmentList1();
       'retail_low_credit_kl': new FormControl(null),
       'retail_high_credit_kl': new FormControl(null),
 
+      'primary_code_sg': new FormControl(null),
+      'primary_code_retail_sg': new FormControl(null),
+      'low_credit_sg': new FormControl(null),
+      'high_credit_sg': new FormControl(null),
+      'retail_low_credit_sg': new FormControl(null),
+      'retail_high_credit_sg': new FormControl(null),
+
       'primary_code_auto_credit': new FormControl(null),
 
 
@@ -927,6 +943,11 @@ this.cmsDepartmentList1();
       'server_name_kl': new FormControl(null),
       'pbx_threshold_limit_kl': new FormControl(null),
       'retail_threshold_limit_kl': new FormControl(null),
+
+      'server_name_sg': new FormControl(null),
+      'pbx_threshold_limit_sg': new FormControl(null),
+      'retail_threshold_limit_sg': new FormControl(null),
+
       'manual_credit': new FormControl(null),
 
     });
@@ -957,6 +978,13 @@ this.cmsDepartmentList1();
       'popup_retail_low_credit_kl': new FormControl(null),
       'popup_retail_high_credit_kl': new FormControl(null),
 
+      'popup_primary_code_sg': new FormControl(null),
+      'popup_primary_code_retail_sg': new FormControl(null),
+      'popup_low_credit_sg': new FormControl(null),
+      'popup_high_credit_sg': new FormControl(null),
+      'popup_retail_low_credit_sg': new FormControl(null),
+      'popup_retail_high_credit_sg': new FormControl(null),
+
       'popup_primary_code_auto_credit': new FormControl(null),
 
 
@@ -972,6 +1000,11 @@ this.cmsDepartmentList1();
       'popup_server_name_kl': new FormControl(null),
       'popup_pbx_threshold_limit_kl': new FormControl(null),
       'popup_retail_threshold_limit_kl': new FormControl(null),
+
+      'popup_server_name_sg': new FormControl(null),
+      'popup_pbx_threshold_limit_sg': new FormControl(null),
+      'popup_retail_threshold_limit_sg': new FormControl(null),
+
       'popup_customerId': new FormControl(null),
       'popup_manual_credit': new FormControl(null),
 
@@ -1028,6 +1061,7 @@ this.cmsDepartmentList1();
       bill_code_kl: '',
       bill_code_750: '',
       bill_code_750_8: '',
+      bill_code_sg: '',
       customer_bill_code_id: '',
       conn_state: '',
       customer_id: '',
@@ -1043,11 +1077,11 @@ this.cmsDepartmentList1();
 
 
   removeAddress1(i: number) {
-   
+
     console.log('iiii--' + i)
     console.log(this.addresses)
-    var customer_bill_code_id= $('#customer_bill_code_id' + i).val();
-     var cust_id = $('#customer_id' + i).val();
+    var customer_bill_code_id = $('#customer_bill_code_id' + i).val();
+    var cust_id = $('#customer_id' + i).val();
     // console.log('pd_billchild_id'+pd_billchild_id);
 
     Swal.fire({
@@ -1060,10 +1094,10 @@ this.cmsDepartmentList1();
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-         this.addresses.removeAt(i);
+        this.addresses.removeAt(i);
         // var addr = this.addPI_section2.value.addresses;
         // var list_cnt = addr.length;
-       
+
 
 
         let api_req: any = new Object();
@@ -1080,7 +1114,7 @@ this.cmsDepartmentList1();
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           console.log("response", response);
-          
+
 
         });
 
@@ -1124,6 +1158,8 @@ this.cmsDepartmentList1();
       popup_bill_code_kl: '',
       popup_bill_code_750: '',
       popup_bill_code_750_8: '',
+      popup_bill_code_sg: '',
+
       popup_customer_bill_code_id: '',
       popup_conn_state: '',
       popup_customer_id: '',
@@ -1348,36 +1384,36 @@ this.cmsDepartmentList1();
     this.checkbox_CAUS = event.target.checked;
     console.log(this.checkbox_CAUS)
   }
-  cmsdepartmentADD_ID:any;
-  cmsdepartmentADD_Value:any;
+  cmsdepartmentADD_ID: any;
+  cmsdepartmentADD_Value: any;
 
-  cmsdepartmentADD(event: any){
- 
-    console.log("cms event",event)
-    var test=event.target.value;
-    var test2 :any=[];
-    test2=test.split(',');
-    console.log("test2",test2)
-    this.cmsdepartmentADD_ID=test2[0];
-    this.cmsdepartmentADD_val=test2[1];
+  cmsdepartmentADD(event: any) {
 
-    console.log("this.cmsdepartmentADD_ID",this.cmsdepartmentADD_ID);
-    console.log("this.cmsdepartmentADD_ID",this.cmsdepartmentADD_val);
-    
+    console.log("cms event", event)
+    var test = event.target.value;
+    var test2: any = [];
+    test2 = test.split(',');
+    console.log("test2", test2)
+    this.cmsdepartmentADD_ID = test2[0];
+    this.cmsdepartmentADD_val = test2[1];
+
+    console.log("this.cmsdepartmentADD_ID", this.cmsdepartmentADD_ID);
+    console.log("this.cmsdepartmentADD_ID", this.cmsdepartmentADD_val);
+
   }
-  cmsdepartmentEdit(event: any){
- 
-    console.log("cms event",event)
-    var testf=event.target.value;
-    var test21 :any=[];
-    test21=testf.split(',');
-    console.log("test21",test21)
-    this.cmsdepartmentEdit_ID=test21[0];
-    this.cmsdepartmentEdit_val=test21[1];
+  cmsdepartmentEdit(event: any) {
 
-    console.log("this.cmsdepartmentEdit_ID",this.cmsdepartmentEdit_ID);
-    console.log("this.cmsdepartmentEdit_val",this.cmsdepartmentEdit_val);
-    
+    console.log("cms event", event)
+    var testf = event.target.value;
+    var test21: any = [];
+    test21 = testf.split(',');
+    console.log("test21", test21)
+    this.cmsdepartmentEdit_ID = test21[0];
+    this.cmsdepartmentEdit_val = test21[1];
+
+    console.log("this.cmsdepartmentEdit_ID", this.cmsdepartmentEdit_ID);
+    console.log("this.cmsdepartmentEdit_val", this.cmsdepartmentEdit_val);
+
   }
 
 
@@ -1427,7 +1463,7 @@ this.cmsDepartmentList1();
 
   autoCreditPermission(event: any) {
     this.primary_code_auto_credit = event.target.checked;
- 
+
     console.log(this.primary_code_auto_credit)
     if (this.primary_code_auto_credit) {
 
@@ -1591,9 +1627,9 @@ this.cmsDepartmentList1();
     // do something when input is focused
     console.log(e)
   }
-  checkCustomerName(){
-    
-    if(this.addCustomer.value.company_Name=='' || this.addCustomer.value.company_Name=='null' || this.addCustomer.value.company_Name==null){
+  checkCustomerName() {
+
+    if (this.addCustomer.value.company_Name == '' || this.addCustomer.value.company_Name == 'null' || this.addCustomer.value.company_Name == null) {
       iziToast.error({
         message: "Company Name Missing",
         position: 'topRight'
@@ -1602,11 +1638,11 @@ this.cmsDepartmentList1();
   }
   CustomerStatus_RadioEvent(evt: any) {
     this.customerStatus_radiobox_Value = evt.target.id;
-    if(evt.target.id=='P1'){
-      this.customerStatus_radiobox_Value='P';
-    }else if(evt.target.id=='N1'){
-      this.customerStatus_radiobox_Value='N';
-    }else{
+    if (evt.target.id == 'P1') {
+      this.customerStatus_radiobox_Value = 'P';
+    } else if (evt.target.id == 'N1') {
+      this.customerStatus_radiobox_Value = 'N';
+    } else {
       this.customerStatus_radiobox_Value = evt.target.id;
     }
     console.log("this.customerStatus_radiobox_Value", this.customerStatus_radiobox_Value);
@@ -1709,7 +1745,7 @@ this.cmsDepartmentList1();
   }
 
   pageLoad() {
-    
+
     this.checkbox_EditShippingAddress = true;
     if (this.checkbox_EditShippingAddress) {
 
@@ -1772,7 +1808,7 @@ this.cmsDepartmentList1();
     $('#searchCustomerFormId').modal('hide');
     this.revenueCheckListvalue = this.searchCustomerForm.value.RevenueTypeWiseShow;
 
-    
+
   }
   CustomerListQuickSearch(data: any) {
     // Swal.fire('Searching');
@@ -1818,13 +1854,13 @@ this.cmsDepartmentList1();
         Swal.close();
         this.QuickSearchResultList = response.user_list;
         this.customer_list = response.customer_details;
-        console.log("customer_list",this.customer_list);
-      
-        
+        console.log("customer_list", this.customer_list);
+
+
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchCustomerFormId').modal('hide');
-       
+
 
       }
       else {
@@ -1836,13 +1872,14 @@ this.cmsDepartmentList1();
       }
     });
   }
-  clearSelection(event:any){
-  
-    this.searchResultTest='';
-   
-   }
+
+  clearSelection(event: any) {
+
+    this.searchResultTest = '';
+
+  }
   customerslist(data: any) {
-   
+
     this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
@@ -1871,12 +1908,12 @@ this.cmsDepartmentList1();
         });
       }
       if (response != '') {
-      
-        this.customer_list = response.customer_details;    
+
+        this.customer_list = response.customer_details;
         // this.customer_list_colorcode=response.customer_details.biller_details[0].colorCodes;
         this.revenue_list = response.revenue_list;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
-       
+
       }
 
       else {
@@ -1962,7 +1999,7 @@ this.cmsDepartmentList1();
         this.billerNameList = response.bill_details;
         this.customerType_list = response.cus_type;
         this.customerPermissionList = response.cus_permission;
-        
+
         this.addPermissionCheckboxID_array = response.cus_permission_selected;
         this.dropdownList_billerName = response.bill_details;
 
@@ -2173,7 +2210,7 @@ this.cmsDepartmentList1();
 
   CHKAll_BillerNameSelectAll(event: any) {
 
-    this.chkAllStatus=event.target.checked;
+    this.chkAllStatus = event.target.checked;
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
       console.log("this.billerNameList", this.billerNameList)
@@ -2399,7 +2436,7 @@ this.cmsDepartmentList1();
 
   // }
 
-  viewCustomer(id: any,i:any) {
+  viewCustomer(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
     let api_req: any = new Object();
@@ -2459,32 +2496,32 @@ this.cmsDepartmentList1();
     // });
   }
 
-  
-  get f() 
-  { return this.addCustomer.controls; 
+
+  get f() {
+    return this.addCustomer.controls;
   }
 
- 
-  addCustomerown(event:any) {
-    console.log("mouse event",event.pointerType)
-    if(event.pointerType=="mouse" || event.pointerType==""){
+
+  addCustomerown(event: any) {
+    console.log("mouse event", event.pointerType)
+    if (event.pointerType == "mouse" || event.pointerType == "") {
       // this variable is used to find button click as mouse or kyboard enter
-      this.Clicked=true;
+      this.Clicked = true;
     }
 
     this.submitted = true;
     if (this.addCustomer.valid) {
-      this.submit_status=true;
+      this.submit_status = true;
     } else {
-      this.submit_status=false;
+      this.submit_status = false;
       $("#company_Name").focus();
-   
-     
+
+
     }
     // if (this.addCustomer.invalid) {
     //   return;
     // }
-    
+
     Swal.fire('Saving Customer Data');
     Swal.showLoading();
 
@@ -2509,7 +2546,7 @@ this.cmsDepartmentList1();
 
 
 
-    if ($('#companyCode1').val() ==null || $('#companyCode1').val() =='' ) {
+    if ($('#companyCode1').val() == null || $('#companyCode1').val() == '') {
 
       iziToast.warning({
         message: "Company Code Missing",
@@ -2646,7 +2683,7 @@ this.cmsDepartmentList1();
     }
     // add_customer_req.cus_permission = this.addCustomer.value.permissionFCAdd;
     add_customer_req.cus_permission = this.addPermissionCheckboxID_array;
-    if(this.cmsdepartmentADD_ID=='' || this.cmsdepartmentADD_ID== null || this.cmsdepartmentADD_ID== undefined){
+    if (this.cmsdepartmentADD_ID == '' || this.cmsdepartmentADD_ID == null || this.cmsdepartmentADD_ID == undefined) {
       // iziToast.warning({
       //   message: "CMS Department Missing",
       //   position: 'topRight'
@@ -2656,15 +2693,33 @@ this.cmsDepartmentList1();
       add_customer_req.cms_default_department = this.cmsdepartmentADD_ID;
       add_customer_req.cms_department_name = this.cmsdepartmentADD_val;
 
-    }else{
-      
+    } else {
+
       add_customer_req.cms_default_department = this.cmsdepartmentADD_ID;
       add_customer_req.cms_department_name = this.cmsdepartmentADD_val;
-      
+
     }
-  
+
     add_customer_req.credit_amt = this.addCustomer.value.ESA_customerLimit_add;
     add_customer_req.reseller_id = this.addCustomer.value.ESA_c3cxResellerId_add;
+    
+    if(this.addCustomer.value.ESA_c3cxResellerId_add !=null){
+    
+      if( this.addCustomer.value.defaultBillerName!=9 && this.cal4care1_sg_add==false && this.cal4care3_jp_add==false && this.cal4care2_sdn_add==false){
+        iziToast.error({
+          message: "3CX Reseller License API Checkbox value Missing",
+          position: 'topRight'
+        });
+        Swal.close();
+        return false;
+      }else{
+        add_customer_req.cal4care_sg = this.cal4care1_sg_add;
+        add_customer_req.cal4care_sdn = this.cal4care2_sdn_add;
+        add_customer_req.cal4care_jp = this.cal4care3_jp_add;
+      }
+    }
+  
+
     add_customer_req.def_currency_id = this.addCustomer.value.currencyname;
     add_customer_req.reseller_dis_per = this.addCustomer.value.discount_percentage;
     add_customer_req.cus_banking_charge = this.addCustomer.value.banking_charge;
@@ -2692,7 +2747,7 @@ this.cmsDepartmentList1();
       $("#addCustomerSave").removeAttr("disabled");
 
       if (response.status == true) {
-        this.submitted=false;
+        this.submitted = false;
         this.customerslist({});
         Swal.close();
         $('#addCustomerFormId').modal('hide');
@@ -2725,7 +2780,7 @@ this.cmsDepartmentList1();
   }
 
 
-  editCustomer(id: any,i:any) {
+  editCustomer(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.pageEditLoad();
     console.log("id", id)
@@ -2745,7 +2800,7 @@ this.cmsDepartmentList1();
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh", response);
       console.log("vignesh1", response.result.customer_details[0].city);
-    
+
       if (response.status == true) {
         var biller_id = response.result.customer_details[0].billerId;
         console.log("dropdown billwer id", biller_id)
@@ -2754,6 +2809,17 @@ this.cmsDepartmentList1();
         var newArray = this.b_id.map(function (item: any) {
           return { 'id': item }
         })
+        // Parse response properties as integers before comparison
+
+
+        // Check if the parsed values are equal to 1 and assign boolean values accordingly
+        this.cal4care1_sg = response.partnerID.cal4care1_sg;
+        this.cal4care2_sdn = response.partnerID.cal4care2_sdn;
+        this.cal4care3_jp = response.partnerID.cal4care3_jp;
+        console.log(" this.cal4care1_sg", this.cal4care1_sg);
+        console.log("this.cal4care2_sdn", this.cal4care2_sdn);
+        console.log("this.cal4care2_sdn", this.cal4care2_sdn);
+
 
         this.emailList = response.result.customer_email;
         console.log(this.emailList)
@@ -2791,7 +2857,7 @@ this.cmsDepartmentList1();
         setTimeout(() => {
           $("#cmsdepartment_name_edit").val(dpt_id)
         }, 3000);
-      
+
         this.editCustomerForm.patchValue({
 
           'e_company_Code': response.result.customer_details[0].customerCode,
@@ -2833,9 +2899,9 @@ this.cmsDepartmentList1();
           // 'e_ESA_Email': response.result.customer_details[0].email,
           'edit_permission': response.result.customer_details[0].cus_permission,
 
-          
-            'edit_cmsdepartment': response.result.cms_dep_value,
-           'update_cmsDepartment': response.result.customer_details[0].cms_default_department,
+
+          'edit_cmsdepartment': response.result.cms_dep_value,
+          'update_cmsDepartment': response.result.customer_details[0].cms_default_department,
           'e_ESA_customerLimit': response.result.customer_details[0].credit_amt,
           'e_ESA_c3cxResellerId': response.result.customer_details[0].reseller_id,
           'edit_currencyname': response.result.customer_details[0].def_currency_id,
@@ -2872,6 +2938,7 @@ this.cmsDepartmentList1();
             "bill_code_kl": response.result.customer_bill_code_arr[index].bill_code_kl,
             "bill_code_750": response.result.customer_bill_code_arr[index].bill_code_750,
             "bill_code_750_8": response.result.customer_bill_code_arr[index].bill_code_750_8,
+            "bill_code_sg": response.result.customer_bill_code_arr[index].bill_code_vs_sg,
             "customer_bill_code_id": response.result.customer_bill_code_arr[index].customer_bill_code_id,
             "conn_state": response.result.customer_bill_code_arr[index].conn_state,
             "customer_id": response.result.customer_bill_code_arr[index].customer_id,
@@ -2883,7 +2950,7 @@ this.cmsDepartmentList1();
         this.billCodeEditForm3.setControl('addresses', formArray);
         console.log(this.addresses)
 
-        
+
 
         this.billCodeEditForm2.patchValue({
 
@@ -2927,6 +2994,16 @@ this.cmsDepartmentList1();
           'retail_threshold_limit_kl': response.result.customer_primary_code_arr[0].retail_threshold_limit_kl,
 
           'manual_credit': response.result.customer_primary_code_arr[0].manual_credit,
+
+
+
+
+          'primary_code_sg': response.result.customer_primary_code_arr[0].bill_code_vs_sg,
+          'primary_code_retail_sg': response.result.customer_primary_code_arr[0].primary_code_retail_vs_sg,
+          'low_credit_sg': response.result.customer_primary_code_arr[0].low_credit_vs_sg,
+          'high_credit_sg': response.result.customer_primary_code_arr[0].high_credit_vs_sg,
+          'retail_low_credit_sg': response.result.customer_primary_code_arr[0].retail_low_credit_vs_sg,
+          'retail_high_credit_sg': response.result.customer_primary_code_arr[0].retail_high_credit_vs_sg,
 
 
         })
@@ -3013,9 +3090,9 @@ this.cmsDepartmentList1();
     //   });
     //   return false;
     // }
-   
+
     update_customer_req.finance_email = result_FinanceEmail_Field;
-    if(this.cmsdepartmentEdit_ID=='' || this.cmsdepartmentEdit_ID== null || this.cmsdepartmentEdit_ID== undefined){
+    if (this.cmsdepartmentEdit_ID == '' || this.cmsdepartmentEdit_ID == null || this.cmsdepartmentEdit_ID == undefined) {
       // iziToast.warning({
       //   message: "CMS Department Missing",
       //   position: 'topRight'
@@ -3024,17 +3101,32 @@ this.cmsDepartmentList1();
       // return false;
       update_customer_req.cms_default_department = this.cmsdepartmentEdit_ID;
       update_customer_req.cms_department_name = this.cmsdepartmentEdit_val;
-    }else{
-      
+    } else {
+
       update_customer_req.cms_default_department = this.cmsdepartmentEdit_ID;
       update_customer_req.cms_department_name = this.cmsdepartmentEdit_val;
-      
+
     }
 
     // update_customer_req.cms_default_department = this.editCustomerForm.value.edit_cmsdepartment;
 
     update_customer_req.credit_amt = this.editCustomerForm.value.e_ESA_customerLimit;
     update_customer_req.reseller_id = this.editCustomerForm.value.e_ESA_c3cxResellerId;
+    if(this.editCustomerForm.value.e_ESA_c3cxResellerId !=null){
+    
+      if( this.editCustomerForm.value.edit_defaultBillerName!=9 && this.cal4care1_sg==false && this.cal4care3_jp==false && this.cal4care2_sdn==false){
+        iziToast.error({
+          message: "3CX Reseller License API Checkbox value Missing",
+          position: 'topRight'
+        });
+        Swal.close();
+        return false;
+      }else{
+        update_customer_req.cal4care_sg = this.cal4care1_sg;
+        update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+        update_customer_req.cal4care_jp = this.cal4care3_jp;
+      }
+    }
     update_customer_req.def_currency_id = this.editCustomerForm.value.edit_currencyname;
     update_customer_req.stripe_customerId = this.editCustomerForm.value.e_stripe_customer_id;
     update_customer_req.stripe_recurring_state = this.editCustomerForm.value.e_stripe_recurr_payment;
@@ -3061,23 +3153,25 @@ this.cmsDepartmentList1();
 
     var addr23 = this.billCodeEditForm3.value.addresses;
     for (let i = 1; i < addr23.length; i++) {
-     
+
       addr23[i].bill_code_name = $('#billCodeName' + i).val();
-      console.log("$('#billCodeName' + i).val()",$('#billCodeName' + i).val());
+      console.log("$('#billCodeName' + i).val()", $('#billCodeName' + i).val());
       addr23[i].bill_code_740 = $('#bill_code_740_' + i).val();
-      console.log("$('#bill_code_740_' + i).val()",$('#bill_code_740_' + i).val());
+      console.log("$('#bill_code_740_' + i).val()", $('#bill_code_740_' + i).val());
       addr23[i].bill_code_kl = $('#bill_code_kl_' + i).val();
-      console.log("$('#bill_code_kl_' + i).val()",$('#bill_code_kl_' + i).val());
+      console.log("$('#bill_code_kl_' + i).val()", $('#bill_code_kl_' + i).val());
+      addr23[i].bill_code_vs_sg = $('#bill_code_sg_' + i).val();
+      console.log("$('#bill_code_sg_' + i).val()", $('#bill_code_sg_' + i).val());
       addr23[i].bill_code_750 = $('#bill_code_750_' + i).val();
-      console.log("$('#bill_code_750_' + i).val()",$('#bill_code_750_' + i).val());
+      console.log("$('#bill_code_750_' + i).val()", $('#bill_code_750_' + i).val());
       addr23[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
-      console.log("$('#bill_code_750_8_' + i).val()",$('#bill_code_750_8_' + i).val());
+      console.log("$('#bill_code_750_8_' + i).val()", $('#bill_code_750_8_' + i).val());
       addr23[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
-      console.log("$('#customer_bill_code_id' + i).val()",$('#customer_bill_code_id' + i).val());
+      console.log("$('#customer_bill_code_id' + i).val()", $('#customer_bill_code_id' + i).val());
       addr23[i].conn_state = $('#conn_state' + i).val();
-      console.log("$('#conn_state' + i).val()",$('#conn_state' + i).val());
+      console.log("$('#conn_state' + i).val()", $('#conn_state' + i).val());
       addr23[i].customer_id = $('#customer_id' + i).val();
-      console.log("$('#customer_id' + i).val()",$('#customer_id' + i).val());
+      console.log("$('#customer_id' + i).val()", $('#customer_id' + i).val());
     }
     update_customer_req.billcode_value = addr23;
 
@@ -3102,6 +3196,13 @@ this.cmsDepartmentList1();
     update_customer_req.retail_low_credit_750 = this.billCodeEditForm2.value.retail_low_credit_750;
     update_customer_req.retail_high_credit_750 = this.billCodeEditForm2.value.retail_high_credit_750;
 
+
+    update_customer_req.bill_code_vs_sg = this.billCodeEditForm2.value.primary_code_sg;
+    update_customer_req.primary_code_retail_sg = this.billCodeEditForm2.value.primary_code_retail_sg;
+    update_customer_req.low_credit_sg = this.billCodeEditForm2.value.low_credit_sg;
+    update_customer_req.high_credit_sg = this.billCodeEditForm2.value.high_credit_sg;
+    update_customer_req.retail_low_credit_sg = this.billCodeEditForm2.value.retail_low_credit_sg;
+    update_customer_req.retail_high_credit_sg = this.billCodeEditForm2.value.retail_high_credit_sg;
 
     update_customer_req.bill_code_kl = this.billCodeEditForm2.value.primary_code_kl;
     update_customer_req.primary_code_retail_kl = this.billCodeEditForm2.value.primary_code_retail_kl;
@@ -3208,6 +3309,7 @@ this.cmsDepartmentList1();
     addCredit_customer_req.bill_code_750 = this.billCodeEditForm2.value.primary_code_750;
     addCredit_customer_req.bill_code_retail_750 = this.billCodeEditForm2.value.primary_code_retail_750;
     addCredit_customer_req.bill_code_kl = this.billCodeEditForm2.value.primary_code_kl;
+    addCredit_customer_req.bill_code_vs_sg = this.billCodeEditForm2.value.primary_code_sg;
     addCredit_customer_req.bill_code_retail_kl = this.billCodeEditForm2.value.primary_code_retail_kl;
 
 
@@ -3248,7 +3350,7 @@ this.cmsDepartmentList1();
   }
 
 
-  specialEditCustomer(id: any,i:any) {
+  specialEditCustomer(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.specialEditId = id;
@@ -3266,7 +3368,7 @@ this.cmsDepartmentList1();
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         console.log(response);
-        this.checkbox_specialEdit3cxSpecialOption=response[0].licence_buy_override
+        this.checkbox_specialEdit3cxSpecialOption = response[0].licence_buy_override
         this.specialEditCustomerForm.patchValue({
           'spedit_Email': response[0].email,
           'spedit_FinanceEmail': response[0].finance_email,
@@ -3326,7 +3428,7 @@ this.cmsDepartmentList1();
     specialUpdate_customer_req.stripe_customerId = this.specialEditCustomerForm.value.spedit_stripe_customer_id;
     specialUpdate_customer_req.system_discount_3cx = this.specialEditCustomerForm.value.spedit_c3cx_system_discount;
     specialUpdate_customer_req.reseller_dis_per = this.specialEditCustomerForm.value.spedit_discount_percentage;
-    specialUpdate_customer_req.licence_buy_override=this.checkbox_specialEdit3cxSpecialOption;
+    specialUpdate_customer_req.licence_buy_override = this.checkbox_specialEdit3cxSpecialOption;
 
     api_req.element_data = specialUpdate_customer_req;
     console.log(this.specialEditCustomerForm.value);
@@ -3364,7 +3466,7 @@ this.cmsDepartmentList1();
         console.log("final error", error);
       };
   }
-  deleteCustomer(id: any,i:any) {
+  deleteCustomer(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Delete?',
@@ -3412,9 +3514,9 @@ this.cmsDepartmentList1();
 
 
   }
- 
 
-  fileAttachmentEdit(ID: any,i:any) {
+
+  fileAttachmentEdit(ID: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.myFiles = [];
@@ -3580,7 +3682,7 @@ this.cmsDepartmentList1();
 
     }
   }
-  mconnect_address_getList(id: any,i:any) {
+  mconnect_address_getList(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.mconnectCustomerForm.reset();
@@ -3640,6 +3742,46 @@ this.cmsDepartmentList1();
         console.log("final error", error);
       };
   }
+ 
+  onCal4careAddChange(selection: string) {
+    if (selection === 'cal4care1_sg_add') {
+        this.cal4care1_sg_add = true;
+        this.cal4care2_sdn_add = false;
+        this.cal4care3_jp_add = false;
+    } else if (selection === 'cal4care2_sdn_add') {
+        this.cal4care1_sg_add = false;
+        this.cal4care2_sdn_add = true;
+        this.cal4care3_jp_add = false;
+    } else if (selection === 'cal4care3_jp_add') {
+        this.cal4care1_sg_add = false;
+        this.cal4care2_sdn_add = false;
+        this.cal4care3_jp_add = true;
+    }
+    console.log("selection",selection);
+    console.log("this.cal4care1_sg_add",this.cal4care1_sg_add)
+    console.log("this.cal4care2_sdn_add",this.cal4care2_sdn_add)
+    console.log("this.cal4care3_jp_add",this.cal4care3_jp_add)
+}
+  onCal4careChange(selection: string) {
+
+    if (selection === 'cal4care1_sg') {
+        this.cal4care1_sg = true;
+        this.cal4care2_sdn = false;
+        this.cal4care3_jp = false;
+    } else if (selection === 'cal4care2_sdn') {
+        this.cal4care1_sg = false;
+        this.cal4care2_sdn = true;
+        this.cal4care3_jp = false;
+    } else if (selection === 'cal4care3_jp') {
+        this.cal4care1_sg = false;
+        this.cal4care2_sdn = false;
+        this.cal4care3_jp = true;
+    }
+    console.log("selection",selection);
+    console.log("this.cal4care1_sg",this.cal4care1_sg)
+    console.log("this.cal4care2_sdn",this.cal4care2_sdn)
+    console.log("this.cal4care3_jp",this.cal4care3_jp)
+}
   mconnect_address_add(id: any) {
     Swal.fire('MConnect Partner Details Updating');
     Swal.showLoading();
@@ -3665,7 +3807,7 @@ this.cmsDepartmentList1();
       success: function (result: any) {
         if (result.status == true) {
           Swal.close();
-          
+
           console.log(result);
           $("#mconnectPartnerDetailsFormId_CM").modal("hide")
 
@@ -3702,7 +3844,7 @@ this.cmsDepartmentList1();
 
   }
 
-  mrvoip_address_getList(id: any,i:any) {
+  mrvoip_address_getList(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.mrvoipCustomerForm.reset();
     this.mrvoip_Logo_Image = '';
@@ -3783,7 +3925,7 @@ this.cmsDepartmentList1();
       success: function (result: any) {
         if (result.status == true) {
           Swal.close();
-         
+
           console.log(result);
           $("#MrvoipPartnerDetailsFormId_CM").modal("hide")
 
@@ -3817,7 +3959,7 @@ this.cmsDepartmentList1();
     })
   }
 
-  call4tel_address_getList(id: any,i:any) {
+  call4tel_address_getList(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.Call4telCustomerForm.reset();
     this.C4T_Logo_Image = '';
@@ -3895,7 +4037,7 @@ this.cmsDepartmentList1();
       success: function (result: any) {
         if (result.status == true) {
           Swal.close();
-         
+
           console.log(result);
           $("#call4tellPartnerDetailsFormId_CM").modal("hide")
 
@@ -3931,7 +4073,7 @@ this.cmsDepartmentList1();
 
   }
 
-  nx32CustomerCreate(id: any,i:any) {
+  nx32CustomerCreate(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to create NX32 Customer?',
@@ -3985,7 +4127,7 @@ this.cmsDepartmentList1();
   }
 
 
-  invoiceShare_edit(id: any,i:any) {
+  invoiceShare_edit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
 
@@ -4136,7 +4278,7 @@ this.cmsDepartmentList1();
   //   });
 
   // }
-  quickMail(id: any,i:any) {
+  quickMail(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to Send Quick Mail?',
@@ -4189,7 +4331,7 @@ this.cmsDepartmentList1();
       }
     })
   }
-  shareCustomerPermission_edit(id: any,i:any) {
+  shareCustomerPermission_edit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.shareCustomerPermission_ID = id;
@@ -4283,7 +4425,7 @@ this.cmsDepartmentList1();
   }
 
 
-  customer_status(id: any, Status_variable: any,i:any) {
+  customer_status(id: any, Status_variable: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Customer status?',
@@ -4347,7 +4489,7 @@ this.cmsDepartmentList1();
 
 
   }
-  employee_status(id: any,i:any) {
+  employee_status(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Employee status?',
@@ -4402,7 +4544,7 @@ this.cmsDepartmentList1();
 
 
   }
-  reseller_statusMethod(id: any,i:any) {
+  reseller_statusMethod(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     Swal.fire({
       title: 'Are you sure to change Reseller status?',
@@ -4457,7 +4599,7 @@ this.cmsDepartmentList1();
 
 
   }
-  customer_NX32PermissionDisplay(id: any, nx32id: any,i:any) {
+  customer_NX32PermissionDisplay(id: any, nx32id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     console.log("checkbox result", this.checkbox_NX32Permission)
     this.NX32SharePermissionParameter = id;
@@ -4550,7 +4692,7 @@ this.cmsDepartmentList1();
         console.log("final error", error);
       };
   }
-  billCodeAttachmentEdit(id: any,i:any) {
+  billCodeAttachmentEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     // this.billCodeEditForm2.reset();
     let api_req: any = new Object();
@@ -4587,6 +4729,7 @@ this.cmsDepartmentList1();
             "popup_billCodeName": response.customer_bill_code_arr[index].bill_code_name,
             "popup_bill_code_740": response.customer_bill_code_arr[index].bill_code_740,
             "popup_bill_code_kl": response.customer_bill_code_arr[index].bill_code_kl,
+            "popup_bill_code_sg": response.customer_bill_code_arr[index].bill_code_vs_sg,
             "popup_bill_code_750": response.customer_bill_code_arr[index].bill_code_750,
             "popup_bill_code_750_8": response.customer_bill_code_arr[index].bill_code_750_8,
             "popup_conn_state": response.customer_bill_code_arr[index].conn_state,
@@ -4627,6 +4770,13 @@ this.cmsDepartmentList1();
         'popup_high_credit_kl': response.customer_primary_code_arr[0].high_credit_kl,
         'popup_retail_low_credit_kl': response.customer_primary_code_arr[0].retail_low_credit_kl,
         'popup_retail_high_credit_kl': response.customer_primary_code_arr[0].retail_high_credit_kl,
+
+        'popup_primary_code_sg': response.customer_primary_code_arr[0].bill_code_vs_sg,
+        'popup_primary_code_retail_sg': response.customer_primary_code_arr[0].primary_code_retail_sg,
+        'popup_low_credit_sg': response.customer_primary_code_arr[0].low_credit_sg,
+        'popup_high_credit_sg': response.customer_primary_code_arr[0].high_credit_sg,
+        'popup_retail_low_credit_sg': response.customer_primary_code_arr[0].retail_low_credit_sg,
+        'popup_retail_high_credit_sg': response.customer_primary_code_arr[0].retail_high_credit_sg,
 
         'popup_primary_code_auto_credit': response.customer_primary_code_arr[0].auto_credit,
 
@@ -4685,6 +4835,7 @@ this.cmsDepartmentList1();
       addr[i].bill_code_kl = $('#bill_code_kl_' + i).val();
       addr[i].bill_code_750 = $('#bill_code_750_' + i).val();
       addr[i].bill_code_750_8 = $('#bill_code_750_8_' + i).val();
+      addr[i].bill_code_sg = $('#bill_code_sg_' + i).val();
       addr[i].conn_state = $('#conn_state' + i).val();
       addr[i].customer_bill_code_id = $('#customer_bill_code_id' + i).val();
       addr[i].customer_id = $('#customer_id' + i).val();
@@ -4725,6 +4876,12 @@ this.cmsDepartmentList1();
     updateBillCode_req.retail_low_credit_kl = this.popupBillCodeForm2.value.popup_retail_low_credit_kl;
     updateBillCode_req.retail_high_credit_kl = this.popupBillCodeForm2.value.popup_retail_high_credit_kl;
 
+    updateBillCode_req.bill_code_vs_sg = this.popupBillCodeForm2.value.popup_primary_code_sg;
+    updateBillCode_req.primary_code_retail_sg = this.popupBillCodeForm2.value.popup_primary_code_retail_sg;
+    updateBillCode_req.low_credit_sg = this.popupBillCodeForm2.value.popup_low_credit_sg;
+    updateBillCode_req.high_credit_sg = this.popupBillCodeForm2.value.popup_high_credit_sg;
+    updateBillCode_req.retail_low_credit_sg = this.popupBillCodeForm2.value.popup_retail_low_credit_sg;
+    updateBillCode_req.retail_high_credit_sg = this.popupBillCodeForm2.value.popup_retail_high_credit_sg;
 
     updateBillCode_req.auto_credit = this.popupBillCodeForm2.value.popup_primary_code_auto_credit;
 
@@ -4801,7 +4958,7 @@ this.cmsDepartmentList1();
 
   }
   cmsDepartmentList1() {
-  
+
     let api_req: any = new Object();
     let cms_edit: any = new Object();
     api_req.moduleType = "customer";
@@ -4810,15 +4967,15 @@ this.cmsDepartmentList1();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     cms_edit.action = "getCmsDepartment";
     cms_edit.user_id = localStorage.getItem('erp_c4c_user_id');
-   
+
     api_req.element_data = cms_edit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response!='') {
-this.cmslistadd=response.cmsDep;
-console.log("this.cmslistadd",this.cmslistadd);
-        
-        
+      if (response != '') {
+        this.cmslistadd = response.cmsDep;
+        console.log("this.cmslistadd", this.cmslistadd);
+
+
       } else {
         iziToast.warning({
           message: "No API Response",
@@ -4833,11 +4990,11 @@ console.log("this.cmslistadd",this.cmslistadd);
         });
         console.log("final error", error);
       };
-        
+
   }
   // getCustomerCode() {
-  
-    
+
+
   //   $.ajax({
   //     url: "https://laravelapi.erp1.cal4care.com/api/customer/getCustomerCode",
   //     type: 'GET',
@@ -4845,13 +5002,13 @@ console.log("this.cmslistadd",this.cmslistadd);
   //        this.companyCodeAddCustomer=response;
   //       $('#companyCode1').val(response);     
   //       this.companyCodeAddCustomer=$('#companyCode1').val(response);
-        
+
   //     }
   // });
-        
+
   // }
   getCustomerCode() {
-  
+
     let api_req: any = new Object();
     let cms_edit: any = new Object();
     api_req.moduleType = "customer";
@@ -4860,16 +5017,16 @@ console.log("this.cmslistadd",this.cmslistadd);
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     cms_edit.action = "getCustomerCode";
     cms_edit.user_id = localStorage.getItem('erp_c4c_user_id');
-   
+
     api_req.element_data = cms_edit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response!='') {
+      if (response != '') {
 
-        this.companyCodeAddCustomer=response.cuscode;
-         $('#companyCode1').val(response.cuscode);     
-           this.companyCodeAddCustomer=$('#companyCode1').val(response.cuscode);
-        
+        this.companyCodeAddCustomer = response.cuscode;
+        $('#companyCode1').val(response.cuscode);
+        this.companyCodeAddCustomer = $('#companyCode1').val(response.cuscode);
+
       } else {
         iziToast.warning({
           message: "No API Response",
@@ -4884,9 +5041,9 @@ console.log("this.cmslistadd",this.cmslistadd);
         });
         console.log("final error", error);
       };
-        
+
   }
-  AssignAccountManager_edit(id: any,i:any) {
+  AssignAccountManager_edit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
 
     this.AssignAccountManager_CustomerID = id;
@@ -4966,7 +5123,7 @@ console.log("this.cmslistadd",this.cmslistadd);
         console.log("final error", error);
       };
   }
-  landscapeEmailEdit(id: any,i:any) {
+  landscapeEmailEdit(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.landscapeEmailForm.reset();
     this.landscapeEmail_Customer_ID = id;
@@ -5161,7 +5318,7 @@ console.log("this.cmslistadd",this.cmslistadd);
     this.addCustomer.vs_credit = '';
     this.addCustomer.def_payment_via = '';
   }
-  GoogleAuthenticationId(id: any,i:any) {
+  GoogleAuthenticationId(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.GoogleAuthenticationForm.reset();
     $('#GoogleAuthentication_CM').modal("show");
@@ -5173,7 +5330,7 @@ console.log("this.cmslistadd",this.cmslistadd);
     });
   }
   GoogleAuthenticationValidation() {
-this.spinner.show();
+    this.spinner.show();
     // this.GoogleAuthenticationForm.reset();
     let api_req: any = new Object();
     let api_googleAuthVali: any = new Object();

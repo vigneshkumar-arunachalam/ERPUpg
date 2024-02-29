@@ -762,6 +762,8 @@ export class CustomernewallComponent implements OnInit {
       'reseller_status': new FormControl(null),
       'voip_switch_credit': new FormControl(null),
       'common_group_name': new FormControl(null),
+      'ESA_email': new FormControl(null, [Validators.email]),
+      
 
 
     });
@@ -3112,7 +3114,8 @@ export class CustomernewallComponent implements OnInit {
 
     update_customer_req.credit_amt = this.editCustomerForm.value.e_ESA_customerLimit;
     update_customer_req.reseller_id = this.editCustomerForm.value.e_ESA_c3cxResellerId;
-    if(this.editCustomerForm.value.e_ESA_c3cxResellerId !=null){
+ 
+    if(this.editCustomerForm.value.e_ESA_c3cxResellerId !=null || this.editCustomerForm.value.e_ESA_c3cxResellerId !=''){
     
       if( this.editCustomerForm.value.edit_defaultBillerName!=9 && this.cal4care1_sg==false && this.cal4care3_jp==false && this.cal4care2_sdn==false){
         iziToast.error({
@@ -3742,28 +3745,46 @@ export class CustomernewallComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  onCal4care1SgAddChange(event: any) {
-    this.cal4care1_sg_add = event.target.checked;
-  }
+  onCal4careAddChange(selection: string) {
+    if (selection === 'cal4care1_sg_add') {
+        this.cal4care1_sg_add = true;
+        this.cal4care2_sdn_add = false;
+        this.cal4care3_jp_add = false;
+    } else if (selection === 'cal4care2_sdn_add') {
+        this.cal4care1_sg_add = false;
+        this.cal4care2_sdn_add = true;
+        this.cal4care3_jp_add = false;
+    } else if (selection === 'cal4care3_jp_add') {
+        this.cal4care1_sg_add = false;
+        this.cal4care2_sdn_add = false;
+        this.cal4care3_jp_add = true;
+    }
+    console.log("selection",selection);
+    console.log("this.cal4care1_sg_add",this.cal4care1_sg_add)
+    console.log("this.cal4care2_sdn_add",this.cal4care2_sdn_add)
+    console.log("this.cal4care3_jp_add",this.cal4care3_jp_add)
+}
+  onCal4careChange(selection: string) {
 
-  onCal4care2SdnAddChange(event: any) {
-    this.cal4care2_sdn_add = event.target.checked;
-  }
+    if (selection === 'cal4care1_sg') {
+        this.cal4care1_sg = true;
+        this.cal4care2_sdn = false;
+        this.cal4care3_jp = false;
+    } else if (selection === 'cal4care2_sdn') {
+        this.cal4care1_sg = false;
+        this.cal4care2_sdn = true;
+        this.cal4care3_jp = false;
+    } else if (selection === 'cal4care3_jp') {
+        this.cal4care1_sg = false;
+        this.cal4care2_sdn = false;
+        this.cal4care3_jp = true;
+    }
+    console.log("selection",selection);
+    console.log("this.cal4care1_sg",this.cal4care1_sg)
+    console.log("this.cal4care2_sdn",this.cal4care2_sdn)
+    console.log("this.cal4care3_jp",this.cal4care3_jp)
+}
 
-  onCal4care3JpAddChange(event: any) {
-    this.cal4care3_jp_add = event.target.checked;
-  }
-  onCal4care1SgChange(event: any) {
-    this.cal4care1_sg = event.target.checked;
-  }
-
-  onCal4care2SdnChange(event: any) {
-    this.cal4care2_sdn = event.target.checked;
-  }
-
-  onCal4care3JpChange(event: any) {
-    this.cal4care3_jp = event.target.checked;
-  }
   mconnect_address_add(id: any) {
     Swal.fire('MConnect Partner Details Updating');
     Swal.showLoading();

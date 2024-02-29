@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header color-dark fw-500">
           <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-            <span class="breadcrumb-item active">Customer Details</span>
+            <span class="breadcrumb-item active">Customer Management</span>
           </h3>
 
 
@@ -619,7 +619,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">View Customer
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">View Customer
           Details </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -796,7 +796,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content addcustomernewallcss">
       <div class="modal-header">
-        <h1 class="modal-title" id="exampleModalLongTitle">Add Customer Details
+        <h1 class="col-11 modal-title text-center" id="exampleModalLongTitle">Add Customer Details
         </h1>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" (click)="clearcustomer()">&times;</span>
@@ -1222,6 +1222,20 @@
                 </div>
               </div>
             </div>
+            <!-- <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="gstin_no " class="col-lg-12 col-form-label">GSTIN Email</label>
+                <div class="col-lg-12">
+                  <label for="ESA_email">Email:</label>
+                  <input type="text" id="ESA_email" formControlName="ESA_email">
+                  <div
+                    *ngIf="addCustomer.get('ESA_email').invalid && (addCustomer.get('ESA_email').dirty || addCustomer.get('ESA_email').touched)">
+                    <div *ngIf="addCustomer.get('ESA_email').errors?.['required']">Email is required.</div>
+                    <div *ngIf="addCustomer.get('ESA_email').errors?.['email']">Invalid email format.</div>
+                  </div>
+                </div>
+              </div>
+            </div> -->
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="gstin_no " class="col-lg-12 col-form-label">GSTIN No</label>
@@ -1426,23 +1440,27 @@
               <div class="form-group row">
                 <label class="col-lg-12 col-form-label">3CX Reseller License API</label>
                 <div class="col-lg-12">
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" [checked]="cal4care1_sg_add" (change)="onCal4care1SgAddChange($event)">
-                        <label class="form-check-label" style="color: #252525;font-size: 14px;
-                        font-weight: 400!important;">Cal4care SG</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" [checked]="cal4care2_sdn_add" (change)="onCal4care2SdnAddChange($event)">
-                        <label class="form-check-label" style="color: #252525;font-size: 14px;
-                        font-weight: 400!important;">Cal4care SDN</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" [checked]="cal4care3_jp_add" (change)="onCal4care3JpAddChange($event)">
-                        <label class="form-check-label" style="color: #252525;font-size: 14px;
-                        font-weight: 400!important;">Cal4care JP</label>
-                    </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care1_sg_add"
+                      (change)="onCal4careAddChange('cal4care1_sg_add')">
+                    <label class="form-check-label"
+                      style="color: #252525;font-size: 14px;font-weight: 400!important;">Cal4care SG</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care2_sdn_add"
+                      (change)="onCal4careAddChange('cal4care2_sdn_add')">
+                    <label class="form-check-label"
+                      style="color: #252525;font-size: 14px;font-weight: 400!important;">Cal4care SDN</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care3_jp_add"
+                      (change)="onCal4careAddChange('cal4care3_jp_add')">
+                    <label class="form-check-label"
+                      style="color: #252525;font-size: 14px;font-weight: 400!important;">Cal4care JP</label>
+                  </div>
                 </div>
-            </div>
+              </div>
+
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1757,7 +1775,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class=" modal-title" id="myLargeModalLabel ">
+        <h2 class="col-11 modal-title text-center" id="myLargeModalLabel ">
           Update Customer Details
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -2219,23 +2237,27 @@
               <div class="form-group row">
                 <label class="col-lg-12 col-form-label">3CX Reseller License API</label>
                 <div class="col-lg-12">
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" [checked]="cal4care1_sg" (change)="onCal4care1SgChange($event)">
-                        <label class="form-check-label" style="color: #252525;font-size: 14px;
-                        font-weight: 400!important;">Cal4care SG</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" [checked]="cal4care2_sdn" (change)="onCal4care2SdnChange($event)">
-                        <label class="form-check-label" style="color: #252525;font-size: 14px;
-                        font-weight: 400!important;">Cal4care SDN</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" [checked]="cal4care3_jp" (change)="onCal4care3JpChange($event)">
-                        <label class="form-check-label" style="color: #252525;font-size: 14px;
-                        font-weight: 400!important;">Cal4care JP</label>
-                    </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care1_sg"
+                      (change)="onCal4careChange('cal4care1_sg')">
+                    <label class="form-check-label" style="color: #252525;font-size: 14px;
+            font-weight: 400!important;">Cal4care SG</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care2_sdn"
+                      (change)="onCal4careChange('cal4care2_sdn')">
+                    <label class="form-check-label" style="color: #252525;font-size: 14px;
+            font-weight: 400!important;">Cal4care SDN</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care3_jp"
+                      (change)="onCal4careChange('cal4care3_jp')">
+                    <label class="form-check-label" style="color: #252525;font-size: 14px;
+            font-weight: 400!important;">Cal4care JP</label>
+                  </div>
+                  
                 </div>
-            </div>
+              </div>
 
             </div>
             <div class="col-lg-6">
@@ -2967,7 +2989,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="myLargeModalLabel ">
+        <h2 class="col-11 modal-title text-center" id="myLargeModalLabel ">
           Update Customer Details(Special Edit)
         </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3137,7 +3159,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Mconnect
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">Mconnect
           Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3258,7 +3280,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Mrvoip
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">Mrvoip
           Partner Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3405,7 +3427,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">Call4tel Partner
+        <h2 cclass="col-11 modal-title text-center" id="exampleModalLongTitle">Call4tel Partner
           Details</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3552,7 +3574,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">Select Invoice Shared
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">Select Invoice Shared
         </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3641,7 +3663,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="exampleModalLongTitle">
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">
           Select Shared Person</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3708,7 +3730,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">
           NX32 Permission Update</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3750,7 +3772,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">
           File Attachment</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -3819,7 +3841,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">
           Bill Code</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -4139,7 +4161,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="quickEmailTitle">
+        <h2 class="col-11 modal-title text-center" id="quickEmailTitle">
           Landscape Email</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -4256,7 +4278,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Advanced Search</h2>
+        <h2 class="col-11 modal-title text-center" id="invoiceAttachModalLongTitle">Advanced Search</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -4340,7 +4362,7 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="AssignAccountManagerModalLongTitle">Assign
+        <h2 class="col-11 modal-title text-center" id="AssignAccountManagerModalLongTitle">Assign
           Account Manager</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -4349,45 +4371,7 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="AssignAccountManagerForm">
-          <!-- <div class="col-lg-12" *ngFor="let aml of AssignAccountManager_List;let i=index">
-            <div class="row">
-              <label class="col-lg-4">{{aml.firstName}}</label>
-
-              <div class="col-lg-4">
-                <input type="radio" name="radio_AssignAccountManager" id="{{aml.userId}}"
-                  checked="{{aml.userId==AssignAccountManager_SelectedUserID ? 'checked':''}}"
-                  (change)="handle_radioChange_AccountManager($event)" />
-
-              </div>
-            </div>
-          </div> -->
-
-
-
-          <!-- <div class="row">
-            <div class="d-flex col-lg-6" *ngFor="let aml of AssignAccountManager_List;let i=index">
-              <div class="d-flex">
-                <div class="">
-                  <div class="checkbox-group-wrapper">
-                    <div class="checkbox-group d-flex mb-2">
-                      <div class="on-off-toggle">
-                        <input  type="radio" name="radio_AssignAccountManager" id="{{aml.userId}}"
-                        checked="{{aml.userId==AssignAccountManager_SelectedUserID ? 'checked':''}}"
-                        (change)="handle_radioChange_AccountManager($event)" />
-                        <label for="check-grp1-{{i}}"></label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-        
-              </div>
-        
-              <span class="mb-2">{{aml.firstName}}</span>
-        
-            </div>
-          </div> -->
-
-
+    
           <div class="row">
             <div class="d-flex col-lg-4" *ngFor="let aml of AssignAccountManager_List;let i=index">
               <div class="d-flex">
@@ -4407,7 +4391,6 @@
 
               </div>
 
-              <!-- <span class="">{{item.firstName}}</span> -->
 
             </div>
           </div>
@@ -4435,7 +4418,7 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="GoogleAuthenticationModalLongTitle">Google Authenticator</h2>
+        <h2 class="col-11 modal-title text-center" id="GoogleAuthenticationModalLongTitle">Google Authenticator</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

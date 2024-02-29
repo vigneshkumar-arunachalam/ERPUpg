@@ -545,8 +545,6 @@ export class AddPIComponent implements OnInit {
         // this.addQuotationInvoice_section3.setValue=response.default_tax_id;
         console.log('response.default_tax_id' + response.default_tax_id);
 
-
-
       }
       var price_amt = $('#pd_SP_1').val();
       if (price_amt > 0) {

@@ -906,9 +906,11 @@ th{
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: #9baacf;
+  /* color: #9baacf; */
+  color:#f9021b;
   transition: all 0.5s ease;
 }
+
 
 
 .addcustomernewallcss .form-control,  .ng-autocomplete 

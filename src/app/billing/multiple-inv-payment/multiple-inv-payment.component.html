@@ -12,8 +12,7 @@
                     <div class="quotation-btn-section">
                         <button type="button" title="Add New Customer Contract"
                             class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-                            data-target="#addMulInvPayId" (click)="addMulInvPay()"
-                            style="margin-right: 10px;">
+                            data-target="#addMulInvPayId" (click)="addMulInvPay()" style="margin-right: 10px;">
                             <i class="fas fa-plus" style="margin-right:0;"></i>
                             Add Payment Entry
                         </button>
@@ -56,7 +55,8 @@
                                         </th>
 
                                         <th>
-                                            <span class="userDatatable-title" style="color: aliceblue;">Payment Entry No</span>
+                                            <span class="userDatatable-title" style="color: aliceblue;">Payment Entry
+                                                No</span>
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">Payment Entry Date</span>
@@ -118,8 +118,18 @@
                                         </td>
                                         <td>
 
-                                            <a  title="Delete" (click)="deleteFile(list.payment_entry_no)">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20" viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>                                                        
+                                            <a title="Delete" (click)="deleteFile(list.payment_entry_no)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20"
+                                                    viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3"
+                                                    stroke-linecap="round" stroke-linejoin="round"
+                                                    class="feather feather-trash-2">
+                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                    <path
+                                                        d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                                    </path>
+                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                </svg>
                                             </a>
                                         </td>
                                     </tr>
@@ -128,44 +138,46 @@
                         </div>
                     </div>
                     <br>
-                    <div >
-                        <nav class="atbd-page" >
-                          <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
-                            <li class="page-item">
-                              <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                                href="javascript:void(0)"
-                                (click)="paginationData.backtab=='show' ? mulInvPaymentList({'offset':paginationData.start}) : false"><i
-                                  class="fas fa-angle-left"></i></a>
-                            </li>
-                            <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                              <a class="page-link" href="javascript:void(0)" (click)="mulInvPaymentList({'offset':paginationData.back})"><i
-                                  class="fas fa-angle-double-left"></i></a>
-                            </li>
-                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                              *ngFor="let pagination of paginationData.data;let i=index">
-                              <a class="page-link" href="javascript:void(0)"
-                                (click)=" pagination.load ==true ? mulInvPaymentList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                                <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                            </li>
-                            <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                              <a class="page-link" href="javascript:void(0)" (click)="mulInvPaymentList({'offset':paginationData.next})"><i
-                                  class="fas fa-angle-double-right"></i></a>
-                            </li>
-                            <li class="page-item">
-                              <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                                href="javascript:void(0)"
-                                (click)="paginationData.nexttab =='show' ? mulInvPaymentList({'offset':paginationData.end}) : false"><i
-                                  class="fas fa-angle-right"></i></a>
-                            </li>
-                            <li class="dropdown__item">
-                              <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
-            
-                              </a>
-                            </li>
-                          </ul>
+                    <div>
+                        <nav class="atbd-page">
+                            <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                                <li class="page-item">
+                                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData.backtab=='show' ? mulInvPaymentList({'offset':paginationData.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="mulInvPaymentList({'offset':paginationData.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? mulInvPaymentList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="mulInvPaymentList({'offset':paginationData.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+                                <li class="page-item">
+                                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData.nexttab =='show' ? mulInvPaymentList({'offset':paginationData.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                                <li class="dropdown__item">
+                                    <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                                    </a>
+                                </li>
+                            </ul>
                         </nav>
-                      </div>
-                  
+                    </div>
+
 
                 </div>
             </div>
@@ -178,193 +190,228 @@
 
 <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
 <div class="modal fade" id="addMulInvPayId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content searchQuotationCSS">
-      <div class="modal-header">
-        <h2 class=" col-11 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Payment Entry Group Add
-        </h2>
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content searchQuotationCSS">
+            <div class="modal-header">
+                <h2 class=" col-11 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Payment Entry
+                    Group Add
+                </h2>
 
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       
-        <form [formGroup]="addPI_section2">
-            <div class="row">
-            
-                <div class="col-12">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
 
-                    <section>
-
-                        <div>
-
-                            <div class="table-responsive">
-                                <table class="add-contact-table-section">
-                                    <thead>
-                                        <tr class="userDatatable-header">
-
-                                            <th><span class="userDatatable-title">Customer Name</span></th>
-
-
-                                            
-                                            <th><span class="userDatatable-title">Date </span></th>
-                                            <th><span class="userDatatable-title">Invoice Amount</span>
-                                            </th>
-                                            <th><span class="userDatatable-title">
-                                                Balance Amount</span></th>
-                                            <th><span class="userDatatable-title">
-                                                Paid Amount</span></th>
-                                            <th><span class="userDatatable-title">
-                                                Payment Type/Method</span></th>
-                                            <th><span class="userDatatable-title">
-                                                Note</span>
-                                            </th>
-                                            
-                                            <th>
-                                                <span class="userDatatable-title">Action</span>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody formArrayName="addresses"
-                                        *ngFor="let address of addressControls.controls; let i = index;">
-
-                                        <!-- <tr [formGroup]="addressControls.controls[i]" class="marginSpace"> -->
-                                        <tr [formGroupName]="i" class="marginSpace">
-
-                                            <td style="width: 240px;">
-                                                <div class="userDatatable-content ">
-
-                                                    <ng-autocomplete [data]="searchResult_add"
-                                                    [searchKeyword]="keywordCompanyName_add"
-                                                    formControlName="pd_company_Name"
-                                                    (selected)='selectEventCustomer_add($event)'
-                                                    (inputChanged)='searchCustomerData_add($event)'
-                                                    (inputCleared)="clearSelection1($event)"
-                                                    (inputFocused)='onFocusedCustomer_add($event)'
-                                                    [itemTemplate]="itemTemplateCustomer"
-                                                    [notFoundTemplate]="notFoundTemplate">
-                                                </ng-autocomplete>
-
-                                                <ng-template #itemTemplateCustomer let-item>
-                                                    <a [innerHTML]="item.customerName"></a>
-                                                </ng-template>
-
-                                                <ng-template #notFoundTemplate let-notFound>
-                                                    <div [innerHTML]="notFound"></div>
-                                                </ng-template>
-
-
-                                                </div>
-
-                                            </td>
-
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <input type="date" class="form-control" 
-                                                        formControlName="pd_date" id="pd_date_{{i}}"
-                                                         />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-
-                                                    <input type="text" class="form-control" 
-                                                        formControlName="pd_invAmount" id="pd_invAmount_{{i}}" />
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <input type="number" class="form-control" style="text-align: right;"
-                                                        formControlName="pd_balAmount" id="pd_balAmount_{{i}}"
-                                                         />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content" style="width: 160px;">
-                                                    <input type="number" class="form-control" 
-                                                    formControlName="pd_paidAmount"
-                                                        style="text-align: right;"
-                                                        id="pd_paidAmount_{{i}}" />
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content" style="width: 160px;">
-                                                    <select class="form-control" formControlName="pd_paymenttype" id="pd_paymenttype_{{i}}" name="pd_paymenttype">
-                                    
-                                                        <option [ngValue]="null" selected>Select Payment Method</option>
-                                      
-                                                        <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
-                                                          {{term.payment_type_name}}
-                                                        </option>
-                                                      </select>
-
-                                                </div>
-                                               
-                                            </td>
-                                            <td>
-                                                <div class="userDatatable-content">
-                                                    <input type="text" class="form-control"  style="text-align: right;"
-                                                        formControlName="pd_note"
-                                                        id="pd_note_{{i}}">
-
-                                                </div>
-                                            </td>
-                                        
-                                         
-                                            <td>
-                                                <div *ngIf="i>0" class="userDatatable-content d-inline-block">
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                        (click)="removeAddress(i)">X</button>
-
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                       
-                                       
-                                    </tbody>
-
-                                </table>
+                <div class="modal-body">
+                    <form [formGroup]="addPI_section2">
+                        <div class="row">
+                            <div class="col-12">
+                                <ng-container *ngFor="let address of addressControls.controls; let i = index;">
+                                    <!-- Customer Invoices Row -->
+                                    <section>
+                                        <!-- Table for Customer Invoices -->
+                                        <div>
+                                            <div class="table-responsive">
+                                                <table class="add-contact-table-section">
+                                                    <!-- Table Header -->
+                                                    <thead>
+                                                        <tr class="userDatatable-header">
+                                                            <th><span class="userDatatable-title">Customer Name</span></th>
+                                                            <th><span class="userDatatable-title">Date</span></th>
+                                                            <th><span class="userDatatable-title">Invoice Amount</span></th>
+                                                            <th><span class="userDatatable-title">Balance Amount</span></th>
+                                                            <th><span class="userDatatable-title">Paid Amount</span></th>
+                                                            <th><span class="userDatatable-title">Payment Type/Method</span></th>
+                                                            <th><span class="userDatatable-title">Note</span></th>
+                                                            <th><span class="userDatatable-title">Action</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Individual Row -->
+                                                        <tr [formGroupName]="i">
+                                                            <!-- Customer Name -->
+                                                            <td style="width: 240px;">
+                                                                <div class="userDatatable-content">
+                                                                    <!-- Autocomplete for Customer Name -->
+                                                                    <ng-autocomplete [data]="searchResult_add"
+                                                                        [searchKeyword]="keywordCompanyName_add"
+                                                                        formControlName="pd_company_Name"
+                                                                        id="pd_company_Name_"
+                                                                        (selected)='selectEventCustomer_add($event)'
+                                                                        (inputChanged)='searchCustomerData_add($event)'
+                                                                        (inputCleared)="clearSelection1($event)"
+                                                                        (inputFocused)='onFocusedCustomer_add($event)'
+                                                                        [itemTemplate]="itemTemplateCustomer"
+                                                                        [notFoundTemplate]="notFoundTemplate">
+                                                                    </ng-autocomplete>
+                                                                    <ng-template #itemTemplateCustomer let-item>
+                                                                        <a [innerHTML]="item.customerName"></a>
+                                                                    </ng-template>
+                                                                    <ng-template #notFoundTemplate let-notFound>
+                                                                        <div [innerHTML]="notFound"></div>
+                                                                    </ng-template>
+                                                                </div>
+                                                            </td>
+                                                            <!-- Other Input Fields -->
+                                                            <!-- Date -->
+                                                            <td>
+                                                                <div class="userDatatable-content">
+                                                                    <input type="date" class="form-control date-value" formControlName="pd_date"
+                                                                        id="pd_date_{{i}}" value=" " />
+                                                                </div>
+                                                            </td>
+                                                            <!-- Invoice Amount -->
+                                                            <td>
+                                                                <div class="userDatatable-content">
+                                                                    <input type="text" class="form-control" formControlName="pd_invAmount"
+                                                                        id="pd_invAmount_{{i}}" />
+                                                                </div>
+                                                            </td>
+                                                            <!-- Balance Amount -->
+                                                            <td>
+                                                                <div class="userDatatable-content">
+                                                                    <input type="number" class="form-control"
+                                                                        formControlName="pd_balAmount"
+                                                                        id="pd_balAmount_{{i}}" />
+                                                                </div>
+                                                            </td>
+                                                            <!-- Paid Amount -->
+                                                            <td>
+                                                                <div class="userDatatable-content" style="width: 160px;">
+                                                                    <input type="number" class="form-control" formControlName="pd_paidAmount"
+                                                                         id="pd_paidAmount_{{i}}" />
+                                                                </div>
+                                                            </td>
+                                                            <!-- Payment Type -->
+                                                            <td>
+                                                                <div class="userDatatable-content" style="width: 160px;">
+                                                                    <select class="form-control" formControlName="pd_paymenttype"
+                                                                        id="pd_paymenttype_{{i}}" name="pd_paymenttype">
+                                                                        <option value="" disabled selected>Select Payment Method</option>
+                                                                        <option *ngFor="let term of paymentType_payment"
+                                                                            [value]="term.payment_type_id">{{term.payment_type_name}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+                                                            <!-- Note -->
+                                                            <td>
+                                                                <div class="userDatatable-content">
+                                                                    <textarea class="form-control" rows="5" 
+                                                                        formControlName="pd_note" id="pd_note_{{i}}">
+                                                                    </textarea>
+                                                                </div>
+                                                            </td>
+                                                            <!-- Action -->
+                                                            <td>
+                                                                <div *ngIf="i > 0" class="userDatatable-content d-inline-block">
+                                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                                        (click)="removeAddress(i)">X</button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </section>
+                                    <!-- End of Customer Invoices Row -->
+                
+                                    <!-- Pending Payments Table -->
+                                    <div *ngIf="Pay_Pending_list_show==true">
+                                        <div class="userDatatable global-shadow border-0 bg-white w-100">
+                                            <div class="table-responsive">
+                                                <table class="table mb-0 table-borderless">
+                                                    <thead>
+                                                        <tr style="background-color: cadetblue!important;" class="userDatatable-header">
+                                                            <th>
+                                                                <div class="d-flex align-items-center">
+                                                                    <div class="custom-checkbox  check-all">
+                                                                        <input class="checkbox" type="checkbox" id="check-31"
+                                                                            (change)="selectAll_pending($event)">
+                                                                        <label for="check-31"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <th><span class="userDatatable-title" style="color: aliceblue;">Customer Bill No</span></th>
+                                                            <th><span class="userDatatable-title">Bill Date</span></th>
+                                                            <th><span class="userDatatable-title">Invoice Amount</span></th>
+                                                            <th><span class="userDatatable-title">Balance Amount</span></th>
+                                                            <th><span class="userDatatable-title">Action</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <!-- Pending Payments Data -->
+                                                        <tr *ngFor="let list of this.Pay_Pending_list; let j = index">
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                                        <div class="checkbox-group-wrapper">
+                                                                            <div class="checkbox-group d-flex">
+                                                                                <div *ngIf="list.performa_invoice == 0" class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                                    <input class="checkbox" type="checkbox" id="check-grp-pendingInv{{j}}" (change)="EditCHK_pending(list.billId,$event)">
+                                                                                    <label for="check-grp-pendingInv{{j}}"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td><span>{{ list.cus_invoice_no }}</span></td>
+                                                            <td><span>{{ list.billdate }}</span></td>
+                                                            <td><span>{{ list.netPayment }}</span></td>
+                                                            <td><span>{{ list.balance_amt }}</span></td>
+                                                            <td>
+                                                                <div class="page">
+                                                                    <div class="dropdown">
+                                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                                        <ul class="dropdown__list">
+                                                                            <li class="dropdown__item">
+                                                                                <a *ngIf="list.performa_invoice == 1" class="hover4" title="Invoice to Proforma" data-toggle="modal" (click)="InvoicetoProforma(list.billId)">
+                                                                                    <img class="show" src="assets/img/icon2/invoice-pi.png">
+                                                                                    <img class="hide" src="assets/img/icon2/invoice-pi.png">
+                                                                                    <span><b style="padding: 0px 20px;">-</b><strong>Invoice to Proforma</strong></span>
+                                                                                </a>
+                                                                                <a *ngIf="list.performa_invoice == 0" class="hover4">
+                                                                                    <span><b style="padding: 0px 20px;">-</b><strong></strong></span>
+                                                                                </a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- End of Pending Payments Table -->
+                                </ng-container>
+                                <!-- Add Button -->
+                                <div class="text-right" style="margin: 20px;">
+                                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                                        style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
+                                </div>
                             </div>
-
-
-
                         </div>
-                    </section>
-
-                    <div class="text-right"  style="margin: 20px;">
-
-
-                        <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2"
-                            (click)="addAddress()" style="margin-right: 10px;"><i class="fas fa-plus"
-                                style="margin-right:0;"> Add Product</i>
-                        </button>
-                    </div>
-
+                    </form>
                 </div>
-
+                
 
             </div>
-        </form>
+            <div class="modal-footer">
 
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-primary" >
-          Save
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal" >
-          Close
-        </button>
-      </div>
+                <button type="button" class="btn btn-primary" (click)="addPaymentEntry()">
+                    Save
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
-
-
-

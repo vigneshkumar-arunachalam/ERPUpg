@@ -106,7 +106,6 @@
                             </div>
                             <div class="ml-4">
 
-
                               <input type="checkbox" name="paid_check_all" id="paid_check_all_{{i}}"
                                 [(ngModel)]="selectAllCheckbox_paid" 
                                 (change)="selectAll_paid1($event)" [disabled]="selectAllCheckbox">
@@ -193,7 +192,6 @@
                                   <tbody *ngFor="let list2 of CurrencyTotalList; let i = index">
 
                                     <tr>
-
                                       <td style="border: 1px solid #e4ebf5;">{{list2.currency_name}}</td>
                                       <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">
                                         {{list2.paid_amt}}</td>
@@ -203,9 +201,6 @@
                                         {{list2.currency_price_val}}</td>
 
                                     </tr>
-
-
-
                                   </tbody>
                                   <tbody>
                                     <tr>
@@ -224,9 +219,6 @@
                                 <table class="table mb-0 table-borderless">
                                   <thead>
                                     <tr class="userDatatable-header">
-
-
-
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Year</span>
                                       </th>
@@ -236,26 +228,17 @@
                                       <th style="border: 1px solid #e4ebf5;">
                                         <span class="userDatatable-title">Unpaid</span>
                                       </th>
-
                                     </tr>
-
                                   </thead>
 
                                   <tbody *ngFor="let list3 of YearTotalList; let i = index">
-
                                     <tr>
-
                                       <td style="border: 1px solid #e4ebf5;">{{list3.curr_year}}</td>
                                       <td style="border: 1px solid #e4ebf5;background-color: #D0FFC3;">
                                         {{list3.paid_amt_year}}</td>
                                       <td style="border: 1px solid #e4ebf5;background-color: #FFB8B8;">
                                         {{list3.unpaid_amt_year}}</td>
-
-
                                     </tr>
-
-
-
                                   </tbody>
 
                                 </table>
