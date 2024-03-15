@@ -143,9 +143,10 @@ export class ResellerPaymentComponent implements OnInit {
   paidCheck_Unpaid_value: any;
   sum_bal2: number;
   unpaid_status: boolean = false;
+  CheckAllSTATUS: boolean = false;
 
-  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, 
-    private route: ActivatedRoute, private router: Router, private fb: FormBuilder, 
+  constructor(public serverService: ServerService, public sanitizer: DomSanitizer,
+    private route: ActivatedRoute, private router: Router, private fb: FormBuilder,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.resellerCommissionForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -423,7 +424,8 @@ export class ResellerPaymentComponent implements OnInit {
   }
 
   selectAll() {
-    this.selectedResellerCommIds_unpaid_all=[];
+    this.CheckAllSTATUS = true;
+    this.selectedResellerCommIds_unpaid_all = [];
     this.unpaid_status = !this.unpaid_status;
     $('#RP_multiple_amount').val('');
     this.resellerList.forEach((reseller: any) => {
@@ -444,9 +446,9 @@ export class ResellerPaymentComponent implements OnInit {
         var toFixval = this.sum_bal;
         $('#RP_multiple_amount').val(toFixval.toFixed(2));
         console.log("If part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
-        
+
       }
-      
+
       else {
         reseller.selected = false;
         const indexOfId = this.selectedResellerCommIds_unpaid.indexOf(reseller.reseller_comm_id);
@@ -463,7 +465,7 @@ export class ResellerPaymentComponent implements OnInit {
         var toFixval = this.sum_bal;
         $('#RP_multiple_amount').val(toFixval.toFixed(2));
         console.log("Else part----$('#RP_multiple_amount').val(toFixval.toFixed(2))", $('#RP_multiple_amount').val())
-     
+
 
       }
     });
@@ -471,6 +473,7 @@ export class ResellerPaymentComponent implements OnInit {
   }
 
   selectAll_paid1(event: any) {
+    console.log("selectAll_paid1")
     this.paidCheck_Unpaid_value = '';
     this.selectedResellerCommIds1 = [];
     this.selectedResellerCommIds2 = [];
@@ -489,18 +492,20 @@ export class ResellerPaymentComponent implements OnInit {
           $('#RP_multiple_amount').val('');
           for (let i = 0; i < this.selectedResellerCommIds2.length; i++) {
             xy = this.selectedResellerCommIds2[i];
-          //   console.log("xy",xy)
-           //  console.log(" this.sum_bal-before", this.sum_bal)
+            //   console.log("xy",xy)
+            //  console.log(" this.sum_bal-before", this.sum_bal)
             this.sum_bal = this.sum_bal + xy;
-           //  console.log(" this.sum_bal-last", this.sum_bal)
+            //  console.log(" this.sum_bal-last", this.sum_bal)
           }
           var toFixval = this.sum_bal;
           this.paidCheck_Unpaid_value = this.sum_bal;
-          this.sum_bal = '';
+          console.log("before emptying sum_bal", this.sum_bal);
+          //  this.sum_bal = '';
+          console.log("after emptying sum_bal", this.sum_bal);
           $('#RP_multiple_amount').val(toFixval.toFixed(2));
-         
+
         }
-        
+
 
       });
       console.log("Final Checkbox group all- selected list", this.selectedResellerCommIds)
@@ -535,11 +540,11 @@ export class ResellerPaymentComponent implements OnInit {
 
 
   selectAll_paid(balAmount: any, data: any, event: any, reseller_id: any, paid_status: any) {
-
+console.log("reseller commision id",data)
     console.log("balAmount", balAmount)
     this.checkbox_value = event.target.checked;
     if (this.checkbox_value) {
-   //  alert("if part")
+      //  alert("if part")
       this.selectedResellerCommIds.push(data);
       if (this.paidCheck_Unpaid_status == true && paid_status == 'Not Paid') {
         // paid check all value aded if some value added in not paid also have to add remove
@@ -551,13 +556,13 @@ export class ResellerPaymentComponent implements OnInit {
       } else if (this.paidCheck_Unpaid_status == true && paid_status == 'Paid') {
         this.selectedResellerCommIds1.push(balAmount);
         this.updateSumBalance();
-      }else if (this.unpaid_status==true) {
-       
+      } else if (this.unpaid_status == true) {
+
         this.selectedResellerCommIds_unpaid_all.push(balAmount);
         this.updateSumBalance2();
       }
 
-       else {
+      else {
         this.selectedResellerCommIds1.push(balAmount);
         console.log("Checkbox-selected", this.selectedResellerCommIds)
         this.updateSumBalance();
@@ -566,18 +571,18 @@ export class ResellerPaymentComponent implements OnInit {
     }
     else {
       // alert("else part")
-       if(this.unpaid_status==true){
-       //  alert("paid/unpaid uncheck part")
+      if (this.unpaid_status == true) {
+        //  alert("paid/unpaid uncheck part")
         const index2 = this.selectedResellerCommIds_unpaid_all.findIndex((el: any) => el === balAmount);
-          console.log("index2",index2)
+        console.log("index2", index2)
         if (index2 > -1) {
           this.selectedResellerCommIds_unpaid_all.splice(index2, 1);
           // this.selectedResellerCommIds_unpaid_all.pop();
-            console.log("Checkbox-before calculation-after uncheck", this.selectedResellerCommIds_unpaid_all)
+          console.log("Checkbox-before calculation-after uncheck", this.selectedResellerCommIds_unpaid_all)
         }
         this.updateSumBalance2();
-      }else if(paid_status == 'Paid'){
-       // alert("Paid part uncheck")
+      } else if (paid_status == 'Paid') {
+        // alert("Paid part uncheck")
         const index1 = this.selectedResellerCommIds2.findIndex((el: any) => el === balAmount)
         // console.log("index1",index1)
         // console.log("Checkbox-Deselected-before", this.selectedResellerCommIds2)
@@ -646,12 +651,12 @@ export class ResellerPaymentComponent implements OnInit {
     var toFixval = 0;
     var xy = 0;
     for (let i = 0; i < this.selectedResellerCommIds_unpaid_all.length; i++) {
-     //  console.log("this.selectedResellerCommIds_unpaid_all",this.selectedResellerCommIds_unpaid_all)
+      //  console.log("this.selectedResellerCommIds_unpaid_all",this.selectedResellerCommIds_unpaid_all)
       xy = this.selectedResellerCommIds_unpaid_all[i];
-     //  console.log("xy-selectedResellerCommIds_unpaid_all ",xy);
-     //  console.log("this.sum_bal2-before-selectedResellerCommIds_unpaid_all",this.sum_bal2);
+      //  console.log("xy-selectedResellerCommIds_unpaid_all ",xy);
+      //  console.log("this.sum_bal2-before-selectedResellerCommIds_unpaid_all",this.sum_bal2);
       this.sum_bal2 = this.sum_bal2 + xy;
-     //  console.log("this.sum_bal2-after-selectedResellerCommIds_unpaid_all",this.sum_bal2);
+      //  console.log("this.sum_bal2-after-selectedResellerCommIds_unpaid_all",this.sum_bal2);
     }
     toFixval = this.sum_bal2;
     console.log("toFixval", toFixval)
@@ -659,7 +664,7 @@ export class ResellerPaymentComponent implements OnInit {
     // toFixval=6.61+toFixval;
     $('#RP_multiple_amount').val(toFixval.toFixed(2));
     this.paidCheck_Unpaid_status = false;
-   
+
   }
 
 
@@ -1974,7 +1979,7 @@ export class ResellerPaymentComponent implements OnInit {
     api_multiple_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_multiple_req.paymentDate = this.multipleResellerPaymentForm.value.RP_multiple_date;
     if ($('#RP_multiple_amount').val() == '') {
-      iziToast.warning({
+      iziToast.error({
         message: "Fill Amount",
         position: 'topRight'
       });
@@ -1986,7 +1991,7 @@ export class ResellerPaymentComponent implements OnInit {
       api_multiple_req.paid_amt_all = this.sum_bal;
     }
     if (this.multipleResellerPaymentForm.value.RP_multiple_paymentType == null) {
-      iziToast.warning({
+      iziToast.error({
         message: "Select Payment Type",
         position: 'topRight'
       });
@@ -1996,7 +2001,7 @@ export class ResellerPaymentComponent implements OnInit {
       api_multiple_req.pay_method = this.multipleResellerPaymentForm.value.RP_multiple_paymentType;
     }
     if (this.multipleResellerPaymentForm.value.RP_multiple_Description == null) {
-      iziToast.warning({
+      iziToast.error({
         message: "Enter Description",
         position: 'topRight'
       });
@@ -2006,8 +2011,12 @@ export class ResellerPaymentComponent implements OnInit {
       api_multiple_req.pay_det = this.multipleResellerPaymentForm.value.RP_multiple_Description;
     }
 
+    if (this.CheckAllSTATUS == true) {
+      api_multiple_req.reseller_comm_id = this.selectedResellerCommIds_unpaid;
+    } else {
+      api_multiple_req.reseller_comm_id = this.selectedResellerCommIds;
+    }
 
-    api_multiple_req.reseller_comm_id = this.selectedResellerCommIds;
     api_req.element_data = api_multiple_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {

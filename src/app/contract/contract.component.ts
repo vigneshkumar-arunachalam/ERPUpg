@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../services/server.service';
 
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import Swal from 'sweetalert2'
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -59,6 +59,7 @@ export class ContractComponent implements OnInit {
   result1: any;
   billDetails: any;
   myFiles: any;
+  myFiles_add: string[] = [];
   contractDetails: any;
   contractClassification: any;
   searchResult: any;
@@ -103,6 +104,7 @@ export class ContractComponent implements OnInit {
   searchResult_CustomerID1: any = '';
   searchResult_CustomerName1: any;
   containsNullValues: any;
+  j: any;
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
@@ -376,15 +378,11 @@ export class ContractComponent implements OnInit {
     }
     return false; // Return false if no company_Name is null
   }
-  contractSave() {
+  contractSave1() {
     this.spinner.show();
     console.log("this.addressForm", this.addressForm);
     console.log("this.addressForm.value.addresses", this.addressForm.value.addresses);
-    // console.log("this.addresses.value",this.addresses.value);
-
-    // if($('#id').val()==''){
-
-    // }
+  
     console.log("Customer List UI Display Data after OnInit ")
 
     let api_req: any = new Object();
@@ -396,8 +394,8 @@ export class ContractComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     save_req.action = "customer_contract_save";
     save_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    const addressesArray = this.addressForm.get('addresses') as FormArray;
-    const hasNullCompanyNames = addressesArray.controls.some(control => control.get('company_Name').value === null);
+    const addressesArray1 = this.addressForm.get('addresses') as FormArray;
+    const hasNullCompanyNames = addressesArray1.controls.some(control => control.get('company_Name').value === null);
     if (hasNullCompanyNames) {
       this.spinner.hide();
       iziToast.error({
@@ -413,11 +411,12 @@ export class ContractComponent implements OnInit {
     } else {
         save_req.values = this.addresses.value;
     }
+
     api_req.element_data = save_req;
     console.log("check api req", api_req)
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      // this.contacts_list=response.result.data.list_data;
+     
 
       console.log("save check", response)
       this.resultSave = response
@@ -444,6 +443,228 @@ export class ContractComponent implements OnInit {
     });
 
   }
+  contractSave0riginal() {
+    this.spinner.show();
+    var data = new FormData();
+    data.append('contractID', this.fileAttachContractID);
+    data.append('customerID', this.fileAttachCustomerID);
+    data.append('fileContractCheckboxID', this.fileContractCheckboxID_array);
+    data.append('contract_attachment_file', $("#uploaded-img")[0].files[0]);
+    data.append('action', "customer_contract_attachment_file_save");
+
+    let api_req: any = new Object();
+    let save_req: any = new Object();
+    api_req.moduleType = "customer_contract";
+    api_req.api_url = "customer_contract/customer_contract_save"
+    api_req.api_type = "web";
+
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    save_req.action = "customer_contract_save";
+    save_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    const addressesArray2= this.addressForm.get('addresses') as FormArray;
+    const hasNullCompanyNames = addressesArray2.controls.some(control => control.get('company_Name').value === null);
+    if (hasNullCompanyNames) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Company Name Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    } 
+
+    if (this.addressForm.value.addresses.length <= 1) {
+      save_req.values = this.addressForm.value.addresses;
+
+    } else {
+        save_req.values = this.addresses.value;
+    }
+
+    api_req.element_data = save_req;
+    console.log("check api req", api_req)
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+     
+
+      console.log("save check", response)
+      this.resultSave = response
+      if (response.status = true) {
+        this.spinner.hide();
+        $("#addCustomerContractId").modal("hide");
+        this.contractList({})
+        iziToast.success({
+          title: 'Saved',
+          message: 'Contract Saved Successfully !',
+        });
+
+      }
+      else {
+        this.spinner.hide();
+        $("#addCustomerContractId").modal("hide");
+        iziToast.error({
+          title: 'Not Saved',
+          message: 'Contract not Saved !',
+        });
+        this.contractList({})
+      }
+
+    });
+
+  }
+  contractSave3() {
+
+    var data = new FormData();
+   
+    data.append('action', "customer_contract_save");
+    data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+    const addressesArray4 = this.addressForm.get('addresses') as FormArray;
+      const hasNullCompanyNames = addressesArray4.controls.some(control => control.get('company_Name').value === null);
+      if (hasNullCompanyNames) {
+        this.spinner.hide();
+        iziToast.error({
+          title: 'Company Name Null',
+          message: 'Contract not Saved !',
+        });
+        return false;
+      } 
+  
+      if (this.addressForm.value.addresses.length <= 1) {
+      
+        data.append('values', this.addressForm.value.addresses);
+  
+      } else {
+        data.append('values', this.addresses.value);
+          
+      }
+    var self = this;
+    $.ajax({
+      type: 'POST',
+      url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+      success: function (result: any) {
+        if (result.status == true) {
+          
+          self.contractList({});
+          $("#addCustomerContractId").modal("hide");
+         
+  
+          // console.log(result);
+  
+  
+        }
+  
+        $("#addCustomerContractId").modal("hide");
+        $('#uploaded-img').val("")
+        Swal.fire({
+          icon: 'success',
+          title: 'Contract File has been Updated',
+          showConfirmButton: false,
+          timer: 1200,
+        });
+  
+      },
+      error: function (err: any) {
+        console.log(err);
+      }
+    })
+  }
+  onFileChange(event: any,j:any) {
+    console.log("event.target.files.length",event.target.files.length)
+
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles_add.push(event.target.files[i]);
+     // $('#file'+j).val(this.myFiles_add)
+    }
+    this.j=j;
+  }
+  contractSave() {
+    this.spinner.show();
+
+    const formData = new FormData();
+    const addressesArray = this.addressForm.get('addresses') as FormArray;
+
+    // addressesArray.controls.forEach((control: AbstractControl, i: number) => {
+    //     if (control instanceof FormGroup) {
+    //         const fileControl = control.get('attachment');
+    //         if (fileControl.value) {
+    //             const files = Array.isArray(fileControl.value) ? fileControl.value : [fileControl.value];
+    //             files.forEach((file: File, j: number) => {
+    //                 formData.append(`file_${i}_${j}`, file); // Append the file directly
+    //             });
+    //         }
+    //     }
+    // });
+ 
+    const data = new FormData();
+
+    for (var i = 0; i < this.myFiles_add.length; i++) {
+      console.log("this.myFiles_add[i]",this.myFiles_add[i])
+      // formData.append("file[" + i + "]", $('#file'+i).val());
+      formData.append("attachmentFile[" + i + "]", this.myFiles_add[i]);
+    }
+    formData.append('moduleType', 'customer_contract');
+    formData.append('api_url', 'customer_contract/customer_contract_save');
+    formData.append('api_type', 'web');
+    formData.append('access_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI'); // Replace with your access token
+    formData.append('action', 'customer_contract_save');
+    formData.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+    formData.append('paramesh',this.addressForm.value.addresses.attachment);
+
+    const hasNullCompanyNames = addressesArray.controls.some(control => control.get('company_Name').value === null);
+    if (hasNullCompanyNames) {
+        this.spinner.hide();
+        iziToast.error({
+            title: 'Company Name Null',
+            message: 'Contract not Saved !',
+        });
+        return false;
+    }
+
+    if (this.addressForm.value.addresses.length <= 1) {
+        formData.append('values', JSON.stringify(this.addressForm.value.addresses));
+        formData.append('valuesAttachment', JSON.stringify(this.addressForm.value.addresses.attachment));
+    } else {
+        formData.append('values', JSON.stringify(this.addresses.value));
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_save',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: (result: any) => {
+            this.spinner.hide();
+            if (result.status === true) {
+                this.contractList({});
+                $("#addCustomerContractId").modal("hide");
+            }
+            Swal.fire({
+                icon: 'success',
+                title: 'Contract File has been Updated',
+                showConfirmButton: false,
+                timer: 1200,
+            });
+        },
+        error: (err: any) => {
+            this.spinner.hide();
+            console.log(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An error occurred while saving the contract.',
+            });
+        }
+    });
+}
+
+
+
+
+
   check() { }
   contractEditGroup() {
     this.spinner.show();
@@ -816,6 +1037,9 @@ export class ContractComponent implements OnInit {
   //   });
 
   // }
+
+
+
   contractFileUpdate() {
 
     var data = new FormData();
@@ -1117,7 +1341,19 @@ export class ContractComponent implements OnInit {
     updateCR_req.contract_id = this.contractRemarksEditId;
     updateCR_req.user_id = localStorage.getItem('erp_c4c_user_id');
     //updateCR_req.comments = this.contractRemarkForm.value.remark_desc;
-    updateCR_req.comments = $('#remark_desc').val();
+    var test=$('#remark_desc').val();
+    alert(test)
+    if(test==null || test=='' || test==undefined ||test=='undefined'){
+      console.log("test",test)
+      iziToast.error({
+        message: "Add Remark",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      updateCR_req.comments = $('#remark_desc').val();
+    }
+   
     api_req.element_data = updateCR_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("contract remarks Update api", response)

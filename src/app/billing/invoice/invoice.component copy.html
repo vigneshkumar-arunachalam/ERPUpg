@@ -3,7 +3,7 @@
   <div class="row no-gutters">
     <div class="col-lg-12 mb-30">
       <div class="card">
-        <div class="card-header color-dark fw-500" >
+        <div class="card-header color-dark fw-500" *ngIf="this.Global_search_filter==false">
           <h3 class="card-header-section">
             <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
             <span class="breadcrumb-item active">Invoice and Payment Process</span>
@@ -25,12 +25,10 @@
             class="fas  fa-bar-chart" style="margin-right:10;"></i>Daily Payment
         </button> -->
             <button type="button"  title="Add New Invoice"
-            *ngIf="(  this.invoicePermissionList_add==1)"
               class="btn btn-primary btn-default btn-squared" (click)="addPIGo()" style="margin-right: 10px;"><i
                 class="fas fa-plus" style="margin-right:10;"></i>Add
             </button>
             <button type="button"  class="btn btn-primary" data-toggle="modal"
-            *ngIf="(  this.invoicePermissionList_Search==1)"
               title="Search" (click)="clearSearch()">
               <i class="fas fa-search" style="margin-right:10;"></i>Search
             </button>
@@ -660,8 +658,8 @@
 
           <br>
           <br>
-          <table border="0" cellspacing="0" cellpadding="0" >
-            <tbody >
+          <table border="0" cellspacing="0" cellpadding="0">
+            <tbody>
               <tr *ngIf="this.response_total_cnt>0">
                 <!-- <td width="20" bgcolor="#d9b3ff">&nbsp;</td>
                 <td width="100" style="padding-left:20px;">Recurring </td> -->
@@ -669,7 +667,7 @@
                 <td width="100" style="padding-left:20px;">Paid </td>
                 <td width="20" bgcolor="#fffeb3">&nbsp;</td>
                 <td width="100" style="padding-left:20px;">Partial Paid</td>
-                <td width="20" bgcolor="#ffb8b8" style="width: 0%;">&nbsp;</td>
+                <td width="20" bgcolor="#ffb8b8">&nbsp;</td>
                 <td width="100" style="padding-left:20px;"> Not Paid </td>
                 <td width="20" bgcolor="#FA600C">&nbsp;</td>
                 <td width="100" style="padding-left:20px;"> Cancel </td>

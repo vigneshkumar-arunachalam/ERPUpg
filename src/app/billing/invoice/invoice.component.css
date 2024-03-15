@@ -696,3 +696,8 @@ tr:hover {background-color: rgb(246, 236, 233)!important;}
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+
+#colorID .userDatatable table tbody tr td:nth-child(5) {
+  width: 0% !important;
+}

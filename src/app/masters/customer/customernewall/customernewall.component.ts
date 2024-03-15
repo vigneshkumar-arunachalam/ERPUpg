@@ -1082,6 +1082,7 @@ export class CustomernewallComponent implements OnInit {
 
     console.log('iiii--' + i)
     console.log(this.addresses)
+    console.log("this.billCodeEditForm3.value.addresses",this.billCodeEditForm3.value.addresses)
     var customer_bill_code_id = $('#customer_bill_code_id' + i).val();
     var cust_id = $('#customer_id' + i).val();
     // console.log('pd_billchild_id'+pd_billchild_id);
@@ -1096,7 +1097,13 @@ export class CustomernewallComponent implements OnInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.addresses.removeAt(i);
+        // this.billCodeEditForm3.value.addresses.splice(i, 1);
+
+
+        const addressesArray = this.billCodeEditForm3.get('addresses') as FormArray;
+        addressesArray.removeAt(i);
+        
+       // this.billCodeEditForm3.value.addresses.removeAt(i);
         // var addr = this.addPI_section2.value.addresses;
         // var list_cnt = addr.length;
 
@@ -2940,7 +2947,7 @@ export class CustomernewallComponent implements OnInit {
             "bill_code_kl": response.result.customer_bill_code_arr[index].bill_code_kl,
             "bill_code_750": response.result.customer_bill_code_arr[index].bill_code_750,
             "bill_code_750_8": response.result.customer_bill_code_arr[index].bill_code_750_8,
-            "bill_code_sg": response.result.customer_bill_code_arr[index].bill_code_vs_sg,
+            "bill_code_sg": response.result.customer_bill_code_arr[index].bill_code_sg,
             "customer_bill_code_id": response.result.customer_bill_code_arr[index].customer_bill_code_id,
             "conn_state": response.result.customer_bill_code_arr[index].conn_state,
             "customer_id": response.result.customer_bill_code_arr[index].customer_id,
@@ -3000,12 +3007,17 @@ export class CustomernewallComponent implements OnInit {
 
 
 
-          'primary_code_sg': response.result.customer_primary_code_arr[0].bill_code_vs_sg,
-          'primary_code_retail_sg': response.result.customer_primary_code_arr[0].primary_code_retail_vs_sg,
-          'low_credit_sg': response.result.customer_primary_code_arr[0].low_credit_vs_sg,
-          'high_credit_sg': response.result.customer_primary_code_arr[0].high_credit_vs_sg,
-          'retail_low_credit_sg': response.result.customer_primary_code_arr[0].retail_low_credit_vs_sg,
-          'retail_high_credit_sg': response.result.customer_primary_code_arr[0].retail_high_credit_vs_sg,
+          'primary_code_sg': response.result.customer_primary_code_arr[0].primary_code_sg,
+          'primary_code_retail_sg': response.result.customer_primary_code_arr[0].primary_code_retail_sg,
+          'low_credit_sg': response.result.customer_primary_code_arr[0].low_credit_sg,
+          'high_credit_sg': response.result.customer_primary_code_arr[0].high_credit_sg,
+          'retail_low_credit_sg': response.result.customer_primary_code_arr[0].retail_low_credit_sg,
+          'retail_high_credit_sg': response.result.customer_primary_code_arr[0].retail_high_credit_sg,
+
+
+          'server_name_sg': response.result.customer_primary_code_arr[0].server_name_sg,
+          'pbx_threshold_limit_sg': response.result.customer_primary_code_arr[0].pbx_threshold_limit_sg,
+          'retail_threshold_limit_sg': response.result.customer_primary_code_arr[0].retail_threshold_limit_sg,
 
 
         })
@@ -3115,21 +3127,46 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.credit_amt = this.editCustomerForm.value.e_ESA_customerLimit;
     update_customer_req.reseller_id = this.editCustomerForm.value.e_ESA_c3cxResellerId;
  
-    if(this.editCustomerForm.value.e_ESA_c3cxResellerId !=null || this.editCustomerForm.value.e_ESA_c3cxResellerId !=''){
+    // if(this.editCustomerForm.value.e_ESA_c3cxResellerId !=null || this.editCustomerForm.value.e_ESA_c3cxResellerId !=''){
     
-      if( this.editCustomerForm.value.edit_defaultBillerName!=9 && this.cal4care1_sg==false && this.cal4care3_jp==false && this.cal4care2_sdn==false){
-        iziToast.error({
-          message: "3CX Reseller License API Checkbox value Missing",
-          position: 'topRight'
-        });
-        Swal.close();
-        return false;
-      }else{
-        update_customer_req.cal4care_sg = this.cal4care1_sg;
-        update_customer_req.cal4care_sdn = this.cal4care2_sdn;
-        update_customer_req.cal4care_jp = this.cal4care3_jp;
+    //   if( this.editCustomerForm.value.edit_defaultBillerName!=9 && this.cal4care1_sg==false && this.cal4care3_jp==false && this.cal4care2_sdn==false){
+    //     iziToast.error({
+    //       message: "3CX Reseller License API Checkbox value Missing",
+    //       position: 'topRight'
+    //     });
+    //     Swal.close();
+    //     return false;
+    //   }else{
+    //     update_customer_req.cal4care_sg = this.cal4care1_sg;
+    //     update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+    //     update_customer_req.cal4care_jp = this.cal4care3_jp;
+    //   }
+    // }
+    if (!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId==0 || this.editCustomerForm.value.e_ESA_c3cxResellerId=='0') {
+      console.log(1)
+      // Condition 1: If 3CX Reseller Id is empty, null, or undefined, no error message is shown
+          update_customer_req.cal4care_sg = this.cal4care1_sg;
+          update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+          update_customer_req.cal4care_jp = this.cal4care3_jp;
+  } else {
+      if (!this.cal4care1_sg && !this.cal4care2_sdn && !this.cal4care3_jp) {
+          // Condition 2: If there is any value for 3CX Reseller Id, but no radio button is selected
+          iziToast.error({
+              message: "Please select a 3CX Reseller License API option.",
+              position: 'topRight'
+          });
+          Swal.close();
+          console.log(2)
+          return false;
+      } else {
+          // If conditions 1 and 2 are met, proceed with assigning values
+          console.log(3)
+          update_customer_req.cal4care_sg = this.cal4care1_sg;
+          update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+          update_customer_req.cal4care_jp = this.cal4care3_jp;
       }
-    }
+  }
+  
     update_customer_req.def_currency_id = this.editCustomerForm.value.edit_currencyname;
     update_customer_req.stripe_customerId = this.editCustomerForm.value.e_stripe_customer_id;
     update_customer_req.stripe_recurring_state = this.editCustomerForm.value.e_stripe_recurr_payment;
@@ -3163,7 +3200,7 @@ export class CustomernewallComponent implements OnInit {
       console.log("$('#bill_code_740_' + i).val()", $('#bill_code_740_' + i).val());
       addr23[i].bill_code_kl = $('#bill_code_kl_' + i).val();
       console.log("$('#bill_code_kl_' + i).val()", $('#bill_code_kl_' + i).val());
-      addr23[i].bill_code_vs_sg = $('#bill_code_sg_' + i).val();
+      addr23[i].bill_code_sg = $('#bill_code_sg_' + i).val();
       console.log("$('#bill_code_sg_' + i).val()", $('#bill_code_sg_' + i).val());
       addr23[i].bill_code_750 = $('#bill_code_750_' + i).val();
       console.log("$('#bill_code_750_' + i).val()", $('#bill_code_750_' + i).val());
@@ -3200,7 +3237,7 @@ export class CustomernewallComponent implements OnInit {
     update_customer_req.retail_high_credit_750 = this.billCodeEditForm2.value.retail_high_credit_750;
 
 
-    update_customer_req.bill_code_vs_sg = this.billCodeEditForm2.value.primary_code_sg;
+    update_customer_req.bill_code_sg = this.billCodeEditForm2.value.primary_code_sg;
     update_customer_req.primary_code_retail_sg = this.billCodeEditForm2.value.primary_code_retail_sg;
     update_customer_req.low_credit_sg = this.billCodeEditForm2.value.low_credit_sg;
     update_customer_req.high_credit_sg = this.billCodeEditForm2.value.high_credit_sg;

@@ -372,25 +372,54 @@ export class InvoiceComponent implements OnInit {
 
       // }
     });
-    this.serverService.global_search_invoice.subscribe((val: any) => {
-      console.log("before parse-global_search_invoice", val)
-      var k = JSON.parse(val);
-      console.log("after parse-global_search_invoice", k)
-      this.PI_list = k;
-      if (k != '') {
-        this.Global_search_filter = true;
-      } else {
-        this.Global_search_filter = false;
-      }
+    // this.serverService.global_search_invoice.subscribe((val: any) => {
+    //   console.log("before parse-global_search_invoice", val)
 
-    });
+    //   if(typeof val === 'object'){
+    //     k=JSON.stringify(val);
+    //   }
+    //   var k = JSON.parse(val);
+    //   console.log("after parse-global_search_invoice", k)
+    //   this.PI_list = k;
+    //   if (k != '') {
+    //     this.Global_search_filter = true;
+    //   } else {
+    //     this.Global_search_filter = false;
+    //   }
+
+    // });
+    this.serverService.global_search_invoice.subscribe((val: any) => {
+      console.log("before parse-global_search_invoice", val);
+      try {
+          let jsonString: string;
+          if (typeof val === 'object') {
+              jsonString = JSON.stringify(val);
+          } else if (typeof val === 'string') {
+              jsonString = val;
+          } else {
+              console.error("Invalid type received:", typeof val);
+              return; // Exit early if the type is not recognized
+          }
+          var k = JSON.parse(jsonString);
+          console.log("after parse-global_search_invoice", k);
+          this.PI_list = k;
+          // if (k != '') {
+          //   this.Global_search_filter = true;
+          // } else {
+          //   this.Global_search_filter = false;
+          // }
+      } catch (error) {
+          console.error("Error parsing JSON:", error);
+          // Handle parsing error if needed
+      }
+  });
+  
     $("body").removeClass("modal-open");
   }
 
   keywordResellerName = 'customerName';
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-
 
     this.commissionType_value = 4;
     // setTimeout(() => {
@@ -1203,6 +1232,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice1(data: any) {
+    console.log("getinvoice1")
 
     console.log("billerid", this.edit_array_SearchBiller_Checkbox);
     console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
@@ -1254,18 +1284,31 @@ export class InvoiceComponent implements OnInit {
       }
       if (response) {
         this.spinner.hide();
+        if(response.proforma_details==null){
+        //   iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
+        }
         this.PI_list = response.proforma_details;
-        this.PI_list.forEach((item: { showHi: boolean; }) => {
-          item.showHi = false;
-        });
+        if(response.proforma_details!=null){
+          this.PI_list.forEach((item: { showHi: boolean; }) => {
+            item.showHi = false;
+          });
+        }
         this.searchFlag = response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
-        this.revenue_type_id = response.proforma_details[0].revenue_type_id;
-        this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
-        this.revenue_color = response.proforma_details[0].revenue_color;
-        this.share_access_state = response.proforma_details[0].share_access_state;
-        this.postal_send_color = response.proforma_details[0].postal_send_color;
-        this.post_send_status = response.proforma_details[0].post_send_status;
+       
+        if(response.proforma_details!=null){
+          this.revenue_color = response.proforma_details[0].revenue_color;
+          this.share_access_state = response.proforma_details[0].share_access_state;
+          this.postal_send_color = response.proforma_details[0].postal_send_color;
+          this.post_send_status = response.proforma_details[0].post_send_status;
+          this.revenue_type_id = response.proforma_details[0].revenue_type_id;
+          this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+          this.taxAmtstate = response.proforma_details[0].taxAmtstate;
+        }
+   
         this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
@@ -1305,7 +1348,7 @@ export class InvoiceComponent implements OnInit {
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
         this.revenueTypeList = response.revenue_list;
-        this.taxAmtstate = response.proforma_details[0].taxAmtstate;
+        
 
 
         if (response.selected_filtervalues[0].biller_ids != '') {
@@ -1334,7 +1377,7 @@ export class InvoiceComponent implements OnInit {
           console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
         }
 
-
+      if(response.proforma_details!=null){
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
@@ -1342,6 +1385,10 @@ export class InvoiceComponent implements OnInit {
           console.log("this.reseller_commissionState", this.reseller_commissionState)
           this.suspend_state = response.proforma_details[j].suspend;
         }
+
+      }
+      
+
         // this.searchInvoiceForm.patchValue({
         //   'search_billerName':response.selected_filtervalues[0].biller_ids,
         //   'company_Name':response.selected_filtervalues[0].name_serach,
@@ -1374,6 +1421,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice(data: any) {
+    console.log("getinvoice")
     this.spinner.show();
     console.log("billerid", this.edit_array_SearchBiller_Checkbox);
     var da = this.edit_array_SearchBiller_Checkbox;
@@ -1426,19 +1474,31 @@ export class InvoiceComponent implements OnInit {
       }
       if (response) {
         this.spinner.hide();
-        this.PI_list = response.proforma_details;
-        this.PI_list.forEach((item: { showHi: boolean; }) => {
-          item.showHi = false;
+        if(response.proforma_details==null){
+          iziToast.warning({
+          message: "Sorry, No Matching Data",
+          position: 'topRight'
         });
+        }
+        this.PI_list = response.proforma_details;
+        if(response.proforma_details!=null){
+          this.PI_list.forEach((item: { showHi: boolean; }) => {
+            item.showHi = false;
+          });
+        }
+      
         this.searchFlag = response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
-        this.revenue_type_id = response.proforma_details[0].revenue_type_id;
-        this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
-        this.taxAmtstate = response.proforma_details[0].taxAmtstate;
-        this.revenue_color = response.proforma_details[0].revenue_color;
-        this.share_access_state = response.proforma_details[0].share_access_state;
-        this.postal_send_color = response.proforma_details[0].postal_send_color;
-        this.post_send_status = response.proforma_details[0].post_send_status;
+        if(response.proforma_details!=null){
+          this.revenue_type_id = response.proforma_details[0].revenue_type_id;
+          this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+          this.taxAmtstate = response.proforma_details[0].taxAmtstate;
+          this.revenue_color = response.proforma_details[0].revenue_color;
+          this.share_access_state = response.proforma_details[0].share_access_state;
+          this.postal_send_color = response.proforma_details[0].postal_send_color;
+          this.post_send_status = response.proforma_details[0].post_send_status;
+        }
+       
         // this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
@@ -1483,12 +1543,16 @@ export class InvoiceComponent implements OnInit {
         this.selected_billerId = response.selected_billerId;
      
         console.log("this.edit_array_SearchBiller_Checkbox-getInvoice-list complete",this.edit_array_SearchBiller_Checkbox);
+       
+       if(response.proforma_details!=null){
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
           this.suspend_state = response.proforma_details[j].suspend;
           this.recurring_state_all = response.proforma_details[j].recuring_status;
         }
+       }
+       
 
         console.log("proforma_details list", this.PI_list)
         // console.log("this.biller_list", this.biller_list)

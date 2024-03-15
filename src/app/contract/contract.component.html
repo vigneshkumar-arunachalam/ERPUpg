@@ -536,10 +536,17 @@
                                                     <th>
                                                         <span class="userDatatable-title">Attachment</span>
                                                     </th>
-                                                    <td>
+                                                    <!-- <td>
                                                         <div class="userDatatable-content">
                                                             <input type="file" multiple="multiple" class="form-control"
                                                                 formControlName="attachment" />
+                                                        </div>
+                                                    </td> -->
+                                                    <td>
+                                                        <div class="userDatatable-content">
+                                                            <input type="file" multiple="multiple" class="form-control" id="file"
+                                                            (change)="onFileChange($event,i)" formControlName="attachment" />
+                                                     
                                                         </div>
                                                     </td>
                                                 </tr>
