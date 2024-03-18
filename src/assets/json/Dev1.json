@@ -1,25 +1,4 @@
-[{
-    "name": "Ledger",
-    "icon":"package",
-    "isActive": false,
-    "menuId":5,
-    "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Transaction New",
-            "icon": "folder-plus",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/transactionnew"
-        }
-       
-
-    ],
-    "isVisible": true,
-    "value": "/ledger"
-},
+[
     {
     "name": "Billing",
     "icon": "airplay",
@@ -43,23 +22,7 @@
             "subchild": [],
             "isVisible": true,
             "value": "/quotationnew"
-        },{
-            "name": "Purchase Order",
-            "icon": "airplay",
-            "IDs": [9501, 9502, 9503, 9504, 9505],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/purchaseorder"
         }, {
-            "name": "Delivery Order",
-            "icon": "truck",
-            "IDs": [9711, 9712, 9713, 9714, 9715],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/deliveryorder"
-        },  {
             "name": "Proforma Invoice",
             "icon": "save",
             "IDs": [3101, 3102, 3103, 3104, 3105],
@@ -84,17 +47,9 @@
             "isVisible": true,
             "value": "/didInvoice"
         },{
-            "name": "Multiple Invoice Payment",
-            "icon": "sliders",
-            "IDs": [3007],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/multipleInvPayment"
-        },{
             "name": "Reseller Payment",
             "icon": "framer",
-            "IDs": [2077],
+            "IDs": [2036],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -116,111 +71,43 @@
             "isVisible": true,
             "value": "/recurringChecker"
         }
-       
         
       
     ],
     "isVisible": true,
     "value": "/bing"
-}, {
-    "name": "CRM",
-    "icon":"settings",
+}, 
+ {
+    "name": "Masters",
+    "icon":"sunrise",
     "isActive": false,
     "menuId":5,
-    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
     "Type": "Main Menu",
     "children": [{
-            "name": "Enquiry New",
-            "icon": "grid",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "name": "Customer Master",
+            "icon": "users",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/enquirynew"
+            "value": "/customernewall"
+        },
+        {
+            "name": "Reseller Management",
+            "icon": "printer",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/ResellerManagement"
         }
        
 
     ],
     "isVisible": true,
-    "value": "/crm"
-}, 
-{
-   "name": "Masters",
-   "icon":"sunrise",
-   "isActive": false,
-   "menuId":5,
-   "IDs": [5001, 5002, 5003, 5004, 5005, 6001, 6002, 6003, 6004, 6005, 9801, 9802, 9803, 9804, 9805, 9901, 9902, 9903, 9904, 9905, 5621, 5622, 5623, 5624, 5625, 5011, 5012, 5013, 5014, 5015],
-   "Type": "Main Menu",
-   "children": [{
-           "name": "Customer Management",
-           "icon": "grid",
-           "IDs": [5001, 5002, 5003, 5004, 5005],
-           "Type": "Sub Menu",
-           "subchild": [],
-           "isVisible": true,
-           "value": "/customernewall"
-       },
-       {
-           "name": "Reseller Management",
-           "icon": "printer",
-           "IDs": [5001, 5002, 5003, 5004, 5005],
-           "Type": "Sub Menu",
-           "subchild": [],
-           "isVisible": true,
-           "value": "/ResellerManagement"
-       }
-      
-
-   ],
-   "isVisible": true,
-   "value": "/custom"
-}, {
-    "name": "Contract",
-    "icon": "slack",
-    "isActive": false,
-    "menuId":6,
-    "IDs": [5011, 5012, 5013, 5014, 5015],
-    "Type": "Main Menu",
-    "children": [{
-            "name": "Customer Contract",
-            "icon": "box",
-            "IDs": [5011, 5012, 5013, 5014, 5015],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contract"
-        },
-        {
-            "name": "Contract Master File",
-            "icon": "file-text",
-            "IDs": [5031, 5032, 5033, 5035],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contractmasterfile"
-        },
-        {
-            "name": "Contract Name",
-            "icon": "clipboard",
-            "IDs": [5031, 5032, 5033, 5035],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/contractname"
-        },
-        {
-            "name": "Contract Classification",
-            "icon": "check-square",
-            "IDs": [5041, 5042, 5043, 5044, 5045],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/Contractclassification"
-        }
-    ],
-    "isVisible": true,
-    "value": "/contract"
-},   {
+    "value": "/custom"
+},    {
     "name": "Settings",
     "icon":"settings",
     "isActive": false,
