@@ -394,7 +394,7 @@
             <div class="col-lg-6">
               <label class="mt-4">Payment Type/Method</label>
               <select class="form-control" formControlName="paymenttype" id="paytype">
-                <option [ngValue]="null" selected disabled>Select Payment Method</option>
+                <option [ngValue]="null" selected >Select Payment Method</option>
 
                 <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
                   {{term.payment_type_name}}
@@ -457,7 +457,7 @@
               </div>
               <div class="col-lg-6">
                 <select class="form-control" formControlName="paymenttype">
-                  <option [ngValue]="null" selected disabled>Select Invoice Type</option>
+                  <option [ngValue]="null" selected >Select Invoice Type</option>
 
                   <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
                                     {{term.enquiry_from_name}}
@@ -496,13 +496,13 @@
       <div class="modal-body">
         <form [formGroup]="couponAssignForm">
           <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-12">#ActionId0
               <div class="col-lg-6">
                 <label>Coupon Code - % - Amt</label>
               </div>
               <div class="col-lg-6">
                 <select class="form-control" formControlName="couponCode">
-                  <option [ngValue]="null" selected disabled>Select Coupon Code</option>
+                  <option [ngValue]="null" selected >Select Coupon Code</option>
 
                   <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
                                     {{term.enquiry_from_name}}
@@ -550,7 +550,7 @@
               <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
               <div class="col-lg-10">
                 <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
-                  <option [ngValue]="null" selected disabled>Select From</option>
+                  <option [ngValue]="null" selected >Select From</option>
                   <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                     {{ from.from_email }}
                   </option>
@@ -660,7 +660,7 @@
               <div class="col-lg-10">
                 <select name="templat" id="template" class="form-control" formControlName="email_template"
                   (change)="templateContentEmailDropdown($event)">
-                  <option [ngValue]="null" selected disabled>Select Template</option>
+                  <option [ngValue]="null" selected >Select Template</option>
                   <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
                     {{template.crm_template_name}}
                   </option>
@@ -737,7 +737,7 @@
               </div>
               <div class="col-lg-6">
                 <select class="form-control" formControlName="setInvoice">
-                  <option [ngValue]="null" selected disabled>Select invoice From</option>
+                  <option [ngValue]="null" selected >Select invoice From</option>
 
                   <option *ngFor="let invTy of InvoiceTypeList" value="{{invTy}}">
                     {{invTy}}
@@ -783,7 +783,7 @@
               </div>
               <div class="col-lg-6">
                 <select class="form-control" formControlName="setTerm">
-                  <option [ngValue]="null" selected disabled>Select term Condition</option>
+                  <option [ngValue]="null" selected >Select term Condition</option>
 
                   <option *ngFor="let term of TermDetailsList" value="{{term}}">
                     {{term}}
@@ -970,7 +970,7 @@
                 <label for="temp1" class="col-lg-12 ">Invoice Type</label>
                 <div class="col-lg-12">
                   <select id="Payment" class="form-control" formControlName="PaymentVia">
-                    <option [ngValue]="null" selected disabled>Select Invoice Type</option>
+                    <option [ngValue]="null" selected >Select Invoice Type</option>
                     <option *ngFor="let exp of exportState_Radio" value="{{exp.id}}">
                       {{exp.name}}
                     </option>

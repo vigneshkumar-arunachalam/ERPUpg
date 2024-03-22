@@ -883,4 +883,16 @@
   }
   
   
-  
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+
+
+
+
+tr:hover {
+  background-color: rgb(211, 244, 102)!important;
+  /* -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear; */
+}

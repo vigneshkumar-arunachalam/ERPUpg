@@ -435,7 +435,7 @@ export class ResellerPaymentComponent implements OnInit {
       if (reseller.checkbox == 1 && this.selectAllCheckbox) {
         reseller.selected = true;
         this.selectedResellerCommIds_unpaid.push(reseller.reseller_comm_id);
-        this.selectedResellerCommIds_unpaid_all.push(reseller.balAmount);
+        this.selectedResellerCommIds_unpaid_all.push(reseller.refAmount);
         // console.log("checkbox-all-unpaid", this.selectedResellerCommIds_unpaid)
         // console.log("checkbox-selectedResellerCommIds_unpaid_all", this.selectedResellerCommIds_unpaid_all)
         this.sum_bal = 0;
@@ -485,7 +485,7 @@ export class ResellerPaymentComponent implements OnInit {
           reseller.selected = true;
           this.paidCheck_Unpaid_status = true;
           this.selectedResellerCommIds.push(reseller.reseller_comm_id);
-          this.selectedResellerCommIds2.push(reseller.balAmount);
+          this.selectedResellerCommIds2.push(reseller.refAmount);
           this.sum_bal = 0;
           this.paidCheck_Unpaid_value = 0;
           var xy = 0;
@@ -537,10 +537,10 @@ export class ResellerPaymentComponent implements OnInit {
   }
 
 
-  selectAll_paid(balAmount: any, data: any, event: any, reseller_id: any, paid_status: any) {
+  selectAll_paid(refAmount: any, data: any, event: any, reseller_id: any, paid_status: any) {
 
     console.log("reseller commision id", data)
-    console.log("balAmount", balAmount)
+    console.log("refAmount", refAmount)
     this.checkbox_value = event.target.checked;
     if (this.checkbox_value) {
       //  alert("if part")
@@ -551,25 +551,25 @@ export class ResellerPaymentComponent implements OnInit {
         // paid check all value aded if some value added in not paid also have to add remove
         this.selectedResellerCommIds1.push(this.paidCheck_Unpaid_value);
         this.paidCheck_Unpaid_value = '';
-        this.selectedResellerCommIds1.push(balAmount);
+        this.selectedResellerCommIds1.push(refAmount);
         this.updateSumBalance();
 
       } else if (this.paidCheck_Unpaid_status == true && paid_status == 'Paid') {
         console.log("y")
-        this.selectedResellerCommIds1.push(balAmount);
+        this.selectedResellerCommIds1.push(refAmount);
         this.updateSumBalance();
       } else if (this.unpaid_status == true) {
         console.log("z")
-        this.selectedResellerCommIds_unpaid_all.push(balAmount);
+        this.selectedResellerCommIds_unpaid_all.push(refAmount);
         this.updateSumBalance2();
       } else if (this.testBool = true && this.paidCheck_Unpaid_status == false) {
         console.log("a")
         console.log("condition for select after deselect")
-        // this.selectedResellerCommIds_unpaid_all.push(balAmount);
+        // this.selectedResellerCommIds_unpaid_all.push(refAmount);
         
         console.log("before calculation-ids-1", this.selectedResellerCommIds)
        // console.log("before calculation-ids", this.selectedResellerCommIds_last)
-        this.selectedResellerCommIds_last.push(balAmount);
+        this.selectedResellerCommIds_last.push(refAmount);
         if (!this.selectedResellerCommIds.includes(data)) {
           this.selectedResellerCommIds.push(data);
       }
@@ -581,7 +581,7 @@ export class ResellerPaymentComponent implements OnInit {
 
       else {
         console.log("b")
-        this.selectedResellerCommIds1.push(balAmount);
+        this.selectedResellerCommIds1.push(refAmount);
         console.log("Checkbox-selected", this.selectedResellerCommIds)
         this.updateSumBalance();
       }
@@ -591,7 +591,7 @@ export class ResellerPaymentComponent implements OnInit {
       // alert("else part")
       if (this.unpaid_status == true) {
         //  alert("paid/unpaid uncheck part")
-        const index2 = this.selectedResellerCommIds_unpaid_all.findIndex((el: any) => el === balAmount);
+        const index2 = this.selectedResellerCommIds_unpaid_all.findIndex((el: any) => el === refAmount);
         console.log("index2", index2)
         if (index2 > -1) {
           this.selectedResellerCommIds_unpaid_all.splice(index2, 1);
@@ -646,8 +646,8 @@ export class ResellerPaymentComponent implements OnInit {
       console.log("reseller:", reseller);
       if (reseller) {
         console.log("coming2");
-        // Add the balAmount of the found reseller to sum_bal2
-        this.sum_bal2 += reseller.balAmount;
+        // Add the refAmount of the found reseller to sum_bal2
+        this.sum_bal2 += reseller.refAmount;
         this.testBool = true;
       }
     }
@@ -674,8 +674,8 @@ export class ResellerPaymentComponent implements OnInit {
       console.log("reseller:", reseller);
       if (reseller) {
         console.log("coming4");
-        // Add the balAmount of the found reseller to sum_bal2
-        this.sum_bal2 += reseller.balAmount;
+        // Add the refAmount of the found reseller to sum_bal2
+        this.sum_bal2 += reseller.refAmount;
         this.testBool = true;
       }
     }
@@ -1474,7 +1474,7 @@ export class ResellerPaymentComponent implements OnInit {
 
   ResellerPayProcessUpdate() {
 
-
+this.spinner.show();
     let api_req: any = new Object();
     let api_getReseller: any = new Object();
     api_req.moduleType = "reseller";
@@ -1482,7 +1482,7 @@ export class ResellerPaymentComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getReseller.action = "reseller_payment_process_update";
-    api_getReseller.reseller_paid_amt = this.resellerProcessPaymentIIForm.value.RP_pay_paidAmount;
+    api_getReseller.reseller_paid_amt = this.resellerProcessPaymentIIForm.value.RP_pay_amount;
     api_getReseller.paymentDate = this.resellerProcessPaymentIIForm.value.RP_pay_date;
     api_getReseller.payment_details = this.resellerProcessPaymentIIForm.value.RP_pay_descr;
 
@@ -1510,7 +1510,7 @@ export class ResellerPaymentComponent implements OnInit {
 
       } else {
 
-
+        this.spinner.hide();
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1518,6 +1518,7 @@ export class ResellerPaymentComponent implements OnInit {
       }
     }),
       (error: any) => {
+        this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -2075,7 +2076,7 @@ export class ResellerPaymentComponent implements OnInit {
 
     } else {
       // api_multiple_req.paid_amt_all = this.multipleResellerPaymentForm.value.RP_multiple_amount;
-      api_multiple_req.paid_amt_all = this.sum_bal;
+      api_multiple_req.paid_amt_all = $('#RP_multiple_amount').val();
     }
     if (this.multipleResellerPaymentForm.value.RP_multiple_paymentType == null) {
       iziToast.warning({

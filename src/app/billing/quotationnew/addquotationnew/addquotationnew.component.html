@@ -21,7 +21,7 @@
                                 (change)="templateContentDropdown($event)" (change)="dynamicChange($event)"
                                 (change)="quotationAddSignature()" (change)="TaxDropdown()"
                                 formControlName="companyName">
-                                <option [ngValue]="null" selected disabled>Select Company Name</option>
+                                <option [ngValue]="null" selected >Select Company Name</option>
                                 <option *ngFor="let comp_name of billerList" value="{{comp_name.billerId}}">
                                     {{comp_name.billerName}}
                                 </option>
@@ -140,7 +140,7 @@
                         <label for="sales_r" class="col-lg-12 col-form-label">Sales Rep</label>
                         <div class="col-lg-12" *ngIf="(salesRepDropDown_Textbox_Status==1)">
                             <select name="enqFormValue" id="sales_r" class="form-control" formControlName="salesRep">
-                                <option [ngValue]="null" selected disabled>Sales Rep</option>
+                                <option [ngValue]="null" selected >Sales Rep</option>
                                 <option *ngFor="let rep of SalesRepList" value="{{rep.userId}}">
                                     {{rep.firstName}}
                                 </option>
@@ -177,7 +177,7 @@
                             <select name="enqFormValue1" id="select_template" class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f['selectTemplate'].errors }"
                                 (change)="templateContentDropdown($event)" formControlName="selectTemplate">
-                                <option [ngValue]="null" selected disabled>Select Template</option>
+                                <option [ngValue]="null" selected >Select Template</option>
                                 <option *ngFor="let template of SelectTemplateList"
                                     value="{{template.quotation_template_id}}">
                                     {{template.quotation_template_name}}
@@ -210,7 +210,7 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="select_resell" class="form-control"
                                 formControlName="selectReseller">
-                                <option [ngValue]="null" selected disabled>Select Reseller</option>
+                                <option [ngValue]="null" selected >Select Reseller</option>
                                 <option *ngFor="let reseller of SalesResellerList" value="{{reseller.customerId}}">
                                     {{reseller.customerName}}
                                 </option>
@@ -236,7 +236,7 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="select_curen" class="form-control"
                                 (change)="radioCurrencyChange($event)" formControlName="selectCurrency">
-                                <option [ngValue]="null" selected disabled>Select Currency</option>
+                                <option [ngValue]="null" selected >Select Currency</option>
                                 <option *ngFor="let currency of CurrencyList" value="{{currency.currencyId}}">
                                     {{currency.currency_name}}
                                 </option>
@@ -253,7 +253,7 @@
                         <div class="col-lg-12">
                             <select name="enqFormValue" id="select_logo" class="form-control"
                                 formControlName="extraLogo">
-                                <option [ngValue]="null" selected disabled>Select Extra Logo</option>
+                                <option [ngValue]="null" selected >Select Extra Logo</option>
                                 <option *ngFor="let logo of LogoList" value="{{logo.bills_logo_id}}">
                                     {{logo.bills_logo_name}}
                                 </option>
@@ -269,7 +269,7 @@
                             <select name="pdftemp" id="pdf_template" class="form-control"
                                 [ngClass]="{ 'is-invalid': submitted && f['selectPDFTemplate'].errors }"
                                 formControlName="selectPDFTemplate">
-                                <option [ngValue]="null" selected disabled>Select PDF Template</option>
+                                <option [ngValue]="null" selected >Select PDF Template</option>
                                 <option *ngFor="let pdf of  PDFTemplateList" value="{{pdf.id}}">
                                     {{pdf.name}}
                                 </option>
@@ -298,7 +298,7 @@
                                 (change)="TermsConditionsContentDropdown($event)"
                                 [ngClass]="{ 'is-invalid': submitted && f['selectTermsConditions'].errors }"
                                 formControlName="selectTermsConditions">
-                                <option [ngValue]="null" selected disabled>Quotation Terms and
+                                <option [ngValue]="null" selected >Quotation Terms and
                                     Conditions</option>
                                 <option *ngFor="let term of TermsConditionList" value="{{term.terms_condition_id}}">
                                     {{term.terms_condition_name}}
@@ -678,7 +678,7 @@
                                             <select name="billerID" id="billerID" class="form-control"
                                                 aria-label="Default select example"
                                                 formControlName="section3_gst_dropdown">
-                                                <option [ngValue]="null" selected disabled>Select Tax</option>
+                                                <option [ngValue]="null" selected >Select Tax</option>
 
 
                                                 <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
@@ -697,7 +697,7 @@
                                         aria-label="Default select example" formControlName="section3_gst_dropdown"
                                         (change)="getTaxCals()">
                                         <option [ngValue]="null" selected>Select Tax</option>
-                                        <!-- <option value="null" selected disabled>Select Tax</option> -->
+                                        <!-- <option value="null" selected >Select Tax</option> -->
 
 
                                         <option *ngFor="let tax of TaxDropdownList" value="{{tax.taxId}}">
@@ -839,7 +839,7 @@
                                             aria-label="Default select example"
                                             formControlName="section3_signature_dropdown">
 
-                                            <option [ngValue]="null" selected disabled>Select Signature
+                                            <option [ngValue]="null" selected >Select Signature
                                             </option>
                                             <option *ngFor="let sign of additionalSignatureList"
                                                 value="{{sign.additional_signature_id}}">

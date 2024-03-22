@@ -105,6 +105,7 @@ export class ContractComponent implements OnInit {
   searchResult_CustomerName1: any;
   containsNullValues: any;
   j: any;
+  myFiles_add1: any;
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
@@ -234,7 +235,7 @@ export class ContractComponent implements OnInit {
       fromDate: '',
       toDate: '',
       remarks: '',
-      attachment: '',
+      // attachment: '',
       billerName: ''
     });
   }
@@ -570,14 +571,23 @@ export class ContractComponent implements OnInit {
       }
     })
   }
-  onFileChange(event: any,j:any) {
-    console.log("event.target.files.length",event.target.files.length)
-
+  onFileChange(event: any, j: any) {
+    console.log("event.target.files.length", event.target.files);
+    this.myFiles_add = [''];
+  
     for (var i = 0; i < event.target.files.length; i++) {
       this.myFiles_add.push(event.target.files[i]);
-     // $('#file'+j).val(this.myFiles_add)
     }
-    this.j=j;
+  
+    // Display the file names
+    const filenames = this.myFiles_add.map(file => file).join(', '); // Concatenate file names
+    $('#file_'+j).text(filenames);
+  
+    // Optionally, you can reset the file input field
+    // event.target.value = null;
+  
+    this.myFiles_add1.push(this.myFiles_add);
+    this.j = j;
   }
   contractSave() {
     this.spinner.show();
@@ -598,11 +608,18 @@ export class ContractComponent implements OnInit {
     // });
  
     const data = new FormData();
-
-    for (var i = 0; i < this.myFiles_add.length; i++) {
-      console.log("this.myFiles_add[i]",this.myFiles_add[i])
-      // formData.append("file[" + i + "]", $('#file'+i).val());
-      formData.append("attachmentFile[" + i + "]", this.myFiles_add[i]);
+    console.log("this.myFiles_add",this.myFiles_add1)
+    var attaval = [];
+    for (var i = 0; i < addressesArray.length; i++) {
+      attaval[i] = $('#file_' + i).val();
+      console.log('sandy',attaval[i]);
+      // Iterate over the values in attaval[i] and append them to formData
+      for (let k = 0; k < attaval[i].length; k++) {
+        formData.append("attachmentFile[" + i + "][" + k + "]", attaval[i][k]);
+      }
+      console.log("this.myFiles_add[k]", this.myFiles_add[i]);
+      // Make sure this.myFiles_add is defined and you're using it properly
+      // formData.append("attachmentFile[" + i + "]", this.myFiles_add[i]);
     }
     formData.append('moduleType', 'customer_contract');
     formData.append('api_url', 'customer_contract/customer_contract_save');

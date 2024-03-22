@@ -978,3 +978,26 @@
     max-width: fit-content;
   }
   
+
+.form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
+  border: 1px solid #dc3545!important; 
+}
+.ng-autocomplete .mandatoryRed.is-invalid{
+  border: none!important;
+}
+.ng-autocomplete 
+::ng-deep  .is-invalid .autocomplete-container .input-container input{
+  border: 1px solid #dc3545!important; 
+}
+.mat-form-field-appearance-outline .mat-form-field-wrapper{
+  margin: 0;
+  padding: 0;
+}
+
+
+tr:hover {
+  background-color: rgb(248, 187, 242)!important;
+  -webkit-transition: background-color 1000ms linear;
+  -ms-transition: background-color 1000ms linear;
+  transition: background-color 1000ms linear;
+}

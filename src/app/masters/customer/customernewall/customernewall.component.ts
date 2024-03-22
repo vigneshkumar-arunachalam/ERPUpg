@@ -138,10 +138,12 @@ export class CustomernewallComponent implements OnInit {
   cal4care1_sg: boolean = false;
   cal4care2_sdn: boolean = false;
   cal4care3_jp: boolean = false;
+  cal4care4_none: boolean = false;
   //edit checkbox-resellerid
   cal4care1_sg_add: boolean = false;
   cal4care2_sdn_add: boolean = false;
   cal4care3_jp_add: boolean = false;
+  cal4care4_none_add: boolean = false;
 
 
   //special edit
@@ -311,6 +313,8 @@ export class CustomernewallComponent implements OnInit {
   chkAllStatus: any;
   submit_status: boolean = false;
   Clicked: boolean = false;
+  defaultBillerID_edit: any;
+  dcare: boolean=true;
 
 
   constructor(private http: HttpClient, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -1695,6 +1699,7 @@ export class CustomernewallComponent implements OnInit {
   clearCustomerAdd() {
 
     this.addCustomer.reset();
+ 
     // this.addCustomer.patchValue({
     //   'company_Code': 'D6387',
     // });
@@ -2069,7 +2074,13 @@ export class CustomernewallComponent implements OnInit {
     this.typeConvertionString_editBillName = this.editBillerNameCheckboxID_array.toString();
 
     console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_editBillName)
-
+        if(this.typeConvertionString_editBillName.includes(9)){
+          this.dcare=false;
+          console.log("dcare",this.dcare)
+        }else{
+          this.dcare=true;
+          console.log("dcare",this.dcare)
+        }
   }
 
   editPermissionCHK(data: any, event: any) {
@@ -2725,6 +2736,8 @@ export class CustomernewallComponent implements OnInit {
         add_customer_req.cal4care_sg = this.cal4care1_sg_add;
         add_customer_req.cal4care_sdn = this.cal4care2_sdn_add;
         add_customer_req.cal4care_jp = this.cal4care3_jp_add;
+        add_customer_req.cal4care_none = this.cal4care4_none_add;
+
       }
     }
   
@@ -2768,7 +2781,7 @@ export class CustomernewallComponent implements OnInit {
 
         this.clear();
         this.customerslist({});
-
+        window.location.reload();
 
       } else {
         Swal.close();
@@ -2825,6 +2838,8 @@ export class CustomernewallComponent implements OnInit {
         this.cal4care1_sg = response.partnerID.cal4care1_sg;
         this.cal4care2_sdn = response.partnerID.cal4care2_sdn;
         this.cal4care3_jp = response.partnerID.cal4care3_jp;
+        this.cal4care4_none =false;
+       
         console.log(" this.cal4care1_sg", this.cal4care1_sg);
         console.log("this.cal4care2_sdn", this.cal4care2_sdn);
         console.log("this.cal4care2_sdn", this.cal4care2_sdn);
@@ -2856,6 +2871,12 @@ export class CustomernewallComponent implements OnInit {
         this.customerType_listEdit = response.result.cus_class_type;
         this.customerStatusEdit = response.result.customer_details[0].cust_status;
         this.customerIDBillCode = response.result.customer_details[0].customerId;
+        this.defaultBillerID_edit =response.result.customer_details[0].def_biller_id;
+        if(this.defaultBillerID_edit==9){
+          this.dcare=false;
+        }else{
+          this.dcare=true;
+        }
         // console.log('selected_biller', response.result.billerId_det);
         // console.log('customer_bill_code_arr', response.result.customer_bill_code_arr[0].bill_code_name);
 
@@ -3148,22 +3169,51 @@ export class CustomernewallComponent implements OnInit {
           update_customer_req.cal4care_sg = this.cal4care1_sg;
           update_customer_req.cal4care_sdn = this.cal4care2_sdn;
           update_customer_req.cal4care_jp = this.cal4care3_jp;
+          update_customer_req.cal4care_none = this.cal4care4_none;
+          // added by vignesh for dcare
+          if((!this.editCustomerForm.value.e_ESA_c3cxResellerId || this.editCustomerForm.value.e_ESA_c3cxResellerId==0 || this.editCustomerForm.value.e_ESA_c3cxResellerId=='0' )&&(this.addCustomer.value.defaultBillerName==9) ){
+            update_customer_req.cal4care_sg = this.cal4care1_sg;
+            update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+            update_customer_req.cal4care_jp = this.cal4care3_jp;
+            update_customer_req.cal4care_none = this.cal4care4_none;
+          }
   } else {
-      if (!this.cal4care1_sg && !this.cal4care2_sdn && !this.cal4care3_jp) {
-          // Condition 2: If there is any value for 3CX Reseller Id, but no radio button is selected
-          iziToast.error({
-              message: "Please select a 3CX Reseller License API option.",
-              position: 'topRight'
-          });
-          Swal.close();
-          console.log(2)
-          return false;
-      } else {
+    console.log(2)
+    console.log("this.cal4care1_sg",this.cal4care1_sg)
+    console.log("!this.cal4care1_sg",!this.cal4care1_sg)
+    console.log("this.cal4care2_sdn",this.cal4care2_sdn)
+    console.log("!this.cal4care2_sdn",!this.cal4care2_sdn)
+    console.log("this.cal4care3_jp",this.cal4care3_jp)
+    console.log("!this.cal4care3_jp",!this.cal4care3_jp)
+    console.log("this.cal4care4_none",this.cal4care4_none)
+    console.log("!this.cal4care4_none",!this.cal4care4_none)
+
+      if (this.editCustomerForm.value.e_ESA_c3cxResellerId !='' && (this.addCustomer.value.defaultBillerName==9) ) {
+        update_customer_req.cal4care_sg = this.cal4care1_sg;
+        update_customer_req.cal4care_sdn = this.cal4care2_sdn;
+        update_customer_req.cal4care_jp = this.cal4care3_jp;
+        update_customer_req.cal4care_none = this.cal4care4_none;
+        
+      } else if(!this.cal4care1_sg && !this.cal4care2_sdn && !this.cal4care3_jp && !this.cal4care4_none && this.dcare==true ){
+        console.log("2.1")
+        // Condition 2: If there is any value for 3CX Reseller Id, but no radio button is selected
+        iziToast.error({
+            message: "Please select a 3CX Reseller License API option.",
+            position: 'topRight'
+        });
+        Swal.close();
+        console.log(2)
+        return false;
+      }
+      else {
           // If conditions 1 and 2 are met, proceed with assigning values
           console.log(3)
+          console.log("2.2")
           update_customer_req.cal4care_sg = this.cal4care1_sg;
           update_customer_req.cal4care_sdn = this.cal4care2_sdn;
           update_customer_req.cal4care_jp = this.cal4care3_jp;
+          update_customer_req.cal4care_none = this.cal4care4_none;
+
       }
   }
   
@@ -3787,19 +3837,29 @@ export class CustomernewallComponent implements OnInit {
         this.cal4care1_sg_add = true;
         this.cal4care2_sdn_add = false;
         this.cal4care3_jp_add = false;
+        this.cal4care4_none_add = false;
+
     } else if (selection === 'cal4care2_sdn_add') {
         this.cal4care1_sg_add = false;
         this.cal4care2_sdn_add = true;
         this.cal4care3_jp_add = false;
+        this.cal4care4_none_add = false;
     } else if (selection === 'cal4care3_jp_add') {
         this.cal4care1_sg_add = false;
         this.cal4care2_sdn_add = false;
         this.cal4care3_jp_add = true;
-    }
+        this.cal4care4_none_add = false;
+    }else if (selection === 'cal4care4_none_add') {
+      this.cal4care1_sg_add = false;
+      this.cal4care2_sdn_add = false;
+      this.cal4care3_jp_add = false;
+      this.cal4care4_none_add = false;
+  }
     console.log("selection",selection);
     console.log("this.cal4care1_sg_add",this.cal4care1_sg_add)
     console.log("this.cal4care2_sdn_add",this.cal4care2_sdn_add)
     console.log("this.cal4care3_jp_add",this.cal4care3_jp_add)
+    console.log("this.cal4care4_none_add",this.cal4care4_none_add)
 }
   onCal4careChange(selection: string) {
 
@@ -3807,19 +3867,28 @@ export class CustomernewallComponent implements OnInit {
         this.cal4care1_sg = true;
         this.cal4care2_sdn = false;
         this.cal4care3_jp = false;
+        this.cal4care4_none = false;
     } else if (selection === 'cal4care2_sdn') {
         this.cal4care1_sg = false;
         this.cal4care2_sdn = true;
         this.cal4care3_jp = false;
+        this.cal4care4_none = false;
     } else if (selection === 'cal4care3_jp') {
         this.cal4care1_sg = false;
         this.cal4care2_sdn = false;
         this.cal4care3_jp = true;
+        this.cal4care4_none = false;
+    }else if (selection === 'cal4care4_none') {
+      this.cal4care1_sg = false;
+      this.cal4care2_sdn = false;
+      this.cal4care3_jp = false;
+      this.cal4care4_none = false;
     }
     console.log("selection",selection);
     console.log("this.cal4care1_sg",this.cal4care1_sg)
     console.log("this.cal4care2_sdn",this.cal4care2_sdn)
     console.log("this.cal4care3_jp",this.cal4care3_jp)
+    console.log("this.cal4care4_none",this.cal4care4_none)
 }
 
   mconnect_address_add(id: any) {

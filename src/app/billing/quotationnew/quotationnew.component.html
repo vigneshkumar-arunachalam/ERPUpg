@@ -642,7 +642,7 @@
                                 <div class="col-lg-12">
                                     <select name="templateN" id="temp_name" class="form-control"
                                         formControlName="templateName_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Template Name</option>
+                                        <option [ngValue]="null" selected >Select Template Name</option>
 
                                         <option *ngFor="let template of templateNameList"
                                             value="{{template.quotationId}}">
@@ -697,7 +697,7 @@
                                 <div class="col-lg-12">
                                     <select name="enqFormValue" id="enq_From" class="form-control"
                                         formControlName="e_enquiryFrom_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Enquiry From</option>
+                                        <option [ngValue]="null" selected >Select Enquiry From</option>
 
                                         <option *ngFor="let term of edit_enquiryFromList"
                                             value="{{term.enquiry_from_id}}">
@@ -729,7 +729,7 @@
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
                                         formControlName="e_quotationValidity_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Quotation Validity</option>
+                                        <option [ngValue]="null" selected >Select Quotation Validity</option>
                                         <option *ngFor="let validity of edit_quotationValidityList"
                                             value="{{validity}}">
                                             {{validity}}
@@ -753,7 +753,7 @@
                                 <div class="col-lg-12">
                                     <select name="templateN" id="temp_name" class="form-control"
                                         formControlName="e_templateName_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Template Name</option>
+                                        <option [ngValue]="null" selected >Select Template Name</option>
 
                                         <option *ngFor="let template of edit_templateNameList"
                                             value="{{template.quotationId}}">
@@ -803,7 +803,7 @@
                                 <div class="col-lg-12">
                                     <select name="enqFormValue" id="enq_From" class="form-control"
                                         formControlName="d_enquiryFrom_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Enquiry From</option>
+                                        <option [ngValue]="null" selected >Select Enquiry From</option>
 
                                         <option *ngFor="let term of duplicate_enquiryFromList"
                                             value="{{term.enquiry_from_id}}">
@@ -835,7 +835,7 @@
                                 <div class="col-lg-12">
                                     <select name="quotValidity" id="quot_val" class="form-control"
                                         formControlName="d_quotationValidity_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Quotation Validity</option>
+                                        <option [ngValue]="null" selected >Select Quotation Validity</option>
                                         <option *ngFor="let validity of duplicate_quotationValidityList"
                                             value="{{validity}}">
                                             {{validity}}
@@ -859,7 +859,7 @@
                                 <div class="col-lg-12">
                                     <select name="templateN" id="temp_name" class="form-control"
                                         formControlName="d_templateName_addPopUP">
-                                        <option [ngValue]="null" selected disabled>Select Template Name</option>
+                                        <option [ngValue]="null" selected >Select Template Name</option>
 
                                         <option *ngFor="let template of duplicate_templateNameList"
                                             value="{{template.quotationId}}">
@@ -1533,7 +1533,7 @@
                             <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
                             <div class="col-lg-10">
                                 <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
-                                    <option [ngValue]="null" selected disabled>Select From</option>
+                                    <option [ngValue]="null" selected >Select From</option>
                                     <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                                         {{ from.from_email }}
                                     </option>
@@ -1605,7 +1605,7 @@
                             <div class="col-lg-10">
                                 <select name="templat" id="template" class="form-control"
                                     formControlName="email_template" (change)="templateContentEmailDropdown($event)">
-                                    <option [ngValue]="null" selected disabled>Select Template</option>
+                                    <option [ngValue]="null" selected >Select Template</option>
                                     <option *ngFor="let template of email_crmTemplateList"
                                         value="{{ template.crm_template_id }}">
                                         {{template.crm_template_name}}

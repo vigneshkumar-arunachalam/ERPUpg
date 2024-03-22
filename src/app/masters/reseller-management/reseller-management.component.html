@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-header color-dark fw-500">
           <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-            <span class="breadcrumb-item active">Reseller Management</span>
+            <span class="breadcrumb-item active">Customer Management</span>
           </h3>
 
 
@@ -1437,7 +1437,7 @@
                     id="ESA_c3cxResellerId" />
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row" *ngIf="this.addBillerNameCheckboxID_array!=9">
                 <label class="col-lg-12 col-form-label">3CX Reseller License API</label>
                 <div class="col-lg-12">
                   <div class="form-check form-check-inline">
@@ -1458,6 +1458,12 @@
                     <label class="form-check-label"
                       style="color: #252525;font-size: 14px;font-weight: 400!important;">Cal4care JP</label>
                   </div>
+                  <!-- <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care4_none_add"
+                      (change)="onCal4careAddChange('cal4care4_none_add')">
+                    <label class="form-check-label"
+                      style="color: #252525;font-size: 14px;font-weight: 400!important;">None</label>
+                  </div> -->
                 </div>
               </div>
 
@@ -2234,9 +2240,9 @@
                     id="ESA_c3cxResellerId1" />
                 </div>
               </div>
-              <div class="form-group row">
+              <div class="form-group row" *ngIf=" this.dcare==true">
                 <label class="col-lg-12 col-form-label">3CX Reseller License API</label>
-                <div class="col-lg-12">
+                <div class="col-lg-12" >
                   <div class="form-check form-check-inline">
                     <input type="radio" class="form-check-input" [checked]="cal4care1_sg"
                       (change)="onCal4careChange('cal4care1_sg')">
@@ -2255,6 +2261,12 @@
                     <label class="form-check-label" style="color: #252525;font-size: 14px;
             font-weight: 400!important;">Cal4care JP</label>
                   </div>
+                  <!-- <div class="form-check form-check-inline">
+                    <input type="radio" class="form-check-input" [checked]="cal4care4_none"
+                      (change)="onCal4careChange('cal4care4_none')">
+                    <label class="form-check-label" style="color: #252525;font-size: 14px;
+            font-weight: 400!important;">None</label>
+                  </div> -->
                   
                 </div>
               </div>

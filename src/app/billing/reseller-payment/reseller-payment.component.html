@@ -320,7 +320,7 @@
                                     </div> -->
                                     <input type="checkbox" [(ngModel)]="list.selected" id="check-rp-grp1-{{f}}"
                                       value="{{list.reseller_comm_id}}"
-                                      (change)="selectAll_paid(list.balAmount,list.reseller_comm_id,$event,list.reseller_id,list.paid_status)" />
+                                      (change)="selectAll_paid(list.refAmount,list.reseller_comm_id,$event,list.reseller_id,list.paid_status)" />
 
                                   </td>
                                   <td *ngIf=" list.checkbox === 0">
@@ -360,6 +360,10 @@
                                     <br>{{list.processDate}}
                                   </td>
                                   <td *ngIf="(list.paid_status=='Not Paid')" style="background-color: #FFB8B8;">{{
+                                    list.paid_status}}
+                                    <br>{{list.processDate}}
+                                  </td>
+                                  <td *ngIf="(list.paid_status=='Partially Paid')" style="background-color: #ebff7a;">{{
                                     list.paid_status}}
                                     <br>{{list.processDate}}
                                   </td>
