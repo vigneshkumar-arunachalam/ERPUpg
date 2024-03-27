@@ -544,7 +544,7 @@
                                                     </td> -->
                                                     <td>
                                                         <div class="userDatatable-content">
-                                                            <input type="file" multiple="multiple" class="form-control" id="file_{{i}}"
+                                                            <input type="file"  class="form-control" id="file_{{i}}"
                                                             (change)="onFileChange($event,i)" formControlName="attachment" />
                                                      
                                                         </div>
@@ -906,8 +906,9 @@
                     <div style="padding-left: 30px;">
                         <label style="font-weight: 500;color: rgb(5, 148, 22)!important;">Contract Attachment</label>
                         <div *ngFor="let display1 of secondResult;let i = index;" class="ml-4">
-                            <span style="color: black !important;">{{i+1}}</span>
-                            <span style="color: black !important;" class="ml-4">{{display1.uploaded_file_name}}</span>
+                            <span style="color: black !important;">{{i+1+"-"}}</span>
+                            <!-- <span style="color: black !important;" class="ml-4">{{display1.uploaded_file_name}}</span> -->
+                            <a href="{{display1.file_path}}" target="_blank">{{display1.uploaded_file_name}}</a>
                             <button type="button" (click)="contractAttachmentDelete(display1.contract_attachment_file_id)" class="btn btn-link">
                                 <span class="bi bi-trash"></span>
                             </button>

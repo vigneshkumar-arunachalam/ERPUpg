@@ -235,7 +235,7 @@ export class ContractComponent implements OnInit {
       fromDate: '',
       toDate: '',
       remarks: '',
-      // attachment: '',
+      attachment: '',
       billerName: ''
     });
   }
@@ -571,56 +571,41 @@ export class ContractComponent implements OnInit {
       }
     })
   }
-  onFileChange(event: any, j: any) {
-    console.log("event.target.files.length", event.target.files);
-    this.myFiles_add = [''];
+  onFileChange(event: any, i: number) {
+    const files = event.target.files;
+    const fileNames = [];
   
-    for (var i = 0; i < event.target.files.length; i++) {
-      this.myFiles_add.push(event.target.files[i]);
+    for (let j = 0; j < files.length; j++) {
+        fileNames.push(files[j].name);
     }
   
-    // Display the file names
-    const filenames = this.myFiles_add.map(file => file).join(', '); // Concatenate file names
-    $('#file_'+j).text(filenames);
-  
-    // Optionally, you can reset the file input field
-    // event.target.value = null;
-  
-    this.myFiles_add1.push(this.myFiles_add);
-    this.j = j;
-  }
+    // Update the file names in the form control
+    const addressesArray = this.addressForm.get('addresses') as FormArray;
+    const attachmentControl = addressesArray.at(i).get('attachment');
+    attachmentControl.setValue(files);
+
+    // Optionally, update the file names displayed in the HTML
+    attachmentControl.markAsDirty(); // Ensure Angular updates the view
+}
   contractSave() {
     this.spinner.show();
 
     const formData = new FormData();
     const addressesArray = this.addressForm.get('addresses') as FormArray;
-
-    // addressesArray.controls.forEach((control: AbstractControl, i: number) => {
-    //     if (control instanceof FormGroup) {
-    //         const fileControl = control.get('attachment');
-    //         if (fileControl.value) {
-    //             const files = Array.isArray(fileControl.value) ? fileControl.value : [fileControl.value];
-    //             files.forEach((file: File, j: number) => {
-    //                 formData.append(`file_${i}_${j}`, file); // Append the file directly
-    //             });
-    //         }
-    //     }
-    // });
  
     const data = new FormData();
-    console.log("this.myFiles_add",this.myFiles_add1)
-    var attaval = [];
-    for (var i = 0; i < addressesArray.length; i++) {
-      attaval[i] = $('#file_' + i).val();
-      console.log('sandy',attaval[i]);
-      // Iterate over the values in attaval[i] and append them to formData
-      for (let k = 0; k < attaval[i].length; k++) {
-        formData.append("attachmentFile[" + i + "][" + k + "]", attaval[i][k]);
+
+    for (let i = 0; i < addressesArray.length; i++) {
+      const control = addressesArray.at(i) as FormGroup; // Cast control to FormGroup
+      const filesControl = control.get('attachment'); // Get the 'attachment' control
+      const files = filesControl ? filesControl.value : null; // Safely access value
+      
+      if (files && files.length > 0) {
+          for (let j = 0; j < files.length; j++) {
+              formData.append(`attachmentFile[${i}]`, files[j]);
       }
-      console.log("this.myFiles_add[k]", this.myFiles_add[i]);
-      // Make sure this.myFiles_add is defined and you're using it properly
-      // formData.append("attachmentFile[" + i + "]", this.myFiles_add[i]);
-    }
+      }
+  }
     formData.append('moduleType', 'customer_contract');
     formData.append('api_url', 'customer_contract/customer_contract_save');
     formData.append('api_type', 'web');
@@ -964,7 +949,7 @@ export class ContractComponent implements OnInit {
     fileattach_req.action = "customer_contract_get_attachment_file";
     fileattach_req.cust_cont_id = this.fileAttachContractID;
     fileattach_req.customerID = this.fileAttachCustomerID;
-    fileattach_req.userId = "2";
+    fileattach_req.userId = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1069,7 +1054,7 @@ export class ContractComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
+      url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
       cache: false,
       contentType: false,
       processData: false,
@@ -1392,6 +1377,7 @@ export class ContractComponent implements OnInit {
   }
 
   searchCustomerData(data: any) {
+    this.spinner.show();
     console.log("search data", data)
 
     //  var list_data= this.listDataInfo(data);
@@ -1408,10 +1394,11 @@ export class ContractComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-customer_status response", response);
-
+      this.spinner.hide();
       this.searchResult = response.customer_names;
       if (response.status = true) {
 
+        this.spinner.hide();
       }
 
     });
