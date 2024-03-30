@@ -158,7 +158,7 @@
 
                                                                     <div class="row"
                                                                         style="display: flex;
-                                                                                        justify-content: space-between;">
+                                                                                        justify-content: space-around;">
                                                                         <ul>
                                                                             <li class="dropdown__item">
                                                                                 <a class="hover1"
@@ -228,6 +228,34 @@
 
                                                                             </li>
                                                                             <li class="dropdown__item">
+                                                                                <a class="view" title="File Attachment" data-toggle="modal"
+                                                                                  data-target="#fileAttachmentFormId_CM0"
+                                                                                  (click)="fileAttachmentEdit(list.customer_id,i)">
+                                                                                  <img class="show" src="assets/img/icon2/fileAttach-blue.png">
+                                                                                  <img class="hide" src="assets/img/icon2/fileAttach-yellow.png">
+                                                                                  <span><b style="padding: 0px 20px;">-</b><strong>File
+                                                                                      Attachment</strong></span>
+                                                                                </a>
+                                                                              </li>
+                                                      
+                                                                        </ul>
+                                                                        <!-- <ul>
+                                                                            <li class="dropdown__item">
+                                                                                <a class="hover2 " title="File Generate"
+                                                                                    data-toggle="modal"
+                                                                                    data-target="#fileContractGenerateId"
+                                                                                    (click)="fileContractGenerateRowID(list.customer_contract_id,i)">
+                                                                                    <img class="show"
+                                                                                        src="assets/img/icon/paperclip-b.png">
+                                                                                    <img class="hide"
+                                                                                        src="assets/img/icon/paperclip.png">
+                                                                                    <span><b
+                                                                                            style="padding: 0px 20px;">-</b><strong>File
+                                                                                            Generate</strong></span>
+                                                                                </a>
+
+                                                                            </li>
+                                                                                                  <!-- <li class="dropdown__item">
 
 
                                                                                 <a class="hover2" title="Bizz File"
@@ -273,24 +301,7 @@
                                                                                             Contract Approve
                                                                                             Status</strong></span>
                                                                                 </a>
-                                                                            </li>
-                                                                        </ul>
-                                                                        <ul>
-                                                                            <li class="dropdown__item">
-                                                                                <a class="hover2 " title="File Generate"
-                                                                                    data-toggle="modal"
-                                                                                    data-target="#fileContractGenerateId"
-                                                                                    (click)="fileContractGenerateRowID(list.customer_contract_id,i)">
-                                                                                    <img class="show"
-                                                                                        src="assets/img/icon/paperclip-b.png">
-                                                                                    <img class="hide"
-                                                                                        src="assets/img/icon/paperclip.png">
-                                                                                    <span><b
-                                                                                            style="padding: 0px 20px;">-</b><strong>File
-                                                                                            Generate</strong></span>
-                                                                                </a>
-
-                                                                            </li>
+                                                                            </li> 
                                                                             <li class="dropdown__item">
                                                                                 <a class="hover1" title="File Temporary"
                                                                                     data-toggle="modal"
@@ -318,9 +329,10 @@
                                                                                             style="padding: 0px 20px;">-</b><strong>Email</strong></span>
                                                                                 </a>
                                                                             </li>
+                                                                           
 
 
-                                                                        </ul>
+                                                                        </ul> -->
 
                                                                     </div>
 
@@ -436,12 +448,12 @@
 
                                                             <ng-autocomplete [data]="searchResult"
                                                                 [searchKeyword]="keywordCompanyName"
-                                                                formControlName="company_Name"
+                                                                formControlName="company_Name" required 
                                                                 (selected)='selectEventCustomer($event)'
                                                                 (inputChanged)='searchCustomerData($event)'
                                                                 (inputFocused)='onFocusedCustomer($event)'
                                                                 [itemTemplate]="itemTemplateCustomer"
-                                                                [notFoundTemplate]="notFoundTemplate">
+                                                                [notFoundTemplate]="notFoundTemplate" >
                                                             </ng-autocomplete>
 
                                                             <ng-template #itemTemplateCustomer let-item>
@@ -465,7 +477,7 @@
                                                         <div class="userDatatable-content">
                                                             <select name="contractNameID" id="contractNameID"
                                                                 class="form-control" aria-label="Default select example"
-                                                                formControlName="contractName">
+                                                                formControlName="contractName" required >
 
                                                                 <option value="0">Select Contract</option>
 
@@ -488,7 +500,7 @@
                                                         <div class="userDatatable-content">
                                                             <select name="classificationID" id="classificationID"
                                                                 class="form-control" aria-label="Default select example"
-                                                                formControlName="classificationName">
+                                                                formControlName="classificationName" required >
                                                                 <option value="0">Select Contract</option>
 
                                                                 <option *ngFor="let classif of contractClassification"
@@ -506,7 +518,7 @@
                                                     <td>
                                                         <div class="userDatatable-content">
                                                             <input type="date" class="form-control"
-                                                                formControlName="fromDate" />
+                                                                formControlName="fromDate" required  />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -517,7 +529,7 @@
                                                     <td>
                                                         <div class="userDatatable-content">
                                                             <input type="date" class="form-control"
-                                                                formControlName="toDate" />
+                                                                formControlName="toDate"  required  />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -766,7 +778,7 @@
                                                         <div class="userDatatable-content">
                                                             <input type="text" class="form-control"
                                                                 formControlName="e_remarks" />
-                                                                <input type="text" class="form-control"
+                                                                <input type="hidden" class="form-control"
                                                                 formControlName="e_customer_contract_id" />
                                                         </div>
                                                     </td>
@@ -1540,3 +1552,44 @@ aria-hidden="true">
   </div>
 </div>
 <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
+
+
+
+<!-- -----------------------Modal-Customer File Attachment begins-------------------------------- -->
+<div class="modal fade" id="fileAttachmentFormId_CM0" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-11 modal-title text-center" id="exampleModalLongTitle">
+          File Attachment</h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="modal-body contractFileAttachmentCSS">
+            <div>
+              <h3 style="color:rgb(165, 2, 68);font-weight: 600;">Attached Files</h3>
+             
+            <div *ngFor="let i =index;let display1 of  getResult;" style="padding-left: 30px;padding-top: 15px;">
+              <span style="color: black !important;">{{i+1+"-"}}</span>
+              <a href="{{display1.attach_file_name}}" target="_blank">{{display1.org_file_name}}</a>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" >
+          Save
+        </button> -->
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------------------- ------Modal-Customer File Attachment ends-------------------------------------- -->

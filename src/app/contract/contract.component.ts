@@ -106,6 +106,7 @@ export class ContractComponent implements OnInit {
   containsNullValues: any;
   j: any;
   myFiles_add1: any;
+  getResult: any;
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
@@ -229,14 +230,14 @@ export class ContractComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this.fb.group({
-      company_Name: '',
-      contractName: '',
-      classificationName: '',
-      fromDate: '',
-      toDate: '',
-      remarks: '',
-      attachment: '',
-      billerName: ''
+        company_Name: ['', Validators.required],
+        contractName: ['', Validators.required],
+        classificationName: ['', Validators.required],
+        fromDate: ['', Validators.required],
+        toDate: ['', Validators.required],
+        remarks: [''], // You can add validators if needed
+        attachment: [''], // You can add validators if needed
+        billerName: ['', Validators.required]
     });
   }
   edit_createAddress(): FormGroup {
@@ -379,71 +380,7 @@ export class ContractComponent implements OnInit {
     }
     return false; // Return false if no company_Name is null
   }
-  contractSave1() {
-    this.spinner.show();
-    console.log("this.addressForm", this.addressForm);
-    console.log("this.addressForm.value.addresses", this.addressForm.value.addresses);
-  
-    console.log("Customer List UI Display Data after OnInit ")
-
-    let api_req: any = new Object();
-    let save_req: any = new Object();
-    api_req.moduleType = "customer_contract";
-    api_req.api_url = "customer_contract/customer_contract_save"
-    api_req.api_type = "web";
-
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    save_req.action = "customer_contract_save";
-    save_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    const addressesArray1 = this.addressForm.get('addresses') as FormArray;
-    const hasNullCompanyNames = addressesArray1.controls.some(control => control.get('company_Name').value === null);
-    if (hasNullCompanyNames) {
-      this.spinner.hide();
-      iziToast.error({
-        title: 'Company Name Null',
-        message: 'Contract not Saved !',
-      });
-      return false;
-    } 
-
-    if (this.addressForm.value.addresses.length <= 1) {
-      save_req.values = this.addressForm.value.addresses;
-
-    } else {
-        save_req.values = this.addresses.value;
-    }
-
-    api_req.element_data = save_req;
-    console.log("check api req", api_req)
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
-
-      console.log("save check", response)
-      this.resultSave = response
-      if (response.status = true) {
-        this.spinner.hide();
-        $("#addCustomerContractId").modal("hide");
-        this.contractList({})
-        iziToast.success({
-          title: 'Saved',
-          message: 'Contract Saved Successfully !',
-        });
-
-      }
-      else {
-        this.spinner.hide();
-        $("#addCustomerContractId").modal("hide");
-        iziToast.error({
-          title: 'Not Saved',
-          message: 'Contract not Saved !',
-        });
-        this.contractList({})
-      }
-
-    });
-
-  }
+ 
   contractSave0riginal() {
     this.spinner.show();
     var data = new FormData();
@@ -462,7 +399,7 @@ export class ContractComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     save_req.action = "customer_contract_save";
     save_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    const addressesArray2= this.addressForm.get('addresses') as FormArray;
+    const addressesArray2 = this.addressForm.get('addresses') as FormArray;
     const hasNullCompanyNames = addressesArray2.controls.some(control => control.get('company_Name').value === null);
     if (hasNullCompanyNames) {
       this.spinner.hide();
@@ -471,20 +408,20 @@ export class ContractComponent implements OnInit {
         message: 'Contract not Saved !',
       });
       return false;
-    } 
+    }
 
     if (this.addressForm.value.addresses.length <= 1) {
       save_req.values = this.addressForm.value.addresses;
 
     } else {
-        save_req.values = this.addresses.value;
+      save_req.values = this.addresses.value;
     }
 
     api_req.element_data = save_req;
     console.log("check api req", api_req)
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     
+
 
       console.log("save check", response)
       this.resultSave = response
@@ -511,74 +448,15 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  contractSave3() {
 
-    var data = new FormData();
-   
-    data.append('action', "customer_contract_save");
-    data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
-    const addressesArray4 = this.addressForm.get('addresses') as FormArray;
-      const hasNullCompanyNames = addressesArray4.controls.some(control => control.get('company_Name').value === null);
-      if (hasNullCompanyNames) {
-        this.spinner.hide();
-        iziToast.error({
-          title: 'Company Name Null',
-          message: 'Contract not Saved !',
-        });
-        return false;
-      } 
-  
-      if (this.addressForm.value.addresses.length <= 1) {
-      
-        data.append('values', this.addressForm.value.addresses);
-  
-      } else {
-        data.append('values', this.addresses.value);
-          
-      }
-    var self = this;
-    $.ajax({
-      type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: data,
-      success: function (result: any) {
-        if (result.status == true) {
-          
-          self.contractList({});
-          $("#addCustomerContractId").modal("hide");
-         
-  
-          // console.log(result);
-  
-  
-        }
-  
-        $("#addCustomerContractId").modal("hide");
-        $('#uploaded-img').val("")
-        Swal.fire({
-          icon: 'success',
-          title: 'Contract File has been Updated',
-          showConfirmButton: false,
-          timer: 1200,
-        });
-  
-      },
-      error: function (err: any) {
-        console.log(err);
-      }
-    })
-  }
   onFileChange(event: any, i: number) {
     const files = event.target.files;
     const fileNames = [];
-  
+
     for (let j = 0; j < files.length; j++) {
-        fileNames.push(files[j].name);
+      fileNames.push(files[j].name);
     }
-  
+
     // Update the file names in the form control
     const addressesArray = this.addressForm.get('addresses') as FormArray;
     const attachmentControl = addressesArray.at(i).get('attachment');
@@ -586,82 +464,119 @@ export class ContractComponent implements OnInit {
 
     // Optionally, update the file names displayed in the HTML
     attachmentControl.markAsDirty(); // Ensure Angular updates the view
-}
+  }
   contractSave() {
     this.spinner.show();
 
     const formData = new FormData();
     const addressesArray = this.addressForm.get('addresses') as FormArray;
- 
+
     const data = new FormData();
 
     for (let i = 0; i < addressesArray.length; i++) {
       const control = addressesArray.at(i) as FormGroup; // Cast control to FormGroup
       const filesControl = control.get('attachment'); // Get the 'attachment' control
       const files = filesControl ? filesControl.value : null; // Safely access value
-      
+
       if (files && files.length > 0) {
-          for (let j = 0; j < files.length; j++) {
-              formData.append(`attachmentFile[${i}]`, files[j]);
+        for (let j = 0; j < files.length; j++) {
+          formData.append(`attachmentFile[${i}]`, files[j]);
+        }
       }
-      }
-  }
+    }
     formData.append('moduleType', 'customer_contract');
     formData.append('api_url', 'customer_contract/customer_contract_save');
     formData.append('api_type', 'web');
     formData.append('access_token', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI'); // Replace with your access token
     formData.append('action', 'customer_contract_save');
     formData.append('user_id', localStorage.getItem('erp_c4c_user_id'));
-    formData.append('paramesh',this.addressForm.value.addresses.attachment);
+    formData.append('paramesh', this.addressForm.value.addresses.attachment);
 
     const hasNullCompanyNames = addressesArray.controls.some(control => control.get('company_Name').value === null);
     if (hasNullCompanyNames) {
-        this.spinner.hide();
-        iziToast.error({
-            title: 'Company Name Null',
-            message: 'Contract not Saved !',
-        });
-        return false;
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Company Name Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    const hasNullContractName = addressesArray.controls.some(control => control.get('contractName').value === null);
+    if (hasNullContractName) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Contract Name Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    const hasNullClassification = addressesArray.controls.some(control => control.get('classificationName').value === null);
+    if (hasNullClassification) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Classification Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    const hasNullfromDate = addressesArray.controls.some(control => control.get('fromDate').value === null);
+    if (hasNullfromDate) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'From Date Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    const hasNullToDate = addressesArray.controls.some(control => control.get('toDate').value === null);
+    if (hasNullToDate) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'To Date Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
     }
 
     if (this.addressForm.value.addresses.length <= 1) {
-        formData.append('values', JSON.stringify(this.addressForm.value.addresses));
-        formData.append('valuesAttachment', JSON.stringify(this.addressForm.value.addresses.attachment));
+      formData.append('values', JSON.stringify(this.addressForm.value.addresses));
+      formData.append('valuesAttachment', JSON.stringify(this.addressForm.value.addresses.attachment));
     } else {
-        formData.append('values', JSON.stringify(this.addresses.value));
+      formData.append('values', JSON.stringify(this.addresses.value));
     }
 
     $.ajax({
-        type: 'POST',
-        url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_save',
-        cache: false,
-        contentType: false,
-        processData: false,
-        data: formData,
-        success: (result: any) => {
-            this.spinner.hide();
-            if (result.status === true) {
-                this.contractList({});
-                $("#addCustomerContractId").modal("hide");
-            }
-            Swal.fire({
-                icon: 'success',
-                title: 'Contract File has been Updated',
-                showConfirmButton: false,
-                timer: 1200,
-            });
-        },
-        error: (err: any) => {
-            this.spinner.hide();
-            console.log(err);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'An error occurred while saving the contract.',
-            });
+      type: 'POST',
+      url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_save',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      success: (result: any) => {
+        this.spinner.hide();
+        if (result.status === true) {
+          this.edit_array = [];
+          this.contractList({});
+          $("#addCustomerContractId").modal("hide");
         }
+        Swal.fire({
+          icon: 'success',
+          title: 'Contract has been Saved',
+          showConfirmButton: false,
+          timer: 1200,
+        });
+      },
+      error: (err: any) => {
+        this.spinner.hide();
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while saving the contract.',
+        });
+      }
     });
-}
+  }
 
 
 
@@ -763,6 +678,7 @@ export class ContractComponent implements OnInit {
 
       if (response.status == true) {
         this.spinner.hide();
+        this.edit_array = [];
         this.contractList({});
         this.editContractGroupForm.reset();
         iziToast.success({
@@ -866,6 +782,7 @@ export class ContractComponent implements OnInit {
           if (response.status == true) {
             this.spinner.hide();
             // $("#fileAttachmentCustomerContractId").modal("hide");
+            this.edit_array = [];
             iziToast.success({
               message: " Contract Deleted successfully",
               position: 'topRight'
@@ -919,6 +836,7 @@ export class ContractComponent implements OnInit {
           this.serverService.sendServer(api_req).subscribe((response: any) => {
 
             if (response.status == true) {
+              this.edit_array=[];
               this.spinner.hide();
               iziToast.success({
                 message: "Contract attachment deleted successfully",
@@ -1343,19 +1261,19 @@ export class ContractComponent implements OnInit {
     updateCR_req.contract_id = this.contractRemarksEditId;
     updateCR_req.user_id = localStorage.getItem('erp_c4c_user_id');
     //updateCR_req.comments = this.contractRemarkForm.value.remark_desc;
-    var test=$('#remark_desc').val();
-    alert(test)
-    if(test==null || test=='' || test==undefined ||test=='undefined'){
-      console.log("test",test)
+    var test = $('#remark_desc').val();
+   
+    if (test == null || test == '' || test == undefined || test == 'undefined') {
+      console.log("test", test)
       iziToast.error({
         message: "Add Remark",
         position: 'topRight'
       });
       return false;
-    }else{
+    } else {
       updateCR_req.comments = $('#remark_desc').val();
     }
-   
+
     api_req.element_data = updateCR_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("contract remarks Update api", response)
@@ -1377,7 +1295,10 @@ export class ContractComponent implements OnInit {
   }
 
   searchCustomerData(data: any) {
-    this.spinner.show();
+    if(data.length>4){
+      this.spinner.show();
+ 
+    }
     console.log("search data", data)
 
     //  var list_data= this.listDataInfo(data);
@@ -1528,7 +1449,7 @@ export class ContractComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/sendemail/customer_contract_mail',
+      url: 'https://laravelapi.erp1.cal4care.com/api/sendemail/customer_contract_mail',
       cache: false,
       contentType: false,
       processData: false,
@@ -1719,6 +1640,47 @@ export class ContractComponent implements OnInit {
       this.contractList({})
     });
   }
+  fileAttachmentEdit(ID: any, i: any) {
+    $("#ActionId" + i).modal("hide");
+
+    this.myFiles = [];
+    $("#fileAttachmentFormId_CM").modal("show");
+    $("#file1").val('')
+    // this.fileAttachContractID = fileAttachContractID;
+    this.fileAttachCustomerID = ID;
+    let api_req: any = new Object();
+    let fileattach_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "customer/get_file_attachment_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    fileattach_req.action = "get_file_attachment_details";
+    fileattach_req.customerId = ID;
+    fileattach_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = fileattach_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        this.getResult = response.result.attachment_details
+
+        // this.myForm.patchValue({
+        //   'file': response.result.attachment_details.org_file_name,
+        // });
+      } else {
+        iziToast.warning({
+          message: "No File",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
   bizzFileContractEmail() {
 
     this.subjectValueBizz = $('#subject_bizz').val();
@@ -1903,7 +1865,7 @@ export class ContractComponent implements OnInit {
   }
 
   contractList(data: any) {
-
+    this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
     let get_req: any = new Object();
@@ -1921,11 +1883,13 @@ export class ContractComponent implements OnInit {
     api_req.element_data = get_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
+        this.spinner.hide();
         $('#searchContractId').modal('hide');
         this.result = response.customer_contract_details;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
       } else {
+        this.spinner.hide();
         iziToast.warning({
           message: "Record Not found",
           position: 'topRight'

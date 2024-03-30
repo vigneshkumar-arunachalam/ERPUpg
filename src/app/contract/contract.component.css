@@ -581,7 +581,7 @@ label {
 #addCustomerContractId , #editCustomerContractId, 
 #fileAttachmentCustomerContractId , #invoiceAttachmentId , 
 #contractRemarksId  , #ApproveStatusId ,#searchContractId,
-#fileContractGenerateId  {
+#fileContractGenerateId ,#fileAttachmentFormId_CM0 {
   grid-column: 1/2;
   grid-row: 4/5;
   background: #6d5dfc;
@@ -592,7 +592,7 @@ label {
 #addCustomerContractId  .btn-primary, #editCustomerContractId .btn-primary, 
 #fileAttachmentCustomerContractId  .btn-primary, #invoiceAttachmentId .btn-primary, 
 #contractRemarksId  .btn-primary, #ApproveStatusId .btn-primary,
-#fileContractGenerateId .btn-primary,#searchContractId .btn-primary {
+#fileContractGenerateId .btn-primary,#searchContractId .btn-primary,#fileAttachmentFormId_CM0 .btn-primary {
   grid-column: 1/2;
   grid-row: 4/5;
   background: #6d5dfc;
@@ -602,14 +602,14 @@ label {
 #addCustomerContractId .modal-content,  #editCustomerContractId .modal-content, 
 #fileAttachmentCustomerContractId .modal-content,  #invoiceAttachmentId .modal-content,
 #contractRemarksId .modal-content,  #ApproveStatusId .modal-content,
-#fileContractGenerateId .modal-content,  #searchContractId .modal-content   { 
+#fileContractGenerateId .modal-content,  #searchContractId .modal-content  ,  #fileAttachmentFormId_CM0 .modal-content  { 
   background: #e4ebf5;
 
 }
 #addCustomerContractId .modal-content label,  #editCustomerContractId .modal-content label, 
 #fileAttachmentCustomerContractId .modal-content label,  #invoiceAttachmentId .modal-content label,
 #contractRemarksId .modal-content label,  #ApproveStatusId .modal-content label,
-#fileContractGenerateId .modal-content label,#searchContractId .modal-content label{
+#fileContractGenerateId .modal-content label,#searchContractId .modal-content label,#fileAttachmentFormId_CM0 .modal-content label{
   color: #5f63f2;
 }
 
@@ -617,7 +617,7 @@ label {
 #addCustomerContractId .modal-content .form-control, #editCustomerContractId .modal-content .form-control, 
 #fileAttachmentCustomerContractId .modal-content .form-control, #invoiceAttachmentId .modal-content .form-control, 
 #contractRemarksId .modal-content .form-control, #ApproveStatusId .modal-content .form-control, 
-#fileContractGenerateId .modal-content .form-control,#searchContractId .modal-content .form-control {
+#fileContractGenerateId .modal-content .form-control,#searchContractId .modal-content .form-control,#fileAttachmentFormId_CM0 .modal-content .form-control {
   border: none;
   padding-left: 1.4rem;
   box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
@@ -628,7 +628,8 @@ label {
 #addCustomerContractId .modal-content .form-control:focus, #editCustomerContractId .modal-content .form-control:focus,
 #fileAttachmentCustomerContractId .modal-content .form-control:focus, #invoiceAttachmentId .modal-content .form-control:focus,
 #contractRemarksId .modal-content .form-control:focus, #ApproveStatusId .modal-content .form-control:focus,
-#fileContractGenerateId .modal-content .form-control:focus, #searchContractId .modal-content .form-control:focus{
+#fileContractGenerateId .modal-content .form-control:focus, #searchContractId .modal-content .form-control:focus
+, #fileAttachmentFormId_CM0 .modal-content .form-control:focus{
   outline: none;
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
 }
@@ -636,7 +637,7 @@ label {
 #fileAttachmentCustomerContractId .modal-content button.close, #invoiceAttachmentId .modal-content button.close,
 #contractRemarksId .modal-content button.close, #ApproveStatusId .modal-content button.close,
 #fileContractGenerateId .modal-content button.close,#TextEditorId .modal-content button.close,
-#searchContractId .modal-content button.close{
+#searchContractId .modal-content button.close,#fileAttachmentFormId_CM0 .modal-content button.close{
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
