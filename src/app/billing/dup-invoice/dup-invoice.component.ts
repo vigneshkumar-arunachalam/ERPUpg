@@ -3,6 +3,7 @@ import { ServerService } from '../../services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 declare var $: any
@@ -16,6 +17,7 @@ declare var tinymce: any;
   styleUrls: ['./dup-invoice.component.css']
 })
 export class DupInvoiceComponent implements OnInit {
+
 
   //list
   PI_list: any;
@@ -101,6 +103,7 @@ export class DupInvoiceComponent implements OnInit {
   emailTo: any;
   subjectValue: any;
   Select_To_Type_radiobox_Value: any;
+
   email_template: any;
   email_fromList: any;
   email_crmTemplateList: any;
@@ -199,7 +202,7 @@ export class DupInvoiceComponent implements OnInit {
   radioSelected: any;
   radioSel: any;
   //reseller commission details-without form array
-  withoutFormArrayResellerCommissionForm: FormGroup;
+
   commissionGrossAmount: any;
 
   //license details
@@ -214,7 +217,7 @@ export class DupInvoiceComponent implements OnInit {
   billId_InvoicetoQuotation: any;
   //notes
   billId_notes: any;
-  selected_billerId: any;
+  selected_billerId: any = [];
 
   datePipe: DatePipe = new DatePipe('en-US');
   transformDate: any;
@@ -293,16 +296,75 @@ export class DupInvoiceComponent implements OnInit {
   yValue: number = 10;
   newDataCount: number = 10;
   chart1: any;
+  PaymentProcessDatee: any;
+  pipe: any;
+  myFormattedDate: any;
+  myFormattedDate1: any;
+  paymentNotes: any;
+  PP_paymentMethod: any;
+  creditResponse: any;
+  PP_PaymentProcessID: any;
+  paymentDetails_paymentLength: any;
   testing = false;
   Global_search_filter = false;
+  invoicePermissionList_suspend: any;
+  search_values: any;
+  search_values1 = 0;
+  InvSearch_off_set: any;
+  InvSearch_Search_BillerId: any;
+  InvSearch_limit_val: any;
+  InvSearch_search_txt: any;
+  InvSearch_years: any;
+  InvSearch_invoiceType: any;
+  InvSearch_recurring_only: any;
+  InvSearch_dont_select_did_invoice: any;
+  InvSearch_revenue_typewise_show: any;
+  InvSearch_revenue_typewise_showID: any;
+  searchFlag: any;
+  upd_searchName: any;
+  upd_searchFlag: any;
+  // reseller commission form
+  resellerCommissionForm: any;
+  public addresses_rc: FormArray;
+  commlistall1: any = [];
+
+  resellercommissiontype1: any = [];
+  resellercommissiontype2: any;
+  CommissionType1: any = [];
+  data_value: any;
+  addr: any = []
+  // new reseller commission details
+  inv_resellerCommissionForm: FormGroup;
+  changeCreditNoteValue: any;
+  changePrepaidNoteValue: any;
+  credit_note_id: any = 0;
+  prepaid_id: any = 0;
+  owingAmt: any;
+  creditShowFlag: boolean = false;
+  prepaidShowFlag: boolean = false;
+  flg: boolean = false;
+  years_id: any;
+  yearsID: any;
+  getSearch: boolean = false;
+  showHi: boolean = false;
+  SelectType_finance: any;
+  SelectType_company: any;
   Global_search_filter_2: string;
   datavalue: any;
-  constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) {
+
+  constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
     this.revenueaddressForm = this.fb.group({
       revenueaddresses: this.fb.array([this.createrevenueAddress()])
+    });
+    this.resellerCommissionForm = this.fb.group({
+      addresses_rc: this.fb.array([this.createAddress_rc()])
+    });
+    this.serverService.invoice_search1.subscribe((val: any) => {
+      console.log(val)
+
     });
     this.serverService.global_search_invoice.subscribe((val: any) => {
       console.log("before parse-global_search_invoice", val)    
@@ -326,19 +388,58 @@ export class DupInvoiceComponent implements OnInit {
 
 
     });
+
+   
+  
     $("body").removeClass("modal-open");
   }
 
   keywordResellerName = 'customerName';
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
-    this.getInvoice1({});
-    this.commissionType_value = 1;
+    this.Select_To_Type_radiobox_Value = 'finance';
+
+    this.commissionType_value = 4;
+    // setTimeout(() => {
+    //   this.commissionValueAutoFill({})
+    // }, 2000);
+    this.route.queryParams
+      .subscribe(params => {
+        console.log("params output value", params);
+
+
+        this.upd_searchName = params['upd_search_name'];
+
+
+        this.upd_searchFlag = params['upd_searchFlag'];
+
+        if (this.upd_searchFlag == 1) {
+
+          this.searchResult_CustomerName = this.upd_searchName;
+          this.search_values1 == 1
+          this.getInvoice1({});
+        }
+
+
+
+      }
+      );
+    if (this.search_values1 == 1) {
+      // alert("inside");
+      //  this.getInvoice({});
+
+    } else if (this.search_values1 == 0) {
+      this.getInvoice1({});
+    } else {
+      // alert("outside");
+      //   this.getInvoice1({});
+    }
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
+    this.yearsAPI();
     this.recurringState = [{ "id": 1, "name": "Active" }, { "id": 0, "name": "Inactive" }];
     this.resellercommissiontype = [{ "id": 1, "name": "Fixed", "selected": "false" }, { "id": 2, "name": "Percentage", "selected": "false" }, { "id": 4, "name": "None", "selected": "true" }];
     this.warrantyList = [{ "id": 1, "name": "No Warranty" }, { "id": 2, "name": "One Year Warranty" }, { "id": 3, "name": "Two Year Warranty" }]
-    this.yearsList = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"]
+    // this.yearsList = ["2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023","2024"]
     this.exportState_Radio = [
       { name: 'Local', selected: true, id: 1 },
       { name: 'Export', selected: false, id: 2 },
@@ -356,8 +457,10 @@ export class DupInvoiceComponent implements OnInit {
       'customer': new FormControl(null),
       'owing': new FormControl(null),
       'amount': new FormControl(null),
-      'date': new FormControl(null),
+      'date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'paymenttype': new FormControl(null),
+      'paymenttype1': new FormControl(null),
+      'paymenttype2': new FormControl(null),
       'note': new FormControl(null),
       'paymentDetails': new FormControl(null),
 
@@ -433,21 +536,19 @@ export class DupInvoiceComponent implements OnInit {
       'txt_templateName': new FormControl(null),
 
     });
-    this.ResellerCommissionForm = new FormGroup({
-      'ResellerName': new FormControl(null),
-      // 'CommissionType': new FormControl(null),
-      'CommissionValue': new FormControl(null),
-      'CommissionAmount': new FormControl(null),
-      'PdfShow': new FormControl(null),
+    this.inv_resellerCommissionForm = new FormGroup({
+      'reseller_name': new FormControl(null),
+      'billChildid1': new FormControl(null),
+      'commission_value': new FormControl(null),
+      'commission_amt': new FormControl(null),
+      'reseller_comm_id': new FormControl(null),
+      'commIndex': new FormControl(null),
+      'reseller_id': new FormControl(null),
+      'billId': new FormControl(null),
+      'grossAmount': new FormControl(null),
+      'pdf_show': new FormControl(null),
+    });
 
-    });
-    this.withoutFormArrayResellerCommissionForm = new FormGroup({
-      'ResellerName_WFA': new FormControl(null),
-      'CommissionType_WFA': new FormControl(null),
-      'CommissionValue_WFA': new FormControl(null),
-      'CommissionAmount_WFA': new FormControl(null),
-      'PdfShow_WFA': new FormControl(null),
-    });
 
     this.addNewQuotationPopUpForm = new FormGroup({
       'enquiryFrom_addPopUP': new FormControl(null, [Validators.required]),
@@ -458,6 +559,13 @@ export class DupInvoiceComponent implements OnInit {
     });
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
+    this.commissionType_value = 1;
+	
+	
+	  setTimeout(() => {
+      let api_reqs:any = {type: "invoice_list"};
+      this.serverService.callbackfun.next(api_reqs);
+    }, 1000);
 
     this.chartOptions = {
       theme: "light2",
@@ -525,14 +633,83 @@ export class DupInvoiceComponent implements OnInit {
         ]
       }]
     }
-    setTimeout(() => {
-      let api_reqs:any = {type: "invoice_list"};
-      this.serverService.callbackfun.next(api_reqs);
-    }, 1000);
 
-  
+
+
+
   }
   // this.resellercommissiontype = [{ "id": 1, "name": "Fixed" ,"selected":"false"}, { "id": 2, "name": "Percentage" ,"selected":"false" }, { "id": 3, "name": "Itemwise" ,"selected":"false" }, { "id": 4, "name": "None"  ,"selected":"true"}];
+
+
+  get addressControls_rc() {
+    return this.resellerCommissionForm.get('addresses_rc') as FormArray
+  }
+
+  addAddress_rc(): void {
+    this.addresses_rc = this.resellerCommissionForm.get('addresses_rc') as FormArray;
+    this.addresses_rc.push(this.createAddress_rc());
+  }
+
+
+  removeAddress_rc(i: number) {
+
+
+    var pd_billchild_id = $('#billChildid1' + i).val();
+
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+
+        this.addresses_rc.removeAt(i);
+
+        let api_req: any = new Object();
+        let api_ProdAutoFill_req: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "invoice/deleteResellerComList";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_ProdAutoFill_req.action = "deleteResellerComList";
+        api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ProdAutoFill_req.reseller_comm_id = pd_billchild_id;
+        api_req.element_data = api_ProdAutoFill_req;
+
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          console.log("response", response);
+          this.get_WFA_ResellerCommission({}, {});
+
+        });
+
+
+
+      }
+    })
+
+  }
+  createAddress_rc(): FormGroup {
+
+    return this.fb.group({
+      billChildid1: '',
+      commIndex: '',
+      reseller_name: '',
+      commission_type: '',
+      commission_value: '',
+      commission_amt: '',
+      pdf_show: '',
+      reseller_comm_id: '',
+      reseller_id: '',
+      billId: '',
+      grossAmount: '',
+
+    });
+  }
 
   radioChecked(id: any, j: any) {
     // this.resellercommissiontype.forEach((item: { id: any; selected: boolean; })=>{
@@ -583,46 +760,173 @@ export class DupInvoiceComponent implements OnInit {
 
   }
   radio_commissionType(event: any) {
-    this.commissionType_value = event.target.id;
+
+    this.commissionType_value = event.target.value;
+
     console.log("this.commissionType_value", this.commissionType_value);
+
     if (this.commissionType_value == 1) {
-      var commvalue = $('#CommissionValue_WFA_ID').val();
-      $('#CommissionAmount_WFA_ID').val(commvalue);
+
+      var commvalue = $('#CommissionValue_WFA_ID_').val();
+      console.log("commvalue", commvalue)
+      $('#CommissionAmount1_WFA_ID_').val(commvalue);
+      console.log("$('#CommissionAmount1_WFA_ID_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID_').val())
+
     }
     if (this.commissionType_value == 2) {
-      var commvalue = $('#CommissionValue_WFA_ID').val();
+      var commvalue = $('#CommissionValue_WFA_ID_').val();
       var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
 
-      $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
-      this.commissionAmount_WFA = $('#CommissionAmount_WFA_ID').val();
+      $('#CommissionAmount1_WFA_ID_').val(commvalue_Percentage);
+      this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID_').val();
 
     }
     if (this.commissionType_value == 4) {
-      $('#CommissionValue_WFA_ID').val('');
-      $('#CommissionAmount_WFA_ID').val('');
+      $('#CommissionValue_WFA_ID_').val(0);
+      $('#CommissionAmount1_WFA_ID_').val(0);
 
     }
+
   }
   commissionValueAutoFill() {
+
+    // if (this.commissionType_value == 1) {
     if (this.commissionType_value == 1) {
-      var commvalue = $('#CommissionValue_WFA_ID').val();
-      $('#CommissionAmount_WFA_ID').val(commvalue);
+
+      var commvalue = $('#CommissionValue_WFA_ID_').val();
+      console.log("commvalue", commvalue)
+      $('#CommissionAmount1_WFA_ID_').val(commvalue);
+
     }
     if (this.commissionType_value == 2) {
+      var com1 = this.resellerCommissionForm.value.commission_value;
+
       // alert(this.commissionType_value)
-      var commvalue = $('#CommissionValue_WFA_ID').val();
+      var commvalue = $('#CommissionValue_WFA_ID_').val();
       // alert(commvalue)
 
-      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
-      // alert(commvalue_Percentage)
 
-      $('#CommissionAmount_WFA_ID').val(commvalue_Percentage);
+      var k = this.commlistall1[0].grossAmount;
+
+      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
+      // alert(commvalue_Percentage)
+      console.log("this.commvalue_Percentage", commvalue_Percentage);
+      $('#CommissionAmount1_WFA_ID_').val(commvalue_Percentage);
+
+    }
+    if (this.commissionType_value == 4) {
+      var commvalue_Percentage = '';
+      console.log("this.commvalue_Percentage", commvalue_Percentage);
+      $('#CommissionAmount1_WFA_ID_').val(commvalue_Percentage);
+
     }
 
   }
+  radio_commissionType_formArray(event: any, index: any) {
+
+    this.commissionType_value = event.target.value;
+    const indexToUpdate = index; // Change this index according to your needs
+    console.log(indexToUpdate);
+    console.log("this.commissionType_value", this.commissionType_value);
+    this.resellerCommissionForm.value.addresses_rc[indexToUpdate].commission_type = this.commissionType_value;
+    this.addr = this.resellerCommissionForm.value.addresses_rc;
+    console.log("this.commissionType_value", this.addr);
+    for (let i = 0; i <= index; i++) {
+      console.log("this.commissionType_value", this.commissionType_value)
+      if (this.commissionType_value == 1) {
+        console.log("index", index)
+        var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
+        console.log("commvalue", commvalue)
+        $('#CommissionAmount1_WFA_ID_' + index).val(commvalue);
+        console.log("$('#CommissionAmount1_WFA_ID_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID_' + index).val())
+        this.resellerCommissionForm.value.addresses_rc[index].commission_amt = commvalue;
+        console.log(this.resellerCommissionForm.value.addresses_rc[index].commvalue)
+      }
+      if (this.commissionType_value == 2) {
+        var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
+        var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
+
+        $('#CommissionAmount1_WFA_ID_' + index).val(commvalue_Percentage);
+        this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID_' + index).val();
+        this.resellerCommissionForm.value.addresses_rc[index].commission_amt = commvalue_Percentage;
+        console.log(this.resellerCommissionForm.value.addresses_rc[index].commission_amt)
+      }
+      if (this.commissionType_value == 4) {
+        $('#CommissionValue_WFA_ID_' + index).val('');
+        $('#CommissionAmount1_WFA_ID_' + index).val('');
+
+      }
+    }
+
+    console.log($('#CommissionValue_WFA_ID_' + index).val())
+
+  }
+  commissionValueAutoFill_formArray(h: any) {
+    console.log(this.commlistall1)
+    for (let i = 0; i <= this.commlistall1.length; i++) {
+      console.log(i)
+      console.log(h)
+      console.log("commlistall1[i].commission_typ", this.commlistall1[i].commission_type)
+      // if (this.commissionType_value == 1) {
+      if (this.commlistall1[i].commission_type == 1) {
+        console.log("index-autofill", h)
+        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        console.log("commvalue", commvalue)
+        $('#CommissionAmount1_WFA_ID_' + h).val(commvalue);
+        console.log("$('#CommissionAmount1_WFA_ID_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID_' + h).val())
+        this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue;
+        console.log(this.resellerCommissionForm.value.addresses_rc[h].commvalue)
+      }
+      if (this.commlistall1[i].commission_type == 2) {
+        var com1 = this.resellerCommissionForm.value.commission_value;
+
+        // alert(this.commissionType_value)
+        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        // alert(commvalue)
+
+
+        var k = this.commlistall1[h].grossAmount;
+
+        var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
+        // alert(commvalue_Percentage)
+        console.log("this.commvalue_Percentage", commvalue_Percentage);
+        $('#CommissionAmount1_WFA_ID_' + h).val(commvalue_Percentage);
+        this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue_Percentage;
+        console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
+      }
+      if (this.commlistall1[i].commission_type == 4) {
+
+
+
+
+        var commvalue_Percentage = '';
+
+        console.log("this.commvalue_Percentage", commvalue_Percentage);
+        $('#CommissionAmount1_WFA_ID_' + h).val(commvalue_Percentage);
+        this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue_Percentage;
+        console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
+      }
+
+    }
+
+    console.log($("#CommissionAmount1_WFA_ID_0").val())
+
+  }
+
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
     console.log(this.Select_To_Type_radiobox_Value);
+
+
+   if( this.Select_To_Type_radiobox_Value=='finance'){
+    this.emailForm.patchValue({
+      'email_to':  this.SelectType_finance,
+    })
+   }else{
+    this.emailForm.patchValue({
+      'email_to': this.SelectType_company,
+    })
+   }
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
@@ -672,6 +976,15 @@ export class DupInvoiceComponent implements OnInit {
     this.revenueTypeWiseDropDownValue = event.target.value;
     console.log(" this.revenueTypeWiseDropDownValue", this.revenueTypeWiseDropDownValue)
 
+  }
+  clearSelection(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
   }
   selectEventCustomer(item: any) {
     console.log(item)
@@ -723,16 +1036,25 @@ export class DupInvoiceComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
+    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
     console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
+      if (!this.edit_array_SearchBiller_Checkbox) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
       console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
-      const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
+      if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+     // const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data);
+      const index = this.edit_array_SearchBiller_Checkbox.indexOf(data);
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
@@ -743,13 +1065,21 @@ export class DupInvoiceComponent implements OnInit {
   }
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
+    this.yearsID = data;
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
+    console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
-
+      if (!this.edit_array_Years_Checkbox) {
+        this.edit_array_Years_Checkbox = [];
+      }
       this.edit_array_Years_Checkbox.push(data);
       this.edit_array_Years_Checkbox.join(',');
       console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
     }
     else {
+      if (!Array.isArray(this.edit_array_Years_Checkbox)) {
+        this.edit_array_Years_Checkbox = [];
+      }
       const index = this.edit_array_Years_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
@@ -759,24 +1089,7 @@ export class DupInvoiceComponent implements OnInit {
     }
 
   }
-  SearchOtherCheckAllCHK(data: any, event: any) {
-    this.CBV_others_All = event.target.checked;
-    if (this.CBV_others_All) {
 
-      this.edit_array_others_Checkbox.push(data);
-      this.edit_array_others_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_others_Checkbox);
-    }
-    else {
-      const index = this.edit_array_others_Checkbox.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array_others_Checkbox.splice(index, 1);
-      }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_others_Checkbox)
-
-    }
-
-  }
   addAddress(): void {
     this.addresses = this.addressForm.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
@@ -909,8 +1222,21 @@ export class DupInvoiceComponent implements OnInit {
     this.invType_Search = event.target.value;
     console.log("invoice type search", this.invType_Search);
   }
+  getSearch1() {
+
+    this.getSearch = true;
+  }
 
   getInvoice1(data: any) {
+    console.log("getinvoice1")
+
+    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
+    if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
+      this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+    }
+    //  alert("getInvoice-1")
     this.spinner.show();
     var list_data = this.listDataInfo(data);
 
@@ -933,6 +1259,8 @@ export class DupInvoiceComponent implements OnInit {
     api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
     api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
+    api_quotationList.getSearch = this.getSearch;
+
 
     api_quotationList.current_page = "";
 
@@ -952,14 +1280,31 @@ export class DupInvoiceComponent implements OnInit {
       }
       if (response) {
         this.spinner.hide();
+        if(response.proforma_details==null){
+        //   iziToast.warning({
+        //   message: "Sorry, No Matching Data",
+        //   position: 'topRight'
+        // });
+        }
         this.PI_list = response.proforma_details;
+        if(response.proforma_details!=null){
+          this.PI_list.forEach((item: { showHi: boolean; }) => {
+            item.showHi = false;
+          });
+        }
+        this.searchFlag = response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
-        this.revenue_type_id = response.proforma_details[0].revenue_type_id;
-        this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
-        this.revenue_color = response.proforma_details[0].revenue_color;
-        this.share_access_state = response.proforma_details[0].share_access_state;
-        this.postal_send_color = response.proforma_details[0].postal_send_color;
-        this.post_send_status = response.proforma_details[0].post_send_status;
+       
+        if(response.proforma_details!=null){
+          this.revenue_color = response.proforma_details[0].revenue_color;
+          this.share_access_state = response.proforma_details[0].share_access_state;
+          this.postal_send_color = response.proforma_details[0].postal_send_color;
+          this.post_send_status = response.proforma_details[0].post_send_status;
+          this.revenue_type_id = response.proforma_details[0].revenue_type_id;
+          this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+          this.taxAmtstate = response.proforma_details[0].taxAmtstate;
+        }
+   
         this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
@@ -989,6 +1334,7 @@ export class DupInvoiceComponent implements OnInit {
         this.invoicePermissionList_pdf_view = response.invoice_permission_arr.pdf_view;
         this.invoicePermissionList_sale_rep = response.invoice_permission_arr.sale_rep;
         this.invoicePermissionList_search = response.invoice_permission_arr.search;
+        this.invoicePermissionList_suspend = response.invoice_permission_arr.sus_inv_list;
 
         this.invoicePermissionList_sent_to_post = response.invoice_permission_arr.sent_to_post;
         this.invoicePermissionList_set_invoice_revenue = response.invoice_permission_arr.set_invoice_revenue;
@@ -998,15 +1344,36 @@ export class DupInvoiceComponent implements OnInit {
         this.invoicePermissionList_sus_inv_list = response.invoice_permission_arr.sus_inv_list;
         this.invoicePermissionList_ten_day_per_billing = response.invoice_permission_arr.ten_day_per_billing;
         this.revenueTypeList = response.revenue_list;
-        this.taxAmtstate = response.proforma_details[0].taxAmtstate;
-
-        this.edit_array_SearchBiller_Checkbox = response.selected_billerId;
-
-        this.selected_billerId = response.selected_billerId;
-        this.invoicePermissionList_inv_to_did
-        this.invoicePermissionList_set_actual_cost
+        
 
 
+        if (response.selected_filtervalues[0].biller_ids != '') {
+          this.selected_billerId = response.selected_billerId;
+          this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',');
+            this.edit_array_SearchBiller_Checkbox =this.edit_array_SearchBiller_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_SearchBiller_Checkbox = this.selected_billerId.split(',').map((str: any) => parseInt(str, 10));
+          console.log("changed value doubt", this.edit_array_SearchBiller_Checkbox);
+          var check = this.isArray(this.edit_array_SearchBiller_Checkbox);
+          console.log("check doubt", check)
+
+
+        }
+        if(response.selected_filtervalues[0].name_serach != ''){
+          this.searchResult_CustomerName=response.selected_filtervalues[0].name_serach;
+          this.searchInvoiceForm.patchValue({
+            'company_Name':response.selected_filtervalues[0].name_serach
+          })
+        }
+        console.log("this.edit_array_SearchBiller_Checkbox-list complete",this.edit_array_SearchBiller_Checkbox);
+        if (response.selected_filtervalues[0].year_filter != '') {
+          this.years_id = response.selected_filtervalues[0].year_filter;
+          this.edit_array_Years_Checkbox = this.years_id.split(',');
+          this.edit_array_Years_Checkbox = this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
+          this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
+          console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
+        }
+
+      if(response.proforma_details!=null){
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
@@ -1015,6 +1382,14 @@ export class DupInvoiceComponent implements OnInit {
           this.suspend_state = response.proforma_details[j].suspend;
         }
 
+      }
+      
+
+        // this.searchInvoiceForm.patchValue({
+        //   'search_billerName':response.selected_filtervalues[0].biller_ids,
+        //   'company_Name':response.selected_filtervalues[0].name_serach,
+        //   'years':response.selected_filtervalues[0].year_filter,
+        // });
         console.log("proforma_details list", this.PI_list)
         console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
@@ -1033,82 +1408,95 @@ export class DupInvoiceComponent implements OnInit {
       }
     });
   }
+  convertTupleToArray(y: string): string[] {
+    // Split the string by comma and filter out empty strings
+    return y.split(',').filter(element => element.trim() !== '');
+  }
+  isArray(variable: any): boolean {
+    return Array.isArray(variable);
+  }
   getInvoice_Dup(data: any) {
-        console.log("data,",data);
-        
-        this.PI_list = data.Invoice_list_send;
-        // this.recurring_Status = data.Invoice_list_send[0].recuring_status;
-        this.revenue_type_id = data.Invoice_list_send[0].revenue_type_id;
-        this.revenue_individual_state = data.Invoice_list_send[0].revenue_individual_state;
-        this.revenue_color = data.Invoice_list_send[0].revenue_color;
-        this.share_access_state = data.Invoice_list_send[0].share_access_state;
-        this.postal_send_color = data.Invoice_list_send[0].postal_send_color;
-        this.post_send_status = data.Invoice_list_send[0].post_send_status;
-        this.biller_list = data.Invoice_biller_send;
-        this.invoicePermissionList = data.Invoice_per_send;
-        this.invoicePermissionList_add = data.Invoice_per_send.add;
-        this.invoicePermissionList_Search = data.Invoice_per_send.search;
-        this.invoicePermissionList_all_invoice_show = data.Invoice_per_send.all_invoice_show;
-        this.invoicePermissionList_all_tax_billing = data.Invoice_per_send.all_tax_billing;
-        this.invoicePermissionList_comm_per = data.Invoice_per_send.comm_per;
-        this.invoicePermissionList_date_filter_billing = data.Invoice_per_send.date_filter_billing;
-        this.invoicePermissionList_delete = data.Invoice_per_send.delete;
-        this.invoicePermissionList_did_to_inv = data.Invoice_per_send.did_to_inv;
-        this.invoicePermissionList_duplicate = data.Invoice_per_send.duplicate;
-        this.invoicePermissionList_edit = data.Invoice_per_send.edit;
-        this.invoicePermissionList_export_billing = data.Invoice_per_send.export_billing;
-        this.invoicePermissionList_file_attach = data.Invoice_per_send.file_attach;
-        this.invoicePermissionList_inv_recurring = data.Invoice_per_send.inv_recurring;
-        this.invoicePermissionList_inv_to_do = data.Invoice_per_send.inv_to_do;
-        this.invoicePermissionList_inv_to_pi = data.Invoice_per_send.inv_to_pi;
-        this.invoicePermissionList_inv_to_quotation = data.Invoice_per_send.inv_to_quotation;
-        this.invoicePermissionList_inv_to_share = data.Invoice_per_send.inv_to_share;
-        this.invoicePermissionList_invoice_alert = data.Invoice_per_send.invoice_alert;
+    console.log("data,",data);
+    
+    this.PI_list = data.Invoice_list_send;
+    // this.recurring_Status = data.Invoice_list_send[0].recuring_status;
+    this.revenue_type_id = data.Invoice_list_send[0].revenue_type_id;
+    this.revenue_individual_state = data.Invoice_list_send[0].revenue_individual_state;
+    this.revenue_color = data.Invoice_list_send[0].revenue_color;
+    this.share_access_state = data.Invoice_list_send[0].share_access_state;
+    this.postal_send_color = data.Invoice_list_send[0].postal_send_color;
+    this.post_send_status = data.Invoice_list_send[0].post_send_status;
+    this.biller_list = data.Invoice_biller_send;
+    this.invoicePermissionList = data.Invoice_per_send;
+    this.invoicePermissionList_add = data.Invoice_per_send.add;
+    this.invoicePermissionList_Search = data.Invoice_per_send.search;
+    this.invoicePermissionList_all_invoice_show = data.Invoice_per_send.all_invoice_show;
+    this.invoicePermissionList_all_tax_billing = data.Invoice_per_send.all_tax_billing;
+    this.invoicePermissionList_comm_per = data.Invoice_per_send.comm_per;
+    this.invoicePermissionList_date_filter_billing = data.Invoice_per_send.date_filter_billing;
+    this.invoicePermissionList_delete = data.Invoice_per_send.delete;
+    this.invoicePermissionList_did_to_inv = data.Invoice_per_send.did_to_inv;
+    this.invoicePermissionList_duplicate = data.Invoice_per_send.duplicate;
+    this.invoicePermissionList_edit = data.Invoice_per_send.edit;
+    this.invoicePermissionList_export_billing = data.Invoice_per_send.export_billing;
+    this.invoicePermissionList_file_attach = data.Invoice_per_send.file_attach;
+    this.invoicePermissionList_inv_recurring = data.Invoice_per_send.inv_recurring;
+    this.invoicePermissionList_inv_to_do = data.Invoice_per_send.inv_to_do;
+    this.invoicePermissionList_inv_to_pi = data.Invoice_per_send.inv_to_pi;
+    this.invoicePermissionList_inv_to_quotation = data.Invoice_per_send.inv_to_quotation;
+    this.invoicePermissionList_inv_to_share = data.Invoice_per_send.inv_to_share;
+    this.invoicePermissionList_invoice_alert = data.Invoice_per_send.invoice_alert;
 
-        this.invoicePermissionList_list = data.Invoice_per_send.list;
-        this.invoicePermissionList_mail = data.Invoice_per_send.mail;
-        this.invoicePermissionList_monthly_turn = data.Invoice_per_send.monthly_turn;
-        this.invoicePermissionList_online_pay_link = data.Invoice_per_send.online_pay_link;
-        this.invoicePermissionList_payment_process = data.Invoice_per_send.payment_process;
-        this.invoicePermissionList_pdf_view = data.Invoice_per_send.pdf_view;
-        this.invoicePermissionList_sale_rep = data.Invoice_per_send.sale_rep;
-        this.invoicePermissionList_search = data.Invoice_per_send.search;
+    this.invoicePermissionList_list = data.Invoice_per_send.list;
+    this.invoicePermissionList_mail = data.Invoice_per_send.mail;
+    this.invoicePermissionList_monthly_turn = data.Invoice_per_send.monthly_turn;
+    this.invoicePermissionList_online_pay_link = data.Invoice_per_send.online_pay_link;
+    this.invoicePermissionList_payment_process = data.Invoice_per_send.payment_process;
+    this.invoicePermissionList_pdf_view = data.Invoice_per_send.pdf_view;
+    this.invoicePermissionList_sale_rep = data.Invoice_per_send.sale_rep;
+    this.invoicePermissionList_search = data.Invoice_per_send.search;
 
-        this.invoicePermissionList_sent_to_post = data.Invoice_per_send.sent_to_post;
-        this.invoicePermissionList_set_invoice_revenue = data.Invoice_per_send.set_invoice_revenue;
-        this.invoicePermissionList_set_invoice_type = data.Invoice_per_send.set_invoice_type;
-        this.invoicePermissionList_set_prev_billing = data.Invoice_per_send.set_prev_billing;
-        this.invoicePermissionList_set_terms_condition = data.Invoice_per_send.set_terms_condition;
-        this.invoicePermissionList_sus_inv_list = data.Invoice_per_send.sus_inv_list;
-        this.invoicePermissionList_ten_day_per_billing = data.Invoice_per_send.ten_day_per_billing;
-        this.revenueTypeList = data.Invoice_revenue_send;
-        this.taxAmtstate = data.Invoice_list_send[0].taxAmtstate;
+    this.invoicePermissionList_sent_to_post = data.Invoice_per_send.sent_to_post;
+    this.invoicePermissionList_set_invoice_revenue = data.Invoice_per_send.set_invoice_revenue;
+    this.invoicePermissionList_set_invoice_type = data.Invoice_per_send.set_invoice_type;
+    this.invoicePermissionList_set_prev_billing = data.Invoice_per_send.set_prev_billing;
+    this.invoicePermissionList_set_terms_condition = data.Invoice_per_send.set_terms_condition;
+    this.invoicePermissionList_sus_inv_list = data.Invoice_per_send.sus_inv_list;
+    this.invoicePermissionList_ten_day_per_billing = data.Invoice_per_send.ten_day_per_billing;
+    this.revenueTypeList = data.Invoice_revenue_send;
+    this.taxAmtstate = data.Invoice_list_send[0].taxAmtstate;
 
-        this.edit_array_SearchBiller_Checkbox = data.selected_billerId;
+    this.edit_array_SearchBiller_Checkbox = data.selected_billerId;
 
-        this.selected_billerId = data.selected_billerId;
-        this.invoicePermissionList_inv_to_did
-        this.invoicePermissionList_set_actual_cost
+    this.selected_billerId = data.selected_billerId;
+    this.invoicePermissionList_inv_to_did
+    this.invoicePermissionList_set_actual_cost
 
 
-        for (var j = 0; j < data.Invoice_list_send.length; j++) {
+    for (var j = 0; j < data.Invoice_list_send.length; j++) {
 
-          this.reseller_commissionState = data.Invoice_list_send[j].commission_state;
-          this.recurring_state_all = data.Invoice_list_send[j].recuring_status;
-          console.log("this.reseller_commissionState", this.reseller_commissionState)
-          this.suspend_state = data.Invoice_list_send[j].suspend;
-        }
+      this.reseller_commissionState = data.Invoice_list_send[j].commission_state;
+      this.recurring_state_all = data.Invoice_list_send[j].recuring_status;
+      console.log("this.reseller_commissionState", this.reseller_commissionState)
+      this.suspend_state = data.Invoice_list_send[j].suspend;
+    }
 
-        console.log("Invoice_list_send list", this.PI_list)
-        console.log("this.biller_list", this.biller_list)
-  }
-  closeModal(){
-    let api_reqs:any = {type: "invoice_list"};
-    this.serverService.closemodal.next(api_reqs);
-  }
+    console.log("Invoice_list_send list", this.PI_list)
+    console.log("this.biller_list", this.biller_list)
+}
   getInvoice(data: any) {
+    console.log("getinvoice")
     this.spinner.show();
+    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    var da = this.edit_array_SearchBiller_Checkbox;
+    console.log(this.isArray(this.edit_array_SearchBiller_Checkbox));
+    
+    if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
+      this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
+      console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
+    }
     var list_data = this.listDataInfo(data);
+    console.log("getdata", this.edit_array_SearchBiller_Checkbox);
 
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
@@ -1118,6 +1506,8 @@ export class DupInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationList.action = "invoice_list";
     api_quotationList.user_id = localStorage.getItem("erp_c4c_user_id");
+    // alert("getInvoice")
+    // alert(this.search_values1)
     api_quotationList.Search_BillerId = this.edit_array_SearchBiller_Checkbox;
     api_quotationList.off_set = list_data.offset;
     api_quotationList.limit_val = list_data.limit;
@@ -1129,9 +1519,8 @@ export class DupInvoiceComponent implements OnInit {
     api_quotationList.dont_select_did_invoice = this.CBV_dont_select_did_invoice;
     api_quotationList.revenue_typewise_show = this.CBV_RevenueTypeWiseShow;
     api_quotationList.revenue_typewise_showID = this.revenueTypeWiseDropDownValue;
-
     api_quotationList.current_page = "";
-
+    api_quotationList.getSearch = this.getSearch;
     api_req.element_data = api_quotationList;
 
 
@@ -1149,15 +1538,31 @@ export class DupInvoiceComponent implements OnInit {
       }
       if (response) {
         this.spinner.hide();
+        if(response.proforma_details==null){
+          iziToast.warning({
+          message: "Sorry, No Matching Data",
+          position: 'topRight'
+        });
+        }
         this.PI_list = response.proforma_details;
+        if(response.proforma_details!=null){
+          this.PI_list.forEach((item: { showHi: boolean; }) => {
+            item.showHi = false;
+          });
+        }
+      
+        this.searchFlag = response.searchFlag;
         // this.recurring_Status = response.proforma_details[0].recuring_status;
-        this.revenue_type_id = response.proforma_details[0].revenue_type_id;
-        this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
-        this.taxAmtstate = response.proforma_details[0].taxAmtstate;
-        this.revenue_color = response.proforma_details[0].revenue_color;
-        this.share_access_state = response.proforma_details[0].share_access_state;
-        this.postal_send_color = response.proforma_details[0].postal_send_color;
-        this.post_send_status = response.proforma_details[0].post_send_status;
+        if(response.proforma_details!=null){
+          this.revenue_type_id = response.proforma_details[0].revenue_type_id;
+          this.revenue_individual_state = response.proforma_details[0].revenue_individual_state;
+          this.taxAmtstate = response.proforma_details[0].taxAmtstate;
+          this.revenue_color = response.proforma_details[0].revenue_color;
+          this.share_access_state = response.proforma_details[0].share_access_state;
+          this.postal_send_color = response.proforma_details[0].postal_send_color;
+          this.post_send_status = response.proforma_details[0].post_send_status;
+        }
+       
         // this.biller_list = response.biller_details;
         this.invoicePermissionList = response.invoice_permission_arr;
         this.invoicePermissionList_add = response.invoice_permission_arr.add;
@@ -1200,21 +1605,28 @@ export class DupInvoiceComponent implements OnInit {
         this.edit_array_SearchBiller_Checkbox = response.selected_billerId;
 
         this.selected_billerId = response.selected_billerId;
-        this.invoicePermissionList_inv_to_did
-        this.invoicePermissionList_set_actual_cost
-
+     
+        console.log("this.edit_array_SearchBiller_Checkbox-getInvoice-list complete",this.edit_array_SearchBiller_Checkbox);
+       
+       if(response.proforma_details!=null){
         for (var j = 0; j < response.proforma_details.length; j++) {
 
           this.reseller_commissionState = response.proforma_details[j].commission_state;
           this.suspend_state = response.proforma_details[j].suspend;
           this.recurring_state_all = response.proforma_details[j].recuring_status;
         }
+       }
+       
 
         console.log("proforma_details list", this.PI_list)
         // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
-
+        // this.searchInvoiceForm.patchValue({
+        //   'search_billerName':response.selected_filtervalues[0].biller_ids,
+        //   'company_Name':response.selected_filtervalues[0].name_serach,
+        //   'years':response.selected_filtervalues[0].year_filter,
+        // });
         $("#invsearchInvoiceFormIdDI").modal("hide");
       }
       else {
@@ -1227,6 +1639,25 @@ export class DupInvoiceComponent implements OnInit {
         })
       }
     });
+
+    let api_reqs_invoice: any = {
+      InvSearch_Search_BillerId: this.edit_array_SearchBiller_Checkbox,
+      InvSearch_off_set: list_data.offset,
+      InvSearch_limit_val: list_data.limit,
+      InvSearch_search_txt: this.searchResult_CustomerName,
+      InvSearch_years: this.edit_array_Years_Checkbox,
+      InvSearch_invoiceType: this.invType_Search,
+      InvSearch_recurring_only: this.CBV_recurring_only,
+      InvSearch_dont_select_did_invoice: this.CBV_dont_select_did_invoice,
+      InvSearch_revenue_typewise_show: this.CBV_RevenueTypeWiseShow,
+      InvSearch_revenue_typewise_showID: this.revenueTypeWiseDropDownValue,
+      type: "search girlfriend",
+    };
+    // api_reqs_invoice = JSON.stringify(api_reqs_invoice)
+    this.serverService.invoice_search.next(api_reqs_invoice);
+    console.log("sending api_reqs_invoice", api_reqs_invoice)
+
+
   }
   listDataInfo(list_data: any) {
     // console.log(list_data)
@@ -1252,7 +1683,8 @@ export class DupInvoiceComponent implements OnInit {
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState: editDIDState
+          e_editDIDState: editDIDState,
+          e_searchFlag: this.searchFlag
         }
       });
     }
@@ -1260,7 +1692,8 @@ export class DupInvoiceComponent implements OnInit {
       this.router.navigate(['/InvoiceEditDID'], {
         queryParams: {
           e_editBillID: editbillID,
-          e_editDIDState: editDIDState
+          e_editDIDState: editDIDState,
+          e_searchFlag: this.searchFlag
         }
       });
 
@@ -1278,6 +1711,7 @@ export class DupInvoiceComponent implements OnInit {
 
     if (didState == '0') {
 
+
       this.router.navigate(['/EditInvoice'], {
         queryParams: {
           e_editDuplicateID: editDuplicateID,
@@ -1286,6 +1720,7 @@ export class DupInvoiceComponent implements OnInit {
       });
 
     } else {
+
 
       this.router.navigate(['/InvoiceEditDID'], {
         queryParams: {
@@ -1460,6 +1895,8 @@ export class DupInvoiceComponent implements OnInit {
               message: "Invoice Deleted Successfully",
               position: 'topRight'
             });
+            this.getInvoice1({});
+
           } else {
             Swal.close();
             iziToast.warning({
@@ -1601,11 +2038,11 @@ export class DupInvoiceComponent implements OnInit {
     if (event.target.checked == true) {
 
       this.suspendList.forEach((element: any, index: any) => {
-        $("#check-grp-suspend-" + index).prop('checked', true);
+        $("#check-grp-suspend-inv-" + index).prop('checked', true);
       });
     } else {
       this.suspendList.forEach((element: any, index: any) => {
-        $("#check-grp-suspend-" + index).prop('checked', false);
+        $("#check-grp-suspend-inv-" + index).prop('checked', false);
       });
 
     }
@@ -1631,6 +2068,7 @@ export class DupInvoiceComponent implements OnInit {
 
     }
   }
+
   getInvoice_Permission(id: any) {
 
     let api_req: any = new Object();
@@ -1808,62 +2246,29 @@ export class DupInvoiceComponent implements OnInit {
     $("#paytype").val('');
     $("#dateee").val('');
   }
-  paymentProcessEditShow(i:any) {
 
-    this.spinner.show();
-    let api_req: any = new Object();
-    let api_payprocessEdit: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/get_edit_payment_process";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_payprocessEdit.action = "get_edit_payment_process";
-    api_payprocessEdit.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_payprocessEdit.processId =i;
 
-    api_req.element_data = api_payprocessEdit;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
-      if (response != '') {
-        this.spinner.hide();
-        // $('#note').val(response.payment_edit[0].notes);
-        // $('#Paid').val(response.payment_edit[0].paidAmount);
-        // $('#paytype').val(response.payment_edit[0].paymentMode);
-        // $('#dateee').val(response.payment_edit[0].processDate_show);
-      
-          this.processPaymentForm.patchValue({
-           // 'date': response.payment_edit[0].processDate_show,
-            'paid': response.payment_edit[0].paidAmount,
-            'paymenttype': response.payment_edit[0].paymentMode,
-            'note': response.payment_edit[0].notes,
-            'amount': response.payment_edit[0].paidAmount,
-         
-  
-  
-          });
-        
-       
-
-      } else {
-        this.spinner.hide();
-
-        iziToast.warning({
-          message: "Payment Process Details not displayed. Please try again",
-          position: 'topRight'
-        });
-      }
-    }),
-      (error: any) => {
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
-      };
-
-  }
   processPaymentEdit(id: any, i: any) {
+    $("#invoiceID").val('');
+    $("#toal").val('');
+    $("#biller").val('');
+    $("#paid").val('');
+    $("#customer").val('');
+    $("#owing").val('');
+    $("#amount").val('');
+    $("#note").val('');
+    $("#paytype").val('');
+    $('#paytype1').val('');
+    $('#paytype2').val('');
+    $("#dateee").val('');
+    this.processPaymentForm.controls['paymenttype'].reset();
+    this.processPaymentForm.reset();
+    this.invoiceDetails_payment = [];
+    this.paymentType_payment = [];
+    this.paymentDetails_payment = [];
+
+
+
     $("#ActionIdInvDup" + i).modal("hide");
     this.spinner.show();
     this.billID_processPayment = id;
@@ -1882,11 +2287,49 @@ export class DupInvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       this.spinner.hide();
-      if (response.status == true) {
+      if (response != '') {
         this.invoiceDetails_payment = response.invoice_details;
         this.paymentType_payment = response.payment_type;
         this.paymentDetails_payment = response.payment_details;
+        this.paymentDetails_paymentLength = response.payment_details.length;
+
+        if (this.paymentDetails_payment == '') {
+          $("#invoiceID").val('');
+          $("#toal").val('');
+          $("#biller").val('');
+          $("#paid").val('');
+          $("#customer").val('');
+          $("#owing").val('');
+          $("#amount").val('');
+          $("#note").val('');
+
+          $("#paytype").val('');
+          $('#paytype1').val('');
+          $('#paytype2').val('');
+          $("#dateee").val('');
+          this.processPaymentForm.controls['paymenttype'].reset();
+          this.processPaymentForm.reset();
+        }
+        if (response.payment_details != '') {
+          //  $("#dateee").val(response.invoice_details[0].billDate)
+          this.paymentNotes = response.payment_details[0].notes;
+          this.PP_PaymentProcessID = response.payment_details[0].processId;
+          this.owingAmt = response.owing_amount;
+          this.processPaymentForm.patchValue({
+
+            // 'note': response.payment_details[0].notes,
+            // 'date': response.payment_details[0].processDate,
+            // 'paymenttype': response.payment_details[0].paymentMode,
+
+          });
+        }
+        //  this.PaymentProcessDatee = response.invoice_details[0].billDate;
+        const now = Date.now();
+        // this.myFormattedDate = this.pipe.transform(now, 'short');
+        // this.myFormattedDate1 = this.pipe.transform(this.PaymentProcessDatee, 'short');
+
         this.processPaymentForm.patchValue({
+          'date': response.invoice_details[0].billDate,
           'invoiceID': response.invoice_details[0].invoice_no,
           'toal': response.invoice_details[0].netPayment,
           'biller': response.invoice_details[0].billerName,
@@ -1895,13 +2338,16 @@ export class DupInvoiceComponent implements OnInit {
           'owing': response.owing_amount,
           'amount': response.owing_amount,
 
-        })
+
+        });
+
         this.spinner.hide();
 
-        this.getInvoice1({});
+        // this.getInvoice1({});
       } else {
 
         $('#processPaymentFormIdDI').modal("hide");
+
         iziToast.warning({
           message: "Payment Process Details not displayed. Please try again",
           position: 'topRight'
@@ -1916,152 +2362,8 @@ export class DupInvoiceComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  processPaymentUpdate() {
-    this.spinner.show();
 
-    let api_req: any = new Object();
-    let api_processpaymentUpdate: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/update_payment_process";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_processpaymentUpdate.action = "update_payment_process";
-    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_processpaymentUpdate.bill_payment_process_id = this.billID_processPayment;
-    if (this.processPaymentForm.value.paymenttype === null) {
-      this.spinner.hide();
-      iziToast.error({
-        message: "Payment Type Missing",
-        position: 'topRight'
-      });
-      return false;
-    } else{
-      api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
-    }
-    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
-    
- 
- 
-    if (this.processPaymentForm.value.amount === null) {
-      this.spinner.hide();
-      iziToast.error({
-        message: "Amount Value missing",
-        position: 'topRight'
-      });
 
-      return false;
-    }
-    
-    api_processpaymentUpdate.total_bal_amount = 0;
-    api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-    api_processpaymentUpdate.balAmt=0; 
-    api_processpaymentUpdate.note = this.processPaymentForm.value.note;
-    api_req.element_data = api_processpaymentUpdate;
-    
-    $("#processPaymentFormIdDI").attr("disabled", true);
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      $("#processPaymentFormIdDI").removeAttr("disabled");
-      if (response.status == true) {
-
-        this.spinner.hide();
-        $('#processPaymentFormIdDI').modal("hide");
-        iziToast.success({
-          message: "Payment Process Updated Successfully",
-          position: 'topRight'
-
-        });
-        this.getInvoice1({});
-
-      } else {
-        this.spinner.hide();
-        $('#processPaymentFormIdDI').modal("hide");
-        iziToast.warning({
-          message: "Payment Process not displayed. Please try again",
-          position: 'topRight'
-        });
-
-      }
-    }),
-      (error: any) => {
-
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
-
-      };
-  }
-  // processPaymentUpdate() {
-  //   this.spinner.show();
-
-  //   let api_req: any = new Object();
-  //   let api_processpaymentUpdate: any = new Object();
-  //   api_req.moduleType = "proforma";
-  //   api_req.api_url = "proforma/proforma_invoice_payment_update";
-  //   api_req.api_type = "web";
-  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-  //   api_processpaymentUpdate.action = "proforma_invoice_payment_update";
-
-  //   api_processpaymentUpdate.billId = this.billID_processPayment;
-  //   api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
-  //   if (this.processPaymentForm.value.amount === null) {
-  //     this.spinner.hide();
-  //     iziToast.error({
-  //       message: "Amount Value missing",
-  //       position: 'topRight'
-  //     });
-
-  //     return false;
-  //   }
-
-  //   api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
-  //   api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
-  //   api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
-  //   if (this.processPaymentForm.value.paymenttype === null) {
-  //     this.spinner.hide();
-  //     iziToast.error({
-  //       message: "Payment Type Missing",
-  //       position: 'topRight'
-  //     });
-  //     return false;
-  //   }
-  //   api_processpaymentUpdate.note = this.processPaymentForm.value.note;
-  //   api_req.element_data = api_processpaymentUpdate;
-  //   $("#processPaymentFormIdDI").attr("disabled", true);
-  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
-  //     $("#processPaymentFormIdDI").removeAttr("disabled");
-  //     if (response.status == true) {
-
-  //       this.spinner.hide();
-  //       $('#processPaymentFormIdDI').modal("hide");
-  //       iziToast.success({
-  //         message: "Payment Process Updated Successfully",
-  //         position: 'topRight'
-
-  //       });
-  //       this.getInvoice1({});
-
-  //     } else {
-  //       this.spinner.hide();
-  //       $('#processPaymentFormIdDI').modal("hide");
-  //       iziToast.warning({
-  //         message: "Payment Process not displayed. Please try again",
-  //         position: 'topRight'
-  //       });
-
-  //     }
-  //   }),
-  //     (error: any) => {
-
-  //       iziToast.error({
-  //         message: "Sorry, some server issue occur. Please contact admin",
-  //         position: 'topRight'
-  //       });
-  //       console.log("final error", error);
-
-  //     };
-  // }
   getEmailDetails(id: any, i: any) {
     $("#ActionIdInvDup" + i).modal("hide");
     this.email_TemplateSelection = false;
@@ -2078,8 +2380,13 @@ export class DupInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_emailDetails.action = "send_invoice_details";
+    if(id!=undefined){
+      api_emailDetails.billId = id;
+    }else{
+      api_emailDetails.billId = '';
+    }
 
-    api_emailDetails.billId = id;
+
     api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_emailDetails;
 
@@ -2092,10 +2399,12 @@ export class DupInvoiceComponent implements OnInit {
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
-        this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+        this.SelectType_finance=response.finance_email;
+        this.SelectType_company=response.company_email;
+        this.mailContent = tinymce.get('tinyIDInv').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID': this.mailContent,
+          'tinyIDInv': this.mailContent,
           'Subject_Content': response.subject,
 
 
@@ -2103,13 +2412,13 @@ export class DupInvoiceComponent implements OnInit {
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID': this.mailContent,
+            'tinyIDInv': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID': this.mailContent,
+            'tinyIDInv': this.mailContent,
           })
         }
 
@@ -2139,31 +2448,375 @@ export class DupInvoiceComponent implements OnInit {
     this.getInvoice1({});
     tinymce.activeEditor.setContent("");
   }
+  PP_PaymentMethod(event: any) {
+    this.PP_paymentMethod = event.target.value;
+    if (event.target.value == 7 || event.target.value == 8) {
+      this.flg = true;
+    }
+    console.log("this.PP_paymentMethod", this.PP_paymentMethod)
+    this.PP_PaymentMethodDropdown();
+  }
+  PP_PaymentMethodDropdown() {
+
+    let api_req: any = new Object();
+    let api_pay_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "invoice/get_credit_note_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_pay_req.action = "get_credit_note_details";
+    api_pay_req.user_id = this.user_ids;
+    api_pay_req.billId = this.billID_processPayment;
+
+    api_pay_req.paytype_id = this.PP_paymentMethod;
+    api_req.element_data = api_pay_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+
+      if (response.status == true) {
+
+        this.creditResponse = response.credit_note;
+        if (response.credit_note.length > 0) {
+          this.credit_note_id = response.credit_note[0].credit_note_id;
+          this.prepaid_id = response.credit_note[0].prepaid_id;
+        }
+
+
+
+        console.log("this.creditResponse", this.creditResponse)
+        this.spinner.hide();
+      }
+      else {
+        var bal_amt = $('#Owing').val()
+        var vh=$('#amount').val();
+        // alert(vh)
+        var ff=this.processPaymentForm.value.amount;
+        // alert(ff)
+        // this.processPaymentForm.patchValue({
+        //   'amount': $('#Owing').val(),
+
+        // })
+         this.processPaymentForm.patchValue({
+          'amount':this.processPaymentForm.value.amount ,
+
+        })
+
+
+      }
+    });
+
+
+
+
+  }
+  changeCreditNote(event: any) {
+    this.changeCreditNoteValue = event.target.value;
+    this.creditShowFlag = true;
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let credit_changeApi: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_credit_note_amount";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    credit_changeApi.action = "get_credit_note_amount";
+    credit_changeApi.user_id = localStorage.getItem('erp_c4c_user_id');
+    credit_changeApi.credit_note_id = this.changeCreditNoteValue;
+    api_req.element_data = credit_changeApi;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        var res = response;
+        var ow = $('#Owing').val();
+        if (parseFloat(ow) < parseFloat(res)) {
+          // console.log("this.owingAmt",ow);
+          // console.log("res",res);
+          // console.log("if this.owingAmt < res=amount value=this.owingAmt",ow)
+
+          this.processPaymentForm.patchValue({
+
+            'amount': ow,
+
+          });
+          // $('#amount').val(this.owingAmt);
+        } else {
+          // console.log("this.owingAmt",ow);
+          // console.log("res",res);
+          // console.log("if this.owingAmt >= res=amount value=res",res)
+          this.processPaymentForm.patchValue({
+
+            'amount': $('#Owing').val(),
+
+
+          });
+          // $('#amount').val(res);
+        }
+        this.spinner.hide();
+
+
+
+
+      } else {
+
+        this.spinner.hide();
+
+
+
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  changePrepaidNote(event: any) {
+    this.changePrepaidNoteValue = event.target.value;
+    this.prepaidShowFlag = true;
+    this.spinner.show();
+    let api_req: any = new Object();
+    let prepaid_changeApi: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_prepaid_note_amount";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    prepaid_changeApi.action = "get_prepaid_note_amount";
+    prepaid_changeApi.user_id = localStorage.getItem('erp_c4c_user_id');
+    prepaid_changeApi.prepaid_id = this.changePrepaidNoteValue;
+    api_req.element_data = prepaid_changeApi;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        var res = response;
+        var ow = $('#Owing').val();
+        if (parseFloat(ow) < parseFloat(res)) {
+
+
+
+
+          this.processPaymentForm.patchValue({
+
+            'amount': ow,
+
+
+          });
+          // $('#amount').val(this.owingAmt);
+        } else {
+          // console.log("this.owingAmt",ow);
+          // console.log("res",res);
+          // console.log("if this.owingAmt >= res=amount value=res",res)
+          this.processPaymentForm.patchValue({
+
+            'amount': res,
+
+
+          });
+          // $('#amount').val(res);
+        }
+        this.spinner.hide();
+
+      } else {
+
+        this.spinner.hide();
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  clearPayProcess() {
+
+    this.processPaymentForm.controls['toal'].reset();
+    this.processPaymentForm.controls['biller'].reset();
+    this.processPaymentForm.controls['paid'].reset();
+    this.processPaymentForm.controls['customer'].reset();
+
+    this.processPaymentForm.controls['owing'].reset();
+    this.processPaymentForm.controls['amount'].reset();
+    this.processPaymentForm.controls['note'].reset();
+    this.processPaymentForm.controls['paymentDetails'].reset();
+    this.processPaymentForm.controls['paymenttype'].reset();
+
+    this.processPaymentForm.controls['paymenttype1'].reset();
+    this.processPaymentForm.controls['paymenttype2'].reset();
+    $('#amount').val('');
+    this.flg = false;
+  }
+  processPaymentUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_processpaymentUpdate: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_processpaymentUpdate.action = "update_payment_process";
+    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_processpaymentUpdate.bill_payment_process_id = this.billID_processPayment;
+    if (this.processPaymentForm.value.paymenttype === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Payment Type Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+      api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+    }
+    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+
+
+
+    if (this.processPaymentForm.value.amount === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Amount Value missing",
+        position: 'topRight'
+      });
+
+      return false;
+    }
+
+    api_processpaymentUpdate.total_bal_amount = 0;
+    api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
+    api_processpaymentUpdate.balAmt = this.processPaymentForm.value.owing;
+    api_processpaymentUpdate.note = this.processPaymentForm.value.note;
+    api_processpaymentUpdate.prepaid_id = this.prepaid_id;
+    api_processpaymentUpdate.credit_note_id = this.credit_note_id;
+
+    api_req.element_data = api_processpaymentUpdate;
+
+    $("#processPaymentFormIdDI").attr("disabled", true);
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#processPaymentFormIdDI").removeAttr("disabled");
+      if (response.status == true) {
+
+        this.spinner.hide();
+        $('#processPaymentFormIdDI').modal("hide");
+        $('#amount').val('');
+        this.processPaymentForm.reset();
+        this.getInvoice1({});
+        iziToast.success({
+          message: "Payment Process Updated Successfully",
+          position: 'topRight'
+
+        });
+        // this.getInvoice1({});
+
+      } else {
+        this.spinner.hide();
+        $('#processPaymentFormIdDI').modal("hide");
+        iziToast.warning({
+          message: "Payment Process not displayed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+
+  paymentProcessEditShow(i: any) {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_payprocessEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_edit_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_payprocessEdit.action = "get_edit_payment_process";
+    api_payprocessEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_payprocessEdit.processId = i;
+
+    api_req.element_data = api_payprocessEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.spinner.hide();
+        // $('#note').val(response.payment_edit[0].notes);
+        // $('#Paid').val(response.payment_edit[0].paidAmount);
+        // $('#paytype').val(response.payment_edit[0].paymentMode);
+        // $('#dateee').val(response.payment_edit[0].processDate_show);
+
+        this.processPaymentForm.patchValue({
+          'date': response.payment_edit[0].processDate_show,
+          'paid': response.payment_edit[0].paidAmount,
+          'paymenttype': response.payment_edit[0].paymentMode,
+          'note': response.payment_edit[0].notes,
+        });
+
+      } else {
+        this.spinner.hide();
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+
+
+
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/get_email_quotation_template";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_email_invoice_template";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
+    api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID
+    api_quotationTemplateDropdown_req.billId = this.Email_BillId;
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-template Dropdown response", response)
-      this.messageContent = response.crm_template_content
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      this.messageContent = response.crm_template_content;
+      this.mailContent = tinymce.get('tinyIDInv').setContent("<p>" + this.messageContent + "</p>");
+      $('#subject').val(response.crm_subject_name);
+      $('#tinyIDInv').val(this.mailContent);
       if (response != '') {
         this.emailForm.patchValue({
 
-          'Subject_Content': response.crm_subject_name,
+          // 'Subject_Content': response.crm_subject_name,
 
-          'tinyID': this.mailContent,
+          // 'tinyIDInv': this.mailContent,
 
         });
 
@@ -2179,15 +2832,25 @@ export class DupInvoiceComponent implements OnInit {
 
     });
   }
-
+  handle__email_from(e: any) {
+    // this.FromEmailValue =e.target.value;
+  }
+  closeModal(){
+    let api_reqs:any = {type: "invoice_list"};
+    this.serverService.closemodal.next(api_reqs);
+  }
   sendMail() {
     Swal.fire('Sending Email');
     Swal.showLoading();
 
-    this.FromEmailValue = $('#emailFrom').val();
-    this.emailTo = $('#emailto').val();
-    this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
+    // this.FromEmailValue = $('#emailFrom').val();
+    this.FromEmailValue = this.emailForm.value.email_From;
+
+    //  this.emailTo = $('#emailto').val();
+    this.emailTo = this.emailForm.value.email_to;
+    // this.subjectValue = $('#subject').val();
+    this.subjectValue = this.emailForm.value.Subject_Content;
+    this.msg_id = tinymce.get('tinyIDInv').getContent();
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
@@ -2210,10 +2873,11 @@ export class DupInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "invoice_details_sendmail";
     api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_email_req.ccEmailId = this.edit_array_emailCC_Checkbox;
     api_email_req.billId = this.Email_BillId;
 
     api_email_req.fromEmailId = this.FromEmailValue;
-    if (this.FromEmailValue === null || this.FromEmailValue === '' || this.FromEmailValue === 'undefined' || this.FromEmailValue === undefined) {
+    if (this.emailForm.value.email_From === null || this.emailForm.value.email_From === '' || this.emailForm.value.email_From === 'undefined' || this.emailForm.value.email_From === undefined) {
 
       iziToast.warning({
         message: "Choose From Email Value",
@@ -2237,7 +2901,9 @@ export class DupInvoiceComponent implements OnInit {
     // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.pdf_state = pdf_state;
     api_email_req.subject = this.subjectValue;
-    if (this.subjectValue === null || this.subjectValue === '' || this.subjectValue === 'undefined' || this.subjectValue === undefined) {
+    this.emailForm.value.Subject_Content
+
+    if (this.emailForm.value.Subject_Content === null || this.emailForm.value.Subject_Content === '' || this.emailForm.value.Subject_Content === 'undefined' || this.emailForm.value.Subject_Content === undefined) {
 
       iziToast.warning({
         message: "Choose Subject",
@@ -2310,8 +2976,8 @@ export class DupInvoiceComponent implements OnInit {
       height: 500,
       plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
       toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
-      alignleft aligncenter alignright alignjustify | \
-      bullist numlist outdent indent | autoresize',
+       alignleft aligncenter alignright alignjustify | \
+       bullist numlist outdent indent | autoresize',
       paste_data_images: true,
       images_upload_url: 'upload.php',
       automatic_uploads: false,
@@ -2801,7 +3467,7 @@ export class DupInvoiceComponent implements OnInit {
         this.TermDetailsList = response.terms_details;
         this.RecurringForm.patchValue({
 
-          'date': response.reccuring_details.fixed_next_dt,
+          'date': response.reccuring_details.recured_date_show,
           'fixedChargeDuration': response.reccuring_details.fixed_duration,
           'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
 
@@ -2821,6 +3487,42 @@ export class DupInvoiceComponent implements OnInit {
           position: 'topRight'
         });
         $('#RecurringFormIdDI').modal("hide");
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
+  yearsAPI() {
+
+    let api_req: any = new Object();
+    let api_year: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/yearValueFilter";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_year.action = "yearValueFilter";
+    api_year.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_year;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+
+        this.yearsList = response;
+
+      } else {
+
+
+
+
       }
     }),
       (error: any) => {
@@ -3678,14 +4380,10 @@ export class DupInvoiceComponent implements OnInit {
   }
 
   get_WFA_ResellerCommission(id: any, i: any) {
-
+    this.CommissionType1 = [];
     this.billId_ResellerCommissionId = id;
     $("#ActionIdInvDup" + i).modal("hide");
     // $("body").removeClass("modal-open");
-
-    this.withoutFormArrayResellerCommissionForm.reset();
-
-
     let api_req: any = new Object();
     let api_resCommEdit: any = new Object();
     api_req.moduleType = "invoice";
@@ -3696,33 +4394,55 @@ export class DupInvoiceComponent implements OnInit {
     api_resCommEdit.billId = this.billId_ResellerCommissionId;
     api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_resCommEdit;
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("response", response)
       this.spinner.hide();
-
-      this.commissionGrossAmount = response.grossAmount;
+      // this.CommissionType = response;
+      this.resellercommissiontype = response.commission_type
+      this.commlistall1 = response.editcommList;
 
       if (response != '') {
+        this.resellercommissiontype2 = response;
+        this.ResellerName_Customer = response.editcommList[0].reseller_name;
+        this.ResellerId_Customer = response.editcommList[0].reseller_id;
+        for (let i = 0; i < response.editcommList.length; i++) {
+          var gh = response.editcommList[i].commIndex;
+          this.commissionGrossAmount = response.editcommList[i].grossAmount;
+          this.resellercommissiontype1.push({ val: gh });
+          console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
+        }
+        console.log("this.resellercommissiontype1-outside loop", this.resellercommissiontype1);
 
-        console.log("response-check", response.reseller_comm[0].commission_type);
+        const formArray = new FormArray([]);
+        for (let i = 0; i < response.editcommList.length; i++) {
 
-        this.CommissionType = response.reseller_comm[0].commission_type;
-        this.resellerCommissionList = response.reseller_comm;
-        this.commissionGrossAmount = response.grossAmount;
-        this.reseller_comm_id = response.reseller_comm[0].reseller_comm_id;
+          var k = response.editcommList[i].commission_type;
+          this.CommissionType1.push(k);
+          console.log(this.CommissionType1);
 
-        this.withoutFormArrayResellerCommissionForm.patchValue({
-          'ResellerName_WFA': response.reseller_comm[0].reseller_name,
-          'CommissionType_WFA': response.reseller_comm[0].commission_type,
-          'CommissionValue_WFA': response.reseller_comm[0].commission_value,
-          'CommissionAmount_WFA': response.reseller_comm[0].commission_amt,
-          'PdfShow_WFA': response.reseller_comm[0].pdf_show,
+          this.inv_resellerCommissionForm.patchValue({
+            "billChildid1": response.editcommList[i].reseller_comm_id,
+            "commIndex": response.editcommList[i].commIndex,
+            "reseller_name": response.editcommList[i].reseller_name,
+            "commission_type": response.editcommList[i].commission_type,
+            "commission_value": response.editcommList[i].commission_value,
+            "commission_amt": response.editcommList[i].commission_amt,
+            "pdf_show": response.editcommList[i].pdf_show == 1 ? true : false,
+            "reseller_comm_id": response.editcommList[i].reseller_comm_id,
+            "reseller_id": response.editcommList[i].reseller_id,
+            "billId": response.editcommList[i].billId,
+            "grossAmount": response.editcommList[i].grossAmount,
 
-        });
+          });
+
+
+        }
+        console.log(this.CommissionType);
+
+
+
 
       } else {
-
-
         iziToast.warning({
           message: "No Match. Please try again",
           position: 'topRight'
@@ -3737,9 +4457,13 @@ export class DupInvoiceComponent implements OnInit {
         console.log("final error", error);
       };
 
+
   }
-  getResellerCommission(id: any) {
+  get_WFA_ResellerCommission_formarray(id: any, i: any) {
+    this.CommissionType1 = [];
     this.billId_ResellerCommissionId = id;
+    $("#ActionIdInvDup" + i).modal("hide");
+    // $("body").removeClass("modal-open");
     let api_req: any = new Object();
     let api_resCommEdit: any = new Object();
     api_req.moduleType = "invoice";
@@ -3747,102 +4471,56 @@ export class DupInvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_resCommEdit.action = "get_reseller_commission_details";
-    api_resCommEdit.billId = id;
+    api_resCommEdit.billId = this.billId_ResellerCommissionId;
     api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_resCommEdit;
-
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("response", response)
       this.spinner.hide();
-      if (response.status == true) {
-        console.log("response-check", response.reseller_comm[0].commission_type);
+      // this.CommissionType = response;
+      this.resellercommissiontype = response.commission_type
+      this.commlistall1 = response.editcommList;
 
-        this.CommissionType = response.reseller_comm[0].commission_type;
-        this.resellerCommissionList = response.reseller_comm;
-
-
-
-        // if(this.resellerCommissionList!=undefined&&this.resellerCommissionList!=null&&this.resellerCommissionList!='undefined'&&this.resellerCommissionList!='null'&&this.resellerCommissionList!=''){
-        // this.resellerCommissionList.forEach((element: any) => {
-        //   if(element.commission_type==id){
-        //     // $("#CommissionType_"+)
-        //     return true;
-        //   }else{
-        //     return false;
-        //   }
-        //   console.log(element.commission_type)
-        // });
-
-        for (var i = 0; i <= this.resellerCommissionList.length - 1; i++) {
-          for (var k = 0; k <= this.resellercommissiontype.length - 1; k++) {
-            if (this.resellerCommissionList[i].commission_type == this.resellercommissiontype[k].id) {
-              console.log("#CommissionType_" + i + "_" + k)
-              console.log(this.resellercommissiontype[k].id)
-              $("#CommissionType_" + i + "_" + k).val(this.resellercommissiontype[k].id);
-            }
-          }
-          // }
+      if (response != '') {
+        this.resellercommissiontype2 = response;
+        for (let i = 0; i < response.editcommList.length; i++) {
+          var gh = response.editcommList[i].commIndex;
+          this.commissionGrossAmount = response.editcommList[i].grossAmount;
+          this.resellercommissiontype1.push({ val: gh });
+          console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
         }
-        // this.addressForm.patchValue({
+        console.log("this.resellercommissiontype1-outside loop", this.resellercommissiontype1);
 
-
-        //   'ResellerName': response.reseller_comm[0].reseller_name,
-        //   'CommissionType': response.reseller_comm[0].commission_type,
-        //   'CommissionValue': response.reseller_comm[0].commission_value,
-        //   'CommissionAmount': response.reseller_comm[0].commission_amt,
-        //   'PdfShow': response.reseller_comm[0].pdf_show,
-
-
-
-        // });
-        console.log(this.addressControls.controls)
         const formArray = new FormArray([]);
-        for (let index = 0; index < response.reseller_comm.length; index++) {
-          this.radioSelected = response.reseller_comm[index].commission_value;
+        for (let i = 0; i < response.editcommList.length; i++) {
+
+          var k = response.editcommList[i].commission_type;
+          this.CommissionType1.push(k);
+          console.log(this.CommissionType1);
+
           formArray.push(this.fb.group({
-            "ResellerName": response.reseller_comm[index].reseller_name,
-            "CommissionType": response.reseller_comm[index].commission_type,
-            // "CommissionType": response.reseller_comm[index].commission_type == 1 ? true : false,
-            "CommissionValue": response.reseller_comm[index].commission_value,
-            "CommissionAmount": response.reseller_comm[index].commission_amt,
-            "PdfShow": response.reseller_comm[index].pdf_show == 1 ? true : false,
-
-
+            "billChildid1": response.editcommList[i].reseller_comm_id,
+            "commIndex": response.editcommList[i].commIndex,
+            "reseller_name": response.editcommList[i].reseller_name,
+            "commission_type": response.editcommList[i].commission_type,
+            "commission_value": response.editcommList[i].commission_value,
+            "commission_amt": response.editcommList[i].commission_amt,
+            "pdf_show": response.editcommList[i].pdf_show == 1 ? true : false,
+            "reseller_comm_id": response.editcommList[i].reseller_comm_id,
+            "reseller_id": response.editcommList[i].reseller_id,
+            "billId": response.editcommList[i].billId,
+            "grossAmount": response.editcommList[i].grossAmount,
 
           })
-
-
-
           );
-          for (var k = 0; k <= this.resellercommissiontype[index].length; k++) {
-            $("#CommissionType_" + k).val(response.reseller_comm[index].commission_type)
-          }
-
-
         }
-
-
-
+        console.log(this.CommissionType);
         console.log(formArray)
-        this.addressForm.setControl('addresses', formArray);
-
-
-        for (let index = 0; index < response.reseller_comm.length; index++) {
-
-          if (response.reseller_comm[index].pdf_show == 1) {
-
-            $('#pdfshow' + [index]).prop('checked', true);
-
-
-
-          }
-        }
-
-
-
+        this.resellerCommissionForm.setControl('addresses_rc', formArray);
+        console.log("this.addresses---end of edit", this.resellerCommissionForm.value.addresses_rc)
+        this.data_value = this.resellerCommissionForm.value.addresses_rc;
 
       } else {
-
-
         iziToast.warning({
           message: "No Match. Please try again",
           position: 'topRight'
@@ -3857,70 +4535,68 @@ export class DupInvoiceComponent implements OnInit {
         console.log("final error", error);
       };
 
+
   }
-  set_WFA_ResellerCommission() {
-    this.commissionAmount_WFA = $('#CommissionAmount_WFA_ID').val();
+
+  update_WFA_ResellerCommission() {
 
     this.spinner.show();
+
+
+    // $("#faqhead" + i).modal("hide");
+    // $("body").removeClass("modal-open");
     let api_req: any = new Object();
-    let api_resCommSave: any = new Object();
+    let api_resCommEdit: any = new Object();
     api_req.moduleType = "invoice";
     api_req.api_url = "invoice/update_reseller_commission_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_resCommSave.action = "update_reseller_commission_details";
+    api_resCommEdit.action = "update_reseller_commission_details";
+    api_resCommEdit.billId = this.billId_ResellerCommissionId;
+    api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_resCommEdit.commIndex = this.inv_resellerCommissionForm.value.commIndex;
 
-
-    api_resCommSave.billId = this.billId_ResellerCommissionId;
-    api_resCommSave.user_id = localStorage.getItem('erp_c4c_user_id');
-    if (this.ResellerName_Customer == undefined || this.ResellerName_Customer == 'undefined' || this.ResellerName_Customer == '') {
+    api_resCommEdit.commission_type = this.commissionType_value;
+    api_resCommEdit.commission_value = $('#CommissionValue_WFA_ID_').val();
+    api_resCommEdit.commission_amt = $('#CommissionAmount1_WFA_ID_').val();
+    api_resCommEdit.pdf_show = this.inv_resellerCommissionForm.value.pdf_show;
+    api_resCommEdit.reseller_comm_id = this.inv_resellerCommissionForm.value.reseller_comm_id;
+    if (this.ResellerName_Customer == undefined || this.ResellerName_Customer == 'undefined' || this.ResellerName_Customer == 'null' || this.ResellerName_Customer == null || this.ResellerName_Customer == '') {
+      this.spinner.hide();
       iziToast.error({
-        message: "Reseller Name is not given",
+        message: "Reseller Name Missing",
         position: 'topRight'
       });
-    } else {
-      api_resCommSave.reseller_name = this.ResellerName_Customer;
-    }
-
-    api_resCommSave.reseller_id = this.ResellerId_Customer;
-    if (this.commissionType_value == undefined || this.commissionType_value == 'undefined' || this.commissionType_value == '') {
-      iziToast.error({
-        message: "Customer Type is not given",
-        position: 'topRight'
-      });
+      return false;
 
     } else {
-      api_resCommSave.commission_type = this.commissionType_value;
+      api_resCommEdit.reseller_name = this.ResellerName_Customer;
     }
 
-    api_resCommSave.commission_value = this.withoutFormArrayResellerCommissionForm.value.CommissionValue_WFA;
-    api_resCommSave.commission_amt = this.commissionAmount_WFA;
-    api_resCommSave.reseller_comm_id = this.reseller_comm_id;
+    api_resCommEdit.reseller_id = this.ResellerId_Customer;
+    api_resCommEdit.grossAmount = this.inv_resellerCommissionForm.value.grossAmount;
 
-    api_resCommSave.pdf_show = this.withoutFormArrayResellerCommissionForm.value.PdfShow_WFA;
-
-
-    api_req.element_data = api_resCommSave;
+    api_req.element_data = api_resCommEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status == true) {
+      $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
+
+
+      if (response != '') {
         this.spinner.hide();
         iziToast.success({
-          message: "Reseller Commission Details updated Successful",
+          message: "Reseller Payment Updated Successfully ",
           position: 'topRight'
         });
-        $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
-
 
       } else {
-
         this.spinner.hide();
+
         iziToast.warning({
           message: "No Match. Please try again",
           position: 'topRight'
         });
-        $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
       }
     }),
       (error: any) => {
@@ -3929,12 +4605,111 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
+        console.log("final error", error);
+      };
+    this.spinner.hide();
+
+  }
+  update_WFA_ResellerCommission_formArray() {
+
+    console.log("form array values- this.resellerCommissionForm.value.addresses_rc", this.resellerCommissionForm.value.addresses_rc)
+    var addr1 = this.resellerCommissionForm.value.addresses_rc;
+    console.log("length", addr1.length)
+    for (let i = 0; i < addr1.length; i++) {
+      console.log(i)
+      console.log(document.getElementById("CommissionAmount1_WFA_ID_" + i).innerHTML)
+      setTimeout(() => {
+        console.log(this.resellerCommissionForm.value.addresses_rc[i].commission_amt)
+      }, 2000);
+
+      console.log("form array-reseller_name", this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName);
+      console.log("form array-billChildid1", this.resellerCommissionForm.value.addresses_rc[i].billChildid1);
+      console.log("form array-CommissionType_", this.resellerCommissionForm.value.addresses_rc[i].CommissionType_);
+      console.log("form array-commission_value", this.resellerCommissionForm.value.addresses_rc[i].commission_value);
+      console.log("form array-commission_amt", this.resellerCommissionForm.value.addresses_rc[i].commission_amt);
+      console.log("form array-reseller_comm_id", this.resellerCommissionForm.value.addresses_rc[i].reseller_comm_id);
+      console.log("form array-commIndex", this.resellerCommissionForm.value.addresses_rc[i].commIndex);
+      console.log("form array-reseller_id", this.resellerCommissionForm.value.addresses_rc[i].reseller_id);
+      console.log("form array-billId", this.resellerCommissionForm.value.addresses_rc[i].billId);
+      console.log("form array-grossAmount", this.resellerCommissionForm.value.addresses_rc[i].grossAmount);
+    }
+
+
+    // $("#faqhead" + i).modal("hide");
+    // $("body").removeClass("modal-open");
+    let api_req: any = new Object();
+    let api_resCommEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_reseller_commission_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_resCommEdit.action = "update_reseller_commission_details";
+    api_resCommEdit.billId = this.billId_ResellerCommissionId;
+    api_resCommEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    //  this.addr = this.resellerCommissionForm.value.addresses_rc;
+    //  api_resCommEdit.billchild_values = this.addr;
+
+
+
+    var addr1 = this.resellerCommissionForm.value.addresses_rc;
+    console.log("addr1-test-commission amount", $('#CommissionAmount1_WFA_ID_0').val());
+    console.log("addr1-test-resellername", $('#reseller_name0').val())
+    // return false;
+    for (let i = 0; i < addr1.length - 1; i++) {
+
+
+      console.log("i value", i)
+      addr1[i].billChildid1 = $('#billChildid1' + i).val();
+      addr1[i].commIndex = $('#commIndex' + i).val();
+      addr1[i].reseller_name = this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName
+      addr1[i].commission_type = $('#CommissionType_' + i).val();
+      addr1[i].commission_value = $('#CommissionValue_WFA_ID_' + i).val();
+
+      addr1[i].commission_amt = $('#CommissionAmount1_WFA_ID_' + i).val();
+      addr1[i].pdf_show = $('#pdf_show' + i).val();
+      addr1[i].reseller_comm_id = $('#reseller_comm_id' + i).val();
+      addr1[i].reseller_id = $('#reseller_id' + i).val();
+      addr1[i].billId = $('#billId' + i).val();
+      addr1[i].grossAmount = $('#grossAmount' + i).val();
+    }
+    console.log("addr1", addr1)
+
+    api_resCommEdit.billchild_values = addr1;
+
+    api_req.element_data = api_resCommEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      $('#invwithoutFormArrayResellerCommissionFormIdDI').modal('hide');
+
+
+      if (response != '') {
+        iziToast.success({
+          message: "Reseller Payment Updated Successfully ",
+          position: 'topRight'
+        });
+
+      } else {
+
+
+        iziToast.warning({
+          message: "No Match. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
         console.log("final error", error);
       };
 
-
   }
+
+
   setResellerCommission() {
 
 
@@ -3964,7 +4739,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Reseller Commission Details updated Successful",
           position: 'topRight'
         });
-        $('#InvResellerCommissionFormIdDI').modal('hide');
+        $('#ResellerCommissionFormId').modal('hide');
 
 
       } else {
@@ -3974,7 +4749,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "No Match. Please try again",
           position: 'topRight'
         });
-        $('#InvResellerCommissionFormIdDI').modal('hide');
+        $('#ResellerCommissionFormId').modal('hide');
       }
     }),
       (error: any) => {
@@ -3983,7 +4758,7 @@ export class DupInvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        $('#InvResellerCommissionFormIdDI').modal('hide');
+        $('#ResellerCommissionFormId').modal('hide');
         console.log("final error", error);
       };
 
@@ -4102,9 +4877,18 @@ export class DupInvoiceComponent implements OnInit {
     $('#file').val('');
 
   }
-
-
+  showTooltip() {
+    
+    var tooltip=$('#tooltip').val();
+    tooltip.style.visibility = "visible";
 }
 
+hideTooltip() {
+  var tooltip=$('#tooltip').val();
+   
+    tooltip.style.visibility = "hidden";
+}
+
+}
 
 

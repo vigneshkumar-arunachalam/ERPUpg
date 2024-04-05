@@ -29023,4 +29023,10 @@ input,select,textarea, .ng-autocomplete .autocomplete-container .input-container
 .modal-backdrop{
     z-index: 999!important;
 }
+#tinyLandscapeEmailID_CUSMASDUP textarea{
+    width: 100% !important;
+  }
+#tinyLandscapeEmailID_CUSMASDUP{
+    width: 100%;
+  }
 .autocomplete-container .suggestions-container{z-index: 99;}

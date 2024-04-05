@@ -653,11 +653,114 @@ export class ContractComponent implements OnInit {
     });
 
   }
-  contractUpdate() {
+  contractUpdate(index:any) {
+    this.spinner.show();
+    
+    console.log(this.editContractGroupForm.value)
+    console.log("e_company_Name",this.editContractGroupForm.value.edit_addresses[index].e_company_Name)
+    console.log("e_contractName",this.editContractGroupForm.value.edit_addresses[index].e_contractName)
+    // console.log("group select id",this.edit_array)
+  
+    let api_req: any = new Object();
+    let update_req: any = new Object();
+    api_req.moduleType = "customer_contract";
+    api_req.api_url = "customer_contract/customer_contract_group_update"
+    api_req.api_type = "web";
+
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    update_req.action = "customer_contract_group_update";
+    update_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    // update_req.e_company_Name=this.customerIDJoin;
+
+    
+    const hasNullCompanyNames_e = this.editContractGroupForm.value.edit_addresses[index].e_company_Name
+    if (this.editContractGroupForm.value.edit_addresses[index].e_company_Name == null || this.editContractGroupForm.value.edit_addresses[index].e_company_Name == '') {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Company Name Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    const hasNullContractName_e = this.editContractGroupForm.value.edit_addresses[index].e_contractName;
+    if (hasNullContractName_e===null || hasNullContractName_e=='' ) {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Contract Name Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    
+    const hasNullClassification_e = this.editContractGroupForm.value.edit_addresses[index].e_classificationName;
+    if (hasNullClassification_e===null || hasNullClassification_e=='') {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'Classification Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    
+    const hasNullfromDate_e = this.editContractGroupForm.value.edit_addresses[index].e_fromDate;
+    if (hasNullfromDate_e===null || hasNullfromDate_e=='') {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'From Date Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    
+    const hasNullToDate_e = this.editContractGroupForm.value.edit_addresses[index].e_toDate;
+    if (hasNullToDate_e===null || hasNullToDate_e=='') {
+      this.spinner.hide();
+      iziToast.error({
+        title: 'To Date Null',
+        message: 'Contract not Saved !',
+      });
+      return false;
+    }
+    
+    
+    update_req.values = this.editContractGroupForm.value.edit_addresses;
+    api_req.element_data = update_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      console.log("update response", response)
+
+      if (response.status == true) {
+        this.spinner.hide();
+        this.edit_array = [];
+        this.contractList({});
+        this.editContractGroupForm.reset();
+        iziToast.success({
+          title: 'Success',
+          message: 'Contract has been updated!',
+        });
+        this.contractList({})
+        $("#editCustomerContractId").modal("hide");
+      }
+      else {
+        this.spinner.hide();
+        iziToast.error({
+          title: 'Error',
+          message: 'Contract has not been updated!',
+        });
+        $("#editCustomerContractId").modal("hide");
+      }
+
+    });
+
+
+  }
+  contractUpdate_previous() {
     this.spinner.show();
     $("#editCustomerContractId").modal("hide");
     console.log(this.editContractGroupForm.value)
-    // console.log("group select id",this.edit_array)
+  
     let api_req: any = new Object();
     let update_req: any = new Object();
     api_req.moduleType = "customer_contract";
@@ -1886,6 +1989,7 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
         $('#searchContractId').modal('hide');
         this.result = response.customer_contract_details;
+        this.edit_array = [];
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
       } else {

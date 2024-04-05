@@ -100,6 +100,7 @@ export class InvoiceComponent implements OnInit {
   emailTo: any;
   subjectValue: any;
   Select_To_Type_radiobox_Value: any;
+
   email_template: any;
   email_fromList: any;
   email_crmTemplateList: any;
@@ -343,6 +344,8 @@ export class InvoiceComponent implements OnInit {
   yearsID: any;
   getSearch: boolean = false;
   showHi: boolean = false;
+  SelectType_finance: any;
+  SelectType_company: any;
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -420,6 +423,7 @@ export class InvoiceComponent implements OnInit {
   keywordResellerName = 'customerName';
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
+    this.Select_To_Type_radiobox_Value = 'finance';
 
     this.commissionType_value = 4;
     // setTimeout(() => {
@@ -580,7 +584,11 @@ export class InvoiceComponent implements OnInit {
       'templateName_addPopUP': new FormControl(null),
     });
     var date = new Date();
-    this.transformDate = this.datePipe.transform(date, 'dd/MM/yyyy');
+    this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+
+
+   
+   // $('#dateee').val(this.transformDate);
 
     this.chartOptions = {
       theme: "light2",
@@ -931,6 +939,17 @@ export class InvoiceComponent implements OnInit {
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
     console.log(this.Select_To_Type_radiobox_Value);
+
+
+   if( this.Select_To_Type_radiobox_Value=='finance'){
+    this.emailForm.patchValue({
+      'email_to':  this.SelectType_finance,
+    })
+   }else{
+    this.emailForm.patchValue({
+      'email_to': this.SelectType_company,
+    })
+   }
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
@@ -2253,9 +2272,9 @@ export class InvoiceComponent implements OnInit {
           this.owingAmt = response.owing_amount;
           this.processPaymentForm.patchValue({
 
-            'note': response.payment_details[0].notes,
+           // 'note': response.payment_details[0].notes,
             // 'date': response.payment_details[0].processDate,
-            'paymenttype': response.payment_details[0].paymentMode,
+           // 'paymenttype': response.payment_details[0].paymentMode,
 
           });
         }
@@ -2263,9 +2282,11 @@ export class InvoiceComponent implements OnInit {
         const now = Date.now();
         // this.myFormattedDate = this.pipe.transform(now, 'short');
         // this.myFormattedDate1 = this.pipe.transform(this.PaymentProcessDatee, 'short');
-
+        const date = new Date();
+        const transformDate1 = this.datePipe.transform(date, 'yyyy-MM-dd');
+        console.log("current date time",transformDate1)
         this.processPaymentForm.patchValue({
-          'date': response.invoice_details[0].billDate,
+          'date': transformDate1,
           'invoiceID': response.invoice_details[0].invoice_no,
           'toal': response.invoice_details[0].netPayment,
           'biller': response.invoice_details[0].billerName,
@@ -2316,8 +2337,13 @@ export class InvoiceComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_emailDetails.action = "send_invoice_details";
+    if(id!=undefined){
+      api_emailDetails.billId = id;
+    }else{
+      api_emailDetails.billId = '';
+    }
 
-    api_emailDetails.billId = id;
+
     api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_emailDetails;
 
@@ -2330,6 +2356,8 @@ export class InvoiceComponent implements OnInit {
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
+        this.SelectType_finance=response.finance_email;
+        this.SelectType_company=response.company_email;
         this.mailContent = tinymce.get('tinyID1').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
@@ -2693,15 +2721,10 @@ export class InvoiceComponent implements OnInit {
 
         this.processPaymentForm.patchValue({
           'date': response.payment_edit[0].processDate_show,
-          'paid': response.payment_edit[0].paidAmount,
+          'amount': response.payment_edit[0].paidAmount,
           'paymenttype': response.payment_edit[0].paymentMode,
           'note': response.payment_edit[0].notes,
-
-
-
         });
-
-
 
       } else {
         this.spinner.hide();

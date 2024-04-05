@@ -1,983 +1,986 @@
-#viewCustomerFormId{
+#dupCusviewCustomerFormId{
+  padding-right: 0px !important;
+}
+#dupCusviewCustomerFormId .modal-dialog{
+  max-width: 65%;
+}
+ 
+
+/* .modal-title{
+  color:#ffff!important
+} */
+
+#dupCusaddCustomerFormId{
     padding-right: 0px !important;
+}
+/* #dupCusaddCustomerFormId .modal-header  {
+
+  background-color: rgb(29, 78, 97);
+} */
+/* #dupCusaddCustomerFormId .modal-header h1 {
+
+  color:#ffff;
+}
+#dupCusaddCustomerFormId .modal-header .close{
+  color:#ffff;
+} */
+#dupCusaddCustomerFormId .modal-dialog{
+    max-width: 80%;
+}
+
+#dupCusaddCustomerFormId .td .th{
+    width: 200px;
+    margin: 0px 10px;
+}
+
+.alertdangerddcustomernewallcss{
+  color: #ff4d4f;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+  margin: 10px 15px !important;
   }
-  #viewCustomerFormId .modal-dialog{
-    max-width: 65%;
-  }
+
+#dupCusspecialEditCustomerFormId .modal-body label{
+  font-weight:500;
+  color: black;
+}
+
+#dupCusmconnectPartnerDetailsFormId .modal-dialog{
+  max-width: 65%;
+}
+#dupCusmconnectPartnerDetailsFormId .modal-body label{
+  font-weight:500;
+  color: black;
+}
+
+#DupCusMrvoipPartnerDetailsFormId .modal-dialog{
+  max-width: 65%;
+}
+#DupCusMrvoipPartnerDetailsFormId .modal-body label{
+  font-weight:500;
+  color: black;
+}
+#dupCuscall4tellPartnerDetailsFormId .modal-body label{
+  font-weight:500;
+  color: black;
+}
+
+.ckboxclass{
+  margin-left: 10px;
+}
+#dupCusinvoiceSharedCustomerFormId .modal-body label{
+  font-weight:500;
+  color: black;
+}
+
+/* .addcustomernewallcss .ng-autocomplete input {
+  color: rgb(153, 54, 54);
+}
+.ng-autocomplete 
+  ::ng-deep .autocomplete-container {
+    margin-left: 15px;
+    padding-left: 5px;
+    width: 428px;
+    color: blue;
+    border-radius: 2px solid grey;
+    border-color: grey;
+    border-bottom: 0px !important;
+    box-shadow: none;
    
-  
-  /* .modal-title{
-    color:#ffff!important
-  } */
-  
-  #addCustomerFormId{
-      padding-right: 0px !important;
   }
-  /* #addCustomerFormId .modal-header  {
-  
-    background-color: rgb(29, 78, 97);
-  } */
-  /* #addCustomerFormId .modal-header h1 {
-  
-    color:#ffff;
-  }
-  #addCustomerFormId .modal-header .close{
-    color:#ffff;
-  } */
-  #addCustomerFormId .modal-dialog{
-      max-width: 80%;
-  }
-  
-  #addCustomerFormId .td .th{
-      width: 200px;
-      margin: 0px 10px;
-  }
-  
-  .alertdangerddcustomernewallcss{
-    color: #ff4d4f;
-    background-color: #ffe5e5;
-    border-color: #ffe5e5;
-    width: 100% !important;
-    margin: 10px 15px !important;
-    }
-  
-  #specialEditCustomerFormId .modal-body label{
-    font-weight:500;
-    color: black;
-  }
-  
-  #mconnectPartnerDetailsFormId .modal-dialog{
-    max-width: 65%;
-  }
-  #mconnectPartnerDetailsFormId .modal-body label{
-    font-weight:500;
-    color: black;
-  }
-  
-  #MrvoipPartnerDetailsFormId .modal-dialog{
-    max-width: 65%;
-  }
-  #MrvoipPartnerDetailsFormId .modal-body label{
-    font-weight:500;
-    color: black;
-  }
-  #call4tellPartnerDetailsFormId .modal-body label{
-    font-weight:500;
-    color: black;
-  }
-  
-  .ckboxclass{
-    margin-left: 10px;
-  }
-  #invoiceSharedCustomerFormId .modal-body label{
-    font-weight:500;
-    color: black;
-  }
-  
-  /* .addcustomernewallcss .ng-autocomplete input {
-    color: rgb(153, 54, 54);
-  }
+
+
   .ng-autocomplete 
-    ::ng-deep .autocomplete-container {
-      margin-left: 15px;
-      padding-left: 5px;
-      width: 428px;
-      color: blue;
-      border-radius: 2px solid grey;
-      border-color: grey;
-      border-bottom: 0px !important;
-      box-shadow: none;
-     
-    }
-  
-  
-    .ng-autocomplete 
-    ::ng-deep .autocomplete-container .input-container input {
-      font-size: 14px;
-      box-sizing: border-box;
-      border: 1px solid #ccc;
-      box-shadow: none;
-    
-      background-color: #fff;
-      color: #000000de;
-      width: 100%;
-      padding: 0 15px;
-      line-height: 40px;
-      height: 40px;
-  }
-  
-  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input:focus {
+  ::ng-deep .autocomplete-container .input-container input {
+    font-size: 14px;
+    box-sizing: border-box;
     border: 1px solid #ccc;
-    box-shadow: 1px 1px 10px #ededed
+    box-shadow: none;
+  
+    background-color: #fff;
+    color: #000000de;
+    width: 100%;
+    padding: 0 15px;
+    line-height: 40px;
+    height: 40px;
+}
+
+.ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input:focus {
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 10px #ededed
+}
+
+
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container  .input-container input{
+      color: rgb(17, 17, 17);
   }
-  
-  
-    .ng-autocomplete 
-    ::ng-deep .autocomplete-container  .input-container input{
-        color: rgb(17, 17, 17);
-    }
-    .ng-autocomplete 
-    ::ng-deep .autocomplete-container  .input-container {
-      border-width: 0px;
-    }
-    */
-   
-  
-    .ng-autocomplete 
-    ::ng-deep .autocomplete-container .input-container input {
-   
-      text-align: left;
-      display: block;
-      width: 100%;
-      height: 2.625rem;
-      padding: 0.375rem 1.2rem;
-      /* padding-left: 4px!important; */
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 1.5;
-      background-color: #fff;
-      background-clip: padding-box;
-      /* border: 1px solid #f1f2f6; */
-      border: 1px solid #beeaca;
-      border-radius: 5px;
-      box-shadow: 0 0;
-      color: #495057;
-      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container  .input-container {
+    border-width: 0px;
+  }
+  */
+ 
+
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input {
+ 
+    text-align: left;
+    display: block;
+    width: 100%;
+    height: 2.625rem;
+    padding: 0.375rem 1.2rem;
+    /* padding-left: 4px!important; */
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    /* border: 1px solid #f1f2f6; */
+    border: 1px solid #beeaca;
+    border-radius: 5px;
+    box-shadow: 0 0;
+    color: #495057;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    
+}
+
+
+
+.ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input:focus {
+   border: 1px solid  #3d0096;
+
+  box-shadow: 1px 1px 10px #ededed
+}
+
+
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container  .input-container input{
+    color: #495057;
       
   }
-  
-  
-  
   .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input:focus {
-     border: 1px solid  #3d0096;
-  
-    box-shadow: 1px 1px 10px #ededed
+  ::ng-deep .autocomplete-container  .input-container {
+    border-width: 0px;
+  }
+
+
+/* .addcustomernewallcss .modal-body input[type=text]{
+  font-weight:500;
+  color: black;
+  border-color: rgb(14, 13, 13);
+}
+.addcustomernewallcss .modal-body select{
+  font-weight:500;
+  color: black;
+  border-color: rgb(14, 13, 13);
+}
+.addcustomernewallcss .modal-body .ng-autocomplete{
+  font-weight:500;
+  color: black;
+  border-color: rgb(14, 13, 13);
+} */
+
+#dupCuseditCustomerFormId .modal-dialog{
+    max-width: 80%;
+}
+#dupCusbillCodeFormId .modal-dialog{
+  max-width: 60%;
+}
+#dupCuslandscapeEmailFormId .modal-dialog{
+  max-width: 60%;
+ 
+}
+#tinyLandscapeEmailID_CUSMASDUP textarea{
+  width: 100% !important;
+}
+
+/* table {
+ 
+    table-layout: fixed;
+
+    width: 100%
   }
   
-  
-    .ng-autocomplete 
-    ::ng-deep .autocomplete-container  .input-container input{
-      color: #495057;
-        
-    }
-    .ng-autocomplete 
-    ::ng-deep .autocomplete-container  .input-container {
-      border-width: 0px;
-    }
-  
-  
-  /* .addcustomernewallcss .modal-body input[type=text]{
-    font-weight:500;
-    color: black;
-    border-color: rgb(14, 13, 13);
-  }
-  .addcustomernewallcss .modal-body select{
-    font-weight:500;
-    color: black;
-    border-color: rgb(14, 13, 13);
-  }
-  .addcustomernewallcss .modal-body .ng-autocomplete{
-    font-weight:500;
-    color: black;
-    border-color: rgb(14, 13, 13);
+  th,tr
+  td {
+   
+    width: 80px;
+    overflow: hidden;
   } */
+  .userDatatable table td{padding:4px 4px 4px!important;}
+  .userDatatable  table tr td span
+  {display: block; 
+     /* white-space: nowrap; 
+     width: 60px; 
+     overflow: hidden;
+     text-overflow: ellipsis; */
+     }
+  /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
+  .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
+  .userDatatable .d-flex{justify-content: center;margin-right: 0;}
+  .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
+  /* .userDatatable table th{padding-left: 10px! important} */
+
+
+
   
-  #editCustomerFormId .modal-dialog{
-      max-width: 80%;
+
+  .dropdown {
+    position: relative;
   }
-  #billCodeFormId .modal-dialog{
-    max-width: 60%;
+ 
+  .dropdown__list {
+    z-index:2;
+    position: absolute;
+    display: none;
+    padding: 10px;
+    min-width: 100%;
+    background: #fff;
+    border: 1px solid;
+    text-align: center;
+    cursor: pointer;
   }
-  #landscapeEmailFormId .modal-dialog{
-    max-width: 60%;
+  .dropdown__item {
+    list-style-type: none;
+  }
+  .dropdown__link {
+    display: block;
+    padding: 0.3em 1em;
+    background: white;
+    color: var(--dropdown__link_clr);
+    text-decoration: none;
+  }
+  .dropdown__link:hover {
+    opacity: 0.9;
+  }
+  .dropdown:hover .button {
+    opacity: 0.9;
+  }
+  /* changes made by aashiq starts */
+  .dropdown:hover .dropdown__list {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 31px;
+  }
+  .view:hover {
    
-  }
-  #tinyLandscapeEmailID{
-    width: 100% !important;
-    
-  }
-  
-  /* table {
-   
-      table-layout: fixed;
-  
-      width: 100%
-    }
-    
-    th,tr
-    td {
-     
-      width: 80px;
-      overflow: hidden;
-    } */
-    .userDatatable table td{padding:4px 4px 4px!important;}
-    .userDatatable  table tr td span
-    {display: block; 
-       /* white-space: nowrap; 
-       width: 60px; 
-       overflow: hidden;
-       text-overflow: ellipsis; */
-       }
-    /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
-    .userDatatable__imgWrapper.d-flex.align-items-center{justify-content: center;}
-    .userDatatable .d-flex{justify-content: center;margin-right: 0;}
-    .userDatatable tbody .custom-checkbox input[type="checkbox"] + label{margin-right: 0px!important;}
-    /* .userDatatable table th{padding-left: 10px! important} */
-  
-  
-  
-    
-  
-    .dropdown {
-      position: relative;
-    }
-   
-    .dropdown__list {
-      z-index:2;
-      position: absolute;
-      display: none;
-      padding: 10px;
-      min-width: 100%;
-      background: #fff;
-      border: 1px solid;
-      text-align: center;
-      cursor: pointer;
-    }
-    .dropdown__item {
-      list-style-type: none;
-    }
-    .dropdown__link {
-      display: block;
-      padding: 0.3em 1em;
-      background: white;
-      color: var(--dropdown__link_clr);
-      text-decoration: none;
-    }
-    .dropdown__link:hover {
-      opacity: 0.9;
-    }
-    .dropdown:hover .button {
-      opacity: 0.9;
-    }
-    /* changes made by aashiq starts */
-    .dropdown:hover .dropdown__list {
-      display: flex;
-      position: absolute;
-      top: 0;
-      right: 31px;
-    }
-    .view:hover {
-     
-        background: rgba(207, 20, 23, 0.5);
-        -webkit-border-radius: 50%;
-        border-radius: 50%;
-    }
-    .remove:hover {
-     
-      background: rgba(66, 124, 52, 0.5);
+      background: rgba(207, 20, 23, 0.5);
       -webkit-border-radius: 50%;
       border-radius: 50%;
   }
-    .close:hover {
-     
-    background: rgba(180, 12, 124, 0.4);
+  .remove:hover {
+   
+    background: rgba(66, 124, 52, 0.5);
     -webkit-border-radius: 50%;
     border-radius: 50%;
-  }
-    .dropdown a {
-      font-size: 14px;
-      /* margin: 5px 8px!important; */
-      padding: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 37px;
-      width: 37px;
-    }
-      
-      /* changes made by aashiq ends */
-  
+}
+  .close:hover {
    
-    .button {
-      padding: 0.6em 1.5em;
+  background: rgba(180, 12, 124, 0.4);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+  .dropdown a {
+    font-size: 14px;
+    /* margin: 5px 8px!important; */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 37px;
+    width: 37px;
+  }
     
-    }
-    .btn1 {
-      background-color: #007cbc;
-      border: none;
-      color: white;
-      padding: 0;
-      font-size: 16px;
-      width: 30px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 30px;
-      border-radius: 50%;
-    }
-    .btn1:hover {
-      background-color: rgb(221, 109, 152);
-    }
-    i.fa.fa-bars {
-      color: #fff!important;
+    /* changes made by aashiq ends */
+
+ 
+  .button {
+    padding: 0.6em 1.5em;
+  
   }
-  
-  .dropdown__item .hide{display: none;}
-  .dropdown__item:hover .hide{display: block;}
-  .dropdown__item:hover .show{display: none;}
-  
-  tr:nth-child(even) {background:#FFF}
-  tr:nth-child(odd) {background: #eee7e7}
-  
-  
-  /* aasiq autocomplete code below */
-  /* 
-  .addcustomernewallcss .modal-body ::ng-deep ng-autocomplete .autocomplete-container input:focus  
-  {
-      color: #495057;
-      background-color: #fff;
-      border-color: #5f63f2;
-      outline: 0;
-      box-shadow: 0 0, 0 5px 20px #5f63f21a;
+  .btn1 {
+    background-color: #007cbc;
+    border: none;
+    color: white;
+    padding: 0;
+    font-size: 16px;
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    border-radius: 50%;
   }
-  
-  .addcustomernewallcss .modal-body ::ng-deep ng-autocomplete .autocomplete-container input {
-  display: block;
-  width: 75%;
-  height: 2.625rem;
-  padding: 0.375rem 1.2rem;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  border: 1px solid #f1f2f6;
-  border-radius: 5px;
-  box-shadow: 0 0;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  .btn1:hover {
+    background-color: rgb(221, 109, 152);
   }
-  
-  .addcustomernewallcss .modal-body ::ng-deep ng-multiselect-dropdown .multiselect-dropdown .dropdown-btn{
-    display: block;
-  width: 100%;
-  height: 2.625rem;
-  padding: 0.375rem 1.2rem;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #495057;
-  background-color: #fff;
-  -webkit-background-clip: padding-box;
-  background-clip: padding-box;
-  border: 1px solid #f1f2f6;
-  border-radius: 5px;
-  box-shadow: 0 0;
-  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; 
-  }
-  .addcustomernewallcss .modal-body ::ng-deep ng-multiselect-dropdown .multiselect-dropdown .dropdown-btn:focus{
-    
+  i.fa.fa-bars {
+    color: #fff!important;
+}
+
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+
+tr:nth-child(even) {background:#FFF}
+tr:nth-child(odd) {background: #eee7e7}
+
+
+/* aasiq autocomplete code below */
+/* 
+.addcustomernewallcss .modal-body ::ng-deep ng-autocomplete .autocomplete-container input:focus  
+{
     color: #495057;
     background-color: #fff;
     border-color: #5f63f2;
     outline: 0;
     box-shadow: 0 0, 0 5px 20px #5f63f21a;
+}
+
+.addcustomernewallcss .modal-body ::ng-deep ng-autocomplete .autocomplete-container input {
+display: block;
+width: 75%;
+height: 2.625rem;
+padding: 0.375rem 1.2rem;
+font-size: 14px;
+font-weight: 400;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+-webkit-background-clip: padding-box;
+background-clip: padding-box;
+border: 1px solid #f1f2f6;
+border-radius: 5px;
+box-shadow: 0 0;
+transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.addcustomernewallcss .modal-body ::ng-deep ng-multiselect-dropdown .multiselect-dropdown .dropdown-btn{
+  display: block;
+width: 100%;
+height: 2.625rem;
+padding: 0.375rem 1.2rem;
+font-size: 14px;
+font-weight: 400;
+line-height: 1.5;
+color: #495057;
+background-color: #fff;
+-webkit-background-clip: padding-box;
+background-clip: padding-box;
+border: 1px solid #f1f2f6;
+border-radius: 5px;
+box-shadow: 0 0;
+transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; 
+}
+.addcustomernewallcss .modal-body ::ng-deep ng-multiselect-dropdown .multiselect-dropdown .dropdown-btn:focus{
+  
+  color: #495057;
+  background-color: #fff;
+  border-color: #5f63f2;
+  outline: 0;
+  box-shadow: 0 0, 0 5px 20px #5f63f21a;
+}
+.addcustomernewallcss .modal-body ::ng-deep .mat-form-field{
+  width: 100%!important;
+  padding: 2px 15px 2px 15px!important;
+} */
+
+
+
+
+/* ::-webkit-input-placeholder { 
+  color: #495057 !important;
+} */
+
+
+
+
+
+
+.ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input{
+   background: transparent;
+ }
+ .ng-autocomplete 
+ ::ng-deep .autocomplete-container .input-container input:focus,
+ ::ng-deep .multiselect-dropdown .dropdown-btn:focus  {
+   outline: none;
+   border: 2px solid transparent!important;
+   background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201))!important;
+   background-origin: border-box;
+   background-clip: padding-box, border-box;
+   animation: bg-hue 2s linear infinite;
+ }
+
+ .form-control{
+  border: 1px solid #e1e1e1;
+  background: transparent;}
+ .form-control:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+/* @keyframes for the gradient animation */
+@keyframes bg-hue {
+  100% {
+    filter: hue-rotate(360deg);
   }
-  .addcustomernewallcss .modal-body ::ng-deep .mat-form-field{
-    width: 100%!important;
-    padding: 2px 15px 2px 15px!important;
-  } */
+}
+
+
+label {
+  color: #5f63f2;
+  font-weight: 600!important;
+}
+
+
+
+.alertdangerCustomCSS1 {
+
+  color: white!important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+.alertdangerCustomCSS {
+  /* color: #ff4d4f; */
+  color: white!important;
+  background-color: #ffe5e5;
+  border-color: #ffe5e5;
+  width: 100% !important;
+  margin: 10px 15px !important;
+ 
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+
+::ng-deep  .mat-form-field-infix {
+ 
+  width: 480px !important;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn{
+  border: 1px solid #e1e1e1!important;
+  background: transparent;
+  height: 42px;
+  display: flex!important;
+  align-items: center;
+}
+
+::ng-deep .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item{
+  max-width: 100%!important;
+}
+
+.form-control:disabled,
+.form-control[readonly] {
+    /* background-color: #f3d2f0 !important; */
+    
+    /* background-color: #f7f1f6 !important; */
+    background-color: #f7e4f4 !important;
+    opacity: 0.6;
+    color: black!important;
+}
+
+.mandatoryField{
+  color: red;
+}
+
+.mousepoint{
+  cursor: pointer !important;
+}
+.CheckboxScroll{
+  height: 140px;
+  overflow-y: scroll;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+/* .modal-header{
+  background-color: #17707B!important;
+  color: white !important;
+} */
+.modal-header h2{margin-bottom: 0}
+.modal-footer{
+  background-color: #e9e3e525!important;
+}
+.close{
+  background: none;
+  opacity: 1;
+}
+.close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover{
+  opacity: 1;
+  background: none;
+}
+.close:focus{outline: 0;}
+/* .close span{color: #fff;} */
+.searchTop{
+  border: 1px solid #520505!important;
+}
+.searchTop:focus {
+  outline: none;
+  border: 2px solid transparent;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+
+
+.search-bar-section {
+  width: 250px;
+  height: 40px;
+  background-color: #313949;
+  border-radius: 4rem;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.search__box {
+  float: left;
+  width: 0;
+  /* height: 4rem; */
+  background: none;
+  color: #f7f7f7;
+  
+  font-size: 14px;
+  border-radius: 2rem;
+  outline: none;
+  border: none;
+  position: relative;
+  opacity: 1;
+  transition: all .75s ease-in;
+  cursor: pointer;
+
+}
+
+.search__icon {
+  box-sizing: border-box;
+  float: left;
+  display: inline-block;
+  margin-top: 0;
+  cursor: pointer;
+  /* position: absolute; */
+  top: 23px;
+  /* color: #fa983a; */
+  /* color: #5f63f2; */
+  color:#009688;
+  transition: all .25s ease-in;
+  border-radius: 50%;
+}
+
+.search-bar-section:hover > .search__box {
+  width: 85%;
+  padding: 0 1rem;
+}
+
+.search-bar-section:hover > .search__icon {
+  background-color: #eee;
+  
+  padding: 8px;
+  /* position: absolute;
+  top: 13px; */
+  margin-left: .8rem;
+}
+
+.quotation-btn-section{
+  display: flex;
+  align-items: center;
+}
+th{
+  padding: 10px 0px;
+}
+
+.on-off-toggle {
+  width: 36px;
+  height: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+
+/*   checkbox for permission pop up -starts*/
+.chb {
+  visibility: hidden;
+}
+
+.chb + label {
+  position: relative;
+  padding-left: 5px;
+  padding-top: 3px;
+}
+
+
+.chb-3 + label::before {
+  position: absolute;
+  left: -20px;
+  top: 4px;
+/*   text-align: center; */
+  
+  border: 2px solid #3498db;
+  content: " ";
+  width: 16px;
+  height: 16px;
+  
+  transition: all 0.1s ease-in,  border-color 0.05s ease-in;
+}
+
+.chb-3:checked + label::before {
+  transform: rotate(40deg);
+  border-top-color: transparent;
+  border-left-color: transparent;
   
   
+  top: 2px;
+  left: -15px;
+  width: 7px;
+  height: 14px;
+}
+
+/*   checkbox for permission pop up -ends*/
+
+
+
+.sq-radio {
+  /* display: block; */
+  position: relative;
+  padding-left: 45px;
+  padding-top: 2px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.sq-radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-top: 3px;
+  
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 25px;
+  background-color: #e9b7b7;
+}
+
+/* On mouse-over, add a grey background color */
+.sq-radio:hover input ~ .checkmark {
+  background-color: #721d7e;
+}
+
+/* When the radio button is checked, add a blue background 
+.sq-radio input:checked ~ .checkmark {
+  background-color: #241d25;
+}
+*/
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.sq-radio input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.sq-radio .checkmark:after {
+ 	top: 4px;
+	left: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background-color: #241d25;
+}
+
+
+
+/*   checkbox for permission pop up -starts*/
+.chb1 {
+  visibility: hidden;
+}
+
+.chb1 + label {
+  position: relative;
+  padding-left: 14px;
+  padding-top: 3px;
+}
+
+
+.chb1-altered + label::before {
+  position: absolute;
+  left: 200px;
+  top: 4px;
+/*   text-align: center; */
+  
+  border: 2px solid #3498db;
+  content: " ";
+  width: 16px;
+  height: 16px;
+  
+  transition: all 0.1s ease-in,  border-color 0.05s ease-in;
+}
+
+.chb1-altered:checked + label::before {
+  transform: rotate(40deg);
+  border-top-color: transparent;
+  border-left-color: transparent;
   
   
-  /* ::-webkit-input-placeholder { 
-    color: #495057 !important;
-  } */
+  top: 2px;
+  left: 200px;
+  width: 7px;
+  height: 14px;
+}
+
+/*   checkbox for permission pop up -ends*/
+.call4tel-address-show::before{
+  left: -13px!important;
   
+}
+
+.userDatatable table td{
+  white-space: normal!important;
+}
+
+.customerlist-section td{
+  width: 85px;
+  font-size: 12px;
+}
+.customerlist-section td span{
+  /* white-space: normal!important; */
+  width: 100%;
+  cursor:pointer;
   
-  
-  
-  
-  
-  .ng-autocomplete 
-   ::ng-deep .autocomplete-container .input-container input{
-     background: transparent;
-   }
-   .ng-autocomplete 
-   ::ng-deep .autocomplete-container .input-container input:focus,
-   ::ng-deep .multiselect-dropdown .dropdown-btn:focus  {
-     outline: none;
-     border: 2px solid transparent!important;
-     background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201))!important;
-     background-origin: border-box;
-     background-clip: padding-box, border-box;
-     animation: bg-hue 2s linear infinite;
-   }
-  
-   .form-control{
-    border: 1px solid #e1e1e1;
-    background: transparent;}
-   .form-control:focus {
-    outline: none;
-    border: 2px solid transparent;
+}
+.userDatatable table .customerlist-section tr td span{
+  width: 110px;
+}
+.customerlist-section td:first-child{
+  width: 35px;
+}
+.customerlist-section td:last-child{
+  width: 45px;
+}
+.customerlist-section td:nth-child(11) {
+  width: 70px;
+  /* display: block; */
+}
+.customerlist-section td:nth-child(9){
+  width: 35px;
+  /* display: inline-block; */
+  white-space: nowrap!important;
+}
+.userDatatable table .customerlist-section tr td:nth-child(9) span{
+  width: 60px;
+}
+.customerlist-section td:nth-child(12) span{
+  /* width: 50px!important; */
+  display: block;
+  /* white-space: nowrap!important; */
+}
+.customerlist-section td:nth-child(8) span{
+  /* width: 50px!important; */
+  display: block;
+  /* white-space: nowrap!important; */
+}
+
+
+.userDatatable .page .dropdown button {
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+/* ------------ks--------------------- */
+.dropdown__item{
+  display: flex;
+  align-items: center;
+  height: 45px;
+}
+.dropdown img, .dropdown svg {
+  width: 24px;
+
+}
+.dropdown__item span strong{
+  font-size: 18px;
+}
+.dropdown__item span {width: 100%!important;}
+
+.ActionIdCustDup li span{
+  overflow: visible!important;
+}
+.ActionIdCustDup li{cursor: pointer;}
+.dropdown a{
+  width: auto;
+  border-radius: 5px;
+}
+.recurring-Status{
+  margin: 0px 10px;
+  width: 30px!important;
+  height: 30px;
+  background: #fff;
+  align-items: center;
+  display: flex!important;
+  justify-content: center;
+  border-radius: 50%;
+  font-weight: 900;
+}
+
+
+.userDatatable-header th span , .modal-content thead th{
+  color: #e4ebf5;
+}
+.userDatatable-header th,.modal-content thead {
+  background: #6d5dfc;
+}
+.modal-content thead th{
+  padding: 10px;
+}
+
+ .modal-content {
+  background: #e4ebf5;
+}
+ .modal-content .form-control,.CheckboxScroll {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+}
+.modal-content .btn-primary  {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+}
+  .modal-content button.close  {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* color: #9baacf; */
+  color:#f9021b;
+  transition: all 0.5s ease;
+}
+
+
+
+.addcustomernewallcss .form-control,  .ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+} 
+.addcustomernewallcss .form-control:focus,  .ng-autocomplete 
+::ng-deep .autocomplete-container .input-container input:focus{
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+  border: 2px solid transparent!important;
     background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
     background-origin: border-box;
     background-clip: padding-box, border-box;
     animation: bg-hue 2s linear infinite;
-  }
-  
-  /* @keyframes for the gradient animation */
-  @keyframes bg-hue {
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
-  
-  
-  label {
-    color: #5f63f2;
-    font-weight: 600!important;
-  }
-  
-  
-  
-  .alertdangerCustomCSS1 {
-  
-    color: white!important;
-    background-color: #ffe5e5;
-    border-color: #ffe5e5;
-  
-    outline: none;
-    border: 2px solid transparent;
-    background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
-  }
-  
-  .alertdangerCustomCSS {
-    /* color: #ff4d4f; */
-    color: white!important;
-    background-color: #ffe5e5;
-    border-color: #ffe5e5;
-    width: 100% !important;
-    margin: 10px 15px !important;
-   
-    outline: none;
-    border: 2px solid transparent;
-    background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
-  }
-  
-  
-  ::ng-deep  .mat-form-field-infix {
-   
-    width: 480px !important;
-  }
-  
-  ::ng-deep .multiselect-dropdown .dropdown-btn{
-    border: 1px solid #e1e1e1!important;
-    background: transparent;
-    height: 42px;
-    display: flex!important;
-    align-items: center;
-  }
-  
-  ::ng-deep .multiselect-dropdown .dropdown-btn .selected-item-container .selected-item{
-    max-width: 100%!important;
-  }
-  
-  .form-control:disabled,
-  .form-control[readonly] {
-      /* background-color: #f3d2f0 !important; */
-      background-color: #f7f1f6 !important;
-      opacity: 0.6;
-      color: black!important;
-  }
-  
-  .mandatoryField{
-    color: red;
-  }
-  
-  .mousepoint{
-    cursor: pointer !important;
-  }
-  .CheckboxScroll{
-    height: 140px;
-    overflow-y: scroll;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  /* .modal-header{
-    background-color: #17707B!important;
-    color: white !important;
-  } */
-  .modal-header h2{margin-bottom: 0}
-  .modal-footer{
-    background-color: #e9e3e525!important;
-  }
-  .close{
-    background: none;
-    opacity: 1;
-  }
-  .close:not(:disabled):not(.disabled):focus, .close:not(:disabled):not(.disabled):hover{
-    opacity: 1;
-    background: none;
-  }
-  .close:focus{outline: 0;}
-  /* .close span{color: #fff;} */
-  .searchTop{
-    border: 1px solid #520505!important;
-  }
-  .searchTop:focus {
-    outline: none;
-    border: 2px solid transparent;
-    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
-  }
-  
-  
-  
-  .search-bar-section {
-    width: 250px;
-    height: 40px;
-    background-color: #313949;
-    border-radius: 4rem;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-  }
-  
-  .search__box {
-    float: left;
-    width: 0;
-    /* height: 4rem; */
-    background: none;
-    color: #f7f7f7;
-    
-    font-size: 14px;
-    border-radius: 2rem;
-    outline: none;
-    border: none;
-    position: relative;
-    opacity: 1;
-    transition: all .75s ease-in;
-    cursor: pointer;
-  
-  }
-  
-  .search__icon {
-    box-sizing: border-box;
-    float: left;
-    display: inline-block;
-    margin-top: 0;
-    cursor: pointer;
-    /* position: absolute; */
-    top: 23px;
-    /* color: #fa983a; */
-    /* color: #5f63f2; */
-    color:#009688;
-    transition: all .25s ease-in;
-    border-radius: 50%;
-  }
-  
-  .search-bar-section:hover > .search__box {
-    width: 85%;
-    padding: 0 1rem;
-  }
-  
-  .search-bar-section:hover > .search__icon {
-    background-color: #eee;
-    
-    padding: 8px;
-    /* position: absolute;
-    top: 13px; */
-    margin-left: .8rem;
-  }
-  
-  .quotation-btn-section{
-    display: flex;
-    align-items: center;
-  }
-  th{
-    padding: 10px 0px;
-  }
-  
-  .on-off-toggle {
-    width: 36px;
-    height: 24px;
-    position: relative;
-    display: inline-block;
-  }
-  
-  
-  /*   checkbox for permission pop up -starts*/
-  .chb {
-    visibility: hidden;
-  }
-  
-  .chb + label {
-    position: relative;
-    padding-left: 5px;
-    padding-top: 3px;
-  }
-  
-  
-  .chb-3 + label::before {
-    position: absolute;
-    left: -20px;
-    top: 4px;
-  /*   text-align: center; */
-    
-    border: 2px solid #3498db;
-    content: " ";
-    width: 16px;
-    height: 16px;
-    
-    transition: all 0.1s ease-in,  border-color 0.05s ease-in;
-  }
-  
-  .chb-3:checked + label::before {
-    transform: rotate(40deg);
-    border-top-color: transparent;
-    border-left-color: transparent;
-    
-    
-    top: 2px;
-    left: -15px;
-    width: 7px;
-    height: 14px;
-  }
-  
-  /*   checkbox for permission pop up -ends*/
-  
-  
-  
-  .sq-radio {
-    /* display: block; */
-    position: relative;
-    padding-left: 45px;
-    padding-top: 2px;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 14px;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-  }
-  
-  /* Hide the browser's default radio button */
-  .sq-radio input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    padding-left: 5px;
-    padding-top: 3px;
-    
-  }
-  
-  /* Create a custom radio button */
-  .checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    border-radius: 25px;
-    background-color: #e9b7b7;
-  }
-  
-  /* On mouse-over, add a grey background color */
-  .sq-radio:hover input ~ .checkmark {
-    background-color: #721d7e;
-  }
-  
-  /* When the radio button is checked, add a blue background 
-  .sq-radio input:checked ~ .checkmark {
-    background-color: #241d25;
-  }
-  */
-  /* Create the indicator (the dot/circle - hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-  
-  /* Show the indicator (dot/circle) when checked */
-  .sq-radio input:checked ~ .checkmark:after {
-    display: block;
-  }
-  
-  /* Style the indicator (dot/circle) */
-  .sq-radio .checkmark:after {
-       top: 4px;
-      left: 4px;
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
-    background-color: #241d25;
-  }
-  
-  
-  
-  /*   checkbox for permission pop up -starts*/
-  .chb1 {
-    visibility: hidden;
-  }
-  
-  .chb1 + label {
-    position: relative;
-    padding-left: 14px;
-    padding-top: 3px;
-  }
-  
-  
-  .chb1-altered + label::before {
-    position: absolute;
-    left: 200px;
-    top: 4px;
-  /*   text-align: center; */
-    
-    border: 2px solid #3498db;
-    content: " ";
-    width: 16px;
-    height: 16px;
-    
-    transition: all 0.1s ease-in,  border-color 0.05s ease-in;
-  }
-  
-  .chb1-altered:checked + label::before {
-    transform: rotate(40deg);
-    border-top-color: transparent;
-    border-left-color: transparent;
-    
-    
-    top: 2px;
-    left: 200px;
-    width: 7px;
-    height: 14px;
-  }
-  
-  /*   checkbox for permission pop up -ends*/
-  .call4tel-address-show::before{
-    left: -13px!important;
-    
-  }
-  
-  .userDatatable table td{
-    white-space: normal!important;
-  }
-  
-  .customerlist-section td{
-    width: 85px;
-    font-size: 12px;
-  }
-  .customerlist-section td span{
-    /* white-space: normal!important; */
-    width: 100%;
-    cursor:pointer;
-    
-  }
-  .userDatatable table .customerlist-section tr td span{
-    width: 110px;
-  }
-  .customerlist-section td:first-child{
-    width: 35px;
-  }
-  .customerlist-section td:last-child{
-    width: 45px;
-  }
-  .customerlist-section td:nth-child(11) {
-    width: 70px;
-    /* display: block; */
-  }
-  .customerlist-section td:nth-child(9){
-    width: 35px;
-    /* display: inline-block; */
-    white-space: nowrap!important;
-  }
-  .userDatatable table .customerlist-section tr td:nth-child(9) span{
-    width: 60px;
-  }
-  .customerlist-section td:nth-child(12) span{
-    /* width: 50px!important; */
-    display: block;
-    /* white-space: nowrap!important; */
-  }
-  .customerlist-section td:nth-child(8) span{
-    /* width: 50px!important; */
-    display: block;
-    /* white-space: nowrap!important; */
-  }
-  
-  
-  .userDatatable .page .dropdown button {
-    border-radius: 0px;
-    border-top-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-  }
-  
-  
-  /* ------------ks--------------------- */
-  .dropdown__item{
-    display: flex;
-    align-items: center;
-    height: 45px;
-  }
-  .dropdown img, .dropdown svg {
-    width: 24px;
-  
-  }
-  .dropdown__item span strong{
-    font-size: 18px;
-  }
-  .dropdown__item span {width: 100%!important;}
-  
-  .ActionId li span{
-    overflow: visible!important;
-  }
-  .ActionId li{cursor: pointer;}
-  .dropdown a{
-    width: auto;
-    border-radius: 5px;
-  }
-  .recurring-Status{
-    margin: 0px 10px;
-    width: 30px!important;
-    height: 30px;
-    background: #fff;
-    align-items: center;
-    display: flex!important;
-    justify-content: center;
-    border-radius: 50%;
-    font-weight: 900;
-  }
-  
-  
-  .userDatatable-header th span , .modal-content thead th{
-    color: #e4ebf5;
-  }
-  .userDatatable-header th,.modal-content thead {
-    background: #6d5dfc;
-  }
-  .modal-content thead th{
-    padding: 10px;
-  }
-  
-   .modal-content {
-    background: #e4ebf5;
-  }
-   .modal-content .form-control,.CheckboxScroll {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
-  }
-  .modal-content .btn-primary  {
-    grid-column: 1/2;
-    grid-row: 4/5;
-    background: #6d5dfc;
-    box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    color: #e4ebf5;
-  }
-    .modal-content button.close  {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: #9baacf;
-    transition: all 0.5s ease;
-  }
-  
-  
-  .addcustomernewallcss .form-control,  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
-  } 
-  .addcustomernewallcss .form-control:focus,  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input:focus{
-    outline: none;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
-    border: 2px solid transparent!important;
-      background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      animation: bg-hue 2s linear infinite;
-  }
-  
-  .tags-list{
-    display: none;
-  }
-  .tags-list:first-child{
-    display: block;
-  }
-  
-  .tags-list-section{
-   display: none;
-  }
-  .tags{
-    position:absolute;
-    background-color: #fdffb2fc;
-    width: 50%;
-  }
-  .tag-section:hover .tags-list-section{
-    display: block;
-    padding: 10px;
-  }
-  .tags-list-section .buttonClass{
-    font-size: 10px;
-  }
-  .tag-btn{
-    background:#007cbc;
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    font-size: 8px;
-    font-weight: 900;
-  }
-  .tags .row{
-    margin: 0;
-  }
-  .tags .col-lg-2 {
-    flex: 0 0 10.66667%;
-    max-width: fit-content;
-    
-  }
-  .email-tag .tags{
-    width: auto;
-    background:#fdffb2fc;
-  }
-  .email-tag .tags .col-lg-2 {
-    flex: 0 0 16.66667%;
-    max-width: fit-content;
-  }
-  
+}
+
+.tags-list{
+  display: none;
+}
+.tags-list:first-child{
+  display: block;
+}
+
+.tags-list-section{
+ display: none;
+}
+.tags{
+  position:absolute;
+  background-color: #fdffb2fc;
+  width: 50%;
+}
+.tag-section:hover .tags-list-section{
+  display: block;
+  padding: 10px;
+}
+.tags-list-section .buttonClass{
+  font-size: 10px;
+}
+.tag-btn{
+  background:#007cbc;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-size: 8px;
+  font-weight: 900;
+}
+.tags .row{
+  margin: 0;
+}
+.tags .col-lg-2 {
+  flex: 0 0 10.66667%;
+  max-width: fit-content;
+  
+}
+.email-tag .tags{
+  width: auto;
+  background:#fdffb2fc;
+}
+.email-tag .tags .col-lg-2 {
+  flex: 0 0 16.66667%;
+  max-width: fit-content;
+}
+
 
 .form-control.is-invalid, .was-validated .form-control:invalid,.is-invalid {
   border: 1px solid #dc3545!important; 
@@ -1000,4 +1003,18 @@ tr:hover {
   -webkit-transition: background-color 1000ms linear;
   -ms-transition: background-color 1000ms linear;
   transition: background-color 1000ms linear;
+}
+
+#dupCussearchCustomerFormId , #dupCusaddCustomerFormId, #dupCusviewCustomerFormId,
+#dupCuseditCustomerFormId , #dupCusspecialEditCustomerFormId , 
+#dupCusfileAttachmentFormId  , #dupCusmconnectPartnerDetailsFormId ,#DupCusMrvoipPartnerDetailsFormId,
+#dupCuscall4tellPartnerDetailsFormId ,#dupCusinvoiceSharedCustomerFormId,
+#DupCusSharedCustomerPermissionFormId ,#dupcuscustomer_NX32PermissionFormId,
+#dupCusbillCodeFormId ,#DupCusAssignAccountManager,
+#dupCuslandscapeEmailFormId ,#DupCusGoogleAuthentication    {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #00050b;
 }
