@@ -558,13 +558,21 @@ export class ContractComponent implements OnInit {
           this.edit_array = [];
           this.contractList({});
           $("#addCustomerContractId").modal("hide");
+          Swal.fire({
+            icon: 'success',
+            title: 'Contract has been Saved',
+            showConfirmButton: false,
+            timer: 1200,
+          });
+        }else if(result.status === false){
+          this.spinner.hide();
+            iziToast.error({
+            title: 'Error,Check Missing Field Values',
+            message: 'Contract not Saved !',
+            position:'topRight',
+          });
         }
-        Swal.fire({
-          icon: 'success',
-          title: 'Contract has been Saved',
-          showConfirmButton: false,
-          timer: 1200,
-        });
+       
       },
       error: (err: any) => {
         this.spinner.hide();

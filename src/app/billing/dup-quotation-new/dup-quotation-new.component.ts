@@ -689,18 +689,23 @@ export class DupQuotationNewComponent implements OnInit {
   quotationList2(data: any) {
     // Swal.fire('Loading');
     // Swal.showLoading();
-    console.log(data);
+    console.log("samson",data);
         this.quotation_list = data.Quotation_list_send;
-        this.quotationPermission_Edit = data.Quotation_per_send.edit;
-        this.quotationPermission_Edit = data.Quotation_per_send.edit
-        this.quotationPermission_ActualPrice = data.Quotation_per_send.actual_price
-        this.quotationPermission_Add = data.Quotation_per_send.add
-        this.quotationPermission_Delete = data.Quotation_per_send.delete
-        this.quotationPermission_List = data.Quotation_per_send.list
-        this.quotationPermission_Mail = data.Quotation_per_send.mail
-        this.quotationPermission_Search = data.Quotation_per_send.search
-        this.quotationPermission_View = data.Quotation_per_send.view
-        this.quotationPermission_Share = data.Quotation_per_send.share
+    
+        if(data.Quotation_per_send!=null || data.Quotation_per_send!='' || data.Quotation_per_send!=undefined || data.Quotation_per_send!='undefined'){
+          this.quotationPermission_Edit = data.Quotation_per_send.edit;
+          this.quotationPermission_ActualPrice = data.Quotation_per_send.actual_price
+          this.quotationPermission_Add = data.Quotation_per_send.add
+          this.quotationPermission_Delete = data.Quotation_per_send.delete
+          this.quotationPermission_List = data.Quotation_per_send.list
+          this.quotationPermission_Mail = data.Quotation_per_send.mail
+          this.quotationPermission_Search = data.Quotation_per_send.search
+          this.quotationPermission_View = data.Quotation_per_send.view
+          this.quotationPermission_Share = data.Quotation_per_send.share
+        
+        }
+
+       
 
   }
   listDataInfo(list_data: any) {

@@ -18,7 +18,7 @@
                             <label for="cmp_name_didpi" class="col-lg-12 col-form-label">Company Name</label>
                             <div class="col-lg-12">
                                 <select name="enqFormValue" id="cmp_name_didpi" class="form-control"
-                                    formControlName="companyName" (change)="getCustomerInvoiceDetails($event)"
+                                    formControlName="companyName" (change)="getCustomerInvoiceDetails1($event)"
                                     (change)="getProformaBillerDetails()">
                                     <option [ngValue]="null" selected >Select Company Name</option>
                                     <option *ngFor="let comp_name of companyNameList" value="{{comp_name.billerId}}">
@@ -37,6 +37,7 @@
                                 <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                     formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
                                     (inputChanged)='searchCustomerData($event)'
+                                    (inputCleared)="clearSelection($event)"
                                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
                                     [notFoundTemplate]="notFoundTemplate"
                                     [ngClass]="{ 'is-invalid': submitted && f['BillTo'].errors }" class="mandatoryRed">

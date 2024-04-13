@@ -37,6 +37,7 @@
                                 <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCustomerName"
                                     formControlName="BillTo" (selected)='searchCustomer_selectDropdownData($event)'
                                     (inputChanged)='searchCustomerData($event)'
+                                    (inputCleared)="clearSelection($event)"
                                     (inputFocused)='onFocusedCustomer($event)' [itemTemplate]="itemTemplateCustomer"
                                     [notFoundTemplate]="notFoundTemplate"
                                     [ngClass]="{ 'is-invalid': submitted && f['BillTo'].errors }" class="mandatoryRed">
@@ -253,7 +254,7 @@
                             <label for="attn1" class="col-lg-12 col-form-label">Cus Invoice No.</label>
                             <div class="col-lg-12">
                                 <input type="text" class="form-control" formControlName="cusInvoiceNo"
-                                    [attr.readonly]="isReadOnly" />
+                                id="cusInvNo"   [attr.readonly]="isReadOnly" />
                             </div>
                         </div>
                     </div>

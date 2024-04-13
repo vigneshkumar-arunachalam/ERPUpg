@@ -211,6 +211,18 @@ export class EditinvoiceDIDComponent implements OnInit {
   send_cusName: any;
     //validation
     submitted = true;
+  shipAdd_Edit: any;
+  custAdr1: any;
+  custAdr2: any;
+  custAdr3: any;
+  ShipAdr1: any;
+  ShipAdr2: any;
+  ShipAdr3: any;
+  shipAddress1_Final: any;
+  shipAddress2_Final: any;
+  shipAddress3_Final: any;
+  ship_to_str_Final: any;
+  customerName_Change: string;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -1349,178 +1361,174 @@ export class EditinvoiceDIDComponent implements OnInit {
   }
 
   Customer_selectDropdownData(customerId: any) {
+  
     this.spinner.show();
-    this.customerName_Data = customerId;
-    let api_req: any = new Object();
-    let api_SearchCUST_req: any = new Object();
-    api_req.moduleType = "proforma";
-    api_req.api_url = "proforma/customer_address_details";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_SearchCUST_req.action = "quot_customer_details";
-    api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchCUST_req.customerId = customerId;
-    api_req.element_data = api_SearchCUST_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      console.log("customer_address_details---response", response)
-      if (response.status == true) {
-this.spinner.hide();
-
-
-        var address_3;
-        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
-
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
+      this.customerName_Data = customerId;
+      let api_req: any = new Object();
+      let api_SearchCUST_req: any = new Object();
+      api_req.moduleType = "proforma";
+      api_req.api_url = "proforma/customer_address_details";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_SearchCUST_req.action = "quot_customer_details";
+      api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_SearchCUST_req.customerId = customerId;
+      api_req.element_data = api_SearchCUST_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+  
+        console.log("customer_address_details---response", response)
+        if (response.status == true) {
+  
+          this.spinner.hide();
+  
+          this.custAdr1=response.customer_details[0].customerAddress1;
+          this.custAdr2=response.customer_details[0].customerAddress2;
+          this.custAdr3=response.customer_details[0].city;
+          this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
+          this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
+          this.ShipAdr3=response.customer_details[0].ship_city;
+  
+          if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
+            this.shipAddress1_Final=this.custAdr1
+          }else{
+            this.shipAddress1_Final=this.ShipAdr1
+          }
+         
+          if(this.ShipAdr2==null || this.ShipAdr2=='' || this.ShipAdr2=='undefined' || this.ShipAdr2==undefined){
+            this.shipAddress2_Final=this.custAdr2
+          }else{
+            this.shipAddress2_Final=this.ShipAdr2
+          }
+          if(this.ShipAdr3==null || this.ShipAdr3=='' || this.ShipAdr3=='undefined' || this.ShipAdr3==undefined){
+            this.shipAddress3_Final=this.custAdr3
+          }else{
+            this.shipAddress3_Final=this.ShipAdr3
+          }
+          if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
+            this.ship_to_str_Final= response.customer_details[0].customerName; 
+         
+          } else {
+            this.ship_to_str_Final = response.customer_details[0].ship_to;
+          }
+          console.log("shipAddress1",this.shipAddress1_Final)
+          console.log("shipAddress2",this.shipAddress2_Final)
+          console.log("shipAddress3", this.shipAddress3_Final)
+          console.log("ship to",  this.ship_to_str_Final)
+          this.addDid_section1.patchValue({
+            'address_1': response.customer_details[0].customerAddress1,
+            'address_2': response.customer_details[0].customerAddress2,
+            'address_3': response.customer_details[0].city,
+            'Attn_1': response.customer_details[0].companyName,
+            'ship_to':   this.ship_to_str_Final,
+            'shipTo_1': this.shipAddress1_Final,
+            'shipTo_2': this.shipAddress2_Final,
+            'shipTo_3': this.shipAddress3_Final,
+            'ship_attn': response.customer_details[0].s_attn,
+           // 'cusInvoiceNo': response.customer_invoice_no,
+          });
         }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
-        } else {
-          address_3 = response.customer_details[0].state;
+        else {
+          this.spinner.hide();
+          this.addDid_section1.patchValue({
+            'address_1': '',
+            'address_2': '',
+            'address_3': '',
+            'Attn_1': '',
+            'ship_to': '',
+            'shipTo_1': '',
+            'shipTo_2': '',
+            'shipTo_3': '',
+            'ship_attn': '',
+          });
         }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
-        } else {
-          address_3 = response.customer_details[0].country;
-        }
+  
+      });
+    }
+  
+    clearSelection(event:any){
+      this.customerName_Data='';
+      this.customerName_Change='';
+    }
 
-
-
-
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
-
-          ship_to_str = response.customer_details[0].customerName;
-
-        } else {
-          ship_to_str = response.customer_details[0].ship_to;
-        }
-
-        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-        } else {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-        } else {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
-        }
-
-
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
-        }
-
-        if (response.customer_details[0].ship_to == '') {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-          ship_address_str3 = address_3;
-        }
-
-
-
-        // this.did_bill_codexx = response.customer_billcode_arr;
-        // this.did_bill_code_section1 = response.customer_billcode_arr;
-        // console.log('this.did_bill_code_section1',this.did_bill_code_section1);
-
-        this.addDid_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'shipTo_1': ship_address_str1,
-          'shipTo_2': ship_address_str2,
-          'shipTo_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
-        });
-      }
-      else {
-        this.spinner.hide();
-        this.addDid_section1.patchValue({
-          'address_1': '',
-          'address_2': '',
-          'address_3': '',
-          'Attn_1': '',
-          'ship_to': '',
-          'shipTo_1': '',
-          'shipTo_2': '',
-          'shipTo_3': '',
-          'ship_attn': '',
-        });
-      }
-
-    });
-  }
-
-  searchCustomer_selectDropdownData(data: any) {
-    this.spinner.show();
-    this.customer_ID = data.customerId;
-    this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
-    this.customerName_Data = data.customerId;
-    let api_req: any = new Object();
-    let api_SearchCUST_req: any = new Object();
-    // api_req.moduleType = "proforma";
-    // api_req.api_url = "proforma/customer_address_details";
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/quot_customer_details";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_SearchCUST_req.action = "quot_customer_details";
-    api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchCUST_req.customerId = this.customerName_Data
-    api_req.element_data = api_SearchCUST_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-
-      if (response.status == true) {
-
-        this.addDid_section1.patchValue({
-          "customer_id_hd": response.customer_list.customerId,
-          "b_name": response.customer_list.customerName,
-          "customer_name": response.customer_list.customerName,
-          "address_1": response.customer_list.customerAddress1,
-          "address_2": response.customer_list.customerAddress2,
-          "address_3": response.customer_list.customerAddress3,
-          "Attn_1": response.customer_list.kind_Attention,
-          "ship_to": response.customer_list.ship_to,
-          "shipTo_1": response.customer_list.ship_customerAddress1,
-          "shipTo_2": response.customer_list.ship_customerAddress2,
-          "shipTo_3": response.customer_list.ship_customerAddress3,
-        });
-        console.log("test response-inv",response)
-        this.spinner.hide();
-        // this.did_bill_code = response.customer_billcode_arr;
-        // this.did_bill_code_section1 = response.customer_billcode_arr;
-        this.FinalDiscount_DiscountType = response.billpardiscount[0].dis_type
-       
-      }
-      else {
+    searchCustomer_selectDropdownData(data: any) {
+      this.spinner.show();
+  
+      console.log("search data in dropdown", data)
+      console.log("search data-customer Id", data.customerId)
+      this.customerName_Data = data.customerId;
+      this.customerName_Change = data.customerName;
+  
+      
+      let api_req: any = new Object();
+      let api_SearchCUST_req: any = new Object();
+      api_req.moduleType = "proforma";
+      api_req.api_url = "proforma/customer_address_details";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_SearchCUST_req.action = "customer_address_details";
+      api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_SearchCUST_req.customerId = this.customerName_Data
+      api_req.element_data = api_SearchCUST_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
   
         this.spinner.hide();
-      
-      }
-    });
-  }
+        if (response.status == true) {
+          this.custAdr1=response.customer_details[0].customerAddress1;
+          this.custAdr2=response.customer_details[0].customerAddress2;
+          this.custAdr3=response.customer_details[0].city;
+          this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
+          this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
+          this.ShipAdr3=response.customer_details[0].ship_city;
+  
+          if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
+            this.shipAddress1_Final=this.custAdr1
+          }else{
+            this.shipAddress1_Final=this.ShipAdr1
+          }
+         
+          if(this.ShipAdr2==null || this.ShipAdr2=='' || this.ShipAdr2=='undefined' || this.ShipAdr2==undefined){
+            this.shipAddress2_Final=this.custAdr2
+          }else{
+            this.shipAddress2_Final=this.ShipAdr2
+          }
+          if(this.ShipAdr3==null || this.ShipAdr3=='' || this.ShipAdr3=='undefined' || this.ShipAdr3==undefined){
+            this.shipAddress3_Final=this.custAdr3
+          }else{
+            this.shipAddress3_Final=this.ShipAdr3
+          }
+          if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
+            this.ship_to_str_Final= response.customer_details[0].customerName; 
+         
+          } else {
+            this.ship_to_str_Final = response.customer_details[0].ship_to;
+          }
+          console.log("shipAddress1",this.shipAddress1_Final)
+          console.log("shipAddress2",this.shipAddress2_Final)
+          console.log("shipAddress3", this.shipAddress3_Final)
+          console.log("ship to",  this.ship_to_str_Final)
+          this.addDid_section1.patchValue({
+            'address_1': response.customer_details[0].customerAddress1,
+            'address_2': response.customer_details[0].customerAddress2,
+            'address_3': response.customer_details[0].city,
+            'Attn_1': response.customer_details[0].companyName,
+            'ship_to':   this.ship_to_str_Final,
+            'shipTo_1': this.shipAddress1_Final,
+            'shipTo_2': this.shipAddress2_Final,
+            'shipTo_3': this.shipAddress3_Final,
+            'ship_attn': response.customer_details[0].s_attn,
+            'cusInvoiceNo': response.customer_invoice_no,
+          });
+  
+         
+  
+  
+        }
+        else {
+  
+        }
+  
+      });
+    }
   getTaxCals() {
 
 
@@ -1700,7 +1708,7 @@ this.spinner.hide();
         this.ExtralogoValue = response.billing_pararent_details[0].bills_logo_id;
         $("#section3_gross_total").val(response.billing_pararent_details[0].grossAmount);
         this.exportState_value = response.billing_pararent_details[0].export_state;
-
+        this.shipAdd_Edit = response.billing_pararent_details[0].s_address
         this.customer_ID = response.billing_pararent_details[0].custId;
         // this.section1_billcode = response.billing_pararent_details[0].did_bill_code
         this.Jompay_Value = response.billing_pararent_details[0].jom_pay_logo;
@@ -1715,6 +1723,8 @@ this.spinner.hide();
         this.TaxDropdown1(response.billing_pararent_details[0].billerId);
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
         this.send_cusName=response.billing_pararent_details[0].b_name;
+        this.customerName_Data = response.billing_pararent_details[0].custId;
+        this.customerName_Change = response.billing_pararent_details[0].b_name;
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
         $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
@@ -2052,25 +2062,77 @@ this.spinner.hide();
     api_updateDid_req.company = this.BillerID_CompanyName;
     api_updateDid_req.billerId = this.BillerID_CompanyName;
     api_updateDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
+
     api_updateDid_req.customer_invoice_no = this.addDid_section1.value.cusInvoiceNo;
-    api_updateDid_req.cus_invoice_no = this.addDid_section1.value.cusInvoiceNo;
-    api_updateDid_req.customerId = this.addDid_section1.value.customer_id_hd;
-    api_updateDid_req.customer_name = this.customerName_Data;
+    api_updateDid_req.cus_invoice_no = $('#cusInvNo').val();
+    if(this.customerName_Data==null || this.customerName_Data==''){
+      this.spinner.hide();
+      iziToast.error({
+        message: "Bill To is empty",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+     
+      api_updateDid_req.customerId = this.customerName_Data;
+    }
+
+    
+    api_updateDid_req.customer_name = this.customerName_Change;
+
     api_updateDid_req.tinNo = this.addDid_section1.value.tin;
     api_updateDid_req.BillTo_customer_ID = this.customer_ID;
     api_updateDid_req.BillTo_customer_NAME = this.customer_NAME;
     api_updateDid_req.searchFlag =this.searchFlag;
 
     // api_updateDid_req.b_name = this.addDid_section1.value.BillTo;
-    api_updateDid_req.b_name = this.addDid_section1.value.customer_name;
+    
+   // api_updateDid_req.b_name = this.customerName_Change;
+
+    if(this.customerName_Change==null || this.customerName_Change==''){
+      this.spinner.hide();
+      iziToast.error({
+        message: "Bill To is empty",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+     
+      api_updateDid_req.b_name = this.customerName_Change;
+    }
     api_updateDid_req.b_address1 = this.addDid_section1.value.address_1;
     api_updateDid_req.b_address2 = this.addDid_section1.value.address_2;
     api_updateDid_req.b_address3 = this.addDid_section1.value.address_3;
 
-    api_updateDid_req.s_name = $('#shipto_editInvDID').val();
-    api_updateDid_req.s_address1 = this.addDid_section1.value.ship_address_1;
-    api_updateDid_req.s_address2 = this.addDid_section1.value.ship_address_2;
-    api_updateDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
+   // api_updateDid_req.s_name = $('#shipto_editInvDID').val();
+    if (this.addDid_section1.value.ship_to == undefined) {
+      api_updateDid_req.s_name =  this.ship_to_str_Final;
+
+    }
+    else {
+      api_updateDid_req.s_name = this.addDid_section1.value.ship_to;
+    }
+
+
+    if(this.addDid_section1.value.shipTo_1==null){
+      api_updateDid_req.s_address1 =this.shipAddress1_Final 
+    }else{
+      api_updateDid_req.s_address1 = this.addDid_section1.value.shipTo_1
+    }
+    if(this.addDid_section1.value.shipTo_2==null){
+      api_updateDid_req.s_address2 =this.shipAddress2_Final 
+    }else{
+      api_updateDid_req.s_address2 = this.addDid_section1.value.shipTo_2
+    }
+
+    if(this.addDid_section1.value.shipTo_3==null){
+      api_updateDid_req.s_address3 =this.shipAddress3_Final 
+    }else{
+      api_updateDid_req.s_address3 = this.addDid_section1.value.shipTo_3
+    }
+    // api_updateDid_req.s_address1 = this.addDid_section1.value.ship_address_1;
+    // api_updateDid_req.s_address2 = this.addDid_section1.value.ship_address_2;
+    // api_updateDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
 
     api_updateDid_req.cstNo = this.addDid_section1.value.cst;
     api_updateDid_req.billDate = this.addDid_section1.value.Date;

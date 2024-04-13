@@ -1152,12 +1152,22 @@ export class DupEditPIComponent implements OnInit {
           'address_1': response.customer_details[0].customerAddress1,
           'address_2': response.customer_details[0].customerAddress2,
           'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'shipTo_1': ship_address_str1,
-          'shipTo_2': ship_address_str2,
-          'shipTo_3': ship_address_str3,
+          "customer_id_hd": response.customer_details[0].customerId,
+          "b_name": response.customer_details[0].customerName,
+          "customer_name": response.customer_details[0].customerName,
+          "Attn_1": response.customer_details[0].kind_Attention,
+          "ship_to": response.customer_details[0].ship_to,
+          "shipTo_1": response.customer_details[0].ship_customerAddress1,
+          "shipTo_2": response.customer_details[0].ship_customerAddress2,
+          "shipTo_3": response.customer_details[0].ship_customerAddress3,
+          "Attn_2": response.customer_details[0].ship_attn,
+
+          'cusInvoiceNo': response.customer_invoice_no,     
           'ship_attn': response.customer_details[0].companyName,
+          'terms': response.customer_details[0].terms_condition,
+          'Currency': response.customer_details[0].def_currency_id,
+          'PaymentVia': response.customer_details[0].def_payment_via,
+          'CurrencyConversionRate': response.currencyValue,
         });
       }
       else {

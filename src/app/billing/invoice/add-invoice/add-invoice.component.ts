@@ -147,6 +147,16 @@ export class AddInvoiceComponent implements OnInit {
   billerIdCurrencyConv: any;
   //validation
   submitted = true;
+  custAdr1: any;
+  ShipAdr2: any;
+  ShipAdr1: any;
+  custAdr2: any;
+  ShipAdr3: any;
+  custAdr3: any;
+  shipAddress1_Final: any;
+  shipAddress2_Final: any;
+  shipAddress3_Final: any;
+  ship_to_str_Final: any;
   constructor(private serverService: ServerService, private fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe,
     private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
@@ -819,81 +829,51 @@ export class AddInvoiceComponent implements OnInit {
       this.spinner.hide();
 
       if (response.status == true) {
-        // console.log('address'+response.customer_details[0].customerAddress1);
+        this.custAdr1=response.customer_details[0].customerAddress1;
+        this.custAdr2=response.customer_details[0].customerAddress2;
+        this.custAdr3=response.customer_details[0].city;
+        this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
+        this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
+        this.ShipAdr3=response.customer_details[0].ship_city;
 
-
-        var address_3;
-        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
-
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
+        if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
+          this.shipAddress1_Final=this.custAdr1
+        }else{
+          this.shipAddress1_Final=this.ShipAdr1
         }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+       
+        if(this.ShipAdr2==null || this.ShipAdr2=='' || this.ShipAdr2=='undefined' || this.ShipAdr2==undefined){
+          this.shipAddress2_Final=this.custAdr2
+        }else{
+          this.shipAddress2_Final=this.ShipAdr2
+        }
+        if(this.ShipAdr3==null || this.ShipAdr3=='' || this.ShipAdr3=='undefined' || this.ShipAdr3==undefined){
+          this.shipAddress3_Final=this.custAdr3
+        }else{
+          this.shipAddress3_Final=this.ShipAdr3
+        }
+        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
+          this.ship_to_str_Final= response.customer_details[0].customerName; 
+       
         } else {
-          address_3 = response.customer_details[0].state;
+          this.ship_to_str_Final = response.customer_details[0].ship_to;
         }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
-        } else {
-          address_3 = response.customer_details[0].country;
-        }
-
-        if (response.customer_details[0].city != '') {
-          ship_address_str3 = response.customer_details[0].city;
-          this.shipAddress3 = response.customer_details[0].city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].state != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
-          this.shipAddress3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
-        } else {
-          ship_address_str3 = response.customer_details[0].state;
-          this.shipAddress3 = response.customer_details[0].state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].country != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
-          this.shipAddress3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
-        } else {
-          ship_address_str3 = response.customer_details[0].country;
-          this.shipAddress3 = response.customer_details[0].country;
-        }
-
-
-        if (response.customer_details[0].ship_to != '') {
-          ship_to_str = response.customer_details[0].ship_to;
-        } else {
-          ship_to_str = response.customer_details[0].customerName;
-        }
-
-        if (response.customer_details[0].ship_customerAddress1 != '') {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-          this.shipAddress1 = response.customer_details[0].ship_customerAddress1;
-        } else {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-          this.shipAddress1 = response.customer_details[0].ship_customerAddress1;
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 != '') {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
-          this.shipAddress2 = response.customer_details[0].ship_customerAddress2;
-
-        } else {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-          this.shipAddress2 = response.customer_details[0].ship_customerAddress2;
-        }
-
-
-
+        console.log("shipAddress1",this.shipAddress1_Final)
+        console.log("shipAddress2",this.shipAddress2_Final)
+        console.log("shipAddress3", this.shipAddress3_Final)
+        console.log("ship to",  this.ship_to_str_Final)
+      
         this.addInvoice_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,
           'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
+          'address_3': response.customer_details[0].city,
           'cusInvoiceNo': response.customer_invoice_no,
           'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'ship_address_1': ship_address_str1,
-          'ship_address_2': ship_address_str2,
-          'ship_address_3': ship_address_str3,
+          'ship_to':   this.ship_to_str_Final,
+               
+          'ship_address_1': this.shipAddress1_Final,
+          'ship_address_2': this.shipAddress2_Final,
+          'ship_address_3': this.shipAddress3_Final,
           'ship_attn': response.customer_details[0].companyName,
           'terms': response.customer_details[0].terms_condition,
           'Currency': response.customer_details[0].def_currency_id,
@@ -988,11 +968,17 @@ export class AddInvoiceComponent implements OnInit {
     api_saveInvoice_req.b_address1 = this.addInvoice_section1.value.address_1;
     api_saveInvoice_req.b_address2 = this.addInvoice_section1.value.address_2;
     api_saveInvoice_req.b_address3 = this.addInvoice_section1.value.address_3;
+   
+  
+    if (this.addInvoice_section1.value.ship_to == undefined) {
+      api_saveInvoice_req.s_name =  this.ship_to_str_Final;
 
-    api_saveInvoice_req.s_name = this.addInvoice_section1.value.ship_to;
-
+    }
+    else {
+      api_saveInvoice_req.s_name = this.addInvoice_section1.value.ship_to;
+    }
     if (this.addInvoice_section1.value.ship_address_1 == undefined) {
-      api_saveInvoice_req.s_address1 = this.shipAddress1;
+      api_saveInvoice_req.s_address1 = this.shipAddress1_Final;
 
     }
     else {
@@ -1000,7 +986,7 @@ export class AddInvoiceComponent implements OnInit {
     }
 
     if (this.addInvoice_section1.value.ship_address_2 == undefined) {
-      api_saveInvoice_req.s_address2 = this.shipAddress2;
+      api_saveInvoice_req.s_address2 = this.shipAddress2_Final;
 
     }
     else {
@@ -1008,7 +994,7 @@ export class AddInvoiceComponent implements OnInit {
     }
 
     if (this.addInvoice_section1.value.ship_address_3 == undefined) {
-      api_saveInvoice_req.s_address3 = this.shipAddress3;
+      api_saveInvoice_req.s_address3 = this.shipAddress3_Final;
 
     }
     else {

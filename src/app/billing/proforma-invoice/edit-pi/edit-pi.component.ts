@@ -154,6 +154,12 @@ export class EditPIComponent implements OnInit {
   upd_search_name: any;
     //validation
     submitted = true;
+  custAdr1: any;
+  custAdr2: any;
+  custAdr3: any;
+  ShipAdr1: any;
+  ShipAdr2: any;
+  ShipAdr3: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -880,20 +886,36 @@ export class EditPIComponent implements OnInit {
        this.radio_Value_ExportState= response.billing_pararent_details[0].export_state;;
        this.radio_Value_InvoiceType= response.billing_pararent_details[0].mile_discount_state;
        this.ckeck_value_MileDisplay=response.billing_pararent_details[0].mile_discount_display_state;
-       
+       let cus_address=response.billing_pararent_details[0].b_address;
+       let ship_address=response.billing_pararent_details[0].s_address;
+      
+       let cus_address_break = cus_address.split('\n');
+       let ship_address_break = ship_address.split('\n');
+     
+
+
+      this.custAdr1=cus_address_break[0];
+      this.custAdr2=cus_address_break[1];
+      this.custAdr3=cus_address_break[2];
+      this.ShipAdr1=ship_address_break[0];
+      this.ShipAdr2=ship_address_break[1];
+      this.ShipAdr3=ship_address_break[2];
+  
+
         this.addPI_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
           'companyName': response.billing_pararent_details[0].billerId,
           'BillTo': response.billing_pararent_details[0].b_name,
           'customer_name': response.billing_pararent_details[0].b_name,
           'customer_id_hd': response.billing_pararent_details[0].custId,
-          'address_1': response.billing_pararent_details[0].b_address,
-          // 'address_2': response.billing_pararent_details[0].b_address2,
-          // 'address_3': response.billing_pararent_details[0].b_address3,
+          'address_1':this.custAdr1,
+           'address_2': this.custAdr2,
+           'address_3': this.custAdr3,
           'Attn_1': response.billing_pararent_details[0].b_attn,
-          // 'shpi_address_1': response.billing_pararent_details[0].b.ship_address_1,
-          // 'shpi_address_2': response.billing_pararent_details[0].b.ship_address_3,
-          // 'shpi_address_3': response.billing_pararent_details[0].b.ship_address_1,
+          'ship_to': response.billing_pararent_details[0].s_name,
+           'shipTo_1': this.ShipAdr1,
+           'shipTo_2': this.ShipAdr2,
+           'shipTo_3': this.ShipAdr3,
           'Attn_2': response.billing_pararent_details[0].s_attn,
           'Ref': response.billing_pararent_details[0].ref,
 
@@ -923,7 +945,9 @@ export class EditPIComponent implements OnInit {
         this.TaxDropdown();
 
         console.log('billchild_details.length' + response.billchild_details.length);
-        this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+// removed the below single line on 12.4.24 on address change
+      //  this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+
         // this.getProformaBillerDetails();
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
@@ -1108,90 +1132,29 @@ export class EditPIComponent implements OnInit {
       if (response.status == true) {
         this.spinner.hide();
         // console.log('address'+response.customer_details[0].customerAddress1);
-
-
-        var address_3;
-        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
-
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
-        }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;        
-        } else {
-          address_3 = response.customer_details[0].state;
-        }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;      
-        } else {
-          address_3 = response.customer_details[0].country;
-        }
-
-        
-
-
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
-
-          ship_to_str = response.customer_details[0].customerName;
-
-        } else {
-          ship_to_str = response.customer_details[0].ship_to;
-        }
-
-        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-        } else {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-        } else {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
-        }
-
-
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;        
-        }else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;        
-        }else {
-          ship_address_str3 = response.customer_details[0].ship_state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;      
-        }else if (ship_address_str3 != ''  && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;      
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
-        }
-
-        if(response.customer_details[0].ship_to==''){
-          ship_address_str1= response.customer_details[0].customerAddress1;
-          ship_address_str2= response.customer_details[0].customerAddress2;
-          ship_address_str3= address_3;
-        }
-
-
-        console.log("ship_address_str1---response", ship_address_str1);
-        console.log("ship_address_str2---response", ship_address_str2)
-        console.log("ship_address_str3---response", ship_address_str3)
+ 
+        this.custAdr1=response.customer_details[0].customerAddress1;
+        this.custAdr2=response.customer_details[0].customerAddress2;
+        this.custAdr3=response.customer_details[0].customerAddress3;
+        this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
+        this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
+        this.ShipAdr3=response.customer_details[0].ship_customerAddress3;
 
 
         this.addPI_section1.patchValue({
           'address_1': response.customer_details[0].customerAddress1,
           'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'shipTo_1': ship_address_str1,
-          'shipTo_2': ship_address_str2,
-          'shipTo_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
+          'address_3': response.customer_details[0].ship_customerAddress3,
+          "customer_id_hd": response.customer_details[0].customerId,
+          "b_name": response.customer_details[0].customerName,
+          "customer_name": response.customer_details[0].customerName,
+
+          "Attn_1": response.customer_details[0].kind_Attention,
+          "ship_to": response.customer_details[0].ship_to,
+          "shipTo_1": response.customer_details[0].ship_customerAddress1,
+          "shipTo_2": response.customer_details[0].ship_customerAddress2,
+          "shipTo_3": response.customer_details[0].ship_customerAddress3,
+          "Attn_2": response.customer_details[0].ship_attn,
         });
       }
       else {
@@ -1205,7 +1168,7 @@ export class EditPIComponent implements OnInit {
           'shipTo_1': '',
           'shipTo_2': '',
           'shipTo_3': '',
-          'ship_attn': '',
+         
         });
       }
 
