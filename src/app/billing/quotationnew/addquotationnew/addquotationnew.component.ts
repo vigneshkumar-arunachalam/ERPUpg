@@ -374,7 +374,10 @@ export class AddquotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      this.FooterDetails = response.footer_details;
+      if(response.footer_details!=null){
+        this.FooterDetails = response.footer_details;
+      }
+     
       if(response.footer_details==''){
         this.submitted_radio=false;
       }
@@ -382,33 +385,36 @@ export class AddquotationnewComponent implements OnInit {
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
       console.log("dynamic term condition change response", response.quotation_terms_cond)
-      for (let index = 0; index < response.footer_details.length; index++) {
-        this.billerIDUpdate = response.footer_details[index].billerId;
-        if (response.status == true) {
-          this.addQuotationInvoice_section1.patchValue({
-            'quotationNumber': response.quotation_no,
-            'selectFooter': response.footer_details[index].pdf_footer_id,
-            'selectCurrency': response.currency_id,
-            'termConditionContentChange': response.quotation_terms_cond,
-            // 'DescriptionText': response.quotation_desp_det,
-          });
-
-          this.currencyNew_RadioValue = response.currency_id;
-          //this.currencyQuotationTermChange();
-
-
-        }
-        else {
-          this.addQuotationInvoice_section1.patchValue({
-            'quotationNumber': '',
-            'selectFooter': '',
-            'selectCurrency': '',
-            'termConditionContentChange': '',
-            // 'DescriptionText': '',
-
-          });
+      if(response.footer_details!=null){
+        for (let index = 0; index < response.footer_details.length; index++) {
+          this.billerIDUpdate = response.footer_details[index].billerId;
+          if (response.status == true) {
+            this.addQuotationInvoice_section1.patchValue({
+              'quotationNumber': response.quotation_no,
+              'selectFooter': response.footer_details[index].pdf_footer_id,
+              'selectCurrency': response.currency_id,
+              'termConditionContentChange': response.quotation_terms_cond,
+              // 'DescriptionText': response.quotation_desp_det,
+            });
+  
+            this.currencyNew_RadioValue = response.currency_id;
+            //this.currencyQuotationTermChange();
+  
+  
+          }
+          else {
+            this.addQuotationInvoice_section1.patchValue({
+              'quotationNumber': '',
+              'selectFooter': '',
+              'selectCurrency': '',
+              'termConditionContentChange': '',
+              // 'DescriptionText': '',
+  
+            });
+          }
         }
       }
+     
 
 
     });
@@ -431,35 +437,43 @@ export class AddquotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      this.FooterDetails = response.footer_details;
+      if(response.footer_details){
+        this.FooterDetails = response.footer_details;
+      }
+      
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
       console.log("dynamic Dropdown change response", response)
       console.log("dynamic term condition change response", response.quotation_terms_cond)
-      for (let index = 0; index < response.footer_details.length; index++) {
-        this.billerIDUpdate = response.footer_details[index].billerId;
-        if (response.status == true) {
-          this.addQuotationInvoice_section1.patchValue({
-            'quotationNumber': response.quotation_no,
-            'selectFooter': response.footer_details[index].pdf_footer_id,
-            'selectCurrency': response.currency_id,
-            'termConditionContentChange': response.quotation_terms_cond,
-            // 'DescriptionText': response.quotation_desp_det,
-          });
+      if(response.footer_details){
 
-
+        for (let index = 0; index < response.footer_details.length; index++) {
+          this.billerIDUpdate = response.footer_details[index].billerId;
+          if (response.status == true) {
+            this.addQuotationInvoice_section1.patchValue({
+              'quotationNumber': response.quotation_no,
+              'selectFooter': response.footer_details[index].pdf_footer_id,
+              'selectCurrency': response.currency_id,
+              'termConditionContentChange': response.quotation_terms_cond,
+              // 'DescriptionText': response.quotation_desp_det,
+            });
+  
+  
+          }
+          else {
+            this.addQuotationInvoice_section1.patchValue({
+              'quotationNumber': '',
+              'selectFooter': '',
+              'selectCurrency': '',
+              'termConditionContentChange': '',
+              // 'DescriptionText': '',
+  
+            });
+          }
         }
-        else {
-          this.addQuotationInvoice_section1.patchValue({
-            'quotationNumber': '',
-            'selectFooter': '',
-            'selectCurrency': '',
-            'termConditionContentChange': '',
-            // 'DescriptionText': '',
 
-          });
-        }
       }
+     
 
 
     });

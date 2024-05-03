@@ -690,9 +690,10 @@ export class DupQuotationNewComponent implements OnInit {
     // Swal.fire('Loading');
     // Swal.showLoading();
     console.log("samson",data);
-        this.quotation_list = data.Quotation_list_send;
+    if(data){
+      this.quotation_list = data.Quotation_list_send;
     
-        if(data.Quotation_per_send!=null || data.Quotation_per_send!='' || data.Quotation_per_send!=undefined || data.Quotation_per_send!='undefined'){
+        if(data.Quotation_per_send){
           this.quotationPermission_Edit = data.Quotation_per_send.edit;
           this.quotationPermission_ActualPrice = data.Quotation_per_send.actual_price
           this.quotationPermission_Add = data.Quotation_per_send.add
@@ -704,8 +705,8 @@ export class DupQuotationNewComponent implements OnInit {
           this.quotationPermission_Share = data.Quotation_per_send.share
         
         }
-
-       
+    }
+  
 
   }
   listDataInfo(list_data: any) {

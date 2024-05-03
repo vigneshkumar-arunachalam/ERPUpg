@@ -116,7 +116,7 @@
 
 
                               <li class="dropdown__item">
-                                <a class="hover4" title="View" data-toggle="modal"
+                                <a class="hover1" title="View" data-toggle="modal"
                                   data-target="#TransactionManagementViewId">
                                   <img class="show" src="assets/img/icon/eye-bl.png">
                                   <img class="hide" src="assets/img/icon/eye-b.png">
@@ -125,7 +125,7 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Edit"  (click)=" edittransactionGo(list.transaction_approval_id,list.type_of_trans)">
+                                <a class="hover1" title="Edit"  (click)=" edittransactionGo(list.transaction_approval_id,list.type_of_trans)">
                                   <img class="show" src="assets/img/icon/nfc-pen-b.png">
                                   <img class="hide" src="assets/img/icon/nfc-pen.png">
                                 </a>
@@ -133,7 +133,7 @@
                               </li>
 
                               <li class="dropdown__item">
-                                <a class="hover3" title="Delete" data-toggle="modal"
+                                <a class="hover1" title="Delete" data-toggle="modal"
                                   (click)="deleteTransaction(list.transaction_approval_id)">
                                   <img class="show" src="assets/img/icon/remove-b.png">
                                   <img class="hide" src="assets/img/icon/remove.png">
@@ -225,8 +225,12 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header modelHeaderCSS">
-        <h2 class="modal-title" id="exampleModalLongTitle">
-          Transaction Approval Management </h2>
+       
+          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" 
+          style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #200122, #6f0000);">
+              Transaction Approval Management </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -426,8 +430,12 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="exampleModalLongTitle">
-          Comments Entry </h2>
+       
+          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" 
+          style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                Comments Entry </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>

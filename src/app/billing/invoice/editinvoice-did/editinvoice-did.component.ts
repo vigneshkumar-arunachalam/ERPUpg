@@ -907,9 +907,15 @@ export class EditinvoiceDIDComponent implements OnInit {
   }
 
   getCustomerInvoiceDetails(event: any) {
-    this.billerID = event.target.value;
-    this.BillerID_CompanyName=event.target.value;
-    console.log("billerID check", this.billerID);
+  
+    if (event && event.target) {
+      this.billerID = event.target.value;
+      this.BillerID_CompanyName=event.target.value;
+      console.log("billerID check", this.billerID);
+  } else {
+      // Handle the case where event or event.target is undefined
+  }
+   
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -937,7 +943,10 @@ export class EditinvoiceDIDComponent implements OnInit {
 
       $('#curren_editinvoicedid').val(response.currency_id);
       $('#Payment_editinvoicedid').val(response.def_payment_via);
-      $('#ccr_editinvoicedid').val(response.conversionRate.currency_live_val);
+      if(response.conversionRate){
+        $('#ccr_editinvoicedid').val(response.conversionRate.currency_live_val);
+      }
+
     
       }
       else {

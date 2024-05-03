@@ -782,7 +782,7 @@
 
 
                                 <td colspan="1">
-                                    <form [formGroup]="subTotalForm2">
+                                 
                                         <div class="userDatable-content">
 
                                             <button type="button"
@@ -791,11 +791,12 @@
                                                 id="didDiscount_btn">Discount(-)
                                             </button>
                                         </div>
-                                    </form>
+                                   
                                 </td>
 
 
                                 <td colspan="3" class="sub-total-list">
+                                    <form [formGroup]="subTotalForm2">
                                     <div class="userDatable-content">
 
                                         <label class="col-form-label">Sub Total(Rs.) </label>
@@ -803,6 +804,7 @@
                                     </div>
                                     <input type="text" class="form-control" formControlName="sub_total_2"
                                         id="sub_total_2" [attr.readonly]="isReadOnly">
+                                    </form>
                                 </td>
                                 <td>
                                     <input type="hidden" class="form-control" style="text-align: right;"
@@ -950,7 +952,7 @@
 
 
                                 <td colspan="1">
-                                    <form [formGroup]="subTotalForm3">
+                                
                                         <div class="userDatable-content">
 
 
@@ -960,11 +962,12 @@
                                                 id="didDiscount_btn">Discount(-)
                                             </button>
                                         </div>
-                                    </form>
+                              
                                 </td>
 
 
                                 <td colspan="3" class="sub-total-list">
+                                    <form [formGroup]="subTotalForm3">
                                     <div class="userDatable-content">
 
                                         <label class="col-form-label">Sub Total(Rs.) </label>
@@ -972,6 +975,7 @@
                                     </div>
                                     <input type="text" class="form-control" formControlName="sub_total_3"
                                         id="sub_total_3" [attr.readonly]="isReadOnly">
+                                    </form>
                                 </td>
 
                                 <td>

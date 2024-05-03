@@ -28928,8 +28928,11 @@ span.breadcrumb-item.active{margin-left: 4px!important;}
     border-radius: 5px;
 }
 .header-top{
-    /* background: #282b8c; */
-    background: #121240;
+    /* background: #121240; */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    z-index: 998;
 }
 
 .card-header-section .breadcrumb-item i{
@@ -29030,3 +29033,116 @@ input,select,textarea, .ng-autocomplete .autocomplete-container .input-container
     width: 100%;
   }
 .autocomplete-container .suggestions-container{z-index: 99;}
+
+
+
+/* --------------------KS CODE sidebar-dynamic menu new change---------------------- */
+li.has-child.ng-star-inserted.open a{
+    background-color: #20b2aa; 
+    color: #fff !important; 
+    border-radius: 6px;
+}
+/* li.has-child.ng-star-inserted.open ul li a .nav-icon, li.has-child.ng-star-inserted.open ul li a{
+    color: #000 !important; 
+} */
+li.has-child.ng-star-inserted a:hover, li.has-child.ng-star-inserted ul li:hover{
+    background-color: #b5a134;
+    color: #fff !important; 
+    border-radius: 6px;
+}
+li.has-child.ng-star-inserted.open a .nav-icon, li.has-child.ng-star-inserted a:hover .nav-icon,
+li.has-child.ng-star-inserted.open ul li:hover .nav-icon,li.has-child.ng-star-inserted ul li:hover a {
+    color: #fff !important; 
+}
+li.has-child.ng-star-inserted.open ul li a{
+    background: transparent;
+}
+.sidebar.collapsed .sidebar__menu-group li{
+    margin-bottom: 4px;
+}
+.mCSB_scrollTools{
+    width: auto!important;
+}
+.sidebar.collapsed .sidebar__menu-group li a.active, .sidebar.collapsed .sidebar__menu-group li a:hover {
+    /* background-color:#b5a134; */
+    background-color: #CB4154 ;
+}
+.sidebar__menu-group  ul.sidebar_nav .open ul .active a, 
+.sidebar__menu-group  ul.sidebar_nav .open ul .active .nav-icon,
+.sidebar.collapsed .sidebar__menu-group li a:hover .nav-icon
+{
+    color: #fff !important;
+}
+.sidebar__menu-group  ul.sidebar_nav .open ul .active{
+    background-color: #808000;
+    color: #fff !important;
+    border-radius: 6px;
+}
+.sidebar.mCustomScrollbar._mCS_1.mCS-autoHide.collapsed .sidebar_nav
+li ul li a{
+    border-radius: 0;
+}
+.sidebar.mCustomScrollbar._mCS_1.mCS-autoHide.collapsed .sidebar_nav
+li ul li a .nav-icon{
+    margin-left: 10px;
+}
+.sidebar.mCustomScrollbar._mCS_1.mCS-autoHide.collapsed .sidebar_nav
+li ul li a:hover{ 
+    background-color:#b5a134;
+    color: #fff !important;
+    border-radius: 6px; 
+}
+.sidebar.mCustomScrollbar._mCS_1.mCS-autoHide.collapsed .sidebar_nav
+li ul li a:hover .nav-icon{
+    color: #fff !important;
+}
+.sidebar{
+    height: calc(100%);
+    top:0;
+    border-radius: 20px;
+    margin: 8px;
+    width: 210px;
+    box-shadow:rgba(99, 99, 99, 0.2) 0px 2px 8px 0px
+}
+.contents{
+    padding: 0px 0px 72px 225px;
+}
+.header-top{
+    position: sticky;
+}
+.sidebar__menu-group ul.sidebar_nav{
+    margin: 5px 0 0 0;
+}
+.contents.expanded {
+    padding-left: 92px;
+    transition: 0s;
+}
+.sidebar__menu-group ul.sidebar_nav li > a{
+    padding: 12px 10px 12px 15px;
+}
+.sidebar{
+    background: linear-gradient(to bottom, #2980b9 0%, #2c3e50 40%);
+}
+.sidebar__menu-group ul.sidebar_nav li > a, .sidebar__menu-group ul.sidebar_nav li > a .nav-icon{
+    color: #fff;
+}
+/* .collapsed .sidebar__menu-group ul.sidebar_nav li ul li a,.collapsed .sidebar__menu-group ul.sidebar_nav li ul li a .nav-icon{
+    color: #000!important;
+} */
+.sidebar.collapsed .sidebar__menu-group .has-child ul{
+    background: #282e33;
+    border-left: 1px solid rgb(202 198 198 / 56%);
+}
+.sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar {
+    width: 3px;
+  }
+   
+  .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
+/* -----------------KS CODE -------------------------*/

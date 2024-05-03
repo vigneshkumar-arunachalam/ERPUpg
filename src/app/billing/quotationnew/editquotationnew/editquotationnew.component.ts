@@ -550,7 +550,8 @@ datavalue:any;
            // alert('ttt'+response.quotation_child_det[index].header_split);
         
           formArray.push(this.fb.group({
-
+            "pd_productName_autocomplete": response.quotation_child_det[index].productName,
+            "pd_split": response.quotation_child_det[index].header_split,
             "pd_productName_txtbox1": response.quotation_child_det[index].productName,
             "pd_productName_txtArea": response.quotation_child_det[index].productDesc,
             "pd_quantity_txtbox1": response.quotation_child_det[index].qty,

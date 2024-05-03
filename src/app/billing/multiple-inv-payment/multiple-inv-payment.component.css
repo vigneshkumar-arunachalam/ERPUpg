@@ -308,7 +308,19 @@
     padding-right: 10px;
   }
   
-  
+  /* .userDatatable table td{
+
+  } */
+  .userDatatable table tr td:nth-child(2){
+    width: 6%;
+  }
+  .userDatatable table tr th:nth-child(5) {
+    width: 25%;
+  }
+  .userDatatable table tr td:nth-child(5) span{
+    width: auto;
+    white-space: normal;
+  }
   
   label.col-form-label {
     padding-right: 10px;
@@ -578,10 +590,7 @@
   .dropdown__item:hover .show{display: none;}
   
   
-  #addCustomerContractId , #editCustomerContractId, 
-  #fileAttachmentCustomerContractId , #invoiceAttachmentId , 
-  #contractRemarksId  , #ApproveStatusId ,
-  #fileContractGenerateId  {
+  #addMulInvPayId, #editMulInvPayId {
     grid-column: 1/2;
     grid-row: 4/5;
     background: #6d5dfc;
@@ -589,35 +598,23 @@
     color: #e4ebf5;
   }
   
-  #addCustomerContractId  .btn-primary, #editCustomerContractId .btn-primary, 
-  #fileAttachmentCustomerContractId  .btn-primary, #invoiceAttachmentId .btn-primary, 
-  #contractRemarksId  .btn-primary, #ApproveStatusId .btn-primary,
-  #fileContractGenerateId .btn-primary,#addMulInvPayId .btn-primary {
+ #addMulInvPayId .btn-primary, #editMulInvPayId .btn-primary {
     grid-column: 1/2;
     grid-row: 4/5;
     background: #6d5dfc;
     box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
     color: #e4ebf5;
   }
-  #addCustomerContractId .modal-content,  #editCustomerContractId .modal-content, 
-  #fileAttachmentCustomerContractId .modal-content,  #invoiceAttachmentId .modal-content,
-  #contractRemarksId .modal-content,  #ApproveStatusId .modal-content,
-  #fileContractGenerateId .modal-content,  #addMulInvPayId .modal-content   { 
+   #addMulInvPayId .modal-content,#editMulInvPayId .modal-content   { 
     background: #e4ebf5;
   
   }
-  #addCustomerContractId .modal-content label,  #editCustomerContractId .modal-content label, 
-  #fileAttachmentCustomerContractId .modal-content label,  #invoiceAttachmentId .modal-content label,
-  #contractRemarksId .modal-content label,  #ApproveStatusId .modal-content label,
-  #fileContractGenerateId .modal-content label,  #addMulInvPayId .modal-content label{
+   #addMulInvPayId .modal-content label,  #editMulInvPayId .modal-content label{
     color: #5f63f2;
   }
   
   
-  #addCustomerContractId .modal-content .form-control, #editCustomerContractId .modal-content .form-control, 
-  #fileAttachmentCustomerContractId .modal-content .form-control, #invoiceAttachmentId .modal-content .form-control, 
-  #contractRemarksId .modal-content .form-control, #ApproveStatusId .modal-content .form-control, 
-  #fileContractGenerateId .modal-content .form-control, #addMulInvPayId .modal-content .form-control {
+  #addMulInvPayId .modal-content .form-control,  #editMulInvPayId .modal-content .form-control {
     border: none;
     padding-left: 1.4rem;
     box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
@@ -625,18 +622,11 @@
     font-family: inherit;
     color: #252525;
   } 
-  #addCustomerContractId .modal-content .form-control:focus, #editCustomerContractId .modal-content .form-control:focus,
-  #fileAttachmentCustomerContractId .modal-content .form-control:focus, #invoiceAttachmentId .modal-content .form-control:focus,
-  #contractRemarksId .modal-content .form-control:focus, #ApproveStatusId .modal-content .form-control:focus,
-  #fileContractGenerateId .modal-content .form-control:focus, #addMulInvPayId .modal-content .form-control:focus {
+ #addMulInvPayId .modal-content .form-control:focus, #editMulInvPayId .modal-content .form-control:focus {
     outline: none;
     box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
   }
-  #addCustomerContractId .modal-content button.close, #editCustomerContractId .modal-content button.close,
-  #fileAttachmentCustomerContractId .modal-content button.close, #invoiceAttachmentId .modal-content button.close,
-  #contractRemarksId .modal-content button.close, #ApproveStatusId .modal-content button.close,
-  #fileContractGenerateId .modal-content button.close,
-  #TextEditorId .modal-content button.close,#addMulInvPayId .modal-content button.close{
+#addMulInvPayId .modal-content button.close,#editMulInvPayId .modal-content button.close{
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
@@ -702,8 +692,18 @@
     overflow: scroll;
   }
 
-  #addMulInvPayId .modal-dialog{
+  #addMulInvPayId .modal-dialog,#editMulInvPayId .modal-dialog{
     min-width: 98%;
+    overflow: scroll;
+    overflow-x: auto;
+  }
+
+
+  #addMulInvPayId .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input,
+  #editMulInvPayId  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input{
+    width: fit-content!important;
   }
   
 

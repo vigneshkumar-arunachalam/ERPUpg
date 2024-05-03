@@ -1047,6 +1047,7 @@ export class DupCustomerNewAllComponent implements OnInit {
       'landscapeEmail_Subject': new FormControl(null),
       'landscapeEmail_Template': new FormControl(null),
       'landscapeEmail_Message': new FormControl(null),
+      'landscapeEmail_Message1': new FormControl(null),
     });
 
   }
@@ -5344,7 +5345,7 @@ export class DupCustomerNewAllComponent implements OnInit {
         this.landscapeEmailForm.patchValue({
 
           'landscapeEmail_Subject': response.crm_subject_name,
-          'landscapeEmail_Message': response.crm_template_content,
+          'landscapeEmail_Message1': response.crm_template_content,
         });
 
 

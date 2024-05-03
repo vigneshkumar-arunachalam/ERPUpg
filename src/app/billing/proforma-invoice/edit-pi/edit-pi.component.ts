@@ -343,7 +343,7 @@ export class EditPIComponent implements OnInit {
       pd_billchild_id: '',
       pd_nextPage_checkbox: '',
       pd_productName_txtbox1: '',
-      // pd_productName_txtArea: '',
+       pd_productName_txtArea: '',
       pd_quantity_txtbox1: '',
       pd_unit: '',
       pd_sellingPrice: '',

@@ -106,6 +106,7 @@ import { RecurringCheckerComponent } from './billing/recurring-checker/recurring
 import { RecurringDateupdateComponent } from './billing/recurring-dateupdate/recurring-dateupdate.component';
 import { MultipleInvPaymentComponent } from './billing/multiple-inv-payment/multiple-inv-payment.component';
 import { AddquotaionnewsdnComponent } from './billing/quotationnew/addquotaionnewsdn/addquotaionnewsdn.component';
+import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.component';
 
 
 
@@ -195,7 +196,8 @@ import { AddquotaionnewsdnComponent } from './billing/quotationnew/addquotaionne
      RecurringCheckerComponent,
      RecurringDateupdateComponent,
      MultipleInvPaymentComponent,
-     AddquotaionnewsdnComponent
+     AddquotaionnewsdnComponent,
+     PurchaseEntryComponent
      
     
   ],

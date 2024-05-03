@@ -751,6 +751,7 @@ export class ResellerPaymentComponent implements OnInit {
   radio_commissionType(event: any, index: any) {
 
     this.commissionType_value = event.target.value;
+    console.log("this.commissionType_value",  this.commissionType_value)
     const indexToUpdate = index; // Change this index according to your needs
     console.log(indexToUpdate);
     console.log("this.commissionType_value", this.commissionType_value);
@@ -760,12 +761,21 @@ export class ResellerPaymentComponent implements OnInit {
 
     if (this.commissionType_value == 1) {
       var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
-      $('#CommissionAmount_WFA_ID_' + index).val(commvalue);
+      console.log("commvalue",commvalue);
+      const commvalue3 = this.resellerCommissionForm.get('addresses').at(index).get('commission_value').value;
+      console.log("commvalue3",commvalue3);
+      $('#CommissionAmount_WFA_ID_' + index).val(commvalue3);
     }
     if (this.commissionType_value == 2) {
-      var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
-      var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
-
+      var commvalue1 = $('#CommissionValue_WFA_ID_' + index).val();
+      const commvalue2 = this.resellerCommissionForm.get('addresses').at(index).get('commission_value').value;
+      
+      console.log("index",index)
+      console.log("commvalue1",commvalue1);
+      console.log("commvalue2",commvalue2);
+      console.log("this.commissionGrossAmount",this.commissionGrossAmount)
+      var commvalue_Percentage = (parseFloat(commvalue2) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
+      console.log("commvalue_Percentage",commvalue_Percentage)
       $('#CommissionAmount_WFA_ID_' + index).val(commvalue_Percentage);
       this.commissionAmount_WFA = $('#CommissionAmount_WFA_ID_' + index).val();
 
@@ -781,8 +791,13 @@ export class ResellerPaymentComponent implements OnInit {
     for (let i = 0; i <= h; i++) {
 
       if (this.commissionType_value == 1) {
-        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
-        $('#CommissionAmount_WFA_ID_' + h).val(commvalue);
+        // console.log("index value",h)
+        // var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        // $('#CommissionAmount_WFA_ID_' + h).val(commvalue);
+        // console.log("commvalue",commvalue)
+        const commvalue5 = this.resellerCommissionForm.get('addresses').at(h).get('commission_value').value;
+        console.log("commvalue5",commvalue5)
+        $('#CommissionAmount_WFA_ID_' + h).val(commvalue5);
       }
       if (this.commissionType_value == 2) {
         var com1 = this.resellerCommissionForm.value.commission_value;
@@ -791,10 +806,13 @@ export class ResellerPaymentComponent implements OnInit {
         var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
         // alert(commvalue)
 
+        const commvalue6 = this.resellerCommissionForm.get('addresses').at(h).get('commission_value').value;
+        console.log("commvalue5",commvalue6)
 
         var k = this.commlistall1[h].grossAmount;
+        console.log("gross amount",k)
 
-        var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
+        var commvalue_Percentage = (parseFloat(commvalue6) * parseFloat(k) / 100).toFixed(2);
         // alert(commvalue_Percentage)
         console.log("this.commvalue_Percentage", commvalue_Percentage);
         $('#CommissionAmount_WFA_ID_' + h).val(commvalue_Percentage);
@@ -1940,6 +1958,7 @@ this.spinner.show();
         for (let i = 0; i < response.editcommList.length; i++) {
           var gh = response.editcommList[i].commIndex;
           this.commissionGrossAmount = response.editcommList[i].grossAmount;
+          // this.commissionGrossAmount = 20;
           this.resellercommissiontype1.push({ val: gh });
           console.log("this.resellercommissiontype1-inside loop", this.resellercommissiontype1);
         }

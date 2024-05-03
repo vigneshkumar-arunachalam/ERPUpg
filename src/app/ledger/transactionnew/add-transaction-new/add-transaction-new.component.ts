@@ -764,6 +764,7 @@ alert( this.payment_details)
         self.goBackTransaction();
         if (result.status == true) {
           this.spinner.hide();
+          this.router.navigate(['/transactionnew']);
           self.goBackTransaction();
           console.log(result);
 

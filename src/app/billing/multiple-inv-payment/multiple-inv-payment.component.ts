@@ -12,6 +12,7 @@ declare var tinymce: any;
 import Swal from 'sweetalert2'
 import { ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 
 
 @Component({
@@ -40,35 +41,44 @@ export class MultipleInvPaymentComponent implements OnInit {
   edit_array_pending: any = [];
   // form array
   public addPI_section2: FormGroup;
+  public editMulInvGroupForm: FormGroup;
   public addresses: FormArray;
+  public edit_addresses: FormArray;
   searchResult_CustomerID_add: any;
   searchResult_CustomerName_add: any;
   searchResult_add: any;
   keywordCompanyName_add = 'customerName';
   paymentType_payment: any;
-  Pay_Pending_list: any;
-  Pay_Pending_list_show: boolean = false;
+  Pay_Pending_list: any[] = [];
+  Pay_Pending_list_show: boolean[] = new Array().fill(false);
   currentDate: string;
   BalanceAmounttotal: any;
   InvoiceAmounttotal: any;
   incrementVariable: any = 0;
-
+  CustomerIDUpdate: any;
+  invAmtDropDown: any;
+  abc: string;
+  dropdownData: any[] = [];
+  cusID: any[] = [];
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
     });
+    this.editMulInvGroupForm = this.fb.group({
+      edit_addresses: this.fb.array([this.edit_createAddress()])
+    });
   }
 
   ngOnInit(): void {
     var date = new Date();
     this.currentDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-   
+    
 
-   
-   
-  
+
+
+
 
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.mulInvPaymentList({});
@@ -78,27 +88,60 @@ export class MultipleInvPaymentComponent implements OnInit {
   get addressControls() {
     return this.addPI_section2.get('addresses') as FormArray
   }
+  get editaddressControls() {
+    return this.editMulInvGroupForm.get('edit_addresses') as FormArray
+  }
 
 
   addAddress(): void {
     $('.date-value').val(this.currentDate);
     this.addresses = this.addPI_section2.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
-    this.incrementVariable++;
- 
+    // this.incrementVariable++;
+
+
+  }
+  editAddress(): void {
+    $('.date-value').val(this.currentDate);
+    this.edit_addresses = this.editMulInvGroupForm.get('edit_addresses') as FormArray;
+    this.edit_addresses.push(this.edit_createAddress());
+    // this.incrementVariable++;
+
 
   }
 
 
   createAddress(): FormGroup {
     return this.fb.group({
-      pd_company_Name: '',
-      pd_date: '',
-      pd_invAmount: '',
-      pd_balAmount: '',
-      pd_paidAmount: '',
-      pd_paymenttype: '',
-      pd_note: ''
+      customer_id:'',
+      customer_name: '',
+      paymentDate: '',
+      invoice_amt: '',
+      bal_amount: '',
+      paid_amt: '',
+      payment_method: '',
+      note: '',
+
+      bill_id:'',
+     
+      net_payment:'',
+
+    });
+  }
+  edit_createAddress(): FormGroup {
+    return this.fb.group({
+      customer_name: '',
+      customer_id:'',
+      payment_child_id:'',
+      invoice_no: '',
+      paymentDate: '',
+      invoice_amt: '',
+      balance_amt: '',
+      paid_amt: '',
+      payment_method: '',
+      note: '',
+      processId:'',
+      billid:''
 
     });
   }
@@ -120,23 +163,160 @@ export class MultipleInvPaymentComponent implements OnInit {
     });
   }
   addMulInvPay() {
-     $('.date-value').val(this.currentDate);
+    
+    $('.date-value').val(this.currentDate);
 
   }
   editMulInvPayGroup() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "multipleInvoicePayment";
+    api_req.api_url = "multipleInvoicePayment/groupEdit"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "groupEdit";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    // getting result as ["2001","2002"],,, need value as [2001,2002]
+    const paymentIdsStrings = this.edit_array;
+    const paymentIdsNumbers = paymentIdsStrings.map((id: string) => parseInt(id));
+    api_mulInvpay.paymentId = paymentIdsNumbers;
+
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response != '') {
+        this.spinner.hide();
+
+        $("#editMulInvPayId").modal("show");
+
+
+        this.spinner.hide();
+
+        const formArray = new FormArray([]);
+        this.invAmtDropDown = [];
+     
+        for (let index = 0; index < response.length; index++) {
+          this.CustomerIDUpdate = response[index].customerId;
+          this.invAmtDropDown = response[index].invoiceNo;
+          this.dropdownData[index] = response[index].invoiceNo;
+          console.log("this.dropdownData[index]",this.dropdownData[index]);
+         // let billIds = response[index].invoiceNo.map((invoiceItem: any) => invoiceItem.billId);
+
+            formArray.push(this.fb.group({
+              "customer_name": response[index].customerName,
+              "invoice_no": response[index].invoiceId,
+              // "paymentDate": response[index].date ,
+             
+              "paymentDate":this.datePipe.transform(response[index].date, 'yyyy-MM-dd')  ,
+              "invoice_amt": response[index].invoiceAmount,
+               "balance_amt": response[index].balanceAmount,
+              "paid_amt": response[index].paidAmount,
+              "payment_method": response[index].paymentType,
+              "note": response[index].note,
+
+              "customer_id": response[index].customerId,
+              "payment_child_id": response[index].payment_child_id,
+              "processId": response[index].processId,
+             // "billid": response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index].billId : null,
+             // "billid": response[index].invoiceNo && response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index].billId : null,
+              "billid": response[index].invoiceNo && response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index]?.billId : null,
+
+               
+            })
+            );
+        }
+        // for(let index1=0;index1<response.length;index1++){
+        //   formArray.push(this.fb.group({
+           
+        //     "billid": response[index1].invoiceNo.length > 0 ? response[index1].invoiceNo[index1].billId : null,
+             
+        //   })
+        //   );
+          
+        // }
+        this.editMulInvGroupForm.setControl('edit_addresses', formArray);
+        console.log("this.editMulInvGroupForm",this.editMulInvGroupForm);
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Select Atleast 1 Group to Edit",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
 
   }
-  selectEventCustomer_add(item: any) {
+  updateMulInvPayment(){
+    this.spinner.show();
+   
+    let api_req: any = new Object();
+    let addRPAPI: any = new Object();
+    api_req.moduleType = "multipleInvoicePayment";
+    api_req.api_url = "multipleInvoicePayment/groupUpdate";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    addRPAPI.action = "groupUpdate";
+    addRPAPI.user_id = localStorage.getItem('erp_c4c_user_id');
+    addRPAPI.billchild_values = this.editMulInvGroupForm.value.edit_addresses;
+    api_req.element_data = addRPAPI;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      this.spinner.hide();
+      if (response != '') {
+
+        this.spinner.hide();
+        $("#editMulInvPayId").modal("hide");
+        iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
+        this.mulInvPaymentList({});
+
+      }else{
+        this.spinner.hide();
+        iziToast.warning({
+          Message:"Update Failed",
+          position:'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
+  selectEventCustomer_add(item: any,i:any) {
     console.log(item)
     this.searchResult_CustomerID_add = item.customerId;
     this.searchResult_CustomerName_add = item.customerName.trim();
     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
-    this.payment_pending_inv_list();
+    this.cusID[i]= item.customerId;
+    console.log("this.cusID[i]",this.cusID[i])
+    this.payment_pending_inv_list(i);
 
   }
 
-  clearSelection1(event: any) {
+  clearSelection1(event: any,i:any) {
     console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
@@ -144,7 +324,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     this.searchResult_CustomerName_add = '';
     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
-    this.Pay_Pending_list_show = false;
+    this.Pay_Pending_list_show[i] = false;
   }
   onFocusedCustomer_add(e: any) {
     // do something when input is focused
@@ -189,57 +369,117 @@ export class MultipleInvPaymentComponent implements OnInit {
   removeAddress(i: number) {
     this.addressControls.removeAt(i);
   }
-  deleteMulInvPayGroup() {
+  
+  removeAddress_edit(i: number) {
+
+  
+    var paymentChildID = this.editMulInvGroupForm.value.edit_addresses[i].payment_child_id;
+
+
     Swal.fire({
-      title: 'Are you sure to Delete?',
+      title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Delete it!'
-    }).then((result: any) => {
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
       if (result.value) {
         this.spinner.show();
+        const editAddresses = this.editMulInvGroupForm.get('edit_addresses') as FormArray;
+        editAddresses.removeAt(i);
+        // this.editContractGroupForm.value.edit_addresses.removeAt(i);
         let api_req: any = new Object();
-        let api_singleDelete: any = new Object();
+        let api_ContDel_req: any = new Object();
         api_req.moduleType = "multipleInvoicePayment";
-        api_req.api_url = "multipleInvoicePayment/groupDeleteInvoice";
+        api_req.api_url = "multipleInvoicePayment/child_details_deletion";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_singleDelete.action = "groupDeleteInvoice";
-        api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_singleDelete.inv_id = this.edit_array;
-        api_req.element_data = api_singleDelete;
+        api_ContDel_req.action = "child_details_deletion";
+        api_ContDel_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_ContDel_req.payment_child_id = paymentChildID;
+        api_req.element_data = api_ContDel_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-
             this.spinner.hide();
+            this.edit_array = [];
             iziToast.success({
-              message: "Deleted Successfully",
+              message: " Contract Deleted successfully",
               position: 'topRight'
             });
-            this.mulInvPaymentList({});
-          } else {
-            this.spinner.hide();
-            iziToast.success({
-              message: "Deleted Successfully",
-              position: 'topRight'
-            });
-            this.mulInvPaymentList({});
+           // this.contractList({});
           }
-        }),
-          (error: any) => {
+          else {
             this.spinner.hide();
-            iziToast.error({
-              message: "Sorry, some server issue occur. Please contact admin",
-              position: 'topRight'
-            });
-            console.log("final error", error);
-          };
+          }
+        });
       }
     })
+
+  }
+  deleteMulInvPayGroup() {
+    if(this.edit_array.length==0){
+      iziToast.error({
+        message: "Select Atleast 1 Group to Delete",
+        position: 'topRight'
+      });
+    }else{
+      Swal.fire({
+        title: 'Are you sure to Delete?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Delete it!'
+      }).then((result: any) => {
+        if (result.value) {
+          this.spinner.show();
+          let api_req: any = new Object();
+          let api_singleDelete: any = new Object();
+          api_req.moduleType = "multipleInvoicePayment";
+          api_req.api_url = "multipleInvoicePayment/groupDeleteInvoice";
+          api_req.api_type = "web";
+          api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+          api_singleDelete.action = "groupDeleteInvoice";
+          api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
+          api_singleDelete.inv_id = this.edit_array;
+          api_req.element_data = api_singleDelete;
+  
+          this.serverService.sendServer(api_req).subscribe((response: any) => {
+            if (response.status == "true") {
+              this.edit_array=[];
+              console.log("array content after delete",this.edit_array)
+              this.spinner.hide();
+              iziToast.success({
+                message: "Deleted Successfully",
+                position: 'topRight'
+              });
+              this.mulInvPaymentList({});
+            } else {
+              this.spinner.hide();
+              iziToast.success({
+                message: "Deleted Successfully",
+                position: 'topRight'
+              });
+              this.mulInvPaymentList({});
+            }
+          }),
+            (error: any) => {
+              this.spinner.hide();
+              iziToast.error({
+                message: "Sorry, some server issue occur. Please contact admin",
+                position: 'topRight'
+              });
+              console.log("final error", error);
+            };
+        }
+      })
+
+    }
+   
 
   }
 
@@ -373,11 +613,11 @@ export class MultipleInvPaymentComponent implements OnInit {
     console.log("Final Checkbox After checkbox selected list", this.edit_array);
   }
 
-  selectAll_pending(event: any) {
+  selectAll_pending(event: any,i:any) {
 
     // Check if the event target is checked
+    console.log("jdhff",i);
     const isChecked1 = event.target.checked;
-
     // Reset both totals
     this.BalanceAmounttotal = 0;
     this.InvoiceAmounttotal = 0;
@@ -386,12 +626,13 @@ export class MultipleInvPaymentComponent implements OnInit {
     this.edit_array_pending = [];
 
     // Iterate over the Pay_Pending_list array
-    this.Pay_Pending_list.forEach((list: any) => {
+    this.Pay_Pending_list[i].forEach((list: any) => {
+    console.log("list",list)
       // Update the checkbox state for each item
       list.isChecked = isChecked1;
 
       // Update the edit_array_pending based on the isChecked status and performa_invoice
-      if (isChecked1 && list.performa_invoice === 0) {
+      if (isChecked1 ==true && list.performa_invoice === 0) {
         this.edit_array_pending.push(list.billId);
         // If it's checked and performa_invoice is 0, add balance_amt and netPayment to corresponding totals
         this.BalanceAmounttotal += list.balance_amt;
@@ -400,7 +641,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     });
 
     // Update the state of all checkboxes in the DOM
-    const checkboxes = document.querySelectorAll('.checkbox-group__single input[type="checkbox"]');
+    const checkboxes = document.querySelectorAll('.checkbox-group__single'+i);
     checkboxes.forEach((checkbox: any) => {
       checkbox.checked = isChecked1;
     });
@@ -408,14 +649,14 @@ export class MultipleInvPaymentComponent implements OnInit {
     console.log("Checkbox-all", this.edit_array_pending);
     console.log("BalanceAmounttotal", this.BalanceAmounttotal);
     console.log("InvoiceAmounttotal", this.InvoiceAmounttotal);
-    $('#pd_invAmount_' + this.incrementVariable).val(this.InvoiceAmounttotal);
-    $('#pd_balAmount_' + this.incrementVariable).val(this.BalanceAmounttotal);
-    $('#pd_paidAmount_' + this.incrementVariable).val(this.BalanceAmounttotal);
+    $('#pd_invAmount_' + i).val(this.InvoiceAmounttotal);
+    $('#pd_balAmount_' + i).val(this.BalanceAmounttotal);
+    $('#pd_paidAmount_' + i).val(this.BalanceAmounttotal);
   }
 
 
 
-  EditCHK_pending(data: any, event: any) {
+  EditCHK_pending(data: any, event: any,i:any) {
 
     console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_pending = data;
@@ -442,7 +683,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       this.InvoiceAmounttotal = 0;
 
       // Iterate over Pay_Pending_list and update totals for selected items
-      this.Pay_Pending_list.forEach((list: any) => {
+      this.Pay_Pending_list[i].forEach((list: any) => {
         if (this.edit_array_pending.includes(list.billId) && list.performa_invoice === 0) {
           this.BalanceAmounttotal += list.balance_amt;
           this.InvoiceAmounttotal += list.netPayment;
@@ -453,9 +694,9 @@ export class MultipleInvPaymentComponent implements OnInit {
       console.log("BalanceAmounttotal", this.BalanceAmounttotal);
       console.log("InvoiceAmounttotal", this.InvoiceAmounttotal);
 
-      $('#pd_invAmount_' + this.incrementVariable).val(this.InvoiceAmounttotal);
-      $('#pd_balAmount_' + this.incrementVariable).val(this.BalanceAmounttotal);
-      $('#pd_paidAmount_' + this.incrementVariable).val(this.BalanceAmounttotal);
+      $('#pd_invAmount_' + i).val(this.InvoiceAmounttotal);
+      $('#pd_balAmount_' + i).val(this.BalanceAmounttotal);
+      $('#pd_paidAmount_' + i).val(this.BalanceAmounttotal);
 
     }
   }
@@ -463,7 +704,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
 
-  payment_pending_inv_list() {
+  payment_pending_inv_list(i:any) {
     this.spinner.show();
 
     let api_req: any = new Object();
@@ -479,11 +720,11 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response != '') {
+      if (response.status== "true") {
         this.spinner.hide();
 
-        this.Pay_Pending_list = response;
-        this.Pay_Pending_list_show = true;
+        this.Pay_Pending_list[i] = response.data;
+        this.Pay_Pending_list_show[i] = true;
         console.log("this.Pay_Pending_list", this.Pay_Pending_list)
 
         $("#searchInvoiceFormId").modal("hide");
@@ -491,7 +732,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       } else {
         this.spinner.hide();
         iziToast.warning({
-          message: "Response Failed",
+          message: "No Data",
           position: 'topRight'
         });
       }
@@ -587,13 +828,13 @@ export class MultipleInvPaymentComponent implements OnInit {
               message: "Invoice to Proforma converted Successfully",
               position: 'topRight'
             });
-            this.payment_pending_inv_list();
+            this.payment_pending_inv_list({});
           } else {
             iziToast.warning({
               message: "Invoice to Proforma not converted. Please try again",
               position: 'topRight'
             });
-            this.payment_pending_inv_list();
+            this.payment_pending_inv_list({});
           }
         }),
           (error: any) => {
@@ -608,7 +849,8 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   }
-  addPaymentEntry() {
+  addPaymentEntry(i:any) {
+      
     this.spinner.show();
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
@@ -618,31 +860,58 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mulInvpay.action = "addPaymentEntry";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
-    var addr = this.addPI_section2.value.addresses;
+   // api_mulInvpay.customerId = this.addPI_section2.value.addresses[0].customer_name.customerId;
+    api_mulInvpay.customerId =  this.cusID[i];
+    api_mulInvpay.invoice_amt = $('#pd_invAmount_' + i).val();
+    api_mulInvpay.paid_amt =  $('#pd_paidAmount_' + i).val();
+    api_mulInvpay.payment_method = this.addPI_section2.value.addresses[0].payment_method;
+    api_mulInvpay.note = this.addPI_section2.value.addresses[0].note;
+    api_mulInvpay.bill_id = this.edit_array_pending;
+    var originalDate = $('#pd_date_' + i).val();
+    var parts = originalDate.split("-");
+    var formattedDate = parts[2] + "-" + parts[1] + "-" + parts[0];
+    api_mulInvpay.paymentDate = formattedDate;
+
+
+   // var addr = this.addPI_section2.value.addresses;
     console.log("this.addPI_section2.value.addresses", this.addPI_section2.value.addresses)
-    for (let i = 0; i < addr.length; i++) {
+    // for (let i = 0; i < addr.length; i++) {
 
 
-      addr[i].customerId = $('#pd_company_Name_' + i).val();
-      addr[i].paymentDate = $('#pd_date_' + i).val();
-      addr[i].invoice_amt = $('#pd_invAmount_' + i).val();
-      addr[i].bal_amount = $('#pd_balAmount_' + i).val();
-      addr[i].paid_amt = $('#pd_paidAmount_' + i).val();
-      addr[i].payment_method = $('#pd_paymenttype_' + i).val();
-      addr[i].note = $('#pd_note_' + i).val();
+    //   addr[i].customerId = $('#pd_company_Name_' + i).val();
+    //   addr[i].paymentDate = $('#pd_date_' + i).val();
+    //   addr[i].invoice_amt = $('#pd_invAmount_' + i).val();
+    //   addr[i].bal_amount = $('#pd_balAmount_' + i).val();
+    //   addr[i].paid_amt = $('#pd_paidAmount_' + i).val();
+    //   addr[i].payment_method = $('#pd_paymenttype_' + i).val();
+    //   addr[i].note = $('#pd_note_' + i).val();
 
 
-    }
-    api_mulInvpay.values = addr;
+    // }
+    // for (let i = 0; i < addr.length; i++) {
+
+
+    //   addr[i].customerId = this.addPI_section2.value.addresses.customer_name;
+    //   addr[i].paymentDate = this.addPI_section2.value.addresses.paymentdate;
+    //   addr[i].invoice_amt = this.addPI_section2.value.addresses.invoice_amt;
+    //   addr[i].bal_amount =this.addPI_section2.value.addresses.bal_amount;
+    //   addr[i].paid_amt = this.addPI_section2.value.addresses.paid_amt;
+    //   addr[i].payment_method = this.addPI_section2.value.addresses.payment_method;
+    //   addr[i].note = this.addPI_section2.value.addresses.note;
+
+
+    // }
+   // api_mulInvpay.values = addr;
 
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response != '') {
+      if (response.status==true) {
         this.spinner.hide();
         this.mulInvPay_list = response.dataList;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
-        $("#searchInvoiceFormId").modal("hide");
+        $("#addMulInvPayId").modal("hide");
+        this.mulInvPaymentList({});
 
       } else {
         this.spinner.hide();

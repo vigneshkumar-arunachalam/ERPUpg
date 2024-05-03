@@ -1,3 +1,13 @@
-aside{
-    background-color: #f8f8f8;
+
+
+.logo-size{
+    width: 100px;
+    padding: 10px;
+}
+.collapsed .logo-size{
+    width: 75px;
+    padding: 10px;
+}
+.navbar-brand{
+    margin-right: 0;
 }

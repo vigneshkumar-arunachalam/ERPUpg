@@ -1417,17 +1417,34 @@ export class DupInvoiceComponent implements OnInit {
   }
   getInvoice_Dup(data: any) {
     console.log("data,",data);
+    if(data){
+      this.PI_list = data.Invoice_list_send;
+    }
     
-    this.PI_list = data.Invoice_list_send;
+    
     // this.recurring_Status = data.Invoice_list_send[0].recuring_status;
-    this.revenue_type_id = data.Invoice_list_send[0].revenue_type_id;
-    this.revenue_individual_state = data.Invoice_list_send[0].revenue_individual_state;
-    this.revenue_color = data.Invoice_list_send[0].revenue_color;
-    this.share_access_state = data.Invoice_list_send[0].share_access_state;
-    this.postal_send_color = data.Invoice_list_send[0].postal_send_color;
-    this.post_send_status = data.Invoice_list_send[0].post_send_status;
-    this.biller_list = data.Invoice_biller_send;
-    this.invoicePermissionList = data.Invoice_per_send;
+
+    // below line 1424-1434 changed on 17.4.24 due to console error
+    if (data.Invoice_list_send && data.Invoice_list_send.length > 0) {
+      // Access properties of data.Invoice_list_send[0] here
+     
+      this.revenue_type_id = data.Invoice_list_send[0].revenue_type_id;
+      this.revenue_individual_state = data.Invoice_list_send[0].revenue_individual_state;
+      this.revenue_color = data.Invoice_list_send[0].revenue_color;
+      this.share_access_state = data.Invoice_list_send[0].share_access_state;
+      this.postal_send_color = data.Invoice_list_send[0].postal_send_color;
+      this.post_send_status = data.Invoice_list_send[0].post_send_status;
+      this.taxAmtstate = data.Invoice_list_send[0].taxAmtstate;
+      // etc.
+  } else {
+      // Handle the case where data.Invoice_list_send is undefined or empty
+      console.error("Invoice list is empty or undefined");
+  }
+ if(data){
+  this.biller_list = data.Invoice_biller_send;
+  this.invoicePermissionList = data.Invoice_per_send;
+  this.revenueTypeList = data.Invoice_revenue_send;
+  if(data.Invoice_per_send){
     this.invoicePermissionList_add = data.Invoice_per_send.add;
     this.invoicePermissionList_Search = data.Invoice_per_send.search;
     this.invoicePermissionList_all_invoice_show = data.Invoice_per_send.all_invoice_show;
@@ -1446,43 +1463,46 @@ export class DupInvoiceComponent implements OnInit {
     this.invoicePermissionList_inv_to_quotation = data.Invoice_per_send.inv_to_quotation;
     this.invoicePermissionList_inv_to_share = data.Invoice_per_send.inv_to_share;
     this.invoicePermissionList_invoice_alert = data.Invoice_per_send.invoice_alert;
-
     this.invoicePermissionList_list = data.Invoice_per_send.list;
-    this.invoicePermissionList_mail = data.Invoice_per_send.mail;
-    this.invoicePermissionList_monthly_turn = data.Invoice_per_send.monthly_turn;
-    this.invoicePermissionList_online_pay_link = data.Invoice_per_send.online_pay_link;
-    this.invoicePermissionList_payment_process = data.Invoice_per_send.payment_process;
-    this.invoicePermissionList_pdf_view = data.Invoice_per_send.pdf_view;
-    this.invoicePermissionList_sale_rep = data.Invoice_per_send.sale_rep;
-    this.invoicePermissionList_search = data.Invoice_per_send.search;
-
-    this.invoicePermissionList_sent_to_post = data.Invoice_per_send.sent_to_post;
-    this.invoicePermissionList_set_invoice_revenue = data.Invoice_per_send.set_invoice_revenue;
-    this.invoicePermissionList_set_invoice_type = data.Invoice_per_send.set_invoice_type;
-    this.invoicePermissionList_set_prev_billing = data.Invoice_per_send.set_prev_billing;
-    this.invoicePermissionList_set_terms_condition = data.Invoice_per_send.set_terms_condition;
-    this.invoicePermissionList_sus_inv_list = data.Invoice_per_send.sus_inv_list;
-    this.invoicePermissionList_ten_day_per_billing = data.Invoice_per_send.ten_day_per_billing;
-    this.revenueTypeList = data.Invoice_revenue_send;
-    this.taxAmtstate = data.Invoice_list_send[0].taxAmtstate;
+      this.invoicePermissionList_mail = data.Invoice_per_send.mail;
+      this.invoicePermissionList_monthly_turn = data.Invoice_per_send.monthly_turn;
+      this.invoicePermissionList_online_pay_link = data.Invoice_per_send.online_pay_link;
+      this.invoicePermissionList_payment_process = data.Invoice_per_send.payment_process;
+      this.invoicePermissionList_pdf_view = data.Invoice_per_send.pdf_view;
+      this.invoicePermissionList_sale_rep = data.Invoice_per_send.sale_rep;
+      this.invoicePermissionList_search = data.Invoice_per_send.search;
+      this.invoicePermissionList_sent_to_post = data.Invoice_per_send.sent_to_post;
+      this.invoicePermissionList_set_invoice_revenue = data.Invoice_per_send.set_invoice_revenue;
+      this.invoicePermissionList_set_invoice_type = data.Invoice_per_send.set_invoice_type;
+      this.invoicePermissionList_set_prev_billing = data.Invoice_per_send.set_prev_billing;
+      this.invoicePermissionList_set_terms_condition = data.Invoice_per_send.set_terms_condition;
+      this.invoicePermissionList_sus_inv_list = data.Invoice_per_send.sus_inv_list;
+      this.invoicePermissionList_ten_day_per_billing = data.Invoice_per_send.ten_day_per_billing;
+  }
+ 
+   
+   
 
     this.edit_array_SearchBiller_Checkbox = data.selected_billerId;
 
     this.selected_billerId = data.selected_billerId;
-    this.invoicePermissionList_inv_to_did
-    this.invoicePermissionList_set_actual_cost
+    if(data.Invoice_list_send){
+      for (var j = 0; j < data.Invoice_list_send.length; j++) {
 
-
-    for (var j = 0; j < data.Invoice_list_send.length; j++) {
-
-      this.reseller_commissionState = data.Invoice_list_send[j].commission_state;
-      this.recurring_state_all = data.Invoice_list_send[j].recuring_status;
-      console.log("this.reseller_commissionState", this.reseller_commissionState)
-      this.suspend_state = data.Invoice_list_send[j].suspend;
+        this.reseller_commissionState = data.Invoice_list_send[j].commission_state;
+        this.recurring_state_all = data.Invoice_list_send[j].recuring_status;
+        console.log("this.reseller_commissionState", this.reseller_commissionState)
+        this.suspend_state = data.Invoice_list_send[j].suspend;
+      }
+  
+      console.log("Invoice_list_send list", this.PI_list)
+      console.log("this.biller_list", this.biller_list)
     }
 
-    console.log("Invoice_list_send list", this.PI_list)
-    console.log("this.biller_list", this.biller_list)
+  
+
+ }
+    
 }
   getInvoice(data: any) {
     console.log("getinvoice")

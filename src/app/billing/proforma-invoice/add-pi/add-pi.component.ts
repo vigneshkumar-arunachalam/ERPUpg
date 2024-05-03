@@ -314,6 +314,12 @@ export class AddPIComponent implements OnInit {
       pd_selectTax: '',
 
 
+      // added newly for console error
+      sub_dis_type:'',
+      sub_dis_val:'',
+      sub_discount:''
+
+
     });
 
   }

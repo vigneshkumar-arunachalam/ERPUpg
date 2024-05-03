@@ -5333,7 +5333,7 @@ export class CustomernewallComponent implements OnInit {
     this.emailTo = $('#emailToLandscape').val();
     this.subjectValue = $('#subjLandscape').val();
     this.emailTemplate = $('#templateLandscape').val();
-    this.msg_id = tinymce.get('tinyLandscapeEmailID').getContent();
+    this.msg_id = tinymce.get('tinyLandscapeEmailID9').getContent();
 
     let api_req: any = new Object();
     let api_email_req: any = new Object();

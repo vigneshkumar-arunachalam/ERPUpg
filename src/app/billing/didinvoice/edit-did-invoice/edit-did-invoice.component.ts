@@ -894,9 +894,12 @@ export class EditDidInvoiceComponent implements OnInit {
   }
 
   getCustomerInvoiceDetails(event: any) {
-    this.billerID = event.target.value;
-    this.BillerID_CompanyName = event.target.value;
-    console.log("billerID check", this.billerID);
+    if(event && event.target ){
+      this.billerID = event.target.value;
+      this.BillerID_CompanyName = event.target.value;
+      console.log("billerID check", this.billerID);
+    }
+   
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();

@@ -1,0 +1,1304 @@
+<div class="contents-section">
+
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active"> Purchase Entry Management</span>
+          </h3>
+
+          <div class="quotation-btn-section">
+            <button type="button" title="Add New Purchase Order" 
+            class="btn btn-primary btn-default btn-squared"
+            data-toggle="modal" data-target="#addPurchaseEntryFormId" (click)="addPurchaseEntry()"
+           style="margin-right: 30px;"><i class="fas fa-plus"
+                style="margin-right:10;"></i>Add
+            </button>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+              data-target="#searchPurchaseOrderFormId">
+              <i class="fas fa-search" style="margin-right:10;"></i>Search
+            </button>
+
+          </div>
+
+
+
+        </div>
+        <div class="container mt-3 ml-0">
+
+          <!-- Nav pills -->
+          <ul class="nav nav-pills" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#All" role="tab" aria-controls="All"
+                aria-selected="true" (click)="SelectTransactionType_ALL()"> All</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#NotPaid" role="tab" aria-controls="NotPaid"
+                aria-selected="false" (click)="SelectTransactionType_NotPaid()">Not Paid</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#PartialPaid" role="tab" aria-controls="PartialPaid"
+                aria-selected="false" (click)="SelectTransactionType_PartialPaid()">Partial Paid</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#Paid" role="tab" aria-controls="Paid" aria-selected="false"
+                (click)="SelectTransactionType_Paid()">Paid</a>
+            </li>
+
+          </ul>
+
+          <!-- Tab panes -->
+          <div class="tab-content" id="myTabContent">
+            <div id="All" class="tab-pane fade show active" role="tabpanel" aria-labelledby="All-tab"><br>
+              <!-- All sub menu starts -->
+
+
+              <!-- All sub menu ends -->
+
+            </div>
+            <div id="NotPaid" class="tab-pane fade" role="tabpanel" aria-labelledby="NotPaid-tab"><br>
+              <!-- NotPaid entry sub menu ends -->
+
+
+              <!-- NotPaid entry sub menu ends -->
+
+
+            </div>
+            <div id="PartialPaid" class="tab-pane fade" role="tabpanel" aria-labelledby="PartialPaid-tab"><br>
+              <!-- PartialPaid entry sub menu ends -->
+
+
+              <!-- PartialPaid entry sub menu ends -->
+            </div>
+
+            <div id="Paid" class="tab-pane fade" role="tabpanel" aria-labelledby="Paid-tab"><br>
+              <!-- Paid sub menu starts -->
+
+
+
+
+              <!-- Paid sub menu ends -->
+            </div>
+
+            <div id="InvoicePayment" class="tab-pane fade" role="tabpanel" aria-labelledby="InvoicePayment-tab"><br>
+              <!-- Invoice Payment sub menu starts -->
+
+
+
+              <!-- Invoice Payment sub menu ends -->
+            </div>
+
+            <div id="AddNewStock" class="tab-pane fade" role="tabpanel" aria-labelledby="AddNewStock-tab"><br>
+
+
+            </div>
+
+            <div id="StockIssued" class="tab-pane fade" role="tabpanel" aria-labelledby="StockIssued-tab"><br>
+              <!-- Stock Issued  sub menu ends -->
+
+
+            </div>
+
+            <div id="StockTransfer" class="tab-pane fade" role="tabpanel" aria-labelledby="StockTransfer-tab"><br>
+              <!-- Stock Transfer  sub menu ends -->
+
+
+
+              <!-- Stock Transfer sub menu ends -->
+            </div>
+
+            <div id="Others" class="tab-pane fade" role="tabpanel" aria-labelledby="Others-tab"><br>
+              <!-- Others sub menu starts -->
+
+
+              <!-- Others sub menu ends -->
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card-body" id="delivery-order-section">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+                    <th>
+                      <span class="userDatatable-title">Purchase Entry No</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Purchase Type</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Purchase Entry Date</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Paid Date</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Vendor Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Inv No</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Inv Date</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Content of Purchase</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Tax</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Amount</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Conv Amt</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Bal Amt</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Curr</span>
+                    </th>
+
+
+                    <th>
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let list of purchaseEntryList;let i = index">
+                  <td>
+                    <span> {{ list.purchaseEntryNo }} </span>
+                    <span><button type="button" class="buttonClass" [ngStyle]="{backgroundColor: list.colorCode}">{{
+                        list.billcode}}
+                      </button>
+                    </span>
+                  </td>
+                  <!-- <td>
+                                                <span> {{ list.delivery_date }} </span>
+                                                <span><button type="button" class="buttonClass"
+                                                  [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                  list.billerCode}}
+                                                </button>
+                                              </span>
+                                            </td> -->
+                  <td>
+
+
+                    {{ list.purchase_type}}
+                  </td>
+                  <td>
+                    <span> {{ list.purchaseEntryDate }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.paid_date }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.vendorname }} </span><br>
+                    <span style="background-color: rgb(211, 254, 93);width: 10%;"> {{ list.entry_state }} </span><br>
+
+                  </td>
+                  <td>
+                    <span> {{ list.invoiceno }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.invoiceDate }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.content_purchase }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.taxAmount }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.invoiceAmount }} </span><br>
+                    <span style="color: brown;"> {{ list.previous_amt }} </span><br>
+                    <span style="color: rgb(22, 102, 4);"> {{ list.total_amt_str }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.convertAmount }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.bal_amt }} </span>
+                  </td>
+                  <td>
+                    <span> {{ list.currency }} </span>
+                  </td>
+
+                  <td>
+                    <div class="page">
+
+                      <div class="dropdown">
+                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                        <ul class="dropdown__list">
+
+                          <li class="dropdown__item">
+                            <a class="remove" title="View" data-toggle="modal" data-target="#viewPurchaseEntryFormId"
+                              (click)="viewEnquiry(list.purchaseEntryNo)">
+
+                              <img class="show" src="assets/img/icon2/eye-yellow.png">
+                              <img class="hide" src="assets/img/icon2/eye-black1.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover3" title="Edit" data-toggle="modal" data-target="#editPurchaseEntryFormId"
+                              (click)="editEnquiry_ML(list.purchaseEntryNo)">
+                              <img class="show" src="assets/img/icon2/edit-blue.png">
+                              <img class="hide" src="assets/img/icon2/edit-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
+                              (click)="deleteEnquiry_ML(list.purchaseEntryNo)">
+                              <img class="show" src="assets/img/icon2/delete-blue.png">
+                              <img class="hide" src="assets/img/icon2/delete-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Recurring" data-toggle="modal" data-target="#RecurringFormId"
+                              (click)="Recurring(list.purchaseEntryNo)">
+                              <img class="show" src="assets/img/icon2/R-blue.png">
+                              <img class="hide" src="assets/img/icon2/R-black.png">
+                            </a>
+                          </li>
+
+                          <li class="dropdown__item">
+                            <a class="hover4" title="Payment Process" data-toggle="modal"
+                              data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryNo)">
+                              <img class="show" src="assets/img/icon2/P-blue.png">
+                              <img class="hide" src="assets/img/icon2/P-black.png">
+                            </a>
+                          </li>
+
+                        </ul>
+                      </div>
+                    </div>
+                  </td>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <br>
+          <nav class="atbd-page">
+            <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+              <li class="page-item">
+                <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                  href="javascript:void(0)"
+                  (click)="paginationData.backtab=='show' ? PurchaseEntryList({'offset':paginationData.start}) : false"><i
+                    class="fas fa-angle-left"></i></a>
+              </li>
+              <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)="PurchaseEntryList({'offset':paginationData.back})"><i
+                    class="fas fa-angle-double-left"></i></a>
+              </li>
+              <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                *ngFor="let pagination of paginationData.data;let i=index">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)=" pagination.load ==true ? PurchaseEntryList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                  <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+              </li>
+              <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                <a class="page-link" href="javascript:void(0)"
+                  (click)="PurchaseEntryList({'offset':paginationData.next})"><i
+                    class="fas fa-angle-double-right"></i></a>
+              </li>
+              <li class="page-item">
+                <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                  href="javascript:void(0)"
+                  (click)="paginationData.nexttab =='show' ? PurchaseEntryList({'offset':paginationData.end}) : false"><i
+                    class="fas fa-angle-right"></i></a>
+              </li>
+              <li class="dropdown__item">
+                <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- -----------------------Modal-View Customer begins-------------------------------- -->
+<div class="modal fade" id="viewPurchaseEntryFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          View Purchase Entry Details </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <form [formGroup]="viewEnquiryForm">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Biller Name</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_billerName" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_ContactInfo" class="col-lg-12  col-form-label">Purchase Entry No</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_PurchaseEntryNo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Email" class="col-lg-12 col-form-label">Purchase Type</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_PurchaseType" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_PhoneNumber" class="col-lg-12 col-form-label">Purchase Entry Date</label>
+                <div class="col-lg-12">
+                  <input type="date" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_PurchaseEntryDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Company" class="col-lg-12 col-form-label">Paid Date</label>
+                <div class="col-lg-12">
+                  <input type="datetime" [readonly]="isReadOnly" class="form-control" formControlName="view_PaidDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Vendor Name</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_VendorName" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_SalesCloud" class="col-lg-12 col-form-label">Invoice No</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_InvoiceNo" />
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_ProductName" class="col-lg-12 col-form-label">Invoice Date</label>
+                <div class="col-lg-12">
+                  <input type="date" [readonly]="isReadOnly" class="form-control" formControlName="view_InvoiceDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Comments" class="col-lg-12 col-form-label">Content of Purchase</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_purchaseContent" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_EnquiryFollowers " class="col-lg-12 col-form-label">Tax Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_taxAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_EnquiryFollowers " class="col-lg-12 col-form-label">Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_amount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_EnquiryFollowers " class="col-lg-12 col-form-label">Conversion Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_convAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_EnquiryFollowers " class="col-lg-12 col-form-label">Balance Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_balAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_EnquiryFollowers " class="col-lg-12 col-form-label">Currency</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_Currency" />
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------- ------Modal-View Customer ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
+<div class="modal fade" id="addPurchaseEntryFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+         Add Purchase Entry Details </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <form [formGroup]="addEnquiryForm">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_billerName" class="col-lg-12 col-form-label">Biller Name</label>
+                <div class="col-lg-12">
+
+                  <select name="add_billerName1" id="add_billerName1" class="form-control"
+                    (change)="handle_company_add($event)" formControlName="add_billerName1">
+                    <option [ngValue]="null" selected>Select Biller Name</option>
+                    <option *ngFor="let from of billerDetails" 
+                    value="{{ from.billerId }}">
+                      {{ from.billerName }}
+                    </option>
+                  </select>
+
+                
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_PurchaseEntryNo" class="col-lg-12  col-form-label">Purchase Entry No</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_PurchaseEntryNo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_PurchaseEntryDate" class="col-lg-12 col-form-label">Purchase Entry Date</label>
+                <div class="col-lg-12">
+                  <input type="date" class="form-control" formControlName="add_PurchaseEntryDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
+                <div class="col-lg-10">
+
+                  <select name="add_VendorName" id="add_VendorName" class="form-control"
+                    (change)="handle_vendor_add($event)" formControlName="add_VendorName">
+                    <option [ngValue]="null" selected>Select Vendor Name</option>
+                    <option *ngFor="let from of vendorDetails" value="{{ from.vendorId }}">
+                      {{ from.vendorName }}
+                    </option>
+                  </select>
+
+                </div>
+                <div class="col-lg-2">
+                  <button type="button" title="Add New Vendor"
+                                                    class="btn btn-primary btn-default btn-squared"
+                                                    (click)="addVendorNameGo()" style="margin-right: 30px;"><i
+                                                        class="fas fa-plus" style="margin-right:0;"></i>
+                                                </button>
+                </div>
+                
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_PurchaseType" class="col-lg-12 col-form-label">Purchase Type</label>
+                <div class="col-lg-12">
+
+                  <select name="add_PurchaseType" id="add_PurchaseType" class="form-control"
+                    (change)="handle_purchaseType_add($event)" formControlName="add_PurchaseType">
+                    <option [ngValue]="null" selected>Select Purchase Type</option>
+                    <option *ngFor="let from of purchaseTypeDetails" value="{{ from.purchase_type_id }}">
+                      {{ from.purchase_type_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_InvoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_InvoiceNo" />
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_purchaseContent" class="col-lg-12 col-form-label">Content of Purchase</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_purchaseContent" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_PONo " class="col-lg-12 col-form-label">PO No</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_PONo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_Currency " class="col-lg-12 col-form-label">Currency</label>
+                <div class="col-lg-12">
+
+                  <select name="add_Currency" id="add_Currency" class="form-control"
+                    (change)=" getCurrencyValues_add($event)" formControlName="add_Currency">
+                    <option [ngValue]="null" selected>Select Currency </option>
+                    <option *ngFor="let from of currencyDetailsList" value="{{ from.currencyId }}">
+                      {{ from.currency_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_convAmount " class="col-lg-12 col-form-label">Conversion Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_convAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_taxAmount " class="col-lg-12 col-form-label">Tax Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_taxAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="add_amount " class="col-lg-12 col-form-label">Invoice Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="add_amount" />
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="savePurchaseEntry()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Vendor Management begins-------------------------------- -->
+<div class="modal fade" id="PE_VendorManagementId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header modelHeaderCSS">
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" 
+                style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #200122, #6f0000);">
+                    Transaction Approval Management </h2>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="PE_VendorManagementForm">
+
+                    <div class="modal-body commentCSS">
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_CompanyCode" class="col-lg-12 col-form-label">Company
+                                            Code<span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_CompanyCode"
+                                            id="PE_VM_CompanyCode" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_CompanyName" class="col-lg-12 col-form-label">Company
+                                            Name<span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_CompanyName"
+                                            id="PE_VM_CompanyName" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_VendorName" class="col-lg-12 col-form-label">Vendor Name
+                                        <span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_VendorName"
+                                            id="PE_VM_VendorName" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_Address1" class="col-lg-12 col-form-label">Address-1</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_Address1"
+                                            id="PE_VM_Address1" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_Address2" class="col-lg-12 col-form-label">Address-2</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_Address2"
+                                            id="PE_VM_Address2" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_City" class="col-lg-12 col-form-label">City</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_City"
+                                            id="PE_VM_City" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_State" class="col-lg-12 col-form-label">State</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_State"
+                                            id="PE_VM_State" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_Country" class="col-lg-12 col-form-label">Country</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_Country"
+                                            id="PE_VM_Country" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_Phone" class="col-lg-12 col-form-label">Phone</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_Phone"
+                                            id="PE_VM_Phone" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_MobilePhone" class="col-lg-12 col-form-label">Mobile
+                                            Phone</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_MobilePhone"
+                                            id="PE_VM_MobilePhone" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_Fax" class="col-lg-12 col-form-label">Fax</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_Fax" id="PE_VM_Fax" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-4">
+                                        <label for="PE_VM_Email" class="col-lg-12 col-form-label">Email</label>
+                                    </div>
+                                    <div class="col-lg-8">
+
+                                        <input type="text" class="form-control" formControlName="PE_VM_Email"
+                                            id="PE_VM_Email" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" 
+                style=" background: linear-gradient(to right, #200122, #6f0000);width: 7%;"
+   
+     (click)="saveVendorManagement()">Save</button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-------------------------- ------Modal-Vendor Management ends-------------------------------------- -->
+<!-- -----------------------Modal-Edit Purchase Entry Begin-------------------------------- -->
+<div class="modal fade" id="editPurchaseEntryFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          Update Purchase Entry Details </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <form [formGroup]="editEnquiryForm">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_billerName" class="col-lg-12 col-form-label">Biller Name</label>
+                <div class="col-lg-12">
+
+                  <select name="edit_billerName" id="edit_billerName" class="form-control"
+                    (change)="handle_company($event)" formControlName="edit_billerName">
+                    <option [ngValue]="null" selected>Select Biller Name</option>
+                    <option *ngFor="let from of billerDetailsList" value="{{ from.billerId }}">
+                      {{ from.billerName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_PurchaseEntryNo" class="col-lg-12  col-form-label">Purchase Entry No</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_PurchaseEntryNo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_PurchaseEntryDate" class="col-lg-12 col-form-label">Purchase Entry Date</label>
+                <div class="col-lg-12">
+                  <input type="date" class="form-control" formControlName="edit_PurchaseEntryDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
+                <div class="col-lg-12">
+
+                  <select name="edit_VendorName" id="edit_VendorName" class="form-control"
+                    (change)="handle_vendor($event)" formControlName="edit_VendorName">
+                    <option [ngValue]="null" selected>Select Vendor Name</option>
+                    <option *ngFor="let from of vendorDetailsList" value="{{ from.vendorId }}">
+                      {{ from.vendorName }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_PurchaseType" class="col-lg-12 col-form-label">Purchase Type</label>
+                <div class="col-lg-12">
+
+                  <select name="edit_PurchaseType" id="edit_PurchaseType" class="form-control"
+                    (change)="handle_purchaseType($event)" formControlName="edit_PurchaseType">
+                    <option [ngValue]="null" selected>Select Purchase Type</option>
+                    <option *ngFor="let from of purchaseTypeList" value="{{ from.purchase_type_id }}">
+                      {{ from.purchase_type_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_InvoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_InvoiceNo" />
+
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_purchaseContent" class="col-lg-12 col-form-label">Content of Purchase</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_purchaseContent" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_PONo " class="col-lg-12 col-form-label">PO No</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_PONo" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_Currency " class="col-lg-12 col-form-label">Currency</label>
+                <div class="col-lg-12">
+
+                  <select name="edit_Currency" id="edit_Currency" class="form-control"
+                    (change)=" getCurrencyValues($event)" formControlName="edit_Currency">
+                    <option [ngValue]="null" selected>Select Currency </option>
+                    <option *ngFor="let from of currencyDetailsList" value="{{ from.currencyId }}">
+                      {{ from.currency_name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_convAmount " class="col-lg-12 col-form-label">Conversion Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_convAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_taxAmount " class="col-lg-12 col-form-label">Tax Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_taxAmount" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="edit_amount " class="col-lg-12 col-form-label">Invoice Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="edit_amount" />
+                </div>
+              </div>
+            </div>
+
+
+
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePurchaseEntry()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------- ------Modal-Edit Purchase Entry ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Payment Process begins-------------------------------- -->
+<div class="modal fade" id="paymentProcessFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          Purchase Payment </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <form [formGroup]="purchasePaymentForm">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_date" class="col-lg-12 col-form-label">Date</label>
+                <div class="col-lg-12">
+                  <input type="date" class="form-control" formControlName="pay_date" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_Total" class="col-lg-12  col-form-label">Total</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" [readonly]="isReadOnly" formControlName="pay_Total" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_paidAmount" class="col-lg-12  col-form-label">Paid Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" [readonly]="isReadOnly" formControlName="pay_paidAmount" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_balance" class="col-lg-12  col-form-label">Balance</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control"   [readonly]="isReadOnly" formControlName="pay_balance" />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_rdAmount" class="col-lg-12  col-form-label">Amount</label>
+                <div class="col-lg-12">
+                  <input type="text" class="form-control" formControlName="pay_rdAmount" />
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_paymentType" class="col-lg-12  col-form-label">Payment Type/Method</label>
+                <div class="col-lg-12">
+                  <select class="form-control" formControlName="pay_paymentType" (change)="PP_PaymentMethod($event)">
+
+                    <option [ngValue]="null" selected>Select Payment Method</option>
+
+                    <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
+                      {{term.payment_type_name}}
+                    </option>
+                  </select>
+
+                </div>
+              </div>
+            </div> -->
+            <div class="col-lg-6">
+              <div class="form-group row">
+                  <label for="pay_paymentType" class="col-lg-12 col-form-label">Payment Type/Method</label>
+                  <div class="col-lg-12">
+                      <select class="form-control" formControlName="pay_paymentType" 
+                      name="pay_paymentType" (change)="PP_PaymentMethod($event)">
+                          <!-- Default "Select Payment Method" option -->
+                          <option value="null" selected>Select Payment Method</option>
+                          <!-- Options generated from paymentType_payment -->
+                          <option *ngFor="let term of paymentType_payment" [value]="term.payment_type_id">
+                              {{term.payment_type_name}}
+                          </option>
+                      </select>
+
+                 
+                  </div>
+              </div>
+          </div>
+          
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_description" class="col-lg-12  col-form-label">Description</label>
+                <div class="col-lg-12">
+
+                  <textarea class="form-control" rows="3" formControlName="pay_description"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="pay_payDetails" class="col-lg-12  col-form-label">Payment Details</label>
+                <div class="col-lg-12" >
+                
+                  <span for="pay_payDetails" [innerHtml]="this.paymentNotes"></span>
+                
+                </div>
+              </div>
+            </div>
+
+
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class=" btn btn-primary" data-dismiss="modal" (click)="paymentProcessUpdate()">Update
+         </button>
+       
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------- ------Modal-Payment Process ends-------------------------------------- -->
+
+
+<!-- -----------------------Modal-Recurring begins------------------------- -->
+<div class="modal fade" id="RecurringFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Select Recurring Options </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <form [formGroup]="RecurringForm">
+
+          <div class="row">
+            <div class="col-lg-12 ">
+              <div class="form-group row">
+                <label for="ML_MT_EnquiryNo" class="col-lg-3 col-form-label">Date</label>
+                <div class="col-lg-9">
+                  <input type="date" id="Rec_date" class="form-control" formControlName="Rec_date">
+
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-12 ">
+                <div class="form-group row">
+                  <label for="ML_MT_CustomerName" class="col-lg-3 col-form-label">Recurring</label>
+                  <div class="col-lg-9">
+                    <input type="text" id="ML_MT_CustomerName" class="form-control" formControlName="Rec_recurring">
+    
+                  </div>
+                </div>
+              </div> -->
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <label for="Payment" class="col-lg-3 col-form-label">Recurring</label>
+
+                <div class="col-lg-9">
+                  <div class="form-check form-check-inline" *ngFor="let display1 of RecurringStatus; let k=index">
+                    <input class="form-check-input" type="radio" name="bills_logo_id" [value]="display1.id"
+                      checked="{{display1.id==this.resultRecurring ? 'checked':''}}"
+                      (change)="handleChange_Recurring(display1.id, $event)" />
+                    <label class="form-check-label" for="exampleRadios{{k}}">
+                      <span style="color:black !important;">{{display1.name}}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="col-lg-12 ">
+              <div class="form-group row">
+                <label for="Rec_Duration" class="col-lg-3 col-form-label">Duration</label>
+                <div class="col-lg-9">
+                  <select name="Rec_Duration" id="Rec_Duration" class="form-control" formControlName="Rec_Duration"
+                    (change)="getMonthsValueDropdown($event)">
+                    <option [ngValue]="0" selected>Select Month</option>
+                    <option *ngFor="let month of getMonthValues" value="{{ month.month_value }}">
+                      {{month.month_value}}
+                    </option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group row">
+                <label for="Payment" class="col-lg-3 col-form-label">Select Group</label>
+
+                <div class="col-lg-9 email-cc-template">
+                  <div class="form-check form-check-inline" *ngFor="let display1 of recurringGroups; let k=index">
+                    <input class="form-check-input" type="checkbox" name="bills_logo_id" [value]="display1.group_id"
+                      checked="{{display1.chk_val=='checked' ? 'checked':''}}"
+                      (change)="handleChange_RecurringGroup( $event,display1.group_id)" />
+                    <label class="form-check-label" for="exampleRadios{{k}}">
+                      <span style="color:black !important;">{{display1.group_name}}</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updateRecurring()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------- ------Modal-Recurring ends-------------------------->

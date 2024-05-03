@@ -2,55 +2,42 @@
 
 <aside class="sidebar collapsed">
     <div class="sidebar__menu-group">
+        <div style="text-align: center;">
+            <a class="navbar-brand" href="#">
+                <!-- <img class="dark logo-size" src="assets/img/cal4care-logo-dark.png" alt="svg"> -->
+                <img class="light logo-size" src="assets/img/cal4care-logo-white.png" alt="img">
+            </a>
+        </div>
         <ul class="sidebar_nav">
             <li class="menu-title">
-                <span style="color:#007cbc ;">Main menus</span>
+                <span style="color:#fff ;">Main menus</span>
             </li>
-            <li class="has-child" *ngFor="let item of overallmenulist; let i = index">
-                <a class="active" [ngClass]="{'active': item.isActive== true, 'non_active_class' : item.isActive== false }" routerLink="{{item.value}}"
-                routerLinkActive="active" 
-                [routerLinkActiveOptions]={exact:true}>
-
+            <li class="has-child" *ngFor="let item of overallmenulist; let i = index" [routerLinkActive]="'open'" [routerLinkActiveOptions]="{exact: true}">
+                <a [routerLink]="item.value">
                     <i [attr.data-feather]="item.icon" class="nav-icon" (click)="handleSelectedMenu(item.menuId)"></i>
                     <span class="menu-text" (click)="change(item.value)">{{item.name}}</span>
                     <span class="toggle-icon"></span>
                 </a>
-                <!-- <a routerLink="{{innermenu.value}}" class="">
-                    <i class="nav-icon {{innermenu.icon}}" ></i>
-                    <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
-                    <span class="toggle-icon"></span>
-                    
-                  </a> -->
-                
-                    <ul *ngIf="item.childMain && item.childMain.length > 0">
-                        <li class="has-child" *ngFor="let innermenu of item.childMain">
-                            <a routerLink="{{innermenu.value}}" class="">
-                                <i [attr.data-feather]="innermenu.icon" class="nav-icon" ></i>
-                                <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
-                                <span class="toggle-icon"></span>
-                                
-                            </a>
-
-                              
-                                    <ul *ngIf="innermenu.subchildMain && innermenu.subchildMain.length > 0" >
-                                        <li class="has-child" *ngFor="let innersubmenu of innermenu.subchildMain">
-                                            <a routerLink="#{{innermenu.value}}" class="">
-                                                <i [attr.data-feather]="innersubmenu.icon" class="nav-icon" ></i>
-                                                <span class="menu-text" (click)="change(innersubmenu.value)">{{innersubmenu.name}}</span>
-                                                <span class="toggle-icon"></span>
-                
-                                            </a>
-                                        </li>
-                                            
-                                    </ul>
-                                
-
-                        </li>
-                            
-                    </ul>
-              
-            
+                <ul *ngIf="item.childMain && item.childMain.length > 0">
+                    <li class="has-child" *ngFor="let innermenu of item.childMain" [routerLinkActive]="'active'">
+                        <a [routerLink]="innermenu.value">
+                            <i [attr.data-feather]="innermenu.icon" class="nav-icon"></i>
+                            <span class="menu-text" (click)="change(innermenu.value)">{{innermenu.name}}</span>
+                            <span class="toggle-icon"></span>
+                        </a>
+                        <ul *ngIf="innermenu.subchildMain && innermenu.subchildMain.length > 0">
+                            <li class="has-child" *ngFor="let innersubmenu of innermenu.subchildMain" [routerLinkActive]="'active'">
+                                <a [routerLink]="innersubmenu.value">
+                                    <i [attr.data-feather]="innersubmenu.icon" class="nav-icon"></i>
+                                    <span class="menu-text" (click)="change(innersubmenu.value)">{{innersubmenu.name}}</span>
+                                    <span class="toggle-icon"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </li>
+            
           
         </ul>
     </div>

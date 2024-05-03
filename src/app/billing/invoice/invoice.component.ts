@@ -521,6 +521,7 @@ export class InvoiceComponent implements OnInit {
       // 'email_pdfType': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
       'email_cc': new FormControl(null, Validators.required),
+      'formControlName="radio_ApprovalBy': new FormControl(null),
 
     });
     this.RecurringForm = new FormGroup({

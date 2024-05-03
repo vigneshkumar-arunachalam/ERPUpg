@@ -86,6 +86,7 @@ export class EnquirynewComponent implements OnInit {
       'email_From': new FormControl(null, Validators.required),
       'email_template': new FormControl(null, Validators.required),
       'email_cc': new FormControl(null, Validators.required),
+      'message':new FormControl(null),
 
     });
     this.TicketAssignForm=new FormGroup({
@@ -93,6 +94,18 @@ export class EnquirynewComponent implements OnInit {
       'ML_ST_CustomerName':new FormControl(null),
       'ML_ST_selectDepartment':new FormControl(null),
       'ML_ST_selectAgent':new FormControl(null),
+    });
+    this.viewEnquiryForm=new FormGroup({
+      'view_ML_ContactInfo':new FormControl(null),
+      'view_ML_Email':new FormControl(null),
+      'view_ML_PhoneNumber':new FormControl(null),
+      'view_ML_Company':new FormControl(null),
+
+      'view_ML_Country':new FormControl(null),
+      'view_ML_SalesCloud':new FormControl(null),
+      'view_ML_ProductName':new FormControl(null),
+      'view_ML_Comments':new FormControl(null),
+      'view_ML_EnquiryFollowers':new FormControl(null),
     });
     this.MultipleTicketAssignForm=new FormGroup({
       'ML_MT_EnquiryNo':new FormControl(null),
