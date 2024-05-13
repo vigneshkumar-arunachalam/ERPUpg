@@ -6,7 +6,7 @@
                 <div class="card-header color-dark fw-500">
                     <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
                             Home</a>
-                        <span class="breadcrumb-item active"> Invoice Payment Entry Management</span>
+                        <span class="breadcrumb-item active">Multiple Invoice Payment Entry Management</span>
                     </h3>
                     <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
                     <div class="quotation-btn-section">
@@ -29,6 +29,12 @@
                             <i class="fa fa-times" style="margin-right:0;"></i>
                             Delete Group Payment Entry
                         </button>
+                        <button type="button" title="Delete  Contract" class="btn btn-primary btn-default btn-squared"
+                        data-toggle="modal" data-target="#searchMulInvPayId" (click)="searchMulInvPayGroup()"
+                        style="margin-right: 10px;">
+                        <i class="fa fa-search" style="margin-right:0;"></i>
+                        Search
+                    </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -92,7 +98,7 @@
                                                                 class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
                                                                 <input class="checkbox" type="checkbox"
                                                                     id="check-grp-mulInv{{i}}"
-                                                                    (change)="EditCHK(list.payment_entry_no,$event)">
+                                                                    (change)="EditCHK(list.payment_entry_id,$event)">
                                                                 <label for="check-grp-mulInv{{i}}"></label>
                                                             </div>
                                                         </div>
@@ -118,7 +124,7 @@
                                         </td>
                                         <td>
 
-                                            <a title="Delete" (click)="deleteFile(list.payment_entry_no)">
+                                            <a title="Delete" (click)="deleteFile(list.payment_entry_id)">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="60" height="20"
                                                     viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3"
                                                     stroke-linecap="round" stroke-linejoin="round"
@@ -199,7 +205,8 @@
                 </h2>
 
 
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                (click)="clearAddMulInvPay()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -260,8 +267,8 @@
                                                             <!-- Date -->
                                                             <td>
                                                                 <div class="userDatatable-content">
-                                                                    <input type="hidden" class="form-control" formControlName="customer_id"
-                                                                     value=" " />
+                                                                    <!-- <input type="hidden" class="form-control" formControlName="customer_id"
+                                                                     value=" " /> -->
                                                                     <input type="date" class="form-control date-value" formControlName="paymentDate"
                                                                         id="pd_date_{{i}}" value=" " />
                                                                 </div>
@@ -338,9 +345,9 @@
                                                             <th>
                                                                 <div class="d-flex align-items-center">
                                                                     <div class="custom-checkbox  check-all">
-                                                                        <input class="checkbox" type="checkbox" id="check-31{{j}}"
+                                                                        <input class="checkbox" type="checkbox" id="check-331{{i}}"
                                                                             (change)="selectAll_pending($event,j)">
-                                                                        <label for="check-31{{j}}"></label>
+                                                                        <label for="check-331{{i}}"></label>
                                                                     </div>
                                                                 </div>
                                                             </th>
@@ -360,8 +367,8 @@
                                                                         <div class="checkbox-group-wrapper">
                                                                             <div class="checkbox-group d-flex">
                                                                                 <div *ngIf="list1.performa_invoice == 0" class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                    <input class="checkbox checkbox-group__single{{j}}" type="checkbox" id="check-grp-pendingInv{{k}}" (change)="EditCHK_pending(list1.billId,$event,j)">
-                                                                                    <label for="check-grp-pendingInv{{k}}"></label>
+                                                                                    <input class="checkbox checkbox-group__single{{j}}" type="checkbox" id="check-grp-pendingInv{{i}}{{k}}" (change)="EditCHK_pending(list1.billId,$event,j)">
+                                                                                    <label for="check-grp-pendingInv{{i}}{{k}}"></label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -605,3 +612,75 @@
     </div>
 </div>
 <!----------Modal Pop Up (END)  edit multiple invoice payment ------------------>
+
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchMulInvPayId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+       
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Advanced Search </h2>
+
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          
+
+          <div class="col-lg-12">
+            <form [formGroup]="searchMulInvForm">
+              <div class="form-group row">
+                <div class="ng-autocomplete">
+                  <label for="companyName" class="col-lg-12 ">Search Text</label>
+                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                    (inputChanged)='searchCustomerData($event)' (keyup)="keysearch($event)"
+                    (inputCleared)="clearSelection($event)" (inputFocused)='onFocusedCustomer($event)'
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+
+              </div>
+            </form>
+          </div>
+
+
+        
+
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="mulInvPaymentList({})">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>

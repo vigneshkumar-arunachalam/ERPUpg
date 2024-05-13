@@ -499,6 +499,7 @@ export class EditDidInvoiceComponent implements OnInit {
 
 
     var pd_billchild_id = $('#billChildid1' + i).val();
+   // alert("pd_billchild_id")
 
 
     Swal.fire({

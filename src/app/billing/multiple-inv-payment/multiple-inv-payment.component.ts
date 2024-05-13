@@ -60,6 +60,10 @@ export class MultipleInvPaymentComponent implements OnInit {
   abc: string;
   dropdownData: any[] = [];
   cusID: any[] = [];
+  searchResult: any;
+  searchResult_CustomerID: any;
+  searchResult_CustomerName: any;
+  searchMulInvForm: FormGroup;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
@@ -70,11 +74,11 @@ export class MultipleInvPaymentComponent implements OnInit {
       edit_addresses: this.fb.array([this.edit_createAddress()])
     });
   }
-
+  keywordCompanyName = 'customerName';
   ngOnInit(): void {
     var date = new Date();
     this.currentDate = this.datePipe.transform(date, 'yyyy-MM-dd');
-    
+
 
 
 
@@ -83,6 +87,9 @@ export class MultipleInvPaymentComponent implements OnInit {
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.mulInvPaymentList({});
     this.PaymentMethodDefaultLoad();
+    this.searchMulInvForm = new FormGroup({
+      'company_Name': new FormControl(null)
+    })
 
   }
   get addressControls() {
@@ -113,7 +120,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   createAddress(): FormGroup {
     return this.fb.group({
-      customer_id:'',
+      // customer_id:'',
       customer_name: '',
       paymentDate: '',
       invoice_amt: '',
@@ -122,17 +129,17 @@ export class MultipleInvPaymentComponent implements OnInit {
       payment_method: '',
       note: '',
 
-      bill_id:'',
-     
-      net_payment:'',
+      bill_id: '',
+
+      net_payment: '',
 
     });
   }
   edit_createAddress(): FormGroup {
     return this.fb.group({
       customer_name: '',
-      customer_id:'',
-      payment_child_id:'',
+      customer_id: '',
+      payment_child_id: '',
       invoice_no: '',
       paymentDate: '',
       invoice_amt: '',
@@ -140,8 +147,8 @@ export class MultipleInvPaymentComponent implements OnInit {
       paid_amt: '',
       payment_method: '',
       note: '',
-      processId:'',
-      billid:''
+      processId: '',
+      billid: ''
 
     });
   }
@@ -163,9 +170,82 @@ export class MultipleInvPaymentComponent implements OnInit {
     });
   }
   addMulInvPay() {
-    
+
     $('.date-value').val(this.currentDate);
 
+  }
+  searchMulInvPayGroup() {
+
+  }
+  keysearch(event: any) {
+    this.searchResult_CustomerName = event.target.value
+  }
+  clearSelection(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+  }
+  selectEventCustomer(item: any) {
+    console.log(item)
+    this.searchResult_CustomerID = item.customerId;
+    this.searchResult_CustomerName = item.customerName;
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+
+  }
+  searchCustomerData(data: any) {
+
+    if (data.length > 0) {
+      // this.spinner.show();
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/customer_name_search";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "customer_name_search";
+      api_Search_req.user_id = this.user_ids;
+      api_Search_req.customerName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        console.log("vignesh-customer_status response", response);
+        // this.searchResult = response[0];
+        this.searchResult = response.customer_names;
+        console.log("vignesh-advanced search result", this.searchResult);
+        if (response! = null) {
+          this.searchResult = response.customer_names;
+          this.spinner.hide();
+        }
+        else {
+          // iziToast.warning({
+          //   message: "Sorry, No Matching Data",
+          //   position: 'topRight'
+          // });
+
+        }
+      });
+
+    }
+
+
+  }
+  onFocusedCustomer(e: any) {
+    // do something when input is focused
+  }
+  clearAddMulInvPay() {
+    const addressesArray = this.addPI_section2.get('addresses') as FormArray;
+    addressesArray.clear();
+
+    //  this.clearSelection1({},{})
+
+    this.addPI_section2 = this.fb.group({
+      addresses: this.fb.array([this.createAddress()])
+    });
   }
   editMulInvPayGroup() {
     this.spinner.show();
@@ -196,48 +276,48 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         const formArray = new FormArray([]);
         this.invAmtDropDown = [];
-     
+
         for (let index = 0; index < response.length; index++) {
           this.CustomerIDUpdate = response[index].customerId;
           this.invAmtDropDown = response[index].invoiceNo;
           this.dropdownData[index] = response[index].invoiceNo;
-          console.log("this.dropdownData[index]",this.dropdownData[index]);
-         // let billIds = response[index].invoiceNo.map((invoiceItem: any) => invoiceItem.billId);
+          console.log("this.dropdownData[index]", this.dropdownData[index]);
+          // let billIds = response[index].invoiceNo.map((invoiceItem: any) => invoiceItem.billId);
 
-            formArray.push(this.fb.group({
-              "customer_name": response[index].customerName,
-              "invoice_no": response[index].invoiceId,
-              // "paymentDate": response[index].date ,
-             
-              "paymentDate":this.datePipe.transform(response[index].date, 'yyyy-MM-dd')  ,
-              "invoice_amt": response[index].invoiceAmount,
-               "balance_amt": response[index].balanceAmount,
-              "paid_amt": response[index].paidAmount,
-              "payment_method": response[index].paymentType,
-              "note": response[index].note,
+          formArray.push(this.fb.group({
+            "customer_name": response[index].customerName,
+            "invoice_no": response[index].invoiceId,
+            // "paymentDate": response[index].date ,
 
-              "customer_id": response[index].customerId,
-              "payment_child_id": response[index].payment_child_id,
-              "processId": response[index].processId,
-             // "billid": response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index].billId : null,
-             // "billid": response[index].invoiceNo && response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index].billId : null,
-              "billid": response[index].invoiceNo && response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index]?.billId : null,
+            "paymentDate": this.datePipe.transform(response[index].date, 'yyyy-MM-dd'),
+            "invoice_amt": response[index].invoiceAmount,
+            "balance_amt": response[index].balanceAmount,
+            "paid_amt": response[index].paidAmount,
+            "payment_method": response[index].paymentType,
+            "note": response[index].note,
 
-               
-            })
-            );
+            "customer_id": response[index].customerId,
+            "payment_child_id": response[index].payment_child_id,
+            "processId": response[index].processId,
+            // "billid": response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index].billId : null,
+            // "billid": response[index].invoiceNo && response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index].billId : null,
+            "billid": response[index].invoiceNo && response[index].invoiceNo.length > 0 ? response[index].invoiceNo[index]?.billId : null,
+
+
+          })
+          );
         }
         // for(let index1=0;index1<response.length;index1++){
         //   formArray.push(this.fb.group({
-           
+
         //     "billid": response[index1].invoiceNo.length > 0 ? response[index1].invoiceNo[index1].billId : null,
-             
+
         //   })
         //   );
-          
+
         // }
         this.editMulInvGroupForm.setControl('edit_addresses', formArray);
-        console.log("this.editMulInvGroupForm",this.editMulInvGroupForm);
+        console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
 
       } else {
         this.spinner.hide();
@@ -258,9 +338,9 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   }
-  updateMulInvPayment(){
+  updateMulInvPayment() {
     this.spinner.show();
-   
+
     let api_req: any = new Object();
     let addRPAPI: any = new Object();
     api_req.moduleType = "multipleInvoicePayment";
@@ -283,13 +363,14 @@ export class MultipleInvPaymentComponent implements OnInit {
           message: "Updated Successfully",
           position: 'topRight'
         });
+        this.edit_array = [];
         this.mulInvPaymentList({});
 
-      }else{
+      } else {
         this.spinner.hide();
         iziToast.warning({
-          Message:"Update Failed",
-          position:'topRight'
+          Message: "Update Failed",
+          position: 'topRight'
         });
       }
     }),
@@ -304,24 +385,27 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   }
-  selectEventCustomer_add(item: any,i:any) {
+  selectEventCustomer_add(item: any, i: any) {
     console.log(item)
     this.searchResult_CustomerID_add = item.customerId;
     this.searchResult_CustomerName_add = item.customerName.trim();
     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
-    this.cusID[i]= item.customerId;
-    console.log("this.cusID[i]",this.cusID[i])
+    this.cusID[i] = item.customerId;
+    console.log("this.cusID[i]", this.cusID[i])
     this.payment_pending_inv_list(i);
 
   }
 
-  clearSelection1(event: any,i:any) {
+  clearSelection1(event: any, i: any) {
     console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID_add = '';
     this.searchResult_CustomerName_add = '';
+    (this.addPI_section2.get('addresses') as FormArray).at(i).get('invoice_amt').reset();
+    (this.addPI_section2.get('addresses') as FormArray).at(i).get('bal_amount').reset();
+    (this.addPI_section2.get('addresses') as FormArray).at(i).get('paid_amt').reset();
     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.Pay_Pending_list_show[i] = false;
@@ -369,10 +453,10 @@ export class MultipleInvPaymentComponent implements OnInit {
   removeAddress(i: number) {
     this.addressControls.removeAt(i);
   }
-  
+
   removeAddress_edit(i: number) {
 
-  
+
     var paymentChildID = this.editMulInvGroupForm.value.edit_addresses[i].payment_child_id;
 
 
@@ -409,7 +493,7 @@ export class MultipleInvPaymentComponent implements OnInit {
               message: " Contract Deleted successfully",
               position: 'topRight'
             });
-           // this.contractList({});
+            // this.contractList({});
           }
           else {
             this.spinner.hide();
@@ -420,12 +504,12 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   }
   deleteMulInvPayGroup() {
-    if(this.edit_array.length==0){
+    if (this.edit_array.length == 0) {
       iziToast.error({
         message: "Select Atleast 1 Group to Delete",
         position: 'topRight'
       });
-    }else{
+    } else {
       Swal.fire({
         title: 'Are you sure to Delete?',
         text: "You won't be able to revert this!",
@@ -445,13 +529,21 @@ export class MultipleInvPaymentComponent implements OnInit {
           api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
           api_singleDelete.action = "groupDeleteInvoice";
           api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
-          api_singleDelete.inv_id = this.edit_array;
+
+          let inv_id: string[] = this.edit_array;
+
+          // Convert strings to numbers
+          let inv_id_numbers: number[] = inv_id.map(Number);
+
+          console.log(inv_id_numbers);
+
+          api_singleDelete.inv_id = inv_id_numbers;
           api_req.element_data = api_singleDelete;
-  
+
           this.serverService.sendServer(api_req).subscribe((response: any) => {
             if (response.status == "true") {
-              this.edit_array=[];
-              console.log("array content after delete",this.edit_array)
+              this.edit_array = [];
+              console.log("array content after delete", this.edit_array)
               this.spinner.hide();
               iziToast.success({
                 message: "Deleted Successfully",
@@ -479,7 +571,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       })
 
     }
-   
+
 
   }
 
@@ -613,10 +705,10 @@ export class MultipleInvPaymentComponent implements OnInit {
     console.log("Final Checkbox After checkbox selected list", this.edit_array);
   }
 
-  selectAll_pending(event: any,i:any) {
+  selectAll_pending(event: any, i: any) {
 
     // Check if the event target is checked
-    console.log("jdhff",i);
+    console.log("jdhff", i);
     const isChecked1 = event.target.checked;
     // Reset both totals
     this.BalanceAmounttotal = 0;
@@ -627,12 +719,12 @@ export class MultipleInvPaymentComponent implements OnInit {
 
     // Iterate over the Pay_Pending_list array
     this.Pay_Pending_list[i].forEach((list: any) => {
-    console.log("list",list)
+      console.log("list", list)
       // Update the checkbox state for each item
       list.isChecked = isChecked1;
 
       // Update the edit_array_pending based on the isChecked status and performa_invoice
-      if (isChecked1 ==true && list.performa_invoice === 0) {
+      if (isChecked1 == true && list.performa_invoice === 0) {
         this.edit_array_pending.push(list.billId);
         // If it's checked and performa_invoice is 0, add balance_amt and netPayment to corresponding totals
         this.BalanceAmounttotal += list.balance_amt;
@@ -641,7 +733,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     });
 
     // Update the state of all checkboxes in the DOM
-    const checkboxes = document.querySelectorAll('.checkbox-group__single'+i);
+    const checkboxes = document.querySelectorAll('.checkbox-group__single' + i);
     checkboxes.forEach((checkbox: any) => {
       checkbox.checked = isChecked1;
     });
@@ -652,11 +744,21 @@ export class MultipleInvPaymentComponent implements OnInit {
     $('#pd_invAmount_' + i).val(this.InvoiceAmounttotal);
     $('#pd_balAmount_' + i).val(this.BalanceAmounttotal);
     $('#pd_paidAmount_' + i).val(this.BalanceAmounttotal);
+
+    const addressesArray = this.addPI_section2.get('addresses') as FormArray;
+    const addressFormGroup = addressesArray.at(i) as FormGroup;
+    addressFormGroup.patchValue({
+      invoice_amt: this.InvoiceAmounttotal,
+      bal_amount: this.BalanceAmounttotal,
+      paid_amt: this.BalanceAmounttotal
+    });
+
+
   }
 
 
 
-  EditCHK_pending(data: any, event: any,i:any) {
+  EditCHK_pending(data: any, event: any, i: any) {
 
     console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_pending = data;
@@ -704,7 +806,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
 
-  payment_pending_inv_list(i:any) {
+  payment_pending_inv_list(i: any) {
     this.spinner.show();
 
     let api_req: any = new Object();
@@ -720,7 +822,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status== "true") {
+      if (response.status == "true") {
         this.spinner.hide();
 
         this.Pay_Pending_list[i] = response.data;
@@ -747,6 +849,8 @@ export class MultipleInvPaymentComponent implements OnInit {
       };
   }
   mulInvPaymentList(data: any) {
+
+
     this.spinner.show();
     var list_data = this.listDataInfo(data);
     let api_req: any = new Object();
@@ -759,7 +863,9 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.off_set = list_data.offset;
     api_mulInvpay.limit_val = list_data.limit;
+    // api_mulInvpay.search_txt = this.searchResult_CustomerName;
     api_mulInvpay.current_page = "";
+    api_mulInvpay.customer_id = this.searchResult_CustomerID;
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -768,6 +874,7 @@ export class MultipleInvPaymentComponent implements OnInit {
         this.mulInvPay_list = response.dataList;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#searchInvoiceFormId").modal("hide");
+        $('#searchMulInvPayId').modal('hide');
 
       } else {
         this.spinner.hide();
@@ -849,8 +956,10 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   }
-  addPaymentEntry(i:any) {
-      
+  addPaymentEntry(i: any) {
+
+
+
     this.spinner.show();
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
@@ -860,20 +969,99 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_mulInvpay.action = "addPaymentEntry";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
-   // api_mulInvpay.customerId = this.addPI_section2.value.addresses[0].customer_name.customerId;
-    api_mulInvpay.customerId =  this.cusID[i];
-    api_mulInvpay.invoice_amt = $('#pd_invAmount_' + i).val();
-    api_mulInvpay.paid_amt =  $('#pd_paidAmount_' + i).val();
-    api_mulInvpay.payment_method = this.addPI_section2.value.addresses[0].payment_method;
-    api_mulInvpay.note = this.addPI_section2.value.addresses[0].note;
-    api_mulInvpay.bill_id = this.edit_array_pending;
+    // api_mulInvpay.customerId = this.addPI_section2.value.addresses[0].customer_name.customerId;
+    // api_mulInvpay.customerId =  this.cusID[i];
+    // api_mulInvpay.invoice_amt = $('#pd_invAmount_' + i).val();
+    // api_mulInvpay.paid_amt =  $('#pd_paidAmount_' + i).val();
+    // var check=this.addPI_section2.value.addresses[0].payment_method;
+    // console.log("samu",check);
+    // if(check=='' || check=='undefined' || check==undefined){
+    //   iziToast.error({
+    //     message: "Payment Method Missing",
+    //     position: 'topRight'
+    //   });
+    //   this.spinner.hide();
+    //   return false;
+
+    // }else{
+    //   api_mulInvpay.payment_method = this.addPI_section2.value.addresses[0].payment_method;
+    // }
+
+    // api_mulInvpay.note = this.addPI_section2.value.addresses[0].note;
+
     var originalDate = $('#pd_date_' + i).val();
     var parts = originalDate.split("-");
     var formattedDate = parts[2] + "-" + parts[1] + "-" + parts[0];
     api_mulInvpay.paymentDate = formattedDate;
 
 
-   // var addr = this.addPI_section2.value.addresses;
+    //var invoice_amt = $('#pd_invAmount_' + i).val();
+    var invoice_amt = parseFloat($('#pd_invAmount_' + i).val()).toFixed(2);
+    //var bal_amount = $('#pd_balAmount_' + i).val();
+    var bal_amount = parseFloat($('#pd_balAmount_' + i).val()).toFixed(2);
+   // var paid_amt = $('#pd_paidAmount_' + i).val();
+   var paid_amt = parseFloat($('#pd_paidAmount_' + i).val()).toFixed(2);
+    var payment_method = $('#pd_paymenttype_' + i).val();
+    var note = $('#pd_note_' + i).val();
+
+
+    const addressesArray7 = this.addPI_section2.get('addresses') as FormArray;
+    const addressFormGroup8 = addressesArray7.at(i) as FormGroup;
+    addressFormGroup8.patchValue({
+      invoice_amt: invoice_amt,
+      paymentDate: formattedDate,
+      bal_amount: bal_amount,
+      paid_amt: paid_amt,
+      payment_method: payment_method,
+      note: note
+    });
+
+
+
+    // api_mulInvpay.values =this.addPI_section2.value.addresses;
+    //  const addressesArray = this.addPI_section2.get('addresses') as FormArray;
+    //  const addressesData = addressesArray.value;
+
+    //    const addressesArray = this.addPI_section2.get('addresses') as FormArray;
+    // const addressesData = addressesArray.controls.map(control => control.value);
+    //     api_mulInvpay.values =addressesData;
+
+    api_mulInvpay.bill_id = this.edit_array_pending;
+    const addressesArray = this.addPI_section2.get('addresses') as FormArray;
+    const addressesData = addressesArray.controls.map(control => control.value);
+
+    // Iterate over collected values and send them
+    addressesData.forEach(address => {
+
+      console.log('Address paymentDate:', address.paymentDate); // Log paymentDate value
+      // Customize the 'api_mulInvpay' object with address data
+      const api_mulInvpay: any = {
+        //  customerId: address.customer_id,
+        invoice_amt: address.invoice_amt,
+        paid_amt: address.paid_amt,
+        payment_method: address.payment_method,
+        note: address.note,
+        paymentDate: address.paymentDate,
+
+        bill_id: address.bill_id,
+        net_payment: address.net_payment
+      };
+
+      // Ensure non-null values before sending
+      if (!api_mulInvpay.customerId || !api_mulInvpay.paymentDate || !api_mulInvpay.invoice_amt || !api_mulInvpay.paid_amt) {
+        // Handle missing values as needed
+        console.error('Missing required values for address:', address);
+        return; // Skip this address if essential values are missing
+      }
+
+      // Send API request with modified 'api_mulInvpay' object
+      // Make sure to handle the response appropriately
+    });
+
+    api_mulInvpay.values = addressesData;
+
+
+    // var addr = this.addPI_section2.value.addresses;
     console.log("this.addPI_section2.value.addresses", this.addPI_section2.value.addresses)
     // for (let i = 0; i < addr.length; i++) {
 
@@ -888,8 +1076,10 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     // }
-    // for (let i = 0; i < addr.length; i++) {
 
+
+
+    // for (let i = 0; i < addr.length; i++) {
 
     //   addr[i].customerId = this.addPI_section2.value.addresses.customer_name;
     //   addr[i].paymentDate = this.addPI_section2.value.addresses.paymentdate;
@@ -901,16 +1091,52 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     // }
-   // api_mulInvpay.values = addr;
+    // api_mulInvpay.values = addr;
 
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status==true) {
+      if (response.status == true) {
         this.spinner.hide();
         this.mulInvPay_list = response.dataList;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#addMulInvPayId").modal("hide");
+
+        // this.addresses.clear();
+        // this.formGroupname.controls[‘formcontrolname’].reset();
+
+        // this.addPI_section2.controls['customer_name'].reset();
+        // this.addPI_section2.controls['invoice_amt'].reset();
+
+        // this.addPI_section2.controls['bal_amount'].reset();
+        // this.addPI_section2.controls['paid_amt'].reset();
+        // this.addPI_section2.controls['payment_method'].reset();
+        // this.addPI_section2.controls['note'].reset();
+        //this.addPI_section2.controls['addresses'].at(i).get('customer_name').reset();
+        (this.addPI_section2.get('addresses') as FormArray).at(i).get('customer_name').reset();
+        (this.addPI_section2.get('addresses') as FormArray).at(i).get('invoice_amt').reset();
+        (this.addPI_section2.get('addresses') as FormArray).at(i).get('bal_amount').reset();
+        (this.addPI_section2.get('addresses') as FormArray).at(i).get('paid_amt').reset();
+        (this.addPI_section2.get('addresses') as FormArray).at(i).get('payment_method').reset();
+        (this.addPI_section2.get('addresses') as FormArray).at(i).get('note').reset();
+
+
+        //   this.InvoiceAmounttotal=0;
+        //   this.BalanceAmounttotal=0;
+
+
+        // $('#pd_invAmount_' + i).val(this.InvoiceAmounttotal);
+        // $('#pd_balAmount_' + i).val(this.BalanceAmounttotal);
+        // $('#pd_paidAmount_' + i).val(this.BalanceAmounttotal);
+
+        // $('#pd_invAmount_' + i).val('');
+        // $('#pd_paidAmount_' + i).val('');
+        // $('#pd_balAmount_' + i).val('');
+        this.edit_array_pending = [];
+
+        this.Pay_Pending_list = []
+
+
         this.mulInvPaymentList({});
 
       } else {

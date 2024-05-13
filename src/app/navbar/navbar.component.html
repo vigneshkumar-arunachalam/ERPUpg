@@ -4,7 +4,7 @@
             <a href="#" class="sidebar-toggle">
                 <img class="svg" src="assets/img/svg/menus.png" style="width: 100%;" alt="img"></a>
             <!-- <a class="navbar-brand" href="#"><img class="dark" src="assets/img/logo_dark.png" alt="svg"><img class="light" src="assets/img/logo_white.png" alt="img"></a> -->
-     <!-- <a class="navbar-brand" href="#"><img class="dark logo-size" src="assets/img/cal4care-logo-dark.png"
+            <!-- <a class="navbar-brand" href="#"><img class="dark logo-size" src="assets/img/cal4care-logo-dark.png"
                 alt="svg"><img class="light logo-size" src="assets/img/cal4care-logo-white.png" alt="img"></a> -->
 
 
@@ -15,15 +15,19 @@
             </div>
         </div>
         <!-- ends: navbar-left -->
-        <!------------------ActionIdxx1-Task List-Starts  ---------------------->
-        <div class="modal fade" data-backdrop="false" id="ActionIdxx1" tabindex="-1" role="dialog"
+        <!------------------TaskList-Task List-Starts  ---------------------->
+        <div class="modal fade" data-backdrop="false" id="TaskList" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered ActionId" role="document" style="max-width: 1000px;">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <span class="col-12 modal-title text-center"
+                        <!-- <span class="col-12 modal-title text-center"
                             style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Task List
-                        </span>
+                        </span> -->
+                        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitlei" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+                        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                        background: linear-gradient(to right, #262127, #54b7aa);">
+                            Task List </h2>
                         <button type="button" class="Close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -136,7 +140,7 @@
 
             </div>
         </div>
-        <!-------------------ActionIdxx1-Task List--Ends  ------------------------->
+        <!-------------------TaskList-Task List--Ends  ------------------------->
         <!------------------ActionIdxx2-Global Search-Starts  ---------------------->
         <div class="modal fade" data-backdrop="false" id="ActionIdxx2" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -179,9 +183,10 @@
                                                 <td>{{item.remark_desc}}</td>
                                                 <td>{{item.from_dt}}{{" "}}to {{" "}}{{item.to_dt}} </td>
                                                 <td>
-                                                    {{item.classification_name}} <br>                                          
-                                                    <input type="color" value="{{item.color}}"  [disabled]="isColorInputDisabled"
-                                                    (click)="toggleColorInput()" />
+                                                    {{item.classification_name}} <br>
+                                                    <input type="color" value="{{item.color}}"
+                                                        [disabled]="isColorInputDisabled"
+                                                        (click)="toggleColorInput()" />
                                                     <!-- <input type="color" formControlName="contractColor"
                                                     [disabled]="isColorInputDisabled"
                                                     (click)="toggleColorInput()" /> -->
@@ -339,7 +344,6 @@
                                                     Name<span class="mandatoryField">
                                                         *</span></label>
                                                 <ng-autocomplete [data]="searchResult"
-                                               
                                                     [searchKeyword]="keywordCompanyName"
                                                     formControlName="GS_CustomerName"
                                                     (selected)='selectEventCustomer($event)'
@@ -487,7 +491,8 @@
                         <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle">Global
                             Search
                         </h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                            (click)="closeModal()">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
@@ -658,7 +663,7 @@
                                 <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                                     data-parent="#accordionExample">
                                     <div class="card-body">
-                                          <app-dup-quotation-new></app-dup-quotation-new>  
+                                        <app-dup-quotation-new></app-dup-quotation-new>
                                     </div>
                                 </div>
                             </div>
@@ -677,7 +682,7 @@
                                 <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
                                     data-parent="#accordionExample">
                                     <div class="card-body">
-                                         <app-dup-customer-new-all></app-dup-customer-new-all> 
+                                        <app-dup-customer-new-all></app-dup-customer-new-all>
                                     </div>
                                 </div>
                             </div>
@@ -713,24 +718,40 @@
                 <!-- ends: .nav-flag-select -->
                 <li>
 
-                    <a href="javascript:;" class="navbar-brand" (click)="PaymentTransactionReports()" *ngIf="(this.payment_transaction_reports_Permission=='1')">
-                        <!-- <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:50px" alt="img"
-                    data-toggle="modal" data-target="#ActionIdxx2"></a> -->
-                        <img class="svg" src="assets/img/icon2/paymentp.png" style="height: 30px;width:30px"
-                           alt="img" title="Payment Transaction Reports"></a>
+                    <a href="javascript:;" class="navbar-brand" (click)="PaymentTransactionReports()"
+                        *ngIf="(this.payment_transaction_reports_Permission=='1')">
+
+                        <img class="svg" src="assets/img/icon2/paymentp.png" style="height: 30px;width:30px" alt="img"
+                            title="Payment Transaction Reports"></a>
                 </li>
                 <li>
+                    <a href="javascript:;" class="navbar-brand">
 
-                    <a href="javascript:;" class="navbar-brand" (click)="PageList()" *ngIf="(this.GlobalSearchPermission==1148)">
-                        <!-- <img class="svg" src="assets/img/icon2/search-bar.png" style="height: 30px;width:50px" alt="img"
-                    data-toggle="modal" data-target="#ActionIdxx2"></a> -->
+                        <img class="svg" src="assets/img/icon2/exchange.png" style="height: 30px;width:30px" alt="img"
+                            title="Currency Conversion" data-toggle="modal" data-target="#currencyConvertorFormId"></a>
+
+                    <a href="javascript:;" class="navbar-brand">
+
+                        <img class="svg" src="assets/img/icon2/volatility.png" style="height: 30px;width:30px" alt="img"
+                            title="Current Currency Rate" data-toggle="modal"
+                            data-target="#currencyConvertorUIFormId"></a>
+                    <a href="javascript:;" class="navbar-brand">
+
+                        <img class="svg" src="assets/img/icon2/postbox.png" style="height: 30px;width:30px" alt="img"
+                            title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a>
+
+                    <a href="javascript:;" class="navbar-brand" (click)="PageList()"
+                        *ngIf="(this.GlobalSearchPermission==1148)">
+
                         <img class="svg" src="assets/img/icon2/Global_Searc.png" style="height: 30px;width:30px"
-                        (click)="showFunction()"    alt="img" title="Global Search" data-toggle="modal" data-target="#ActionIdxx2"></a>
+                            (click)="showFunction()" alt="img" title="Global Search" data-toggle="modal"
+                            data-target="#ActionIdxx2"></a>
+                    <a href="javascript:;" class="navbar-brand">
+                        <img class="svg" src="assets/img/icon2/to-do-list.png" title="Task List"
+                            style="height: 30px;width:30px" alt="img" data-toggle="modal" data-target="#TaskList">
+                    </a>
                 </li>
-                <li> <a href="#" class="navbar-brand">
-                        <img class="svg" src="assets/img/icon2/checklist.png" title="Task List"
-                            style="height: 30px;width:30px" alt="img" data-toggle="modal"
-                            data-target="#ActionIdxx1"></a></li>
+
                 <li class="nav-author">
 
                     <!-- <a href="https://dev.cal4care.com/erp/quotationNew.php?ac=QuotationNew" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle"></a> -->
@@ -789,3 +810,355 @@
         <!-- ends: .navbar-right -->
     </nav>
 </header>
+
+
+<!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
+<div class="modal fade" id="currencyConvertorFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    Currency Conversion</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                    (click)="clearCurrencyConvert()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+                <form [formGroup]="currencyConvertorForm">
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12 ">
+
+
+
+                                <!-- Second Row -->
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label for="CurrencyFrom">Currency From</label>
+                                        <select name="CurrencyFrom" class="form-control"
+                                            (change)="handle_currencyFrom($event);currencyConvert()"
+                                            formControlName="CurrencyFrom">
+                                            <option [ngValue]="null" selected>Select Currency</option>
+                                            <option *ngFor="let from of getCurrencyList" [value]="from.currency">{{
+                                                from.currency }}</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <label for="CurrencyTo">Currency To</label>
+                                        <select name="CurrencyTo" class="form-control"
+                                            (change)="handle_currencyTo($event);currencyConvert()"
+                                            formControlName="CurrencyTo">
+                                            <option [ngValue]="null" selected>Select Currency</option>
+                                            <option *ngFor="let from of getCurrencyList" [value]="from.currency">{{
+                                                from.currency }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- First Row -->
+                                <div class="form-group row">
+                                    <div class="col-lg-6">
+                                        <label for="convertValue">Value to Convert</label>
+                                        <input type="text" class="form-control"
+                                            (change)="handle_convertValue($event);currencyConvert()"
+                                            (keyup)="handle_convertValue($event);currencyConvert()"
+                                            placeholder="Enter the value to get converted from one currency to another currency"
+                                            formControlName="convertValue" />
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <label for="convertedAmount" style="background-color: #edf1c5;">Converted
+                                            Amount</label>
+                                        <input type="text" class="form-control" placeholder="Converted Amount"
+                                            style="background:linear-gradient(to right, #e1bfeb, #f2e5ef);color:#C04000 ;font-size:600 ;"
+                                            formControlName="outputValue" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                    Convert
+                </button> -->
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
+<div class="modal fade" id="currencyConvertorUIFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+                    Current Currency Rate </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive">
+                        <table class="table mb-0 table-borderless">
+
+                            <thead>
+                                <tr class="userDatatable-header">
+                                    <th class="userDatatable-title">Currency</th>
+                                    <th *ngFor="let toCurrency of currencies" class="userDatatable-title">{{ toCurrency
+                                        }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let fromCurrency of currencies" class="userDatatable-header">
+                                    <td class="userDatatable-title"
+                                        style=" background: linear-gradient(to right, #200122, #6f0000);color: #fff;">{{
+                                        fromCurrency }}</td>
+                                    <td *ngFor="let toCurrency of currencies" style="text-align: left;"
+                                        class="table-warning">
+                                        <ng-container *ngIf="fromCurrency !== toCurrency">
+                                            {{ getConversionRate(fromCurrency, toCurrency) }}
+                                        </ng-container>
+                                        <ng-container *ngIf="fromCurrency === toCurrency">
+                                            1.0000
+                                        </ng-container>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
+<div class="modal fade" id="sendtoPostFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #9d0f2f, #98a833);">
+                    Send to Post Invoice List</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+
+
+                <form [formGroup]="sendtoPostForm">
+
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive ">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+
+
+                                        <th>
+                                            <span class="userDatatable-title">S.No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Inv No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Cus Inv No</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Invoice Date</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Customer</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Total</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Send Type</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Generated By</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Currency</span>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let list of postalInvoiceDetails ; let i = 'index+1'">
+                                    <tr >
+                                        <td class="PIlistlabel" colspan="10"
+                                          [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                          {{list.billerName}}
+                                        </td>
+                                      </tr>
+
+                                    <tr >
+
+
+                                        <td>
+
+                                            <span> {{i}}</span>
+
+
+                                        </td>
+                                        <td>
+                                            <span>
+                                                <input type="checkbox" [checked]="isSelected(list.data.billId)"
+                                                    (change)="toggleSelection($event, list.billId)">
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <span>{{list.invoice_no}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{list.cus_invoice_no}}</span>
+
+
+                                        </td>
+
+
+                                        <td>
+                                            <span> {{list.billDate}}</span>
+
+
+
+                                        </td>
+                                        <td>
+                                            <span> {{list.customerName}}</span>
+                                        </td>
+
+
+                                        <td>
+                                            <span> {{list.netPayment}}</span>
+                                        </td>
+
+                                        <!-- <td>
+
+                                            <span>
+                                                <i class="fas fa-chevron-down"></i>
+                                                <i class="fas fa-envelope"></i>
+                                            </span>
+
+                                        </td> -->
+                                        <td>
+                                            <div class="d-flex justify-content-evenly align-items-center">
+                                                <span>
+                                                    <!-- First icon -->
+                                                    <i class="fa fa-file-pdf-o" style="color: #C04000;"></i>
+                                                </span>
+                                                <span class="mx-2"></span> <!-- Adjust the space between icons using mx-* classes -->
+                                                <span>
+                                                    <!-- Second icon -->
+                                                    <i class="fas fa-envelope" style="color: #C04000;"></i>
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{list.billgeneratedBy}}</span>
+
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{list.currency_name}}</span>
+
+                                        </td>
+
+                                        <td>
+
+                                            <span>{{list.net_amt}}</span>
+
+                                        </td>
+
+                                    </tr>
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                </form>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                    Send
+                </button>
+                <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                    Multi Print
+                </button>
+                <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                    Multi Print(W/O Logo)
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->

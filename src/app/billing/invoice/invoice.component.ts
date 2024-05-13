@@ -791,23 +791,23 @@ export class InvoiceComponent implements OnInit {
 
     if (this.commissionType_value == 1) {
 
-      var commvalue = $('#CommissionValue_WFA_ID_').val();
+      var commvalue = $('#CommissionValue_WFA_ID1_').val();
       console.log("commvalue", commvalue)
-      $('#CommissionAmount1_WFA_ID_').val(commvalue);
-      console.log("$('#CommissionAmount1_WFA_ID_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID_').val())
+      $('#CommissionAmount1_WFA_ID1_').val(commvalue);
+      console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_').val())
 
     }
     if (this.commissionType_value == 2) {
-      var commvalue = $('#CommissionValue_WFA_ID_').val();
+      var commvalue = $('#CommissionValue_WFA_ID1_').val();
       var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
 
-      $('#CommissionAmount1_WFA_ID_').val(commvalue_Percentage);
-      this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID_').val();
+      $('#CommissionAmount1_WFA_ID1_').val(commvalue_Percentage);
+      this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID1_').val();
 
     }
     if (this.commissionType_value == 4) {
-      $('#CommissionValue_WFA_ID_').val(0);
-      $('#CommissionAmount1_WFA_ID_').val(0);
+      $('#CommissionValue_WFA_ID1_').val(0);
+      $('#CommissionAmount1_WFA_ID1_').val(0);
 
     }
 
@@ -817,16 +817,16 @@ export class InvoiceComponent implements OnInit {
     // if (this.commissionType_value == 1) {
     if (this.commissionType_value == 1) {
 
-      var commvalue = $('#CommissionValue_WFA_ID_').val();
+      var commvalue = $('#CommissionValue_WFA_ID1_').val();
       console.log("commvalue", commvalue)
-      $('#CommissionAmount1_WFA_ID_').val(commvalue);
+      $('#CommissionAmount1_WFA_ID1_').val(commvalue);
 
     }
     if (this.commissionType_value == 2) {
       var com1 = this.resellerCommissionForm.value.commission_value;
 
       // alert(this.commissionType_value)
-      var commvalue = $('#CommissionValue_WFA_ID_').val();
+      var commvalue = $('#CommissionValue_WFA_ID1_').val();
       // alert(commvalue)
 
 
@@ -835,13 +835,13 @@ export class InvoiceComponent implements OnInit {
       var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
       // alert(commvalue_Percentage)
       console.log("this.commvalue_Percentage", commvalue_Percentage);
-      $('#CommissionAmount1_WFA_ID_').val(commvalue_Percentage);
+      $('#CommissionAmount1_WFA_ID1_').val(commvalue_Percentage);
 
     }
     if (this.commissionType_value == 4) {
       var commvalue_Percentage = '';
       console.log("this.commvalue_Percentage", commvalue_Percentage);
-      $('#CommissionAmount1_WFA_ID_').val(commvalue_Percentage);
+      $('#CommissionAmount1_WFA_ID1_').val(commvalue_Percentage);
 
     }
 
@@ -859,30 +859,30 @@ export class InvoiceComponent implements OnInit {
       console.log("this.commissionType_value", this.commissionType_value)
       if (this.commissionType_value == 1) {
         console.log("index", index)
-        var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
+        var commvalue = $('#CommissionValue_WFA_ID1_' + index).val();
         console.log("commvalue", commvalue)
-        $('#CommissionAmount1_WFA_ID_' + index).val(commvalue);
-        console.log("$('#CommissionAmount1_WFA_ID_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID_' + index).val())
+        $('#CommissionAmount1_WFA_ID1_' + index).val(commvalue);
+        console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_' + index).val())
         this.resellerCommissionForm.value.addresses_rc[index].commission_amt = commvalue;
         console.log(this.resellerCommissionForm.value.addresses_rc[index].commvalue)
       }
       if (this.commissionType_value == 2) {
-        var commvalue = $('#CommissionValue_WFA_ID_' + index).val();
+        var commvalue = $('#CommissionValue_WFA_ID1_' + index).val();
         var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(this.commissionGrossAmount) / 100).toFixed(2);
 
-        $('#CommissionAmount1_WFA_ID_' + index).val(commvalue_Percentage);
-        this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID_' + index).val();
+        $('#CommissionAmount1_WFA_ID1_' + index).val(commvalue_Percentage);
+        this.commissionAmount_WFA = $('#CommissionAmount1_WFA_ID1_' + index).val();
         this.resellerCommissionForm.value.addresses_rc[index].commission_amt = commvalue_Percentage;
         console.log(this.resellerCommissionForm.value.addresses_rc[index].commission_amt)
       }
       if (this.commissionType_value == 4) {
-        $('#CommissionValue_WFA_ID_' + index).val('');
-        $('#CommissionAmount1_WFA_ID_' + index).val('');
+        $('#CommissionValue_WFA_ID1_' + index).val('');
+        $('#CommissionAmount1_WFA_ID1_' + index).val('');
 
       }
     }
 
-    console.log($('#CommissionValue_WFA_ID_' + index).val())
+    console.log($('#CommissionValue_WFA_ID1_' + index).val())
 
   }
   commissionValueAutoFill_formArray(h: any) {
@@ -894,10 +894,10 @@ export class InvoiceComponent implements OnInit {
       // if (this.commissionType_value == 1) {
       if (this.commlistall1[i].commission_type == 1) {
         console.log("index-autofill", h)
-        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        var commvalue = $('#CommissionValue_WFA_ID1_' + h).val();
         console.log("commvalue", commvalue)
-        $('#CommissionAmount1_WFA_ID_' + h).val(commvalue);
-        console.log("$('#CommissionAmount1_WFA_ID_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID_' + h).val())
+        $('#CommissionAmount1_WFA_ID1_' + h).val(commvalue);
+        console.log("$('#CommissionAmount1_WFA_ID1_' + index).val(commvalue)", $('#CommissionAmount1_WFA_ID1_' + h).val())
         this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue;
         console.log(this.resellerCommissionForm.value.addresses_rc[h].commvalue)
       }
@@ -905,7 +905,7 @@ export class InvoiceComponent implements OnInit {
         var com1 = this.resellerCommissionForm.value.commission_value;
 
         // alert(this.commissionType_value)
-        var commvalue = $('#CommissionValue_WFA_ID_' + h).val();
+        var commvalue = $('#CommissionValue_WFA_ID1_' + h).val();
         // alert(commvalue)
 
 
@@ -914,7 +914,7 @@ export class InvoiceComponent implements OnInit {
         var commvalue_Percentage = (parseFloat(commvalue) * parseFloat(k) / 100).toFixed(2);
         // alert(commvalue_Percentage)
         console.log("this.commvalue_Percentage", commvalue_Percentage);
-        $('#CommissionAmount1_WFA_ID_' + h).val(commvalue_Percentage);
+        $('#CommissionAmount1_WFA_ID1_' + h).val(commvalue_Percentage);
         this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue_Percentage;
         console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
       }
@@ -926,14 +926,14 @@ export class InvoiceComponent implements OnInit {
         var commvalue_Percentage = '';
 
         console.log("this.commvalue_Percentage", commvalue_Percentage);
-        $('#CommissionAmount1_WFA_ID_' + h).val(commvalue_Percentage);
+        $('#CommissionAmount1_WFA_ID1_' + h).val(commvalue_Percentage);
         this.resellerCommissionForm.value.addresses_rc[h].commission_amt = commvalue_Percentage;
         console.log(this.resellerCommissionForm.value.addresses_rc[h].commission_amt)
       }
 
     }
 
-    console.log($("#CommissionAmount1_WFA_ID_0").val())
+    console.log($("#CommissionAmount1_WFA_ID1_0").val())
 
   }
 
@@ -3453,6 +3453,73 @@ export class InvoiceComponent implements OnInit {
 
 
   }
+  RecurringEditPE(id: any, i: any) {
+    this.recuringStatus = '';
+    $("#ActionId" + i).modal("hide");
+    this.spinner.show();
+    this.recurring_BillerID = id;
+    this.getInvoice1({});
+    let api_req: any = new Object();
+    let api_recurring: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/reccuring_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_recurring.action = "reccuring_details";
+
+    api_recurring.billId = id;
+    api_recurring.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_recurring;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response.status == true) {
+        var date = response.reccuring_details.recured_date_show;
+        console.log("date check", date)
+        // $('#date123').val('01/01/1970');
+        this.recurringDetails = response.reccuring_details;
+        this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;
+        this.recurringDetails_usage_next_dt = response.reccuring_details.usage_next_dt;
+        this.recuringStatus = response.reccuring_details.recuring_status;
+        this.recurring_State_value = response.reccuring_details.recuring_status;
+
+        this.reccuringDuration = response.reccuring_duration;
+        this.TermDetailsList = response.terms_details;
+        this.RecurringForm.patchValue({
+
+          'date': response.reccuring_details.recured_date_show,
+          'fixedChargeDuration': response.reccuring_details.fixed_duration,
+          'fixedChargeDt_value': response.reccuring_details.fixed_next_dt,
+
+          'usageChargeDuration': response.reccuring_details.usage_duration,
+          'usageChargeDt_value': response.reccuring_details.usage_next_dt,
+
+        })
+
+        // $('#RecurringFormId_inv').modal("hide");
+        this.getInvoice1({});
+
+      } else {
+
+
+        iziToast.warning({
+          message: "Recurring Details not displayed. Please try again",
+          position: 'topRight'
+        });
+        $('#RecurringFormId_inv').modal("hide");
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
   yearsAPI() {
 
     let api_req: any = new Object();
@@ -3525,13 +3592,17 @@ export class InvoiceComponent implements OnInit {
           message: "Recurring Details Updated Successfully",
           position: 'topRight'
         });
+        this.getInvoice({});//added now
         this.getInvoice1({});
+        window.location.reload();
       } else {
         iziToast.warning({
           message: "Check Response",
           position: 'topRight'
         });
+        this.getInvoice({});
         this.getInvoice1({});
+        window.location.reload();
 
       }
     }),
@@ -3541,7 +3612,9 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
+        this.getInvoice({});
         this.getInvoice1({});
+        window.location.reload();
         console.log("final error", error);
       };
 
@@ -4511,8 +4584,8 @@ export class InvoiceComponent implements OnInit {
     api_resCommEdit.commIndex = this.inv_resellerCommissionForm.value.commIndex;
 
     api_resCommEdit.commission_type = this.commissionType_value;
-    api_resCommEdit.commission_value = $('#CommissionValue_WFA_ID_').val();
-    api_resCommEdit.commission_amt = $('#CommissionAmount1_WFA_ID_').val();
+    api_resCommEdit.commission_value = $('#CommissionValue_WFA_ID1_').val();
+    api_resCommEdit.commission_amt = $('#CommissionAmount1_WFA_ID1_').val();
     api_resCommEdit.pdf_show = this.inv_resellerCommissionForm.value.pdf_show;
     api_resCommEdit.reseller_comm_id = this.inv_resellerCommissionForm.value.reseller_comm_id;
     if (this.ResellerName_Customer == undefined || this.ResellerName_Customer == 'undefined' || this.ResellerName_Customer == 'null' || this.ResellerName_Customer == null || this.ResellerName_Customer == '') {
@@ -4571,7 +4644,7 @@ export class InvoiceComponent implements OnInit {
     console.log("length", addr1.length)
     for (let i = 0; i < addr1.length; i++) {
       console.log(i)
-      console.log(document.getElementById("CommissionAmount1_WFA_ID_" + i).innerHTML)
+      console.log(document.getElementById("CommissionAmount1_WFA_ID1_" + i).innerHTML)
       setTimeout(() => {
         console.log(this.resellerCommissionForm.value.addresses_rc[i].commission_amt)
       }, 2000);
@@ -4607,7 +4680,7 @@ export class InvoiceComponent implements OnInit {
 
 
     var addr1 = this.resellerCommissionForm.value.addresses_rc;
-    console.log("addr1-test-commission amount", $('#CommissionAmount1_WFA_ID_0').val());
+    console.log("addr1-test-commission amount", $('#CommissionAmount1_WFA_ID1_0').val());
     console.log("addr1-test-resellername", $('#reseller_name0').val())
     // return false;
     for (let i = 0; i < addr1.length - 1; i++) {
@@ -4618,9 +4691,9 @@ export class InvoiceComponent implements OnInit {
       addr1[i].commIndex = $('#commIndex' + i).val();
       addr1[i].reseller_name = this.resellerCommissionForm.value.addresses_rc[i].reseller_name.customerName
       addr1[i].commission_type = $('#CommissionType_' + i).val();
-      addr1[i].commission_value = $('#CommissionValue_WFA_ID_' + i).val();
+      addr1[i].commission_value = $('#CommissionValue_WFA_ID1_' + i).val();
 
-      addr1[i].commission_amt = $('#CommissionAmount1_WFA_ID_' + i).val();
+      addr1[i].commission_amt = $('#CommissionAmount1_WFA_ID1_' + i).val();
       addr1[i].pdf_show = $('#pdf_show' + i).val();
       addr1[i].reseller_comm_id = $('#reseller_comm_id' + i).val();
       addr1[i].reseller_id = $('#reseller_id' + i).val();

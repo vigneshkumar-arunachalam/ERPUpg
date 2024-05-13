@@ -513,8 +513,16 @@ export class EditinvoiceDIDComponent implements OnInit {
   removeDid1(i: number) {
 
 
-    var pd_billchild_id = $('#billChildid1' + i).val();
+   // var pd_billchild_id = $('#billChildid1' + i).val();
 
+ //   console.log("pd_billchild_id",pd_billchild_id)
+ // const commvalue = this.did_Invice_fixed_charges.get('fixedAddresses').at(i).get('billChildid1').value;
+  const fixedAddressesArray = this.did_Invice_fixed_charges.get('fixedAddresses') as FormArray;
+  const billId_fixed = fixedAddressesArray.at(i).get('billChildid1').value;
+
+  console.log("pd_billchild_id-formarray",billId_fixed)
+  
+  
 
     Swal.fire({
       title: 'Are you sure?',
@@ -540,7 +548,7 @@ export class EditinvoiceDIDComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_quotation_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+        api_ProdAutoFill_req.billchild_id = billId_fixed;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -611,7 +619,10 @@ export class EditinvoiceDIDComponent implements OnInit {
   removeDid2(i: number) {
 
     var pd_usageChr_billchild = $('#billChildid2' + i).val();
-
+    const usageAddressesArray = this.did_Invice_usage_Charges.get('usageAddress') as FormArray;
+    const billId_usage = usageAddressesArray.at(i).get('billChildid2').value;
+  
+    console.log("pd_billchild_id-formarray",billId_usage)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -635,7 +646,7 @@ export class EditinvoiceDIDComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_quotation_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.billchild_id = pd_usageChr_billchild;
+        api_ProdAutoFill_req.billchild_id = billId_usage;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -715,7 +726,12 @@ export class EditinvoiceDIDComponent implements OnInit {
 
   removeDid3(i: number) {
 
-    var pd_othChr_billchild = $('#billChildid3' + i).val();
+   // var pd_othChr_billchild = $('#billChildid3' + i).val();
+
+    const othersAddressesArray = this.did_Invice_other_charges.get('otherAddress') as FormArray;
+    const billId_others = othersAddressesArray.at(i).get('billChildid3').value;
+  
+    console.log("pd_billchild_id-formarray",billId_others)
 
 
     Swal.fire({
@@ -740,7 +756,7 @@ export class EditinvoiceDIDComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_quotation_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.billchild_id = pd_othChr_billchild;
+        api_ProdAutoFill_req.billchild_id = billId_others;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {

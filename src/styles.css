@@ -28932,9 +28932,9 @@ span.breadcrumb-item.active{margin-left: 4px!important;}
     background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
-    z-index: 998;
+    z-index: 996;
 }
-
+.sidebar{ z-index: 996;}
 .card-header-section .breadcrumb-item i{
     width: 2.5rem;
     height: 2.5rem;
@@ -29111,7 +29111,7 @@ li ul li a:hover .nav-icon{
     position: sticky;
 }
 .sidebar__menu-group ul.sidebar_nav{
-    margin: 5px 0 0 0;
+    margin: 12px 0 0 0;
 }
 .contents.expanded {
     padding-left: 92px;
@@ -29134,7 +29134,7 @@ li ul li a:hover .nav-icon{
     border-left: 1px solid rgb(202 198 198 / 56%);
 }
 .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar {
-    width: 3px;
+    width: 5px;
   }
    
   .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar-track {
@@ -29142,7 +29142,7 @@ li ul li a:hover .nav-icon{
   }
    
   .sidebar.collapsed .sidebar__menu-group .has-child ul::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    outline: 1px solid slategrey;
+    background-color: #2a75a7;
+    outline: 1px solid #2a6994;
   }
 /* -----------------KS CODE -------------------------*/

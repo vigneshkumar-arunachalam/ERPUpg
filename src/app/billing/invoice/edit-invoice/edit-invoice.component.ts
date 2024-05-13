@@ -466,11 +466,19 @@ export class EditInvoiceComponent implements OnInit {
 
   removeParticular(i: number) {
   
-    console.log('Attempting to remove address at index', i);
-  console.log('Form array:', this.addresses); 
+  //   console.log('Attempting to remove address at index', i);
+  // console.log('Form array:', this.addresses); 
 
-    var pd_billchild_id = $('#pd_billchild_id_' + i).val();
-
+    // var pd_billchild_id = $('#pd_billchild_id_' + i).val();
+    // console.log("pd_billchild_id-non formarray",pd_billchild_id)
+   // alert(pd_billchild_id)  
+   
+   const othersAddressesArray = this.addPI_section2.get('addresses') as FormArray;
+   
+   
+   const billId_others = othersAddressesArray.at(i).get('pd_billchild_id').value;
+  
+   // console.log("pd_billchild_id-formarray",billId_others)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -494,7 +502,8 @@ export class EditInvoiceComponent implements OnInit {
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
         api_ProdAutoFill_req.action = "delete_quotation_child";
         api_ProdAutoFill_req.user_id = localStorage.getItem('erp_c4c_user_id');
-        api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+       // api_ProdAutoFill_req.billchild_id = pd_billchild_id;
+        api_ProdAutoFill_req.billchild_id = billId_others;
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {

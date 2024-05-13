@@ -83,11 +83,25 @@ export class NavbarComponent implements OnInit {
   roles: string;
   GlobalSearchPermission: any;
   payment_transaction_reports_Permission: string;
-  constructor(private router: Router, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+  currencyConvertorForm: FormGroup;
+  getCurrencyList: any;
+
+  currencyConvOutput: any;
+  getCurrencyDetails: any;
+  convetValue: any;
+  convetcurrencyFrom: any;
+  convetcurrencyTo: any;
+  currencyData: any;
+  currencies: any[];
+  //send to post
+  sendtoPostForm: FormGroup;
+  actualCost_ProductList: any[];
+  postalInvoiceDetails: any;
+  constructor(private router: Router, private serverService: ServerService, private http: HttpClient, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
-      console.log(res);
+     // console.log(res);
       var kk = JSON.parse(res);
-      console.log(kk)
+    //  console.log(kk)
       if (kk.data == 'reload_profile_data') {
         this.userName = localStorage.getItem('user_name');
         this.userId = localStorage.getItem('erp_c4c_user_id');
@@ -96,16 +110,16 @@ export class NavbarComponent implements OnInit {
       }
     });
     this.serverService.closemodal.subscribe((res: any) => {
-      console.log('val.type',res.type);
+     // console.log('val.type', res.type);
       this.PageList();
       setTimeout(() => {
         this.functionclose();
       }, 1000);
     });
     this.serverService.callbackfun.subscribe((val: any) => {
-      console.log('val.type',val.type);
+     // console.log('val.type', val.type);
       if (val.type == 'quotation_list') {
-        console.log(this.Quotation_list_send);
+       // console.log(this.Quotation_list_send);
         let api_reqs: any = {
           Quotation_list_send: this.Quotation_list_send,
           Quotation_per_send: this.Quotation_per_send
@@ -113,25 +127,25 @@ export class NavbarComponent implements OnInit {
         this.serverService.global_search_quotation.next(api_reqs);
       } else if (val.type == 'pi_list') {
         let api_reqs: any = {
-          PI_list_send :this.PI_list_send,
-          PI_per_send : this.PI_per_send
+          PI_list_send: this.PI_list_send,
+          PI_per_send: this.PI_per_send
         };
         this.serverService.global_search.next(api_reqs);
       } else if (val.type == 'invoice_list') {
         let api_reqs: any = {
-          Invoice_list_send :this.Invoice_list_send,
-          Invoice_per_send : this.Invoice_per_send,
-          Invoice_biller_send : this.Invoice_biller_send,
-          Invoice_revenue_send : this.Invoice_revenue_send,
+          Invoice_list_send: this.Invoice_list_send,
+          Invoice_per_send: this.Invoice_per_send,
+          Invoice_biller_send: this.Invoice_biller_send,
+          Invoice_revenue_send: this.Invoice_revenue_send,
         };
         this.serverService.global_search_invoice.next(api_reqs);
       } else if (val.type == 'customer_list') {
         let api_reqs: any = {
-          Customer_list_send :this.Customer_list_send,
-          Customer_revenue_send : this.Customer_revenue_send
+          Customer_list_send: this.Customer_list_send,
+          Customer_revenue_send: this.Customer_revenue_send
         };
         this.serverService.global_search_customer.next(api_reqs);
-      }
+      }
 
     })
 
@@ -147,13 +161,13 @@ export class NavbarComponent implements OnInit {
     this.resellerList_ResellerDiscount = 0;
     this.resellerList_ResellerId = 'Empty';
     this.addSelectPageListCheckboxID_array = ["Customer New"];
-    console.log("addSelectPageListCheckboxID_array----initial on load", this.addSelectPageListCheckboxID_array);
+   // console.log("addSelectPageListCheckboxID_array----initial on load", this.addSelectPageListCheckboxID_array);
     setTimeout(() => {
       this.userName = localStorage.getItem('user_name');
       this.userId = localStorage.getItem('erp_c4c_user_id');
       this.role_Permission = localStorage.getItem('role');
       this.user_ProfileImage = localStorage.getItem('profile_image');
-      this.payment_transaction_reports_Permission= localStorage.getItem('payment_transaction_reports');
+      this.payment_transaction_reports_Permission = localStorage.getItem('payment_transaction_reports');
 
     }, 2000);
     this.PageList();
@@ -161,7 +175,7 @@ export class NavbarComponent implements OnInit {
     this.roles = localStorage.getItem("role");
     this.get_permission();
     this.testVariable = [{ "id": 1, "name": "Credit Note" }, { "id": 2, "name": "Customer New" }, { "id": 3, "name": "Customer Project" }, { "id": 4, "name": " DID Number" }]
-    console.log(this.testVariable)
+  //  console.log(this.testVariable)
     this.GlobalSearch = new FormGroup({
       'GS_SelectPage': new FormControl(null),
       'GS_CustomerCode': new FormControl(null),
@@ -176,26 +190,84 @@ export class NavbarComponent implements OnInit {
     this.ContractDetailsForm = new FormGroup({
       'contractColor': new FormControl(null),
     });
+    this.currencyConvertorForm = new FormGroup({
+      'convertValue': new FormControl(null),
+      'CurrencyFrom': new FormControl(null),
+      'CurrencyTo': new FormControl(null),
+      'outputValue': new FormControl(null),
+    });
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
+      this.getCurrencyList = data.currency_data;
+     // console.log("this.getCurrencyList", this.getCurrencyList)
+    });
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
+      this.getCurrencyDetails = data.currency_data;
+      this.currencyData = data.currency_data;
+      this.currencies = ["SGD", "USD", "INR", "MYR", "EUR", "JPY", "THB", "AUD", "NZD", "IDR", "PHP"];
+     // console.log("this.getCurrencyDetails", this.getCurrencyDetails)
+    });
+
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+      this.postalInvoiceDetails = data.postal_data;
+
+      console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+    });
+
 
   }
-  get_permission(){
+  getConversionRate(fromCurrency: string, toCurrency: string): number {
+    const rate = this.currencyData.find((data: { from_curr: string; to_curr: string; }) => data.from_curr === fromCurrency && data.to_curr === toCurrency);
+    return rate ? rate.price : 1; // Return 1 if fromCurrency equals toCurrency
+  }
+  get_permission() {
     // console.log("this.roles",this.roles)
-    var k:any = this.roles.split(',');
-    for(var i=0; i<=k.length;i++){
-      if(k[i]==1148){
+    var k: any = this.roles.split(',');
+    for (var i = 0; i <= k.length; i++) {
+      if (k[i] == 1148) {
         this.GlobalSearchPermission = k[i]
       }
     }
-    console.log(this.GlobalSearchPermission);
+   // console.log(this.GlobalSearchPermission);
   }
+// Inside your component class
+selectedBillIds: number[] = [];
+
+// Inside your component class
+toggleSelection(event: any, billId: number) {
+  const target = event.target as HTMLInputElement; // Cast event.target to HTMLInputElement
+  const checked = target.checked;
+
+  if (checked) {
+      // Add billId to the selectedBillIds array if it's not already there
+      if (!this.selectedBillIds.includes(billId)) {
+          this.selectedBillIds.push(billId);
+      }
+  } else {
+      // Remove billId from the selectedBillIds array
+      const index = this.selectedBillIds.indexOf(billId);
+      if (index !== -1) {
+          this.selectedBillIds.splice(index, 1);
+      }
+  }
+  // Log the selectedBillIds array to the console
+ // console.log("Selected Bill IDs:", this.selectedBillIds);
+}
+
+
+isSelected(billId: number): boolean {
+    // Check if the billId is in the selectedBillIds array
+    return this.selectedBillIds.includes(billId);
+}
+
+
   selectEventCustomer(item: any) {
-    
+
     this.searchResultTest = item.customerName;
     this.PG_customerId = item.customerId;
     this.PG_customerName = item.customerName;
-    console.log(" this.PG_customerName-customer select change", this.PG_customerName);
-    console.log(item.customerId)
-    console.log(item.customerName)
+    // console.log(" this.PG_customerName-customer select change", this.PG_customerName);
+    // console.log(item.customerId)
+    // console.log(item.customerName)
 
     this.CompanyName = item.customerName;
 
@@ -210,7 +282,7 @@ export class NavbarComponent implements OnInit {
 
     this.show = false;
     this.spinner.show();
- 
+
     let api_req: any = new Object();
     let api_contract_req: any = new Object();
     api_req.moduleType = "global";
@@ -221,7 +293,7 @@ export class NavbarComponent implements OnInit {
     api_contract_req.user_id = this.user_ids;
     api_contract_req.customer_id = this.PG_customerId;
     api_req.element_data = api_contract_req;
-    if( this.PG_customerId==undefined){
+    if (this.PG_customerId == undefined) {
       this.spinner.hide();
       return false;
     }
@@ -229,10 +301,10 @@ export class NavbarComponent implements OnInit {
       this.spinner.hide();
 
       if (response != '') {
-      
+
         this.spinner.hide();
         this.contract_filter = true;
-        console.log("response.customer_contract.color", response.customer_contract.color)
+// console.log("response.customer_contract.color", response.customer_contract.color)
 
         this.customerContractlist = response.customer_contract;
         this.resellerList = response.reseller_info;
@@ -240,17 +312,17 @@ export class NavbarComponent implements OnInit {
         this.resellerList_ResellerDiscount = response.reseller_info.reseller_discount;
         this.resellerList_ResellerId = response.reseller_info.reseller_id;
 
-        
+
 
         // this.ContractDetailsForm.patchValue({
         //   for(let i=0;i<response.customer_contract.length;i++){
         //     'contractColor': response.customer_contract[i].color
         //   }
-         
+
         // })
 
       } else {
-      
+
         this.contract_filter = false;
         Swal.close();
         this.spinner.hide();
@@ -263,7 +335,7 @@ export class NavbarComponent implements OnInit {
 
     }),
       (error: any) => {
-     
+
         this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
@@ -275,7 +347,7 @@ export class NavbarComponent implements OnInit {
   CHKAll_BillerNameSelectAll(a: any) {
 
   }
-  toggleColorInput(){
+  toggleColorInput() {
     this.isColorInputDisabled = !this.isColorInputDisabled;
   }
   CHKAll_SelectPageSelectAll(event: any) {
@@ -283,7 +355,7 @@ export class NavbarComponent implements OnInit {
 
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
-      console.log("this.SelectPageList", this.SelectPageList)
+     // console.log("this.SelectPageList", this.SelectPageList)
 
       this.SelectPageList.forEach((element: any, index: any) => {
         $("#check-grp-SelectPage-" + index).prop('checked', true);
@@ -293,18 +365,18 @@ export class NavbarComponent implements OnInit {
       });
       this.addSelectPageListCheckboxID_array = [];
       this.addSelectPageListCheckboxID_array = checkAll_ID;
-      console.log("checkedID", checkAll_ID)
-      console.log("this.addSelectPageListCheckboxID_array-Select All", this.addSelectPageListCheckboxID_array)
+      // console.log("checkedID", checkAll_ID)
+      // console.log("this.addSelectPageListCheckboxID_array-Select All", this.addSelectPageListCheckboxID_array)
       this.PageIDs = this.addSelectPageListCheckboxID_array;
-      console.log("this.PageIDs-Select All", this.PageIDs);
+     // console.log("this.PageIDs-Select All", this.PageIDs);
     } else {
       this.SelectPageList.forEach((element: any, index: any) => {
         $("#check-grp-SelectPage-" + index).prop('checked', false);
       });
       this.addSelectPageListCheckboxID_array = [];
-      console.log("this.addSelectPageListCheckboxID_array-De Select All", this.addSelectPageListCheckboxID_array);
+     // console.log("this.addSelectPageListCheckboxID_array-De Select All", this.addSelectPageListCheckboxID_array);
       this.PageIDs = this.addSelectPageListCheckboxID_array;
-      console.log("this.PageIDs-De Select All", this.PageIDs);
+      // console.log("this.PageIDs-De Select All", this.PageIDs);
     }
 
   }
@@ -313,24 +385,24 @@ export class NavbarComponent implements OnInit {
 
 
   addSelectPageCHK(data: any, event: any) {
-    console.log("Contract File Attachment Display - CheckBox ID", data);
+   // console.log("Contract File Attachment Display - CheckBox ID", data);
     this.SelectPageListId = data;
 
     if (event.target.checked == true) {
 
       this.addSelectPageListCheckboxID_array.push(data);
-      console.log("Final BillerName Checkbox After checkbox selected list", this.addSelectPageListCheckboxID_array);
+     // console.log("Final BillerName Checkbox After checkbox selected list", this.addSelectPageListCheckboxID_array);
     }
     else {
       const index = this.addSelectPageListCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.addSelectPageListCheckboxID_array.splice(index, 1);
       }
-      console.log("Final BillerName Checkbox After Deselected selected list", this.addSelectPageListCheckboxID_array)
+      // console.log("Final BillerName Checkbox After Deselected selected list", this.addSelectPageListCheckboxID_array)
 
     }
     this.addSelectPageListCheckboxID_array.join(',');
-    console.log("addSelectPageListCheckboxID_array----after join", this.addSelectPageListCheckboxID_array);
+    // console.log("addSelectPageListCheckboxID_array----after join", this.addSelectPageListCheckboxID_array);
 
   }
 
@@ -386,31 +458,31 @@ export class NavbarComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error)
+           // console.log("final error", error)
           };
       }
     })
 
 
   }
-  PaymentTransactionReports(){
-    var userid=localStorage.getItem('erp_c4c_user_id');
-    var username=localStorage.getItem('user_name');
-   var payment_transaction_reports= localStorage.getItem('payment_transaction_reports');
-    console.log("userid",userid);
-    console.log("username",username);
-    console.log("userid+username",userid+username);
-    console.log("payment_transaction_reports",payment_transaction_reports);
-    var userDetails=btoa(userid+username)
-    console.log("userDetails",userDetails)
-    var url="https://paymentinbound.cal4care.com/verify?uid="+btoa(userid)+"&authToken="+btoa(userid+username);
+  PaymentTransactionReports() {
+    var userid = localStorage.getItem('erp_c4c_user_id');
+    var username = localStorage.getItem('user_name');
+    var payment_transaction_reports = localStorage.getItem('payment_transaction_reports');
+    // console.log("userid", userid);
+    // console.log("username", username);
+    // console.log("userid+username", userid + username);
+    // console.log("payment_transaction_reports", payment_transaction_reports);
+    var userDetails = btoa(userid + username)
+    console.log("userDetails", userDetails)
+    var url = "https://paymentinbound.cal4care.com/verify?uid=" + btoa(userid) + "&authToken=" + btoa(userid + username);
     window.open(url, '_blank');
   }
   searchGlobalList() {
     this.spinner.show();
     this.onFocusedCustomer({});
     // $('#ActionIdxx3').modal('show');
-    if(this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined ){
+    if (this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) {
 
     }
 
@@ -423,9 +495,9 @@ export class NavbarComponent implements OnInit {
     api_schGlo_req.action = "globalSearchAll";
     api_schGlo_req.user_id = this.user_ids;
     if ((this.PG_customerId == '' || this.PG_customerId == 'undefined' || this.PG_customerId == undefined) &&
-    (this.PG_customerName == '' || this.PG_customerName == 'undefined' || this.PG_customerName == undefined) &&
-    (this.PG_LicenseNum == '' || this.PG_LicenseNum == 'undefined' || this.PG_LicenseNum == undefined) &&
-    (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined) 
+      (this.PG_customerName == '' || this.PG_customerName == 'undefined' || this.PG_customerName == undefined) &&
+      (this.PG_LicenseNum == '' || this.PG_LicenseNum == 'undefined' || this.PG_LicenseNum == undefined) &&
+      (this.PG_DIDNumber == '' || this.PG_DIDNumber == 'undefined' || this.PG_DIDNumber == undefined)
     ) {
       this.spinner.hide();
       // iziToast.error({
@@ -438,7 +510,7 @@ export class NavbarComponent implements OnInit {
       api_schGlo_req.customer_id = this.PG_customerId;
     }
 
-    console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
+   // console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
     api_schGlo_req.customer_name = this.PG_customerName;
     api_schGlo_req.customer_code = this.PG_CustomerCode;
 
@@ -453,7 +525,7 @@ export class NavbarComponent implements OnInit {
       });
       return false;
     } else {
-      console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
+    //  console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
       api_schGlo_req.pagename = this.addSelectPageListCheckboxID_array;
     }
 
@@ -463,9 +535,9 @@ export class NavbarComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       // $('#ActionIdxx2').modal('hide');
-      console.log(" response--pagelist", response)
+     // console.log(" response--pagelist", response)
       if (response != '') {
-        console.log("playboy", response.quotation_list)
+      //  console.log("playboy", response.quotation_list)
 
         this.SelectPageList = response.menuList;
         this.pageList = response.menuList;
@@ -483,8 +555,8 @@ export class NavbarComponent implements OnInit {
 
         if (response.quotation_list != 0 || response.quotation_list != '0') {
           this.Quot_UI_Show = response.quotation_list;
-          console.log("quotation-global-before send", JSON.stringify(this.Quotation_list_send));
-          console.log("this.Customer_list_send-before send", JSON.stringify(this.Customer_list_send));
+          // console.log("quotation-global-before send", JSON.stringify(this.Quotation_list_send));
+          // console.log("this.Customer_list_send-before send", JSON.stringify(this.Customer_list_send));
 
 
           let api_reqs: any = {
@@ -494,7 +566,7 @@ export class NavbarComponent implements OnInit {
           this.serverService.global_search_quotation.next(api_reqs);
         } else {
           this.Quot_UI_Show = response.quotation_list;
-          console.log("Quotation Skipped")
+       //   console.log("Quotation Skipped")
         }
         if (response.proforma_invoice_list != 0 || response.proforma_invoice_list != '0') {
           this.PI_list_send = response.proforma_invoice_list.proforma_details;
@@ -502,14 +574,14 @@ export class NavbarComponent implements OnInit {
           this.PI_UI_Show = response.proforma_invoice_list;
 
           let api_reqs: any = {
-            PI_list_send :this.PI_list_send,
-            PI_per_send : this.PI_per_send
+            PI_list_send: this.PI_list_send,
+            PI_per_send: this.PI_per_send
           };
           this.serverService.global_search.next(api_reqs);
         } else {
           this.PI_UI_Show = response.proforma_invoice_list;
 
-          console.log("Performa invoice Skipped")
+        //  console.log("Performa invoice Skipped")
         }
 
         if (response.customer_list != 0 || response.customer_list != '0') {
@@ -517,37 +589,37 @@ export class NavbarComponent implements OnInit {
           this.Customer_revenue_send = response.customer_list.revenue_list;
           this.Cust_UI_Show = response.customer_list;
           let api_reqs: any = {
-            Customer_list_send :this.Customer_list_send,
-            Customer_revenue_send : this.Customer_revenue_send
+            Customer_list_send: this.Customer_list_send,
+            Customer_revenue_send: this.Customer_revenue_send
           };
           this.serverService.global_search_customer.next(api_reqs);
         } else {
           this.Cust_UI_Show = response.customer_list;
-          console.log("Customer List Skipped")
+         // console.log("Customer List Skipped")
         }
 
 
         if (response.invoice_list != 0 || response.invoice_list != '0') {
           this.Invoice_list_send = response.invoice_list.proforma_details;
           this.Invoice_UI_Show = response.invoice_list;
-          console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
+        //  console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
           let api_reqs: any = {
-            Invoice_list_send :this.Invoice_list_send,
-            Invoice_per_send : this.Invoice_per_send,
-            Invoice_biller_send : this.Invoice_biller_send,
-            Invoice_revenue_send : this.Invoice_revenue_send
+            Invoice_list_send: this.Invoice_list_send,
+            Invoice_per_send: this.Invoice_per_send,
+            Invoice_biller_send: this.Invoice_biller_send,
+            Invoice_revenue_send: this.Invoice_revenue_send
           };
           this.serverService.global_search_invoice.next(api_reqs);
         } else {
           this.Invoice_UI_Show = response.invoice_list;
-          console.log("Invoice List Skipped")
+         // console.log("Invoice List Skipped")
         }
 
 
-        console.log(this.Quotation_list_send);
+        // console.log(this.Quotation_list_send);
 
-        console.log("without json stringfy,this.Customer_list_send", this.Customer_list_send);
-        console.log("with json stringfy,this.Customer_list_send", JSON.stringify(this.Customer_list_send));
+        // console.log("without json stringfy,this.Customer_list_send", this.Customer_list_send);
+        // console.log("with json stringfy,this.Customer_list_send", JSON.stringify(this.Customer_list_send));
         this.dashboard = true;
 
 
@@ -572,7 +644,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
 
 
@@ -583,10 +655,10 @@ export class NavbarComponent implements OnInit {
     // this.router.navigate(['/customernewall']);
     // window.location.reload();
   }
-  functionclose(){
-    console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
+  functionclose() {
+  //  console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
     for (let i = 0; i < this.addSelectPageListCheckboxID_array.length; i++) {
-      console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
+    //  console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
       if (this.addSelectPageListCheckboxID_array[i] == "Credit Note") {
         $("#check-grp-SelectPage-0").prop('checked', true);
       }
@@ -652,10 +724,10 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log(" response--pagelist", response)
+    //  console.log(" response--pagelist", response)
       if (response != '') {
         this.SelectPageList = response.menuList;
-        console.log(" this.SelectPageList", this.SelectPageList)
+      //  console.log(" this.SelectPageList", this.SelectPageList)
       } else {
         Swal.close();
         iziToast.warning({
@@ -672,7 +744,7 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        // console.log("final error", error);
       };
   }
 
@@ -730,10 +802,10 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log(" response", response)
+     // console.log(" response", response)
       if (response != '') {
         this.searchResult = response.customerName;
-        console.log(" this.searchResult", this.searchResult)
+       // console.log(" this.searchResult", this.searchResult)
         this.onFocusedCustomer({});
       } else {
         Swal.close();
@@ -754,6 +826,7 @@ export class NavbarComponent implements OnInit {
         console.log("final error", error);
       };
   }
+
   inpChanged_CodeData(data: any) {
 
     let api_req: any = new Object();
@@ -767,10 +840,10 @@ export class NavbarComponent implements OnInit {
     api_comCode_req.searchkey = data;
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer code_status response", response);
+     // console.log("vignesh-customer code_status response", response);
 
       this.searchResult_code = response.customerCode;
-      console.log("vignesh-advanced search result", this.searchResult_code);
+      // console.log("vignesh-advanced search result", this.searchResult_code);
 
     });
   }
@@ -781,9 +854,9 @@ export class NavbarComponent implements OnInit {
 
   selected_CustomerCode(item: any) {
     this.PG_CustomerCode = item.customerCode;
-    this.PG_customerId=item.customerId;
-console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
-    console.log(item)
+    this.PG_customerId = item.customerId;
+    // console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
+    // console.log(item)
 
   }
 
@@ -800,10 +873,10 @@ console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
     api_comCode_req.searchkey = data;
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer code_status response", response);
+    //  console.log("vignesh-customer code_status response", response);
 
       this.searchResult_DIDNumber = response.did_numbers;
-      console.log("vignesh-advanced search result", this.searchResult_DIDNumber);
+      // console.log("vignesh-advanced search result", this.searchResult_DIDNumber);
       this.onout_DIDNumber();
     });
   }
@@ -814,10 +887,10 @@ console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
   }
 
   selected_DIDNumber(item: any) {
-    console.log("DID Number,item",item);
+    // console.log("DID Number,item", item);
     this.PG_DIDNumber = item.did_numbers;
-    console.log("this.PG_DIDNumber",this.PG_DIDNumber);
-    console.log(item)
+    // console.log("this.PG_DIDNumber", this.PG_DIDNumber);
+    // console.log(item)
     this.onout_DIDNumber();
 
   }
@@ -835,10 +908,10 @@ console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
     api_comCode_req.searchkey = data;
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer code_status response", response);
+     // console.log("vignesh-customer code_status response", response);
 
       this.searchResult_LicenseNumber = response.license_key;
-      console.log("vignesh-advanced search result", this.searchResult_LicenseNumber);
+      // console.log("vignesh-advanced search result", this.searchResult_LicenseNumber);
       this.onout_LicenseNumber();
 
     });
@@ -863,13 +936,13 @@ console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
-      console.log(" this.PG_customerName-license number", this.PG_customerName);
+     // console.log(" this.PG_customerName-license number", this.PG_customerName);
       this.PG_LicenseKey = response.license_key;
 
     });
   }
   onout_DIDNumber() {
-console.log("DIDnumber check ip",this.PG_DIDNumber)
+   // console.log("DIDnumber check ip", this.PG_DIDNumber)
     let api_req: any = new Object();
     let api_DIDCode_req: any = new Object();
     api_req.moduleType = "global";
@@ -883,7 +956,7 @@ console.log("DIDnumber check ip",this.PG_DIDNumber)
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
-      console.log(" this.PG_customerName-DID number", this.PG_customerName);
+     // console.log(" this.PG_customerName-DID number", this.PG_customerName);
       this.PG_DIDNumbers = response.did_numbers;
 
     });
@@ -892,12 +965,96 @@ console.log("DIDnumber check ip",this.PG_DIDNumber)
 
   selected_LicenseNumber(item: any) {
     this.PG_LicenseNum = item;
-    console.log(item)
+   // console.log(item)
     this.onout_LicenseNumber();
 
   }
 
   EditCHK(i: any, k: any) {
+
+  }
+  handle_convertValue(event: any) {
+    this.convetValue = event.target.value;
+    // if(event.target.value.length>2){
+    //   this.currencyConvert();
+
+    // }
+  }
+  handle_currencyFrom(event: any) {
+    this.convetcurrencyFrom = event.target.value;
+  }
+  handle_currencyTo(event: any) {
+    this.convetcurrencyTo = event.target.value;
+  }
+  clearCurrencyConvert() {
+    this.currencyConvertorForm.reset();
+    this.convetcurrencyFrom = '';
+    this.convetcurrencyTo = '';
+    this.convetValue = '';
+
+
+  }
+  currencyConvert() {
+    if (this.convetcurrencyFrom && this.convetcurrencyTo && this.currencyConvertorForm.value.convertValue.length > 3) {
+      this.spinner.show();
+    }
+    // this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_year: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "getCurrencyConvert";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_year.action = "getCurrencyConvert";
+    // api_year.user_id = localStorage.getItem('erp_c4c_user_id');
+    if (this.currencyConvertorForm.value.CurrencyFrom == null) {
+      api_year.currency_from_val = this.currencyConvertorForm.value.CurrencyFrom;
+    } else {
+      api_year.currency_from_val = this.convetcurrencyFrom;
+    }
+
+    if (this.currencyConvertorForm.value.CurrencyTo == null) {
+      api_year.currency_to_val = this.currencyConvertorForm.value.CurrencyTo;
+    } else {
+      api_year.currency_to_val = this.convetcurrencyTo;
+    }
+
+    if (this.currencyConvertorForm.value.convertValue == null) {
+      api_year.convert_val = this.currencyConvertorForm.value.convertValue;
+    } else {
+      api_year.convertValue = this.convetValue;
+    }
+
+    api_req.element_data = api_year;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+        this.spinner.hide();
+
+
+        this.currencyConvertorForm.patchValue({
+          'outputValue': response.convert_data.convert_vals,
+        })
+
+      } else {
+
+
+
+
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+      //  console.log("final error", error);
+      };
+
 
   }
 }

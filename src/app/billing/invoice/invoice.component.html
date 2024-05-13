@@ -209,6 +209,26 @@
                                       </a>
 
                                     </li>
+                                    <li class="dropdown__item" *ngIf="(invoicePermissionList_inv_recurring==1)">
+                                      <a *ngIf="(recurring_Status=='1')" class="hover4" title="Un-Recurring1"
+                                        data-toggle="modal" data-target="#RecurringFormIdPE_inv"
+                                        (click)="RecurringEditPE(list.billId,i)">
+
+                                        <img class="show" src="assets/img/icon2/R-red.png">
+                                        <img class="hide" src="assets/img/icon2/R-black.png">
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller Recurring</strong></span>
+                                      </a>
+                                      <a *ngIf="(recurring_Status=='0')" class="hover4" title="Recurring1"
+                                        data-toggle="modal" data-target="#RecurringFormIdPE_inv"
+                                        (click)="RecurringEditPE(list.billId,i)">
+
+                                        <img class="show" src="assets/img/icon2/R-blue.png">
+                                        <img class="hide" src="assets/img/icon2/R-black.png">
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller Recurring</strong></span>
+                                      </a>
+
+                                    </li>
+
                                     <li class="dropdown__item" *ngIf="(invoicePermissionList_comm_per==1)">
                                       <a *ngIf="(reseller_commissionState=='1')" class="hover3"
                                         title="Set Reseller Commission" data-toggle="modal"
@@ -608,13 +628,13 @@
 
                 </tbody>
                
-                <!-- <tbody *ngIf="response_total_cnt == 0">
+                <tbody *ngIf="response_total_cnt == 0">
                   <tr>
-                      <td colspan="9" style="height: 50px; font-weight: 600; line-height: 1.5; padding-top: 25px; text-align: center;">
+                      <td colspan="9" style="height: 50px; font-weight: 600; line-height: 1.5;font-style:italic; padding-top: 25px; text-align: center;background-color: red;">
                           No Record Found
                       </td>
                   </tr>
-              </tbody> -->
+              </tbody>
               </table>
             
             
@@ -1372,6 +1392,103 @@
 </div>
 <!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
 
+<!-----------------Modal Pop Up-Recurring-Begin------------------>
+<div class="modal fade" id="RecurringFormIdPE_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="col-12 modal-title text-center">Reseller Recurring
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="RecurringForm">
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Date</label>
+              </div>
+              <div class="col-lg-8">
+                <input type="date" class="form-control" formControlName="date" id="date123">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Recurring</label>
+              </div>
+
+              <div class="col-lg-8">
+                <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
+                  <input class="form-check-input" type="radio" formControlName="recurring_state" name="recurring_state"
+                    checked="{{ity.id==recuringStatus ? 'checked':''}}" id="{{ity.id}}" value="{{ity.id}}"
+                    (change)="radio_recurring($event)">
+                  <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Recurring Date</label>
+              </div>
+              <div class="col-lg-8" style="display: flex;">
+                <input type="checkbox" formControlName="fixedChargeDtCBX" (change)="CBF_FixedChargeDtFn($event)">
+                <input type="date" class="form-control ml-4" formControlName="fixedChargeDt_value">
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12 mt-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <label class="form-label">Recurring Duration</label>
+                <p>Next Rec Dt : {{this.recurringDetails_fixed_next_dt}}</p>
+              </div>
+              <div class="col-lg-8">
+                <select class="form-control" formControlName="fixedChargeDuration">
+                  <option *ngFor="let term of reccuringDuration" value="{{term}}">
+                    {{term}}
+                  </option>
+
+                </select>
+
+              </div>
+            </div>
+          </div>
+
+       
+
+         
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit" class="btn btn-primary" (click)="RecurringUpdate()">Save</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
+
 
 <!-----------------Modal Pop Up (BEGIN) Coupon Assign------------------>
 <div class="modal fade" id="couponAssignFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
@@ -1908,7 +2025,7 @@
                     </div>
                     <div class="col-lg-9">
                       <input type="number" class="form-control" formControlName="commission_value"
-                        id="CommissionValue_WFA_ID_{{i}}" (keyup)="commissionValueAutoFill_formArray(i)">
+                        id="CommissionValue_WFA_ID1_{{i}}" (keyup)="commissionValueAutoFill_formArray(i)">
                     </div>
                   </div>
                   <div class="col-lg-12 mt-2" style="display: flex;">
@@ -1917,7 +2034,7 @@
                     </div>
                     <div class="col-lg-9">
                       <input type="number" class="form-control" formControlName="commission_amt"
-                        id="CommissionAmount1_WFA_ID_{{i}}">
+                        id="CommissionAmount1_WFA_ID1_{{i}}">
                       <input type="hidden" class="form-control" id="reseller_comm_id{{i}}"
                         formControlName="reseller_comm_id">
                       <input type="hidden" class="form-control" id="commIndex{{i}}" formControlName="commIndex">
@@ -2035,7 +2152,7 @@
               </div>
               <div class="col-lg-9">
                 <input type="number" class="form-control" formControlName="commission_value"
-                  id="CommissionValue_WFA_ID_" (keyup)="commissionValueAutoFill()">
+                  id="CommissionValue_WFA_ID1_" (keyup)="commissionValueAutoFill()">
               </div>
             </div>
             <div class="col-lg-12 mt-2" style="display: flex;">
@@ -2044,7 +2161,7 @@
               </div>
               <div class="col-lg-9">
                 <input type="number" class="form-control" formControlName="commission_amt"
-                  id="CommissionAmount1_WFA_ID_">
+                  id="CommissionAmount1_WFA_ID1_">
                 <input type="hidden" class="form-control" id="reseller_comm_id" formControlName="reseller_comm_id">
                 <input type="hidden" class="form-control" id="commIndex" formControlName="commIndex">
                 <input type="hidden" class="form-control" id="reseller_id" formControlName="reseller_id">

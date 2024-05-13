@@ -673,6 +673,7 @@ tr:hover {background-color: rgb(246, 236, 233)!important;}
   display: inline-block;
   border-bottom: 1px dotted black; /* Add a dotted border bottom */
   opacity: 5;
+  z-index: 99;
 }
 
 /* Tooltip text */

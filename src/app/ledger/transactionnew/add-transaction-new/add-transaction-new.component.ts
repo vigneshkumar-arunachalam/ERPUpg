@@ -58,10 +58,11 @@ export class AddTransactionNewComponent implements OnInit {
   //add stock -form array
   itre = 0;
   test: boolean[] = [];
-  productDetails:any;
-  valuw:any;
-  serial_no_state:any;
-  payment_details:any;
+  productDetails: any;
+  valuw: any;
+  serial_no_state: any;
+  payment_details: any;
+  add_billerNameID: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.addStock_section2 = this.fb.group({
@@ -72,6 +73,7 @@ export class AddTransactionNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.addLoad();
+    // this.addLoad_2();
 
     this.Transaction_Type_List = [
       { name: 'Deposit', selected: true, id: 1 },
@@ -232,7 +234,7 @@ export class AddTransactionNewComponent implements OnInit {
       entry_product_id: '',
       entry_quantity: '',
       entry_serail_no_str: '',
-      mac_no:'',
+      mac_no: '',
 
 
 
@@ -244,26 +246,26 @@ export class AddTransactionNewComponent implements OnInit {
     this.addresses.removeAt(i);
 
   }
-  addTextBox(k:any) {
+  addTextBox(k: any) {
 
     $("#serial_mac_no").html('');
-    var val = $("#AddNewStock_Qty"+k).val();
-//this.valuw=val;
-    var ser_str='';
+    var val = $("#AddNewStock_Qty" + k).val();
+    //this.valuw=val;
+    var ser_str = '';
     var addr = this.addStock_section2.value.addresses;
-    console.log("total addr",addr)
+    console.log("total addr", addr)
     // console.log(addr)
-    for (let i= 0; i < val; i++) {
+    for (let i = 0; i < val; i++) {
 
       // $("#serial_mac_no"+i).append('<input type="text " name="text">');
-    
-     //$("#serial_mac_no"+k).append('<input type="text" name="Quantity" id="serial_mac_no'+i+'" /><br>');
 
-     ser_str=ser_str+'<input type="text" name="Quantity" class="form-control" id="qty'+i+'" /><br>';
+      //$("#serial_mac_no"+k).append('<input type="text" name="Quantity" id="serial_mac_no'+i+'" /><br>');
+
+      ser_str = ser_str + '<input type="text" name="Quantity" class="form-control" id="qty' + i + '" /><br>';
 
     }
-    
-    $('#serial_mac_no'+k).html(ser_str);
+
+    $('#serial_mac_no' + k).html(ser_str);
 
   }
   CB_Fn_PE_AttachMobile(event: any) {
@@ -328,7 +330,11 @@ export class AddTransactionNewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_loadAdd.action = "purchase_entry_addnew";
 
-
+    if (this.add_billerNameID != 'undefined' || this.add_billerNameID != undefined) {
+      api_loadAdd.billerId = this.add_billerNameID;
+    } else {
+      api_loadAdd.billerId = '';
+    }
     api_loadAdd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_loadAdd;
 
@@ -344,8 +350,18 @@ export class AddTransactionNewComponent implements OnInit {
         this.categoryDetails = response.category_det;
         this.DefaultBillerIDValue = response.defaults_biller_id;
         this.getPaymentInvoice();
+        let defaultCurrencyIdString =response.default_currency_id;
+        let currencyID: number = parseInt(defaultCurrencyIdString);
+        setTimeout(() => {
+                  $('#biller_name8').val(response.defaults_biller_id);
+                 $('#PE_Currency').val(currencyID);
+                }, 1000)
+        
         this.addTransaction_section1.patchValue({
           'billerName': this.DefaultBillerIDValue,
+          'PE_purchaseEntryNo': response.purchase_entry_no,
+          'PE_Currency': currencyID,
+          'PE_currencyConversionRate': response.currency_converstion,
 
         });
 
@@ -368,7 +384,72 @@ export class AddTransactionNewComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  changeCategory(id:any){
+  // addLoad_2() {
+
+
+  //   let api_req: any = new Object();
+  //   let api_loadAdd: any = new Object();
+  //   api_req.moduleType = "purchase_entry_addnew";
+  //   api_req.api_url = "transaction_entry/purchase_entry_addnew";
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_loadAdd.action = "purchase_entry_addnew";
+
+
+  //   api_loadAdd.user_id = localStorage.getItem('erp_c4c_user_id');
+  //   if (this.add_billerNameID != 'undefined' || this.add_billerNameID != undefined) {
+  //     api_loadAdd.billerId = this.add_billerNameID;
+  //   } else {
+  //     api_loadAdd.billerId = '';
+  //   }
+
+  //   api_req.element_data = api_loadAdd;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     this.spinner.hide();
+  //     if (response != '') {
+
+  //       this.currencyDetails = response.currency_det;
+  //       this.billerDetails = response.biller_det;
+  //       this.vendorDetails = response.vendor_det;
+  //       this.purchaseTypeDetails = response.purchase_type_det;
+  //       this.taxProviderDetails = response.tax_provider_det;
+  //       this.categoryDetails = response.category_det;
+  //       this.DefaultBillerIDValue = response.defaults_biller_id;
+  //       setTimeout(() => {
+  //         $('#add_billerName1').val(response.defaults_biller_id);
+  //       }, 1000)
+
+
+  //       // this.getPaymentInvoice();
+  //       this.addEnquiryForm.patchValue({
+  //         'add_billerName1': this.DefaultBillerIDValue,
+  //         'add_PurchaseEntryNo': response.purchase_entry_no,
+  //         'add_Currency': response.default_currency_id,
+  //         'add_convAmount': response.currency_converstion,
+
+  //       });
+
+
+
+  //     } else {
+
+
+  //       iziToast.warning({
+  //         message: "Invoice Type Details not displayed. Please try again",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //   }),
+  //     (error: any) => {
+  //       iziToast.error({
+  //         message: "Sorry, some server issue occur. Please contact admin",
+  //         position: 'topRight'
+  //       });
+  //       console.log("final error", error);
+  //     };
+  // }
+  changeCategory(id: any) {
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -377,7 +458,7 @@ export class AddTransactionNewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getInvoiceDetails_req.action = "get_prodoct_entry_stock_name";
-    api_getInvoiceDetails_req.category_id =id;
+    api_getInvoiceDetails_req.category_id = id;
 
     api_req.element_data = api_getInvoiceDetails_req;
 
@@ -385,7 +466,7 @@ export class AddTransactionNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       if (response != '') {
-        this.productDetails=response.product_det;
+        this.productDetails = response.product_det;
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
 
@@ -404,6 +485,8 @@ export class AddTransactionNewComponent implements OnInit {
     console.log("event", event)
 
     this.DefaultBillerIDValue = event.target.value;
+    this.add_billerNameID = event.target.value;
+    this.addLoad();
   }
 
   getCurrencyValues(event: any) {
@@ -471,8 +554,8 @@ export class AddTransactionNewComponent implements OnInit {
 
     });
   }
-  getProductserialState(event:any) {
-    var productID=event.target.value;
+  getProductserialState(event: any) {
+    var productID = event.target.value;
 
     let api_req: any = new Object();
     let api_getPaymentDetails_req: any = new Object();
@@ -482,7 +565,7 @@ export class AddTransactionNewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getPaymentDetails_req.action = "get_product_serial_state";
     api_getPaymentDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_getPaymentDetails_req.product_id =productID;
+    api_getPaymentDetails_req.product_id = productID;
     api_req.element_data = api_getPaymentDetails_req;
 
 
@@ -491,7 +574,7 @@ export class AddTransactionNewComponent implements OnInit {
       if (response != '') {
 
         this.serial_no_state = response.serial_state[0].serial_no_state;
-       // alert(this.serial_no_state)
+        // alert(this.serial_no_state)
 
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
@@ -530,9 +613,9 @@ export class AddTransactionNewComponent implements OnInit {
         this.netPayment = response.netPayment;
         this.paymentNote = response.paymentNote;
         this.paymentTypeDetails = response.payment_type_det;
-        this.payment_details= response.payment_details;
+        this.payment_details = response.payment_details;
 
-alert( this.payment_details)
+        alert(this.payment_details)
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
 
@@ -725,12 +808,12 @@ alert( this.payment_details)
     }
     if (this.Select_Transaction_Type == 15) {
       this.saveVariable = "add_new_stock_save";
-     
+
       var addr = this.addStock_section2.value.addresses;
-     
-   
+
+
       // for (let i = 0; i < addr.length; i++) {
-       
+
       //  var x=JSON.stringify(addr);
       //   addr[i].vendorId = $('#vendorId' + i).val();
       //   addr[i].lic_pur_date = $('#lic_pur_date' + i).val();
@@ -738,12 +821,12 @@ alert( this.payment_details)
       //   addr[i].entry_product_id = $('#entry_product_id' + i).val();
       //   addr[i].entry_quantity = $('#entry_quantity' + i).val();
       //   addr[i].entry_serail_no_str = $('#entry_serail_no_str' + i).val();
-      
-          
+
+
       // }
-  
-      data.append('values',JSON.stringify(addr)); 
-    
+
+      data.append('values', JSON.stringify(addr));
+
     }
 
 
@@ -826,7 +909,7 @@ alert( this.payment_details)
     this.Select_Transaction_Type = 8;
   }
 
-  
+
   goBackTransaction() {
     this.router.navigate(['/transactionnew']);
   }

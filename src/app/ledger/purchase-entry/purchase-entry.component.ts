@@ -20,7 +20,7 @@ declare var tinymce: any;
 export class PurchaseEntryComponent implements OnInit {
   //pagination
   recordNotFound = false;
-  pageLimit = 50;
+  pageLimit = 1000;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   user_ids: any;
@@ -116,20 +116,46 @@ export class PurchaseEntryComponent implements OnInit {
   //file
   myFiles: string[] = [];
 
+  getVendorCode: any;
+  //advanced search
+  searchPEForm: FormGroup;
+  searchBILLERID: any;
+  CBV_BillerName_All: any;
+  searchResult_CustomerID: any;
+  //SEARCH-YEARS
+  yearsList: any;
+  CBV_Years_All: any;
+  yearsID: any;
+  edit_array_Years_Checkbox: any = [];
+  getVendorList: any;
+  notPaidEntries: any;
+  paidEntries: any;
+  partialPaidEntries: any;
 
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
     private spinner: NgxSpinnerService, private injector: Injector, private http: HttpClient) { }
-
+  keywordCompanyName = 'vendorName';
   ngOnInit(): void {
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
-    this.PurchaseEntryList({});
+
     this.getUserCommonDetails();
     this.addLoad();
+    this.yearsAPI();
 
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/purchaseEntry/getMonthValues').subscribe((data: any) => {
       this.getMonthValues = data.months;
       console.log("this.getMonthValues", this.getMonthValues)
     })
+
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+      this.getVendorCode = data.vendorCode;
+      console.log("this.getVendorCode", this.getVendorCode)
+    })
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
+      this.getVendorList = data.vendorList;
+      console.log("this.getVendorCode", this.getVendorCode)
+    })
+    this.PurchaseEntryList({});
 
     this.EnquiryCommentsEntryForm = new FormGroup({
       'ML_CE_toDoDate': new FormControl((new Date()).toISOString().substring(0, 10)),
@@ -213,12 +239,11 @@ export class PurchaseEntryComponent implements OnInit {
       'PE_VM_City': new FormControl(null),
       'PE_VM_State': new FormControl(null),
       'PE_VM_Country': new FormControl(null),
+      'PE_VM_ZipCode': new FormControl(null),
       'PE_VM_Phone': new FormControl(null),
       'PE_VM_MobilePhone': new FormControl(null),
       'PE_VM_Fax': new FormControl(null),
-      'PE_VM_Email': new FormControl(null),
-
-
+      'PE_VM_Email': new FormControl(null, [Validators.email]),
     });
 
     this.RecurringForm = new FormGroup({
@@ -226,6 +251,13 @@ export class PurchaseEntryComponent implements OnInit {
       'Rec_date': new FormControl(null),
       'Rec_recurring': new FormControl(null),
       'Rec_Duration': new FormControl(null),
+
+    });
+    this.searchPEForm = new FormGroup({
+
+      'company_Name': new FormControl(null),
+
+
 
     });
     this.RecurringStatus = [{ id: 0, name: 'Inactive' },
@@ -285,28 +317,263 @@ export class PurchaseEntryComponent implements OnInit {
 
   }
   handle_company_add(event: any) {
-    this.add_billerNameID=event.target.value;
+    this.add_billerNameID = event.target.value;
     this.addLoad();
+    this.getPurchaseEntryNo();
   }
   handle_vendor_add(event: any) {
-    this.add_vendorID=event.target.value;
+    this.add_vendorID = event.target.value;
   }
   handle_purchaseType_add(event: any) {
-    this.add_PurchasetypeID=event.target.value;
+    this.add_PurchasetypeID = event.target.value;
   }
   getCurrencyValues_add(event: any) {
-    this.add_currencyID=event.target.value;
+    this.add_currencyID = event.target.value;
   }
-  saveVendorManagement(){
+
+  goBackADDTransaction() {
 
   }
-  goBackADDTransaction(){
+  searchBillerNameCHK(data: any, event: any) {
+    this.searchBILLERID = data;
+    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
+    console.log("this.searchBILLERID", this.searchBILLERID);
+    this.CBV_BillerName_All = event.target.checked;
+    if (this.CBV_BillerName_All) {
+      if (!this.edit_array_SearchBiller_Checkbox) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+
+
+      this.edit_array_SearchBiller_Checkbox.push(data);
+      this.edit_array_SearchBiller_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+    }
+    else {
+      if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
+        this.edit_array_SearchBiller_Checkbox = [];
+      }
+      // const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data);
+      const index = this.edit_array_SearchBiller_Checkbox.indexOf(data);
+      if (index > -1) {
+        this.edit_array_SearchBiller_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+
+    }
 
   }
-  addPurchaseEntry(){
+  selectEventCustomer(item: any) {
+    console.log(item)
+    this.searchResult_CustomerID = item.vendorId;
+    this.searchResult_CustomerName = item.vendorName.trim();;
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+
+  }
+  keysearch(event: any) {
+    this.searchResult_CustomerName = event.target.value;
+  }
+  clearSelection(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_CustomerID = '';
+    this.searchResult_CustomerName = '';
+    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+  }
+  searchCustomerData(data: any) {
+
+
+    if (data.length > 0) {
+      // this.spinner.show();
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "base";
+      api_req.api_url = "base/getVendorSearchList";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "getVendorSearchList";
+      api_Search_req.user_id = this.user_ids;
+      api_Search_req.vendorName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        console.log("vignesh-customer_status response", response);
+        // this.searchResult = response[0];
+        this.searchResult = response.vendorName;
+        console.log("vignesh-advanced search result", this.searchResult);
+        if (response! = null) {
+          this.searchResult = response.vendorName;
+          this.spinner.hide();
+        }
+        else {
+          // iziToast.warning({
+          //   message: "Sorry, No Matching Data",
+          //   position: 'topRight'
+          // });
+
+        }
+      });
+
+    }
+
+
+  }
+  onFocusedCustomer(e: any) {
+    // do something when input is focused
+  }
+  yearsAPI() {
+
+    let api_req: any = new Object();
+    let api_year: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/yearValueFilter";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_year.action = "yearValueFilter";
+    api_year.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_year;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+
+        this.yearsList = response;
+
+      } else {
+
+
+
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+
+  }
+
+  yearsCHK(data: any, event: any) {
+    this.CBV_Years_All = event.target.checked;
+    this.yearsID = data;
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
+    console.log("this.CBV_Years_All", this.CBV_Years_All)
+    if (this.CBV_Years_All) {
+      if (!this.edit_array_Years_Checkbox) {
+        this.edit_array_Years_Checkbox = [];
+      }
+      this.edit_array_Years_Checkbox.push(data);
+      this.edit_array_Years_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
+    }
+    else {
+      if (!Array.isArray(this.edit_array_Years_Checkbox)) {
+        this.edit_array_Years_Checkbox = [];
+      }
+      const index = this.edit_array_Years_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_Years_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+
+    }
+
+  }
+  saveVendorManagement() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "vendor";
+    api_req.api_url = "vendor/saveVendor"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "saveVendor";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    if (this.PE_VendorManagementForm.value.PE_VM_CompanyName == null) {
+      iziToast.error({
+        message: "Company Name Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_mulInvpay.companyName = this.PE_VendorManagementForm.value.PE_VM_CompanyName;
+    }
+    if (this.PE_VendorManagementForm.value.PE_VM_VendorName == null) {
+      iziToast.error({
+        message: "Vendor Name Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_mulInvpay.vendorName = this.PE_VendorManagementForm.value.PE_VM_VendorName;
+    }
+
+    api_mulInvpay.vendorCode = this.PE_VendorManagementForm.value.PE_VM_CompanyCode;
+    api_mulInvpay.vendorAddress1 = this.PE_VendorManagementForm.value.PE_VM_Address1;
+    api_mulInvpay.vendorAddress2 = this.PE_VendorManagementForm.value.PE_VM_Address2;
+    api_mulInvpay.city = this.PE_VendorManagementForm.value.PE_VM_City;
+
+    api_mulInvpay.state = this.PE_VendorManagementForm.value.PE_VM_State;
+    api_mulInvpay.zipCode = this.PE_VendorManagementForm.value.PE_VM_ZipCode;
+    api_mulInvpay.country = this.PE_VendorManagementForm.value.PE_VM_Country;
+    api_mulInvpay.phone = this.PE_VendorManagementForm.value.PE_VM_Phone;
+    api_mulInvpay.mobilePhone = this.PE_VendorManagementForm.value.PE_VM_MobilePhone;
+
+    api_mulInvpay.fax = this.PE_VendorManagementForm.value.PE_VM_Fax;
+    api_mulInvpay.email = this.PE_VendorManagementForm.value.PE_VM_Email;
+
+
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status = true) {
+        this.spinner.hide();
+        $('#PE_VendorManagementId').modal('hide')
+        iziToast.success({
+          message: "Vendor Saved Successfully",
+          position: 'topRight'
+        });
+
+        $("#RecurringFormId").modal("hide");
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Vendor Save Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        if (error.status === 500) {
+          this.spinner.hide();
+          iziToast.error({
+            message: "Sorry, a server error(500) occurred. Please try again later.",
+            position: 'topRight'
+          });
+        }
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  addPurchaseEntry() {
     this.addLoad();
   }
-    fileAttachmentEventPE1(event: any) {
+  fileAttachmentEventPE1(event: any) {
 
     if (event.target.files.length < 4) {
       for (var i = 0; i < event.target.files.length; i++) {
@@ -322,11 +589,41 @@ export class PurchaseEntryComponent implements OnInit {
 
 
   }
+  getPurchaseEntryNo() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_getInvoiceDetails_req: any = new Object();
+    api_req.moduleType = "purchaseEntry";
+    api_req.api_url = "purchaseEntry/getPurchaseEntryNo";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getInvoiceDetails_req.action = "getPurchaseEntryNo";
+    api_getInvoiceDetails_req.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_getInvoiceDetails_req.billerId = this.add_billerNameID;
+    api_req.element_data = api_getInvoiceDetails_req;
+
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.spinner.hide();
+        this.editEnquiryForm.patchValue({
+          'add_convAmount': response.currency_live_val,
+          'add_Currency': response.currency_id,
+          'add_PurchaseEntryNo': response.purchaseEntryNo,
+
+        });
+
+      }
+      else {
+
+      }
+
+    });
+  }
   getCurrencyValues(event: any) {
     this.spinner.show();
     this.getCurrencyCode = event.target.value;
-
-
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "base";
@@ -484,26 +781,25 @@ export class PurchaseEntryComponent implements OnInit {
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "purchaseEntry";
-    api_req.api_url = "purchaseEntry/purchase_recurringUpdate"
+    api_req.api_url = "purchaseEntry/savePurchaseEntry"
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_mulInvpay.action = "purchase_recurringUpdate";
+    api_mulInvpay.action = "savePurchaseEntry";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
-    api_mulInvpay.add_billerName1 = this.addEnquiryForm.value.add_billerName1;
-    api_mulInvpay.add_PurchaseEntryNo = this.addEnquiryForm.value.add_PurchaseEntryNo;
-    api_mulInvpay.add_PurchaseEntryDate = this.addEnquiryForm.value.add_PurchaseEntryDate;
-    api_mulInvpay.add_VendorName = this.addEnquiryForm.value.add_VendorName;
-    api_mulInvpay.add_PurchaseType = this.addEnquiryForm.value.add_PurchaseType;
+    api_mulInvpay.company = this.addEnquiryForm.value.add_billerName1;
+    api_mulInvpay.vendorId = this.addEnquiryForm.value.add_VendorName;
 
-    api_mulInvpay.add_InvoiceNo = this.addEnquiryForm.value.add_InvoiceNo;
-    api_mulInvpay.add_purchaseContent = this.addEnquiryForm.value.add_purchaseContent;
-    api_mulInvpay.add_PONo = this.addEnquiryForm.value.add_PONo;
-    api_mulInvpay.add_Currency = this.addEnquiryForm.value.add_Currency;
-    api_mulInvpay.add_convAmount = this.addEnquiryForm.value.add_convAmount;
-
-    api_mulInvpay.add_taxAmount = this.addEnquiryForm.value.add_taxAmount;
-    api_mulInvpay.add_amount = this.addEnquiryForm.value.add_amount;
+    api_mulInvpay.purchaseEntryNo = this.addEnquiryForm.value.add_PurchaseEntryNo;
+    api_mulInvpay.purchaseEntryDate = this.addEnquiryForm.value.add_PurchaseEntryDate;
+    api_mulInvpay.purchase_type_id = this.addEnquiryForm.value.add_PurchaseType;
+    api_mulInvpay.invoiceNo = this.addEnquiryForm.value.add_InvoiceNo;
+    api_mulInvpay.content_purchase = this.addEnquiryForm.value.add_purchaseContent;
+    api_mulInvpay.poNo = this.addEnquiryForm.value.add_PONo;
+    api_mulInvpay.currency = this.addEnquiryForm.value.add_Currency;
+    api_mulInvpay.conversionRate = this.addEnquiryForm.value.add_convAmount;
+    api_mulInvpay.taxAmount = this.addEnquiryForm.value.add_taxAmount;
+    api_mulInvpay.invoiceAmount = this.addEnquiryForm.value.add_amount;
 
     api_req.element_data = api_mulInvpay;
 
@@ -514,13 +810,13 @@ export class PurchaseEntryComponent implements OnInit {
           message: "Saved Successfully",
           position: 'topRight'
         });
-
-        $("#RecurringFormId").modal("hide");
+        this.PurchaseEntryList({});
+        $("#addPurchaseEntryFormId").modal("hide");
 
       } else {
         this.spinner.hide();
         iziToast.warning({
-          message: "Saved Failed",
+          message: "Save Failed",
           position: 'topRight'
         });
       }
@@ -798,7 +1094,7 @@ export class PurchaseEntryComponent implements OnInit {
     } else {
       api_mulInvpay.paymentDate = this.purchasePaymentForm.value.pay_date;
     }
-    if (this.purchasePaymentForm.value.pay_paymentType == null ||this.purchasePaymentForm.value.pay_paymentType == 'null') {
+    if (this.purchasePaymentForm.value.pay_paymentType == null || this.purchasePaymentForm.value.pay_paymentType == 'null') {
       iziToast.error({
         message: "Payment Type Missing",
         position: 'topRight'
@@ -845,10 +1141,10 @@ export class PurchaseEntryComponent implements OnInit {
 
   }
   goAddNewEnquiry() {
-   // this.router.navigate(['/addNewEnquiry'])
+    // this.router.navigate(['/addNewEnquiry'])
   }
-  addVendorNameGo(){
-   // $('#addPurchaseEntryFormId').modal('hide');
+  addVendorNameGo() {
+    // $('#addPurchaseEntryFormId').modal('hide');
     $('#PE_VendorManagementId').modal('show');
   }
   addLoad() {
@@ -864,12 +1160,12 @@ export class PurchaseEntryComponent implements OnInit {
 
 
     api_loadAdd.user_id = localStorage.getItem('erp_c4c_user_id');
-    if(this.add_billerNameID!='undefined' || this.add_billerNameID!=undefined){
-      api_loadAdd.billerId= this.add_billerNameID;
-    }else{
-      api_loadAdd.billerId='';
+    if (this.add_billerNameID != 'undefined' || this.add_billerNameID != undefined) {
+      api_loadAdd.billerId = this.add_billerNameID;
+    } else {
+      api_loadAdd.billerId = '';
     }
-  
+
     api_req.element_data = api_loadAdd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -887,8 +1183,8 @@ export class PurchaseEntryComponent implements OnInit {
           $('#add_billerName1').val(response.defaults_biller_id);
         }, 1000)
 
-        
-       // this.getPaymentInvoice();
+
+        // this.getPaymentInvoice();
         this.addEnquiryForm.patchValue({
           'add_billerName1': this.DefaultBillerIDValue,
           'add_PurchaseEntryNo': response.purchase_entry_no,
@@ -916,18 +1212,14 @@ export class PurchaseEntryComponent implements OnInit {
         console.log("final error", error);
       };
   }
-  pdf(enquiryId: any) {
-    var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + enquiryId + "";
-    window.open(url, '_blank');
-    console.log("url", url)
-    $('#pdfFormId').modal('hide');
-    // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-
-  }
+ 
   PurchaseEntryList(data: any) {
 
 
     this.spinner.show();
+    console.log("this.searchResult_CustomerName", this.searchResult_CustomerName)
+    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
+    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -940,36 +1232,55 @@ export class PurchaseEntryComponent implements OnInit {
     api_deliveryOrder.user_id = localStorage.getItem("erp_c4c_user_id");
     api_deliveryOrder.off_set = list_data.offset;
     api_deliveryOrder.limit_val = list_data.limit;
-    // api_deliveryOrder.search_txt = this.searchResult1_CustomerName;
-    // api_deliveryOrder.search_biller_str = this.searchResult1_CustomerName;
-    // api_deliveryOrder.year_filter = this.searchResult1_CustomerName;
-    //api_deliveryOrder.billerID = this.edit_array_SearchBiller_Checkbox;
+    if (this.searchResult_CustomerName == undefined) {
+      api_deliveryOrder.search_txt = [];
+    } else {
+      api_deliveryOrder.search_txt = this.searchResult_CustomerName;
+    }
 
-    api_deliveryOrder.search_txt = '';
-    api_deliveryOrder.search_biller_str = '';
-    api_deliveryOrder.year_filter = '';
-    api_deliveryOrder.billerID = '';
+    // api_deliveryOrder.search_biller_str = this.searchResult1_CustomerName;
+    if (this.edit_array_SearchBiller_Checkbox == undefined) {
+      api_deliveryOrder.billerID = [];
+    } else {
+      api_deliveryOrder.billerID = this.edit_array_SearchBiller_Checkbox;
+    }
+    api_deliveryOrder.year_filter = this.edit_array_Years_Checkbox;
+
+
+    // api_deliveryOrder.search_txt = '';
+    // api_deliveryOrder.search_biller_str = '';
+    // api_deliveryOrder.year_filter = '';
+    // api_deliveryOrder.billerID = '';
     api_deliveryOrder.current_page = "";
 
     api_req.element_data = api_deliveryOrder;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.edit_array_SearchBiller_Checkbox = []
       this.spinner.hide();
       if (response.total_cnt == 0) {
         iziToast.warning({
           message: "No Matching Records",
           position: 'topRight'
         });
+        $('#searchPEFormId').modal("hide");
       }
 
       if (response.status = true) {
         this.biller_list = response.biller_details;
         this.purchaseEntryList = response.purchaseEntryList;
 
+        this.notPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'notpaid');
+        this.paidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paid');
+        this.partialPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paritialypaid');
 
+        console.log("this.notPaidEntries",this.notPaidEntries)
+        console.log("this.paidEntries",this.paidEntries)
+        console.log("this.partialPaidEntries",this.partialPaidEntries)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchDeliveryOrderFormId').modal("hide");
         $('#searchPurchaseOrderFormId').modal("hide");
+        $('#searchPEFormId').modal("hide");
         // this.searchDeliveryOrderForm.reset();
 
       }
@@ -1025,259 +1336,9 @@ export class PurchaseEntryComponent implements OnInit {
       }
     })
   }
-  Email(enquiryID: any) {
-    this.emailForm.reset();
-    this.EmailEnquiryID = enquiryID;
-
-
-    let api_req: any = new Object();
-    let emailPage_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/sendmail_popup_quot";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    emailPage_req.action = "sendmail_popup_quot";
-    emailPage_req.user_id = this.user_ids;
-    emailPage_req.enquiry_id = this.EmailEnquiryID;
-    api_req.element_data = emailPage_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("emailpagecontent", response)
-      if (response != true) {
-        // this.myForm.reset();
-        console.log("emailpagecontent", response)
-        // $("#fileAttachmentFormId").modal("hide");
-        this.email_fromList = response.email_from;
-        this.email_crmTemplateList = response.crm_template;
-        this.email_cc_userList = response.cc_user;
-        this.emailForm.patchValue({
-
-          'email_to': response.to_email,
-
-        });
-
-      }
-
-
-    });
-
-  }
-  EditCHK_emailCC(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
-    this.groupSelect_emailCCId = data;
-    this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
-    if (this.checkbox_value) {
-
-      this.edit_array_emailCC_Checkbox.push(data);
-      this.edit_array_emailCC_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
-    }
-    else {
-      const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array_emailCC_Checkbox.splice(index, 1);
-      }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
-
-    }
-  }
-  templateContentEmailDropdown(event: any) {
-    this.enquiry_Emailtemplate_id = event.target.value;
-
-    let api_req: any = new Object();
-    let api_enquiryTemplateDropdown_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/get_email_quotation_template";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_enquiryTemplateDropdown_req.action = "get_email_quotation_template";
-    api_enquiryTemplateDropdown_req.user_id = this.user_ids;
-    api_enquiryTemplateDropdown_req.enquiry_id = this.EmailEnquiryID;
-    api_enquiryTemplateDropdown_req.template_id = this.enquiry_Emailtemplate_id;
-    api_req.element_data = api_enquiryTemplateDropdown_req;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
-      this.messageContent = response.crm_template_content
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
-      if (response != '') {
-        this.emailForm.patchValue({
-          'Subject_Content': response.crm_subject_name,
-          'tinyID': this.mailContent,
-        });
-
-      }
-      else {
-        this.emailForm.patchValue({
-          'email_template': '',
-        });
-      }
-
-
-    });
-  }
-  sendMail() {
-    Swal.fire('Sending Email');
-    Swal.showLoading();
-
-    this.FromEmailValue = $('#emailFrom').val();
-    this.emailTo = $('#emailto').val();
-    this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
-    console.log("msgid", this.msg_id)
-    console.log("email to", this.emailTo)
-    console.log("subject", this.subjectValue)
-    let api_req: any = new Object();
-    let api_email_req: any = new Object();
-    api_req.moduleType = "customer";
-    api_req.api_url = "sendemail/quotation_sendmail";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_email_req.action = "quotation_sendmail";
-    api_email_req.user_id = this.user_ids;
-    // api_email_req.customer_contract_id = this.EmailCustomerContractID;
-
-    api_email_req.from_email = this.FromEmailValue;
-    if (this.FromEmailValue === null || this.FromEmailValue === '' || this.FromEmailValue === 'undefined' || this.FromEmailValue === undefined) {
-
-      iziToast.warning({
-        message: "Choose From Email Value",
-        position: 'topRight'
-      });
-      return false;
-
-    }
-    api_email_req.to_email = this.emailTo;
-    if (this.emailTo === null) {
-
-      iziToast.warning({
-        message: "Choose To Email Value",
-        position: 'topRight'
-      });
-      return false;
-
-    }
-    api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
-    api_email_req.subject = this.subjectValue;
-    if (this.subjectValue === null || this.subjectValue === '' || this.subjectValue === 'undefined' || this.subjectValue === undefined) {
-
-      iziToast.warning({
-        message: "Choose Subject",
-        position: 'topRight'
-      });
-      return false;
-
-    }
-    api_email_req.mail_message = this.msg_id;
-    if (this.msg_id === null) {
-
-      iziToast.warning({
-        message: "Choose Message",
-        position: 'topRight'
-      });
-      return false;
-
-    }
-    api_email_req.enquiry_id = this.EmailEnquiryID;
-    api_req.element_data = api_email_req;
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status", response.status);
-      if (response.status == true) {
-        $('#subject').val('');
-        $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
-        tinymce.activeEditor.setContent("");
-        this.PurchaseEntryList({});
-        Swal.close();
-        iziToast.success({
-          message: "Email Notification Sent Successfully",
-          position: 'topRight'
-        });
-
-      }
-      else {
-        $('#subject').val('');
-        $('#emailto').val('');
-        $("#TextEditorId").modal("hide");
-        tinymce.activeEditor.setContent("");
-        Swal.close();
-        this.PurchaseEntryList({});
-        iziToast.success({
-          message: "Email Notification Sent !!!!",
-          position: 'topRight'
-        });
-        this.PurchaseEntryList({});
-
-      }
-      Swal.close();
-    }), (error: any) => {
-      iziToast.error({
-        message: "Sorry, some server issue occur. Please contact admin",
-        position: 'topRight'
-      });
-      console.log("final error", error);
-    }
-  }
-  initTiny() {
-    var richTextArea_id = 'richTextAreacreated';
-    tinymce.init({
-      selector: '#richTextAreacreated',
-      height: 500,
-      plugins: 'advlist autolink textcolor formatpainter lists link  image charmap print preview anchor searchreplace visualblocks code fullscreen insertdatetime media table paste  wordcount autolink lists media table',
-      toolbar: 'undo redo |fullscreen|forecolor backcolor| formatselect | bold italic | \ undo redo | link image file| code | \
-       alignleft aligncenter alignright alignjustify | \
-       bullist numlist outdent indent | autoresize',
-      paste_data_images: true,
-      images_upload_url: 'upload.php',
-      automatic_uploads: false,
-      default_link_target: "_blank",
-      extended_valid_elements: "a[href|target=_blank]",
-      link_assume_external_targets: true,
-      images_upload_handler: function (blobInfo: any, success: any, failure: any) {
-        var xhr: any, formData;
-
-        xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-        xhr.open('POST', 'upload.php');
-
-        xhr.onload = function () {
-          var json;
-
-          if (xhr.status != 200) {
-            failure('HTTP Error: ' + xhr.status);
-            return;
-          }
-
-          json = JSON.parse(xhr.responseText);
-
-          if (!json || typeof json.file_path != 'string') {
-            failure('Invalid JSON: ' + xhr.responseText);
-            return;
-          }
-
-          success(json.file_path);
-        };
-
-        formData = new FormData();
-        formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-        xhr.send(formData);
-      },
-    });
-    if (tinymce.editors.length > 0) {
-      //  tinymce.execCommand('mceFocus', true, richTextArea_id );       
-      tinymce.execCommand('mceRemoveEditor', true, richTextArea_id);
-      tinymce.execCommand('mceAddEditor', true, richTextArea_id);
-    }
-  }
-
-  enquiryEmailClear() {
-    this.emailForm.reset();
-    this.msg_id = '';
-    this.PurchaseEntryList({});
-    tinymce.activeEditor.setContent("");
-  }
+ 
+  
+ 
 
 
 }

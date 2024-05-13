@@ -10,6 +10,31 @@
   #ActionIdxx2 .modal-dialog{
     max-width: 65% !important;
   }
+  #currencyConvertorUIFormId .modal-dialog{
+    max-width: 75% !important;
+  }
+  #currencyConvertorFormId label {
+    font-weight: 600;
+    color: #009688!important;
+}
+
+#sendtoPostFormId .modal-dialog{
+  max-width: 90% !important;
+}
+#sendtoPostFormId .table-responsive .table-borderless thead tr th{
+  background: #272b41;
+  color: #fff;
+}
+#sendtoPostFormId .btn-primary{
+  background: linear-gradient(to right, #9d0f2f, #98a833);
+  color: rgb(240 241 219);
+  box-shadow: none;
+}
+
+
+
+
+  
 
 
   .modal-content {
@@ -67,17 +92,17 @@
   
   
   
-  #ActionIdxx1 .table-responsive .table-borderless{
+  #TaskList .table-responsive .table-borderless{
     border: 1px solid #000;
   }
-  #ActionIdxx1 .table-responsive .table-borderless thead tr th{
+  #TaskList .table-responsive .table-borderless thead tr th{
     background: #6d5dfc;
     color: #fff;
   }
-  #ActionIdxx1 .table-responsive .table-borderless thead tr th span{
+  #TaskList .table-responsive .table-borderless thead tr th span{
     color: #fff;
   }
-  #ActionIdxx1 button.Close{
+  #TaskList button.Close{
     border-radius: 50%;
     font-size: 20px;
   }
@@ -163,34 +188,34 @@
 
 
 
-#ActionIdxx1 .userDatatable table tbody tr:first-child td {
+#TaskList .userDatatable table tbody tr:first-child td {
   background-color: #FFDAB9;
  
 }
-#ActionIdxx1 .userDatatable table tbody tr:nth-child(2) td {
+#TaskList .userDatatable table tbody tr:nth-child(2) td {
   background-color: #98FB98;
 }
-#ActionIdxx1 .userDatatable table tbody tr:nth-child(3) td {
+#TaskList .userDatatable table tbody tr:nth-child(3) td {
   background-color: #C0C0C0;
 }
-#ActionIdxx1 .userDatatable table tbody tr:nth-child(4) td {
+#TaskList .userDatatable table tbody tr:nth-child(4) td {
   background-color: #fc9388;
 }
-#ActionIdxx1 .userDatatable table tbody tr:nth-child(5) td {
+#TaskList .userDatatable table tbody tr:nth-child(5) td {
   background-color: #FFF8DC;
 }
-#ActionIdxx1 .userDatatable table tbody tr:nth-child(6) td {
+#TaskList .userDatatable table tbody tr:nth-child(6) td {
   background-color: #8abdff;
 }
-#ActionIdxx1 .userDatatable table tbody tr:nth-child(7) td {
+#TaskList .userDatatable table tbody tr:nth-child(7) td {
   background-color: #FFC0CB;
 }
-#ActionIdxx1 .userDatatable table tbody tr:last-child td {
+#TaskList .userDatatable table tbody tr:last-child td {
   background-color: #f3c267;
 }
-#ActionIdxx1  .table-responsive   .table-borderless{
+#TaskList  .table-responsive   .table-borderless{
   border: 2px dotted #000;
 }
-#ActionIdxx1  .userDatatable table td {border-bottom: 1px dotted #66278f;}
+#TaskList  .userDatatable table td {border-bottom: 1px dotted #66278f;}
 
 
