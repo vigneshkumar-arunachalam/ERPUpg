@@ -117,7 +117,7 @@
 
                               <li class="dropdown__item">
                                 <a class="hover1" title="View" data-toggle="modal"
-                                  data-target="#TransactionManagementViewId">
+                                  data-target="#TransactionManagementViewId" (click)="viewTransaction(list.transaction_approval_id)">
                                   <img class="show" src="assets/img/icon/eye-bl.png">
                                   <img class="hide" src="assets/img/icon/eye-b.png">
 
@@ -142,7 +142,8 @@
 
                               <li class="dropdown__item">
                                 <a class="hover1" title="Comments Entry" data-toggle="modal"
-                                  data-target="#TransactionCommentsId">
+                                  data-target="#TransactionCommentsId" 
+                                  (click)="commentTransaction(list.transaction_approval_id)">
                                   <img class="show" src="assets/img/icon/comment-bl.png">
                                   <img class="hide" src="assets/img/icon/comment-b.png">
                                 </a>
@@ -230,7 +231,7 @@
           style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #200122, #6f0000);">
-              Transaction Approval Management </h2>
+              View Transaction Approval Management </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -241,106 +242,106 @@
 
           <div class="modal-body commentCSS">
             <div class="row">
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_billerName" class="col-lg-12 col-form-label">Biller Name</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_billerName"
-                                        [attr.readonly]= "isReadOnly" id="view_billerName" />{{this.BillerName}} -->
+                    <input type="text" class="form-control" formControlName="view_billerName"
+                                        [attr.readonly]= "isReadOnly" id="view_billerName" />
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_Date" class="col-lg-12 col-form-label">Date</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_Date"
-                                        [attr.readonly]= "isReadOnly" id="view_Date" />{{ this.date}} -->
+                    <input type="text" class="form-control" formControlName="view_Date"
+                                        [attr.readonly]= "isReadOnly" id="view_Date" />
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_priority" class="col-lg-12 col-form-label">Priority</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_priority"
-                                        [attr.readonly]= "isReadOnly"  id="view_priority" />{{ this.Priority}} -->
+                    <input type="text" class="form-control" formControlName="view_priority"
+                                        [attr.readonly]= "isReadOnly"  id="view_priority" />
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_PurchaseEntryNo" class="col-lg-12 col-form-label">Purchase Entry No</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_PurchaseEntryNo"
-                                      [attr.readonly]= "isReadOnly"  id="view_PurchaseEntryNo" />{{ this.Purchase Entry No}} -->
+                 <input type="text" class="form-control" formControlName="view_PurchaseEntryNo"
+                                      [attr.readonly]= "isReadOnly"  id="view_PurchaseEntryNo" />
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_VendorName"
-                                      [attr.readonly]= "isReadOnly"  id="view_VendorName" />{{ this.Vendor Name}} -->
+                    <input type="text" class="form-control" formControlName="view_VendorName"
+                                      [attr.readonly]= "isReadOnly"  id="view_VendorName" />
                   </div>
                 </div>
               </div>
 
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_InvoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_InvoiceNo"
-                                      [attr.readonly]= "isReadOnly"  id="view_InvoiceNo" />{{ this.Invoice No}} -->
+                    <input type="text" class="form-control" formControlName="view_InvoiceNo"
+                                      [attr.readonly]= "isReadOnly"  id="view_InvoiceNo" />
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_ContentofPurchase" class="col-lg-12 col-form-label">Content of Purchase</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_ContentofPurchase"
-                                      [attr.readonly]= "isReadOnly"  id="view_ContentofPurchase" />{{ this.Content of Purchase}} -->
+                    <input type="text" class="form-control" formControlName="view_ContentofPurchase"
+                                      [attr.readonly]= "isReadOnly"  id="view_ContentofPurchase" />
                   </div>
                 </div>
               </div>
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_PONumber" class="col-lg-12 col-form-label">PO Number</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_PONumber"
-                                      [attr.readonly]= "isReadOnly"  id="view_PONumber" />{{ this.PO Number}} -->
+                    <input type="text" class="form-control" formControlName="view_PONumber"
+                                      [attr.readonly]= "isReadOnly"  id="view_PONumber" />
                   </div>
                 </div>
               </div>
@@ -348,19 +349,19 @@
 
 
 
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_Currency" class="col-lg-12 col-form-label">Currency</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_Currency"
-                                      [attr.readonly]= "isReadOnly"  id="view_Currency" />{{ this.Currency}} -->
+                    <input type="text" class="form-control" formControlName="view_Currency"
+                                      [attr.readonly]= "isReadOnly"  id="view_Currency" />
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_CurrencyConversionRate" class="col-lg-12 col-form-label">Currency Conversion
@@ -368,44 +369,44 @@
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_CurrencyConversionRate"
-                                      [attr.readonly]= "isReadOnly"  id="view_CurrencyConversionRate" />{{ this.CurrencyConversionRate}} -->
+                    <input type="text" class="form-control" formControlName="view_CurrencyConversionRate"
+                                      [attr.readonly]= "isReadOnly"  id="view_CurrencyConversionRate" />
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_TaxAmount" class="col-lg-12 col-form-label">Tax Amount</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_TaxAmount"
-                                      [attr.readonly]= "isReadOnly"  id="view_TaxAmount" />{{ this.TaxAmount}} -->
+                    <input type="text" class="form-control" formControlName="view_TaxAmount"
+                                      [attr.readonly]= "isReadOnly"  id="view_TaxAmount" />
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_InvoiceAmount" class="col-lg-12 col-form-label">Invoice Amount</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_InvoiceAmount"
-                                      [attr.readonly]= "isReadOnly"  id="view_InvoiceAmount" />{{ this.InvoiceAmount}} -->
+                    <input type="text" class="form-control" formControlName="view_InvoiceAmount"
+                                      [attr.readonly]= "isReadOnly"  id="view_InvoiceAmount" />
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12">
+              <div class="col-lg-6">
                 <div class="form-group row">
                   <div class="col-lg-4">
                     <label for="view_Comments" class="col-lg-12 col-form-label">Comments</label>
                   </div>
                   <div class="col-lg-8">
 
-                    <!-- <input type="text" class="form-control" formControlName="view_Comments"
-                                      [attr.readonly]= "isReadOnly"  id="view_Comments" />{{ this.Comments}} -->
+                    <input type="text" class="form-control" formControlName="view_Comments"
+                                      [attr.readonly]= "isReadOnly"  id="view_Comments" />
                   </div>
                 </div>
               </div>

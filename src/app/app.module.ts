@@ -107,6 +107,8 @@ import { RecurringDateupdateComponent } from './billing/recurring-dateupdate/rec
 import { MultipleInvPaymentComponent } from './billing/multiple-inv-payment/multiple-inv-payment.component';
 import { AddquotaionnewsdnComponent } from './billing/quotationnew/addquotaionnewsdn/addquotaionnewsdn.component';
 import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.component';
+import { ReportsComponent } from './reports/reports.component';
+import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicereportsold.component';
 
 
 
@@ -197,7 +199,9 @@ import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.c
      RecurringDateupdateComponent,
      MultipleInvPaymentComponent,
      AddquotaionnewsdnComponent,
-     PurchaseEntryComponent
+     PurchaseEntryComponent,
+     ReportsComponent,
+     InvoicereportsoldComponent
      
     
   ],

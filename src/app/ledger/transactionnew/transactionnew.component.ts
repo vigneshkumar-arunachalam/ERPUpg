@@ -35,7 +35,8 @@ export class TransactionnewComponent implements OnInit {
   searchResult1_CustomerID: any;
   searchResult1_CustomerName: any;
   AdvanceSearchResult: any;
-
+  isReadOnly:boolean=false;
+  commentTransactionID: any;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
@@ -251,11 +252,163 @@ export class TransactionnewComponent implements OnInit {
       }
     })
   }
+  commentTransaction(id:any){
+    this.commentTransactionID=id;
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/comments_save"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "comments_save";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_mulInvpay.transaction_id = this.commentTransactionID;
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response !='') {
+        this.spinner.hide();
+      
+      //  $("#TransactionManagementViewId").modal("hide");
+        this.TransactionCommentsForm.patchValue({
+          'transaction_comments': response.billerId,
+        
+        });
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Vendor Save Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        if (error.status === 500) {
+          this.spinner.hide();
+          iziToast.error({
+            message: "Sorry, a server error(500) occurred. Please try again later.",
+            position: 'topRight'
+          });
+        }
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
   TransactionCommentsSave() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/comments_save"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "comments_save";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_mulInvpay.transaction_id = this.commentTransactionID;
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response !='') {
+        this.spinner.hide();
+      
+      //  $("#TransactionManagementViewId").modal("hide");
+        this.TransactionCommentsForm.patchValue({
+          'transaction_comments': response.billerId,
+        });
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Vendor Save Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        if (error.status === 500) {
+          this.spinner.hide();
+          iziToast.error({
+            message: "Sorry, a server error(500) occurred. Please try again later.",
+            position: 'topRight'
+          });
+        }
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
 
   }
   TransactionCommentsClear() {
 
+  }
+
+  viewTransaction(id:any) {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/get_transaction_approval_details"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "get_transaction_approval_details";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_mulInvpay.transaction_id = id;
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response !='') {
+        this.spinner.hide();
+      
+      //  $("#TransactionManagementViewId").modal("hide");
+        this.TransactionManagementViewForm.patchValue({
+          'view_billerName': response.billerId,
+          'view_Date': response.transaction_date,
+          'view_priority': response.priority,
+          'view_PurchaseEntryNo': response.purchase_entry.purchaseEntryNo,
+          'view_VendorName': response.purchase_entry.vendorName,
+          'view_InvoiceNo': response.purchase_entry.invoiceNo,
+          'view_ContentofPurchase': response.purchase_entry.content_purchase,
+          'view_PONumber': response.purchase_entry.poNo,
+          'view_Currency': response.purchase_entry.currencyName,
+          'view_CurrencyConversionRate': response.purchase_entry.conversionRate,
+          'view_TaxAmount': response.purchase_entry.taxAmount,
+          'view_InvoiceAmount': response.purchase_entry.invoiceAmount,
+          'view_Comments':response.commands,
+        });
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Vendor Save Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        if (error.status === 500) {
+          this.spinner.hide();
+          iziToast.error({
+            message: "Sorry, a server error(500) occurred. Please try again later.",
+            position: 'topRight'
+          });
+        }
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
 }

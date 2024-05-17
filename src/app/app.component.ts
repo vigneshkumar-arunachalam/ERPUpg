@@ -20,12 +20,12 @@ export class AppComponent {
   constructor(private bnIdle: BnNgIdleService, private router: Router, private route: ActivatedRoute, private serverService: ServerService,public datepipe: DatePipe) {
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+      //  console.log("params output value", params);
         this.code_val = params['code_val'];
         this.uscode = params['uscode'];
         this.pageurl = params['pageurl'];
-        console.log(this.code_val);
-        console.log(this.pageurl);
+        // console.log(this.code_val);
+        // console.log(this.pageurl);
       }
       );
   }
@@ -39,14 +39,14 @@ export class AppComponent {
       if (res) {
         localStorage.clear();
         this.templateAuthView = true;
-        console.log('session expired after half an hour 24 hours');
+     //   console.log('session expired after half an hour 24 hours');
         let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
-        console.log(currentDateTime);
+      //  console.log(currentDateTime);
         // this.router.navigateByUrl('/logout');
         this.router.navigate(['/login']);
       }else{
         let currentDateTime =this.datepipe.transform((new Date), 'MM/dd/yyyy h:mm:ss');
-        console.log(currentDateTime);
+     //   console.log(currentDateTime);
       }
     });
 

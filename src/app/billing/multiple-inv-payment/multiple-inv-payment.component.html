@@ -206,7 +206,7 @@
 
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                (click)="clearAddMulInvPay()">
+                (click)="mulInvPaymentList({});clearAddMulInvPay();addMulInvPay()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -408,23 +408,24 @@
                                             <button type="button" class="btn btn-primary" (click)="addPaymentEntry(i)">
                                                 Save
                                             </button>
-                                            <!-- <button type="button" class="btn btn-dark" data-dismiss="modal">
+                                             <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="mulInvPaymentList({}); clearAddMulInvPay();">
                                                 Close
-                                            </button> -->
+                                            </button> 
                                         </div>
                                     </div>
                                 </div>
                                     <!-- End of Pending Payments Table -->
                                 
                                 <!-- Add Button -->
-                                <div class="text-right" style="margin: 20px;">
-                                    <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
-                                        style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
-                                </div>
+                              
 
                                 </ng-container>
 
                             </div>
+                        </div>
+                        <div class="text-right" style="margin: 20px;">
+                            <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
                         </div>
                     </form>
                 </div>
@@ -511,7 +512,7 @@
                                                             <!-- Other Input Fields -->
                                                              <!-- Invoice No -->
                                                             <td>
-                                                                <div *ngFor="let dropdown of dropdownData; let k = index" class="userDatatable-content" style="width: 160px;">
+                                                                <div *ngFor="let dropdown of dropdownData; let k = index" class="userDatatable-content" style="width: 170px;">
                                                                     <select *ngIf="dropdown && dropdown.length && k == i" class="form-control" formControlName="invoice_no"
                                                                         id="pd_invoiceNumber_{{i}}" name="invoice_no">
                                                                         <option value="" disabled selected>Select Invoice Number</option>

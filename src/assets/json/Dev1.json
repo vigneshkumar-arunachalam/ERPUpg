@@ -132,14 +132,14 @@
     "value": "/bing"
 }, {
     "name": "CRM",
-    "icon":"settings",
+    "icon":"layers",
     "isActive": false,
     "menuId":5,
     "IDs": [6071, 6072, 6073, 6074, 6075],
     "Type": "Main Menu",
     "children": [{
             "name": "Enquiry New",
-            "icon": "grid",
+            "icon": "image",
             "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",
             "subchild": [],
@@ -249,6 +249,27 @@
     ],
     "isVisible": true,
     "value": "/profiledetails"
+},{
+    "name": "Reports",
+    "icon":"pie-chart",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Invoice Reports Old",
+            "icon": "printer",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/invoiceReportsOld"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/reports"
 },
 {
     "name": "3CX",

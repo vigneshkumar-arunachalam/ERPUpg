@@ -20,7 +20,7 @@ declare var tinymce: any;
 export class PurchaseEntryComponent implements OnInit {
   //pagination
   recordNotFound = false;
-  pageLimit = 1000;
+  pageLimit = 500;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   user_ids: any;
@@ -329,6 +329,35 @@ export class PurchaseEntryComponent implements OnInit {
   }
   getCurrencyValues_add(event: any) {
     this.add_currencyID = event.target.value;
+    this.changeCurrency();
+  }
+  changeCurrency(){
+    this.spinner.show();
+  
+    let api_req: any = new Object();
+    let api_recurring: any = new Object();
+    api_req.moduleType = "base";
+    api_req.api_url = "base/get_currency_values"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_recurring.action = "get_currency_values";
+    api_recurring.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_recurring.billerId=$('#add_billerName1').val();
+
+    api_recurring.currency_code = this.add_currencyID;
+    api_req.element_data = api_recurring;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status = true) {
+  
+        this.addEnquiryForm.patchValue({
+          'add_convAmount': response.currency_live_val,
+        });
+      }
+    });
+
+
   }
 
   goBackADDTransaction() {
@@ -810,7 +839,9 @@ export class PurchaseEntryComponent implements OnInit {
           message: "Saved Successfully",
           position: 'topRight'
         });
+        this.addEnquiryForm.reset();
         this.PurchaseEntryList({});
+        this.addEnquiryForm.value.reset();
         $("#addPurchaseEntryFormId").modal("hide");
 
       } else {
@@ -874,7 +905,7 @@ export class PurchaseEntryComponent implements OnInit {
           'view_Currency': response.currency,
         })
 
-        $("#viewPurchaseEntryFormId").modal("hide");
+      //  $("#viewPurchaseEntryFormId").modal("hide");
 
       } else {
         this.spinner.hide();

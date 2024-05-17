@@ -171,11 +171,11 @@ export class QuotationnewComponent implements OnInit {
   getSearch:boolean=false;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
-      console.log(params)
+     // console.log(params)
       if (params['ids'] != '' && params['ids'] != undefined && params['ids'] != 'undefined' && params['ids'] != null && params['ids'] != 'null') {
         var k = atob(params['ids']);
         this.user_ids = k;
-        console.log(this.user_ids)
+      //  console.log(this.user_ids)
       }
 
     }
@@ -287,11 +287,11 @@ export class QuotationnewComponent implements OnInit {
     this.search_BillerList();
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+  //  console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   onFocusedCustomer(e: any) {
@@ -336,99 +336,99 @@ export class QuotationnewComponent implements OnInit {
   checkbox_CM_QuotPermission: any;
   eventCheck_CM_QuotPermission(event: any) {
     this.checkbox_CM_QuotPermission = event.target.checked;
-    console.log(this.checkbox_CM_QuotPermission)
+   // console.log(this.checkbox_CM_QuotPermission)
   }
 
   checkbox_CD_QuotPermission: any;
   eventCheck_CD_QuotPermission(event: any) {
     this.checkbox_CD_QuotPermission = event.target.checked;
-    console.log(this.checkbox_CD_QuotPermission)
+   // console.log(this.checkbox_CD_QuotPermission)
   }
   checkbox_eventCheck_PDFType: any;
   eventCheck_PDFType(event: any) {
     this.checkbox_eventCheck_PDFType = event.target.checked;
-    console.log(this.checkbox_eventCheck_PDFType)
+   // console.log(this.checkbox_eventCheck_PDFType)
   }
   checkbox_eventCheck_GroupByCustomer: any;
   eventCheckGroupByCustomer(event: any) {
     this.checkbox_eventCheck_GroupByCustomer = event.target.checked;
-    console.log(this.checkbox_eventCheck_GroupByCustomer)
+   // console.log(this.checkbox_eventCheck_GroupByCustomer)
   }
   onKey(event: any) { // without type info
     this.values = event.target.value;
-    console.log("this.values", this.values)
+  //  console.log("this.values", this.values)
   }
   handleChange(evt: any, userId: any) {
 
     this.approvalUserID_Radio = userId;
     var xyz = evt.target.id;
     this.quotationApprovedBy = this.approvalUserID_Radio;
-    console.log(xyz, "target");
+   // console.log(xyz, "target");
     if (xyz == "0") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = true;
       this.textarea1_Show_hide = false;
     }
     else if (xyz == "1") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "2") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "3") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "4") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "5") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "6") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "7") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "8") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
     }
     else if (xyz == "9") {
-      console.log(xyz);
-      console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       this.textarea_Show_hide = false;
       this.textarea1_Show_hide = true;
 
@@ -436,14 +436,14 @@ export class QuotationnewComponent implements OnInit {
   }
   handle_radioChange(event: any) {
     this.Approval_Type_radiobox_Value = event.target.id;
-    console.log(this.Approval_Type_radiobox_Value);
+    // console.log(this.Approval_Type_radiobox_Value);
 
     if (this.Approval_Type_radiobox_Value == "single") {
       this.approval_Show_hide = true;
 
     }
     else if (this.Approval_Type_radiobox_Value == "double") {
-      console.log(this.Approval_Type_radiobox_Value);
+     // console.log(this.Approval_Type_radiobox_Value);
       this.approval_Show_hide = false;
 
     }
@@ -452,15 +452,15 @@ export class QuotationnewComponent implements OnInit {
 
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-    console.log(this.Select_To_Type_radiobox_Value);
+   // console.log(this.Select_To_Type_radiobox_Value);
   }
   EditCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
     // console.log(this.checkbox_value)
     for (let i = 0; i <= this.getFileAttachmentResult.length; i++) {
-      console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
+    //  console.log(this.getFileAttachmentResult[i].quotation_pdf_add)
       // console.log(this.checkboxAdding)
       if (this.getFileAttachmentResult[i].quotation_pdf_add == '1') {
         this.checkboxAdding = this.getFileAttachmentResult[i].common_attachmentId;
@@ -469,20 +469,20 @@ export class QuotationnewComponent implements OnInit {
 
     }
 
-    console.log(this.checkboxAdding)
+   // console.log(this.checkboxAdding)
     if (this.checkbox_value) {
       this.checkboxAdding.push(data);
-      console.log(this.checkboxAdding)
+     // console.log(this.checkboxAdding)
       this.edit_array.push(data);
       // this.edit_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array);
     }
     else {
       const index = this.edit_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
@@ -490,22 +490,22 @@ export class QuotationnewComponent implements OnInit {
 
 
   EditCHK_emailCC(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+   // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
@@ -518,18 +518,18 @@ export class QuotationnewComponent implements OnInit {
 
     this.groupSelect_searchId = data;
     this.quotationSearchCheckboxID_array = this.quotationSearchCheckboxID_array.filter((item: null) => item !== null);
-    console.log("this.quotationSearchCheckboxID_array", this.quotationSearchCheckboxID_array)
+   // console.log("this.quotationSearchCheckboxID_array", this.quotationSearchCheckboxID_array)
 
-    console.log("this.groupSelect_searchId", this.groupSelect_searchId);
+   // console.log("this.groupSelect_searchId", this.groupSelect_searchId);
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+   // console.log(this.checkbox_value)
     if (this.checkbox_value) {
       if (!this.quotationSearchCheckboxID_array) {
         this.quotationSearchCheckboxID_array = [];
       }
       this.quotationSearchCheckboxID_array.push(data);
       this.quotationSearchCheckboxID_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
+    //  console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
     }
     else {
       if (!Array.isArray(this.quotationSearchCheckboxID_array)) {
@@ -539,7 +539,7 @@ export class QuotationnewComponent implements OnInit {
       if (index > -1) {
         this.quotationSearchCheckboxID_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
+     // console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
 
     }
   }
@@ -560,7 +560,7 @@ export class QuotationnewComponent implements OnInit {
     api_SearchBiller_req.user_id = this.user_ids;
     api_req.element_data = api_SearchBiller_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
+      // console.log("vignesh-customer_status response", response);
 
       this.searchBillerResult = response.biller_list;
 
@@ -581,18 +581,18 @@ export class QuotationnewComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
+    //  console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
 
-      console.log("vignesh-advanced search result", this.searchResult);
+     // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
   }
   quotationList1() {
     this.spinner.show();
-    console.log("Quotation List UI Display Data after OnInit ")
+   // console.log("Quotation List UI Display Data after OnInit ")
 
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
@@ -609,10 +609,10 @@ export class QuotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("qoutation list", response);
+     // console.log("qoutation list", response);
       if (response) {
         this.quotation_list = response.quotation_details;
-        console.log(this.quotation_list)
+     //   console.log(this.quotation_list)
         this.spinner.hide();
       }
       else {
@@ -650,17 +650,17 @@ export class QuotationnewComponent implements OnInit {
     this.spinner.show();
     // Swal.fire('Loading');
     // Swal.showLoading();
-    console.log("billerid", this.quotationSearchCheckboxID_array);
+   // console.log("billerid", this.quotationSearchCheckboxID_array);
     this.quotationSearchCheckboxID_array = this.quotationSearchCheckboxID_array.filter((item: null) => item !== null);
   
        if (this.isArray(this.quotationSearchCheckboxID_array) == false) {
       this.quotationSearchCheckboxID_array = this.convertTupleToArray(this.quotationSearchCheckboxID_array); // Assign the result back to edit_array_SearchBiller_Checkbox
-      console.log("after conversion to array", this.quotationSearchCheckboxID_array)
+    //  console.log("after conversion to array", this.quotationSearchCheckboxID_array)
     }
 
-    console.log("Quotation List UI Display Data after OnInit ")
+    // console.log("Quotation List UI Display Data after OnInit ")
     var list_data = this.listDataInfo(data);
-    console.log("data console", list_data)
+    // console.log("data console", list_data)
     let api_req: any = new Object();
     let api_quotationList: any = new Object();
     api_req.moduleType = "quotation";
@@ -681,7 +681,7 @@ export class QuotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
     
-      console.log("qoutation list", response);
+     //  console.log("qoutation list", response);
       if (response) {
         // Swal.close();
         this.spinner.hide();
@@ -701,8 +701,8 @@ export class QuotationnewComponent implements OnInit {
           this.quotationSearchCheckboxID_array = this.selected_billerId.split(',');
           this.quotationSearchCheckboxID_array = this.quotationSearchCheckboxID_array.map((str: string) => parseInt(str, 10));
 
-          console.log("inside list response.selected_filtervalues[0].biller_ids", response.selected_filtervalues[0].biller_ids)
-          console.log("inside list this.quotationSearchCheckboxID_array", this.quotationSearchCheckboxID_array)
+          // console.log("inside list response.selected_filtervalues[0].biller_ids", response.selected_filtervalues[0].biller_ids)
+          // console.log("inside list this.quotationSearchCheckboxID_array", this.quotationSearchCheckboxID_array)
         }
         if(response.selected_filtervalues[0].name_serach != ''){
           this.searchResult_CustomerName=response.selected_filtervalues[0].name_serach;
@@ -713,7 +713,7 @@ export class QuotationnewComponent implements OnInit {
 
 
 
-        console.log(response)
+        // console.log(response)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
       else {
@@ -731,7 +731,7 @@ export class QuotationnewComponent implements OnInit {
 
   }
   listDataInfo(list_data: any) {
-    console.log(list_data)
+   // console.log(list_data)
     // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
     // list_data.order_by_name = list_data.order_by_name == undefined ? "user.agent_name" : list_data.order_by_name;
     list_data.order_by_type = list_data.order_by_type == undefined ? "desc" : list_data.order_by_type;
@@ -776,14 +776,14 @@ export class QuotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       $("#addNewQuotationFormId").removeAttr("disabled");
-      console.log(response);
+     // console.log(response);
 
-      console.log("pop up for add quotation", response);
+     // console.log("pop up for add quotation", response);
       if (response != '') {
         this.enquiryFromList = response.enquiry_from;
         this.quotationValidityList = response.quot_validity;
         this.templateNameList = response.template_name_arr;
-        console.log("EnquiryFormList", this.enquiryFromList)
+      //  console.log("EnquiryFormList", this.enquiryFromList)
 
         // $('#addNewQuotationFormId').modal('hide');
         //this.contactsList({});
@@ -807,9 +807,9 @@ export class QuotationnewComponent implements OnInit {
     edit_popup_req.quotation_id = this.edit_quotationID;
     api_req.element_data = edit_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+    //  console.log(response);
 
-      console.log("pop up for edit quotation", response);
+     // console.log("pop up for edit quotation", response);
       if (response != '') {
         this.edit_enquiryFromList = response.enquiry_from;
         this.edit_quotationValidityList = response.quot_validity;
@@ -846,9 +846,9 @@ export class QuotationnewComponent implements OnInit {
     duplicate_popup_req.quotation_id = this.duplicate_quotationID;
     api_req.element_data = duplicate_popup_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+     // console.log(response);
 
-      console.log("pop up for edit quotation", response);
+     // console.log("pop up for edit quotation", response);
       if (response != '') {
         this.duplicate_enquiryFromList = response.enquiry_from;
         this.duplicate_quotationValidityList = response.quot_validity;
@@ -898,7 +898,7 @@ export class QuotationnewComponent implements OnInit {
         this.quotationSharedPerson_List1 = response.access_userid;
         this.quotationSharedResult = response.user_list;
         this.CheckBox_DynamicArrayList_quotationSharedPerson = response.access_userid.split(',').map(Number);
-        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+      //  console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
       }
       else {
@@ -912,13 +912,13 @@ export class QuotationnewComponent implements OnInit {
     }), (error: HttpErrorResponse) => {
       if (error.status == 500) {
         // alert("wrong")
-        console.log("vignesh", error)
+      //  console.log("vignesh", error)
       }
       iziToast.error({
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
 
     }
   }
@@ -960,7 +960,7 @@ export class QuotationnewComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+       // console.log("final error", error);
       };
   }
 
@@ -1059,10 +1059,10 @@ export class QuotationnewComponent implements OnInit {
 
 
     this.values = event.target.value;
-    console.log("this.values", this.values)
+   // console.log("this.values", this.values)
 
 
-    console.log("You entered: ", event.target.value);
+   // console.log("You entered: ", event.target.value);
     this.search_SharedPersonName = event.target.value;
 
     let api_req: any = new Object();
@@ -1077,7 +1077,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = quot_share_Search_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("search username ", response)
+     // console.log("search username ", response)
       if (response.status == true) {
 
         // this.quotationSharedResult = response.user_list;
@@ -1092,36 +1092,36 @@ export class QuotationnewComponent implements OnInit {
 
   }
   QuotationSharedCHK(data: any, event: any) {
-    console.log("List - Checkbox ID", data);
+   // console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_quotationShare_Value = data;
     this.Checkbox_value_quotationShare = event.target.checked;
-    console.log(this.Checkbox_value_quotationShare)
+  //  console.log(this.Checkbox_value_quotationShare)
     if (this.Checkbox_value_quotationShare) {
 
       this.CheckBox_DynamicArrayList_quotationSharedPerson.push(Number(data));
       this.CheckBox_DynamicArrayList_quotationSharedPerson.join(',');
       this.CheckBox_DynamicArrayList_quotationSharedPerson.sort();
-      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson);
+     // console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
-      console.log(index)
+     // console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
     }
     this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
+  //  console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
   QuotationSharedCHK1(data: any, event: any) {
-    console.log("before--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
-    console.log("List - Checkbox ID", data);
+    // console.log("before--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
+    // console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_quotationShare_Value = data;
     this.Checkbox_value_quotationShare = event.target.checked;
     // console.log(this.Checkbox_value_quotationShare)
@@ -1140,12 +1140,12 @@ export class QuotationnewComponent implements OnInit {
         var k = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
         var a = k.split(',');
         let filteredArr = a.filter((item: any) => item === data);
-        console.log(filteredArr);
+       // console.log(filteredArr);
       }
       else {
         //type something
       }
-      console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+     // console.log("Final check After  selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
 
     } else {
       // for(var i=0;i<=k.length;i++){
@@ -1161,19 +1161,19 @@ export class QuotationnewComponent implements OnInit {
       // }
       // console.log(k)
       const index = this.CheckBox_DynamicArrayList_quotationSharedPerson.indexOf(data);
-      console.log(this.CheckBox_DynamicArrayList_quotationSharedPerson)
+     // console.log(this.CheckBox_DynamicArrayList_quotationSharedPerson)
       if (index == 1) {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_quotationSharedPerson.splice(index, 1);
       }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
+     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_quotationSharedPerson)
     }
     // this.quotationSharedPerson_List1 = k.toString();
     // console.log(this.quotationSharedPerson_List1)
     this.typeConvertionString_quotation_Shared_Permission = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
     this.quotationSharedPerson_List1 = this.CheckBox_DynamicArrayList_quotationSharedPerson.toString();
-    console.log("after--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
+   // console.log("after--Final check After Selected/Deselected selected list", this.typeConvertionString_quotation_Shared_Permission)
 
   }
   quotationApprovalEdit(id: any, i: any) {
@@ -1193,7 +1193,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = quot_approval_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status", response.status);
+    //  console.log("response status", response.status);
       if (response.status == true) {
 
         this.quotationApprovalResult = response.user_list;
@@ -1215,7 +1215,7 @@ export class QuotationnewComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+    //  console.log("final error", error);
     }
 
   }
@@ -1237,7 +1237,7 @@ export class QuotationnewComponent implements OnInit {
     quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
     quot_approvalUpdate_req.quotation_comments = this.quotationApprovalForm.value.comments_approvedBy;
     quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
-    console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+   // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
     if (this.Approval_Type_radiobox_Value == "double" && this.quotationApprovedBy == '') {
 
       iziToast.warning({
@@ -1255,7 +1255,7 @@ export class QuotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       $("#quotationApprovalId").removeAttr("disabled");
-      console.log("response status", response.status);
+    //  console.log("response status", response.status);
       if (response.status == true) {
 
         iziToast.success({
@@ -1352,9 +1352,9 @@ export class QuotationnewComponent implements OnInit {
     templateName_req.quotationId = this.template_quotationID;
     api_req.element_data = templateName_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+    //  console.log(response);
 
-      console.log("set template name", response);
+    //  console.log("set template name", response);
       if (response.status = true) {
         this.TemplateNameList = response.template_name;
 
@@ -1383,7 +1383,7 @@ export class QuotationnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
 
-      console.log("set template name update", response);
+    //  console.log("set template name update", response);
       if (response != '') {
         $("#setTemplateNameId").modal("hide");
       }
@@ -1405,9 +1405,9 @@ export class QuotationnewComponent implements OnInit {
     actualCost_req.quotationId = this.actualCost_quotationID;
     api_req.element_data = actualCost_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+    //  console.log(response);
 
-      console.log("set actual cost response", response);
+    //  console.log("set actual cost response", response);
       if (response.status = true) {
         this.actualCost_ProductList = response.product_details;
         this.quotationChildId_count = this.actualCost_ProductList.length + 1;
@@ -1421,7 +1421,7 @@ export class QuotationnewComponent implements OnInit {
   setActualCostSave() {
     this.spinner.show();
 
-    console.log(this.actualCost_ProductList);
+   // console.log(this.actualCost_ProductList);
     for (let k = 0, i = 1; k < this.actualCost_ProductList.length; k++, i++) {
       this.actualCost_ProductList[k].act_diff_amt = $('#act_diff_amt_' + i).val();
       this.actualCost_ProductList[k].actual_cost = $('#actual_cost_' + i).val();
@@ -1444,8 +1444,8 @@ export class QuotationnewComponent implements OnInit {
       this.actualCost_ProductList[k].unit = $('#product_unit' + i).val();
 
     }
-    console.log(this.actualCost_ProductList);
-    console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
+    // console.log(this.actualCost_ProductList);
+    // console.log("form array group", this.setActualCost_FormGroup.value.addresses_actualCost)
     let api_req: any = new Object();
     let actualCostUpdate_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1459,10 +1459,8 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = actualCostUpdate_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log(response);
-
-
-      console.log("set actual cost response", response);
+      // console.log(response);
+      // console.log("set actual cost response", response);
       if (response.status == true) {
         iziToast.success({
           message: "Success",
@@ -1496,7 +1494,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = fileattach_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("check  file attachment", response)
+     // console.log("check  file attachment", response)
       this.getFileAttachmentResult = response.attachment_list
       // this.firstResult = response.phone_provision_det;
       // this.secondResult=response.contract_attachment_arr;
@@ -1671,7 +1669,7 @@ export class QuotationnewComponent implements OnInit {
         success: function (result: any) {
           if (result.status == true) {
             self.quotationList({});
-            console.log(result);
+          //  console.log(result);
             Swal.close();
             $("#fileAttachmentFormId").modal("hide");
             this.edit_array = [];
@@ -1725,10 +1723,10 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = emailPage_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("emailpagecontent", response)
+     // console.log("emailpagecontent", response)
       if (response != true) {
         // this.myForm.reset();
-        console.log("emailpagecontent", response)
+      //  console.log("emailpagecontent", response)
         // $("#fileAttachmentFormId").modal("hide");
         this.email_fromList = response.email_from;
         this.email_crmTemplateList = response.crm_template;
@@ -1749,7 +1747,7 @@ export class QuotationnewComponent implements OnInit {
 
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-    console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+  //  console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -1763,7 +1761,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
+    //  console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
       this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
@@ -1795,9 +1793,9 @@ export class QuotationnewComponent implements OnInit {
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
     this.msg_id = tinymce.get('tinyID').getContent();
-    console.log("msgid", this.msg_id)
-    console.log("email to", this.emailTo)
-    console.log("subject", this.subjectValue)
+    // console.log("msgid", this.msg_id)
+    // console.log("email to", this.emailTo)
+    // console.log("subject", this.subjectValue)
     let api_req: any = new Object();
     let api_email_req: any = new Object();
     api_req.moduleType = "customer";
@@ -1852,7 +1850,7 @@ export class QuotationnewComponent implements OnInit {
     api_email_req.quotation_id = this.EmailQuotationID;
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status", response.status);
+     // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -1944,7 +1942,7 @@ export class QuotationnewComponent implements OnInit {
 
   quotationCommentsEdit(quotationID: any, transactionID: any, i: any) {
     $("#ActionId" + i).modal("hide");
-    console.log("transactionid", transactionID)
+  //  console.log("transactionid", transactionID)
     if (transactionID != null) {
 
       this.comment_QuotationID = quotationID;
@@ -2026,7 +2024,7 @@ export class QuotationnewComponent implements OnInit {
     var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + pi_convert_status + "";
     //    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
     window.open(url, '_blank');
-    console.log("url", url)
+  //  console.log("url", url)
     $('#PIPDFId').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
@@ -2048,7 +2046,7 @@ export class QuotationnewComponent implements OnInit {
     piEdit_req.userId = "2";
     api_req.element_data = piEdit_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response status", response.status);
+    //  console.log("response status", response.status);
       if (response.status == true) {
 
         this.PIResult = response.user_list;
@@ -2099,7 +2097,7 @@ export class QuotationnewComponent implements OnInit {
       this.spinner.hide();
       ($event.target as HTMLButtonElement).disabled = false;
       $("#PIId").removeAttr("disabled");
-      console.log("response-quotation convert pi", response)
+     // console.log("response-quotation convert pi", response)
       if (response.status == true) {
         iziToast.success({
           message: "PI Conversion Successfull. Go to Old ERP PI List",
@@ -2130,7 +2128,7 @@ export class QuotationnewComponent implements OnInit {
     var url = "https://erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
     //    var url = "https://laravelapi.erp1.cal4care.com/api/quotation/show_quotation_pdf?id=" + quotationId + "";
     window.open(url, '_blank');
-    console.log("url", url)
+   // console.log("url", url)
     $('#pdfFormId').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
@@ -2154,7 +2152,7 @@ export class QuotationnewComponent implements OnInit {
       this.spinner.hide();
       this.ExcelReportResult = response.web_excel_path;
       window.open(this.ExcelReportResult, '_blank')
-      console.log("response-quotation convert pi", response)
+    //  console.log("response-quotation convert pi", response)
       if (response.status != '') {
         iziToast.success({
           message: "Excel file has been downloaded",
@@ -2264,10 +2262,10 @@ export class QuotationnewComponent implements OnInit {
     $('#addNewQuotationFormId').modal('hide');
   }
   EditQuotationGo() {
-    console.log("e_formID", this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP)
-    console.log("e_subject", this.editNewQuotationPopUpForm.value.e_enquirySubject_addPopUP)
-    console.log("e_valid", this.editNewQuotationPopUpForm.value.e_quotationValidity_addPopUP)
-    console.log("e_version", this.editNewQuotationPopUpForm.value.e_version_enqForm_addPopUP)
+    // console.log("e_formID", this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP)
+    // console.log("e_subject", this.editNewQuotationPopUpForm.value.e_enquirySubject_addPopUP)
+    // console.log("e_valid", this.editNewQuotationPopUpForm.value.e_quotationValidity_addPopUP)
+    // console.log("e_version", this.editNewQuotationPopUpForm.value.e_version_enqForm_addPopUP)
     var editQuotID = this.edit_quotationID;
     var enq_formID = this.editNewQuotationPopUpForm.value.e_enquiryFrom_addPopUP;
     var enq_subject = this.editNewQuotationPopUpForm.value.e_enquirySubject_addPopUP;
@@ -2308,7 +2306,7 @@ export class QuotationnewComponent implements OnInit {
     api_req.element_data = api_dup_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response-quotation convert pi", response);
+     // console.log("response-quotation convert pi", response);
       // console.log("quotationId_new", response.quotationId_new)
       //  this.quotationId_new = response.quotationId_new;
       var editQuotID = response.quotationId_new;
@@ -2338,17 +2336,17 @@ export class QuotationnewComponent implements OnInit {
 
     for (let i = 1; i < bill_cnt; i++) {
       if ($('#invisiable_state_' + i).val() == 0) {
-        console.log('test');
+     //   console.log('test');
         actual_cost = $('#actual_cost_' + i).val();
         product_qty = $('#product_qty_' + i).val();
         product_rate = $('#product_rate_' + i).val();
         product_net_amt = $('#product_net_amt_' + i).val();
         actual_percentage = $('#actual_percentage_' + i).val();
-        console.log(product_rate);
-        console.log(actual_cost);
-        console.log(actual_percentage);
-        console.log(product_qty);
-        console.log(product_net_amt);
+        // console.log(product_rate);
+        // console.log(actual_cost);
+        // console.log(actual_percentage);
+        // console.log(product_qty);
+        // console.log(product_net_amt);
         if (actual_cost == '') {
           actual_cost = 0;
         }
@@ -2358,9 +2356,9 @@ export class QuotationnewComponent implements OnInit {
           $('#actual_cost_' + i).val(actual_cost);
         }
         actual_net_tot = (parseFloat(product_qty) * parseFloat(actual_cost)).toFixed(2);
-        console.log(actual_net_tot);
+       // console.log(actual_net_tot);
         act_diff_amt = (parseFloat(product_net_amt) - parseFloat(actual_net_tot)).toFixed(2);
-        console.log(act_diff_amt);
+      //  console.log(act_diff_amt);
         $('#act_diff_amt_' + i).val(act_diff_amt);
         $('#actual_net_tot_' + i).val(actual_net_tot);
         actual_cost_tot += parseFloat(actual_cost);

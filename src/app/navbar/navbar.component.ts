@@ -208,9 +208,9 @@ export class NavbarComponent implements OnInit {
     });
 
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
-      this.postalInvoiceDetails = data.postal_data;
+      this.postalInvoiceDetails = data;
 
-      console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+     // console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
 
 

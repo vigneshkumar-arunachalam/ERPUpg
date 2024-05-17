@@ -124,17 +124,17 @@ export class DupProformaInvoiceComponent implements OnInit {
     // alert("Pi constructor")
     this.serverService.global_search.subscribe((val: any) => {
       // alert("Pi-observable inside")
-      console.log("Received value from observable:Proforma Invoice", val)
+    //  console.log("Received value from observable:Proforma Invoice", val)
       try {
         this.pi_list_search = val;
-        console.log("after parse", this.pi_list_search)
+      //  console.log("after parse", this.pi_list_search)
         this.PIList_Dup(this.pi_list_search)
         if (this.pi_list_search != '') {
           this.Global_search_filter = true;
         } else {
           this.Global_search_filter = false;
         }
-        console.log(this.Global_search_filter)
+       // console.log(this.Global_search_filter)
 
       }catch (error) {
       console.error("Error parsing JSON:", error);
@@ -218,11 +218,11 @@ export class DupProformaInvoiceComponent implements OnInit {
     this.serverService.closemodal.next(api_reqs);
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+   // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   onFocusedCustomer(e: any) {
@@ -230,90 +230,90 @@ export class DupProformaInvoiceComponent implements OnInit {
   }
   handle_radioChange_email(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-    console.log(this.Select_To_Type_radiobox_Value);
+   // console.log(this.Select_To_Type_radiobox_Value);
   }
   radioChange_selectToType(event: any) {
     this.Select_To_Type_radiobox_Value = event.target.id;
-    console.log(this.Select_To_Type_radiobox_Value);
+   // console.log(this.Select_To_Type_radiobox_Value);
   }
   CBF_TemplateSelection(event: any) {
     this.CBV_TemplateSelection = event.target.checked;
-    console.log(this.CBV_TemplateSelection);
+   // console.log(this.CBV_TemplateSelection);
   }
   CBF_PDFLink(event: any) {
     this.CBV_PDFLink = event.target.checked;
-    console.log(this.CBV_PDFLink);
+  //  console.log(this.CBV_PDFLink);
   }
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
-    console.log(this.CBV_PaymentLink);
+   // console.log(this.CBV_PaymentLink);
 
   } searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.searchBILLERID", this.searchBILLERID);
+   // console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+   //   console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
   }
   EditCHK_emailCC(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+   //  console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array_emailCC_Checkbox.push(data);
       this.edit_array_emailCC_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
     }
     else {
       const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_emailCC_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
 
     }
   }
   InvoiceShowCHK(data: any, event: any) {
-    console.log("List - Checkbox ID", data);
+   // console.log("List - Checkbox ID", data);
     this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
     this.Checkbox_value_invoiceShow = event.target.checked;
-    console.log(this.Checkbox_value_invoiceShow)
+   // console.log(this.Checkbox_value_invoiceShow)
     if (this.Checkbox_value_invoiceShow) {
 
       this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
       this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
       this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
-      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+    //  console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
 
     }
     else {
       const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
-      console.log(index)
+     // console.log(index)
       if (index == -1) {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       } else {
         this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
       }
-      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+     // console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
     }
     this.typeConvertionString_invoiceShowPermission = this.CheckBox_DynamicArrayList_invoiceShowPermission.toString();
 
-    console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
+   // console.log("Final check After Selected/Deselected selected list", this.typeConvertionString_invoiceShowPermission)
 
   }
   searchCustomerData(data: any) {
@@ -329,10 +329,10 @@ export class DupProformaInvoiceComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
+    //  console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
-      console.log("vignesh-advanced search result", this.searchResult);
+    //  console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -350,7 +350,7 @@ export class DupProformaInvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
 
-      console.log("vignesh-customer_status response", response);
+     // console.log("vignesh-customer_status response", response);
 
       this.searchBillerResult = response.biller_list;
 
@@ -359,22 +359,22 @@ export class DupProformaInvoiceComponent implements OnInit {
     });
   }
   QuotationSearchCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelect_searchId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.quotationSearchCheckboxID_array.push(data);
       this.quotationSearchCheckboxID_array.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
+     // console.log("Final Checkbox After checkbox selected list", this.quotationSearchCheckboxID_array);
     }
     else {
       const index = this.quotationSearchCheckboxID_array.findIndex((el: any) => el === data)
       if (index > -1) {
         this.quotationSearchCheckboxID_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
+     // console.log("Final Checkbox After Deselected selected list", this.quotationSearchCheckboxID_array)
 
     }
   }
@@ -445,7 +445,7 @@ export class DupProformaInvoiceComponent implements OnInit {
   }
   templateContentEmailDropdown(event: any) {
     this.quotation_Emailtemplate_id = event.target.value;
-    console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+   // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -459,7 +459,7 @@ export class DupProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
+    // console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
       this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
@@ -615,17 +615,17 @@ export class DupProformaInvoiceComponent implements OnInit {
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
     this.msg_id = tinymce.get('tinyID').getContent();
-    console.log("msgid", this.msg_id)
-    console.log("email to", this.emailTo)
-    console.log("subject", this.subjectValue)
+    // console.log("msgid", this.msg_id)
+    // console.log("email to", this.emailTo)
+    // console.log("subject", this.subjectValue)
     var pdf_state = 0
     if (this.CBV_TemplateSelection == true || this.CBV_PDFLink == true || this.CBV_PaymentLink == true) {
       var pdf_state = 1;
-      console.log("if condition if any checkbox selects", pdf_state)
+      // console.log("if condition if any checkbox selects", pdf_state)
     }
     else {
       var pdf_state = 0;
-      console.log("if condition if none of checkbox selects", pdf_state)
+     // console.log("if condition if none of checkbox selects", pdf_state)
     }
 
 
@@ -689,7 +689,7 @@ export class DupProformaInvoiceComponent implements OnInit {
     api_req.element_data = api_email_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       Swal.close();
-      console.log("response status", response.status);
+     // console.log("response status", response.status);
       if (response.status == true) {
         $('#subject').val('');
         $('#emailto').val('');
@@ -818,7 +818,7 @@ export class DupProformaInvoiceComponent implements OnInit {
       this.spinner.hide();
 
       $("#searchPIFormId_DupPI").modal("hide");
-      console.log("PI list", response);
+     // console.log("PI list", response);
       if (response) {
 
         this.PI_list = response.proforma_details;
@@ -829,8 +829,8 @@ export class DupProformaInvoiceComponent implements OnInit {
 
 
 
-        console.log("proforma_details list", this.PI_list)
-        console.log("this.biller_list", this.biller_list)
+        // console.log("proforma_details list", this.PI_list)
+        // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
       }
       else {
@@ -856,8 +856,8 @@ export class DupProformaInvoiceComponent implements OnInit {
   
         this.PI_list = data.PI_list_send;
         this.biller_list = data.PI_per_send;
-        console.log("proforma_details list", this.PI_list)
-        console.log("this.biller_list", this.biller_list)
+        // console.log("proforma_details list", this.PI_list)
+        // console.log("this.biller_list", this.biller_list)
 
         // this.payLink=response.proforma_details[0].payment_link;
       
@@ -867,13 +867,13 @@ export class DupProformaInvoiceComponent implements OnInit {
 
     var url = "https://erp.cal4care.com/erp/pay_online.php?payment_through=aW52b2ljZQ==&payment=" + paylink_id;
     window.open(url, '_blank');
-    console.log("url", url)
+    // console.log("url", url)
     // $('#pdfFormId').modal('hide');
     // this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(url);
 
   }
   selectAll(event: any) {
-    console.log(event.target.checked)
+    // console.log(event.target.checked)
     if (event.target.checked == true) {
 
       this.PI_list.forEach((element: any, index: any) => {
@@ -891,14 +891,14 @@ export class DupProformaInvoiceComponent implements OnInit {
   }
 
   EditCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     // this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+   // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.edit_array.push(data);
-      console.log("Final Checkbox After checkbox selected list", this.edit_array);
+    //  console.log("Final Checkbox After checkbox selected list", this.edit_array);
 
     }
     else {
@@ -906,7 +906,7 @@ export class DupProformaInvoiceComponent implements OnInit {
       if (index > -1) {
         this.edit_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array)
 
     }
   }
@@ -947,22 +947,22 @@ export class DupProformaInvoiceComponent implements OnInit {
   }
 
   CHKGroup_emailCC(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelect_emailCCId = data;
     this.email_checkbox_value = event.target.checked;
-    console.log(this.email_checkbox_value)
+   // console.log(this.email_checkbox_value)
     if (this.email_checkbox_value) {
 
       this.email_array_emailCC_Checkbox.push(data);
       this.email_array_emailCC_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.email_array_emailCC_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.email_array_emailCC_Checkbox);
     }
     else {
       const index = this.email_array_emailCC_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.email_array_emailCC_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.email_array_emailCC_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.email_array_emailCC_Checkbox)
 
     }
   }
@@ -1074,7 +1074,7 @@ export class DupProformaInvoiceComponent implements OnInit {
         this.invoiceShowPermission_List1 = response.access_userid;
         this.invoiceShowResult = response.user_list;
         this.CheckBox_DynamicArrayList_invoiceShowPermission = response.access_userid.split(',').map(Number);
-        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+       // console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
 
       }
       else {
@@ -1149,7 +1149,7 @@ export class DupProformaInvoiceComponent implements OnInit {
     }
 
     window.open(url, '_blank');
-    console.log("url", url)
+  //  console.log("url", url)
   }
 
   showPerission() {
@@ -1309,7 +1309,7 @@ export class DupProformaInvoiceComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         this.InvoiceTypeList = response.invoice_type_det;
-        console.log("response.selected_invoice_type", response.selected_invoice_type)
+       // console.log("response.selected_invoice_type", response.selected_invoice_type)
         this.setInvoiceType.patchValue({
           'setInvoice': response.selected_invoice_type
         })

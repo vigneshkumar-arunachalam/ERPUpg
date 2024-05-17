@@ -46,7 +46,7 @@ export class Sidebar2Component implements OnInit {
         this.GlobalSearchPermission = k[i];
       }
     }
-    console.log(this.GlobalSearchPermission);
+ //   console.log(this.GlobalSearchPermission);
   }
   handleSelectedMenu(id: number) {
     this.overallmenulist.forEach((element: { menuId: number; isActive: boolean; }) => {

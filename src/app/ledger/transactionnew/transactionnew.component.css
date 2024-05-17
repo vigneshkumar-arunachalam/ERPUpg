@@ -690,7 +690,7 @@ label {
 .dropdown__item:hover .show{display: none;}
 
 #TransactionManagementViewId .modal-dialog{
-  min-width: 45%;
+  min-width: 75%;
 
 }
 

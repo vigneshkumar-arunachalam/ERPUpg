@@ -324,16 +324,16 @@ export class DupCustomerNewAllComponent implements OnInit {
   constructor(private http: HttpClient, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
 
     this.serverService.global_search_customer.subscribe((val: any) => {
-      console.log("Received value from observable:Customer Master", val)
+     // console.log("Received value from observable:Customer Master", val)
 
       // var k = JSON.parse(val);
       // console.log("after parse",val)
       // this.customer_list=k;
-      console.log("k in customer", val)
-      console.log("k length in customer", val.length);
+      // console.log("k in customer", val)
+      // console.log("k length in customer", val.length);
       this.data_value = val;
       this.customerslist_dup(this.data_value);
-      console.log("this.customer_list in customer", this.customer_list);
+     // console.log("this.customer_list in customer", this.customer_list);
       if (val != null || val != 'null') {
         this.Global_search_filter = true;
 
@@ -410,7 +410,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   ];
   addEmail(event: MatChipInputEvent): void {
     this.email_alert = true;
-    console.log(event.value);
+   // console.log(event.value);
 
     let api_req: any = new Object();
     let email_Validation: any = new Object();
@@ -466,7 +466,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   }
 
   editEmail(event: MatChipInputEvent): void {
-    console.log(event.value)
+  //  console.log(event.value)
     if (event.value.indexOf('@') > 0) {
       var value: any = (event.value || '').trim();
 
@@ -1936,7 +1936,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     api_req.element_data = get_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log('hgyrdrrd')
+     // console.log('hgyrdrrd')
       $('#dupCussearchCustomerFormId').modal('hide');
       this.spinner.hide();
 
@@ -1975,7 +1975,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     console.log(data);
 
     this.customer_list = data.Customer_list_send;
-    console.log("this.customer_list----main list", this.customer_list);
+   // console.log("this.customer_list----main list", this.customer_list);
     // this.customer_list_colorcode=response.customer_details.biller_details[0].colorCodes;
     this.revenue_list = data.Customer_revenue_send;
 
@@ -5121,7 +5121,7 @@ export class DupCustomerNewAllComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
         this.cmslistadd = response.cmsDep;
-        console.log("this.cmslistadd", this.cmslistadd);
+      //  console.log("this.cmslistadd", this.cmslistadd);
 
 
       } else {

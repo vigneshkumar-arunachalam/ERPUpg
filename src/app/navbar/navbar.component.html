@@ -995,7 +995,7 @@
 
                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                         <div class="table-responsive ">
-                            <table class="table mb-0 table-borderless">
+                            <table class="table mb-0 table-borderless"  *ngIf="postalInvoiceDetails">
                                 <thead>
                                     <tr class="userDatatable-header">
 
@@ -1035,27 +1035,30 @@
                                         </th>
 
                                     </tr>
-                                </thead>
-                                <tbody *ngFor="let list of postalInvoiceDetails ; let i = 'index+1'">
-                                    <tr >
+                                </thead> 
+                                <tbody *ngFor="let list1 of postalInvoiceDetails?.postal_data ; let i = 'index+1'">
+                                    <!-- <tr >
                                         <td class="PIlistlabel" colspan="10"
                                           [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
                                           {{list.billerName}}
                                         </td>
+                                      </tr> -->
+                                      <tr class="PIlistlabel" [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                        <td colspan="10">{{list1.biller_name}}</td>
                                       </tr>
 
-                                    <tr >
+                                    <tr *ngFor="let list of list1.datas;let k = 'index+1'">
 
 
                                         <td>
 
-                                            <span> {{i}}</span>
+                                            <span> {{k}}</span>
 
 
                                         </td>
                                         <td>
                                             <span>
-                                                <input type="checkbox" [checked]="isSelected(list.data.billId)"
+                                                <input type="checkbox" [checked]="isSelected(list.billId)"
                                                     (change)="toggleSelection($event, list.billId)">
                                             </span>
                                         </td>

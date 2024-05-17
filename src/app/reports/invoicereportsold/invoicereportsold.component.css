@@ -147,8 +147,13 @@ tr:nth-child(odd) {background: #FFF}
 
  .form-control{
   
-  border: 1px solid #e1e1e1;
-  background: transparent;
+  /* border: 1px solid #0e8543;
+  background: transparent; */
+
+  /* background: linear-gradient(to right, #dce79a, #b0f2b1); */
+  background: linear-gradient(to right, #eaf5ae, #b0f2b1);
+    color: rgb(41, 42, 28);
+    box-shadow: none;
 }
  .form-control:focus {
   outline: none;
@@ -157,6 +162,8 @@ tr:nth-child(odd) {background: #FFF}
   background-origin: border-box;
   background-clip: padding-box, border-box;
   animation: bg-hue 2s linear infinite;
+  background: linear-gradient(to right, #dce79a, #b0f2b1);
+  color: rgb(41, 42, 28);
 }
 
 /* @keyframes for the gradient animation */
@@ -169,7 +176,8 @@ tr:nth-child(odd) {background: #FFF}
 
 label {
   font-weight: 500;
-  color: #051b5a!important;
+  /* color: #051b5a!important; */
+  color:#f40845 !important;
 }
 input.form-control {
   padding: 4px 8px !important;
@@ -197,55 +205,8 @@ background: rgba(118, 177, 103, 0.5);
 -webkit-border-radius: 50%;
 border-radius: 50%;
 }
-.hover3:hover {
-
-  background: rgba(255, 77, 79, 0.5);
--webkit-border-radius: 50%;
-border-radius: 50%;
-}
-.hover4:hover {
-
-background: rgba(118, 177, 103, 0.5);
--webkit-border-radius: 50%;
-border-radius: 50%;
-}
-.hover5:hover {
-
-background: rgba(12, 1, 39, 0.973);
--webkit-border-radius: 50%;
-border-radius: 50%;
-}
-.hover6:hover {
-   
-  background: rgba(228, 231, 14, 0.973);
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-.hover7:hover {
-
-background: rgb(34, 46, 32);
--webkit-border-radius: 50%;
-border-radius: 50%;
-}
-.hover8:hover {
-
-background: rgba(23, 198, 241, 0.973);
--webkit-border-radius: 50%;
-border-radius: 50%;
-}
 
 
-.emailLabel{
-  color: rgba(0, 0, 0, 0.589) !important;
-  font-weight: 400!important;
-}
-#processPaymentFormId .modal-dialog{
-  max-width: 60% !important;
-}
-#processPaymentFormId label{
-  color: rgb(27, 1, 121)!important;
-  font-weight: 500!important;
-}
 
 
 .form-control:disabled,
@@ -256,19 +217,7 @@ border-radius: 50%;
     color: black!important;
 }
 
-#searchDeliveryOrderFormId .modal-dialog,#searchPEFormId .modal-dialog {
-  max-width: 60%;
-}
-#searchPIFormId .modal-dialog {
-  max-width: 95%;
-}
-#emailFormId .modal-dialog {
-  max-width: 65%;
-}
 
-#emailFormId label {
-  font-weight: 500;
-}
 .card.quotation .card-header {
   display: flex;
 }
@@ -284,62 +233,8 @@ border-radius: 50%;
  
   overflow-y: scroll;
 }
-.checkbox {
-  margin-right: 10px;
-}
-.email-cc-template{
-  height: 150px;
-  overflow-y: scroll;
-}
-
-.email-cc-template::-webkit-scrollbar {
-  width: 4px;
-}
-
-/* Track */
-.email-cc-template::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-.email-cc-template::-webkit-scrollbar-thumb {
-  background: #888; 
-}
-
-/* Handle on hover */
-.email-cc-template::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
-
-/* #emailFormId span{width: 138px;    display: inline-block;} */
-label.col-lg-2.col-form-label{text-align: right;}
 
 
-/* #delivery-order-section .userDatatable table td, #delivery-order-section .userDatatable table th {
-  padding: 4px 0px 4px!important;
-  white-space: normal;
-  width: 25%;
-}
-
-#delivery-order-section .userDatatable table td:nth-child(5), #delivery-order-section .userDatatable table th:nth-child(5),
-#delivery-order-section .userDatatable table td:last-child, #delivery-order-section .userDatatable table th:last-child {
-  width: 12%;
-}
-#delivery-order-section .userDatatable table td:nth-child(2), #delivery-order-section .userDatatable table th:nth-child(2),
-#delivery-order-section .userDatatable table td:first-child, #delivery-order-section .userDatatable table th:first-child {
-  width: 16%;
-} */
-
-
-
-
-/*  i have deleted .ng-autocomplete 
-::ng-deep .autocomplete-container */
-
-
-/* .ng-autocomplete ::ng-deep{
-  padding: 0px;
-} */
 
 .ng-autocomplete 
 ::ng-deep .autocomplete-container .input-container input {
@@ -390,81 +285,15 @@ ng-autocomplete .ng-autocomplete.ng-pristine.ng-valid.ng-touched, .ng-autocomple
 
 
 
-/* quick search */
 
 
-.search-bar-section {
-  width: 250px;
-  height: 40px;
-  background-color: #313949;
-  border-radius: 4rem;
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-}
 
-.search__box {
-  float: left;
-  width: 0;
-  /* height: 4rem; */
-  background: none;
-  color: #f7f7f7;
-  
-  font-size: 14px;
-  border-radius: 2rem;
-  outline: none;
-  border: none;
-  position: relative;
-  opacity: 1;
-  transition: all .75s ease-in;
-  cursor: pointer;
 
-}
-
-.search__icon {
-  box-sizing: border-box;
-  float: left;
-  display: inline-block;
-  margin-top: 0;
-  cursor: pointer;
-  /* position: absolute; */
-  top: 23px;
-  /* color: #fa983a; */
-  /* color: #5f63f2; */
-  color:#009688;
-  transition: all .25s ease-in;
-  border-radius: 50%;
-}
-
-.search-bar-section:hover > .search__box {
-  width: 85%;
-  padding: 0 1rem;
-}
-
-.search-bar-section:hover > .search__icon {
-  background-color: #eee;
-  
-  padding: 8px;
-  /* position: absolute;
-  top: 13px; */
-  margin-left: .8rem;
-}
-
-.quotation-btn-section{
-  display: flex;
-  align-items: center;
-}
 th{
   padding: 10px 0px;
 }
 
-.on-off-toggle {
-  width: 36px;
-  height: 24px;
-  position: relative;
-  display: inline-block;
-}
+
 .buttonClass{border:none}
 .userDatatable table td{padding:10px 4px;}
 .userDatatable table td:first-child{text-align: center;}
@@ -498,13 +327,7 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
   padding: 0px 0px!important;
 }
 
-#delivery-order-section .userDatatable table td,#delivery-order-section .userDatatable table thead tr:not(.footable-filtering) th{
-  white-space: normal;
-}
-#delivery-order-section .userDatatable table thead tr th:nth-child(3),
-#delivery-order-section .userDatatable table thead tr th:nth-child(4){
-  width: 6%;
-}
+
 
 #viewPurchaseEntryFormId .modal-dialog,#editPurchaseEntryFormId  .modal-dialog,
 #paymentProcessFormId  .modal-dialog,#addPurchaseEntryFormId  .modal-dialog{
@@ -597,46 +420,6 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
  /* search ends */
 
 
- .checkbox {
-  margin-right: 10px;
-}
-.email-cc-template{
-  height: 150px;
-  overflow-y: scroll;
-  display: grid;
-}
-
-.email-cc-template::-webkit-scrollbar {
-  width: 4px;
-}
-
-/* Track */
-.email-cc-template::-webkit-scrollbar-track {
-  background: #f1f1f1; 
-}
- 
-/* Handle */
-.email-cc-template::-webkit-scrollbar-thumb {
-  background: #888; 
-}
-
-/* Handle on hover */
-.email-cc-template::-webkit-scrollbar-thumb:hover {
-  background: #555; 
-}
 
 
 
-.userDatatable  table tr td:nth-child(8) span{width: 135px;}
-ul.nav.nav-pills{padding:0 1.56rem;}
-ul.nav.nav-pills a.nav-link {
-  /* background: #5f63f2; */
-  background: #cf7a0a;
-  color: #fff;
-  border-radius: 4px;
-  border-right: 3px solid #fff;
-}
-ul.nav.nav-pills a.nav-link.active, ul.nav.nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #2c3e50;
-}

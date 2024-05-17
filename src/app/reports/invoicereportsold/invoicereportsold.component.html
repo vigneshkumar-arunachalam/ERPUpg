@@ -1,0 +1,461 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card quotation">
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+                            Home</a>
+                        <span class="breadcrumb-item active">Invoice Report</span>
+                    </h3>
+                    <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
+                    <div class="quotation-btn-section">
+
+
+
+                        <button type="button" title="Delete  Contract" class="btn btn-primary btn-default btn-squared"
+                            data-toggle="modal" data-target="#searchMulInvPayId" style="margin-right: 10px;">
+                            <i class="fa fa-search" style="margin-right:0;"></i>
+                            Search
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="invoiceReportOld">
+                        <div class="row">
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_From" class="col-lg-12 col-form-label">From</label>
+
+                                    <div class="col-lg-12">
+
+                                        <input type="date" [readonly]="isReadOnly" class="form-control"
+                                            formControlName="IR_From" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_To" class="col-lg-12 col-form-label">To</label>
+
+                                    <div class="col-lg-12">
+
+                                        <input type="date" class="form-control" formControlName="IR_To" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_BillerName" class="col-lg-12 col-form-label">Biller Name</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_BillerName" class="form-control"
+                                            formControlName="IR_BillerName">
+                                            <option [ngValue]="null" selected>Select Biller Name</option>
+                                            <option *ngFor="let from of billerList" value="{{ from.billerId }}">
+                                                {{ from.billerName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_CustomerName" class="col-lg-12 col-form-label">Customer Name</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_CustomerName" class="form-control"
+                                            formControlName="IR_CustomerName">
+                                            <option [ngValue]="null" selected>Select Customer Name</option>
+                                            <option *ngFor="let from of customerList" value="{{ from.customerId }}">
+                                                {{ from.customerName }}
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_InvoiceNumber" class="col-lg-12 col-form-label">Invoice No</label>
+
+                                    <div class="col-lg-12">
+
+                                        <select name="IR_InvoiceNumber" class="form-control"
+                                            formControlName="IR_InvoiceNumber">
+                                            <option [ngValue]="null" selected>Select Invoice Number</option>
+                                            <option *ngFor="let from of invoice_noList" value="{{ from.billId }}">
+                                                {{ from.invoice_no }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_InvoiceType" class="col-lg-12 col-form-label">Invoice Type</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_InvoiceType" class="form-control"
+                                            formControlName="IR_InvoiceType">
+                                            <option [ngValue]="null" selected>Select Invoice Type</option>
+                                            <option *ngFor="let from of invoice_statusList" value="{{ from.id }}">
+                                                {{ from.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_InvoiceTypePerformaSales" class="col-lg-12 col-form-label">Invoice
+                                        Type[Performa]or[Sales]</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_InvoiceTypePerformaSales" class="form-control"
+                                            formControlName="IR_InvoiceTypePerformaSales">
+                                            <option [ngValue]="null" selected>Select Invoice Type</option>
+                                            <option *ngFor="let from of performaTypeList" value="{{ from.id }}">
+                                                {{ from.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_CurrencyType" class="col-lg-12 col-form-label">Currency Type</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_CurrencyType" class="form-control"
+                                            formControlName="IR_CurrencyType">
+                                            <option [ngValue]="null" selected>Select Currency Type</option>
+                                            <option *ngFor="let from of currencyList" value="{{ from.currencyId }}">
+                                                {{ from.currency_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_SalesType" class="col-lg-12 col-form-label">Sales
+                                        Type[Local]or[Export]</label>
+
+                                    <div class="col-lg-12">
+
+
+
+                                        <select name="IR_SalesType" class="form-control" formControlName="IR_SalesType">
+                                            <option [ngValue]="null" selected>Select Sales Type</option>
+                                            <option *ngFor="let from of export_stateList" value="{{ from.id }}">
+                                                {{ from.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- <div class="col-lg-4">
+                                <div class="form-group row">
+
+                                    <label for="IR_ShowRecords" class="col-lg-12 col-form-label">Show Records</label>
+
+                                    <div class="col-lg-12">
+
+
+
+                                        <select name="IR_ShowRecords" class="form-control"
+                                            formControlName="IR_ShowRecords">
+                                            <option [ngValue]="null" selected>Select Show Records</option>
+                                            <option *ngFor="let from of billerDetails" value="{{ from.billerId }}">
+                                        {{ from.billerName }}
+                                      </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                            <div class="col-lg-4">
+                                <div class="form-group row">
+                                    <label for="IR_Tax" class="col-lg-12 col-form-label">Tax</label>
+                                    <div class="col-lg-12 d-flex">
+                                        <div class="form-check mr-3">
+                                            <input type="checkbox" class="form-check-input" id="withoutTax"
+                                                formControlName="IR_Tax" value="withoutTax" />
+                                            <label class="form-check-label" for="withoutTax"
+                                                style="color: #f44336!important;">Without Tax</label>
+                                        </div>
+                                        <div class="form-check mr-3">
+                                            <input type="checkbox" class="form-check-input" id="withTax"
+                                                formControlName="IR_Tax" value="withTax" />
+                                            <label class="form-check-label" for="withTax"
+                                                style="color: #5f63f2!important;">With Tax</label>
+                                        </div>
+                                        <div class="form-check mr-3">
+                                            <input type="checkbox" class="form-check-input" id="withTax2"
+                                                formControlName="IR_Tax" value="withTax2" />
+                                            <label class="form-check-label" for="withTax2"
+                                                style="color: #654b2e !important;">With Tax - 2</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input" id="export"
+                                                formControlName="IR_Tax" value="export" />
+                                            <label class="form-check-label" for="export"
+                                                style="color: #f44336!important;">Export</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="quotation-btn-section mt-4">
+
+                                <button type="button" title="Go" class="btn btn-primary btn-default btn-squared"
+                                    data-toggle="modal" data-target="#searchMulInvPayId"
+                                    style="margin-right: 10px;background-color: #0b0531;">
+                                    <i class="fa fa-search" style="margin-right:0;"></i>
+                                    Go
+                                </button>
+                                <button type="button" title="Export" class="btn btn-primary btn-default btn-squared"
+                                    data-toggle="modal" data-target="#searchMulInvPayId"
+                                    style="margin-right: 10px;background-color: #cf130a;">
+                                    <i class="fa fa-share-alt" style="margin-right:0;"></i>
+                                    Export
+                                </button>
+                                <button type="button" title="Print Preview"
+                                    class="btn btn-primary btn-default btn-squared" data-toggle="modal"
+                                    data-target="#searchMulInvPayId"
+                                    style="margin-right: 10px;background-color: #0d8a2a;">
+                                    <i class="fa fa-outdent" style="margin-right:0;"></i>
+                                    Print Preview
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive" style="overflow: scroll">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header" >
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">A</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">B</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">C</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">D</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">E</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">F</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">G</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">H</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">I</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">J</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">K</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">L</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">M</span>
+                                        </th>
+
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">N</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">O</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">P</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">Q</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">R</span>
+                                        </th>
+
+                                    </tr>
+                                    <tr class="userDatatable-header">
+                                        <th>
+                                            <span class="userDatatable-title">INV NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">DATE</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">BILLER NAME</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CUSTOMER NAME</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CURRENCY</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CCR</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">BASE TOTAL</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CONVERTED TOTAL</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">DISCOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">STANDARD SUPPLY (1)(2)</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">RECEVIED TAX</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">OUTPUT TAX(6)</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">SHIPPING AMT</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">BANKING AMT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">TOTAL REVENUE(13)</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">PAID AMT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">OWING AMT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">AGING</span>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let list of getInvoiceReportList;let i = index">
+                                    <tr>
+
+                                        <td>
+                                            <span> {{ list.invoice_no }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.billDate }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.billerName }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.customerName }} </span>
+                                        </td>
+
+                                        <td>
+                                            <span> {{ list.Currency }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.conversionRate }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.grossAmount }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.convertedtotal }} </span>
+
+                                        </td>
+                                        <td>
+                                            <span> {{ list.discountAmount }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.standardsupply }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.taxAmt }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.currency }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.outputtax }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.shippingAmt }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.add_amt }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.paidamt }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.owingamt }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.aging }} </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
