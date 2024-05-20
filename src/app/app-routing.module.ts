@@ -83,11 +83,14 @@ import { AddquotaionnewsdnComponent } from './billing/quotationnew/addquotaionne
 import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.component';
 import { ReportsComponent } from './reports/reports.component';
 import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicereportsold.component';
+import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/printpreview.component';
 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'printpreview', component: PrintpreviewComponent
   },{
     path: 'reports', component: ReportsComponent
   },{

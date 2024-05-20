@@ -364,16 +364,16 @@ export class MultipleInvPaymentComponent implements OnInit {
   //  console.log("bg",bg)
   //  alert(bg);
   //  return false;
+// alert(this.searchResult_CustomerID_add)
+    // if (this.searchResult_CustomerID_add == '' || this.searchResult_CustomerID_add == 'undefined' || this.searchResult_CustomerID_add == undefined) {
+    //   this.spinner.hide();
+    //   iziToast.error({
+    //     message: "Customer name missing",
+    //     position: 'topRight'
+    //   });
+    //   return false;
 
-    if (this.searchResult_CustomerID_add == '' || this.searchResult_CustomerID_add == 'undefined' || this.searchResult_CustomerID_add == undefined) {
-      this.spinner.hide();
-      iziToast.error({
-        message: "Customer name missing",
-        position: 'topRight'
-      });
-      return false;
-
-    }
+    // }
     api_req.element_data = addRPAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
@@ -877,6 +877,52 @@ export class MultipleInvPaymentComponent implements OnInit {
         this.spinner.hide();
         iziToast.warning({
           message: "No Data",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  mulInvPaymentList123(data: any) {
+
+
+    this.spinner.show();
+    var list_data = this.listDataInfo(data);
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "multipleInvoicePayment";
+    api_req.api_url = "multipleInvoicePayment/getInvoiceList"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "getInvoiceList";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_mulInvpay.off_set = list_data.offset;
+    api_mulInvpay.limit_val = list_data.limit;
+    // api_mulInvpay.search_txt = this.searchResult_CustomerName;
+    api_mulInvpay.current_page = "";
+    api_mulInvpay.customer_id = this.searchResult_CustomerID;
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response != '') {
+        this.spinner.hide();
+        this.mulInvPay_list = response.dataList;
+        this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+        $("#searchInvoiceFormId").modal("hide");
+        $("#searchInvoiceFormId").modal("hide");
+        $('#addMulInvPayId').modal('hide');
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Response Failed",
           position: 'topRight'
         });
       }

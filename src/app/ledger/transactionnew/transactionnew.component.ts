@@ -258,13 +258,14 @@ export class TransactionnewComponent implements OnInit {
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "transaction_entry";
-    api_req.api_url = "transaction_entry/comments_save"
+    api_req.api_url = "transactionEntrycomments"
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_mulInvpay.action = "comments_save";
+    api_mulInvpay.action = "transactionEntrycomments";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.transaction_id = this.commentTransactionID;
-    api_req.element_data = api_mulInvpay;
+    api_req.element_data = api_mulInvpay; 
+
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
@@ -272,7 +273,7 @@ export class TransactionnewComponent implements OnInit {
       
       //  $("#TransactionManagementViewId").modal("hide");
         this.TransactionCommentsForm.patchValue({
-          'transaction_comments': response.billerId,
+          'transaction_comments': response.commands,
         
         });
 
@@ -306,27 +307,32 @@ export class TransactionnewComponent implements OnInit {
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "transaction_entry";
-    api_req.api_url = "transaction_entry/comments_save"
+    api_req.api_url = "transactionEntryCommentsUpdate"
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_mulInvpay.action = "comments_save";
+    api_mulInvpay.action = "transactionEntryCommentsUpdate";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.transaction_id = this.commentTransactionID;
+    api_mulInvpay.commands = this.TransactionCommentsForm.value.transaction_comments;
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
         this.spinner.hide();
       
-      //  $("#TransactionManagementViewId").modal("hide");
-        this.TransactionCommentsForm.patchValue({
-          'transaction_comments': response.billerId,
+        $("#TransactionCommentsId").modal("hide");
+        iziToast.success({
+          message: "comments updated",
+          position: 'topRight'
         });
+        // this.TransactionCommentsForm.patchValue({
+        //   'transaction_comments': response.billerId,
+        // });
 
       } else {
         this.spinner.hide();
         iziToast.warning({
-          message: "Vendor Save Failed",
+          message: "Comments Save Failed",
           position: 'topRight'
         });
       }

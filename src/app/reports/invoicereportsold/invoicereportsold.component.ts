@@ -137,7 +137,7 @@ export class InvoicereportsoldComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
         this.spinner.hide();
-        this.getInvoiceReportList=response.invoice_list;
+        this.getInvoiceReportList=response;
        
     
 
@@ -164,6 +164,10 @@ export class InvoicereportsoldComponent implements OnInit {
         });
         console.log("final error", error);
       };
+  }
+  printPreviewGo(){
+   
+    this.router.navigate(['/printpreview'])
   }
 
 

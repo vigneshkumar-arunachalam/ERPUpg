@@ -1306,9 +1306,11 @@ export class PurchaseEntryComponent implements OnInit {
         this.partialPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paritialypaid');
 
         console.log("this.notPaidEntries",this.notPaidEntries)
+        console.log("this.notPaidEntries.length",this.notPaidEntries.length)
         console.log("this.paidEntries",this.paidEntries)
         console.log("this.partialPaidEntries",this.partialPaidEntries)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
+       
         $('#searchDeliveryOrderFormId').modal("hide");
         $('#searchPurchaseOrderFormId').modal("hide");
         $('#searchPEFormId').modal("hide");

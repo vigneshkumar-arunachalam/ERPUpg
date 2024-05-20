@@ -1,0 +1,71 @@
+<div class="print-container">
+    <div class="table-responsive" id="bb">
+        <table>
+            <thead>
+                <tr>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                    <th>G</th>
+                    <th>H</th>
+                    <th>I</th>
+                    <th>J</th>
+                    <th>K</th>
+                    <th>L</th>
+                    <th>M</th>
+                    <th>N</th>
+                    <th>O</th>
+                    <th>P</th>
+                    <th>Q</th>
+                    <th>R</th>
+                </tr>
+                <tr>
+                    <th>INV NO</th>
+                    <th>DATE</th>
+                    <th>BILLER NAME</th>
+                    <th>CUSTOMER NAME</th>
+                    <th>CURRENCY</th>
+                    <th>CCR</th>
+                    <th>BASE TOTAL</th>
+                    <th>CONVERTED TOTAL</th>
+                    <th>DISCOUNT</th>
+                    <th>STANDARD SUPPLY (1)(2)</th>
+                    <th>RECEIVED TAX</th>
+                    <th>OUTPUT TAX(6)</th>
+                    <th>SHIPPING AMT</th>
+                    <th>BANKING AMT</th>
+                    <th>TOTAL REVENUE(13)</th>
+                    <th>PAID AMT</th>
+                    <th>OWING AMT</th>
+                    <th>AGING</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let list of getInvoiceReportList">
+                    <td>{{ list.invoice_no }}</td>
+                    <td>{{ list.billDate }}</td>
+                    <td>{{ list.billerName }}</td>
+                    <td>{{ list.customerName }}</td>
+                    <td>{{ list.Currency }}</td>
+                    <td>{{ list.conversionRate }}</td>
+                    <td>{{ list.grossAmount }}</td>
+                    <td>{{ list.convertedTotal }}</td>
+                    <td>{{ list.discountAmount }}</td>
+                    <td>{{ list.exc_tax_net_total }}</td>
+                    <td>{{ list.taxAmt }}</td>
+                    <td>{{ list.output_tax_val }}</td>
+                    <td>{{ list.shippingAmt }}</td>
+                    <td>{{ list.add_amt }}</td>
+                    <td>{{ list.total_revenue }}</td>
+                    <td>{{ list.paidAmount }}</td>
+                    <td>{{ list.owingAmt }}</td>
+                    <td>{{ list.aging }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<button (click)="printTable()">Print Table</button>

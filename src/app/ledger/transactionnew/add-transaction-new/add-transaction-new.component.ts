@@ -702,9 +702,47 @@ export class AddTransactionNewComponent implements OnInit {
     //purchase entry
     if (this.Select_Transaction_Type == 3) {
       this.saveVariable = "purchase_entry_save";
-      data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
-      data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
+
+      var PENO=this.addTransaction_section1.value.PE_purchaseEntryNo;
+      if (PENO=== null || PENO=== undefined || PENO=== 'undefined') {
+        iziToast.error({
+          message: "Fill Purchase Entry Number  ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+      }
+      else {
+        data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
+      }
+
+      var vendorid=this.addTransaction_section1.value.PE_vendorName;
+      if (vendorid=== null || vendorid=== undefined || vendorid=== 'undefined') {
+        iziToast.error({
+          message: "Fill Vendor Name  ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+      }
+      else {
+        data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
+      }
+      
+     var purchasetype=this.addTransaction_section1.value.PE_purchaseType;
+     if (purchasetype=== null || purchasetype=== undefined || purchasetype=== 'undefined') {
+      iziToast.error({
+        message: "Fill Purchase Type  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }
+    else {
       data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
+    }
+
+     
       data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
       data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
       data.append('content_purchase', this.addTransaction_section1.value.PE_contentofPurchase);
@@ -843,11 +881,13 @@ export class AddTransactionNewComponent implements OnInit {
       processData: false,
       data: data,
       success: function (result: any) {
-        this.spinner.hide();
-        self.goBackTransaction();
-        if (result.status == true) {
-          this.spinner.hide();
-          this.router.navigate(['/transactionnew']);
+      //  alert(result)
+        console.log("result",result)
+       // this.spinner.hide();
+       // self.goBackTransaction();
+        if (result.status == true || result.status == 'true') {
+         // this.spinner.hide();
+         // this.router.navigate(['/transactionnew']);
           self.goBackTransaction();
           console.log(result);
 

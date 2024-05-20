@@ -109,6 +109,7 @@ import { AddquotaionnewsdnComponent } from './billing/quotationnew/addquotaionne
 import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.component';
 import { ReportsComponent } from './reports/reports.component';
 import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicereportsold.component';
+import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/printpreview.component';
 
 
 
@@ -201,7 +202,8 @@ import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicer
      AddquotaionnewsdnComponent,
      PurchaseEntryComponent,
      ReportsComponent,
-     InvoicereportsoldComponent
+     InvoicereportsoldComponent,
+     PrintpreviewComponent
      
     
   ],

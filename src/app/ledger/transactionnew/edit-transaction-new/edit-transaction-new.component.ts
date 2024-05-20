@@ -76,7 +76,7 @@ export class EditTransactionNewComponent implements OnInit {
   categoryDetails: any;
   productDetails: any;
   prodResult:any;
-
+  Clicked: boolean = false;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
@@ -534,7 +534,7 @@ export class EditTransactionNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
-
+        this.billerID =response.transaction_details[0].billerId;
         this.addTransaction_section1.patchValue({
           'billerName': response.transaction_details[0].billerId,
           'trans_Date': response.transaction_details[0].transaction_date,
@@ -562,8 +562,12 @@ export class EditTransactionNewComponent implements OnInit {
 
         })
 
-
-        this.getFileAttachmentResult = response.trans_file;
+        if (response.trans_file == null) {
+          this.getFileAttachmentResult = [];
+      } else {
+          this.getFileAttachmentResult = response.trans_file;
+      }
+        
 
 
         //  switching between tabs
@@ -662,7 +666,11 @@ export class EditTransactionNewComponent implements OnInit {
           })
 
 
-        this.getFileAttachmentResult = response.trans_file;
+          if (response.trans_file == null) {
+            this.getFileAttachmentResult = [];
+        } else {
+            this.getFileAttachmentResult = response.trans_file;
+        }
 
 
         //  switching between tabs
@@ -791,7 +799,11 @@ export class EditTransactionNewComponent implements OnInit {
         })
 
 
-        this.getFileAttachmentResult = response.trans_file;
+        if (response.trans_file == null) {
+          this.getFileAttachmentResult = [];
+      } else {
+          this.getFileAttachmentResult = response.trans_file;
+      }
 
 
         //  switching between tabs
@@ -895,7 +907,11 @@ export class EditTransactionNewComponent implements OnInit {
         });
 
 
-        this.getFileAttachmentResult = response.trans_file;
+        if (response.trans_file == null) {
+          this.getFileAttachmentResult = [];
+      } else {
+          this.getFileAttachmentResult = response.trans_file;
+      }
         this.prodResult=response.editData.productList;
 
 
@@ -1047,7 +1063,9 @@ export class EditTransactionNewComponent implements OnInit {
 
 
   }
-
+  getCurrencyConversion(event: any) {
+    this.getCurrencyCode = event.target.value;;
+  }
   getCurrencyValues(event: any) {
     console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
@@ -1089,17 +1107,19 @@ export class EditTransactionNewComponent implements OnInit {
   BillerChange(event: any) {
     this.billerID = event.target.value;;
   }
-  getCurrencyConversion(event: any) {
-    this.billerID = event.target.value;;
-  }
+
 
   saveVendorManagement() {
 
   }
+  
+  UpdateTransaction(event:any) {
 
-  UpdateTransaction() {
-
-
+    console.log("mouse event", event.pointerType)
+    if (event.pointerType == "mouse" || event.pointerType == "") {
+      // this variable is used to find button click as mouse or kyboard enter
+      this.Clicked = true;
+    }
     var data = new FormData();
 
     data.append('company', this.addTransaction_section1.value.billerName);
@@ -1288,7 +1308,8 @@ export class EditTransactionNewComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+      url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+      // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
       cache: false,
       contentType: false,
       processData: false,

@@ -255,8 +255,7 @@
                                     Export
                                 </button>
                                 <button type="button" title="Print Preview"
-                                    class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-                                    data-target="#searchMulInvPayId"
+                                    class="btn btn-primary btn-default btn-squared" (click)="printPreviewGo()"
                                     style="margin-right: 10px;background-color: #0d8a2a;">
                                     <i class="fa fa-outdent" style="margin-right:0;"></i>
                                     Print Preview
@@ -414,24 +413,22 @@
                                             <span> {{ list.grossAmount }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.convertedtotal }} </span>
+                                            <span> {{ list.convertedTotal }} </span>
 
                                         </td>
                                         <td>
                                             <span> {{ list.discountAmount }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.standardsupply }} </span>
+                                            <span> {{ list.exc_tax_net_total }} </span>
                                         </td>
                                         <td>
                                             <span> {{ list.taxAmt }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.currency }} </span>
+                                            <span> {{ list.output_tax_val }} </span>
                                         </td>
-                                        <td>
-                                            <span> {{ list.outputtax }} </span>
-                                        </td>
+                                       
                                         <td>
                                             <span> {{ list.shippingAmt }} </span>
                                         </td>
@@ -439,10 +436,13 @@
                                             <span> {{ list.add_amt }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.paidamt }} </span>
+                                            <span> {{ list.total_revenue }} </span>
                                         </td>
                                         <td>
-                                            <span> {{ list.owingamt }} </span>
+                                            <span> {{ list.paidAmount }} </span>
+                                        </td>
+                                        <td>
+                                            <span> {{ list.owingAmt }} </span>
                                         </td>
                                         <td>
                                             <span> {{ list.aging }} </span>
@@ -459,3 +459,7 @@
     </div>
 
 </div>
+
+
+
+
