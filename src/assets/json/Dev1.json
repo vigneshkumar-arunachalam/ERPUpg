@@ -26,7 +26,7 @@
 
     ],
     "isVisible": true,
-    "value": "/ledger"
+    "value": "/ledger--"
 },
     {
     "name": "Billing",
@@ -129,7 +129,7 @@
       
     ],
     "isVisible": true,
-    "value": "/bing"
+    "value": "/bing--"
 }, {
     "name": "CRM",
     "icon":"layers",
@@ -150,7 +150,7 @@
 
     ],
     "isVisible": true,
-    "value": "/crm"
+    "value": "/crm--"
 }, 
 {
    "name": "Masters",
@@ -181,7 +181,7 @@
 
    ],
    "isVisible": true,
-   "value": "/custom"
+   "value": "/custom--"
 }, {
     "name": "Contract",
     "icon": "slack",
@@ -264,12 +264,28 @@
             "subchild": [],
             "isVisible": true,
             "value": "/invoiceReportsOld"
+        },{
+            "name": "Purchase Entry Report",
+            "icon": "cast",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/purchaseentryreport"
+        },{
+            "name": "GST Report",
+            "icon": "play-circle",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/gstreport"
         }
        
 
     ],
     "isVisible": true,
-    "value": "/reports"
+    "value": "/reports--"
 },
 {
     "name": "3CX",

@@ -19,50 +19,73 @@
                     <th>N</th>
                     <th>O</th>
                     <th>P</th>
-                    <th>Q</th>
-                    <th>R</th>
+                 
                 </tr>
                 <tr>
                     <th>INV NO</th>
                     <th>DATE</th>
-                    <th>BILLER NAME</th>
+                    <th>BILLER </th>
                     <th>CUSTOMER NAME</th>
                     <th>CURRENCY</th>
                     <th>CCR</th>
-                    <th>BASE TOTAL</th>
-                    <th>CONVERTED TOTAL</th>
+                    <th>NET TOTAL</th>
                     <th>DISCOUNT</th>
-                    <th>STANDARD SUPPLY (1)(2)</th>
-                    <th>RECEIVED TAX</th>
-                    <th>OUTPUT TAX(6)</th>
-                    <th>SHIPPING AMT</th>
-                    <th>BANKING AMT</th>
-                    <th>TOTAL REVENUE(13)</th>
+                    <th>NET TOTAL-1</th>
+                    <th>TAX</th>
+                    <th>TAX-2</th>
+                    <th>TAX OCT</th>
+                    <th>GROSS AMT</th>
                     <th>PAID AMT</th>
                     <th>OWING AMT</th>
                     <th>AGING</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let list of getInvoiceReportList">
+                <tr *ngFor="let list of printPreviewList ">
                     <td>{{ list.invoice_no }}</td>
                     <td>{{ list.billDate }}</td>
                     <td>{{ list.billerName }}</td>
                     <td>{{ list.customerName }}</td>
                     <td>{{ list.Currency }}</td>
                     <td>{{ list.conversionRate }}</td>
-                    <td>{{ list.grossAmount }}</td>
-                    <td>{{ list.convertedTotal }}</td>
-                    <td>{{ list.discountAmount }}</td>
-                    <td>{{ list.exc_tax_net_total }}</td>
+                    <td>{{ list.netTotal }}</td>
+                    <td>{{ list.net_total1 }}</td>
                     <td>{{ list.taxAmt }}</td>
-                    <td>{{ list.output_tax_val }}</td>
-                    <td>{{ list.shippingAmt }}</td>
+                    <td>{{ list.taxAmt2 }}</td>
+                    <td>{{ list.taxAmt }}</td>
                     <td>{{ list.add_amt }}</td>
-                    <td>{{ list.total_revenue }}</td>
+                    <td>{{ list.netPayment }}</td>
                     <td>{{ list.paidAmount }}</td>
                     <td>{{ list.owingAmt }}</td>
                     <td>{{ list.aging }}</td>
+                </tr>
+                <tr *ngFor="let list1 of printPreviewSubTotals">
+                    <td colspan="6" style="font-weight: 700;">sub Total </td>
+                    <td style="font-weight: 700;">{{list1.gsrAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.discountAmountAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.net_total1_tot}}</td>
+                    <td style="font-weight: 700;">{{list1.taxTotAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.taxTotalAmt2}}</td>
+                    <td style="font-weight: 700;">{{list1.taxTotAmt2}}</td>
+
+                    <td style="font-weight: 700;">{{list1.netAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.pAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.oAmt}}</td>
+
+                </tr>
+                <tr *ngFor="let list1 of printPreviewTotals">
+                    <td colspan="6" style="font-weight: 700;">Total </td>
+                    <td style="font-weight: 700;">{{list1.gsrAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.discountAmountAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.net_total1_tot}}</td>
+                    <td style="font-weight: 700;">{{list1.taxTotAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.taxTotalAmt2}}</td>
+                    <td style="font-weight: 700;">{{list1.taxTotAmt2}}</td>
+
+                    <td style="font-weight: 700;">{{list1.netAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.pAmt}}</td>
+                    <td style="font-weight: 700;">{{list1.oAmt}}</td>
+
                 </tr>
             </tbody>
         </table>

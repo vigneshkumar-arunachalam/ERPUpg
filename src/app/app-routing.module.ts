@@ -84,11 +84,16 @@ import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.c
 import { ReportsComponent } from './reports/reports.component';
 import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicereportsold.component';
 import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/printpreview.component';
-
+import { PurchaseentryreportComponent } from './reports/purchaseentryreport/purchaseentryreport.component';
+import { GstreportComponent } from './reports/gstreport/gstreport.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'gstreport', component: GstreportComponent
+  },{
+    path: 'purchaseentryreport', component: PurchaseentryreportComponent
   },{
     path: 'printpreview', component: PrintpreviewComponent
   },{

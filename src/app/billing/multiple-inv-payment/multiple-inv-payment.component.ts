@@ -483,9 +483,13 @@ export class MultipleInvPaymentComponent implements OnInit {
 
     var paymentChildID = this.editMulInvGroupForm.value.edit_addresses[i].payment_child_id;
    //vignesh- to delete id from array since paramesh not given api
+   console.log("paymentChildID",paymentChildID)
+   console.log("i",i)
+   console.log("this.edit_array---before slice",this.edit_array)
     if (i > -1) {
       this.edit_array.splice(i, 1);
     }
+    console.log("this.edit_array---after slice",this.edit_array)
 
     Swal.fire({
       title: 'Are you sure?',

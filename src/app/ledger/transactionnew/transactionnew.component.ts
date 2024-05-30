@@ -40,6 +40,10 @@ export class TransactionnewComponent implements OnInit {
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
   ngOnInit(): void {
+    this.searchTransactionForm = new FormGroup({
+      'search_billerName1': new FormControl(null),
+      'company_Name6': new FormControl(null),
+    });
     this.getTransactionNewList({});
 
     this.Transaction_Type_List = [
@@ -75,10 +79,7 @@ export class TransactionnewComponent implements OnInit {
       'view_Comments': new FormControl(null),
 
     });
-    this.searchTransactionForm = new FormGroup({
-      'search_billerName': new FormControl(null),
-      'company_Name': new FormControl(null),
-    });
+   
     this.TransactionCommentsForm = new FormGroup({
       'transaction_comments': new FormControl(null),
      
@@ -171,6 +172,9 @@ export class TransactionnewComponent implements OnInit {
 
     TNapi_req.off_set = list_data.offset;;
     TNapi_req.limit_val = list_data.limit;
+     TNapi_req.search_txt=this.searchTransactionForm.value.company_Name6;
+   // TNapi_req.search_txt='';
+    TNapi_req.transaction_type=this.edit_array_SearchBiller_Checkbox;
     TNapi_req.current_page = "";
 
     api_req.element_data = TNapi_req;
@@ -182,7 +186,7 @@ export class TransactionnewComponent implements OnInit {
         console.log(this.Transaction_list);
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
-
+        $('#searchTransactionFormId').modal('hide');
       }
 
     });

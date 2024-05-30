@@ -887,7 +887,7 @@ export class EditTransactionNewComponent implements OnInit {
       if (response.status == true) {
         console.log("response.editData.product_category_id",response.editData.product_category_id)
 
-        alert(response.editData.product_category_id)
+     
         this.changeCategory(response.editData.product_category_id);
         setTimeout(() => {                           // <<<---using ()=> syntax
           this.changeCategory(response.editData.product_category_id);
@@ -1044,7 +1044,7 @@ export class EditTransactionNewComponent implements OnInit {
               message: "File Attachment Deleted successfully",
               position: 'topRight'
             });
-            // this.editPurchaseEntry();
+             this.editPurchaseEntry();
 
 
           } else {
@@ -1321,7 +1321,7 @@ export class EditTransactionNewComponent implements OnInit {
 
 
           iziToast.success({
-            message: "Transaction details Up successfully",
+            message: "Transaction details Updated successfully",
             position: 'topRight'
           });
         }
@@ -1383,7 +1383,7 @@ export class EditTransactionNewComponent implements OnInit {
     window.location.reload();
   }
   Logistics() {
-    alert("hello");
+   
   }
 
 }

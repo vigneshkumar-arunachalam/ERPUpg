@@ -1,0 +1,583 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card quotation">
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+                            Home</a>
+                        <span class="breadcrumb-item active">Purchase Entry Management Report</span>
+                    </h3>
+
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="purchaseEntryReport">
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+
+                                    <label for="IR_From" class="col-lg-12 col-form-label">From</label>
+
+                                    <div class="col-lg-12">
+
+                                        <input type="date" [readonly]="isReadOnly" class="form-control"
+                                            formControlName="IR_From" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+
+                                    <label for="IR_To" class="col-lg-12 col-form-label">To</label>
+
+                                    <div class="col-lg-12">
+
+                                        <input type="date" class="form-control" formControlName="IR_To" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+
+                                    <label for="IR_BillerName" class="col-lg-12 col-form-label">Vendor Name</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_vendorName" class="form-control"
+                                            formControlName="IR_vendorName">
+                                            <option [ngValue]="null" selected>Select Vendor Name</option>
+                                            <option *ngFor="let from of vendorsList" value="{{ from.vendorId }}">
+                                                {{ from.vendorName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+
+                                    <label for="IR_InvoiceNumber" class="col-lg-12 col-form-label">Invoice No</label>
+
+                                    <div class="col-lg-12">
+
+                                        <select name="IR_InvoiceNumber" class="form-control"
+                                            formControlName="IR_InvoiceNumber">
+                                            <option [ngValue]="null" selected>All</option>
+                                            <option *ngFor="let from of invoice_noList"
+                                                value="{{ from.purchaseEntryId }}">
+                                                {{ from.invoiceNo }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+
+                                    <label for="IR_purchaseType" class="col-lg-12 col-form-label">Purchase Type</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_purchaseType" class="form-control"
+                                            formControlName="IR_purchaseType">
+                                            <option [ngValue]="null" selected>Select Purchase Type</option>
+                                            <option *ngFor="let from of purchaseTypeList"
+                                                value="{{ from.purchase_type_id }}">
+                                                {{ from.purchase_type_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+
+                                    <label for="IR_BillerName" class="col-lg-12 col-form-label">Biller Name</label>
+
+                                    <div class="col-lg-12">
+
+
+                                        <select name="IR_BillerName" class="form-control" (change)="getCustomer($event)"
+                                            formControlName="IR_BillerName">
+                                            <option [ngValue]="null" selected>Select Biller Name</option>
+                                            <option *ngFor="let from of billerList" value="{{ from.billerId }}">
+                                                {{ from.billerName }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group row">
+                                    <div class="col-lg-12 ">
+
+                                        <label for="IR_NoTax" class="col-form-label ml-2">No Tax</label>
+                                        <input type="checkbox" style="margin-left: 12px;" id="IR_NoTax"
+                                            formControlName="IR_Tax" value="withoutTax" (change)="NoTax($event)" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="quotation-btn-section mt-4">
+
+                                <button type="button" title="Go" class="btn btn-primary btn-default btn-squared"
+                                    (click)="getPurchaseEntryReport()"
+                                    style="margin-right: 10px;background-color: #0b0531;">
+                                    <i class="fa fa-search" style="margin-right:0;"></i>
+                                    Go
+                                </button>
+                                <button type="button" title="Export" class="btn btn-primary btn-default btn-squared"
+                                    data-toggle="modal" data-target="#searchMulInvPayId"
+                                    style="margin-right: 10px;background-color: #cf130a;">
+                                    <i class="fa fa-share-alt" style="margin-right:0;"></i>
+                                    Export
+                                </button>
+                                <button type="button" title="Print Preview"
+                                    class="btn btn-primary btn-default btn-squared"
+                                    (click)="getPurchaseEntryReportPrint()"
+                                    style="margin-right: 10px;background-color: #0d8a2a;">
+                                    <i class="fa fa-outdent" style="margin-right:0;"></i>
+                                    Print Preview
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100 mt-4" *ngIf="this.go==true">
+                        <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #200122, #6f0000);">
+                            Purchase Entry Report List </h2>
+                        <div class="table-responsive" style="overflow: scroll">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">A</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">B</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">C</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">D</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">E</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">F</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">G</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">H</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">I</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">J</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">K</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">L</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">M</span>
+                                        </th>
+
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">N</span>
+                                        </th>
+
+
+                                    </tr>
+                                    <tr class="userDatatable-header">
+                                        <th>
+                                            <span class="userDatatable-title">PUR NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INVOICE DATE</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">BILLER NAME</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">PURCHASE TYPE</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">VENDOR NAME</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INVOICE NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">PO NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CURR</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CURR CONV</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INVOICE AMOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INV CONV AMOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">TAX AMOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INV WOT</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">INV(5.6%)</span>
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of getPurchaseEntryReportList;let i = index">
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.PurchaseEntryNo }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryNo }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.PurchaseEntryDate }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryDate }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.billerName }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.billerName }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.purchase_type_name }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.purchase_type_name }}</td>
+                                      
+                                       
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.VendorName }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.VendorName }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.InvoiceNo }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceNo }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.PONumber }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.PONumber }}</td>
+
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.currency }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.currency }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.conversionRate }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.conversionRate }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.InvoiceAmount }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceAmount }}</td>
+                                      
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.inv_conv_val_str }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.inv_conv_val_str }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.taxAmt }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.taxAmt }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.wot_amt }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt }}</td>
+
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.wot_amt_per }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt_per }}</td>
+                                        
+                                       
+
+                                    </tr>
+
+                                    <tr *ngFor="let list1 of getPurchaseEntryReportTotal">
+                                        <td colspan="9"
+                                            style="font-weight: 700;background-color: rgb(42 56 11);color:white">Total
+                                        </td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.InvoiceAmount_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.inv_conv_val_str_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.taxAmt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.wot_amt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.wot_amt_per_tot}}</td>
+
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                    <div class="print-container mt-4" *ngIf="this.printPreview==true">
+                        <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(3, 9, 50);background: #200122; /* fallback for old browsers */
+                        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                        background: linear-gradient(to right, #9b6f9e, #cade4c);">
+                            Print Preview </h2>
+                        <div class="table-responsive " style="overflow: scroll" id="cc">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">A</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">B</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">C</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">D</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">E</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">F</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">G</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">H</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">I</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">J</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">K</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">L</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">M</span>
+                                        </th>
+
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">N</span>
+                                        </th>
+
+
+                                    </tr>
+                                    <tr class="userDatatable-header">
+                                        <th>
+                                            <span class="userDatatable-title">PUR NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INVOICE DATE</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">BILLER NAME</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">PURCHASE TYPE</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">VENDOR NAME</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INVOICE NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">PO NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CURR</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CURR CONV</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INVOICE AMOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INV CONV AMOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">TAX AMOUNT</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">INV WOT</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">INV(5.6%)</span>
+                                        </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let list of PurchaseEntryPrintList;let i = index">
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.PurchaseEntryNo }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryNo }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.PurchaseEntryDate }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryDate }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.billerName }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.billerName }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.purchase_type_name }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.purchase_type_name }}</td>
+                                      
+                                       
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.VendorName }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.VendorName }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.InvoiceNo }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceNo }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.PONumber }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.PONumber }}</td>
+
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.currency }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.currency }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.conversionRate }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.conversionRate }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.InvoiceAmount }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceAmount }}</td>
+                                      
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.inv_conv_val_str }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.inv_conv_val_str }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.taxAmt }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.taxAmt }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.wot_amt }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt }}</td>
+
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
+                                            <span> {{ list.wot_amt_per }} </span>
+                                        </td>
+                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt_per }}</td>
+
+                                    </tr>
+                                    <tr *ngFor="let list1 of getPurchaseEntryPrintTotal">
+                                        <td colspan="9"
+                                            style="font-weight: 700;background-color: rgb(42 56 11);color:white">Total
+                                        </td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.InvoiceAmount_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.inv_conv_val_str_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.taxAmt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.wot_amt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">
+                                            {{list1.wot_amt_per_tot}}</td>
+
+
+                                    </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+                    <div *ngIf="this.printPreview==true" class="mt-4">
+                        <button type="button" title="Print" class="btn btn-dark" (click)="printTable()"
+                            style="margin-right: 30px;"><i class="fas fa-print" style="margin-right:0;">Print </i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

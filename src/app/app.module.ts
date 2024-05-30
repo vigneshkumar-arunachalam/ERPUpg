@@ -110,6 +110,8 @@ import { PurchaseEntryComponent } from './ledger/purchase-entry/purchase-entry.c
 import { ReportsComponent } from './reports/reports.component';
 import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicereportsold.component';
 import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/printpreview.component';
+import { PurchaseentryreportComponent } from './reports/purchaseentryreport/purchaseentryreport.component';
+import { GstreportComponent } from './reports/gstreport/gstreport.component';
 
 
 
@@ -119,6 +121,7 @@ import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/
 @NgModule({
   declarations: [
     AppComponent,
+ 
     MastersComponent,
     HeaderComponent,
     FooterComponent,
@@ -203,12 +206,14 @@ import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/
      PurchaseEntryComponent,
      ReportsComponent,
      InvoicereportsoldComponent,
-     PrintpreviewComponent
+     PrintpreviewComponent,
+     PurchaseentryreportComponent,
+     GstreportComponent
      
     
   ],
   imports: [
-    BrowserModule,CanvasJSAngularChartsModule,
+    BrowserModule,CanvasJSAngularChartsModule, 
     FormsModule,MatTabsModule,NgxSpinnerModule,
     ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,

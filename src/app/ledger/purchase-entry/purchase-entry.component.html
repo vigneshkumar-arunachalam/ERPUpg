@@ -230,41 +230,41 @@
                 <br>
                 <nav class="atbd-page">
                   <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
-                    <li class="page-item">
-                      <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                        href="javascript:void(0)"
-                        (click)="paginationData.backtab=='show' ? PurchaseEntryList({'offset':paginationData.start}) : false"><i
-                          class="fas fa-angle-left"></i></a>
-                    </li>
-                    <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                      <a class="page-link" href="javascript:void(0)"
-                        (click)="PurchaseEntryList({'offset':paginationData.back})"><i
-                          class="fas fa-angle-double-left"></i></a>
-                    </li>
-                    <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                      *ngFor="let pagination of paginationData.data;let i=index">
-                      <a class="page-link" href="javascript:void(0)"
-                        (click)=" pagination.load ==true ? PurchaseEntryList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                    </li>
-                    <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                      <a class="page-link" href="javascript:void(0)"
-                        (click)="PurchaseEntryList({'offset':paginationData.next})"><i
-                          class="fas fa-angle-double-right"></i></a>
-                    </li>
-                    <li class="page-item">
-                      <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                        href="javascript:void(0)"
-                        (click)="paginationData.nexttab =='show' ? PurchaseEntryList({'offset':paginationData.end}) : false"><i
-                          class="fas fa-angle-right"></i></a>
-                    </li>
-                    <li class="dropdown__item">
-                      <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
-      
-                      </a>
-                    </li>
+                      <li class="page-item">
+                          <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                              href="javascript:void(0)"
+                              (click)="paginationData.backtab=='show' ? PurchaseEntryList({'offset':paginationData.start}) : false"><i
+                                  class="fas fa-angle-left"></i></a>
+                      </li>
+                      <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                          <a class="page-link" href="javascript:void(0)"
+                              (click)="PurchaseEntryList({'offset':paginationData.back})"><i
+                                  class="fas fa-angle-double-left"></i></a>
+                      </li>
+                      <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                          *ngFor="let pagination of paginationData.data;let i=index">
+                          <a class="page-link" href="javascript:void(0)"
+                              (click)=" pagination.load ==true ? PurchaseEntryList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                              <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                      </li>
+                      <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                          <a class="page-link" href="javascript:void(0)"
+                              (click)="PurchaseEntryList({'offset':paginationData.next})"><i
+                                  class="fas fa-angle-double-right"></i></a>
+                      </li>
+                      <li class="page-item">
+                          <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                              href="javascript:void(0)"
+                              (click)="paginationData.nexttab =='show' ? PurchaseEntryList({'offset':paginationData.end}) : false"><i
+                                  class="fas fa-angle-right"></i></a>
+                      </li>
+                      <li class="dropdown__item">
+                          <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                          </a>
+                      </li>
                   </ul>
-                </nav>
+              </nav>
       
               </div>
               <!-- All sub menu ends -->
@@ -396,7 +396,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="remove" title="View" data-toggle="modal" data-target="#viewPurchaseEntryFormId"
-                                      (click)="viewEnquiry(list.purchaseEntryNo)">
+                                      (click)="viewEnquiry(list.purchaseEntryId)">
       
                                       <img class="show" src="assets/img/icon2/eye-yellow.png">
                                       <img class="hide" src="assets/img/icon2/eye-black1.png">
@@ -405,7 +405,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover3" title="Edit" data-toggle="modal" data-target="#editPurchaseEntryFormId"
-                                      (click)="editEnquiry_ML(list.purchaseEntryNo)">
+                                      (click)="editEnquiry_ML(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/edit-blue.png">
                                       <img class="hide" src="assets/img/icon2/edit-black.png">
                                     </a>
@@ -413,7 +413,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
-                                      (click)="deleteEnquiry_ML(list.purchaseEntryNo)">
+                                      (click)="deleteEnquiry_ML(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/delete-blue.png">
                                       <img class="hide" src="assets/img/icon2/delete-black.png">
                                     </a>
@@ -421,7 +421,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Recurring" data-toggle="modal" data-target="#RecurringFormId"
-                                      (click)="Recurring(list.purchaseEntryNo)">
+                                      (click)="Recurring(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/R-blue.png">
                                       <img class="hide" src="assets/img/icon2/R-black.png">
                                     </a>
@@ -429,7 +429,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Payment Process" data-toggle="modal"
-                                      data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryNo)">
+                                      data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/P-blue.png">
                                       <img class="hide" src="assets/img/icon2/P-black.png">
                                     </a>
@@ -617,7 +617,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="remove" title="View" data-toggle="modal" data-target="#viewPurchaseEntryFormId"
-                                      (click)="viewEnquiry(list.purchaseEntryNo)">
+                                      (click)="viewEnquiry(list.purchaseEntryId)">
       
                                       <img class="show" src="assets/img/icon2/eye-yellow.png">
                                       <img class="hide" src="assets/img/icon2/eye-black1.png">
@@ -626,7 +626,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover3" title="Edit" data-toggle="modal" data-target="#editPurchaseEntryFormId"
-                                      (click)="editEnquiry_ML(list.purchaseEntryNo)">
+                                      (click)="editEnquiry_ML(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/edit-blue.png">
                                       <img class="hide" src="assets/img/icon2/edit-black.png">
                                     </a>
@@ -634,7 +634,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
-                                      (click)="deleteEnquiry_ML(list.purchaseEntryNo)">
+                                      (click)="deleteEnquiry_ML(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/delete-blue.png">
                                       <img class="hide" src="assets/img/icon2/delete-black.png">
                                     </a>
@@ -642,7 +642,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Recurring" data-toggle="modal" data-target="#RecurringFormId"
-                                      (click)="Recurring(list.purchaseEntryNo)">
+                                      (click)="Recurring(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/R-blue.png">
                                       <img class="hide" src="assets/img/icon2/R-black.png">
                                     </a>
@@ -650,7 +650,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Payment Process" data-toggle="modal"
-                                      data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryNo)">
+                                      data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/P-blue.png">
                                       <img class="hide" src="assets/img/icon2/P-black.png">
                                     </a>
@@ -835,7 +835,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="remove" title="View" data-toggle="modal" data-target="#viewPurchaseEntryFormId"
-                                      (click)="viewEnquiry(list.purchaseEntryNo)">
+                                      (click)="viewEnquiry(list.purchaseEntryId)">
       
                                       <img class="show" src="assets/img/icon2/eye-yellow.png">
                                       <img class="hide" src="assets/img/icon2/eye-black1.png">
@@ -844,7 +844,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover3" title="Edit" data-toggle="modal" data-target="#editPurchaseEntryFormId"
-                                      (click)="editEnquiry_ML(list.purchaseEntryNo)">
+                                      (click)="editEnquiry_ML(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/edit-blue.png">
                                       <img class="hide" src="assets/img/icon2/edit-black.png">
                                     </a>
@@ -852,7 +852,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Delete" data-toggle="modal" data-target="#DeleteInvoice"
-                                      (click)="deleteEnquiry_ML(list.purchaseEntryNo)">
+                                      (click)="deleteEnquiry_ML(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/delete-blue.png">
                                       <img class="hide" src="assets/img/icon2/delete-black.png">
                                     </a>
@@ -860,7 +860,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Recurring" data-toggle="modal" data-target="#RecurringFormId"
-                                      (click)="Recurring(list.purchaseEntryNo)">
+                                      (click)="Recurring(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/R-blue.png">
                                       <img class="hide" src="assets/img/icon2/R-black.png">
                                     </a>
@@ -868,7 +868,7 @@
       
                                   <li class="dropdown__item">
                                     <a class="hover4" title="Payment Process" data-toggle="modal"
-                                      data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryNo)">
+                                      data-target="#paymentProcessFormId" (click)="paymentProcess(list.purchaseEntryId)">
                                       <img class="show" src="assets/img/icon2/P-blue.png">
                                       <img class="hide" src="assets/img/icon2/P-black.png">
                                     </a>
@@ -1148,7 +1148,7 @@
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_billerName" class="col-lg-12 col-form-label">Biller Name</label>
+                <label for="edit_billerName" class="col-lg-12 col-form-label">Biller Name<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
 
                   <select name="add_billerName1" id="add_billerName1" class="form-control"
@@ -1164,7 +1164,7 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="add_PurchaseEntryNo" class="col-lg-12  col-form-label">Purchase Entry No</label>
+                <label for="add_PurchaseEntryNo" class="col-lg-12  col-form-label">Purchase Entry No<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="add_PurchaseEntryNo" />
                 </div>
@@ -1172,7 +1172,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="add_PurchaseEntryDate" class="col-lg-12 col-form-label">Purchase Entry Date</label>
+                <label for="add_PurchaseEntryDate" class="col-lg-12 col-form-label">Purchase Entry Date<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
                   <input type="date" class="form-control" formControlName="add_PurchaseEntryDate" />
                 </div>
@@ -1203,7 +1203,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="add_PurchaseType" class="col-lg-12 col-form-label">Purchase Type</label>
+                <label for="add_PurchaseType" class="col-lg-12 col-form-label">Purchase Type<span style="color: red;"> *</span></label>
                 <div class="col-lg-12">
 
                   <select name="add_PurchaseType" id="add_PurchaseType" class="form-control"
@@ -1221,7 +1221,7 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="add_InvoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
+                <label for="add_InvoiceNo" class="col-lg-12 col-form-label">Invoice No<span style="color: red;"> *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="add_InvoiceNo" />
 
@@ -1278,7 +1278,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="add_amount " class="col-lg-12 col-form-label">Invoice Amount</label>
+                <label for="add_amount " class="col-lg-12 col-form-label">Invoice Amount<span style="color: red;"> *</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="add_amount" />
                 </div>
@@ -1294,7 +1294,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="savePurchaseEntry()">
+        <button type="button" class="btn btn-primary"  (click)="savePurchaseEntry()">
           Save
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1779,7 +1779,9 @@
             </div> -->
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="pay_paymentType" class="col-lg-12 col-form-label">Payment Type/Method</label>
+                <label for="pay_paymentType" class="col-lg-12 col-form-label">Payment Type/Method
+                  <span style="color:red">*</span>
+                </label>
                 <div class="col-lg-12">
                   <select class="form-control" formControlName="pay_paymentType" name="pay_paymentType"
                     (change)="PP_PaymentMethod($event)">
@@ -1799,7 +1801,7 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="pay_description" class="col-lg-12  col-form-label">Description</label>
+                <label for="pay_description" class="col-lg-12  col-form-label">Description<span style="color:red">*</span></label>
                 <div class="col-lg-12">
 
                   <textarea class="form-control" rows="3" formControlName="pay_description"></textarea>
@@ -1826,7 +1828,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class=" btn btn-primary" data-dismiss="modal" (click)="paymentProcessUpdate()">Update
+        <button type="button" class=" btn btn-primary"  (click)="paymentProcessUpdate()">Update
         </button>
 
         <button type="button" class="btn btn-dark" data-dismiss="modal">

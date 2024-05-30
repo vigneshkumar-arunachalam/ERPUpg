@@ -1272,6 +1272,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice1(data: any) {
+    // alert(2)
     console.log("getinvoice1")
 
     console.log("billerid", this.edit_array_SearchBiller_Checkbox);
@@ -1461,6 +1462,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice(data: any) {
+   // alert(1)
     console.log("getinvoice")
     this.spinner.show();
     console.log("billerid", this.edit_array_SearchBiller_Checkbox);

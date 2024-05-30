@@ -4,6 +4,7 @@ import { ServerService } from 'src/app/services/server.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 declare var $: any
@@ -18,45 +19,89 @@ declare var tinymce: any;
 })
 export class PrintpreviewComponent implements OnInit {
   getInvoiceReportList: any;
+  billerId: any;
+  customerId: any;
+  billId: any;
+  invoiceType: any;
+  performaType: any;
+  currenyType: any;
+  export_state: any;
+  fromdt: any;
+  todt: any;
+  without_tax: boolean;
+  with_tax: boolean;
+  with_tax2: boolean;
+  with_export: boolean;
+  tax: any;
+  printPreviewList: any;
+  printPreviewSubTotals: any;
+  printPreviewTotals: any;
 
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
-    private spinner: NgxSpinnerService, private injector: Injector, private http: HttpClient) { }
+    private spinner: NgxSpinnerService, private route: ActivatedRoute, private injector: Injector, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.getInvoiceReport();
+   // this.getInvoiceReport();
+    this.route.queryParams
+      .subscribe(params => {
+        console.log("params output value", params);
+        this.billerId = params['billerId'];
+        this.customerId = params['customerId'];
+        this.billId = params['billId'];
+        this.invoiceType = params['invoiceType'];
+        this.performaType = params['performaType'];
+        this.currenyType = params['currenyType'];
+        this.export_state = params['export_state'];
+        this.fromdt = params['fromdt'];
+        this.todt = params['todt'];
+        this.without_tax = JSON.parse(params['without_tax']);
+        this.with_tax = JSON.parse(params['with_tax']);
+        this.with_tax2 = JSON.parse(params['with_tax2']);
+        this.with_export = JSON.parse(params['with_export']);
+        this.tax = params['tax'];
+      }
+      );
+      this.getInvoiceReportPrintPreview();
+      console.log("this.without_tax", this.without_tax)
   }
-  getInvoiceReport() {
+  getInvoiceReportPrintPreview() {
     this.spinner.show();
 
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "invoice";
-    api_req.api_url = "getInvoiceReport"
+    api_req.api_url = "reports/invoiceReportPrint"
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_mulInvpay.action = "getInvoiceReport";
+    api_mulInvpay.action = "reports/invoiceReportPrint";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
-    api_mulInvpay.billerId = 3;
-    api_mulInvpay.customerId ='';
-    api_mulInvpay.billId ='';
-    api_mulInvpay.invoiceType ='';
-    api_mulInvpay.performaType ='';
-    api_mulInvpay.currenyType ='';
-    api_mulInvpay.export_state ='';
-    api_mulInvpay.fromdt ='';
-    api_mulInvpay.todt ='';
-    api_mulInvpay.without_tax ='';
-    api_mulInvpay.with_tax ='';
-    api_mulInvpay.with_tax2 ='';
-    api_mulInvpay.with_export ='';
+    api_mulInvpay.billerId = this.billerId;
+    api_mulInvpay.customerId =this.customerId;
+    api_mulInvpay.billId =this.billId;
+    api_mulInvpay.invoiceType =this.invoiceType;
+    api_mulInvpay.performaType =this.performaType;
+    api_mulInvpay.currenyType =this.currenyType;
+    api_mulInvpay.export_state =this.export_state;
+    api_mulInvpay.fromdt =this.fromdt;
+    api_mulInvpay.todt =this.todt;
+    api_mulInvpay.without_tax = this.without_tax;
+    api_mulInvpay.with_tax = this.with_tax;
+    api_mulInvpay.with_tax2 =this.with_tax2;
+    api_mulInvpay.with_export =this.with_export;
+    api_mulInvpay.tax =this.tax;
 
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
         this.spinner.hide();
-        this.getInvoiceReportList=response;
+        this.printPreviewList=response.reportsData.reports;
+        this.printPreviewSubTotals=response.reportsData.subtotals;
+        this.printPreviewTotals=response.reportsData.totals;
+        console.log("this.printPreviewList",this.printPreviewList)
+        console.log("this.printPreviewSubTotals",this.printPreviewSubTotals)
+        console.log("this.printPreviewTotals",this.printPreviewTotals)
        
     
 
@@ -84,9 +129,12 @@ export class PrintpreviewComponent implements OnInit {
         console.log("final error", error);
       };
   }
+ 
+  
   printTable() {
     const printContents = document.querySelector('#bb')?.innerHTML;
-    const popupWin = window.open('', '_blank', 'width=800,height=600');
+    const popupWin = window.open();
+   // const popupWin = window.open('', '_blank', 'width=800,height=600');
     popupWin!.document.open();
     popupWin!.document.write(`
       <html>

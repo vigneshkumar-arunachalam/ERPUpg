@@ -183,7 +183,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="invoiceNo"
-                                                    class=" col-form-label">Invoice No</label></div>
+                                                    class=" col-form-label">Invoice No<span style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
@@ -196,11 +196,23 @@
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="invoice_Date"
                                                     class=" col-form-label">Invoice
-                                                    Date</label></div>
+                                                    Date<span style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <input type="date" class="form-control"
                                                     formControlName="PE_invoice_Date" id="invoice_Date" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="invoiceAmount"
+                                                    class=" col-form-label">Invoice
+                                                    Amount<span style="color: red;">*</span></label></div>
+
+                                            <div class="col-lg-4">
+                                                <input type="number" class="form-control"
+                                                    formControlName="PE_invoiceAmount" />
                                             </div>
                                         </div>
                                     </div>
@@ -235,7 +247,7 @@
                                                     class=" col-form-label">Currency</label></div>
 
                                             <div class="col-lg-4">
-                                                <select id="Currency" class="form-control"
+                                                <select id="Currency90" class="form-control"
                                                     (change)="getCurrencyValues($event)" formControlName="PE_Currency">
                                                     <option [ngValue]="null" selected>Select Currency</option>
                                                     <option *ngFor="let curren of currencyDetails"
@@ -325,18 +337,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="invoiceAmount"
-                                                    class=" col-form-label">Invoice
-                                                    Amount</label></div>
-
-                                            <div class="col-lg-4">
-                                                <input type="number" class="form-control"
-                                                    formControlName="PE_invoiceAmount" />
-                                            </div>
-                                        </div>
-                                    </div>
+          
 
                                     <!-- <div class="col-lg-12">
                                         <div class="form-group row">
@@ -1151,189 +1152,203 @@
                 style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
                 background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                 background: linear-gradient(to right, #200122, #6f0000);">
-                    Transaction Approval Management </h2>
+                    Add Vendor Details </h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form [formGroup]="VendorManagementForm">
+                <form [formGroup]="PE_VendorManagementForm">
 
-                    <div class="modal-body commentCSS">
-                        <div class="row">
-
+                    <div class="modal-body" style="padding-top: 0;">
+                      <div class="row">
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                      
+                              <label for="PE_VM_CompanyCode" class="col-lg-12 col-form-label">Company
+                                Code<span style="color: red;">*</span></label>
+                     
                             <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_CompanyCode" class="col-lg-12 col-form-label">Company
-                                            Code<span style="color: red;">*</span></label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_CompanyCode"
-                                            id="VM_CompanyCode" />
-                                    </div>
-                                </div>
+          
+                              <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="PE_VM_CompanyCode"
+                                id="PE_VM_CompanyCode" [(ngModel)]="this.getVendorCode" />
                             </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_CompanyName" class="col-lg-12 col-form-label">Company
-                                            Name<span style="color: red;">*</span></label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_CompanyName"
-                                            id="VM_CompanyName" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_VendorName" class="col-lg-12 col-form-label">Vendor Name
-                                        <span style="color: red;">*</span></label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_VendorName"
-                                            id="VM_VendorName" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_Address1" class="col-lg-12 col-form-label">Address-1</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_Address1"
-                                            id="VM_Address1" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_Address2" class="col-lg-12 col-form-label">Address-2</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_Address2"
-                                            id="VM_Address2" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_City" class="col-lg-12 col-form-label">City</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_City"
-                                            id="VM_City" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_State" class="col-lg-12 col-form-label">State</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_State"
-                                            id="VM_State" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_Country" class="col-lg-12 col-form-label">Country</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_Country"
-                                            id="VM_Country" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_Phone" class="col-lg-12 col-form-label">Phone</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_Phone"
-                                            id="VM_Phone" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_MobilePhone" class="col-lg-12 col-form-label">Mobile
-                                            Phone</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_MobilePhone"
-                                            id="VM_MobilePhone" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_Fax" class="col-lg-12 col-form-label">Fax</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_Fax" id="VM_Fax" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <div class="col-lg-4">
-                                        <label for="VM_Email" class="col-lg-12 col-form-label">Email</label>
-                                    </div>
-                                    <div class="col-lg-8">
-
-                                        <input type="text" class="form-control" formControlName="VM_Email"
-                                            id="VM_Email" />
-                                    </div>
-                                </div>
-                            </div>
+                          </div>
                         </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_CompanyName" class="col-lg-12 col-form-label">Company
+                                Name<span style="color: red;">*</span></label>
+                         
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_CompanyName"
+                                id="PE_VM_CompanyName" />
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_VendorName" class="col-lg-12 col-form-label">Vendor Name
+                                <span style="color: red;">*</span></label>
+                          
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_VendorName" id="PE_VM_VendorName" />
+                            </div>
+                          </div>
+                        </div>
+          
+          
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_Address1" class="col-lg-12 col-form-label">Address-1</label>
+                      
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_Address1" id="PE_VM_Address1" />
+                            </div>
+                          </div>
+                        </div>
+          
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_Address2" class="col-lg-12 col-form-label">Address-2</label>
+                          
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_Address2" id="PE_VM_Address2" />
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                            
+                              <label for="PE_VM_City" class="col-lg-12 col-form-label">City</label>
+                           
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_City" id="PE_VM_City" />
+                            </div>
+                          </div>
+                        </div>
+                      
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                         
+                              <label for="PE_VM_State" class="col-lg-12 col-form-label">State</label>
+                           
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_State" id="PE_VM_State" />
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                          
+                              <label for="PE_VM_Country" class="col-lg-12 col-form-label">Country</label>
+                        
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_Country" id="PE_VM_Country" />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                          
+                              <label for="PE_VM_ZipCode" class="col-lg-12 col-form-label">Zip Code</label>
+                          
+                            <div class="col-lg-12">
+          
+                              <input type="number" class="form-control" formControlName="PE_VM_ZipCode" id="PE_VM_ZipCode" />
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_Phone" class="col-lg-12 col-form-label">Phone</label>
+                          
+                            <div class="col-lg-12">
+          
+                              <input type="number" class="form-control" formControlName="PE_VM_Phone" id="PE_VM_Phone" />
+                            </div>
+                          </div>
+                        </div>
+          
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                         
+                              <label for="PE_VM_MobilePhone" class="col-lg-12 col-form-label">Mobile
+                                Phone</label>
+                       
+                            <div class="col-lg-12">
+          
+                              <input type="number" class="form-control" formControlName="PE_VM_MobilePhone"
+                                id="PE_VM_MobilePhone" />
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_Fax" class="col-lg-12 col-form-label">Fax</label>
+                           
+                            <div class="col-lg-12">
+          
+                              <input type="text" class="form-control" formControlName="PE_VM_Fax" id="PE_VM_Fax" />
+                            </div>
+                          </div>
+                        </div>
+          
+                        <div class="col-lg-6">
+                          <div class="form-group row">
+                           
+                              <label for="PE_VM_Email" class="col-lg-12 col-form-label">Email</label>
+                           
+                            <div class="col-lg-12">
+          
+                              <input type="email" class="form-control" formControlName="PE_VM_Email" id="PE_VM_Email" />
+          
+                              <div
+                                *ngIf="PE_VendorManagementForm.get('PE_VM_Email').errors && (PE_VendorManagementForm.get('PE_VM_Email').dirty || PE_VendorManagementForm.get('PE_VM_Email').touched)">
+                                <div class="alert alert-danger alertdangerCustomCSS1 mt-2"
+                                  *ngIf="PE_VendorManagementForm.get('PE_VM_Email').errors['required']">Email is required.</div>
+                                <div class="alert alert-danger alertdangerCustomCSS1 mt-2"
+                                  *ngIf="PE_VendorManagementForm.get('PE_VM_Email').errors['email']">Please enter a valid email
+                                  address.</div>
+          
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-
-                </form>
+          
+                  </form>
             </div>
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-primary mr-4 " (click)="saveVendorManagement()">Save</button>
-                <button type="button" class="btn btn-dark" (click)="goBackADDTransaction()">Cancel</button>
+                <button type="button" class="btn btn-dark" (click)="cancelVendor()">Cancel</button>
             </div>
 
         </div>

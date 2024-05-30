@@ -420,6 +420,7 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
  /* search ends */
 
 
+
  .userDatatable  .table-responsive::-webkit-scrollbar {
   width: 12px;
 }
@@ -441,10 +442,10 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
   border:1px solid #aeb3b6;
 }
 
-#bb  table  tbody tr td{
+#cc  table  tbody tr td{
   border:3px solid #C5D9E0;
 }
-#bb  table  thead tr th{
+#cc  table  thead tr th{
   border:4px solid #C5D9E0;
   /* border:5px solid #aeb3b6; */
 }
@@ -452,9 +453,6 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
   border:1px solid rgb(1, 14, 13);
 } */
 
-tr:hover {
-  background-color: rgb(211, 244, 102)!important;
 
-}
 
 

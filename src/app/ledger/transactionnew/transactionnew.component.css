@@ -410,14 +410,14 @@ label.col-lg-2.col-form-label{text-align: right;}
 .userDatatable .table-responsive .table thead tr th:first-child,
 .userDatatable  .table-responsive .table tbody tr td:first-child
 {
-  width: 15%;
+  width: 5%;
 }
 .userDatatable table td,
 /* .userDatatable table tr td span{white-space: normal!important;} */
 .userDatatable .table-responsive .table thead tr th:nth-child(2),
 .userDatatable  .table-responsive .table tbody tr td:nth-child(2)
 {
-  width: 30%;
+  /* width: 15%; */
 }
 .userDatatable .table-responsive .table thead tr th:nth-child(3),
 .userDatatable  .table-responsive .table tbody tr td:nth-child(3)
@@ -429,7 +429,7 @@ label.col-lg-2.col-form-label{text-align: right;}
 .userDatatable .table-responsive .table thead tr th:nth-child(5),
 .userDatatable  .table-responsive .table tbody tr td:nth-child(5)
 {
-  width: 15%;
+  width: 25%;
 }
 .userDatatable  .table-responsive .table tbody tr td:nth-child(4) span,
 .userDatatable  .table-responsive .table tbody tr td:nth-child(8) span
@@ -451,11 +451,11 @@ label.col-lg-2.col-form-label{text-align: right;}
 {
   width: 10%;
 }
-.userDatatable  .table-responsive .table tbody tr td:nth-child(5) span{
+/* .userDatatable  .table-responsive .table tbody tr td:nth-child(5) span{
   white-space: nowrap!important;
   width: 120px;
 
-}
+} */
 
 
 /* Contract File Attachment modal css */
@@ -530,7 +530,7 @@ label {
 
 .form-control:disabled,
 .form-control[readonly] {
-    background-color: #f3d2f0 !important;
+    background-color: #e3f5e5 !important;
     opacity: 0.6;
     color: black!important;
 }
@@ -716,24 +716,26 @@ label {
   font-weight: 560;
 }
 
-#addNewQuotationFormId .btn-primary, #editNewQuotationFormId .btn-primary, #TransactionCommentsId .btn-primary{
+#addNewQuotationFormId .btn-primary, #editNewQuotationFormId .btn-primary, 
+#addNewQuotationFormId .btn-primary, #searchTransactionFormId .btn-primary, 
+#TransactionCommentsId .btn-primary{
   grid-column: 1/2;
   grid-row: 4/5;
   background: #6d5dfc;
   box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
   color: #e4ebf5;
 }
-#addNewQuotationFormId .modal-content,  #editNewQuotationFormId .modal-content{ 
+#addNewQuotationFormId .modal-content,  #editNewQuotationFormId .modal-content,  
+#editNewQuotationFormId .modal-content,#searchTransactionFormId .modal-content{ 
   background: #e4ebf5;
-
 }
-#addNewQuotationFormId .modal-content label,  #editNewQuotationFormId .modal-content label{
+#addNewQuotationFormId .modal-content label,  #editNewQuotationFormId .modal-content label,  #searchTransactionFormId .modal-content label{
   color: #5f63f2;
 }
 
 
 #addNewQuotationFormId .modal-content .form-control, #editNewQuotationFormId .modal-content .form-control
-, #TransactionManagementViewId .modal-content .form-control {
+, #TransactionManagementViewId .modal-content .form-control, #searchTransactionFormId .modal-content .form-control {
   border: none;
   padding-left: 1.4rem;
   box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
@@ -742,12 +744,12 @@ label {
   color: #252525;
 } 
 #addNewQuotationFormId .modal-content .form-control:focus, #editNewQuotationFormId .modal-content .form-control:focus 
-, #TransactionManagementViewId .modal-content .form-control:focus{
+, #TransactionManagementViewId .modal-content .form-control:focus, #searchTransactionFormId .modal-content .form-control:focus{
   outline: none;
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
 }
 #addNewQuotationFormId .modal-content button.close, #editNewQuotationFormId .modal-content button.close
-,#TransactionManagementViewId .modal-content button.close,#TransactionCommentsId .modal-content button.close{
+,#TransactionManagementViewId .modal-content button.close,#TransactionCommentsId .modal-content button.close,#searchTransactionFormId .modal-content button.close{
   width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -770,3 +772,20 @@ label {
 
 
 tr:hover {background-color: rgb(246, 236, 233)!important;}
+
+
+#TransactionManagementViewId {
+  opacity: 0.9;
+}
+
+#searchTransactionFormId .form-control{
+  
+  border: 1px solid #2f5c66 !important; 
+  
+}
+#searchTransactionFormId .btn-primary{
+  background: linear-gradient(to right, #262127, #54b7aa);
+  color: rgb(240 241 219);
+  box-shadow: none;
+}
+

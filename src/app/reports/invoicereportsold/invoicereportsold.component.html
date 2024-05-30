@@ -9,7 +9,7 @@
                         <span class="breadcrumb-item active">Invoice Report</span>
                     </h3>
                     <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
-                    <div class="quotation-btn-section">
+                    <!-- <div class="quotation-btn-section">
 
 
 
@@ -18,13 +18,13 @@
                             <i class="fa fa-search" style="margin-right:0;"></i>
                             Search
                         </button>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="card-body">
                     <form [formGroup]="invoiceReportOld">
                         <div class="row">
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_From" class="col-lg-12 col-form-label">From</label>
@@ -37,7 +37,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_To" class="col-lg-12 col-form-label">To</label>
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_BillerName" class="col-lg-12 col-form-label">Biller Name</label>
@@ -58,6 +58,7 @@
 
 
                                         <select name="IR_BillerName" class="form-control"
+                                        (change)="getCustomer($event)"
                                             formControlName="IR_BillerName">
                                             <option [ngValue]="null" selected>Select Biller Name</option>
                                             <option *ngFor="let from of billerList" value="{{ from.billerId }}">
@@ -67,10 +68,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6" *ngIf="(this.sdn==10)">
+                                <div class="form-group row">
+
+                                    <label for="IR_taxssn" title="Tax only for Singapore" class="col-lg-12 col-form-label">Tax<span style="background-color:#0d8a2a;color: aliceblue;"> (SDN only)</span></label>
+
+                                    <div class="col-lg-12">
 
 
+                                        <select name="IR_taxssn" class="form-control" (change)="tax_sdn($event);"
+                                            formControlName="IR_taxssn">
+                                            <option [ngValue]="null" selected>Select Tax values</option>
+                                            <option *ngFor="let from of Taxnew" value="{{ from.taxId }}">
+                                                {{ from.tax_name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <div class="col-lg-4">
+
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_CustomerName" class="col-lg-12 col-form-label">Customer Name</label>
@@ -78,7 +96,7 @@
                                     <div class="col-lg-12">
 
 
-                                        <select name="IR_CustomerName" class="form-control"
+                                        <select name="IR_CustomerName" class="form-control" (change)="getInvoiceno($event)"
                                             formControlName="IR_CustomerName">
                                             <option [ngValue]="null" selected>Select Customer Name</option>
                                             <option *ngFor="let from of customerList" value="{{ from.customerId }}">
@@ -91,7 +109,7 @@
                             </div>
 
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_InvoiceNumber" class="col-lg-12 col-form-label">Invoice No</label>
@@ -100,7 +118,7 @@
 
                                         <select name="IR_InvoiceNumber" class="form-control"
                                             formControlName="IR_InvoiceNumber">
-                                            <option [ngValue]="null" selected>Select Invoice Number</option>
+                                            <option [ngValue]="null" selected>All</option>
                                             <option *ngFor="let from of invoice_noList" value="{{ from.billId }}">
                                                 {{ from.invoice_no }}
                                             </option>
@@ -109,7 +127,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_InvoiceType" class="col-lg-12 col-form-label">Invoice Type</label>
@@ -119,7 +137,7 @@
 
                                         <select name="IR_InvoiceType" class="form-control"
                                             formControlName="IR_InvoiceType">
-                                            <option [ngValue]="null" selected>Select Invoice Type</option>
+                                            <option [ngValue]="null" selected>All</option>
                                             <option *ngFor="let from of invoice_statusList" value="{{ from.id }}">
                                                 {{ from.name }}
                                             </option>
@@ -127,9 +145,11 @@
                                     </div>
                                 </div>
                             </div>
+                            
+         
 
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_InvoiceTypePerformaSales" class="col-lg-12 col-form-label">Invoice
@@ -140,7 +160,7 @@
 
                                         <select name="IR_InvoiceTypePerformaSales" class="form-control"
                                             formControlName="IR_InvoiceTypePerformaSales">
-                                            <option [ngValue]="null" selected>Select Invoice Type</option>
+                                            <option [ngValue]="null" selected>All</option>
                                             <option *ngFor="let from of performaTypeList" value="{{ from.id }}">
                                                 {{ from.name }}
                                             </option>
@@ -149,7 +169,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_CurrencyType" class="col-lg-12 col-form-label">Currency Type</label>
@@ -159,7 +179,7 @@
 
                                         <select name="IR_CurrencyType" class="form-control"
                                             formControlName="IR_CurrencyType">
-                                            <option [ngValue]="null" selected>Select Currency Type</option>
+                                            <option [ngValue]="null" selected>All</option>
                                             <option *ngFor="let from of currencyList" value="{{ from.currencyId }}">
                                                 {{ from.currency_name }}
                                             </option>
@@ -167,7 +187,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
 
                                     <label for="IR_SalesType" class="col-lg-12 col-form-label">Sales
@@ -178,7 +198,7 @@
 
 
                                         <select name="IR_SalesType" class="form-control" formControlName="IR_SalesType">
-                                            <option [ngValue]="null" selected>Select Sales Type</option>
+                                            <option [ngValue]="null" selected>All</option>
                                             <option *ngFor="let from of export_stateList" value="{{ from.id }}">
                                                 {{ from.name }}
                                             </option>
@@ -208,42 +228,42 @@
                                 </div>
                             </div> -->
 
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
                                     <label for="IR_Tax" class="col-lg-12 col-form-label">Tax</label>
                                     <div class="col-lg-12 d-flex">
                                         <div class="form-check mr-3">
                                             <input type="checkbox" class="form-check-input" id="withoutTax"
-                                                formControlName="IR_Tax" value="withoutTax" />
-                                            <label class="form-check-label" for="withoutTax"
+                                                formControlName="IR_Tax_withoutTax" value="withoutTax" (change)="withoutTax($event)"/>
+                                            <label class="form-check-label" for="IR_Tax_withoutTax"
                                                 style="color: #f44336!important;">Without Tax</label>
                                         </div>
                                         <div class="form-check mr-3">
                                             <input type="checkbox" class="form-check-input" id="withTax"
-                                                formControlName="IR_Tax" value="withTax" />
-                                            <label class="form-check-label" for="withTax"
+                                                formControlName="IR_Tax_withTax" value="withTax" (change)="withTax($event)" />
+                                            <label class="form-check-label" for="IR_Tax_withTax"
                                                 style="color: #5f63f2!important;">With Tax</label>
                                         </div>
                                         <div class="form-check mr-3">
                                             <input type="checkbox" class="form-check-input" id="withTax2"
-                                                formControlName="IR_Tax" value="withTax2" />
-                                            <label class="form-check-label" for="withTax2"
+                                                formControlName="IR_Tax_withTax2" value="withTax2" (change)="withoutTax2($event)" />
+                                            <label class="form-check-label" for="IR_Tax_withTax2"
                                                 style="color: #654b2e !important;">With Tax - 2</label>
                                         </div>
                                         <div class="form-check">
                                             <input type="checkbox" class="form-check-input" id="export"
-                                                formControlName="IR_Tax" value="export" />
-                                            <label class="form-check-label" for="export"
+                                                formControlName="IR_Tax_export" value="export"  (change)="exportTax($event)"/>
+                                            <label class="form-check-label" for="IR_Tax_export"
                                                 style="color: #f44336!important;">Export</label>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="quotation-btn-section mt-4">
+                            <div class="quotation-btn-section mt-4 mb-4">
 
                                 <button type="button" title="Go" class="btn btn-primary btn-default btn-squared"
-                                    data-toggle="modal" data-target="#searchMulInvPayId"
+                                   (click)="getInvoiceReport()"
                                     style="margin-right: 10px;background-color: #0b0531;">
                                     <i class="fa fa-search" style="margin-right:0;"></i>
                                     Go
@@ -255,7 +275,7 @@
                                     Export
                                 </button>
                                 <button type="button" title="Print Preview"
-                                    class="btn btn-primary btn-default btn-squared" (click)="printPreviewGo()"
+                                    class="btn btn-primary btn-default btn-squared" (click)="printPreviewGo2()"
                                     style="margin-right: 10px;background-color: #0d8a2a;">
                                     <i class="fa fa-outdent" style="margin-right:0;"></i>
                                     Print Preview
@@ -266,8 +286,12 @@
 
                     </form>
 
-                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                        <div class="table-responsive" style="overflow: scroll">
+                    <div class="userDatatable global-shadow border-0 bg-white w-100" *ngIf="this.go==true">
+                        <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #200122, #6f0000);">
+    Invoice Report List </h2>
+                        <div class="table-responsive" style="overflow: scroll;height:600px">
                             <table class="table mb-0 table-borderless">
                                 <thead>
                                     <tr class="userDatatable-header" >
@@ -277,6 +301,7 @@
                                         <th style="background-color: #2B4963 !important;">
                                             <span class="userDatatable-title">B</span>
                                         </th>
+
                                         <th style="background-color: #2B4963 !important;">
                                             <span class="userDatatable-title">C</span>
                                         </th>
@@ -304,9 +329,16 @@
                                         <th style="background-color: #2B4963 !important;">
                                             <span class="userDatatable-title">K</span>
                                         </th>
-                                        <th style="background-color: #2B4963 !important;">
+                                        <th style="background-color: #2B4963 !important;" *ngIf="this.outputTax!='ALL'">
                                             <span class="userDatatable-title">L</span>
                                         </th>
+                                        <th style="background-color: #2B4963 !important;" *ngIf="this.outputTax=='ALL'">
+                                            <span class="userDatatable-title">L1</span>
+                                        </th>
+                                        <th style="background-color: #2B4963 !important;" *ngIf="this.outputTax=='ALL'">
+                                            <span class="userDatatable-title">L2</span>
+                                        </th>
+                                      
                                         <th style="background-color: #2B4963 !important;">
                                             <span class="userDatatable-title">M</span>
                                         </th>
@@ -326,11 +358,18 @@
                                         <th style="background-color: #2B4963 !important;">
                                             <span class="userDatatable-title">R</span>
                                         </th>
+                                        <th style="background-color: #2B4963 !important;">
+                                            <span class="userDatatable-title">S</span>
+                                        </th>
+                                       
 
                                     </tr>
                                     <tr class="userDatatable-header">
                                         <th>
                                             <span class="userDatatable-title">INV NO</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">CUS INV NO</span>
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">DATE</span>
@@ -359,11 +398,20 @@
                                         <th>
                                             <span class="userDatatable-title">STANDARD SUPPLY (1)(2)</span>
                                         </th>
-                                        <th>
-                                            <span class="userDatatable-title">RECEVIED TAX</span>
+                                        <th *ngIf="this.outputTax!='ALL'">
+                                            <span class="userDatatable-title">RECEIVED TAX</span>
+                                        </th>
+                                        <th *ngIf="this.outputTax=='ALL'">
+                                            <span class="userDatatable-title">RECEIVED TAX(6%)</span>
+                                        </th>
+                                        <th *ngIf="this.outputTax=='ALL'">
+                                            <span class="userDatatable-title">RECEIVED TAX(8%)</span>
                                         </th>
                                         <th>
-                                            <span class="userDatatable-title">OUTPUT TAX(6)</span>
+                                            <span class="userDatatable-title">OUTPUT TAX
+                                               
+                                                <span style="color:chartreuse"> ({{this.outputTax}})</span>
+                                            </span>
                                         </th>
                                         <th>
                                             <span class="userDatatable-title">SHIPPING AMT</span>
@@ -387,67 +435,91 @@
 
                                     </tr>
                                 </thead>
-                                <tbody *ngFor="let list of getInvoiceReportList;let i = index">
-                                    <tr>
+                                <tbody >
+                                    <tr *ngFor="let list of getInvoiceReportList;let i = index">
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.invoice_no }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.invoice_no }}</td>
 
-                                        <td>
-                                            <span> {{ list.invoice_no }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.billDate }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.billerName }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.customerName }} </span>
-                                        </td>
-
-                                        <td>
-                                            <span> {{ list.Currency }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.conversionRate }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.grossAmount }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.convertedTotal }} </span>
-
-                                        </td>
-                                        <td>
-                                            <span> {{ list.discountAmount }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.exc_tax_net_total }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.taxAmt }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.output_tax_val }} </span>
-                                        </td>
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.cus_invoice_no
+                                        }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.cus_invoice_no
+                                        }}</td>
                                        
-                                        <td>
-                                            <span> {{ list.shippingAmt }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.add_amt }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.total_revenue }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.paidAmount }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.owingAmt }} </span>
-                                        </td>
-                                        <td>
-                                            <span> {{ list.aging }} </span>
-                                        </td>
+
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.billDate }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.billDate }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.billerName }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.billerName }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.customerName }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.customerName }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.Currency }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.Currency }}</td>
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.conversionRate }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.conversionRate }}</td>
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.grossAmount }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.grossAmount }}</td>
+                            
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.convertedTotal }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.convertedTotal }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.discountAmount }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.discountAmount }}</td>
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.exc_tax_net_total }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.exc_tax_net_total }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes' && this.outputTax!='ALL' " style="background-color: #ed0514;color:white">{{ list.taxAmt }}</td>
+                                        <td *ngIf="list.color=='No' && this.outputTax!='ALL'" >{{ list.taxAmt }}</td>
+                                        <td *ngIf="list.color=='Yes' && this.outputTax=='ALL' " style="background-color: #ed0514;color:white">{{ list.taxAmt6 }}</td>
+                                        <td *ngIf="list.color=='No' && this.outputTax=='ALL'" >{{ list.taxAmt6 }}</td>
+                                        <td *ngIf="list.color=='Yes' && this.outputTax=='ALL' " style="background-color: #ed0514;color:white">{{ list.taxAmt8 }}</td>
+                                        <td *ngIf="list.color=='No' && this.outputTax=='ALL'" >{{ list.taxAmt8 }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.output_tax_val }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.output_tax_val }}</td>
+                                     
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.shippingAmt }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.shippingAmt }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.add_amt }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.add_amt }}</td>
+
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.total_revenue }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.total_revenue }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.paidAmount }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.paidAmount }}</td>
+                                       
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.owingAmt }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.owingAmt }}</td>
+                                        
+                                        <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.aging }}</td>
+                                        <td *ngIf="list.color=='No'" >{{ list.aging }}</td>
                                     </tr>
+                                    <tr *ngFor="let list1 of getInvoiceReportTotals" >
+                                        <td colspan="7" style="font-weight: 700;background-color: rgb(42 56 11);color:white">Total </td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.base_total_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.converted_total_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.discountAmt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.std_supply_tot}}</td>
+                                        <td *ngIf=" this.outputTax!='ALL' " style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.received_tax_tot}}</td>
+                                        <td *ngIf=" this.outputTax=='ALL' " style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.taxAmt6_tot}}</td>
+                                        <td *ngIf="this.outputTax=='ALL'" style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.taxAmt8_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.output_tax_tot}}</td>
+                    
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.shipping_amt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.banking_amt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.tot_revenue_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.paidAmt_tot}}</td>
+                                        <td style="font-weight: 500;background-color: rgb(42 56 11);color:white">{{list1.owingAmt_tot}}</td>
+                                    </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -459,6 +531,130 @@
     </div>
 
 </div>
+
+
+
+<div class="print-container" *ngIf="this.printPreview==true" >
+  
+    <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(3, 9, 50);background: #200122; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #9b6f9e, #cade4c);">
+    Print Preview </h2>
+    <div class="table-responsive" id="bb">
+        <table>
+            <thead>
+                
+                <tr>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">A</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">B</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">C</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;width: 15%;">D</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">E</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">F</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">G</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">H</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">I</th>
+                    <th  *ngIf="this.outputTaxPrint!='ALL'"style="background-color: #eaf6ce;color:black;padding-left: 6px;">J</th>
+                    
+                    <th  *ngIf="this.outputTaxPrint=='ALL'"style="background-color: #eaf6ce;color:black;padding-left: 6px;">J1</th>
+                    <th  *ngIf="this.outputTaxPrint=='ALL'"style="background-color: #eaf6ce;color:black;padding-left: 6px;">J2</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">K</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">L</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">M</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">N</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">O</th>
+                    <th style="background-color: #eaf6ce;color:black;padding-left: 6px;">P</th>
+                 
+                </tr>
+                <tr>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">INV NO</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">DATE</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">BILLER </th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;width: 15%;">CUSTOMER NAME</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">CUR</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">CCR</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">NET TOTAL</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">DISCOUNT</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">NET TOTAL-1</th>
+                    <th *ngIf="this.outputTaxPrint!='ALL'" style="background-color: #2B5B7E;color:white;font-weight: 500;">TAX</th>
+                    <th *ngIf="this.outputTaxPrint=='ALL'" style="background-color: #2B5B7E;color:white;font-weight: 500;">TAX(6%)</th>
+                    <th *ngIf="this.outputTaxPrint=='ALL'" style="background-color: #2B5B7E;color:white;font-weight: 500;">TAX(8%)</th>
+                   
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">TAX-2</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">TAX OCT</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">GROSS AMT</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">PAID AMT</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">OWING AMT</th>
+                    <th style="background-color: #2B5B7E;color:white;font-weight: 500;">AGING</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let list of printPreviewList " >
+                    <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">{{ list.invoice_no }}</td>
+                    <td *ngIf="list.color=='No'" >{{ list.invoice_no }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.billDate }}</td>
+                    <td *ngIf="list.color=='No'" >{{ list.billDate }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.billerName }}</td>
+                    <td  *ngIf="list.color=='No'">{{ list.billerName }}</td>
+                 
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.customerName }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.customerName }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.Currency }}</td>
+                    <td  *ngIf="list.color=='No'">{{ list.Currency }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.conversionRate }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.conversionRate }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.netTotal }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.netTotal }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.discountAmount }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.discountAmount }}</td>
+                    <td *ngIf="list.color=='Yes' && this.outputTaxPrint!='ALL'"  style="background-color: #ed0514;color:white">{{ list.taxAmt }}</td>
+                    <td *ngIf="list.color=='No' && this.outputTaxPrint!='ALL'">{{ list.taxAmt }}</td>
+                    <td *ngIf="list.color=='Yes' && this.outputTaxPrint=='ALL'"  style="background-color: #ed0514;color:white">{{ list.taxAmt }}</td>
+                    <td *ngIf="list.color=='No' && this.outputTaxPrint=='ALL'">{{ list.taxAmt6 }}</td>
+                    <td *ngIf="list.color=='Yes' && this.outputTaxPrint=='ALL'"  style="background-color: #ed0514;color:white">{{ list.taxAmt }}</td>
+                    <td *ngIf="list.color=='No' && this.outputTaxPrint=='ALL'">{{ list.taxAmt8 }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.taxAmt2 }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.taxAmt2 }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.taxAmt }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.taxAmt }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.add_amt }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.add_amt }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.netPayment }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.netPayment }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.paidAmount }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.paidAmount }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.owingAmt }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.owingAmt }}</td>
+                    <td *ngIf="list.color=='Yes'"  style="background-color: #ed0514;color:white">{{ list.aging }}</td>
+                    <td *ngIf="list.color=='No'">{{ list.aging }}</td>
+                </tr>
+             
+                <tr *ngFor="let list1 of printPreviewTotals">
+                    <td colspan="6" style="font-weight: 700;background-color: rgb(17,54,103);color:white">Total </td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.gsrAmt}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.discountAmountAmt}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.net_total1_tot}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.taxTotAmt}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.taxTotalAmt2}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.taxTotAmt2}}</td>
+
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.netAmt}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.pAmt}}</td>
+                    <td style="font-weight: 600;background-color: rgb(17,54,103);color:white">{{list1.oAmt}}</td>
+
+                </tr>
+            </tbody> 
+        </table>
+    </div>
+</div>
+
+<div *ngIf="this.printPreview==true" class="mt-4">
+    <button type="button" title="Print" class="btn btn-dark"
+    (click)="printTable()" style="margin-right: 30px;"><i class="fas fa-print"
+      style="margin-right:0;">Print </i>
+  </button>
+</div>
+
 
 
 

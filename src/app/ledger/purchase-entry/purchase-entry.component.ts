@@ -20,7 +20,7 @@ declare var tinymce: any;
 export class PurchaseEntryComponent implements OnInit {
   //pagination
   recordNotFound = false;
-  pageLimit = 500;
+  pageLimit = 50;
   paginationData: any = { "info": "hide" };
   offset_count = 0;
   user_ids: any;
@@ -150,7 +150,7 @@ export class PurchaseEntryComponent implements OnInit {
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
       console.log("this.getVendorCode", this.getVendorCode)
-    })
+    });
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
       this.getVendorList = data.vendorList;
       console.log("this.getVendorCode", this.getVendorCode)
@@ -188,7 +188,7 @@ export class PurchaseEntryComponent implements OnInit {
       'view_Currency': new FormControl(null),
     });
     this.purchasePaymentForm = new FormGroup({
-      'pay_date': new FormControl(null),
+      'pay_date': new FormControl((new Date()).toISOString().substring(0, 10)),
       'pay_Total': new FormControl(null),
       'pay_paidAmount': new FormControl(null),
       'pay_balance': new FormControl(null),
@@ -572,7 +572,21 @@ export class PurchaseEntryComponent implements OnInit {
           message: "Vendor Saved Successfully",
           position: 'topRight'
         });
-
+        this.PE_VendorManagementForm.controls['PE_VM_CompanyName'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_VendorName'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_Address1'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_Address2'].reset();
+    
+        this.PE_VendorManagementForm.controls['PE_VM_City'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_State'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_Country'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_ZipCode'].reset();
+    
+        this.PE_VendorManagementForm.controls['PE_VM_Phone'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_MobilePhone'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_Fax'].reset();
+        this.PE_VendorManagementForm.controls['PE_VM_Email'].reset();
+        this.getUserCommonDetails();
         $("#RecurringFormId").modal("hide");
 
       } else {
@@ -816,25 +830,99 @@ export class PurchaseEntryComponent implements OnInit {
     api_mulInvpay.action = "savePurchaseEntry";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
-    api_mulInvpay.company = this.addEnquiryForm.value.add_billerName1;
-    api_mulInvpay.vendorId = this.addEnquiryForm.value.add_VendorName;
+ 
+    var billername=this.addEnquiryForm.value.add_billerName1;
+    if (billername=== null || billername=== undefined || billername=== 'undefined') {
+      iziToast.error({
+        message: "Fill Biller Name  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else{
+      api_mulInvpay.company = this.addEnquiryForm.value.add_billerName1;
+    }
 
-    api_mulInvpay.purchaseEntryNo = this.addEnquiryForm.value.add_PurchaseEntryNo;
+    var vendorname=this.addEnquiryForm.value.add_VendorName;
+    if (vendorname=== null || vendorname=== undefined || vendorname=== 'undefined') {
+    
+      iziToast.error({
+        message: "Fill Vendor Name  ",
+        position: 'topRight'
+      });
+     this.spinner.hide();
+      return false;
+    }else{
+      
+      api_mulInvpay.vendorId = this.addEnquiryForm.value.add_VendorName;
+    }
+   
+    var purchaseentrynumber=this.addEnquiryForm.value.add_PurchaseEntryNo;
+    if (purchaseentrynumber=== null || purchaseentrynumber=== undefined || purchaseentrynumber=== 'undefined') {
+      iziToast.error({
+        message: "Fill Purchase Entry Number  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else{
+      api_mulInvpay.purchaseEntryNo = this.addEnquiryForm.value.add_PurchaseEntryNo;
+    }
+    
     api_mulInvpay.purchaseEntryDate = this.addEnquiryForm.value.add_PurchaseEntryDate;
-    api_mulInvpay.purchase_type_id = this.addEnquiryForm.value.add_PurchaseType;
-    api_mulInvpay.invoiceNo = this.addEnquiryForm.value.add_InvoiceNo;
+
+
+    var purchasetype=this.addEnquiryForm.value.add_PurchaseType;
+    if (purchasetype=== null || purchasetype=== undefined || purchasetype=== 'undefined') {
+      iziToast.error({
+        message: "Fill Purchase Type  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else{
+      api_mulInvpay.purchase_type_id = this.addEnquiryForm.value.add_PurchaseType;
+    }
+
+    var invoiceNumb=this.addEnquiryForm.value.add_InvoiceNo;
+    if (invoiceNumb=== null || invoiceNumb=== undefined || invoiceNumb=== 'undefined') {
+      iziToast.error({
+        message: "Fill Invoice Number  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else{
+      api_mulInvpay.invoiceNo = this.addEnquiryForm.value.add_InvoiceNo;
+    }
+ 
+ 
     api_mulInvpay.content_purchase = this.addEnquiryForm.value.add_purchaseContent;
     api_mulInvpay.poNo = this.addEnquiryForm.value.add_PONo;
     api_mulInvpay.currency = this.addEnquiryForm.value.add_Currency;
     api_mulInvpay.conversionRate = this.addEnquiryForm.value.add_convAmount;
     api_mulInvpay.taxAmount = this.addEnquiryForm.value.add_taxAmount;
-    api_mulInvpay.invoiceAmount = this.addEnquiryForm.value.add_amount;
+
+    
+    var invoiceamount=this.addEnquiryForm.value.add_amount;
+    if (invoiceamount=== null || invoiceamount=== undefined || invoiceamount=== 'undefined') {
+      iziToast.error({
+        message: "Fill Invoice Amount  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+     return false;
+    }else{
+      api_mulInvpay.invoiceAmount = this.addEnquiryForm.value.add_amount;
+    }
+   
 
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status = true) {
+      if (response.status == "true" || response.status == true ) {
         this.spinner.hide();
+        $("#addPurchaseEntryFormId").modal("hide");
         iziToast.success({
           message: "Saved Successfully",
           position: 'topRight'
@@ -842,8 +930,8 @@ export class PurchaseEntryComponent implements OnInit {
         this.addEnquiryForm.reset();
         this.PurchaseEntryList({});
         this.addEnquiryForm.value.reset();
-        $("#addPurchaseEntryFormId").modal("hide");
-
+       
+       
       } else {
         this.spinner.hide();
         iziToast.warning({
@@ -870,6 +958,7 @@ export class PurchaseEntryComponent implements OnInit {
   }
 
   viewEnquiry(purchaseEntryID: any) {
+
     this.spinner.show();
 
     let api_req: any = new Object();
@@ -1071,7 +1160,7 @@ export class PurchaseEntryComponent implements OnInit {
         this.paymentNotes = response.paymentNote;
 
         this.purchasePaymentForm.patchValue({
-          'pay_date': response.billerId,
+         // 'pay_date': response.billerId,
           'pay_Total': response.invoiceAmount,
           'pay_paidAmount': response.paid_amt,
           'pay_balance': response.bal_amt,
@@ -1110,9 +1199,20 @@ export class PurchaseEntryComponent implements OnInit {
     api_mulInvpay.action = "processPurchasePayment";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.purchase_id = this.paymentProcessPurchaseID;
-    api_mulInvpay.payment_details = this.purchasePaymentForm.value.pay_description;
+    var desc=this.purchasePaymentForm.value.pay_description;
+    if(desc==null ||desc==undefined || desc=='undefined'){
+      iziToast.error({
+        message: "Description Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else{
+      api_mulInvpay.payment_details = this.purchasePaymentForm.value.pay_description;
+    }
+ 
     api_mulInvpay.payment_method = this.purchasePaymentForm.value.pay_paymentType;
-    api_mulInvpay.purchase_paid_amt = this.purchasePaymentForm.value.pay_paidAmount;
+    api_mulInvpay.purchase_paid_amt = this.purchasePaymentForm.value.pay_rdAmount;
     api_mulInvpay.bal_amt = this.purchasePaymentForm.value.pay_balance;
 
     if (this.purchasePaymentForm.value.pay_date == undefined) {
@@ -1142,10 +1242,12 @@ export class PurchaseEntryComponent implements OnInit {
       if (response.status = true) {
         this.spinner.hide();
         this.purchasePaymentForm.controls['pay_description'].reset();
+        $('#paymentProcessFormId').modal('hide');
         iziToast.success({
           message: "Updated Successfully",
           position: 'topRight'
         });
+        this.PurchaseEntryList({});
 
 
 
@@ -1176,6 +1278,12 @@ export class PurchaseEntryComponent implements OnInit {
   }
   addVendorNameGo() {
     // $('#addPurchaseEntryFormId').modal('hide');
+    
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+      this.getVendorCode = data.vendorCode;
+      console.log("this.getVendorCode", this.getVendorCode)
+    });
+
     $('#PE_VendorManagementId').modal('show');
   }
   addLoad() {
@@ -1268,7 +1376,7 @@ export class PurchaseEntryComponent implements OnInit {
     } else {
       api_deliveryOrder.search_txt = this.searchResult_CustomerName;
     }
-
+    
     // api_deliveryOrder.search_biller_str = this.searchResult1_CustomerName;
     if (this.edit_array_SearchBiller_Checkbox == undefined) {
       api_deliveryOrder.billerID = [];

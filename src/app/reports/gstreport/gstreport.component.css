@@ -1,0 +1,60 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  .tax-table-container {
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .tax-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .tax-table th, .tax-table td {
+    padding: 12px 15px;
+    text-align: right;
+    border: 1px solid #ddd;
+  }
+  
+  .tax-table th {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+  }
+  
+  .tax-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .tax-table tbody tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .tax-table tfoot tr.total {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .tax-table tbody tr.subtotal {
+    font-weight: bold;
+    background-color: #f3f3f3;
+  }
+  
+  .tax-table tbody tr.subtotal td:first-child {
+    text-align: left;
+  }
+  
+  .tax-table tfoot tr td:first-child {
+    text-align: left;
+  }
+  

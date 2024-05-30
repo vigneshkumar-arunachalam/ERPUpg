@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { ServerService } from 'src/app/services/server.service';
-
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +18,7 @@ export class AddTransactionNewComponent implements OnInit {
   VendorManagementForm: FormGroup;
   addStock_section2: FormGroup;
   public addresses: FormArray;
+  PE_VendorManagementForm: FormGroup;
 
   //file attachment
   file: File;
@@ -42,7 +43,7 @@ export class AddTransactionNewComponent implements OnInit {
   customerName: any;
   netPayment: any;
   paymentNote: any;
-
+  isReadOnly: boolean = true;
   //tab
   Select_Transaction_Type: any = 3;
   //pe file
@@ -63,8 +64,11 @@ export class AddTransactionNewComponent implements OnInit {
   serial_no_state: any;
   payment_details: any;
   add_billerNameID: any;
+  getVendorCode: any;
 
-  constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
+  constructor(private serverService: ServerService, private fb: FormBuilder, 
+    private router: Router, private route: ActivatedRoute, 
+    private spinner: NgxSpinnerService,private http: HttpClient) {
     this.addStock_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()]),
 
@@ -74,7 +78,11 @@ export class AddTransactionNewComponent implements OnInit {
   ngOnInit(): void {
     this.addLoad();
     // this.addLoad_2();
-
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+      this.getVendorCode = data.vendorCode;
+     // console.log("this.getVendorCode", this.getVendorCode)
+    })
+   
     this.Transaction_Type_List = [
       { name: 'Deposit', selected: true, id: 1 },
       { name: 'Withdrawal', selected: true, id: 2 },
@@ -208,6 +216,22 @@ export class AddTransactionNewComponent implements OnInit {
 
 
     });
+    this.PE_VendorManagementForm = new FormGroup({
+
+      'PE_VM_CompanyCode': new FormControl(null),
+      'PE_VM_CompanyName': new FormControl(null),
+      'PE_VM_VendorName': new FormControl(null),
+      'PE_VM_Address1': new FormControl(null),
+      'PE_VM_Address2': new FormControl(null),
+      'PE_VM_City': new FormControl(null),
+      'PE_VM_State': new FormControl(null),
+      'PE_VM_Country': new FormControl(null),
+      'PE_VM_ZipCode': new FormControl(null),
+      'PE_VM_Phone': new FormControl(null),
+      'PE_VM_MobilePhone': new FormControl(null),
+      'PE_VM_Fax': new FormControl(null),
+      'PE_VM_Email': new FormControl(null, [Validators.email]),
+    });
   }
   get addressControls() {
     return this.addStock_section2.get('addresses') as FormArray
@@ -277,6 +301,12 @@ export class AddTransactionNewComponent implements OnInit {
   }
   CB_Fn_Log_AttachMobile(event: any) {
 
+  }
+  VendorAPIList(){
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
+      this.vendorDetails = data.vendorList;
+     // console.log("this.getVendorCode", this.getVendorCode)
+    })
   }
 
   fileAttachmentEvent(event: any) {
@@ -348,13 +378,16 @@ export class AddTransactionNewComponent implements OnInit {
         this.purchaseTypeDetails = response.purchase_type_det;
         this.taxProviderDetails = response.tax_provider_det;
         this.categoryDetails = response.category_det;
+        //added below newly
+        this.add_billerNameID=response.defaults_biller_id;
         this.DefaultBillerIDValue = response.defaults_biller_id;
         this.getPaymentInvoice();
         let defaultCurrencyIdString =response.default_currency_id;
         let currencyID: number = parseInt(defaultCurrencyIdString);
+        console.log("currencyID",currencyID)
         setTimeout(() => {
                   $('#biller_name8').val(response.defaults_biller_id);
-                 $('#PE_Currency').val(currencyID);
+                 $('#Currency90').val(currencyID);
                 }, 1000)
         
         this.addTransaction_section1.patchValue({
@@ -615,7 +648,7 @@ export class AddTransactionNewComponent implements OnInit {
         this.paymentTypeDetails = response.payment_type_det;
         this.payment_details = response.payment_details;
 
-        alert(this.payment_details)
+   
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
 
@@ -633,9 +666,99 @@ export class AddTransactionNewComponent implements OnInit {
     $('#VendorManagementId').modal('show');
   }
 
-
+ 
+ 
   saveVendorManagement() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "vendor";
+    api_req.api_url = "vendor/saveVendor"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "saveVendor";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    if (this.PE_VendorManagementForm.value.PE_VM_CompanyName == null) {
+      iziToast.error({
+        message: "Company Name Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_mulInvpay.companyName = this.PE_VendorManagementForm.value.PE_VM_CompanyName;
+    }
+    if (this.PE_VendorManagementForm.value.PE_VM_VendorName == null) {
+      iziToast.error({
+        message: "Vendor Name Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_mulInvpay.vendorName = this.PE_VendorManagementForm.value.PE_VM_VendorName;
+    }
 
+    api_mulInvpay.vendorCode = this.PE_VendorManagementForm.value.PE_VM_CompanyCode;
+    api_mulInvpay.vendorAddress1 = this.PE_VendorManagementForm.value.PE_VM_Address1;
+    api_mulInvpay.vendorAddress2 = this.PE_VendorManagementForm.value.PE_VM_Address2;
+    api_mulInvpay.city = this.PE_VendorManagementForm.value.PE_VM_City;
+
+    api_mulInvpay.state = this.PE_VendorManagementForm.value.PE_VM_State;
+    api_mulInvpay.zipCode = this.PE_VendorManagementForm.value.PE_VM_ZipCode;
+    api_mulInvpay.country = this.PE_VendorManagementForm.value.PE_VM_Country;
+    api_mulInvpay.phone = this.PE_VendorManagementForm.value.PE_VM_Phone;
+    api_mulInvpay.mobilePhone = this.PE_VendorManagementForm.value.PE_VM_MobilePhone;
+
+    api_mulInvpay.fax = this.PE_VendorManagementForm.value.PE_VM_Fax;
+    api_mulInvpay.email = this.PE_VendorManagementForm.value.PE_VM_Email;
+
+
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status = true) {
+        this.spinner.hide();
+        iziToast.success({
+          message: "Vendor Saved Successfully",
+          position: 'topRight'
+        });
+        
+        this.VendorAPIList();
+        window.location.reload();
+ 
+        $('#VendorManagementId').modal('hide');
+        
+        $('#PurchaseEntry').modal('hide');
+       
+        $('#PurchaseEntry').modal('show');
+     
+
+        $("#RecurringFormId").modal("hide");
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Vendor Save Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        if (error.status === 500) {
+          this.spinner.hide();
+          iziToast.error({
+            message: "Sorry, a server error(500) occurred. Please try again later.",
+            position: 'topRight'
+          });
+        }
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
   }
 
   saveTransaction() {
@@ -742,9 +865,48 @@ export class AddTransactionNewComponent implements OnInit {
       data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
     }
 
+    var invoiceNUm=this.addTransaction_section1.value.PE_invoiceNo;
+    if (invoiceNUm=== null || invoiceNUm=== undefined || invoiceNUm=== 'undefined') {
+     iziToast.error({
+       message: "Fill Invoice Number  ",
+       position: 'topRight'
+     });
+     this.spinner.hide();
+     return false;
+   }
+   else {
+    data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
+   }
+
+   var invoiceDate=this.addTransaction_section1.value.PE_invoice_Date;
+   if (invoiceDate=== null || invoiceDate=== undefined || invoiceDate=== 'undefined') {
+    iziToast.error({
+      message: "Fill Invoice Date  ",
+      position: 'topRight'
+    });
+    this.spinner.hide();
+    return false;
+  }
+  else {
+    data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
+  }
+
+
+  var invoiceAmount=this.addTransaction_section1.value.PE_invoiceAmount;
+  if (invoiceAmount=== null || invoiceAmount=== undefined || invoiceAmount=== 'undefined') {
+   iziToast.error({
+     message: "Fill Invoice Amount  ",
+     position: 'topRight'
+   });
+   this.spinner.hide();
+   return false;
+ }
+ else {
+  data.append('invoiceAmount', this.addTransaction_section1.value.PE_invoiceAmount);
+ }
      
-      data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
-      data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
+     
+     
       data.append('content_purchase', this.addTransaction_section1.value.PE_contentofPurchase);
       data.append('poNo', this.addTransaction_section1.value.PE_poNumber);
       data.append('currency', this.addTransaction_section1.value.PE_Currency);
@@ -753,7 +915,7 @@ export class AddTransactionNewComponent implements OnInit {
       data.append('tax_provider', this.addTransaction_section1.value.PE_TaxProvider);
       data.append('freight_provider', this.addTransaction_section1.value.PE_FreightProvider);
       data.append('freight_amt', this.addTransaction_section1.value.PE_FreightAmount);
-      data.append('invoiceAmount', this.addTransaction_section1.value.PE_invoiceAmount);
+     
       //data.append('pur_attach_mobile', this.addTransaction_section1.value.CB_PE_AttachMobile);
       // for(let i=0;i<this.PE_FileLength;i++){
       //   data.append('file_attachment_name[i]', $("#PE_FileAttachment")[i].files[i]);
@@ -957,5 +1119,27 @@ export class AddTransactionNewComponent implements OnInit {
     this.router.navigate(['/AddTransactionNew']);
     window.location.reload();
   }
+  cancelVendor(){
+    $('#VendorManagementId').modal('hide');
+   // this.PE_VendorManagementForm.reset();
+
+    this.PE_VendorManagementForm.controls['PE_VM_CompanyName'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_VendorName'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_Address1'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_Address2'].reset();
+
+    this.PE_VendorManagementForm.controls['PE_VM_City'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_State'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_Country'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_ZipCode'].reset();
+
+    this.PE_VendorManagementForm.controls['PE_VM_Phone'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_MobilePhone'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_Fax'].reset();
+    this.PE_VendorManagementForm.controls['PE_VM_Email'].reset();
+   
+  }
 
 }
+
+
