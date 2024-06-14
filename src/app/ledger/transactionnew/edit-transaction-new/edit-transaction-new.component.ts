@@ -86,14 +86,14 @@ export class EditTransactionNewComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+       // console.log("params output value", params);
 
         this.TransactionApprovalID = params['e_transaction_approval_id'];
         this.edit_TransactionTpeID = params['e_Transaction_Type_id'];
 
 
-        console.log("Transactional approval ID", this.TransactionApprovalID);
-        console.log("e_Transaction_Type_id", this.edit_TransactionTpeID);
+        // console.log("Transactional approval ID", this.TransactionApprovalID);
+        // console.log("e_Transaction_Type_id", this.edit_TransactionTpeID);
       }
       );
 
@@ -367,7 +367,7 @@ export class EditTransactionNewComponent implements OnInit {
       }
     }
     else {
-      console.log('kavin', $("#PE_FileAttachment_new").val(''))
+    //  console.log('kavin', $("#PE_FileAttachment_new").val(''))
       $("#PE_FileAttachment_new").val('');
       iziToast.error({
         message: "Sorry, Maximum you can choose 3 files only. Please contact admin",
@@ -378,16 +378,16 @@ export class EditTransactionNewComponent implements OnInit {
 
   }
   fileAttachmentEventUpdate(event: any) {
-    console.log(this.getFileAttachmentResult.length)
+  //  console.log(this.getFileAttachmentResult.length)
     this.fileIterationVariable = this.getFileAttachmentResult.length + event.target.files.length;
     if (this.fileIterationVariable < 4) {
       for (var i = 0; i < event.target.files.length; i++) {
         this.myFilesUpdate.push(event.target.files[i]);
-        console.log("this.myFilesUpdate.length", this.myFilesUpdate.length)
+       // console.log("this.myFilesUpdate.length", this.myFilesUpdate.length)
       }
     }
     else {
-      console.log('kavin', $("#PE_FileAttachment_new").val(''))
+     // console.log('kavin', $("#PE_FileAttachment_new").val(''))
       $("#PE_FileAttachment_new").val('');
       iziToast.error({
         message: "Sorry, Maximum you can choose 3 files only. Please contact admin",
@@ -574,7 +574,7 @@ export class EditTransactionNewComponent implements OnInit {
 
         $('#PurchaseEntry_link').removeClass('active');
         this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans;
-        console.log(" this.Transaction_Type_Variable - purchase entry", this.Transaction_Type_Variable)
+      //  console.log(" this.Transaction_Type_Variable - purchase entry", this.Transaction_Type_Variable)
 
         switch (this.Transaction_Type_Variable) {
 
@@ -678,7 +678,7 @@ export class EditTransactionNewComponent implements OnInit {
         $('#PurchaseEntry_link').removeClass('active');
         this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans;
 
-        console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
+       // console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
 
         switch (this.Transaction_Type_Variable) {
 
@@ -811,7 +811,7 @@ export class EditTransactionNewComponent implements OnInit {
         $('#PurchaseEntry_link').removeClass('active');
         this.Transaction_Type_Variable = response.transaction_details[0].type_of_trans;
 
-        console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
+       // console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
 
         switch (this.Transaction_Type_Variable) {
 
@@ -885,7 +885,7 @@ export class EditTransactionNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
-        console.log("response.editData.product_category_id",response.editData.product_category_id)
+      //  console.log("response.editData.product_category_id",response.editData.product_category_id)
 
      
         this.changeCategory(response.editData.product_category_id);
@@ -920,7 +920,7 @@ export class EditTransactionNewComponent implements OnInit {
         $('#PurchaseEntry_link').removeClass('active');
         this.Transaction_Type_Variable = response.editData.type_of_trans;
 
-        console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
+       // console.log(" this.Transaction_Type_Variable -- petty cash", this.Transaction_Type_Variable);
 
         switch (this.Transaction_Type_Variable) {
 
@@ -1067,9 +1067,9 @@ export class EditTransactionNewComponent implements OnInit {
     this.getCurrencyCode = event.target.value;;
   }
   getCurrencyValues(event: any) {
-    console.log("event.target;", event.target);
+   // console.log("event.target;", event.target);
     this.getCurrencyCode = event.target.value;
-    console.log("billerID check", this.billerID);
+    // console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1115,7 +1115,7 @@ export class EditTransactionNewComponent implements OnInit {
   
   UpdateTransaction(event:any) {
 
-    console.log("mouse event", event.pointerType)
+   // console.log("mouse event", event.pointerType)
     if (event.pointerType == "mouse" || event.pointerType == "") {
       // this variable is used to find button click as mouse or kyboard enter
       this.Clicked = true;
@@ -1131,11 +1131,75 @@ export class EditTransactionNewComponent implements OnInit {
     if (this.Transaction_Type_Variable == 3) {
       this.updateVariable = "purchase_entry_update";
       data.append('transaction_approval_id', this.TransactionApprovalID);
-      data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
-      data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
-      data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
-      data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
-      data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
+
+     
+
+
+      var PENO=this.addTransaction_section1.value.PE_purchaseEntryNo;
+      if (PENO=== null || PENO=== undefined || PENO=== 'undefined') {
+        iziToast.error({
+          message: "Fill Purchase Entry Number  ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+      }
+      else {
+        data.append('purchaseEntryNo', this.addTransaction_section1.value.PE_purchaseEntryNo);
+      }
+
+      var vendorid=this.addTransaction_section1.value.PE_vendorName;
+      if (vendorid=== null || vendorid=== undefined || vendorid=== 'undefined') {
+        iziToast.error({
+          message: "Fill Vendor Name  ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+      }
+      else {
+        data.append('vendorId', this.addTransaction_section1.value.PE_vendorName);
+      }
+
+  
+      var purchasetype=this.addTransaction_section1.value.PE_purchaseType;
+      if (purchasetype=== null || purchasetype=== undefined || purchasetype=== 'undefined') {
+       iziToast.error({
+         message: "Fill Purchase Type  ",
+         position: 'topRight'
+       });
+       this.spinner.hide();
+       return false;
+     }
+     else {
+       data.append('purchase_type_id', this.addTransaction_section1.value.PE_purchaseType);
+     }
+ 
+     var invoiceNUm=this.addTransaction_section1.value.PE_invoiceNo;
+     if (invoiceNUm=== null || invoiceNUm=== '' || invoiceNUm=== undefined || invoiceNUm=== 'undefined') {
+      iziToast.error({
+        message: "Fill Invoice Number  ",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }
+    else {
+     data.append('invoiceNo', this.addTransaction_section1.value.PE_invoiceNo);
+    }
+    var invoiceDate=this.addTransaction_section1.value.PE_invoice_Date;
+    if (invoiceDate=== null || invoiceDate=== undefined || invoiceDate=== 'undefined') {
+     iziToast.error({
+       message: "Fill Invoice Date  ",
+       position: 'topRight'
+     });
+     this.spinner.hide();
+     return false;
+   }
+   else {
+     data.append('invoiceDate', this.addTransaction_section1.value.PE_invoice_Date);
+   }
+ 
       data.append('content_purchase', this.addTransaction_section1.value.PE_contentofPurchase);
       data.append('poNo', this.addTransaction_section1.value.PE_poNumber);
       data.append('currency', this.addTransaction_section1.value.PE_Currency);
@@ -1144,21 +1208,33 @@ export class EditTransactionNewComponent implements OnInit {
       data.append('tax_provider', this.addTransaction_section1.value.PE_TaxProvider);
       data.append('freight_provider', this.addTransaction_section1.value.PE_FreightProvider);
       data.append('freight_amt', this.addTransaction_section1.value.PE_FreightAmount);
+      var invoiceAmount=this.addTransaction_section1.value.PE_invoiceAmount;
+      if (invoiceAmount=== null || invoiceAmount=== undefined || invoiceAmount=== 'undefined') {
+       iziToast.error({
+         message: "Fill Invoice Amount  ",
+         position: 'topRight'
+       });
+       this.spinner.hide();
+       return false;
+     }
+     else {
       data.append('invoiceAmount', this.addTransaction_section1.value.PE_invoiceAmount);
+     }
+ 
       //data.append('pur_attach_mobile', this.addTransaction_section1.value.CB_PE_AttachMobile);
       // for(let i=0;i<this.PE_FileLength;i++){
       //   data.append('file_attachment_name[i]', $("#PE_FileAttachment")[i].files[i]);
       // }
-      console.log("this.getFileAttachmentResult", this.getFileAttachmentResult);
-      console.log("this.getFileAttachmentResult", this.myFilesUpdate.length);
+      // console.log("this.getFileAttachmentResult", this.getFileAttachmentResult);
+      // console.log("this.getFileAttachmentResult", this.myFilesUpdate.length);
       if (this.myFilesUpdate.length < 4 && this.myFilesUpdate.length != 0) {
 
         if (this.getFileAttachmentResult.length > 0) {
           // alert(this.myFilesUpdate.length)
-          console.log(this.myFilesUpdate)
+        //  console.log(this.myFilesUpdate)
           for (var i = 0; i <= this.fileIterationVariable - 1; i++) {
             if (this.myFilesUpdate[i] != undefined && this.myFilesUpdate[i] != null) {
-              console.log(this.myFilesUpdate[i])
+             // console.log(this.myFilesUpdate[i])
               data.append("trans_file[]", this.myFilesUpdate[i]);
             }
             if (this.getFileAttachmentResult[i] != '' && this.getFileAttachmentResult[i] != undefined && this.getFileAttachmentResult[i] != 'undefined' && this.getFileAttachmentResult[i] != 'null' && this.getFileAttachmentResult[i] != null) {
@@ -1204,16 +1280,16 @@ export class EditTransactionNewComponent implements OnInit {
       data.append('petty_type', this.addTransaction_section1.value.PC_Type);
       data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
 
-      console.log("this.getFileAttachmentResult", this.getFileAttachmentResult);
-      console.log("this.getFileAttachmentResult", this.myFilesUpdate.length);
+      // console.log("this.getFileAttachmentResult", this.getFileAttachmentResult);
+      // console.log("this.getFileAttachmentResult", this.myFilesUpdate.length);
       if (this.myFilesUpdate.length < 4 && this.myFilesUpdate.length != 0) {
 
         if (this.getFileAttachmentResult.length > 0) {
           // alert(this.myFilesUpdate.length)
-          console.log(this.myFilesUpdate)
+         // console.log(this.myFilesUpdate)
           for (var i = 0; i <= this.fileIterationVariable - 1; i++) {
             if (this.myFilesUpdate[i] != undefined && this.myFilesUpdate[i] != null) {
-              console.log(this.myFilesUpdate[i])
+             // console.log(this.myFilesUpdate[i])
               data.append("trans_file[]", this.myFilesUpdate[i]);
             }
             if (this.getFileAttachmentResult[i] != '' && this.getFileAttachmentResult[i] != undefined && this.getFileAttachmentResult[i] != 'undefined' && this.getFileAttachmentResult[i] != 'null' && this.getFileAttachmentResult[i] != null) {
@@ -1308,8 +1384,8 @@ export class EditTransactionNewComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
-      // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+      // url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+       url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
       cache: false,
       contentType: false,
       processData: false,
@@ -1317,7 +1393,7 @@ export class EditTransactionNewComponent implements OnInit {
       success: function (result: any) {
         if (result.status == true) {
           self.goBackTransaction();
-          console.log(result);
+         // console.log(result);
 
 
           iziToast.success({
@@ -1336,7 +1412,7 @@ export class EditTransactionNewComponent implements OnInit {
       },
       error: function (err: any) {
 
-        console.log("err", err)
+       // console.log("err", err)
         iziToast.error({
           message: "Server Side Error",
           position: 'topRight'

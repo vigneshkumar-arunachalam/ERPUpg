@@ -118,21 +118,21 @@ export class AddquotationnewComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+       // console.log("params output value", params);
         this.FormID_enquiryFromDetails = params['formID'];
         this.subject_enquiryFromDetails = params['subject'];
         this.validity_enquiryFromDetails = params['validity'];
         this.version_enquiryFromDetails = params['version'];
 
-        console.log("formid", this.FormID_enquiryFromDetails);
-        console.log("subject", this.subject_enquiryFromDetails);
-        console.log("validity", this.validity_enquiryFromDetails);
-        console.log("version", this.version_enquiryFromDetails);
+        // console.log("formid", this.FormID_enquiryFromDetails);
+        // console.log("subject", this.subject_enquiryFromDetails);
+        // console.log("validity", this.validity_enquiryFromDetails);
+        // console.log("version", this.version_enquiryFromDetails);
 
-        console.log(this.FormID_enquiryFromDetails);
-        console.log(this.subject_enquiryFromDetails);
-        console.log(this.validity_enquiryFromDetails);
-        console.log(this.version_enquiryFromDetails);
+        // console.log(this.FormID_enquiryFromDetails);
+        // console.log(this.subject_enquiryFromDetails);
+        // console.log(this.validity_enquiryFromDetails);
+        // console.log(this.version_enquiryFromDetails);
       }
       );
 
@@ -212,26 +212,26 @@ export class AddquotationnewComponent implements OnInit {
   }
 
   selectEventProduct(item: any, i: any) {
-    console.log("product item selected", item)
+   // console.log("product item selected", item)
     this.product_name_AutoComplete = item.partNo;
-    console.log("product item.partNo selected", item.partNo)
+   // console.log("product item.partNo selected", item.partNo)
     if (this.product_name_AutoComplete != '') {
       this.productNameAutoFill(i)
     }
 
   }
   onFocusedProduct(e: any) {
-    console.log("onFocusedProduct ", e)
+   // console.log("onFocusedProduct ", e)
 
 
     // do something when input is focused
   }
 
   changeProductName_partNO(e: any) {
-    console.log(e.target.value);
+   // console.log(e.target.value);
   }
   onDrop(event: CdkDragDrop<string[]>) {
-    console.log("event drag drop", event)
+   // console.log("event drag drop", event)
     moveItemInArray(this.addressControls.controls, event.previousIndex, event.currentIndex);
 
   }
@@ -240,17 +240,17 @@ export class AddquotationnewComponent implements OnInit {
   checkbox_productDetails_Split_Number: any;
   productDetails_Split_eventCheck(e: any) {
     this.checkbox_productDetails_Split = e.target.checked
-    console.log(this.checkbox_productDetails_Split);
+  //  console.log(this.checkbox_productDetails_Split);
     this.checkbox_productDetails_Split_Number = Number(this.checkbox_productDetails_Split);
-    console.log(" checkbox 1 or 0---:", this.checkbox_productDetails_Split_Number)
+  //  console.log(" checkbox 1 or 0---:", this.checkbox_productDetails_Split_Number)
   }
   checkbox_productDetails_GPTotal: any;
   checkbox_productDetails_GPTotal_Number: any;
   productDetails_GPTotal_eventCheck(e: any) {
     this.checkbox_productDetails_GPTotal = e.target.checked
-    console.log(this.checkbox_productDetails_GPTotal);
+   // console.log(this.checkbox_productDetails_GPTotal);
     this.checkbox_productDetails_GPTotal_Number = Number(this.checkbox_productDetails_GPTotal);
-    console.log(" checkbox 1 or 0---:", this.checkbox_productDetails_GPTotal_Number)
+   // console.log(" checkbox 1 or 0---:", this.checkbox_productDetails_GPTotal_Number)
   }
   checkbox_productDetails_selectTax: any;
 
@@ -258,29 +258,29 @@ export class AddquotationnewComponent implements OnInit {
   checkbox_GrantTotalShow: any;
   eventCheckGrantTotalShows(e: any) {
     this.checkbox_GrantTotalShow = e.target.checked
-    console.log(this.checkbox_GrantTotalShow);
+  //  console.log(this.checkbox_GrantTotalShow);
   }
 
   termsCondition_DontShow_eventCheck(e: any) {
     this.submittedcheck=false;
     this.checkbox_termsCondition_DontShow = e.target.checked;
-    console.log(this.checkbox_termsCondition_DontShow);
+   // console.log(this.checkbox_termsCondition_DontShow);
   }
 
 
   descriptionDetails_DontShow_eventCheck(e: any) {
     this.checkbox_descriptionDetails_DontShow = e.target.checked
-    console.log(this.checkbox_descriptionDetails_DontShow);
+   // console.log(this.checkbox_descriptionDetails_DontShow);
   }
   checkbox_selectAdditionalSignature: any;
   eventCheckSelectAdditionalSignature(e: any) {
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature);
+   // console.log(this.checkbox_selectAdditionalSignature);
   }
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
-    console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
+  //  console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
     this.currencyQuotationTermChange();
 
   }
@@ -292,25 +292,25 @@ export class AddquotationnewComponent implements OnInit {
     }else{
       this.submitted_radio=true;
     }
-    console.log("event only", evt)
-    console.log("evt.target", evt.target)
-    console.log("evt.target.checked", evt.target.checked)
-    console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
-    console.log(" evt.target.value radioSelectFooter", evt.target.value)
+    // console.log("event only", evt)
+    // console.log("evt.target", evt.target)
+    // console.log("evt.target.checked", evt.target.checked)
+    // console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
+    // console.log(" evt.target.value radioSelectFooter", evt.target.value)
 
-    console.log("radio button value", radioSelectFooter);
+    // console.log("radio button value", radioSelectFooter);
   }
 
   chk_grantTotal: any;
   chkGrandTotalEvent(event: any) {
     this.chk_grantTotal = event.target.checked;
-    console.log(this.chk_grantTotal)
+   // console.log(this.chk_grantTotal)
   }
 
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
-    console.log(item)
+    // console.log(item)
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
@@ -359,7 +359,7 @@ export class AddquotationnewComponent implements OnInit {
   dynamicChange(event: any) {
     this.spinner.show();
     this.billerID = event.target.value;
-    console.log("billerID check", this.billerID);
+  //  console.log("billerID check", this.billerID);
     // this.TaxDropdown();
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
@@ -381,10 +381,10 @@ export class AddquotationnewComponent implements OnInit {
       if(response.footer_details==''){
         this.submitted_radio=false;
       }
-      console.log("dynamic Dropdown change response", response)
+    //  console.log("dynamic Dropdown change response", response)
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
-      console.log("dynamic term condition change response", response.quotation_terms_cond)
+    //  console.log("dynamic term condition change response", response.quotation_terms_cond)
       if(response.footer_details!=null){
         for (let index = 0; index < response.footer_details.length; index++) {
           this.billerIDUpdate = response.footer_details[index].billerId;
@@ -421,7 +421,7 @@ export class AddquotationnewComponent implements OnInit {
   }
   dynamicChange1() {
     this.spinner.show();
-    console.log("billerID check", this.billerID);
+  //  console.log("billerID check", this.billerID);
     this.TaxDropdown();
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
@@ -443,8 +443,8 @@ export class AddquotationnewComponent implements OnInit {
       
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
-      console.log("dynamic Dropdown change response", response)
-      console.log("dynamic term condition change response", response.quotation_terms_cond)
+      // console.log("dynamic Dropdown change response", response)
+      // console.log("dynamic term condition change response", response.quotation_terms_cond)
       if(response.footer_details){
 
         for (let index = 0; index < response.footer_details.length; index++) {
@@ -490,9 +490,9 @@ export class AddquotationnewComponent implements OnInit {
     add_newQuotationNextPage_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = add_newQuotationNextPage_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+// console.log(response);
 
-      console.log("add new quotation response", response);
+    //  console.log("add new quotation response", response);
       if (response != '') {
 
         this.salesRepDropDown_Textbox_Status = response.sales_rep_status.dropdown_status;
@@ -507,7 +507,7 @@ export class AddquotationnewComponent implements OnInit {
         this.additionalSignatureList = response.additional_signature_list;
         this.LogoList = response.extra_bills;
 
-        console.log("add new quotation response-customer name", this.PDFTemplateList);
+       // console.log("add new quotation response-customer name", this.PDFTemplateList);
         this.billerID = response.defaults_biller_id;
 
         if (this.billerID != '') {
@@ -561,7 +561,7 @@ export class AddquotationnewComponent implements OnInit {
 
     this.spinner.show();
     this.quotation_template_id = event.target.value;
-    console.log("quotation dropdown ID check", this.quotation_template_id);
+   // console.log("quotation dropdown ID check", this.quotation_template_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -575,7 +575,7 @@ export class AddquotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("quotation-template Dropdown response", response)
+    //  console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
         this.spinner.hide();
@@ -612,7 +612,7 @@ export class AddquotationnewComponent implements OnInit {
     api_req.element_data = api_quotationAddSignature_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+    //  console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
@@ -635,7 +635,7 @@ export class AddquotationnewComponent implements OnInit {
   TermsConditionsContentDropdown(event: any) {
     this.spinner.show();
     this.terms_condition_id = event.target.value;
-    console.log("template terms_condition ID check", this.terms_condition_id);
+   // console.log("template terms_condition ID check", this.terms_condition_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -650,7 +650,7 @@ export class AddquotationnewComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("quotation-template Dropdown response", response)
+     // console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
         this.spinner.hide();
@@ -689,7 +689,7 @@ export class AddquotationnewComponent implements OnInit {
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Tax Dropdown response", response)
+    //  console.log("quotation-template Tax Dropdown response", response)
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
@@ -728,7 +728,7 @@ export class AddquotationnewComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation/currency_change", response)
+     // console.log("quotation/currency_change", response)
       this.CurrencyChangeFieldValue = response.terms
       if (response.status == true) {
         this.addQuotationInvoice_section1.patchValue({
@@ -755,14 +755,14 @@ export class AddquotationnewComponent implements OnInit {
   saveQuotationEnquiry($event: MouseEvent) {
     this.submitted=true;
 
-    console.log("this.checkbox_termsCondition_DontShow", this.checkbox_termsCondition_DontShow);
-    console.log("this.checkbox_descriptionDetails_DontShow", this.checkbox_descriptionDetails_DontShow);
+    // console.log("this.checkbox_termsCondition_DontShow", this.checkbox_termsCondition_DontShow);
+    // console.log("this.checkbox_descriptionDetails_DontShow", this.checkbox_descriptionDetails_DontShow);
     if (this.radioSelectFooterChecked == true) {
 
-      console.log(this.addQuotationInvoice_section3.value.section3_gst_dropdown)
-      console.log("this.addQuotationInvoice_section1.value.customerName", this.addQuotationInvoice_section1.value.customerName)
+      // console.log(this.addQuotationInvoice_section3.value.section3_gst_dropdown)
+      // console.log("this.addQuotationInvoice_section1.value.customerName", this.addQuotationInvoice_section1.value.customerName)
       // alert(this.addQuotationInvoice_section1.value.selectCurrency)
-      console.log("this.addQuotationInvoice_section1.value.selectPDFTemplate", this.addQuotationInvoice_section1.value.selectPDFTemplate)
+     // console.log("this.addQuotationInvoice_section1.value.selectPDFTemplate", this.addQuotationInvoice_section1.value.selectPDFTemplate)
       let api_req: any = new Object();
       let api_saveEnquiry_req: any = new Object();
       api_req.moduleType = "quotation";
@@ -904,7 +904,7 @@ export class AddquotationnewComponent implements OnInit {
 
         }
 
-        console.log(addr[i].pd_quantity_txtbox1)
+       // console.log(addr[i].pd_quantity_txtbox1)
         addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
         addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
         addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
@@ -919,7 +919,7 @@ export class AddquotationnewComponent implements OnInit {
 
 
       api_saveEnquiry_req.values = addr;
-      console.log(api_req);
+     // console.log(api_req);
 
 
       ($event.target as HTMLButtonElement).disabled = true;
@@ -928,7 +928,7 @@ export class AddquotationnewComponent implements OnInit {
 
         ($event.target as HTMLButtonElement).disabled = false;
 
-        console.log("add quotation new save", response);
+       // console.log("add quotation new save", response);
         if (response.status == true) {
 
           iziToast.success({
@@ -954,7 +954,7 @@ export class AddquotationnewComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       }
     }
     else {
@@ -969,8 +969,8 @@ export class AddquotationnewComponent implements OnInit {
 
   searchCustomer_selectDropdownData(data: any) {
 
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1038,7 +1038,7 @@ export class AddquotationnewComponent implements OnInit {
         });
         return false;
       }
-      console.log("vignesh-customer_name response", response);
+     //  console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -1053,7 +1053,7 @@ export class AddquotationnewComponent implements OnInit {
 
   }
   searchCustomerDataMouse(data: any) {
-    console.log("search data afer mouse click", data)
+  //  console.log("search data afer mouse click", data)
   }
 
   searchProductName(data: any) {
@@ -1070,9 +1070,9 @@ export class AddquotationnewComponent implements OnInit {
     api_SearchProd_req.part_no = data;
     api_req.element_data = api_SearchProd_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation/product_name_auto response", response);
+     // console.log("quotation/product_name_auto response", response);
       this.searchResult_productName = response.products_list;
-      console.log("response.partNo", response.products_list)
+     // console.log("response.partNo", response.products_list)
       // console.log("response.partNo",response.partNo)
 
       if (response.status == true) {
@@ -1097,13 +1097,13 @@ export class AddquotationnewComponent implements OnInit {
     api_req.element_data = api_ProdAutoFill_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("response", response)
-      console.log("response.length", response.length)
-      console.log("partNo by auto fill", response[0].partNo);
-      console.log("productName by auto fill", response[0].productName);
-      console.log("productDesc by auto fill", response[0].productDesc);
-      console.log("rate by auto fill", response[0].rate);
-      console.log("this.addressControls.length", this.addressControls.length)
+      // console.log("response", response)
+      // console.log("response.length", response.length)
+      // console.log("partNo by auto fill", response[0].partNo);
+      // console.log("productName by auto fill", response[0].productName);
+      // console.log("productDesc by auto fill", response[0].productDesc);
+      // console.log("rate by auto fill", response[0].rate);
+      // console.log("this.addressControls.length", this.addressControls.length)
 
       $('#pd_productName_txtbox_' + i).val(response[0].productName)
       $('#pd_productName_txtArea_' + i).val(response[0].productDesc)
@@ -1115,19 +1115,19 @@ export class AddquotationnewComponent implements OnInit {
 
   clearAddress() {
     var t = this.addQuotationInvoice_section2.value;
-    console.log(t)
+  //  console.log(t)
   }
   totalCalculate_last() {
 
-    console.log("total calculate");
-    console.log("this.grossTotal", $('#gross').val());
-    console.log("this.finalTax", $('#tax_amt_id').val());
-    console.log("this.shipping_amt", this.shipping_amt);
-    console.log("this.finalDiscount", $('#finalDiscount_amt').val());
-    console.log("this.grandTotal", this.grandTotal);
+    // console.log("total calculate");
+    // console.log("this.grossTotal", $('#gross').val());
+    // console.log("this.finalTax", $('#tax_amt_id').val());
+    // console.log("this.shipping_amt", this.shipping_amt);
+    // console.log("this.finalDiscount", $('#finalDiscount_amt').val());
+    // console.log("this.grandTotal", this.grandTotal);
 
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
-    console.log("this.grandTotal", this.grandTotal);
+   // console.log("this.grandTotal", this.grandTotal);
   }
 
   totalCalculate() {
@@ -1161,12 +1161,12 @@ export class AddquotationnewComponent implements OnInit {
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
+     // console.log('discount_type' + discount_type);
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
+      //  console.log('discount_type1111' + this.sub_dis_val);
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
+       // console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val)
         $('#pd_netPrice_' + a).val(sub_total_amt);
         $('#sub_discount_' + a).val(dis_amt_val);
@@ -1214,14 +1214,14 @@ export class AddquotationnewComponent implements OnInit {
     }
     //console.log('tax_per'+this.tax_per_mod+'grossTotal'+this.grossTotal+'this.finalTax'+this.finalTax+'shipping_amt'+this.shipping_amt+'finalDiscount'+this.finalDiscount);
 
-    console.log("total calculate");
-    console.log("this.grossTotal", this.grossTotal);
-    console.log("this.finalTax", this.finalTax);
-    console.log("this.shipping_amt", this.shipping_amt);
-    console.log("this.finalDiscount", this.finalDiscount);
-    console.log("this.grandTotal", this.grandTotal);
+    // console.log("total calculate");
+    // console.log("this.grossTotal", this.grossTotal);
+    // console.log("this.finalTax", this.finalTax);
+    // console.log("this.shipping_amt", this.shipping_amt);
+    // console.log("this.finalDiscount", this.finalDiscount);
+    // console.log("this.grandTotal", this.grandTotal);
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt)) - parseFloat(this.finalDiscount)).toFixed(2);
-    console.log("this.grandTotal", this.grandTotal);
+   // console.log("this.grandTotal", this.grandTotal);
   }
 
   keyPress(event: any, i: any) {
@@ -1248,8 +1248,8 @@ export class AddquotationnewComponent implements OnInit {
     }
     for (let j = 0; j <= this.itre; j++) {
       // const formArray = new FormArray([]);
-      console.log($('#pd_Total_' + j).val())
-      console.log($('#pd_netPrice_' + j).val())
+      // console.log($('#pd_Total_' + j).val())
+      // console.log($('#pd_netPrice_' + j).val())
       // formArray.push(this.fb.group({
       //   "pd_Total": $('#pd_Total_' + j).val(),
       //   "pd_netPrice":$('#pd_netPrice_' + j).val(),
@@ -1339,7 +1339,7 @@ export class AddquotationnewComponent implements OnInit {
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
-    console.log('row_cnt' + row_cnt);
+  //  console.log('row_cnt' + row_cnt);
     $('#enablePercentabeDiscont').val('');
     $('#enablePriceDiscont').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
@@ -1383,12 +1383,12 @@ export class AddquotationnewComponent implements OnInit {
 
         // price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
         var c = $('#GrossTotalafterdiscount').val()
-        console.log("enablePercentabeDiscont", enablePercentabeDiscont);
-        console.log("final_tot", final_tot);
+        // console.log("enablePercentabeDiscont", enablePercentabeDiscont);
+        // console.log("final_tot", final_tot);
         price_afterDiscount = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
-        console.log("price_afterDiscount", price_afterDiscount);
+       // console.log("price_afterDiscount", price_afterDiscount);
         price = final_tot - price_afterDiscount;
-        console.log("price---over", price);
+       // console.log("price---over", price);
         this.finalDiscount = price_afterDiscount;
         $('#finalDiscount_amt').val(price_afterDiscount);
         $('#GrossTotalafterdiscount').val(price);
@@ -1427,7 +1427,7 @@ export class AddquotationnewComponent implements OnInit {
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
       this.finalDiscountVal = enablePercentabeDiscont;
-      console.log('999' + price);
+     // console.log('999' + price);
     }
 
     if (this.grandTotal > 0) {
@@ -1441,20 +1441,20 @@ export class AddquotationnewComponent implements OnInit {
     $('#enablePriceFinal').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+   // console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountTYpe_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal').val(final_dis_val);
-      console.log('22' + disType);
+     // console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountTYpe_amt').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
       $('#enablePriceFinal').val(final_dis_val);
-      console.log('33' + disType);
+    //  console.log('33' + disType);
     } else {
-      console.log('44' + disType);
+    //  console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -1501,13 +1501,13 @@ export class AddquotationnewComponent implements OnInit {
       }
       else {
         // alert("2")
-        console.log("tax percentage", tax);
-        console.log("GrossTotalafterdiscount", $('#GrossTotalafterdiscount').val());
+        // console.log("tax percentage", tax);
+        // console.log("GrossTotalafterdiscount", $('#GrossTotalafterdiscount').val());
         tax = (parseFloat(tax) * ($('#GrossTotalafterdiscount').val()) / 100).toFixed(2);
         $('#tax_amt_id').val(tax);
 
-        console.log("tax calc-2", tax);
-        console.log("shipping_amt_id", $('#shipping_amt_id').val());
+        // console.log("tax calc-2", tax);
+        // console.log("shipping_amt_id", $('#shipping_amt_id').val());
 
         this.grandTotal = Number($('#GrossTotalafterdiscount').val()) + Number(tax) +
           Number($('#shipping_amt_id').val());
@@ -1519,7 +1519,7 @@ export class AddquotationnewComponent implements OnInit {
       //   this.grandTotal = (this.grossTotal + this.finalTax + this.finalDiscount + this.extraCharge).toFixed(2);
       // }
       this.finalTax = parseFloat(tax).toFixed(2);
-      console.log(" this.finalTax", this.finalTax)
+     // console.log(" this.finalTax", this.finalTax)
       $('#tax_amt_id').val(this.finalTax);
 
 

@@ -4,10 +4,6 @@ import { ServerService } from '../services/server.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { ProformaInvoiceComponent } from '../billing/proforma-invoice/proforma-invoice.component';
-
-
-
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -26,7 +22,7 @@ export class NavbarComponent implements OnInit {
   GlobalSearch: FormGroup;
   pagesNameList: any;
 
-
+live:boolean=true;
   SelectPageListId: any;
   //autocomplete-customer name
   searchResultTest: any;
@@ -97,6 +93,16 @@ export class NavbarComponent implements OnInit {
   sendtoPostForm: FormGroup;
   actualCost_ProductList: any[];
   postalInvoiceDetails: any;
+  getTaskList: any;
+  overduePaymentsBillerList: any;
+  dropdownVisible = false;
+  overduePaymentForm: FormGroup;
+  overduePaymentsBillerWise: any;
+  colorCodes: any;
+  billerNameDisplay: any;
+  //group checkbox
+  selectedBillIds_overdue: number[] = [];
+
   constructor(private router: Router, private serverService: ServerService, private http: HttpClient, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
      // console.log(res);
@@ -177,13 +183,16 @@ export class NavbarComponent implements OnInit {
     this.testVariable = [{ "id": 1, "name": "Credit Note" }, { "id": 2, "name": "Customer New" }, { "id": 3, "name": "Customer Project" }, { "id": 4, "name": " DID Number" }]
   //  console.log(this.testVariable)
     this.GlobalSearch = new FormGroup({
-      'GS_SelectPage': new FormControl(null),
+
       'GS_CustomerCode': new FormControl(null),
       'GS_CustomerName': new FormControl(null),
       'GS_DIDNumber': new FormControl(null),
       'GS_LicenseNumber': new FormControl(null),
 
     });
+    this.overduePaymentForm=new FormGroup({
+      
+    })
     this.customercontractForm = new FormGroup({
       'colorCU': new FormControl(null),
     });
@@ -196,24 +205,51 @@ export class NavbarComponent implements OnInit {
       'CurrencyTo': new FormControl(null),
       'outputValue': new FormControl(null),
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
+    if(data!=''){
       this.getCurrencyList = data.currency_data;
+    }  
+ 
      // console.log("this.getCurrencyList", this.getCurrencyList)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
-      this.getCurrencyDetails = data.currency_data;
-      this.currencyData = data.currency_data;
+    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
+      if(data!=''){
+        this.getCurrencyDetails = data.currency_data;
+        this.currencyData = data.currency_data;
+      }  
+  
       this.currencies = ["SGD", "USD", "INR", "MYR", "EUR", "JPY", "THB", "AUD", "NZD", "IDR", "PHP"];
      // console.log("this.getCurrencyDetails", this.getCurrencyDetails)
     });
 
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
-      this.postalInvoiceDetails = data;
-
-     // console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+   
+      if(data!=''){
+        this.postalInvoiceDetails = data;
+      }  
+    //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
+    this.http.get<any>('https://erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
+    
+      if(data!=''){
+        this.getTaskList = data.taskList;
+      }
+      // console.log("this.getTaskList", this.getTaskList)
+    });
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/soa/overduePaymentsBillerList').subscribe((data: any) => {
+    
+      if(data!=''){
+        this.overduePaymentsBillerList = data.dataList;
+      }
+     //  console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
+    })
+
+  
 
 
+  }
+  toggleDropdown() {
+    this.dropdownVisible = !this.dropdownVisible;
   }
   getConversionRate(fromCurrency: string, toCurrency: string): number {
     const rate = this.currencyData.find((data: { from_curr: string; to_curr: string; }) => data.from_curr === fromCurrency && data.to_curr === toCurrency);
@@ -413,8 +449,7 @@ isSelected(billId: number): boolean {
     this.router.navigate(['/login']);
 
 
-  }
-  QuickMail_Customer() {
+  } QuickMail_Customer() {
     Swal.fire({
       title: 'Are you sure to Send?',
       text: "You won't be able to revert this!",
@@ -465,6 +500,59 @@ isSelected(billId: number): boolean {
 
 
   }
+  postalinv_sendMail(billId: any) {
+    Swal.fire({
+      title: 'Are you sure to Send?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        let api_req: any = new Object();
+        let api_reqD1: any = new Object();
+        api_req.moduleType = "invoice";
+        api_req.api_url = "mailPostalInvoice";
+        api_req.api_type = "web";
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        api_reqD1.action = "mailPostalInvoice";
+        api_reqD1.user_id = localStorage.getItem('erp_c4c_user_id');
+        api_reqD1.billId = billId;
+        api_reqD1.email_state = 'yes';
+        api_req.element_data = api_reqD1;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.spinner.hide();
+            iziToast.success({
+              message: "Mail Sent Successfully",
+              position: 'topRight'
+            });
+
+          } else {
+            this.spinner.hide();
+            iziToast.warning({
+              message: "Mail not Sent. Please try again",
+              position: 'topRight'
+            });
+          }
+        }),
+          (error: any) => {
+            this.spinner.hide();
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+           // console.log("final error", error)
+          };
+      }
+    })
+
+
+  }
+ 
   PaymentTransactionReports() {
     var userid = localStorage.getItem('erp_c4c_user_id');
     var username = localStorage.getItem('user_name');
@@ -474,7 +562,7 @@ isSelected(billId: number): boolean {
     // console.log("userid+username", userid + username);
     // console.log("payment_transaction_reports", payment_transaction_reports);
     var userDetails = btoa(userid + username)
-    console.log("userDetails", userDetails)
+   // console.log("userDetails", userDetails)
     var url = "https://paymentinbound.cal4care.com/verify?uid=" + btoa(userid) + "&authToken=" + btoa(userid + username);
     window.open(url, '_blank');
   }
@@ -747,6 +835,98 @@ isSelected(billId: number): boolean {
         // console.log("final error", error);
       };
   }
+  overduePayments(billerID:any) {
+
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/overduePaymentsBillerWise";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "overduePaymentsBillerWise";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.billerId=billerID;
+    api_page_req.customer_id="";
+    api_page_req.from_dt="";
+    api_page_req.to_dt="";
+ 
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      if (response != '') {
+        this.overduePaymentsBillerWise=response.overduePayments;
+        this.colorCodes=response.colorCodes;
+        this.billerNameDisplay=response.billerName;
+        if (Array.isArray(this.overduePaymentsBillerWise)) {
+        //  console.log('this.overduePaymentsBillerWise is an array');
+      } else {
+         // console.log('this.overduePaymentsBillerWise is not an array');
+      }
+    
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+       // console.log("error",error)
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        
+      };
+  }
+  postalinv_sendPDF(billerID:any) {
+
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "postalPrint";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "postalPrint";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.billId=billerID;
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      if (response != '') {
+        var url = "https://paymentinbound.cal4care.com/verify?uid=" + btoa(billerID) + "&authToken=" + btoa(billerID + billerID);
+        window.open(url, '_blank');
+    
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+      //  console.log("error",error)
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        
+      };
+  }
 
   customerQuickMail() {
 
@@ -783,7 +963,7 @@ isSelected(billId: number): boolean {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+        // console.log("final error", error);
       };
   }
   searchCustomerData(data: any) {
@@ -823,7 +1003,7 @@ isSelected(billId: number): boolean {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("final error", error);
+      //  console.log("final error", error);
       };
   }
 
@@ -857,7 +1037,6 @@ isSelected(billId: number): boolean {
     this.PG_customerId = item.customerId;
     // console.log(" this.PG_CustomerCode-code", this.PG_CustomerCode)
     // console.log(item)
-
   }
 
   inpChanged_DIDNumber(data: any) {
@@ -875,7 +1054,7 @@ isSelected(billId: number): boolean {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
     //  console.log("vignesh-customer code_status response", response);
 
-      this.searchResult_DIDNumber = response.did_numbers;
+    this.searchResult_DIDNumber = response.did_numbers;
       // console.log("vignesh-advanced search result", this.searchResult_DIDNumber);
       this.onout_DIDNumber();
     });
@@ -1040,10 +1219,6 @@ isSelected(billId: number): boolean {
         })
 
       } else {
-
-
-
-
       }
     }),
       (error: any) => {
@@ -1056,5 +1231,22 @@ isSelected(billId: number): boolean {
       };
 
 
+  }
+  toggleSelection_overdue(event: any, billId: number) {
+    var checked=event.target.checked;
+    if (checked) {
+      this.selectedBillIds_overdue.push(billId);
+    } else {
+      const index = this.selectedBillIds_overdue.indexOf(billId);
+      if (index !== -1) {
+        this.selectedBillIds_overdue.splice(index, 1);
+      }
+    }
+    console.log("checkbox-overdue",this.selectedBillIds_overdue);
+  }
+
+  isSelected_overdue(billId: number): boolean {
+   // console.log("selectedBillIds_overdue",this.selectedBillIds_overdue)
+    return this.selectedBillIds_overdue.includes(billId);
   }
 }

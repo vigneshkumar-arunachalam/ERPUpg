@@ -144,16 +144,16 @@ export class PurchaseEntryComponent implements OnInit {
 
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/purchaseEntry/getMonthValues').subscribe((data: any) => {
       this.getMonthValues = data.months;
-      console.log("this.getMonthValues", this.getMonthValues)
+     // console.log("this.getMonthValues", this.getMonthValues)
     })
 
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
-      console.log("this.getVendorCode", this.getVendorCode)
+     // console.log("this.getVendorCode", this.getVendorCode)
     });
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
       this.getVendorList = data.vendorList;
-      console.log("this.getVendorCode", this.getVendorCode)
+     // console.log("this.getVendorCode", this.getVendorCode)
     })
     this.PurchaseEntryList({});
 
@@ -313,7 +313,7 @@ export class PurchaseEntryComponent implements OnInit {
         this.selectedGroupIds.splice(index, 1);
       }
     }
-    console.log(this.selectedGroupIds); // Log the array for testing
+  //  console.log(this.selectedGroupIds); // Log the array for testing
 
   }
   handle_company_add(event: any) {
@@ -365,8 +365,8 @@ export class PurchaseEntryComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
-    console.log("this.searchBILLERID", this.searchBILLERID);
+    // console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
+    // console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
       if (!this.edit_array_SearchBiller_Checkbox) {
@@ -376,7 +376,7 @@ export class PurchaseEntryComponent implements OnInit {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       if (!Array.isArray(this.edit_array_SearchBiller_Checkbox)) {
@@ -387,30 +387,30 @@ export class PurchaseEntryComponent implements OnInit {
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+   // console.log(item)
     this.searchResult_CustomerID = item.vendorId;
     this.searchResult_CustomerName = item.vendorName.trim();;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   keysearch(event: any) {
     this.searchResult_CustomerName = event.target.value;
   }
   clearSelection(event: any) {
-    console.log("clear selection", event)
+   // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID = '';
     this.searchResult_CustomerName = '';
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
   }
   searchCustomerData(data: any) {
 
@@ -429,10 +429,10 @@ export class PurchaseEntryComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-        console.log("vignesh-customer_status response", response);
+       // console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult = response.vendorName;
-        console.log("vignesh-advanced search result", this.searchResult);
+        // console.log("vignesh-advanced search result", this.searchResult);
         if (response! = null) {
           this.searchResult = response.vendorName;
           this.spinner.hide();
@@ -493,15 +493,15 @@ export class PurchaseEntryComponent implements OnInit {
   yearsCHK(data: any, event: any) {
     this.CBV_Years_All = event.target.checked;
     this.yearsID = data;
-    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
-    console.log("this.CBV_Years_All", this.CBV_Years_All)
+    // console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
+    // console.log("this.CBV_Years_All", this.CBV_Years_All)
     if (this.CBV_Years_All) {
       if (!this.edit_array_Years_Checkbox) {
         this.edit_array_Years_Checkbox = [];
       }
       this.edit_array_Years_Checkbox.push(data);
       this.edit_array_Years_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_Years_Checkbox);
     }
     else {
       if (!Array.isArray(this.edit_array_Years_Checkbox)) {
@@ -511,7 +511,7 @@ export class PurchaseEntryComponent implements OnInit {
       if (index > -1) {
         this.edit_array_Years_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_Years_Checkbox)
 
     }
 
@@ -746,7 +746,7 @@ export class PurchaseEntryComponent implements OnInit {
         this.resultRecurring = response[0].recuring_activechk;
         this.recurringGroups = response[0].recurringGroups
         this.selectedGroupIds = response[0].recuring_group_str.split(',').map(Number);
-        console.log("this.selectedGroupIds", this.selectedGroupIds)
+       // console.log("this.selectedGroupIds", this.selectedGroupIds)
         const dateParts = response[0].recured_date_show.split('/');
         const year = parseInt(dateParts[2], 10);
         const month = parseInt(dateParts[1], 10);
@@ -1072,67 +1072,259 @@ export class PurchaseEntryComponent implements OnInit {
       };
   }
 
+  // updatePurchaseEntry() {
+  //   this.spinner.show();
+
+  //   let api_req: any = new Object();
+  //   let api_mulInvpay: any = new Object();
+  //   api_req.moduleType = "purchaseEntry";
+  //   api_req.api_url = "purchaseEntry/updatePurchaseEntry"
+  //   api_req.api_type = "web";
+  //   api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+  //   api_mulInvpay.action = "updatePurchaseEntry";
+  //   api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+
+  //   var purchaseentrynumber=this.editEnquiryForm.value.edit_PurchaseEntryNo;
+ 
+  //   if (purchaseentrynumber=== null || purchaseentrynumber=== '' || purchaseentrynumber=== undefined || purchaseentrynumber=== 'undefined') {
+  //     iziToast.error({
+  //       message: "Fill Purchase Entry Number  ",
+  //       position: 'topRight'
+  //     });
+  //     this.spinner.hide();
+  //     return false;
+  //   }else{
+      
+  //     api_mulInvpay.purchaseEntryNo = this.editEnquiryForm.value.edit_PurchaseEntryNo;
+  //   }
+
+  //   var purchaseentrydate=this.editEnquiryForm.value.edit_PurchaseEntryDate;
+  //   if (purchaseentrydate=== null || purchaseentrydate=== '' || purchaseentrydate=== undefined || purchaseentrydate=== 'undefined') {
+  //     iziToast.error({
+  //       message: "Fill Purchase Entry Date  ",
+  //       position: 'topRight'
+  //     });
+  //     this.spinner.hide();
+  //     return false;
+  //   }else{
+      
+  //     api_mulInvpay.purchaseEntryDate = this.editEnquiryForm.value.edit_PurchaseEntryDate;
+  //   }
+ 
+
+  //   var invoiceNumb=this.editEnquiryForm.value.edit_InvoiceNo;
+  //   if (invoiceNumb=== null || invoiceNumb=== ''|| invoiceNumb=== undefined || invoiceNumb=== 'undefined') {
+  //     iziToast.error({
+  //       message: "Fill Invoice Number  ",
+  //       position: 'topRight'
+  //     });
+  //     this.spinner.hide();
+  //     return false;
+  //   }else{
+      
+  //     api_mulInvpay.invoiceNo = this.editEnquiryForm.value.edit_InvoiceNo;
+  //   }
+  //   api_mulInvpay.content_purchase = this.editEnquiryForm.value.edit_purchaseContent;
+  //   api_mulInvpay.poNo = this.editEnquiryForm.value.edit_PONo;
+  //   var invoiceamount=this.editEnquiryForm.value.edit_amount;
+  //   if (invoiceamount=== null || invoiceamount=== '' ||invoiceamount=== undefined || invoiceamount=== 'undefined') {
+  //     iziToast.error({
+  //       message: "Fill Invoice Amount  ",
+  //       position: 'topRight'
+  //     });
+  //     this.spinner.hide();
+  //    return false;
+  //   }else{
+     
+  //     api_mulInvpay.invoiceAmount = this.editEnquiryForm.value.edit_amount;
+  //   }
+  //   api_mulInvpay.company = this.recurringEditBillerID;
+  //   api_mulInvpay.conversionRate = this.editEnquiryForm.value.edit_convAmount;
+
+  //   api_mulInvpay.currency = this.recurringEditCurrencyID;
+  //   api_mulInvpay.taxAmount = this.editEnquiryForm.value.edit_taxAmount;
+   
+  //   var vendor= this.recurringEditVendorID;
+  //   if (vendor=== null || vendor=== '' ||vendor=== undefined || vendor=== 'undefined') {
+  //     iziToast.error({
+  //       message: "Fill Vendor Details  ",
+  //       position: 'topRight'
+  //     });
+  //     this.spinner.hide();
+  //     return false;
+  //   }else{
+      
+  //     api_mulInvpay.vendorId = this.recurringEditVendorID;
+  //   }
+
+  //   var purchaseType= this.recurringEditVendorID;
+  //   if (purchaseType=== null || purchaseType=== '' ||purchaseType=== undefined || purchaseType=== 'undefined') {
+  //     iziToast.error({
+  //       message: "Fill Purchase Type  ",
+  //       position: 'topRight'
+  //     });
+  //     this.spinner.hide();
+  //     return false;
+  //   }else{
+      
+  //     api_mulInvpay.purchase_type_id = this.recurringEditPurchaseTypeID;
+  //   }
+
+ 
+  //   api_mulInvpay.purchaseEntryId = this.editpurchaseEntryID;
+
+
+  //   api_req.element_data = api_mulInvpay;
+
+  //   this.serverService.sendServer(api_req).subscribe((response: any) => {
+  //     if (response.status = true) {
+  //       this.spinner.hide();
+  //       this.PurchaseEntryList({});
+  //       iziToast.success({
+  //         message: "Purchase Entry Values Updated Successfully",
+  //         position: 'topRight'
+  //       });
+
+  //       $("#editPurchaseEntryFormId").modal("hide");
+
+
+  //     } else {
+  //       this.spinner.hide();
+  //       iziToast.warning({
+  //         message: "Update Failed",
+  //         position: 'topRight'
+  //       });
+  //     }
+  //   }),
+  //     (error: any) => {
+  //       this.spinner.hide();
+  //       iziToast.error({
+  //         message: "Sorry, some server issue occur. Please contact admin",
+  //         position: 'topRight'
+  //       });
+  //       console.log("final error", error);
+  //     };
+  // }
   updatePurchaseEntry() {
     this.spinner.show();
 
-    let api_req: any = new Object();
-    let api_mulInvpay: any = new Object();
+    let api_req: any = {};
+    let api_mulInvpay: any = {};
     api_req.moduleType = "purchaseEntry";
-    api_req.api_url = "purchaseEntry/updatePurchaseEntry"
+    api_req.api_url = "purchaseEntry/updatePurchaseEntry";
     api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_req.access_token = "your_access_token_here"; // Replace with actual token
     api_mulInvpay.action = "updatePurchaseEntry";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
-    api_mulInvpay.purchaseEntryNo = this.editEnquiryForm.value.edit_PurchaseEntryNo;
-    api_mulInvpay.purchaseEntryDate = this.editEnquiryForm.value.edit_PurchaseEntryDate;
+    const purchaseEntryNumber = this.editEnquiryForm.value.edit_PurchaseEntryNo;
+    if (!purchaseEntryNumber) {
+        iziToast.error({
+            message: "Fill Purchase Entry Number",
+            position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+    }
+    api_mulInvpay.purchaseEntryNo = purchaseEntryNumber;
 
-    api_mulInvpay.invoiceNo = this.editEnquiryForm.value.edit_InvoiceNo;
+    const purchaseEntryDate = this.editEnquiryForm.value.edit_PurchaseEntryDate;
+    if (!purchaseEntryDate) {
+        iziToast.error({
+            message: "Fill Purchase Entry Date",
+            position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+    }
+    api_mulInvpay.purchaseEntryDate = purchaseEntryDate;
+
+    const invoiceNo = this.editEnquiryForm.value.edit_InvoiceNo;
+    if (!invoiceNo) {
+        iziToast.error({
+            message: "Fill Invoice Number",
+            position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+    }
+    api_mulInvpay.invoiceNo = invoiceNo;
+
+    const invoiceAmount = this.editEnquiryForm.value.edit_amount;
+    if (!invoiceAmount) {
+        iziToast.error({
+            message: "Fill Invoice Amount",
+            position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+    }
+    api_mulInvpay.invoiceAmount = invoiceAmount;
+
+    const vendorId = this.recurringEditVendorID;
+    if (!vendorId) {
+        iziToast.error({
+            message: "Fill Vendor Details",
+            position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+    }
+    api_mulInvpay.vendorId = vendorId;
+
+    const purchaseTypeId = this.recurringEditPurchaseTypeID;
+    if (!purchaseTypeId) {
+        iziToast.error({
+            message: "Fill Purchase Type",
+            position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+    }
+    api_mulInvpay.purchase_type_id = purchaseTypeId;
+
     api_mulInvpay.content_purchase = this.editEnquiryForm.value.edit_purchaseContent;
     api_mulInvpay.poNo = this.editEnquiryForm.value.edit_PONo;
-    api_mulInvpay.invoiceAmount = this.editEnquiryForm.value.edit_amount;
     api_mulInvpay.company = this.recurringEditBillerID;
     api_mulInvpay.conversionRate = this.editEnquiryForm.value.edit_convAmount;
-
     api_mulInvpay.currency = this.recurringEditCurrencyID;
     api_mulInvpay.taxAmount = this.editEnquiryForm.value.edit_taxAmount;
-    api_mulInvpay.vendorId = this.recurringEditVendorID;
-
-    api_mulInvpay.purchase_type_id = this.recurringEditPurchaseTypeID;
     api_mulInvpay.purchaseEntryId = this.editpurchaseEntryID;
-
 
     api_req.element_data = api_mulInvpay;
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      if (response.status = true) {
-        this.spinner.hide();
-        this.PurchaseEntryList({});
-        iziToast.success({
-          message: "Purchase Entry Values Updated Successfully",
-          position: 'topRight'
-        });
+    this.serverService.sendServer(api_req).subscribe({
+        next: (response: any) => {
+            this.spinner.hide();
+            if (response.status) {
+                this.PurchaseEntryList({});
+                iziToast.success({
+                    message: "Purchase Entry Values Updated Successfully",
+                    position: 'topRight'
+                });
+                $("#editPurchaseEntryFormId").modal("hide");
+            } else {
+                iziToast.warning({
+                    message: "Update Failed",
+                    position: 'topRight'
+                });
+            }
+        },
+        error: (error: any) => {
+            this.spinner.hide();
+            iziToast.error({
+                message: "Sorry, some server issue occurred. Please contact admin",
+                position: 'topRight'
+            });
+            console.log("Error:", error);
+        },
+        complete: () => {
+            console.log("Update purchase entry completed.");
+        }
+    });
+}
 
-        $("#editPurchaseEntryFormId").modal("hide");
 
-
-      } else {
-        this.spinner.hide();
-        iziToast.warning({
-          message: "Update Failed",
-          position: 'topRight'
-        });
-      }
-    }),
-      (error: any) => {
-        this.spinner.hide();
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
-      };
-  }
   PP_PaymentMethod(event: any) {
     this.PP_paymentMethod = event.target.value;
 
@@ -1235,7 +1427,7 @@ export class PurchaseEntryComponent implements OnInit {
     } else {
       api_mulInvpay.payment_method = this.purchasePaymentForm.value.pay_paymentType;
     }
-    console.log("batter", this.purchasePaymentForm.value.pay_paymentType)
+  //  console.log("batter", this.purchasePaymentForm.value.pay_paymentType)
     api_req.element_data = api_mulInvpay;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -1281,7 +1473,7 @@ export class PurchaseEntryComponent implements OnInit {
     
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
-      console.log("this.getVendorCode", this.getVendorCode)
+    //  console.log("this.getVendorCode", this.getVendorCode)
     });
 
     $('#PE_VendorManagementId').modal('show');
@@ -1356,9 +1548,9 @@ export class PurchaseEntryComponent implements OnInit {
 
 
     this.spinner.show();
-    console.log("this.searchResult_CustomerName", this.searchResult_CustomerName)
-    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
-    console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
+    // console.log("this.searchResult_CustomerName", this.searchResult_CustomerName)
+    // console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox)
+    // console.log("this.edit_array_SearchBiller_Checkbox", this.edit_array_SearchBiller_Checkbox)
     var list_data = this.listDataInfo(data);
 
     let api_req: any = new Object();
@@ -1413,10 +1605,10 @@ export class PurchaseEntryComponent implements OnInit {
         this.paidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paid');
         this.partialPaidEntries = this.purchaseEntryList.filter((entry: { paymentStatus: string; }) => entry.paymentStatus === 'paritialypaid');
 
-        console.log("this.notPaidEntries",this.notPaidEntries)
-        console.log("this.notPaidEntries.length",this.notPaidEntries.length)
-        console.log("this.paidEntries",this.paidEntries)
-        console.log("this.partialPaidEntries",this.partialPaidEntries)
+        // console.log("this.notPaidEntries",this.notPaidEntries)
+        // console.log("this.notPaidEntries.length",this.notPaidEntries.length)
+        // console.log("this.paidEntries",this.paidEntries)
+        // console.log("this.partialPaidEntries",this.partialPaidEntries)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
        
         $('#searchDeliveryOrderFormId').modal("hide");

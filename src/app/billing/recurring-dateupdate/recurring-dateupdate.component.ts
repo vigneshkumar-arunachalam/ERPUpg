@@ -67,17 +67,17 @@ export class RecurringDateupdateComponent implements OnInit {
   }
   radio_recurring(event: any) {
     this.recurring_State_value = event.target.id;
-    console.log(this.recurring_State_value)
+   // console.log(this.recurring_State_value)
 
   }
   CBF_FixedChargeDtFn(event: any) {
     this.CBV_FixedChargeDt = event.target.checked;
-    console.log(this.CBV_FixedChargeDt);
+   // console.log(this.CBV_FixedChargeDt);
 
   }
   CBF_UsageChargeDtFn(event: any) {
     this.CBV_UsageChargeDt = event.target.checked;
-    console.log(this.CBV_UsageChargeDt);
+   // console.log(this.CBV_UsageChargeDt);
 
   }
   recurringCheckerList() {
@@ -117,14 +117,14 @@ export class RecurringDateupdateComponent implements OnInit {
 
   }
   EditCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     // this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+    // console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.ckbx_array.push(data);
-      console.log("Final Checkbox After checkbox selected list", this.ckbx_array);
+     // console.log("Final Checkbox After checkbox selected list", this.ckbx_array);
 
     }
     else {
@@ -132,7 +132,7 @@ export class RecurringDateupdateComponent implements OnInit {
       if (index > -1) {
         this.ckbx_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.ckbx_array)
+     // console.log("Final Checkbox After Deselected selected list", this.ckbx_array)
 
     }
   }
@@ -267,7 +267,7 @@ export class RecurringDateupdateComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response != '') {
-        console.log("response", response.sending_type)
+      //  console.log("response", response.sending_type)
         this.spinner.hide();
 
         this.InvoiceSendingMethodForm.patchValue({
@@ -297,7 +297,7 @@ export class RecurringDateupdateComponent implements OnInit {
     var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
-    console.log("url", url)
+   // console.log("url", url)
   }
   RecurringEdit(id: any) {
 
@@ -321,7 +321,7 @@ export class RecurringDateupdateComponent implements OnInit {
       this.spinner.hide();
       if (response.status == true) {
         var date = response.reccuring_details.recured_date_show;
-        console.log("date check", date)
+      //  console.log("date check", date)
         // $('#date123').val('01/01/1970');
         this.recurringDetails = response.reccuring_details;
         this.recurringDetails_fixed_next_dt = response.reccuring_details.fixed_next_dt;

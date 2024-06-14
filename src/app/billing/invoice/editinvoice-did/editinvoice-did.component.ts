@@ -223,6 +223,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   shipAddress3_Final: any;
   ship_to_str_Final: any;
   customerName_Change: string;
+  invoiceNumberValueEdit: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -296,7 +297,9 @@ export class EditinvoiceDIDComponent implements OnInit {
       );
  this.addDidLoad();
     this.editDidInvice();
-
+    setTimeout(() => {
+      $('#inv_no').val( this.invoiceNumberValueEdit);
+    }, 4000)
 
 
     // setTimeout(() => {
@@ -1375,7 +1378,7 @@ export class EditinvoiceDIDComponent implements OnInit {
 
 
 
-      if (response.status = true) {
+      if (response.status == true) {
         this.addDid_section1.patchValue({
           "customer_id_hd": response.customer_list.customerId
         });
@@ -1396,22 +1399,23 @@ export class EditinvoiceDIDComponent implements OnInit {
       api_req.api_type = "web";
       api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
       api_SearchCUST_req.action = "quot_customer_details";
+      api_SearchCUST_req.billerId = this.addDid_section1.value.companyName;
       api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
       api_SearchCUST_req.customerId = customerId;
       api_req.element_data = api_SearchCUST_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
   
-        console.log("customer_address_details---response", response)
+        // console.log("customer_address_details---response", response)
         if (response.status == true) {
   
           this.spinner.hide();
   
-          this.custAdr1=response.customer_details[0].customerAddress1;
-          this.custAdr2=response.customer_details[0].customerAddress2;
-          this.custAdr3=response.customer_details[0].city;
-          this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
-          this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
-          this.ShipAdr3=response.customer_details[0].ship_city;
+          this.custAdr1=response.customer_details.customerAddress1;
+          this.custAdr2=response.customer_details.customerAddress2;
+          this.custAdr3=response.customer_details.city;
+          this.ShipAdr1=response.customer_details.ship_customerAddress1;
+          this.ShipAdr2=response.customer_details.ship_customerAddress2;
+          this.ShipAdr3=response.customer_details.ship_city;
   
           if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
             this.shipAddress1_Final=this.custAdr1
@@ -1429,27 +1433,33 @@ export class EditinvoiceDIDComponent implements OnInit {
           }else{
             this.shipAddress3_Final=this.ShipAdr3
           }
-          if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
-            this.ship_to_str_Final= response.customer_details[0].customerName; 
+          if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
+            this.ship_to_str_Final= response.customer_details.customerName; 
          
           } else {
-            this.ship_to_str_Final = response.customer_details[0].ship_to;
+            this.ship_to_str_Final = response.customer_details.ship_to;
           }
           console.log("shipAddress1",this.shipAddress1_Final)
           console.log("shipAddress2",this.shipAddress2_Final)
           console.log("shipAddress3", this.shipAddress3_Final)
           console.log("ship to",  this.ship_to_str_Final)
+          
+        
+ 
+      
           this.addDid_section1.patchValue({
-            'address_1': response.customer_details[0].customerAddress1,
-            'address_2': response.customer_details[0].customerAddress2,
-            'address_3': response.customer_details[0].city,
-            'Attn_1': response.customer_details[0].companyName,
-            'ship_to':   this.ship_to_str_Final,
-            'shipTo_1': this.shipAddress1_Final,
-            'shipTo_2': this.shipAddress2_Final,
-            'shipTo_3': this.shipAddress3_Final,
-            'ship_attn': response.customer_details[0].s_attn,
-           // 'cusInvoiceNo': response.customer_invoice_no,
+            'address_1': response.customer_details.customerAddress1,
+            'address_2': response.customer_details.customerAddress2,
+            'address_3': response.customer_details.customerAddress3,
+            'Attn_1': response.customer_details.kind_Attention,
+            'ship_to':  response.customer_details.ship_to,
+            'shipTo_1': response.customer_details.ship_customerAddress1,
+            'shipTo_2': response.customer_details.ship_customerAddress2,
+            'shipTo_3': response.customer_details.ship_customerAddress3,
+            'ship_attn': response.customer_details.ship_attn,
+            'cusInvoiceNo': response.customer_invoice_no,
+            'invoiceNo': response.invoice_no,
+           // 'cusInvoiceNo': response.customer_invoice_no--- last minute change- check with paramesh,
           });
         }
         else {
@@ -1478,8 +1488,8 @@ export class EditinvoiceDIDComponent implements OnInit {
     searchCustomer_selectDropdownData(data: any) {
       this.spinner.show();
   
-      console.log("search data in dropdown", data)
-      console.log("search data-customer Id", data.customerId)
+      // console.log("search data in dropdown", data)
+      // console.log("search data-customer Id", data.customerId)
       this.customerName_Data = data.customerId;
       this.customerName_Change = data.customerName;
   
@@ -1492,18 +1502,19 @@ export class EditinvoiceDIDComponent implements OnInit {
       api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
       api_SearchCUST_req.action = "customer_address_details";
       api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_SearchCUST_req.billerId = this.addDid_section1.value.companyName;
       api_SearchCUST_req.customerId = this.customerName_Data
       api_req.element_data = api_SearchCUST_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
   
         this.spinner.hide();
         if (response.status == true) {
-          this.custAdr1=response.customer_details[0].customerAddress1;
-          this.custAdr2=response.customer_details[0].customerAddress2;
-          this.custAdr3=response.customer_details[0].city;
-          this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
-          this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
-          this.ShipAdr3=response.customer_details[0].ship_city;
+          this.custAdr1=response.customer_details.customerAddress1;
+          this.custAdr2=response.customer_details.customerAddress2;
+          this.custAdr3=response.customer_details.city;
+          this.ShipAdr1=response.customer_details.ship_customerAddress1;
+          this.ShipAdr2=response.customer_details.ship_customerAddress2;
+          this.ShipAdr3=response.customer_details.ship_city;
   
           if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
             this.shipAddress1_Final=this.custAdr1
@@ -1521,27 +1532,29 @@ export class EditinvoiceDIDComponent implements OnInit {
           }else{
             this.shipAddress3_Final=this.ShipAdr3
           }
-          if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
-            this.ship_to_str_Final= response.customer_details[0].customerName; 
+          if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
+            this.ship_to_str_Final= response.customer_details.customerName; 
          
           } else {
-            this.ship_to_str_Final = response.customer_details[0].ship_to;
+            this.ship_to_str_Final = response.customer_details.ship_to;
           }
-          console.log("shipAddress1",this.shipAddress1_Final)
-          console.log("shipAddress2",this.shipAddress2_Final)
-          console.log("shipAddress3", this.shipAddress3_Final)
-          console.log("ship to",  this.ship_to_str_Final)
+          // console.log("shipAddress1",this.shipAddress1_Final)
+          // console.log("shipAddress2",this.shipAddress2_Final)
+          // console.log("shipAddress3", this.shipAddress3_Final)
+          // console.log("ship to",  this.ship_to_str_Final)
           this.addDid_section1.patchValue({
-            'address_1': response.customer_details[0].customerAddress1,
-            'address_2': response.customer_details[0].customerAddress2,
-            'address_3': response.customer_details[0].city,
-            'Attn_1': response.customer_details[0].companyName,
-            'ship_to':   this.ship_to_str_Final,
-            'shipTo_1': this.shipAddress1_Final,
-            'shipTo_2': this.shipAddress2_Final,
-            'shipTo_3': this.shipAddress3_Final,
-            'ship_attn': response.customer_details[0].s_attn,
+            'address_1': response.customer_details.customerAddress1,
+            'address_2': response.customer_details.customerAddress2,
+            'address_3': response.customer_details.customerAddress3,
+            'Attn_1': response.customer_details.kind_Attention,
+            'ship_to':  response.customer_details.ship_to,
+            'shipTo_1': response.customer_details.ship_customerAddress1,
+            'shipTo_2': response.customer_details.ship_customerAddress2,
+            'shipTo_3': response.customer_details.ship_customerAddress3,
+            'Attn_2': response.customer_details.ship_attn,
             'cusInvoiceNo': response.customer_invoice_no,
+            'invoiceNo': response.invoice_no,
+            'CurrencyConversionRate': response.currencyValue,
           });
   
          
@@ -1750,10 +1763,12 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.send_cusName=response.billing_pararent_details[0].b_name;
         this.customerName_Data = response.billing_pararent_details[0].custId;
         this.customerName_Change = response.billing_pararent_details[0].b_name;
+        this.invoiceNumberValueEdit=response.billing_pararent_details[0].invoice_no
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
         $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
         $('#sub_total_3').val(response.other_subtotal.toFixed(2));
+        $('#inv_no').val(response.billing_pararent_details[0].invoice_no);
         
         this.addDid_section1.patchValue({
           'billId_edit': response.billing_pararent_details[0].billId,
@@ -1793,7 +1808,8 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
         // $("#attn1").val(response.billing_pararent_details[0].b_attn);
         console.log('billchild_details.length' ,response.billing_pararent_details.length);
-        this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
+        // if there is error look at this line, change made in 11.06.2024-paramesh
+        // this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
         this.editCurrencyValue=response.billing_pararent_details[0].currency;
         this.editpaymentVIAValue=response.billing_pararent_details[0].paymentVIA;
 
@@ -2061,7 +2077,8 @@ export class EditinvoiceDIDComponent implements OnInit {
 
     
     // $('#sub_total_2').val(this.sub2Total_edit);
-
+   
+  
     this.spinner.hide();
 
   }
@@ -2072,10 +2089,21 @@ export class EditinvoiceDIDComponent implements OnInit {
     let api_updateDid_req: any = new Object();
     api_req.moduleType = "did";
     
-    api_req.api_url = "did/update_invoice";
+    // api_req.api_url = "did/update_invoice";
 
+
+    if (this.edit_Duplicate_ID == 'undefined' || this.edit_Duplicate_ID == undefined) {
+      api_req.api_url = "did/update_invoice";
+
+    } else {
+
+      api_req.api_url = "invoice/duplicate_invoice";
+
+    }
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+   
+   
     api_updateDid_req.action = "update_invoice";
     api_updateDid_req.user_id = localStorage.getItem('erp_c4c_user_id');
 

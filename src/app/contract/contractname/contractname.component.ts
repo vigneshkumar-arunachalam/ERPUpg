@@ -259,7 +259,7 @@ export class ContractnameComponent implements OnInit {
     this.editContractNameForm.reset();
   }
   updateContractName() {
-    alert(this.editContractNameForm.value.e_create_contract_name)
+   // alert(this.editContractNameForm.value.e_create_contract_name)
     let api_req: any = new Object();
     let contractNameUpdate_req: any = new Object();
     api_req.moduleType = "customer_contract";

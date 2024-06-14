@@ -127,7 +127,7 @@
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="purchaseEntryNo"
                                                     class="col-form-label">Purchase Entry
-                                                    No</label></div>
+                                                    No<span style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
@@ -139,7 +139,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"><label for="vendorName" class=" col-form-label">Vendor
-                                                    Name</label>
+                                                    Name<span style="color: red;">*</span></label>
                                             </div>
                                             <div class="col-lg-4">
                                                 <select id="vendorName" class="form-control"
@@ -166,7 +166,7 @@
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="purchaseType"
                                                     class=" col-form-label">Purchase
-                                                    Type</label></div>
+                                                    Type<span style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <select id="purchaseType" class="form-control"
@@ -184,7 +184,7 @@
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="invoiceNo"
-                                                    class=" col-form-label">Invoice No</label></div>
+                                                    class=" col-form-label">Invoice No<span style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <input type="text" class="form-control"
@@ -197,11 +197,23 @@
                                         <div class="form-group row">
                                             <div class="col-lg-2"> <label for="invoice_Date"
                                                     class=" col-form-label">Invoice
-                                                    Date</label></div>
+                                                    Date<span style="color: red;">*</span></label></div>
 
                                             <div class="col-lg-4">
                                                 <input type="date" class="form-control"
                                                     formControlName="PE_invoice_Date" id="invoice_Date" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="form-group row">
+                                            <div class="col-lg-2"> <label for="invoiceAmount"
+                                                    class=" col-form-label">Invoice
+                                                    Amount<span style="color: red;">*</span></label></div>
+
+                                            <div class="col-lg-4">
+                                                <input type="number" class="form-control"
+                                                    formControlName="PE_invoiceAmount" />
                                             </div>
                                         </div>
                                     </div>
@@ -327,18 +339,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="col-lg-2"> <label for="invoiceAmount"
-                                                    class=" col-form-label">Invoice
-                                                    Amount</label></div>
-
-                                            <div class="col-lg-4">
-                                                <input type="number" class="form-control"
-                                                    formControlName="PE_invoiceAmount" />
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
 
 
                                     <div class="col-lg-12">

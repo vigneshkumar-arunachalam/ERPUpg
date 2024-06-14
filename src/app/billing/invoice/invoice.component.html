@@ -628,13 +628,13 @@
 
                 </tbody>
                
-                <tbody *ngIf="response_total_cnt == 0">
+                <!-- <tbody *ngIf="response_total_cnt == 0">
                   <tr>
                       <td colspan="9" style="height: 50px; font-weight: 600; line-height: 1.5;font-style:italic; padding-top: 25px; text-align: center;background-color: red;">
                           No Record Found
                       </td>
                   </tr>
-              </tbody>
+              </tbody> -->
               </table>
             
             
@@ -1234,7 +1234,7 @@
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
               <div class="col-lg-10">
-                <editor id="tinyID1" [init]="{
+                <editor id="tinyID1_inv" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'

@@ -1,15 +1,15 @@
 <div class="contents-section">
 
-    <div class="row no-gutters">
-        <div class="col-lg-12 mb-30">
-            <div class="card quotation">
-                <div class="card-header color-dark fw-500">
-                    <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
-                            Home</a>
-                        <span class="breadcrumb-item active">GST Report</span>
-                    </h3>
-                    <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
-                    <!-- <div class="quotation-btn-section">
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card quotation">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+              Home</a>
+            <span class="breadcrumb-item active">GST Report-Cal4Care Pte Ltd</span>
+          </h3>
+          <!-- <h3 style="margin-bottom: 0;">Quotation</h3> -->
+          <!-- <div class="quotation-btn-section">
 
 
 
@@ -19,125 +19,197 @@
                             Search
                         </button>
                     </div> -->
+          <div class="col-lg-3 quotation-btn-section">
+            <form [formGroup]="YearsForm">
+              <div class="form-group row">
+                <div>
+                  <label for="years" class="col-lg-12 col-form-label" style="color:red;font-weight: 600;">Year</label>
                 </div>
-                <div class="card-body">
-                 
-                    <div class="tax-table-container">
-                        <table class="tax-table">
-                          <thead>
-                            <tr>
-                              <th>Month</th>
-                              <th>Inv Tax (6)</th>
-                              <th>Pur Tax (7)</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>Jan</td>
-                              <td>12,075.60</td>
-                              <td>3,730.91</td>
-                            </tr>
-                            <tr>
-                              <td>Feb</td>
-                              <td>9,834.43</td>
-                              <td>3,084.94</td>
-                            </tr>
-                            <tr>
-                              <td>Mar</td>
-                              <td>21,267.57</td>
-                              <td>6,384.14</td>
-                            </tr>
-                            <tr class="subtotal">
-                              <td>Sub Total</td>
-                              <td>43,177.60</td>
-                              <td>13,199.99</td>
-                            </tr>
-                            <tr>
-                              <td>Apr</td>
-                              <td>34,288.90</td>
-                              <td>3,040.46</td>
-                            </tr>
-                            <tr>
-                              <td>May</td>
-                              <td>12,084.76</td>
-                              <td>2,093.81</td>
-                            </tr>
-                            <tr>
-                              <td>Jun</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr class="subtotal">
-                              <td>Sub Total</td>
-                              <td>46,373.66</td>
-                              <td>5,134.27</td>
-                            </tr>
-                            <tr>
-                              <td>Jul</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr>
-                              <td>Aug</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr>
-                              <td>Sep</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr class="subtotal">
-                              <td>Sub Total</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr>
-                              <td>Oct</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr>
-                              <td>Nov</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr>
-                              <td>Dec</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                            <tr class="subtotal">
-                              <td>Sub Total</td>
-                              <td>0.00</td>
-                              <td>0.00</td>
-                            </tr>
-                          </tbody>
-                          <tfoot>
-                            <tr class="total">
-                              <td>Total</td>
-                              <td>89,551.26</td>
-                              <td>18,334.26</td>
-                            </tr>
-                          </tfoot>
-                        </table>
-                      </div>
-                    
 
+                <div>
+                  <select name="years" class="form-control" (change)="yearChange($event)" formControlName="years">
+                    <!-- <option [ngValue]="null" selected>All</option> -->
+                    <option *ngFor="let from of yearsList" value="{{ from}}">
+                      {{ from }}
+                    </option>
+                  </select>
                 </div>
-            </div>
+              </div>
+            </form>
+
+          </div>
         </div>
+        <div class="card-body">
+          <div style="display: flex;" class="col-lg-12">
+            <div class="tax-table-container col-lg-6">
+              <!-- <h2>TAX - 2024</h2> -->
+              <h2 class="col-4  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+                      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                      background: linear-gradient(to right, #200122, #6f0000);">
+                TAX - {{this.currentYear}}</h2>
+              <table class="tax-table col-lg-10">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Inv Tax (6)</th>
+                    <th>Pur Tax (7)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of monthReportList;let i=index;"
+                    [ngStyle]="{'background-color': row.color === 'Yes' ? 'rgb(9 10 10)' : '','font-weight':row.color === 'Yes' ? '500' : '','color': row.color === 'Yes' ? '#efeded' : ''}">
+                    <td>{{ row.month }}</td>
+                    <td *ngIf="row.color === 'No'">{{ row.taxAmount }}</td>
+                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport(row)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ row.taxAmount }}</td>
+                    <td *ngIf="row.color === 'No'">{{ row.purchaseTaxAmount }}</td>
+                    <td *ngIf="row.color === 'Yes'" (click)="redirectToPurEntReport(row)" style="cursor: pointer;"
+                      title="Redirect to Purchase Entry Report">{{ row.purchaseTaxAmount }}</td>
+                  </tr>
+
+                <tfoot>
+                  <tr class="total" *ngFor="let list of monthReportTotal">
+                    <td>Total</td>
+                    <td>{{list.tax}}</td>
+                    <td>{{list.purchaseTax}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="tax-table-container col-lg-6">
+              <!-- <h2>TURNOVER - 2024</h2> -->
+              <h2 class="col-4  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+              background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+              background: linear-gradient(to right, #262127, #54b7aa);">
+                TURNOVER - {{this.currentYear}}</h2>
+              <table class="tax-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Net Amt (1)</th>
+                    <th>Amt (13)</th>
+                    <th>P With T Amt (7-B)</th>
+                    <th>P WO T Amt (5)</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr *ngFor="let list of turnReportList"
+                    [ngStyle]="{'background-color': list.color === 'Yes' ? 'rgb(9 10 10)' : '','font-weight':list.color === 'Yes' ? '500' : '','color': list.color === 'Yes' ? '#efeded' : ''}">
+                    <td>{{list.month}}</td>
+                    <td *ngIf="list.color === 'No'">{{list.netPayment}}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.netPayment }}</td>
+                    <td *ngIf="list.color === 'No'">{{list.grossAmount}}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.grossAmount }}</td>
+
+                    <td *ngIf="list.color === 'No'">{{ list.purchaseWithTax }}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToPurEntReport(list)" style="cursor: pointer;"
+                      title="Redirect to Purchase Entry Report">{{ list.purchaseWithTax }}</td>
+                    <td *ngIf="list.color === 'No'">{{ list.purchaseWithoutTax }}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToPurEntReport(list)" style="cursor: pointer;"
+                      title="Redirect to Purchase Entry Report">{{ list.purchaseWithoutTax }}</td>
+
+                  </tr>
+
+                  <tr class="subtotal">
+
+                  </tr>
+
+                </tbody>
+
+                <tfoot>
+
+                  <tr *ngFor="let list of turnoverTotal">
+                    <td colspan="2" style="background-color: gainsboro;border:3px dashed #224b5a;color:maroon">Total
+                      Turnover:{{list.month}}</td>
+                    <td colspan="1" style="background-color: rgb(237, 247, 197);border:3px dashed #224b5a;">
+                      {{list.turnoverTotal}}</td>
+                  </tr>
+
+                </tfoot>
+
+                <tfoot>
+                  <tr class="total" *ngFor="let list of turnReportTotal">
+                    <td>Total</td>
+                    <td>{{list.tot_net}}</td>
+                    <td>{{list.tot_gross}}</td>
+                    <td>{{list.tot_purTax}}</td>
+                    <td>{{list.tot_purwoTax}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+
+            </div>
+
+          </div>
+          <div>
+            <div class="tax-table-container">
+              <table class="tax-table" id="lonv">
+                <tbody>
+                  <tr style="line-height: 40px;">
+                    <th style="padding-top:0px !important" text-align="left"><strong>Goods and Services Tax
+                        Return</strong></th>
+                    <th style="padding-top:0px !important" text-align="left"><strong>Currency
+                      </strong></th>
+                    <th style="padding-top:0px !important" align="right"><strong>Jan - Mar</strong></th>
+                    <th style="padding-top:0px !important" align="right"><strong>Apr - Jun</strong></th>
+                    <th style="padding-top:0px !important" align="right"><strong>Jul - Sep</strong></th>
+                    <th style="padding-top:0px !important" align="right"><strong>Oct - Dec</strong></th>
+                    <th></th>
+                  </tr>
+
+                  <tr *ngFor="let list of gstReturnList;let i=index">
+                    <td>{{list.title}}</td>
+                    <td>{{list.currency}}</td>
+
+                    <td *ngIf="list.color === 'No'">{{list.first}}
+                    </td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{list.first}}
+                    </td>
+                    <td *ngIf="list.color === 'No'">{{list.second}}
+                    </td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{list.second}}
+                    </td>
+
+                    <td *ngIf="list.color === 'No'">{{list.third}}
+                    </td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{list.third}}
+                    </td>
+                    <td *ngIf="list.color === 'No'">{{list.fourth}}
+                    </td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{list.fourth}}
+                    </td>
+
+
+                    <td>
+                      <span><span>→</span> <span class="badge badge-round badge-success badge-lg">
+
+                          {{i+1}}
+                        </span></span>
+                    </td>
+                  </tr>
+
+
+
+
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+      </div>
     </div>
+  </div>
 
 </div>
-
-
-
-
-
-
-
-
-
-
-

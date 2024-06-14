@@ -51,17 +51,17 @@ export class RecurringCheckerComponent implements OnInit {
   }
   radio_InvoiceSendingInput(event: any) {
     this.InvoiceSendingValue = event.target.value;
-    console.log("this.InvoiceSendingValue",this.InvoiceSendingValue)
+  //  console.log("this.InvoiceSendingValue",this.InvoiceSendingValue)
   }
   EditCHK(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     // this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value)
+// console.log(this.checkbox_value)
     if (this.checkbox_value) {
 
       this.ckbx_array.push(data);
-      console.log("Final Checkbox After checkbox selected list", this.ckbx_array);
+     // console.log("Final Checkbox After checkbox selected list", this.ckbx_array);
 
     }
     else {
@@ -69,7 +69,7 @@ export class RecurringCheckerComponent implements OnInit {
       if (index > -1) {
         this.ckbx_array.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.ckbx_array)
+     // console.log("Final Checkbox After Deselected selected list", this.ckbx_array)
 
     }
   }
@@ -89,7 +89,7 @@ export class RecurringCheckerComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         this.recurringCheckList=response.recurring_list;
-        console.log(" this.recurringCheckerList", this.recurringCheckerList)
+      //  console.log(" this.recurringCheckerList", this.recurringCheckerList)
 
       } else {
         this.spinner.hide();
@@ -127,7 +127,7 @@ export class RecurringCheckerComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.recurringCheckList=response.recurring_list;
-        console.log(" this.recurringCheckerList", this.recurringCheckerList)
+      //  console.log(" this.recurringCheckerList", this.recurringCheckerList)
         $('#RC_multipleRecurrDateUpdate').modal("hide");
         this.recurringCheckerList();
         iziToast.success({
@@ -153,10 +153,10 @@ export class RecurringCheckerComponent implements OnInit {
 
   }
   multipleAddressPrint(){
-    var url = " https://laravelapi.erp1.cal4care.com/api/recurring_date_update/getaddresspdfShow?billId=" +  btoa(this.ckbx_array) + "";
+    var url = " https://erp1.cal4care.com/api/recurring_date_update/getaddresspdfShow?billId=" +  btoa(this.ckbx_array) + "";
     // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
-    console.log("url", url)
+   // console.log("url", url)
 
 
    
@@ -281,7 +281,7 @@ export class RecurringCheckerComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response:any)=>{
         if(response!=''){
-          console.log("response",response.sending_type)
+         // console.log("response",response.sending_type)
           this.spinner.hide();
           
           this.InvoiceSendingMethodForm.patchValue({
@@ -355,7 +355,7 @@ export class RecurringCheckerComponent implements OnInit {
     var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
-    console.log("url", url)
+   // console.log("url", url)
   }
 
 }

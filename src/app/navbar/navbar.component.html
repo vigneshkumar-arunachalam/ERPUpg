@@ -55,73 +55,15 @@
                                     </thead>
                                     <tbody>
 
-                                        <tr>
-                                            <td> 1</td>
-                                            <td>Activation form Link</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10062"
-                                                    alt="text">https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10062</a>
+                                        <tr *ngFor="let list of getTaskList;let i = index" style="font-weight: 600;">
+                                            <td> {{list.id}}</td>
+                                            <td>{{list.name}}</td>
+                                            <td> <a href="{{list.link}}" target="_blank" alt="text"
+                                                    style="color:#6f0000">{{list.link}}</a>
                                             </td>
 
                                         </tr>
-                                        <tr>
-                                            <td> 2</td>
-                                            <td>Deactivation Form Link</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10142"
-                                                    alt="text">
-                                                    https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10142</a>
-                                            </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td> 3</td>
-                                            <td>Demo from</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10145"
-                                                    alt="text">
-                                                    https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10145</a>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td> 4</td>
-                                            <td>Change request form</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10060"
-                                                    alt="text">https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10060</a>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td> 5</td>
-                                            <td>Internal support</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10158"
-                                                    alt="text">https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10158</a>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td> 6</td>
-                                            <td>Report Incident</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10061"
-                                                    alt="text">
-                                                    https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10061</a>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td> 7</td>
-                                            <td> For IT Help</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10059"
-                                                    alt="text">https://cal4care.atlassian.net/servicedesk/customer/portal/9/create/10059</a>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td> 8</td>
-                                            <td>3CX Licence related</td>
-                                            <td><a href="https://cal4care.atlassian.net/servicedesk/customer/portal/20/create/84"
-                                                    alt="text">https://cal4care.atlassian.net/servicedesk/customer/portal/20/create/84</a>
-                                            </td>
-
-                                        </tr>
 
                                     </tbody>
                                 </table>
@@ -157,7 +99,7 @@
 
                     </div>
                     <div class="modal-body mousepoint mt-0">
-                        <form [formGroup]="ContractDetailsForm" *ngIf="(show==false)">
+                        <div *ngIf="(show==false)">
                             <label for="companyCode" class="col-lg-12 col-form-label"
                                 style="font-weight: 420;font-size:large; color: #C04000;padding-left:0;">Contract
                                 Details</label>
@@ -259,7 +201,7 @@
                                 <!-- <i class="fa-solid fa-envelope fa-beat-fade " style="color: #5a52eb;"></i> -->
                             </div>
 
-                        </form>
+                        </div>
                         <form [formGroup]="GlobalSearch">
                             <div class="row mt-2">
                                 <div class="col-lg-6">
@@ -325,21 +267,11 @@
                                         </div>
                                     </div>
 
-                                    <!-- <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <label for="companyCode " class="col-lg-12 col-form-label">Customer Name<span
-                                            class="mandatoryField">
-                                            *</span></label>
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" formControlName="GS_CustomerName"
-                                            id="companyCode" />
-                                    </div>
-                                </div>
-                            </div> -->
+                
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="ng-autocomplete">
-                                                <label for="companyName" class="col-lg-12 col-form-label"
+                                                <label for="GS_CustomerName" class="col-lg-12 col-form-label"
                                                     style="font-weight: 420;color: blue; ">Company
                                                     Name<span class="mandatoryField">
                                                         *</span></label>
@@ -404,19 +336,6 @@
                                         </div>
                                     </div>
 
-
-                                    <!-- <div class="col-lg-12">
-                                <div class="form-group row">
-                                    <label for="companyCode " class="col-lg-12 col-form-label">DID Number<span
-                                            class="mandatoryField">
-                                            *</span></label>
-                                    <div class="col-lg-12">
-                                        <input type="text" class="form-control" formControlName="GS_DIDNumber"
-                                            id="companyCode" />
-                                    </div>
-                                </div>
-                            </div> -->
-
                                     <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
 
                                     <div class="col-lg-12">
@@ -445,9 +364,9 @@
                                                 </ng-template>
 
                                             </div>
-                                            <div *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
+                                            <div *ngIf="GlobalSearch.controls['GS_LicenseNumber'].invalid && (GlobalSearch.controls['GS_LicenseNumber'].dirty || GlobalSearch.controls['GS_LicenseNumber'].touched)"
                                                 class="alert alert-danger alertdangerCustomCSS mt-2">
-                                                Company Name is Required
+                                                License Number is Required
                                             </div>
 
                                         </div>
@@ -502,111 +421,6 @@
 
                         <div class="accordion" id="accordionExample">
 
-                            <!-- <div class="card" *ngFor="let item of SelectPageList;let i=index">
-                        <div class="card-header" id="heading{i}">
-                          <h2 class="mb-0">
-                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                              <span> {{item.menu_name}}</span>
-                              <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                              <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                            </button>
-                          </h2>
-                        </div>
-                    
-                        <div id="collapseOne" class="collapse show" aria-labelledby="heading{i}" data-parent="#accordionExample">
-                          <div class="card-body">
-                            {{item.pageId}}
-                          </div>
-                        </div>
-                      </div> -->
-
-
-
-                            <!-- <div class="card" *ngFor="let item of componentDynamic;let i=index">
-                                <div class="card-header" id="heading{i}">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left" type="button"
-                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            <span> {{item}}</span>
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </button>
-                                    </h2>
-                                </div>
-
-                                <div id="collapseOne" class="collapse show" aria-labelledby="heading{i}"
-                                    data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        {{item}}
-                                        <div [ngSwitch]="'{{item}}'">
-                                            <div *ngSwitchCase="'Invoice'">
-                                                alert("invoice alert")
-                                                <app-dup-proforma-invoice></app-dup-proforma-invoice>
-                                            </div>
-                                            <div *ngSwitchCase="'Customer New'">
-                                                alert("customer new alert")
-                                                <app-dup-customer-new-all></app-dup-customer-new-all>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
-                            <!-- <div class="card" *ngFor="let item of componentDynamic; let i = index">
-                                <div class="card-header" [id]="'heading' + i">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left" type="button"
-                                            data-toggle="collapse" [attr.data-target]="'#collapse' + i"
-                                            [attr.aria-expanded]="i === 0" [attr.aria-controls]="'collapse' + i">
-                                            <span>{{item}}</span>
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </button>
-                                    </h2>
-                                </div>
-
-                                <div [id]="'collapse' + i" class="collapse" [attr.aria-labelledby]="'heading' + i"
-                                    data-parent="#accordionExample">
-                                    <div class="card-body">
-
-                                        <ng-container [ngSwitch]="item">
-                                            <div *ngSwitchCase="'Credit Note'">
-                                                <p>Credit Note</p>
-                                            </div>
-                                            <div *ngSwitchCase="'Customer New'">
-
-                                                <app-dup-customer-new-all></app-dup-customer-new-all>
-                                            </div>
-                                            <div *ngSwitchCase="'Customer Project'">
-                                                <p>Customer Project</p>
-                                            </div>
-                                            <div *ngSwitchCase="'DID Number'">
-                                                <p>DID Number</p>
-                                            </div>
-                                            <div *ngSwitchCase="'Invoice'">
-                                                <app-dup-invoice></app-dup-invoice>
-                                            </div>
-                                            <div *ngSwitchCase="'License Key New'">
-                                                <p>License Key New</p>
-                                            </div>
-                                            <div *ngSwitchCase="'Prepaid Note'">
-                                                <p>Prepaid Note</p>
-                                            </div>
-                                            <div *ngSwitchCase="'Proforma Invoice'">
-                                                <app-dup-proforma-invoice></app-dup-proforma-invoice>
-                                            </div>
-                                            <div *ngSwitchCase="'Quotation New'">
-                                                <app-dup-quotation-new></app-dup-quotation-new>
-                                            </div>
-                                            <div *ngSwitchCase="'Vs Provisioning'">
-                                                <p>Vs Provisioning</p>
-                                            </div>
-
-                                        </ng-container>
-                                    </div>
-                                </div>
-                            </div> -->
 
                             <div class="card" *ngIf="(this.PI_UI_Show!=0)">
                                 <div class="card-header" id="headingOne">
@@ -725,6 +539,30 @@
                             title="Payment Transaction Reports"></a>
                 </li>
                 <li>
+          
+                    <div style="position: relative;" *ngIf="this.live==false">
+                        <a href="javascript:;"  class="navbar-brand" (click)="toggleDropdown()">
+                            <img class="svg" src="assets/img/icon2/warning.png" title="Overdue Payment"
+                                style="height: 30px;width:30px" alt="img">
+                        </a>
+
+                        <div class="dropdown-menu" [class.show]="dropdownVisible">
+                            <div *ngFor="let list of overduePaymentsBillerList">
+                                
+                                <span class="dropdown-list" (click)="overduePayments(list.billerId)" data-toggle="modal"
+                                    data-target="#overduePaymentFormId">
+                                    {{list.name}}<b style="padding: 0px 15px;">-</b>
+                                    <span class="badge badge-round badge-danger badge-lg">{{list.count}}
+                                    </span>
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </li>
+                <li>
                     <a href="javascript:;" class="navbar-brand">
 
                         <img class="svg" src="assets/img/icon2/exchange.png" style="height: 30px;width:30px" alt="img"
@@ -735,10 +573,10 @@
                         <img class="svg" src="assets/img/icon2/volatility.png" style="height: 30px;width:30px" alt="img"
                             title="Current Currency Rate" data-toggle="modal"
                             data-target="#currencyConvertorUIFormId"></a>
-                    <a href="javascript:;" class="navbar-brand">
+                    <!-- <a href="javascript:;" class="navbar-brand" >
 
                         <img class="svg" src="assets/img/icon2/postbox.png" style="height: 30px;width:30px" alt="img"
-                            title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a>
+                            title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a> -->
 
                     <a href="javascript:;" class="navbar-brand" (click)="PageList()"
                         *ngIf="(this.GlobalSearchPermission==1148)">
@@ -908,7 +746,7 @@
 </div>
 <!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
 
-<!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
+<!-- -----------------------Modal-Add Purchase Entry Begin-----formGroup--------------------------- -->
 <div class="modal fade" id="currencyConvertorUIFormId" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
@@ -990,12 +828,12 @@
                 <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
 
 
-                <form [formGroup]="sendtoPostForm">
+                <!-- <form []="sendtoPostForm"> -->
 
 
                     <div class="userDatatable global-shadow border-0 bg-white w-100">
                         <div class="table-responsive ">
-                            <table class="table mb-0 table-borderless"  *ngIf="postalInvoiceDetails">
+                            <table class="table mb-0 table-borderless" *ngIf="postalInvoiceDetails">
                                 <thead>
                                     <tr class="userDatatable-header">
 
@@ -1035,7 +873,7 @@
                                         </th>
 
                                     </tr>
-                                </thead> 
+                                </thead>
                                 <tbody *ngFor="let list1 of postalInvoiceDetails?.postal_data ; let i = 'index+1'">
                                     <!-- <tr >
                                         <td class="PIlistlabel" colspan="10"
@@ -1043,9 +881,10 @@
                                           {{list.billerName}}
                                         </td>
                                       </tr> -->
-                                      <tr class="PIlistlabel" [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                    <tr class="PIlistlabel"
+                                        [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
                                         <td colspan="10">{{list1.biller_name}}</td>
-                                      </tr>
+                                    </tr>
 
                                     <tr *ngFor="let list of list1.datas;let k = 'index+1'">
 
@@ -1101,12 +940,15 @@
                                             <div class="d-flex justify-content-evenly align-items-center">
                                                 <span>
                                                     <!-- First icon -->
-                                                    <i class="fa fa-file-pdf-o" style="color: #C04000;"></i>
+                                                    <i class="fa fa-file-pdf-o" style="color: #C04000;" 
+                                                    (click)="postalinv_sendPDF(list.billId)"></i>
                                                 </span>
-                                                <span class="mx-2"></span> <!-- Adjust the space between icons using mx-* classes -->
+                                                <span class="mx-2"></span>
+                                                <!-- Adjust the space between icons using mx-* classes -->
                                                 <span>
                                                     <!-- Second icon -->
-                                                    <i class="fas fa-envelope" style="color: #C04000;"></i>
+                                                    <i class="fas fa-envelope" style="color: #C04000;"
+                                                        (click)="postalinv_sendMail(list.billId)"></i>
                                                 </span>
                                             </div>
                                         </td>
@@ -1139,7 +981,7 @@
                     </div>
 
 
-                </form>
+                <!-- </form> -->
 
 
 
@@ -1155,6 +997,169 @@
                 <button type="button" class="btn btn-primary" (click)="currencyConvert()">
                     Multi Print(W/O Logo)
                 </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    Cancel
+                </button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
+
+<!-- -----------------------Modal-Over Due Payment Entry Begin-------------------------------- -->
+<div class="modal fade" id="overduePaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #9d0f2f, #98a833);">
+                    Overdue Payments Customer List</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+
+
+                
+
+
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                        <div class="table-responsive ">
+                            <table class="table mb-0 table-borderless">
+                                <thead>
+                                    <tr class="userDatatable-header">
+                                        <th>
+
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">S.No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Inv No</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Cus Inv No</span>
+                                        </th>
+
+
+                                        <th>
+                                            <span class="userDatatable-title">Invoice Date</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Invoice Amt</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Paid Amt</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Balance Amt</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Generated By</span>
+                                        </th>
+
+                                        <th>
+                                            <span class="userDatatable-title">Currency</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Aging</span>
+                                        </th>
+                                        <th>
+                                            <span class="userDatatable-title">Action</span>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- <tr >
+                                        <td class="PIlistlabel" colspan="10"
+                                          [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                          {{list.billerName}}
+                                        </td>
+                                      </tr> -->
+                                    <tr class="PIlistlabel"
+                                        [ngStyle]="{'backgroundColor': this.colorCodes, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                        <td colspan="11">{{this.billerNameDisplay}}</td>
+                                    </tr>
+
+                                    <tr *ngFor="let list of overduePaymentsBillerWise;let k = 'index+1'">
+
+                                        <td>
+                                            <input type="checkbox" [checked]="isSelected_overdue(list.billId)"
+                                                (change)="toggleSelection_overdue($event, list.billId)">
+                                        </td>
+                                        <td>
+
+                                            <span> {{k}}</span>
+
+
+                                        </td>
+
+
+                                        <td>
+                                            <span>{{list.invoiceNo}}</span>
+
+                                        </td>
+                                        <td>
+                                            <span>{{list.cusInvoiceNo}}</span>
+
+
+                                        </td>
+
+
+                                        <td>
+                                            <span> {{list.billDate}}</span>
+
+
+
+                                        </td>
+                                        <td>
+                                            <span> {{list.netPayment}}</span>
+                                        </td>
+
+
+                                        <td>
+                                            <span> {{list.paidAmount}}</span>
+                                        </td>
+                                        <td>
+                                            <span> {{list.balanceAmount}}</span>
+                                        </td>
+                                        <td>
+                                            <span> {{list.generatedBy}}</span>
+                                        </td>
+                                        <td>
+                                            <span> {{list.currency}}</span>
+                                        </td>
+                                        <td>
+                                            <span> {{list.aging}}</span>
+                                        </td>
+
+
+
+                                    </tr>
+
+
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">
+                    Action
+                </button>
+
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
                     Cancel
                 </button>

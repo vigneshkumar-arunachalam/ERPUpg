@@ -1370,7 +1370,7 @@ export class EditDidInvoiceComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("customer_address_details---response", response)
+     // console.log("customer_address_details---response", response)
       if (response.status == true) {
         this.spinner.hide();
 
@@ -1448,15 +1448,16 @@ export class EditDidInvoiceComponent implements OnInit {
         // console.log('this.did_bill_code_section1',this.did_bill_code_section1);
 
         this.addDid_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'shipTo_1': ship_address_str1,
-          'shipTo_2': ship_address_str2,
-          'shipTo_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to':  response.customer_details.ship_to,
+          'shipTo_1': response.customer_details.ship_customerAddress1,
+          'shipTo_2': response.customer_details.ship_customerAddress2,
+          'shipTo_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+
         });
       }
       else {
@@ -1486,10 +1487,10 @@ export class EditDidInvoiceComponent implements OnInit {
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
-    // api_req.moduleType = "proforma";
-    // api_req.api_url = "proforma/customer_address_details";
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/quot_customer_details";
+    api_req.moduleType = "proforma";
+    api_req.api_url = "proforma/customer_address_details";
+    // api_req.moduleType = "quotation";
+    // api_req.api_url = "quotation/quot_customer_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
@@ -1501,19 +1502,22 @@ export class EditDidInvoiceComponent implements OnInit {
 
       if (response.status == true) {
       
-
+    
         this.addDid_section1.patchValue({
-          "customer_id_hd": response.customer_list.customerId,
-          "b_name": response.customer_list.customerName,
-          "customer_name": response.customer_list.customerName,
-          "address_1": response.customer_list.customerAddress1,
-          "address_2": response.customer_list.customerAddress2,
-          "address_3": response.customer_list.customerAddress3,
-          "Attn_1": response.customer_list.kind_Attention,
-          "ship_to": response.customer_list.ship_to,
-          "shipTo_1": response.customer_list.ship_customerAddress1,
-          "shipTo_2": response.customer_list.ship_customerAddress2,
-          "shipTo_3": response.customer_list.ship_customerAddress3,
+          "customer_id_hd": response.customer_details.customerId,
+          "b_name": response.customer_details.customerName,
+          "customer_name": response.customer_details.customerName,
+
+          'address_1': response.customer_details.customerAddress1,
+        'address_2': response.customer_details.customerAddress2,
+        'address_3': response.customer_details.customerAddress3,
+        'Attn_1': response.customer_details.kind_Attention,
+        'ship_to':  response.customer_details.ship_to,
+        'shipTo_1': response.customer_details.ship_customerAddress1,
+        'shipTo_2': response.customer_details.ship_customerAddress2,
+        'shipTo_3': response.customer_details.ship_customerAddress3,
+        'ship_attn': response.customer_details.ship_attn,
+        'cusInvoiceNo': response.customer_invoice_no,
         });
 
         this.spinner.hide();

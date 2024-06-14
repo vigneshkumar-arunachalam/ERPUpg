@@ -62,8 +62,8 @@ export class ContractmasterfileComponent implements OnInit {
             var self = this;
             $.ajax({
                 type: 'POST',
-                // url: 'https://erp1.cal4care.com/api/customer_contract/contract_master_file_add',
-                url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/contract_master_file_add',
+                 url: 'https://erp1.cal4care.com/api/customer_contract/contract_master_file_add',
+               // url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/contract_master_file_add',
                 cache: false,
                 contentType: false,
                 processData: false,

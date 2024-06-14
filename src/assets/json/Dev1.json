@@ -273,7 +273,7 @@
             "isVisible": true,
             "value": "/purchaseentryreport"
         },{
-            "name": "GST Report",
+            "name": "GST Report-Cal4Care Pte Ltd",
             "icon": "play-circle",
             "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",

@@ -189,10 +189,10 @@ export class EditInvoiceComponent implements OnInit {
     this.serverService.invoice_search.subscribe((val: any) => {
       // alert("hi")
     
-      console.log("before parse-invoice search-kavin", val.type) 
+     // console.log("before parse-invoice search-kavin", val.type) 
       if(val.type=="search girlfriend"){
         this.search_values = val;
-        console.log("invoice_search-val--------poda",val)
+      //  console.log("invoice_search-val--------poda",val)
       }
       // var k = JSON.parse(val);
       // console.log("kavin",k);
@@ -211,7 +211,7 @@ export class EditInvoiceComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+       // console.log("params output value", params);
 
         this.editbillerID = params['e_editBillID'];
         this.editDIDStateID = params['e_editDIDState'];
@@ -219,10 +219,10 @@ export class EditInvoiceComponent implements OnInit {
         this.searchFlag = params['e_searchFlag'];
        
 
-        console.log("edit biller id", this.editbillerID);
-        console.log("edit DID state id", this.editDIDStateID);
-        console.log("edit duplicate id", this.edit_Duplicate_ID);
-        console.log("edit searchFlag id", this.searchFlag);
+        // console.log("edit biller id", this.editbillerID);
+        // console.log("edit DID state id", this.editDIDStateID);
+        // console.log("edit duplicate id", this.edit_Duplicate_ID);
+        // console.log("edit searchFlag id", this.searchFlag);
         this.editInvoice();
 
       }
@@ -391,11 +391,11 @@ export class EditInvoiceComponent implements OnInit {
     this.addresses.push(this.editAddress_FormControl());
 
     this.itre = this.itre + 1;
-    console.log(this.addresses);
-    console.log(this.itre);
+    // console.log(this.addresses);
+    // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = false;
-      console.log(this.test[index]);
+     // console.log(this.test[index]);
 
 
     });
@@ -428,8 +428,8 @@ export class EditInvoiceComponent implements OnInit {
 
   removeAddresstest(i: number) {
 
-    console.log(i)
-    console.log(this.addresses)
+    // console.log(i)
+    // console.log(this.addresses)
     this.addresses.removeAt(i);
     var addr = this.addPI_section2.value.addresses;
     var list_cnt = addr.length;
@@ -440,16 +440,16 @@ export class EditInvoiceComponent implements OnInit {
 
   chkTermsandconditionEvent(event: any) {
     this.chkTermsandcondition = event.target.checked;
-    console.log(this.chkTermsandcondition)
+   // console.log(this.chkTermsandcondition)
   }
   chkReceivedAuthorizedSignatureEvent(event: any) {
     this.chkReceivedAuthorizedSignature = event.target.checked;
-    console.log(this.chkReceivedAuthorizedSignature)
+   // console.log(this.chkReceivedAuthorizedSignature)
   }
 
   chklogoAddressSignatureEvent(event: any) {
     this.chklogoAddressSignature = event.target.checked;
-    console.log(this.chklogoAddressSignature)
+   // console.log(this.chklogoAddressSignature)
   }
 
   removeAddress(i: number) {
@@ -507,7 +507,7 @@ export class EditInvoiceComponent implements OnInit {
         api_req.element_data = api_ProdAutoFill_req;
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
-          console.log("response", response);
+         // console.log("response", response);
 
         });
 
@@ -598,7 +598,7 @@ export class EditInvoiceComponent implements OnInit {
       this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(tax_amt)) - parseFloat(price)).toFixed(2);
     }
 
-    console.log('grandTotal' + this.grandTotal);
+   // console.log('grandTotal' + this.grandTotal);
     this.finalDiscount = price
 
     setTimeout(() => {
@@ -646,15 +646,15 @@ export class EditInvoiceComponent implements OnInit {
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type' + discount_type);
+    //  console.log('discount_type' + discount_type);
       if (discount_type == 'per') {
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111' + this.sub_dis_val);
+      //  console.log('discount_type1111' + this.sub_dis_val);
         if (this.sub_dis_val == '') {
           this.sub_dis_val = 0;
         }
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val' + dis_amt_val);
+       // console.log('dis_amt_val' + dis_amt_val);
         sub_total_amt = parseFloat(total_amt) - parseFloat(dis_amt_val);
         
         $('#pd_netPrice_'+a).val((sub_total_amt).toFixed(2));
@@ -677,7 +677,7 @@ export class EditInvoiceComponent implements OnInit {
       if ($('#pd_selectTax_' + a).prop('checked') == true && this.tax_per_mod != null) {
         this.net_amt = $('#pd_netPrice_' + a).val();
         netAmt = parseFloat($('#pd_netPrice_' + a).val());
-        console.log('-this.finalDiscount---' + this.finalDiscount);
+      //  console.log('-this.finalDiscount---' + this.finalDiscount);
 
         tax_amt_tot += netAmt;
 
@@ -730,12 +730,12 @@ export class EditInvoiceComponent implements OnInit {
 
 
     this.grandTotal = ((parseFloat(this.grossTotal) + parseFloat(this.finalTax) + parseFloat(this.shipping_amt) + parseFloat(this.bankingCharge)) - parseFloat(this.finalDiscount)).toFixed(2);
-    console.log("this.grossTotal", this.grossTotal);
-    console.log("this.finalTax", this.finalTax);
-    console.log("this.shipping_amt", this.shipping_amt);
-    console.log("this.bankingCharge", this.bankingCharge);
-    console.log("this.finalDiscount", this.finalDiscount);
-    console.log("this.grandTotal", this.grandTotal);
+    // console.log("this.grossTotal", this.grossTotal);
+    // console.log("this.finalTax", this.finalTax);
+    // console.log("this.shipping_amt", this.shipping_amt);
+    // console.log("this.bankingCharge", this.bankingCharge);
+    // console.log("this.finalDiscount", this.finalDiscount);
+    // console.log("this.grandTotal", this.grandTotal);
 
   }
 
@@ -744,64 +744,64 @@ export class EditInvoiceComponent implements OnInit {
   handleChange_ExportState(data: any, evt: any) {
 
     this.radioID_Export = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_ExportState = evt.target.value;
 
-    console.log("radio button value", this.radio_Value_ExportState);
+   // console.log("radio button value", this.radio_Value_ExportState);
 
   }
   handleChange_SelectExtraLogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_SelectExtraLogo = evt.target.value;
 
-    console.log("radio button value", this.radio_Value_SelectExtraLogo);
+   // console.log("radio button value", this.radio_Value_SelectExtraLogo);
 
   }
   handleChange_mileSate_InvoiceType(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_mileSate_InvoiceType = evt.target.value;
 
-    console.log("radio button value", this.radio_Value_mileSate_InvoiceType);
+   // console.log("radio button value", this.radio_Value_mileSate_InvoiceType);
 
   }
 
 
   handleChange_MSDisplay(event: any) {
     this.MSDisplay_Value = event.target.checked;
-    console.log(this.MSDisplay_Value);
+    // console.log(this.MSDisplay_Value);
   }
   cbk_fn_conversionAmtShow(event: any) {
     this.cbk_conversionAmtShow_value = event.target.checked;
-    console.log(this.cbk_conversionAmtShow_value)
+   // console.log(this.cbk_conversionAmtShow_value)
 
   }
   cbk_fn_deductWithholdingTax(event: any) {
     this.cbk_deductWithholdingTax = event.target.checked;
-    console.log(this.cbk_deductWithholdingTax)
+   // console.log(this.cbk_deductWithholdingTax)
 
   }
   cbk_fn_previousDue(event: any) {
     this.cbk_previousDue = event.target.checked;
-    console.log(this.cbk_previousDue)
+  //  console.log(this.cbk_previousDue)
   }
   cbk_fn_JomPAYLogo(event: any) {
     this.cbk_JomPAYLogo = event.target.checked;
-    console.log(this.cbk_JomPAYLogo)
+   // console.log(this.cbk_JomPAYLogo)
   }
 
   cbk_Fn_EditShipAddress(event: any) {
     this.EditShippingAddress = event.target.checked;
-    console.log(this.EditShippingAddress)
+  //  console.log(this.EditShippingAddress)
 
     if (this.EditShippingAddress) {
 
@@ -820,56 +820,56 @@ export class EditInvoiceComponent implements OnInit {
 
 
     }
-    console.log(this.EditShippingAddress)
+    // console.log(this.EditShippingAddress)
   }
 
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
 
-    console.log(item)
+   // console.log(item)
 
   }
   onFocusedCustomer(e: any) {
 
   }
   EditCHK_MileDiscount(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_MileDiscount = data;
     this.checkbox_value_MileDiscount = event.target.checked;
-    console.log(this.checkbox_value_MileDiscount)
+   // console.log(this.checkbox_value_MileDiscount)
     if (this.checkbox_value_MileDiscount) {
 
       this.edit_array_MileDiscount.push(data);
       this.edit_array_MileDiscount.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_MileDiscount);
     }
     else {
       const index = this.edit_array_MileDiscount.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_MileDiscount.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_MileDiscount)
 
     }
   }
   EditCHK_ExtraLogo(data: any, event: any) {
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_ExtraLogo = data;
     this.checkbox_value_ExtraLogo = event.target.checked;
-    console.log(this.checkbox_value_ExtraLogo)
+    // console.log(this.checkbox_value_ExtraLogo)
     if (this.checkbox_value_ExtraLogo) {
 
       this.edit_array_ExtraLogo.push(data);
       this.edit_array_ExtraLogo.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
+     //  console.log("Final Checkbox After checkbox selected list", this.edit_array_ExtraLogo);
     }
     else {
       const index = this.edit_array_ExtraLogo.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_ExtraLogo.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
+    //  console.log("Final Checkbox After Deselected selected list", this.edit_array_ExtraLogo)
 
     }
   }
@@ -885,7 +885,7 @@ export class EditInvoiceComponent implements OnInit {
     add_BillerDetails_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = add_BillerDetails_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+     // console.log(response);
 
 
       if (response != '') {
@@ -944,7 +944,7 @@ export class EditInvoiceComponent implements OnInit {
       this.paymentviaList = response.paymentvia;
 
 
-      console.log("response-load-pi", response)
+   //   console.log("response-load-pi", response)
     });
 
   }
@@ -974,7 +974,7 @@ export class EditInvoiceComponent implements OnInit {
 
         }, 500);
 
-        console.log('response.default_tax_id' + response.default_tax_id);
+       // console.log('response.default_tax_id' + response.default_tax_id);
 
 
 
@@ -998,7 +998,7 @@ export class EditInvoiceComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response.customer_list.customerId);
+    //  console.log("vignesh-customer_name response", response.customer_list.customerId);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -1013,15 +1013,15 @@ export class EditInvoiceComponent implements OnInit {
 
   }
   searchCustomer_selectDropdownData(data: any) {
+    // alert(2)
     this.spinner.show();
-
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     this.customerName_Change = data.customerName;
-    console.log("this.customerName_Data",this.customerName_Data);
-    console.log("this.customerName_Change",this.customerName_Change);
-    
+    // console.log("this.customerName_Data",this.customerName_Data);
+    // console.log("this.customerName_Change",this.customerName_Change);
+
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
     api_req.moduleType = "proforma";
@@ -1030,18 +1030,19 @@ export class EditInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "customer_address_details";
     api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_SearchCUST_req.billerId = this.addPI_section1.value.companyName;
     api_SearchCUST_req.customerId = this.customerName_Data
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
       this.spinner.hide();
       if (response.status == true) {
-        this.custAdr1=response.customer_details[0].customerAddress1;
-        this.custAdr2=response.customer_details[0].customerAddress2;
-        this.custAdr3=response.customer_details[0].city;
-        this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
-        this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
-        this.ShipAdr3=response.customer_details[0].ship_city;
+        this.custAdr1=response.customer_details.customerAddress1;
+        this.custAdr2=response.customer_details.customerAddress2;
+        this.custAdr3=response.customer_details.city;
+        this.ShipAdr1=response.customer_details.ship_customerAddress1;
+        this.ShipAdr2=response.customer_details.ship_customerAddress2;
+        this.ShipAdr3=response.customer_details.ship_city;
 
         if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
           this.shipAddress1_Final=this.custAdr1
@@ -1059,31 +1060,30 @@ export class EditInvoiceComponent implements OnInit {
         }else{
           this.shipAddress3_Final=this.ShipAdr3
         }
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
-          this.ship_to_str_Final= response.customer_details[0].customerName; 
+        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
+          this.ship_to_str_Final= response.customer_details.customerName; 
        
         } else {
-          this.ship_to_str_Final = response.customer_details[0].ship_to;
+          this.ship_to_str_Final = response.customer_details.ship_to;
         }
-        console.log("shipAddress1",this.shipAddress1_Final)
-        console.log("shipAddress2",this.shipAddress2_Final)
-        console.log("shipAddress3", this.shipAddress3_Final)
-        console.log("ship to",  this.ship_to_str_Final)
+        // console.log("shipAddress1",this.shipAddress1_Final)
+        // console.log("shipAddress2",this.shipAddress2_Final)
+        // console.log("shipAddress3", this.shipAddress3_Final)
+        // console.log("ship to",  this.ship_to_str_Final)
+
         this.addPI_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': response.customer_details[0].city,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to':   this.ship_to_str_Final,
-          'shipTo_1': this.shipAddress1_Final,
-          'shipTo_2': this.shipAddress2_Final,
-          'shipTo_3': this.shipAddress3_Final,
-          'ship_attn': response.customer_details[0].s_attn,
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to':  response.customer_details.ship_to,
+          'shipTo_1': response.customer_details.ship_customerAddress1,
+          'shipTo_2': response.customer_details.ship_customerAddress2,
+          'shipTo_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
           'cusInvoiceNo': response.customer_invoice_no,
         });
-
-       
-
+        // console.log(this.addPI_section1);
 
       }
       else {
@@ -1097,7 +1097,7 @@ export class EditInvoiceComponent implements OnInit {
   getCustomerInvoiceDetails(event: any) {
     this.spinner.show();
     this.billerID = event.target.value;
-    console.log("billerID check", this.billerID);
+  //  console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
@@ -1177,7 +1177,7 @@ export class EditInvoiceComponent implements OnInit {
         this.radio_Value_ExportState = response.billing_pararent_details[0].export_state;
         this.radio_Value_SelectExtraLogo = response.billing_pararent_details[0].bills_logo_id;
         this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
-        console.log(response.billing_pararent_details[0].currency)
+       // console.log(response.billing_pararent_details[0].currency)
         $('#curren').val(response.billing_pararent_details[0].currency);
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
 
@@ -1219,7 +1219,7 @@ export class EditInvoiceComponent implements OnInit {
 
         });
 
-        console.log('billchild_details.length' + response.billchild_details.length);
+      //  console.log('billchild_details.length' + response.billchild_details.length);
         this.Customer_selectDropdownData(response.billing_pararent_details[0].custId);
 
         this.TaxDropdown();
@@ -1228,7 +1228,7 @@ export class EditInvoiceComponent implements OnInit {
         const formArray = new FormArray([]);
         for (let index = 0; index < response.billchild_details.length; index++) {
 
-          console.log('billchild_details++index' + index);
+        //  console.log('billchild_details++index' + index);
 
 
           formArray.push(this.fb.group({
@@ -1257,9 +1257,9 @@ export class EditInvoiceComponent implements OnInit {
         }
 
 
-        console.log(formArray)
+      //  console.log(formArray)
         this.addPI_section2.setControl('addresses', formArray);
-        console.log(this.addresses)
+      //  console.log(this.addresses)
 
 
         this.finalDiscountType = '';
@@ -1317,7 +1317,7 @@ export class EditInvoiceComponent implements OnInit {
           'section3_select_additional_signature': response.quot_signature_show_state,
         });
 
-        console.log('==finalDiscountVal==' + this.finalDiscountVal);
+       // console.log('==finalDiscountVal==' + this.finalDiscountVal);
         this.received_signature_state = response.billing_pararent_details[0].received_signature;
         this.print_logo_state = response.billing_pararent_details[0].print_logo;
 
@@ -1385,10 +1385,11 @@ export class EditInvoiceComponent implements OnInit {
 
   Customer_selectDropdownData(customerId: any) {
   
+  
   this.spinner.show();
     this.customerName_Data = customerId;
-    console.log("this.customerName_Data",this.customerName_Data)
-    console.log("this.customerName_Change",this.customerName_Change)
+    // console.log("this.customerName_Data",this.customerName_Data)
+    // console.log("this.customerName_Change",this.customerName_Change)
  
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1398,21 +1399,23 @@ export class EditInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
     api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        
+    api_SearchCUST_req.billerId = this.addPI_section1.value.companyName;
     api_SearchCUST_req.customerId = customerId;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("customer_address_details---response", response)
+    //  console.log("customer_address_details---response", response)
       if (response.status == true) {
 
         this.spinner.hide();
 
-        this.custAdr1=response.customer_details[0].customerAddress1;
-        this.custAdr2=response.customer_details[0].customerAddress2;
-        this.custAdr3=response.customer_details[0].city;
-        this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
-        this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
-        this.ShipAdr3=response.customer_details[0].ship_city;
+        this.custAdr1=response.customer_details.customerAddress1;
+        this.custAdr2=response.customer_details.customerAddress2;
+        this.custAdr3=response.customer_details.city;
+        this.ShipAdr1=response.customer_details.ship_customerAddress1;
+        this.ShipAdr2=response.customer_details.ship_customerAddress2;
+        this.ShipAdr3=response.customer_details.ship_city;
 
         if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
           this.shipAddress1_Final=this.custAdr1
@@ -1430,27 +1433,29 @@ export class EditInvoiceComponent implements OnInit {
         }else{
           this.shipAddress3_Final=this.ShipAdr3
         }
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
-          this.ship_to_str_Final= response.customer_details[0].customerName; 
+        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
+          this.ship_to_str_Final= response.customer_details.customerName; 
        
         } else {
-          this.ship_to_str_Final = response.customer_details[0].ship_to;
+          this.ship_to_str_Final = response.customer_details.ship_to;
         }
-        console.log("shipAddress1",this.shipAddress1_Final)
-        console.log("shipAddress2",this.shipAddress2_Final)
-        console.log("shipAddress3", this.shipAddress3_Final)
-        console.log("ship to",  this.ship_to_str_Final)
+        // console.log("shipAddress1",this.shipAddress1_Final)
+        // console.log("shipAddress2",this.shipAddress2_Final)
+        // console.log("shipAddress3", this.shipAddress3_Final)
+        // console.log("ship to",  this.ship_to_str_Final)
         this.addPI_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': response.customer_details[0].city,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to':   this.ship_to_str_Final,
-          'shipTo_1': this.shipAddress1_Final,
-          'shipTo_2': this.shipAddress2_Final,
-          'shipTo_3': this.shipAddress3_Final,
-          'ship_attn': response.customer_details[0].s_attn,
-         // 'cusInvoiceNo': response.customer_invoice_no,
+
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to':  response.customer_details.ship_to,
+          'shipTo_1': response.customer_details.ship_customerAddress1,
+          'shipTo_2': response.customer_details.ship_customerAddress2,
+          'shipTo_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+
+        //  'cusInvoiceNo': response.customer_invoice_no,
         });
       }
       else {
@@ -2111,14 +2116,14 @@ export class EditInvoiceComponent implements OnInit {
     api_req.element_data = api_invoiceAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+    //  console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
 
         this.invoiceAddSignature_state = response.signature_state;
         this.checkbox_selectAdditionalSignature = true
         if (sign_val == 0) {
-          console.log('response.signature_filename' + response.signature_filename);
+         // console.log('response.signature_filename' + response.signature_filename);
           this.invoiceAddSignature_filename = response.signature_filename;
         }
         this.invoiceAddSignature_filename = response.signature_filename;

@@ -1,31 +1,35 @@
-.logo-size{
-    width: 100px;
-    padding: 10px;
+.logo-size {
+  width: 100px;
+  padding: 10px;
 }
 
-#ActionId1 .modal-dialog{
-    max-width: 65% !important;
-  }
-
-  #ActionIdxx2 .modal-dialog{
-    max-width: 65% !important;
-  }
-  #currencyConvertorUIFormId .modal-dialog{
-    max-width: 75% !important;
-  }
-  #currencyConvertorFormId label {
-    font-weight: 600;
-    color: #009688!important;
+#ActionId1 .modal-dialog {
+  max-width: 65% !important;
 }
 
-#sendtoPostFormId .modal-dialog{
+#ActionIdxx2 .modal-dialog {
+  max-width: 65% !important;
+}
+
+#currencyConvertorUIFormId .modal-dialog {
+  max-width: 75% !important;
+}
+
+#currencyConvertorFormId label {
+  font-weight: 600;
+  color: #009688 !important;
+}
+
+#sendtoPostFormId .modal-dialog {
   max-width: 90% !important;
 }
-#sendtoPostFormId .table-responsive .table-borderless thead tr th{
+
+#sendtoPostFormId .table-responsive .table-borderless thead tr th {
   background: #272b41;
   color: #fff;
 }
-#sendtoPostFormId .btn-primary{
+
+#sendtoPostFormId .btn-primary {
   background: linear-gradient(to right, #9d0f2f, #98a833);
   color: rgb(240 241 219);
   box-shadow: none;
@@ -34,188 +38,291 @@
 
 
 
-  
 
 
-  .modal-content {
-    background: #e4ebf5;
-  }
-   .modal-content .form-control,.CheckboxScroll {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
-  }
-  .modal-content .btn-primary  {
-    grid-column: 1/2;
-    grid-row: 4/5;
-    background: #6d5dfc;
-    box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    color: #e4ebf5;
-  }
-    .modal-content button.close  {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    /* color: #9baacf; */
-    color:#f9021b;
-    transition: all 0.5s ease;
-  }
-  
-  
-  .addcustomernewallcss .form-control,  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
-  } 
-  .addcustomernewallcss .form-control:focus,  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input:focus{
-    outline: none;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
-    border: 2px solid transparent!important;
-      background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      animation: bg-hue 2s linear infinite;
-  }
-  
-  
-  
-  #TaskList .table-responsive .table-borderless{
-    border: 1px solid #000;
-  }
-  #TaskList .table-responsive .table-borderless thead tr th{
-    background: #6d5dfc;
-    color: #fff;
-  }
-  #TaskList .table-responsive .table-borderless thead tr th span{
-    color: #fff;
-  }
-  #TaskList button.Close{
-    border-radius: 50%;
-    font-size: 20px;
-  }
- /* action output css--- general-starts */
-  #ActionIdOutput .modal-dialog{
-    width: 100% !important;
-  }
-  #ActionIdOutput .modal-dialog {
-    max-width: 100% !important;
-    min-height: 100%;
-    margin: 0;
-  }
-  #ActionIdOutput .modal-dialog  .modal-content.addcustomernewallcss{
+
+
+
+
+.modal-content {
+  background: #e4ebf5;
+}
+
+.modal-content .form-control,
+.CheckboxScroll {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+}
+
+.modal-content .btn-primary {
+  grid-column: 1/2;
+  grid-row: 4/5;
+  background: #6d5dfc;
+  box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  color: #e4ebf5;
+}
+
+.modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* color: #9baacf; */
+  color: #f9021b;
+  transition: all 0.5s ease;
+}
+
+
+.addcustomernewallcss .form-control,
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
+  border: none;
+  padding-left: 1.4rem;
+  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+  background: none;
+  font-family: inherit;
+  color: #252525;
+}
+
+.addcustomernewallcss .form-control:focus,
+.ng-autocomplete ::ng-deep .autocomplete-container .input-container input:focus {
+  outline: none;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  animation: bg-hue 2s linear infinite;
+}
+
+
+
+#TaskList .table-responsive .table-borderless {
+  border: 1px solid #000;
+}
+
+#TaskList .table-responsive .table-borderless thead tr th {
+  background: #6d5dfc;
+  color: #fff;
+}
+
+#TaskList .table-responsive .table-borderless thead tr th span {
+  color: #fff;
+}
+
+#TaskList button.Close {
+  border-radius: 50%;
+  font-size: 20px;
+}
+
+/* action output css--- general-starts */
+#ActionIdOutput .modal-dialog {
+  width: 100% !important;
+}
+
+#ActionIdOutput .modal-dialog {
+  max-width: 100% !important;
   min-height: 100%;
-  }
-  #ActionIdOutput button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-up,
-   #ActionIdOutput button.btn.btn-link.btn-block.text-left .fa-chevron-down{
-   display: none;
-  }
-  #ActionIdOutput button.btn.btn-link.btn-block.text-left .fa-chevron-up, 
-  #ActionIdOutput button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-down{
-    display: block;
-  }
-  #ActionIdOutput button.btn.btn-link.btn-block.text-left{
-    margin: 0;
-    padding: 0px;
-    display: flex;
-    align-items: center;
-  }
-  #ActionIdOutput button.btn.btn-link.btn-block.text-left span{
-    padding: 0 20px 0px 0px;
-    margin: 0;
-    font-size: 18px;
-  }
-  #ActionIdOutput button.btn.btn-link.btn-block.text-left i{
-    color:#e4ebf5
-  }
-  
-  /* action output css--- general-ends */
-  #ActionIdOutput .card {
-    margin-bottom: 10px;
-    border-radius: 5px;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-  }
-  #ActionIdOutput  .card .card-header{
-    background: #6d5dfc;
-    color: #e4ebf5;
-  }
-  #ActionIdOutput  .modal-header{
-    background: #121240;
-  }
-  #addModalLongTitle {
-    color: #fff;
-  }
-  #ActionIdOutput .close{
-    opacity: 1;
-  }
-  #ActionIdOutput  .card .card-header span{
-    color: #e4ebf5;
-  }
-  #ActionIdOutput .modal-content button.close{
-    color: #fff;
-  }
-  #ActionIdOutput .modal-content{
-    background-color: #fff;
-  }
+  margin: 0;
+}
 
-  /* ---------------------------------KS-CODE--------------------------------- */
+#ActionIdOutput .modal-dialog .modal-content.addcustomernewallcss {
+  min-height: 100%;
+}
 
-.userDatatable-header th { background: #6d5dfc; color: #ffffff;}
-.userDatatable-header th span { color: #e4ebf5;}
+#ActionIdOutput button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-up,
+#ActionIdOutput button.btn.btn-link.btn-block.text-left .fa-chevron-down {
+  display: none;
+}
+
+#ActionIdOutput button.btn.btn-link.btn-block.text-left .fa-chevron-up,
+#ActionIdOutput button.btn.btn-link.btn-block.text-left.collapsed .fa-chevron-down {
+  display: block;
+}
+
+#ActionIdOutput button.btn.btn-link.btn-block.text-left {
+  margin: 0;
+  padding: 0px;
+  display: flex;
+  align-items: center;
+}
+
+#ActionIdOutput button.btn.btn-link.btn-block.text-left span {
+  padding: 0 20px 0px 0px;
+  margin: 0;
+  font-size: 18px;
+}
+
+#ActionIdOutput button.btn.btn-link.btn-block.text-left i {
+  color: #e4ebf5
+}
+
+/* action output css--- general-ends */
+#ActionIdOutput .card {
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+}
+
+#ActionIdOutput .card .card-header {
+  background: #6d5dfc;
+  color: #e4ebf5;
+}
+
+#ActionIdOutput .modal-header {
+  background: #121240;
+}
+
+#addModalLongTitle {
+  color: #fff;
+}
+
+#ActionIdOutput .close {
+  opacity: 1;
+}
+
+#ActionIdOutput .card .card-header span {
+  color: #e4ebf5;
+}
+
+#ActionIdOutput .modal-content button.close {
+  color: #fff;
+}
+
+#ActionIdOutput .modal-content {
+  background-color: #fff;
+}
+
+/* ---------------------------------KS-CODE--------------------------------- */
+
+.userDatatable-header th {
+  background: #6d5dfc;
+  color: #ffffff;
+}
+
+.userDatatable-header th span {
+  color: #e4ebf5;
+}
+
 .userDatatable .page .dropdown button {
   border-radius: 0px;
   border-top-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-.dropdown__item .hide{display: none;}
-.dropdown__item:hover .hide{display: block;}
-.dropdown__item:hover .show{display: none;}
-.userDatatable table td {border-bottom: 1px solid #ddd;}
-#suggestions{z-index: 99;}
+
+.dropdown__item .hide {
+  display: none;
+}
+
+.dropdown__item:hover .hide {
+  display: block;
+}
+
+.dropdown__item:hover .show {
+  display: none;
+}
+
+.userDatatable table td {
+  border-bottom: 1px solid #ddd;
+}
+
+#suggestions {
+  z-index: 99;
+}
+
 /* ---------------------------------KS-CODE--------------------------------- */
 
 
 
 #TaskList .userDatatable table tbody tr:first-child td {
   background-color: #FFDAB9;
- 
+
 }
+
 #TaskList .userDatatable table tbody tr:nth-child(2) td {
   background-color: #98FB98;
 }
+
 #TaskList .userDatatable table tbody tr:nth-child(3) td {
   background-color: #C0C0C0;
 }
+
 #TaskList .userDatatable table tbody tr:nth-child(4) td {
   background-color: #fc9388;
 }
+
 #TaskList .userDatatable table tbody tr:nth-child(5) td {
   background-color: #FFF8DC;
 }
+
 #TaskList .userDatatable table tbody tr:nth-child(6) td {
   background-color: #8abdff;
 }
+
 #TaskList .userDatatable table tbody tr:nth-child(7) td {
   background-color: #FFC0CB;
 }
+
 #TaskList .userDatatable table tbody tr:last-child td {
   background-color: #f3c267;
 }
-#TaskList  .table-responsive   .table-borderless{
+
+#TaskList .table-responsive .table-borderless {
   border: 2px dotted #000;
 }
-#TaskList  .userDatatable table td {border-bottom: 1px dotted #66278f;}
+
+#TaskList .userDatatable table td {
+  border-bottom: 1px dotted #66278f;
+}
 
 
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  font-style: italic;
+  text-transform: capitalize;
+}
+
+.dropdown-menu.show {
+  display: block;
+  width: 280px;
+  /* background-color: greenyellow; */
+  background-color: #2C3E50;
+  color: whitesmoke;
+}
+
+
+.dropdown-menu.show .badge.badge-lg {
+  padding: 4.5px 6.58px;
+}
+
+.dropdown-list {
+  margin-bottom: 10px !important;
+  display: block;
+  border-bottom: 1px dotted deepskyblue;
+}
+
+.dropdown-menu :hover {
+
+  background-color: #b5a134;
+  color: #fff !important;
+  cursor: pointer;
+  font-style: italic;
+  text-transform: uppercase;
+  /* background-color: #2C3E50; */
+}
+#overduePaymentFormId .modal-dialog{
+  min-width: 98%;
+}

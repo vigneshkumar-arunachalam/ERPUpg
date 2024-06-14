@@ -452,6 +452,10 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
 /* #bb  table  thead tr th{
   border:1px solid rgb(1, 14, 13);
 } */
+tr:hover {
+  background-color: rgb(211, 244, 102)!important;
+
+}
 
 
 

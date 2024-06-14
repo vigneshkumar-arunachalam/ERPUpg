@@ -247,6 +247,7 @@ export class QuotationnewComponent implements OnInit {
       'radio_approvalPermission': new FormControl(null),
       'approval_comments': new FormControl(null),
       'comments_approvedBy': new FormControl(null),
+    
     });
     this.setTemplateNameForm = new FormGroup({
       'txt_templateName': new FormControl(null),
@@ -273,10 +274,7 @@ export class QuotationnewComponent implements OnInit {
       'quotation_Comments': new FormControl(null),
 
     });
-    this.PIForm = new FormGroup({
-      'quotation_Comments': new FormControl(null),
-
-    });
+   
     this.addressControlsActualCost.controls.forEach((elt, index) => {
       this.test[index] = true;
     });

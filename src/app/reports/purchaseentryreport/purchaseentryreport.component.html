@@ -138,8 +138,7 @@
                                     Go
                                 </button>
                                 <button type="button" title="Export" class="btn btn-primary btn-default btn-squared"
-                                    data-toggle="modal" data-target="#searchMulInvPayId"
-                                    style="margin-right: 10px;background-color: #cf130a;">
+                                    (click)="ExportReport()" style="margin-right: 10px;background-color: #cf130a;">
                                     <i class="fa fa-share-alt" style="margin-right:0;"></i>
                                     Export
                                 </button>
@@ -265,78 +264,78 @@
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.PurchaseEntryNo }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryNo }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.PurchaseEntryNo }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.PurchaseEntryDate }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryDate }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.PurchaseEntryDate }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.billerName }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.billerName }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.billerName }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.purchase_type_name }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.purchase_type_name }}</td>
-                                      
-                                       
+                                        <td *ngIf="list.color=='No'">{{ list.purchase_type_name }}</td>
+
+
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.VendorName }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.VendorName }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.VendorName }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.InvoiceNo }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceNo }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.InvoiceNo }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.PONumber }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.PONumber }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.PONumber }}</td>
 
-                                        
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.currency }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.currency }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.currency }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.conversionRate }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.conversionRate }}</td>
-                                       
+                                        <td *ngIf="list.color=='No'">{{ list.conversionRate }}</td>
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.InvoiceAmount }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceAmount }}</td>
-                                      
+                                        <td *ngIf="list.color=='No'">{{ list.InvoiceAmount }}</td>
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.inv_conv_val_str }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.inv_conv_val_str }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.inv_conv_val_str }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.taxAmt }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.taxAmt }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.taxAmt }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.wot_amt }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.wot_amt }}</td>
 
-                                       
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.wot_amt_per }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt_per }}</td>
-                                        
-                                       
+                                        <td *ngIf="list.color=='No'">{{ list.wot_amt_per }}</td>
+
+
 
                                     </tr>
 
@@ -474,76 +473,76 @@
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.PurchaseEntryNo }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryNo }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.PurchaseEntryNo }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.PurchaseEntryDate }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.PurchaseEntryDate }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.PurchaseEntryDate }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.billerName }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.billerName }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.billerName }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.purchase_type_name }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.purchase_type_name }}</td>
-                                      
-                                       
+                                        <td *ngIf="list.color=='No'">{{ list.purchase_type_name }}</td>
+
+
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.VendorName }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.VendorName }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.VendorName }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.InvoiceNo }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceNo }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.InvoiceNo }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.PONumber }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.PONumber }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.PONumber }}</td>
 
-                                        
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.currency }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.currency }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.currency }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.conversionRate }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.conversionRate }}</td>
-                                       
+                                        <td *ngIf="list.color=='No'">{{ list.conversionRate }}</td>
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.InvoiceAmount }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.InvoiceAmount }}</td>
-                                      
+                                        <td *ngIf="list.color=='No'">{{ list.InvoiceAmount }}</td>
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.inv_conv_val_str }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.inv_conv_val_str }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.inv_conv_val_str }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.taxAmt }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.taxAmt }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.taxAmt }}</td>
 
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.wot_amt }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.wot_amt }}</td>
 
-                                       
+
                                         <td *ngIf="list.color=='Yes'" style="background-color: #ed0514;color:white">
                                             <span> {{ list.wot_amt_per }} </span>
                                         </td>
-                                        <td *ngIf="list.color=='No'" >{{ list.wot_amt_per }}</td>
+                                        <td *ngIf="list.color=='No'">{{ list.wot_amt_per }}</td>
 
                                     </tr>
                                     <tr *ngFor="let list1 of getPurchaseEntryPrintTotal">

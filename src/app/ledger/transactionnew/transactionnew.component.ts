@@ -104,11 +104,11 @@ export class TransactionnewComponent implements OnInit {
 
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+   // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   onFocusedCustomer(e: any) {
@@ -116,20 +116,20 @@ export class TransactionnewComponent implements OnInit {
   }
   searchBillerNameCHK(data: any, event: any) {
     this.searchBILLERID = data;
-    console.log("this.searchBILLERID", this.searchBILLERID);
+   // console.log("this.searchBILLERID", this.searchBILLERID);
     this.CBV_BillerName_All = event.target.checked;
     if (this.CBV_BillerName_All) {
 
       this.edit_array_SearchBiller_Checkbox.push(data);
       this.edit_array_SearchBiller_Checkbox.join(',');
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
+     // console.log("Final Checkbox After checkbox selected list", this.edit_array_SearchBiller_Checkbox);
     }
     else {
       const index = this.edit_array_SearchBiller_Checkbox.findIndex((el: any) => el === data)
       if (index > -1) {
         this.edit_array_SearchBiller_Checkbox.splice(index, 1);
       }
-      console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
+     // console.log("Final Checkbox After Deselected selected list", this.edit_array_SearchBiller_Checkbox)
 
     }
 
@@ -147,10 +147,10 @@ export class TransactionnewComponent implements OnInit {
     api_Search_req.customerName = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_status response", response);
+    //  console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
-      console.log("vignesh-advanced search result", this.searchResult);
+     // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
     });
@@ -183,7 +183,7 @@ export class TransactionnewComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.Transaction_list = response.trans_details;
-        console.log(this.Transaction_list);
+       // console.log(this.Transaction_list);
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
         $('#searchTransactionFormId').modal('hide');
@@ -251,7 +251,7 @@ export class TransactionnewComponent implements OnInit {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-            console.log("final error", error);
+           // console.log("final error", error);
           };
       }
     })

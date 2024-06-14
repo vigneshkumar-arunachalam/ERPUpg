@@ -111,7 +111,7 @@ datavalue:any;
     });
     this.route.queryParams
     .subscribe(params => {
-      console.log("params output value", params);
+     // console.log("params output value", params);
 
       this.editQuotationID = params['e_quotID'];
       this.FormID_enquiryFromDetails = params['e_formID'];
@@ -119,17 +119,17 @@ datavalue:any;
       this.validity_enquiryFromDetails = params['e_validity'];
       this.version_enquiryFromDetails = params['e_version'];
 
-      console.log("quotationId for edit", this.editQuotationID);
-      console.log("formid", this.FormID_enquiryFromDetails);
-      console.log("subject", this.subject_enquiryFromDetails);
-      console.log("validity", this.validity_enquiryFromDetails);
-      console.log("version", this.version_enquiryFromDetails);
+      // console.log("quotationId for edit", this.editQuotationID);
+      // console.log("formid", this.FormID_enquiryFromDetails);
+      // console.log("subject", this.subject_enquiryFromDetails);
+      // console.log("validity", this.validity_enquiryFromDetails);
+      // console.log("version", this.version_enquiryFromDetails);
 
-      console.log(this.editQuotationID);
-      console.log(this.FormID_enquiryFromDetails);
-      console.log(this.subject_enquiryFromDetails);
-      console.log(this.validity_enquiryFromDetails);
-      console.log(this.version_enquiryFromDetails);
+      // console.log(this.editQuotationID);
+      // console.log(this.FormID_enquiryFromDetails);
+      // console.log(this.subject_enquiryFromDetails);
+      // console.log(this.validity_enquiryFromDetails);
+      // console.log(this.version_enquiryFromDetails);
       this.testVariable = this.editQuotationID;
     
       // this.editQuotation();
@@ -210,36 +210,36 @@ datavalue:any;
     }
   }
   onDrop(event: CdkDragDrop<string[]>) {
-    console.log("event drag drop", event)
+   // console.log("event drag drop", event)
     moveItemInArray(this.addressControls.controls, event.previousIndex, event.currentIndex);
-    console.log(this.addressControls.controls, event.previousIndex, event.currentIndex)
+   // console.log(this.addressControls.controls, event.previousIndex, event.currentIndex)
 
   }
   
   termsCondition_DontShow_eventCheck(e: any) {
     this.checkbox_termsCondition_DontShow = e.target.checked;
-    console.log(this.checkbox_termsCondition_DontShow);
+  //  console.log(this.checkbox_termsCondition_DontShow);
   }
 
   descriptionDetails_DontShow_eventCheck(e: any) {
     this.checkbox_descriptionDetails_DontShow = e.target.checked
-    console.log(this.checkbox_descriptionDetails_DontShow);
+  //  console.log(this.checkbox_descriptionDetails_DontShow);
   }
   checkbox_productDetails_Split: any;
   productDetails_Split_eventCheck(e: any) {
     this.checkbox_productDetails_Split = e.target.checked
-    console.log(this.checkbox_productDetails_Split);
+   // console.log(this.checkbox_productDetails_Split);
   }
   checkbox_productDetails_GPTotal: any;
   productDetails_GPTotal_eventCheck(e: any) {
     this.checkbox_productDetails_GPTotal = e.target.checked
-    console.log(this.checkbox_productDetails_GPTotal);
+   // console.log(this.checkbox_productDetails_GPTotal);
   }
   checkbox_productDetails_selectTax: any;
   checkbox_GrantTotalShow: any;
   eventCheckGrantTotalShows(e: any) {
     this.checkbox_GrantTotalShow = e.target.checked
-    console.log(this.checkbox_GrantTotalShow);
+  //  console.log(this.checkbox_GrantTotalShow);
   }
   checkbox_selectAdditionalSignature:any;
   eventCheckSelectAdditionalSignature(e:any){
@@ -253,13 +253,13 @@ datavalue:any;
       $('#signature_message_id').css("display","block");
     }
     this.checkbox_selectAdditionalSignature = e.target.checked
-    console.log(this.checkbox_selectAdditionalSignature );
+  //  console.log(this.checkbox_selectAdditionalSignature );
   }
 
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
-    console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
+   // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
     this.currencyQuotationTermChange();
 
   }
@@ -267,26 +267,26 @@ datavalue:any;
     this.selectFooter("any");
     var radioSelectFooter = evt.target.value;
     this.radioSelectFooterChecked=evt.target.checked;
-    console.log("evt.target.checked global variable",this.radioSelectFooterChecked)
-    console.log("radio button value", radioSelectFooter);
+    // console.log("evt.target.checked global variable",this.radioSelectFooterChecked)
+    // console.log("radio button value", radioSelectFooter);
   }
 
   selectEventProduct(item: any, i: any) {
 
-    console.log("product item selected", item)
+   // console.log("product item selected", item)
     this.product_name_AutoComplete = item.partNo;
-    console.log("product item.partNo selected", item.partNo)
+   // console.log("product item.partNo selected", item.partNo)
     if (this.product_name_AutoComplete != '') {
       this.productNameAutoFill(i)
     }
   }
   onFocusedProduct(e: any) {
-    console.log("onFocusedProduct ", e)
+   // console.log("onFocusedProduct ", e)
     // do something when input is focused
   }
 
   changeProductName_partNO(e: any) {
-    console.log(e.target.value);
+   // console.log(e.target.value);
   }
 
 
@@ -294,7 +294,7 @@ datavalue:any;
   keywordCustomerName = 'customerName';
 
   selectEventCustomer(item: any) {
-    console.log(item)
+   // console.log(item)
     // do something with selected item
   }
   onFocusedCustomer(e: any) {
@@ -310,11 +310,11 @@ datavalue:any;
     this.addresses.push(this.EditAddress_FormControl());
 
     this.itre = this.itre + 1;
-    console.log(this.addresses)
-    console.log(this.itre)
+    // console.log(this.addresses)
+    // console.log(this.itre)
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log(this.test[index])
+     // console.log(this.test[index])
     });
   }
   
@@ -347,7 +347,7 @@ datavalue:any;
 
   dynamicChange(event: any) {
     this.billerID = event.target.value;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
     // this.TaxDropdown();
      let api_req: any = new Object();
      let api_dynamicDropdown_req: any = new Object();
@@ -361,9 +361,9 @@ datavalue:any;
 			         api_req.element_data = api_dynamicDropdown_req;
 				   this.serverService.sendServer(api_req).subscribe((response: any) => {
 		//		   this.FooterDetails = response.footer_details;
-				   console.log("dynamic Dropdown change response", response)
+				//   console.log("dynamic Dropdown change response", response)
 				   
-				   console.log("dynamic term condition change response", response.quotation_terms_cond)
+				 //  console.log("dynamic term condition change response", response.quotation_terms_cond)
           //  alert("dynamic change")
 				  //     alert(response.quotation_terms_cond);  
 					 for (let index = 0; index < response.footer_details.length; index++) {
@@ -396,7 +396,7 @@ datavalue:any;
   }
   dynamicChange_edit(val: any) {
     this.billerID = val;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
     this.TaxDropdown();
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
@@ -412,8 +412,8 @@ datavalue:any;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.FooterDetails = response.footer_details;
-      console.log("dynamic Dropdown change response", response)
-      console.log("dynamic term condition change response", response.quotation_terms_cond)
+      // console.log("dynamic Dropdown change response", response)
+      // console.log("dynamic term condition change response", response.quotation_terms_cond)
       // alert("dynamic change-edit")
       // alert(response.quotation_terms_cond)
      // this.FooterDetails = response.footer_details;
@@ -460,7 +460,7 @@ datavalue:any;
   editQuotation() {
     
     // window.location.reload();
-    console.log("quotation id check for edit", this.editQuotationID)
+  //  console.log("quotation id check for edit", this.editQuotationID)
    
     let api_req: any = new Object();
     let edit_Quotation_req: any = new Object();
@@ -473,9 +473,9 @@ datavalue:any;
     edit_Quotation_req.quotation_id = this.editQuotationID;
     api_req.element_data = edit_Quotation_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log(response);
+     // console.log(response);
 
-      console.log("edit quotation response", response);
+    //  console.log("edit quotation response", response);
       if (response != '') {
         // alert(response.quotation_details[0].terms_conditions);
         this.dynamicChange_edit(response.quotation_details[0].billerId);
@@ -492,7 +492,7 @@ datavalue:any;
         this.additionalSignatureList = response.additional_signature_list;
 
         if (response.sales_rep_status.dropdown_status == 0) {
-          console.log("response.sales_rep.name", response.sales_rep.name);
+         // console.log("response.sales_rep.name", response.sales_rep.name);
 
           this.editQuotationInvoice_section1.patchValue({
             'salesRep_id': response.sales_rep.name,
@@ -501,7 +501,7 @@ datavalue:any;
 
         }
         this.finalTax=response.quotation_details[0].tax_amt1
-      console.log("this.finalTax on edit",this.finalTax)
+     // console.log("this.finalTax on edit",this.finalTax)
         this.editQuotationInvoice_section1.patchValue({
 
           'e_companyName': response.quotation_details[0].billerId,
@@ -578,16 +578,16 @@ datavalue:any;
           
         }
 
-        console.log(formArray)
+       // console.log(formArray)
         this.addQuotationInvoice_section2.setControl('addresses', formArray);
         // this.addresses.push(this.addQuotationInvoice_section2);
-        console.log(this.addresses)
+        // console.log(this.addresses)
       //  console.log('response.quotation_details[0].grand_total'+response.quotation_details[0].grand_total);
 
       this.finalDiscountType = '';
       this.finalDiscountVal='';
       this.finalDiscount='';
-      console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
+     // console.log('response.signature_filename'+response.quotation_details[0].signature_filename);
      
       if(response.quotation_details[0].signature_filename!=''){
         this.sign_state=1;
@@ -638,7 +638,7 @@ datavalue:any;
         this.quotationAddSignatureEdit(this.sign_state);
         //this.tax_per_mod = response.quotation_details[0].tax_id1;
         this.editAddress();
-        console.log(response.quotation_child_det.length);
+       // console.log(response.quotation_child_det.length);
         this.removeAddresstest(response.quotation_child_det.length);
         
         
@@ -680,7 +680,7 @@ datavalue:any;
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log(error);
+       // console.log(error);
       }
     
 
@@ -690,7 +690,7 @@ datavalue:any;
   }
   templateContentDropdown(event: any) {
     this.quotation_template_id = event.target.value;
-    console.log("quotation dropdown ID check", this.quotation_template_id);
+   // console.log("quotation dropdown ID check", this.quotation_template_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -703,7 +703,7 @@ datavalue:any;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
+     // console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
         this.editQuotationInvoice_section1.patchValue({
@@ -742,14 +742,14 @@ datavalue:any;
     api_req.element_data = api_quotationAddSignatureEdit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-quotation_add_signature response", response)
+// console.log("quotation-quotation_add_signature response", response)
 
       if (response.status == true) {
       
         this.quotationAddSignature_state=response.signature_state;
         this.checkbox_selectAdditionalSignature = true
         if(sign_val==0){
-          console.log('response.signature_filename'+response.signature_filename);
+        //  console.log('response.signature_filename'+response.signature_filename);
           this.quotationAddSignature_filename=response.signature_filename;
         }
        
@@ -774,7 +774,7 @@ datavalue:any;
   }
   TermsConditionsContentDropdown(event: any) {
     this.terms_condition_id = event.target.value;
-    console.log("template terms_condition ID check", this.terms_condition_id);
+   // console.log("template terms_condition ID check", this.terms_condition_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
     api_req.moduleType = "quotation";
@@ -788,7 +788,7 @@ datavalue:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Dropdown response", response)
+     // console.log("quotation-template Dropdown response", response)
 
       if (response.status == true) {
         // alert("term condition content dropdown")
@@ -827,7 +827,7 @@ datavalue:any;
     api_req.element_data = api_TaxDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation-template Tax Dropdown response", response)
+     // console.log("quotation-template Tax Dropdown response", response)
 
       if (response.status == true) {
         this.TaxDropdownList = response.tax_list;
@@ -855,7 +855,7 @@ datavalue:any;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation/currency_change", response)
+     // console.log("quotation/currency_change", response)
       this.CurrencyChangeFieldValue = response.terms
       if (response.status == true) {
         // alert("currencyQuotationTermChange")
@@ -924,7 +924,7 @@ datavalue:any;
 
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-      console.log(addr[i].pd_quantity_txtbox1)
+     // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_quotationChildId = $('#pd_quotationChildId_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
@@ -976,7 +976,7 @@ datavalue:any;
     //section-2
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
-      console.log(addr[i].pd_quantity_txtbox1)
+     // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
@@ -988,12 +988,12 @@ datavalue:any;
       addr[i].sub_discount = $('#sub_discount_' + i).val();
     }
    api_UpdateEnquiry_req.values = addr;
-	console.log(api_req);
+	// console.log(api_req);
   ($event.target as HTMLButtonElement).disabled = true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       ($event.target as HTMLButtonElement).disabled = false;
 
-      console.log("add quotation new save", response);
+    //  console.log("add quotation new save", response);
       if (response.status == true) {
 
         iziToast.success({
@@ -1020,14 +1020,14 @@ datavalue:any;
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
       }
 
   searchCustomer_selectDropdownData(data: any) {
 
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -1092,7 +1092,7 @@ datavalue:any;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -1102,7 +1102,7 @@ datavalue:any;
 
   }
   searchCustomerDataMouse(data: any) {
-    console.log("search data afer mouse click", data)
+   // console.log("search data afer mouse click", data)
   }
   searchProductName(data: any) {
 
@@ -1118,7 +1118,7 @@ datavalue:any;
     api_SearchProd_req.part_no = data;
     api_req.element_data = api_SearchProd_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("quotation/product_name_auto response", response);
+     // console.log("quotation/product_name_auto response", response);
       this.searchResult_productName = response.products_list;
       console.log("response.partNo", response.products_list)
       // console.log("response.partNo",response.partNo)
@@ -1146,13 +1146,13 @@ datavalue:any;
     api_req.element_data = api_ProdAutoFill_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-console.log("response", response)
-      console.log("response.length", response.length)
-      console.log("partNo by auto fill", response[0].partNo);
-      console.log("productName by auto fill", response[0].productName);
-      console.log("productDesc by auto fill", response[0].productDesc);
-      console.log("rate by auto fill", response[0].rate);
- console.log("this.addressControls.length", this.addressControls.length)
+      // console.log("response", response)
+      // console.log("response.length", response.length)
+      // console.log("partNo by auto fill", response[0].partNo);
+      // console.log("productName by auto fill", response[0].productName);
+      // console.log("productDesc by auto fill", response[0].productDesc);
+      // console.log("rate by auto fill", response[0].rate);
+      // console.log("this.addressControls.length", this.addressControls.length)
 
       $('#pd_productName_txtbox_' + i).val(response[0].productName)
       $('#pd_productName_txtArea_' + i).val(response[0].productDesc)
@@ -1163,7 +1163,7 @@ console.log("response", response)
   }
   clearAddress() {
     var t = this.addQuotationInvoice_section2.value;
-    console.log(t)
+   // console.log(t)
   }
   totalCalculate() {
 
@@ -1195,12 +1195,12 @@ console.log("response", response)
 
 
       discount_type = $('#sub_discount_type_' + a).val();
-      console.log('discount_type'+discount_type);
+      // console.log('discount_type'+discount_type);
       if(discount_type=='per'){
         this.sub_dis_val = $('#sub_discount_val_' + a).val();
-        console.log('discount_type1111'+this.sub_dis_val);
+       // console.log('discount_type1111'+this.sub_dis_val);
         dis_amt_val = (parseFloat(this.sub_dis_val) * parseFloat(total_amt) / 100).toFixed(2);
-        console.log('dis_amt_val'+dis_amt_val);
+       // console.log('dis_amt_val'+dis_amt_val);
         sub_total_amt = parseFloat(total_amt)-parseFloat(dis_amt_val)
         $('#pd_netPrice_' + a).val(sub_total_amt);
         $('#sub_discount_' + a).val(dis_amt_val);
@@ -1272,8 +1272,8 @@ console.log("response", response)
     }
     for (let j = 0; j <= this.itre; j++) {
       // const formArray = new FormArray([]);
-      console.log($('#pd_Total_' + j).val())
-      console.log($('#pd_netPrice_' + j).val())
+      // console.log($('#pd_Total_' + j).val())
+      // console.log($('#pd_netPrice_' + j).val())
       // formArray.push(this.fb.group({
       //   "pd_Total": $('#pd_Total_' + j).val(),
       //   "pd_netPrice":$('#pd_netPrice_' + j).val(),
@@ -1314,7 +1314,7 @@ console.log("response", response)
     if (disType == 'per') {
    // console.log('enablePercentabeDiscont'+enablePercentabeDiscont+'--'+final_tot);
       if (enablePercentabeDiscont != '') {
-           console.log('3333'+final_tot);
+        //   console.log('3333'+final_tot);
         price = (parseFloat(enablePercentabeDiscont) * parseFloat(final_tot) / 100).toFixed(2);
 
 
@@ -1324,7 +1324,7 @@ console.log("response", response)
       } else {
         $('#sub_discount_' + this.quotationPriceKey).val('');
         $('#sub_discount_val_' + this.quotationPriceKey).val('');
-           console.log('222'+final_tot);
+          // console.log('222'+final_tot);
         price = final_tot;
 
       }
@@ -1372,7 +1372,7 @@ this.DiscountForm.reset();
     var row_cnt = val;
     var sub_dis_val = 0;
     // var sub_dis_amt_val =0;
-    console.log('row_cnt' + row_cnt);
+   // console.log('row_cnt' + row_cnt);
     $('#enablePercentabeDiscont').val('');
     $('#enablePriceDiscont').val('');
     // $('input:radio[name=discountTYpe]').prop('checked', true).val('per');
@@ -1433,7 +1433,7 @@ this.DiscountForm.reset();
       $('#final_discount').val(enablePriceDiscont);
       $('#final_discount_val').val(enablePriceDiscont);
       this.finalDiscountVal=enablePercentabeDiscont;
-      console.log('999' + price);
+     // console.log('999' + price);
 
     }
     if (this.grandTotal > 0) {
@@ -1448,20 +1448,20 @@ this.DiscountForm.reset();
     $('#enablePriceFinal').val('');
     var final_dis_val = 0;
     var disType = $('#final_discount_type').val();
-    console.log('111' + disType);
+  //  console.log('111' + disType);
     if (disType == 'per') {
       $('#finaldiscountType_per').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
 
       $('#enablePerFinal').val(final_dis_val);
-      console.log('22' + disType);
+    //  console.log('22' + disType);
     } else if (disType == 'amt') {
       $('#finaldiscountType_amt').prop('checked', true);
       final_dis_val = $('#final_discount_val').val();
       $('#enablePriceFinal').val(final_dis_val);
-      console.log('33' + disType);
+    //  console.log('33' + disType);
     } else {
-      console.log('44' + disType);
+     // console.log('44' + disType);
       $('#finaldiscountTYpe_per').prop('checked', false);
       $('#finaldiscountTYpe_amt').prop('checked', false);
     }
@@ -1546,8 +1546,8 @@ this.DiscountForm.reset();
 }
 
 removeAddress(i: number) {
-  console.log(i)
-  console.log(this.addresses)
+  // console.log(i)
+  // console.log(this.addresses)
   
   var quotationChildId = $('#pd_quotationChildId_' + i).val();
   //console.log('quotationChildId'+quotationChildId);
@@ -1580,7 +1580,7 @@ removeAddress(i: number) {
     api_req.element_data = api_ProdAutoFill_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-console.log("response", response)
+    // console.log("response", response)
 
 
     });
@@ -1595,8 +1595,8 @@ console.log("response", response)
 
 }
 removeAddresstest(i: number) {
-  console.log(i)
-  console.log(this.addresses)
+  // console.log(i)
+  // console.log(this.addresses)
       this.addresses.removeAt(i);
       var addr = this.addQuotationInvoice_section2.value.addresses;
       var list_cnt = addr.length;

@@ -1561,7 +1561,7 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_PurchaseEntryNo" class="col-lg-12  col-form-label">Purchase Entry No</label>
+                <label for="edit_PurchaseEntryNo" class="col-lg-12  col-form-label">Purchase Entry No<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="edit_PurchaseEntryNo" />
                 </div>
@@ -1569,7 +1569,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_PurchaseEntryDate" class="col-lg-12 col-form-label">Purchase Entry Date</label>
+                <label for="edit_PurchaseEntryDate" class="col-lg-12 col-form-label">Purchase Entry Date<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
                   <input type="date" class="form-control" formControlName="edit_PurchaseEntryDate" />
                 </div>
@@ -1577,7 +1577,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
+                <label for="edit_VendorName" class="col-lg-12 col-form-label">Vendor Name<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
 
                   <select name="edit_VendorName" id="edit_VendorName" class="form-control"
@@ -1592,7 +1592,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_PurchaseType" class="col-lg-12 col-form-label">Purchase Type</label>
+                <label for="edit_PurchaseType" class="col-lg-12 col-form-label">Purchase Type<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
 
                   <select name="edit_PurchaseType" id="edit_PurchaseType" class="form-control"
@@ -1610,7 +1610,7 @@
 
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_InvoiceNo" class="col-lg-12 col-form-label">Invoice No</label>
+                <label for="edit_InvoiceNo" class="col-lg-12 col-form-label">Invoice No<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="edit_InvoiceNo" />
 
@@ -1667,7 +1667,7 @@
             </div>
             <div class="col-lg-6">
               <div class="form-group row">
-                <label for="edit_amount " class="col-lg-12 col-form-label">Invoice Amount</label>
+                <label for="edit_amount " class="col-lg-12 col-form-label">Invoice Amount<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
                   <input type="text" class="form-control" formControlName="edit_amount" />
                 </div>
@@ -1683,7 +1683,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="updatePurchaseEntry()">
+        <button type="button" class="btn btn-primary"  (click)="updatePurchaseEntry()">
           Update
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">

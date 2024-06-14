@@ -7,12 +7,12 @@ body {
   }
   
   .tax-table-container {
-    width: 100%;
-    overflow-x: auto;
+    /* width: 100%; */
+    /* overflow-x: auto; */
   }
   
   .tax-table {
-    width: 100%;
+    /* width: 100%; */
     border-collapse: collapse;
     margin: 20px 0;
     background-color: #fff;
@@ -22,11 +22,14 @@ body {
   .tax-table th, .tax-table td {
     padding: 12px 15px;
     text-align: right;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd;
+    border: 1px dashed #868286; */
+    border:2px dashed #C5D9E0;
   }
   
   .tax-table th {
-    background-color: #4CAF50;
+    /* background-color: #4CAF50; */
+    background-color: #025552;
     color: white;
     text-align: center;
   }
@@ -40,14 +43,16 @@ body {
   }
   
   .tax-table tfoot tr.total {
-    background-color: #4CAF50;
-    color: white;
+    /* background-color: #4CAF50; */
+    background-color: #eeb2a8;
+    color:black;
     font-weight: bold;
   }
   
   .tax-table tbody tr.subtotal {
     font-weight: bold;
     background-color: #f3f3f3;
+   
   }
   
   .tax-table tbody tr.subtotal td:first-child {
@@ -57,4 +62,27 @@ body {
   .tax-table tfoot tr td:first-child {
     text-align: left;
   }
+
+  tr:hover {
+    background-color: rgb(241, 116, 116)!important;  
+  }
+
+#lonv tbody tr td {
+  text-align: left;
+}
+#lonv tr:hover {
+  background-color: rgb(240, 250, 149)!important;  
+}
+
+.badge.badge-lg {
+  height: 20px;
+   padding: 4px !important; 
+  font-size: 12px;
+}
+
+.badge-success {
+  color: #fff;
+  background-color: #0b4f3b !important;
+}
   
+

@@ -398,7 +398,7 @@ export class InvoiceComponent implements OnInit {
 
     // });
     this.serverService.global_search_invoice.subscribe((val: any) => {
-      console.log("before parse-global_search_invoice", val);
+      // console.log("before parse-global_search_invoice", val);
       try {
         let jsonString: string;
         if (typeof val === 'object') {
@@ -410,7 +410,7 @@ export class InvoiceComponent implements OnInit {
           return; // Exit early if the type is not recognized
         }
         var k = JSON.parse(jsonString);
-        console.log("after parse-global_search_invoice", k);
+        // console.log("after parse-global_search_invoice", k);
         this.PI_list = k;
         // if (k != '') {
         //   this.Global_search_filter = true;
@@ -437,7 +437,7 @@ export class InvoiceComponent implements OnInit {
     // }, 2000);
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+        // console.log("params output value", params);
 
 
         this.upd_searchName = params['upd_search_name'];
@@ -1273,10 +1273,10 @@ export class InvoiceComponent implements OnInit {
 
   getInvoice1(data: any) {
     // alert(2)
-    console.log("getinvoice1")
+    // console.log("getinvoice1")
 
-    console.log("billerid", this.edit_array_SearchBiller_Checkbox);
-    console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
+    // console.log("billerid", this.edit_array_SearchBiller_Checkbox);
+    // console.log("this.edit_array_Years_Checkbox", this.edit_array_Years_Checkbox);
     if (this.isArray(this.edit_array_SearchBiller_Checkbox) == false) {
       this.edit_array_SearchBiller_Checkbox = this.convertTupleToArray(this.edit_array_SearchBiller_Checkbox); // Assign the result back to edit_array_SearchBiller_Checkbox
       console.log("after conversion to array", this.edit_array_SearchBiller_Checkbox)
@@ -1314,7 +1314,7 @@ export class InvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.response_total_cnt = response.total_cnt
-      console.log("PI list", response);
+     // console.log("PI list", response);
       if (response.total_cnt == 0) {
         // iziToast.warning({
         //   message: "Sorry, No Matching Data",
@@ -1409,13 +1409,13 @@ export class InvoiceComponent implements OnInit {
             'company_Name': response.selected_filtervalues[0].name_serach
           })
         }
-        console.log("this.edit_array_SearchBiller_Checkbox-list complete", this.edit_array_SearchBiller_Checkbox);
+       // console.log("this.edit_array_SearchBiller_Checkbox-list complete", this.edit_array_SearchBiller_Checkbox);
         if (response.selected_filtervalues[0].year_filter != '') {
           this.years_id = response.selected_filtervalues[0].year_filter;
           this.edit_array_Years_Checkbox = this.years_id.split(',');
           this.edit_array_Years_Checkbox = this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
-          console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
+        //  console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
         }
 
         if (response.proforma_details != null) {
@@ -1423,7 +1423,7 @@ export class InvoiceComponent implements OnInit {
 
             this.reseller_commissionState = response.proforma_details[j].commission_state;
             this.recurring_state_all = response.proforma_details[j].recuring_status;
-            console.log("this.reseller_commissionState", this.reseller_commissionState)
+        //    console.log("this.reseller_commissionState", this.reseller_commissionState)
             this.suspend_state = response.proforma_details[j].suspend;
           }
 
@@ -1435,8 +1435,8 @@ export class InvoiceComponent implements OnInit {
         //   'company_Name':response.selected_filtervalues[0].name_serach,
         //   'years':response.selected_filtervalues[0].year_filter,
         // });
-        console.log("proforma_details list", this.PI_list)
-        console.log("this.biller_list", this.biller_list)
+        // console.log("proforma_details list", this.PI_list)
+        // console.log("this.biller_list", this.biller_list)
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
 
@@ -2381,10 +2381,10 @@ export class InvoiceComponent implements OnInit {
         this.messageContent = response.invoice_content;
         this.SelectType_finance = response.finance_email;
         this.SelectType_company = response.company_email;
-        this.mailContent = tinymce.get('tinyID1').setContent("<p>" + this.messageContent + "</p>");
+        this.mailContent = tinymce.get('tinyID1_inv').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID1': this.mailContent,
+          'tinyID1_inv': this.mailContent,
           'Subject_Content': response.subject,
 
 
@@ -2392,13 +2392,13 @@ export class InvoiceComponent implements OnInit {
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID1': this.mailContent,
+            'tinyID1_inv': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID1': this.mailContent,
+            'tinyID1_inv': this.mailContent,
           })
         }
 
@@ -2788,15 +2788,15 @@ export class InvoiceComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content;
-      this.mailContent = tinymce.get('tinyID1').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyID1_inv').setContent("<p>" + this.messageContent + "</p>");
       $('#subject').val(response.crm_subject_name);
-      $('#tinyID1').val(this.mailContent);
+      $('#tinyID1_inv').val(this.mailContent);
       if (response != '') {
         this.emailForm.patchValue({
 
           // 'Subject_Content': response.crm_subject_name,
 
-          // 'tinyID1': this.mailContent,
+          // 'tinyID1_inv': this.mailContent,
 
         });
 
@@ -2826,7 +2826,7 @@ export class InvoiceComponent implements OnInit {
     this.emailTo = this.emailForm.value.email_to;
     // this.subjectValue = $('#subject').val();
     this.subjectValue = this.emailForm.value.Subject_Content;
-    this.msg_id = tinymce.get('tinyID1').getContent();
+    this.msg_id = tinymce.get('tinyID1_inv').getContent();
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
@@ -3197,7 +3197,7 @@ export class InvoiceComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://laravelapi.erp1.cal4care.com/api/invoice/invoice_attachment_save',
+        url: 'https://erp1.cal4care.com/api/invoice/invoice_attachment_save',
 
 
         cache: false,

@@ -438,7 +438,7 @@ PO_Permission_view:any;
     }
   }
   pdf(purchaseOrderId: any) {
-    var url = "https://laravelapi.erp1.cal4care.com/api/purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
+    var url = "https://erp1.cal4care.com/api/purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
     window.open(url, '_blank');
     console.log("url", url)
 

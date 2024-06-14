@@ -32,7 +32,7 @@
                                     <div class="col-lg-12">
 
                                         <input type="date" [readonly]="isReadOnly" class="form-control"
-                                            formControlName="IR_From" />
+                                            formControlName="IR_From" id="invoiceReportOld_IR_From" />
                                     </div>
                                 </div>
                             </div>
@@ -44,7 +44,7 @@
 
                                     <div class="col-lg-12">
 
-                                        <input type="date" class="form-control" formControlName="IR_To" />
+                                        <input type="date" class="form-control"  id="invoiceReportOld_IR_To" formControlName="IR_To" />
                                     </div>
                                 </div>
                             </div>
@@ -269,7 +269,7 @@
                                     Go
                                 </button>
                                 <button type="button" title="Export" class="btn btn-primary btn-default btn-squared"
-                                    data-toggle="modal" data-target="#searchMulInvPayId"
+                                    (click)="ExportInvoiceReport()"
                                     style="margin-right: 10px;background-color: #cf130a;">
                                     <i class="fa fa-share-alt" style="margin-right:0;"></i>
                                     Export
@@ -285,7 +285,13 @@
                         </div>
 
                     </form>
-
+                    <!-- <div style="text-align:center">
+                        <h1>
+                          Welcome to {{ title }}!
+                        </h1>
+                        <button (click)="exportToExcel()">Export to Excel</button>
+                      </div> -->
+                      
                     <div class="userDatatable global-shadow border-0 bg-white w-100" *ngIf="this.go==true">
                         <h2 class="col-12  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */

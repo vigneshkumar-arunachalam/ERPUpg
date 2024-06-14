@@ -184,20 +184,20 @@ export class MultipleInvPaymentComponent implements OnInit {
     this.searchResult_CustomerName = event.target.value
   }
   clearSelection(event: any) {
-    console.log("clear selection", event)
+   // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID = '';
     this.searchResult_CustomerName = '';
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
   }
   selectEventCustomer(item: any) {
-    console.log(item)
+   // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
   searchCustomerData(data: any) {
@@ -216,10 +216,10 @@ export class MultipleInvPaymentComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-        console.log("vignesh-customer_status response", response);
+       // console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult = response.customer_names;
-        console.log("vignesh-advanced search result", this.searchResult);
+       // console.log("vignesh-advanced search result", this.searchResult);
         if (response! = null) {
           this.searchResult = response.customer_names;
           this.spinner.hide();
@@ -290,7 +290,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           this.CustomerIDUpdate = response[index].customerId;
           this.invAmtDropDown = response[index].invoiceNo;
           this.dropdownData[index] = response[index].invoiceNo;
-          console.log("this.dropdownData[index]", this.dropdownData[index]);
+         // console.log("this.dropdownData[index]", this.dropdownData[index]);
           // let billIds = response[index].invoiceNo.map((invoiceItem: any) => invoiceItem.billId);
 
           formArray.push(this.fb.group({
@@ -326,7 +326,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         // }
         this.editMulInvGroupForm.setControl('edit_addresses', formArray);
-        console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
+       // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
 
       } else {
         this.spinner.hide();
@@ -410,19 +410,19 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   }
   selectEventCustomer_add(item: any, i: any) {
-    console.log(item)
+   // console.log(item)
     this.searchResult_CustomerID_add = item.customerId;
     this.searchResult_CustomerName_add = item.customerName.trim();
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.cusID[i] = item.customerId;
-    console.log("this.cusID[i]", this.cusID[i])
+  //  console.log("this.cusID[i]", this.cusID[i])
     this.payment_pending_inv_list(i);
 
   }
 
   clearSelection1(event: any, i: any) {
-    console.log("clear selection", event)
+   // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID_add = '';
@@ -430,8 +430,8 @@ export class MultipleInvPaymentComponent implements OnInit {
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('invoice_amt').reset();
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('bal_amount').reset();
     (this.addPI_section2.get('addresses') as FormArray).at(i).get('paid_amt').reset();
-    console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
-    console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
+    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
+    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.Pay_Pending_list_show[i] = false;
   }
   onFocusedCustomer_add(e: any) {
@@ -453,10 +453,10 @@ export class MultipleInvPaymentComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-        console.log("vignesh-customer_status response", response);
+       // console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult_add = response.customer_names;
-        console.log("vignesh-advanced search result", this.searchResult_add);
+       // console.log("vignesh-advanced search result", this.searchResult_add);
         if (response! = null) {
           this.searchResult_add = response.customer_names;
           this.spinner.hide();
@@ -483,13 +483,13 @@ export class MultipleInvPaymentComponent implements OnInit {
 
     var paymentChildID = this.editMulInvGroupForm.value.edit_addresses[i].payment_child_id;
    //vignesh- to delete id from array since paramesh not given api
-   console.log("paymentChildID",paymentChildID)
-   console.log("i",i)
-   console.log("this.edit_array---before slice",this.edit_array)
+  // console.log("paymentChildID",paymentChildID)
+  // console.log("i",i)
+  // console.log("this.edit_array---before slice",this.edit_array)
     if (i > -1) {
       this.edit_array.splice(i, 1);
     }
-    console.log("this.edit_array---after slice",this.edit_array)
+   // console.log("this.edit_array---after slice",this.edit_array)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -571,7 +571,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           // Convert strings to numbers
           let inv_id_numbers: number[] = inv_id.map(Number);
 
-          console.log(inv_id_numbers);
+         // console.log(inv_id_numbers);
 
           api_singleDelete.inv_id = inv_id_numbers;
           api_req.element_data = api_singleDelete;
@@ -579,7 +579,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           this.serverService.sendServer(api_req).subscribe((response: any) => {
             if (response.status == "true") {
               this.edit_array = [];
-              console.log("array content after delete", this.edit_array)
+             // console.log("array content after delete", this.edit_array)
               this.spinner.hide();
               iziToast.success({
                 message: "Deleted Successfully",
@@ -711,16 +711,16 @@ export class MultipleInvPaymentComponent implements OnInit {
       checkbox.checked = isChecked;
     });
 
-    console.log("Checkbox-all", this.edit_array);
+   // console.log("Checkbox-all", this.edit_array);
   }
 
 
   EditCHK(data: any, event: any) {
 
-    console.log("List - CheckBox ID", data);
+  //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-    console.log(this.checkbox_value);
+   // console.log(this.checkbox_value);
 
     // Check if data is not undefined
     if (data !== undefined) {
@@ -729,22 +729,22 @@ export class MultipleInvPaymentComponent implements OnInit {
         if (!this.edit_array.includes(data)) {
           this.edit_array.push(data);
         }
-        console.log("Final Checkbox After checkbox selected list", this.edit_array);
+       // console.log("Final Checkbox After checkbox selected list", this.edit_array);
       } else {
         const index = this.edit_array.findIndex((el: any) => el === data);
         if (index > -1) {
           this.edit_array.splice(index, 1);
         }
-        console.log("Final Checkbox After Deselected selected list", this.edit_array);
+      //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
       }
     }
-    console.log("Final Checkbox After checkbox selected list", this.edit_array);
+  //  console.log("Final Checkbox After checkbox selected list", this.edit_array);
   }
 
   selectAll_pending(event: any, i: any) {
 
     // Check if the event target is checked
-    console.log("jdhff", i);
+   // console.log("jdhff", i);
     const isChecked1 = event.target.checked;
     // Reset both totals
     this.BalanceAmounttotal = 0;
@@ -755,7 +755,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
     // Iterate over the Pay_Pending_list array
     this.Pay_Pending_list[i].forEach((list: any) => {
-      console.log("list", list)
+     // console.log("list", list)
       // Update the checkbox state for each item
       list.isChecked = isChecked1;
 
@@ -774,9 +774,9 @@ export class MultipleInvPaymentComponent implements OnInit {
       checkbox.checked = isChecked1;
     });
 
-    console.log("Checkbox-all", this.edit_array_pending);
-    console.log("BalanceAmounttotal", this.BalanceAmounttotal);
-    console.log("InvoiceAmounttotal", this.InvoiceAmounttotal);
+    // console.log("Checkbox-all", this.edit_array_pending);
+    // console.log("BalanceAmounttotal", this.BalanceAmounttotal);
+    // console.log("InvoiceAmounttotal", this.InvoiceAmounttotal);
     $('#pd_invAmount_' + i).val(this.InvoiceAmounttotal);
     $('#pd_balAmount_' + i).val(this.BalanceAmounttotal);
     $('#pd_paidAmount_' + i).val(this.BalanceAmounttotal);
@@ -797,10 +797,10 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   EditCHK_pending(data: any, event: any, i: any) {
 
-    console.log("List - CheckBox ID", data);
+   // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_pending = data;
     this.checkbox_value_pending = event.target.checked;
-    console.log(this.checkbox_value_pending);
+  //  console.log(this.checkbox_value_pending);
 
     // Check if data is not undefined
     if (data !== undefined) {
@@ -829,9 +829,9 @@ export class MultipleInvPaymentComponent implements OnInit {
         }
       });
 
-      console.log("Final Checkbox After checkbox selected list", this.edit_array_pending);
-      console.log("BalanceAmounttotal", this.BalanceAmounttotal);
-      console.log("InvoiceAmounttotal", this.InvoiceAmounttotal);
+      // console.log("Final Checkbox After checkbox selected list", this.edit_array_pending);
+      // console.log("BalanceAmounttotal", this.BalanceAmounttotal);
+      // console.log("InvoiceAmounttotal", this.InvoiceAmounttotal);
 
       $('#pd_invAmount_' + i).val(this.InvoiceAmounttotal);
       $('#pd_balAmount_' + i).val(this.BalanceAmounttotal);
@@ -873,7 +873,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         this.Pay_Pending_list[i] = response.data;
         this.Pay_Pending_list_show[i] = true;
-        console.log("this.Pay_Pending_list", this.Pay_Pending_list)
+       // console.log("this.Pay_Pending_list", this.Pay_Pending_list)
 
         $("#searchInvoiceFormId").modal("hide");
 
@@ -1096,7 +1096,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     // api_mulInvpay.bal_amount=$('#pd_balAmount_' + i).val();
 
     var check = addressDataAtIndex.paymentDate;
-    console.log("samu", check);
+  //  console.log("samu", check);
     if (check == '' || check == 'undefined' || check == undefined) {
       iziToast.error({
         message: "Payment Method Missing",
@@ -1164,7 +1164,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     // var addr = this.addPI_section2.value.addresses;
-    console.log("this.addPI_section2.value.addresses", this.addPI_section2.value.addresses)
+  //  console.log("this.addPI_section2.value.addresses", this.addPI_section2.value.addresses)
     // for (let i = 0; i < addr.length; i++) {
 
 

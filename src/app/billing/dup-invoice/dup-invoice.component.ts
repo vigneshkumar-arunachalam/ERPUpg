@@ -3241,7 +3241,7 @@ export class DupInvoiceComponent implements OnInit {
       var self = this;
       $.ajax({
         type: 'POST',
-        url: 'https://laravelapi.erp1.cal4care.com/api/invoice/invoice_attachment_save',
+        url: 'https://erp1.cal4care.com/api/invoice/invoice_attachment_save',
 
 
         cache: false,
