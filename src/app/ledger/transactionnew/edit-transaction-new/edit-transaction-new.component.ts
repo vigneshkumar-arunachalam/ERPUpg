@@ -77,6 +77,7 @@ export class EditTransactionNewComponent implements OnInit {
   productDetails: any;
   prodResult:any;
   Clicked: boolean = false;
+  add_billerNameID: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
@@ -118,7 +119,11 @@ export class EditTransactionNewComponent implements OnInit {
 
       case '3':
         $('#PurchaseEntry_link').addClass('active');
-        this.editPurchaseEntry();
+        
+        setTimeout(() => {
+          this.editPurchaseEntry();
+        }, 2000)
+     
         break;
       case '5':
         $('#PurchaseEntry').addClass('fade');
@@ -408,7 +413,11 @@ export class EditTransactionNewComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_loadAdd.action = "purchase_entry_addnew";
-
+    if (this.add_billerNameID != 'undefined' || this.add_billerNameID != undefined) {
+      api_loadAdd.billerId = this.add_billerNameID;
+    } else {
+      api_loadAdd.billerId = '';
+    }
 
     api_loadAdd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_loadAdd;
@@ -424,10 +433,26 @@ export class EditTransactionNewComponent implements OnInit {
         this.taxProviderDetails = response.tax_provider_det;
         this.DefaultBillerIDValue = response.defaults_biller_id;
         this.categoryDetails = response.category_det;
+        let defaultCurrencyIdString =response.default_currency_id;
+        let currencyID: number = parseInt(defaultCurrencyIdString);
+        console.log("currencyID",currencyID)
         this.getPaymentInvoice();
         this.addTransaction_section1.patchValue({
           // 'setInvoice': response.selected_invoice_type
-        })
+        });
+        setTimeout(() => {
+          $('#biller_name9').val(response.defaults_biller_id);
+         $('#Currency9').val(currencyID);
+        }, 1000)
+        this.addTransaction_section1.patchValue({
+          'billerName': this.DefaultBillerIDValue,
+          'PE_purchaseEntryNo': response.purchase_entry_no,
+          'PE_Currency': currencyID,
+          'PE_currencyConversionRate': response.currency_converstion,
+          'PE_vendorName':815
+
+        });
+
 
 
 
@@ -520,7 +545,7 @@ export class EditTransactionNewComponent implements OnInit {
   }
 
   editPurchaseEntry() {
-
+this.spinner.show();
     let api_req: any = new Object();
     let api_loadEdit: any = new Object();
     api_req.moduleType = "transaction_entry";
@@ -534,6 +559,7 @@ export class EditTransactionNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
+        this.spinner.hide();
         this.billerID =response.transaction_details[0].billerId;
         this.addTransaction_section1.patchValue({
           'billerName': response.transaction_details[0].billerId,
@@ -563,8 +589,10 @@ export class EditTransactionNewComponent implements OnInit {
         })
 
         if (response.trans_file == null) {
+          this.spinner.hide();
           this.getFileAttachmentResult = [];
       } else {
+        this.spinner.hide();
           this.getFileAttachmentResult = response.trans_file;
       }
         
@@ -616,7 +644,7 @@ export class EditTransactionNewComponent implements OnInit {
 
       } else {
 
-
+        this.spinner.hide();
         iziToast.warning({
           message: "Edit Value of Transaction entry not displayed. Please try again",
           position: 'topRight'
@@ -1105,7 +1133,9 @@ export class EditTransactionNewComponent implements OnInit {
     $('#VendorManagementId').modal('show');
   }
   BillerChange(event: any) {
-    this.billerID = event.target.value;;
+    this.billerID = event.target.value;
+    this.add_billerNameID = event.target.value;
+    this.addLoad();
   }
 
 

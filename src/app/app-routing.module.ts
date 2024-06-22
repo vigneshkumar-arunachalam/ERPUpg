@@ -87,6 +87,7 @@ import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/
 import { PurchaseentryreportComponent } from './reports/purchaseentryreport/purchaseentryreport.component';
 import { GstreportComponent } from './reports/gstreport/gstreport.component';
 
+
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent

@@ -823,7 +823,8 @@ export class AddInvoiceComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_SearchCUST_req.action = "quot_customer_details";
     api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchCUST_req.customerId = this.customerName_Data
+    api_SearchCUST_req.customerId = this.customerName_Data;
+    api_SearchCUST_req.billerId = this.addInvoice_section1.value.companyName;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
@@ -864,20 +865,20 @@ export class AddInvoiceComponent implements OnInit {
         console.log("ship to",  this.ship_to_str_Final)
       
         this.addInvoice_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': response.customer_details[0].city,
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
           'cusInvoiceNo': response.customer_invoice_no,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to':   this.ship_to_str_Final,
-               
-          'ship_address_1': this.shipAddress1_Final,
-          'ship_address_2': this.shipAddress2_Final,
-          'ship_address_3': this.shipAddress3_Final,
-          'ship_attn': response.customer_details[0].companyName,
-          'terms': response.customer_details[0].terms_condition,
-          'Currency': response.customer_details[0].def_currency_id,
-          'PaymentVia': response.customer_details[0].def_payment_via,
+          'invoiceNo': response.invoice_no,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to':   response.customer_details.ship_to,
+          'ship_address_1':  response.customer_details.ship_customerAddress1,
+          'ship_address_2': response.customer_details.ship_customerAddress2,
+          'ship_address_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+          'terms': response.customer_details.terms_condition,
+          'Currency': response.customer_details.def_currency_id,
+          'PaymentVia': response.customer_details.def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
         });
       }

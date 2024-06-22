@@ -677,9 +677,10 @@ export class AddPIComponent implements OnInit {
     api_req.api_url = "proforma/customer_address_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_SearchCUST_req.action = "quot_customer_details";
+    api_SearchCUST_req.action = "customer_address_details";
     api_SearchCUST_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_SearchCUST_req.customerId = this.customerName_Data
+    api_SearchCUST_req.customerId = this.customerName_Data;
+    api_SearchCUST_req.billerId = this.addPI_section1.value.companyName;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
@@ -687,92 +688,92 @@ export class AddPIComponent implements OnInit {
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
    
-        this.cusID=response.customer_details[0].customerId;
+        this.cusID=response.customer_details.customerId;
        
-        this.CurID=response.customer_details[0].def_currency_id;
+        this.CurID=response.customer_details.def_currency_id;
 
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
 
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
+        if (response.customer_details.city != '') {
+          address_3 = response.customer_details.city;
         }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+        if (address_3 != '' && response.customer_details.state != '') {
+          address_3 = address_3 + ' ,' + response.customer_details.state;
         } else {
-          address_3 = response.customer_details[0].state;
+          address_3 = response.customer_details.state;
         }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
+        if (address_3 != '' && response.customer_details.country != '') {
+          address_3 = address_3 + ' ,' + response.customer_details.country;
         } else {
-          address_3 = response.customer_details[0].country;
+          address_3 = response.customer_details.country;
         }
 
 
 
 
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
+        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null) {
 
-          ship_to_str = response.customer_details[0].customerName;
+          ship_to_str = response.customer_details.customerName;
 
         } else {
-          ship_to_str = response.customer_details[0].ship_to;
+          ship_to_str = response.customer_details.ship_to;
         }
 
-        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
+        if (response.customer_details.ship_customerAddress1 == '' || response.customer_details.ship_customerAddress1 == null) {
+          ship_address_str1 = response.customer_details.customerAddress1;
         } else {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+          ship_address_str1 = response.customer_details.ship_customerAddress1;
 
         }
 
-        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
+        if (response.customer_details.ship_customerAddress2 == '' || response.customer_details.ship_customerAddress2 == null) {
+          ship_address_str2 = response.customer_details.customerAddress2;
         } else {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+          ship_address_str2 = response.customer_details.ship_customerAddress2;
         }
 
 
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].city;
+        if (response.customer_details.ship_city != '') {
+          ship_address_str3 = response.customer_details.city;
         }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
+        if (ship_address_str3 != '' && response.customer_details.ship_state != '' && response.customer_details.ship_state != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details.ship_state;
+        } else if (ship_address_str3 != '' && response.customer_details.ship_state == null) {
           ship_address_str3 = ship_address_str3;
         } else {
-          ship_address_str3 = response.customer_details[0].ship_state;
+          ship_address_str3 = response.customer_details.ship_state;
         }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
+        if (ship_address_str3 != '' && response.customer_details.ship_country != '' && response.customer_details.ship_country != null) {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details.ship_country;
+        } else if (ship_address_str3 != '' && response.customer_details.ship_country == null) {
           ship_address_str3 = ship_address_str3;
         } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
+          ship_address_str3 = response.customer_details.ship_country;
         }
 
-        if (response.customer_details[0].ship_to == '') {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-          ship_address_str2 = response.customer_details[0].customerAddress2;
+        if (response.customer_details.ship_to == '') {
+          ship_address_str1 = response.customer_details.customerAddress1;
+          ship_address_str2 = response.customer_details.customerAddress2;
           ship_address_str3 = address_3;
         }
-        this.getCurrencyCodeChange=response.customer_details[0].def_currency_id;
+        this.getCurrencyCodeChange=response.customer_details.def_currency_id;
        // console.log("response.customer_details[0].def_currency_id",response.customer_details[0].def_currency_id)
 
 
         this.addPI_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'ship_address_1': ship_address_str1,
-          'ship_address_2': ship_address_str2,
-          'ship_address_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
-          'terms': response.customer_details[0].terms_condition,
-          'Currency': response.customer_details[0].def_currency_id,
-          'PaymentVia': response.customer_details[0].def_payment_via,
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to': response.customer_details.ship_to,
+          'ship_address_1': response.customer_details.ship_customerAddress1,
+          'ship_address_2':response.customer_details.ship_customerAddress2,
+          'ship_address_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+          'terms': response.terms_condition,
+          'Currency': response.def_currency_id,
+          'PaymentVia': response.def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
 
         });

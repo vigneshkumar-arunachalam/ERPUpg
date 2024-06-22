@@ -267,7 +267,7 @@
                                         </div>
                                     </div>
 
-                
+
                                     <div class="col-lg-12">
                                         <div class="form-group row">
                                             <div class="ng-autocomplete">
@@ -516,9 +516,27 @@
         <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Ends  ------------------------->
 
 
+        <!-- <div style="color:white">
+            Login Time: {{ currentTime }}
+          </div> -->
+
+        <!-- <div style="color:white">
+            Elapsed Time: {{ currentReverseTime }}
+          </div> -->
+        <!-- <div style="color: white;" *ngIf="remainingTime> 0">
+            <p>Time remaining: {{ formatTime(remainingTime) }}</p>
+          </div> -->
+        <!-- <div style="color: white;" *ngIf="remainingTime> 0">
+            <p>Time remaining: {{ formatTime1(remainingTime) }}</p>
+          </div> -->
+        <!-- <div  style="color: white;" *ngIf="remainingTime <= 0">
+            <p>Timer expired!</p>
+          </div> -->
+        <!-- <app-timecounter >hello</app-timecounter> -->
 
 
         <div class="navbar-right">
+
             <ul class="navbar-right__menu">
 
                 <!-- ends: nav-message -->
@@ -539,16 +557,16 @@
                             title="Payment Transaction Reports"></a>
                 </li>
                 <li>
-          
-                    <div style="position: relative;" *ngIf="this.live==false">
-                        <a href="javascript:;"  class="navbar-brand" (click)="toggleDropdown()">
+
+                    <div style="position: relative;">
+                        <a href="javascript:;" class="navbar-brand" (click)="toggleDropdown()">
                             <img class="svg" src="assets/img/icon2/warning.png" title="Overdue Payment"
                                 style="height: 30px;width:30px" alt="img">
                         </a>
 
                         <div class="dropdown-menu" [class.show]="dropdownVisible">
                             <div *ngFor="let list of overduePaymentsBillerList">
-                                
+
                                 <span class="dropdown-list" (click)="overduePayments(list.billerId)" data-toggle="modal"
                                     data-target="#overduePaymentFormId">
                                     {{list.name}}<b style="padding: 0px 15px;">-</b>
@@ -573,10 +591,10 @@
                         <img class="svg" src="assets/img/icon2/volatility.png" style="height: 30px;width:30px" alt="img"
                             title="Current Currency Rate" data-toggle="modal"
                             data-target="#currencyConvertorUIFormId"></a>
-                    <!-- <a href="javascript:;" class="navbar-brand" >
+                    <a href="javascript:;" class="navbar-brand">
 
                         <img class="svg" src="assets/img/icon2/postbox.png" style="height: 30px;width:30px" alt="img"
-                            title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a> -->
+                            title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a>
 
                     <a href="javascript:;" class="navbar-brand" (click)="PageList()"
                         *ngIf="(this.GlobalSearchPermission==1148)">
@@ -831,104 +849,104 @@
                 <!-- <form []="sendtoPostForm"> -->
 
 
-                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                        <div class="table-responsive ">
-                            <table class="table mb-0 table-borderless" *ngIf="postalInvoiceDetails">
-                                <thead>
-                                    <tr class="userDatatable-header">
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive ">
+                        <table class="table mb-0 table-borderless" *ngIf="postalInvoiceDetails">
+                            <thead>
+                                <tr class="userDatatable-header">
 
 
-                                        <th>
-                                            <span class="userDatatable-title">S.No</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Action</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Inv No</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Cus Inv No</span>
-                                        </th>
+                                    <th>
+                                        <span class="userDatatable-title">S.No</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Action</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Inv No</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Cus Inv No</span>
+                                    </th>
 
-                                        <th>
-                                            <span class="userDatatable-title">Invoice Date</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Customer</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Total</span>
-                                        </th>
+                                    <th>
+                                        <span class="userDatatable-title">Invoice Date</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Customer</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Total</span>
+                                    </th>
 
-                                        <th>
-                                            <span class="userDatatable-title">Send Type</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Generated By</span>
-                                        </th>
+                                    <th>
+                                        <span class="userDatatable-title">Send Type</span>
+                                    </th>
+                                    <th>
+                                        <span class="userDatatable-title">Generated By</span>
+                                    </th>
 
-                                        <th>
-                                            <span class="userDatatable-title">Currency</span>
-                                        </th>
+                                    <th>
+                                        <span class="userDatatable-title">Currency</span>
+                                    </th>
 
-                                    </tr>
-                                </thead>
-                                <tbody *ngFor="let list1 of postalInvoiceDetails?.postal_data ; let i = 'index+1'">
-                                    <!-- <tr >
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let list1 of postalInvoiceDetails?.postal_data ; let i = 'index+1'">
+                                <!-- <tr >
                                         <td class="PIlistlabel" colspan="10"
                                           [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
                                           {{list.billerName}}
                                         </td>
                                       </tr> -->
-                                    <tr class="PIlistlabel"
-                                        [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
-                                        <td colspan="10">{{list1.biller_name}}</td>
-                                    </tr>
+                                <tr class="PIlistlabel"
+                                    [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                    <td colspan="10">{{list1.biller_name}}</td>
+                                </tr>
 
-                                    <tr *ngFor="let list of list1.datas;let k = 'index+1'">
-
-
-                                        <td>
-
-                                            <span> {{k}}</span>
+                                <tr *ngFor="let list of list1.datas;let k = 'index+1'">
 
 
-                                        </td>
-                                        <td>
-                                            <span>
-                                                <input type="checkbox" [checked]="isSelected(list.billId)"
-                                                    (change)="toggleSelection($event, list.billId)">
-                                            </span>
-                                        </td>
+                                    <td>
 
-                                        <td>
-                                            <span>{{list.invoice_no}}</span>
-
-                                        </td>
-                                        <td>
-                                            <span>{{list.cus_invoice_no}}</span>
+                                        <span> {{k}}</span>
 
 
-                                        </td>
+                                    </td>
+                                    <td>
+                                        <span>
+                                            <input type="checkbox" [checked]="isSelected(list.billId)"
+                                                (change)="toggleSelection($event, list.billId)">
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span>{{list.invoice_no}}</span>
+
+                                    </td>
+                                    <td>
+                                        <span>{{list.cus_invoice_no}}</span>
 
 
-                                        <td>
-                                            <span> {{list.billDate}}</span>
+                                    </td>
+
+
+                                    <td>
+                                        <span> {{list.billDate}}</span>
 
 
 
-                                        </td>
-                                        <td>
-                                            <span> {{list.customerName}}</span>
-                                        </td>
+                                    </td>
+                                    <td>
+                                        <span> {{list.customerName}}</span>
+                                    </td>
 
 
-                                        <td>
-                                            <span> {{list.netPayment}}</span>
-                                        </td>
+                                    <td>
+                                        <span> {{list.netPayment}}</span>
+                                    </td>
 
-                                        <!-- <td>
+                                    <!-- <td>
 
                                             <span>
                                                 <i class="fas fa-chevron-down"></i>
@@ -936,49 +954,56 @@
                                             </span>
 
                                         </td> -->
-                                        <td>
-                                            <div class="d-flex justify-content-evenly align-items-center">
-                                                <span>
-                                                    <!-- First icon -->
-                                                    <i class="fa fa-file-pdf-o" style="color: #C04000;" 
-                                                    (click)="postalinv_sendPDF(list.billId)"></i>
-                                                </span>
-                                                <span class="mx-2"></span>
-                                                <!-- Adjust the space between icons using mx-* classes -->
-                                                <span>
-                                                    <!-- Second icon -->
-                                                    <i class="fas fa-envelope" style="color: #C04000;"
-                                                        (click)="postalinv_sendMail(list.billId)"></i>
-                                                </span>
-                                            </div>
-                                        </td>
+                                    <td>
+                                        <div class="d-flex justify-content-evenly align-items-center">
+                                            <span>
+                                                <!-- First icon -->
+                                                <i class="fa fa-file-pdf-o" style="color: #C04000;cursor: pointer;"
+                                                    title="PDF-LOGO" (click)="postalinv_sendPDF(list.billId)"></i>
+                                            </span>
+                                            <span class="mx-2"></span>
+                                            <span>
+                                                <!-- First icon -->
+                                                <i class="fa fa-file-pdf-o" style="color: #025552;cursor: pointer;"
+                                                    title="PDF W/O LOGO"
+                                                    (click)="postalinvwithoutLogo_sendPDF(list.billId)"></i>
+                                            </span>
+                                            <span class="mx-2"></span>
+                                            <!-- Adjust the space between icons using mx-* classes -->
+                                            <span>
+                                                <!-- Second icon -->
+                                                <i class="fas fa-envelope" style="color: #C04000;cursor:pointer;"
+                                                    title="Mail" (click)="postalinv_sendMail(list.billId)"></i>
+                                            </span>
+                                        </div>
+                                    </td>
 
-                                        <td>
+                                    <td>
 
-                                            <span>{{list.billgeneratedBy}}</span>
+                                        <span>{{list.billgeneratedBy}}</span>
 
-                                        </td>
+                                    </td>
 
-                                        <td>
+                                    <td>
 
-                                            <span>{{list.currency_name}}</span>
+                                        <span>{{list.currency_name}}</span>
 
-                                        </td>
+                                    </td>
 
-                                        <td>
+                                    <td>
 
-                                            <span>{{list.net_amt}}</span>
+                                        <span>{{list.net_amt}}</span>
 
-                                        </td>
+                                    </td>
 
-                                    </tr>
+                                </tr>
 
 
-                                </tbody>
+                            </tbody>
 
-                            </table>
-                        </div>
+                        </table>
                     </div>
+                </div>
 
 
                 <!-- </form> -->
@@ -988,13 +1013,13 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                <button type="button" class="btn btn-primary" (click)="multipleMailPostalInvoice()">
                     Send
                 </button>
-                <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                <button type="button" class="btn btn-primary" (click)=" multiPrintPostalWithLogo()">
                     Multi Print
                 </button>
-                <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+                <button type="button" class="btn btn-primary" (click)="multiPrintPostalWithoutLogo()">
                     Multi Print(W/O Logo)
                 </button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1027,132 +1052,145 @@
                 <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
 
 
-                
-
-
-                    <div class="userDatatable global-shadow border-0 bg-white w-100">
-                        <div class="table-responsive ">
-                            <table class="table mb-0 table-borderless">
-                                <thead>
-                                    <tr class="userDatatable-header">
-                                        <th>
-
-                                        </th>
-
-                                        <th>
-                                            <span class="userDatatable-title">S.No</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Inv No</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Cus Inv No</span>
-                                        </th>
-
-
-                                        <th>
-                                            <span class="userDatatable-title">Invoice Date</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Invoice Amt</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Paid Amt</span>
-                                        </th>
-
-                                        <th>
-                                            <span class="userDatatable-title">Balance Amt</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Generated By</span>
-                                        </th>
-
-                                        <th>
-                                            <span class="userDatatable-title">Currency</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Aging</span>
-                                        </th>
-                                        <th>
-                                            <span class="userDatatable-title">Action</span>
-                                        </th>
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <!-- <tr >
-                                        <td class="PIlistlabel" colspan="10"
-                                          [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
-                                          {{list.billerName}}
-                                        </td>
-                                      </tr> -->
-                                    <tr class="PIlistlabel"
-                                        [ngStyle]="{'backgroundColor': this.colorCodes, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
-                                        <td colspan="11">{{this.billerNameDisplay}}</td>
-                                    </tr>
-
-                                    <tr *ngFor="let list of overduePaymentsBillerWise;let k = 'index+1'">
-
-                                        <td>
-                                            <input type="checkbox" [checked]="isSelected_overdue(list.billId)"
-                                                (change)="toggleSelection_overdue($event, list.billId)">
-                                        </td>
-                                        <td>
-
-                                            <span> {{k}}</span>
-
-
-                                        </td>
-
-
-                                        <td>
-                                            <span>{{list.invoiceNo}}</span>
-
-                                        </td>
-                                        <td>
-                                            <span>{{list.cusInvoiceNo}}</span>
-
-
-                                        </td>
-
-
-                                        <td>
-                                            <span> {{list.billDate}}</span>
 
 
 
-                                        </td>
-                                        <td>
-                                            <span> {{list.netPayment}}</span>
-                                        </td>
+                <div class="userDatatable global-shadow border-0 bg-white w-100">
+                    <div class="table-responsive ">
+                        <table class="table mb-0 table-borderless">
+                            <thead>
+                              <tr class="userDatatable-header">
+                                <th></th>
+                                <th><span class="userDatatable-title">S.No</span></th>
+                                <th><span class="userDatatable-title">Inv No</span></th>
+                                <th><span class="userDatatable-title">Cus Inv No</span></th>
+                                <th><span class="userDatatable-title">Invoice Date</span></th>
+                                <th><span class="userDatatable-title">Invoice Amt</span></th>
+                                <th><span class="userDatatable-title">Paid Amt</span></th>
+                                <th><span class="userDatatable-title">Balance Amt</span></th>
+                                <th><span class="userDatatable-title">Generated By</span></th>
+                                <th><span class="userDatatable-title">Currency</span></th>
+                                <th><span class="userDatatable-title">Aging</span></th>
+                                <th><span class="userDatatable-title">Action</span></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="PIlistlabel"
+                                  [ngStyle]="{'backgroundColor': 'rgb(212 204 184)', 'color':'#040436','font-weight': '500','height':'25px','padding-left':'14px'}">
+                                <td colspan="12">{{ this.billerNameDisplay }}</td>
+                               
+                              </tr>
+                              <!-- Outer ngFor for each biller -->
+                              <ng-container *ngFor="let list of overduePaymentsBillerWise; let i = index">
+                                <!-- Row for the biller title and actions -->
+                                <tr >
+                                  <td colspan="11" [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#861F41','color':'white'}">
+                                    {{ list.title.customerName }}{{"  "}}
+                                    <span *ngIf="calculateSelectedTotals(list.title.cus_id) > 0"  style="background-color: darkblue;">{{this.balamt}}</span>
+                                  </td>
+                                  <td colspan="1"  style="background-color:rgb(134, 31, 65) ;">
+                                    <div class="page">
+                                        <div class="dropdown">
+                                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                                          <ul class="dropdown__list">
+                                            <li class="dropdown__item">
+                                              <a class="hover1" title="Overdue Consolidate Send Mail" data-toggle="modal" data-target="#paymentReminderMailId">
+                                                <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                                <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                              </a>
+                                            </li>
+                                            <li class="dropdown__item">
+                                              <a class="hover2" title="Overdue Consolidate PDF">
+                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                              </a>
+                                            </li>
+                                            <li class="dropdown__item">
+                                              <a class="hover1" title="Demand Letter PDF">
+                                                <img class="show" src="assets/img/icon2/resign-blue.png">
+                                                <img class="hide" src="assets/img/icon2/resign-black.png">
+                                              </a>
+                                            </li>
+                                         
+                                          </ul>
+                                        </div>
+                                      </div>
+                                </td>
+                               
+                                </tr>
+                              
+                                <!-- Nested ngFor for each payment detail, with check for list.data -->
+                                <ng-container *ngIf="list.data">
+                                  <tr *ngFor="let item of list.data; let j = index">
+                                    <td>
+                                      <input  type="checkbox" [checked]="isSelected_overdue(item.billId, list.title.cus_id)"
+                                             (change)="toggleSelection_overdue($event, item.billId,item.balanceAmount,list.title.cus_id)">
+                                    </td>
+                                 
+                                    <td><span>{{ item.row_count}}</span></td>
+                                    <td><span>{{ item.invoiceNo }}</span></td>
+                                    <td><span>{{ item.cusInvoiceNo }}</span></td>
+                                    <td><span>{{ item.billDate }}</span></td>
+                                    <td><span>{{ item.netPayment }}</span></td>
+                                    <td><span>{{ item.paidAmount }}</span></td>
+                                    <td style="color:red"><span>{{ item.balanceAmount }}</span></td>
+                                    <td><span>{{ item.generatedBy }}</span></td>
+                                    <td><span>{{ item.currency }}</span></td>
+                                    <td><span>{{ item.aging }}</span></td>
+                                    <td>
+                                      <div class="page">
+                                        <div class="dropdown">
+                                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                                          <ul class="dropdown__list">
+                                            <li class="dropdown__item">
+                                              <a class="hover1" title="Payment Reminder Send Mail" data-toggle="modal" data-target="#paymentReminderMailId">
+                                                <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                                <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                              </a>
+                                            </li>
+                                            <li class="dropdown__item">
+                                              <a class="hover2" title="Payment Process">
+                                                <img class="hide" src="assets/img/icon2/P-black.png">
+                                                <img class="show" src="assets/img/icon2/P-blue.png">
+                                              </a>
+                                            </li>
+                                            <li class="dropdown__item">
+                                              <a class="hover1" title="Landscape PDF">
+                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                              </a>
+                                            </li>
+                                            <li class="dropdown__item">
+                                              <a class="hover2" title="Payment Followers" data-toggle="modal" data-target="#paymentFollowersId">
+                                                <img class="show" src="assets/img/icon2/employee-blue.png">
+                                                <img class="hide" src="assets/img/icon2/employee-black.png">
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </ng-container>
 
+                                <tr>
+                                    <td colspan="7" [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#f7d3d3','text-align':'center'}">
+                                      {{ list.totalAmount.title }}
+                                     
+                                    </td>
+                                    <td colspan="5" [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#f7d3d3'}">
+                                        {{ list.totalAmount.balanceAmount }}
+                                       
+                                      </td>
+                                  </tr>
 
-                                        <td>
-                                            <span> {{list.paidAmount}}</span>
-                                        </td>
-                                        <td>
-                                            <span> {{list.balanceAmount}}</span>
-                                        </td>
-                                        <td>
-                                            <span> {{list.generatedBy}}</span>
-                                        </td>
-                                        <td>
-                                            <span> {{list.currency}}</span>
-                                        </td>
-                                        <td>
-                                            <span> {{list.aging}}</span>
-                                        </td>
-
-
-
-                                    </tr>
-
-
-                                </tbody>
-
-                            </table>
-                        </div>
+                              </ng-container>
+                            </tbody>
+                          </table>
+                          
+                          
                     </div>
+                </div>
 
             </div>
             <div class="modal-footer">

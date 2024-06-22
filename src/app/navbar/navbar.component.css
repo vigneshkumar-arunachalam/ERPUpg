@@ -326,3 +326,101 @@
 #overduePaymentFormId .modal-dialog{
   min-width: 98%;
 }
+
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown__list {
+  z-index: 2;
+  position: absolute;
+  display: none;
+  padding: 10px;
+  min-width: 100%;
+  background: #fff;
+  cursor: pointer;
+  border: 1px solid;
+  text-align: center;
+}
+
+.dropdown__item {
+  list-style-type: none;
+}
+
+.dropdown__link {
+  display: block;
+  padding: 0.3em 1em;
+  background: white;
+  color: var(--dropdown__link_clr);
+  text-decoration: none;
+}
+
+.dropdown__link:hover {
+  opacity: 0.9;
+}
+
+.dropdown:hover .button {
+  opacity: 0.9;
+}
+
+.dropdown:hover .dropdown__list {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 31px;
+
+}
+
+.dropdown__item .hide{display: none;}
+.dropdown__item:hover .hide{display: block;}
+.dropdown__item:hover .show{display: none;}
+.userDatatable .page .dropdown button{
+  border-radius: 0px;
+  border-top-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+
+.btn1 {
+  background-color: #007cbc;
+  border: none;
+  color: white;
+  padding: 0;
+  font-size: 16px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  border-radius: 50%;
+}
+.dropdown a {
+  font-size: 14px;
+  /* margin: 5px 8px!important; */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 37px;
+  width: 37px;
+}
+.hover1:hover {
+   
+  background: rgba(255, 77, 79, 0.5);
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+}
+.hover2:hover {
+
+background: rgba(118, 177, 103, 0.5);
+-webkit-border-radius: 50%;
+border-radius: 50%;
+}
+
+
+#overduePaymentFormId .userDatatable-header th{
+  background: #04001f;
+  color: #ffffff;
+}

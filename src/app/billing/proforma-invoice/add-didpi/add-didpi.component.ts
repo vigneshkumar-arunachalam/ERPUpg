@@ -937,51 +937,51 @@ export class AddDidpiComponent implements OnInit {
         var address_3;
         var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
 
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
+        if (response.customer_details.city != '') {
+          address_3 = response.customer_details.city;
         }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
+        if (address_3 != '' && response.customer_details.state != '') {
+          address_3 = address_3 + ' ,' + response.customer_details.state;
         } else {
-          address_3 = response.customer_details[0].state;
+          address_3 = response.customer_details.state;
         }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
+        if (address_3 != '' && response.customer_details.country != '') {
+          address_3 = address_3 + ' ,' + response.customer_details.country;
         } else {
-          address_3 = response.customer_details[0].country;
+          address_3 = response.customer_details.country;
         }
 
-        if (response.customer_details[0].city != '') {
-          ship_address_str3 = response.customer_details[0].city;
+        if (response.customer_details.city != '') {
+          ship_address_str3 = response.customer_details.city;
         }
-        if (ship_address_str3 != '' && response.customer_details[0].state != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].state;
+        if (ship_address_str3 != '' && response.customer_details.state != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details.state;
         } else {
-          ship_address_str3 = response.customer_details[0].state;
+          ship_address_str3 = response.customer_details.state;
         }
-        if (ship_address_str3 != '' && response.customer_details[0].country != '') {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].country;
+        if (ship_address_str3 != '' && response.customer_details.country != '') {
+          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details.country;
         } else {
-          ship_address_str3 = response.customer_details[0].country;
-        }
-
-
-        if (response.customer_details[0].ship_to != '') {
-          ship_to_str = response.customer_details[0].ship_to;
-        } else {
-          ship_to_str = response.customer_details[0].customerName;
+          ship_address_str3 = response.customer_details.country;
         }
 
-        if (response.customer_details[0].ship_customerAddress1 != '') {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
+
+        if (response.customer_details.ship_to != '') {
+          ship_to_str = response.customer_details.ship_to;
         } else {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
+          ship_to_str = response.customer_details.customerName;
         }
 
-        if (response.customer_details[0].ship_customerAddress2 != '') {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
+        if (response.customer_details.ship_customerAddress1 != '') {
+          ship_address_str1 = response.customer_details.ship_customerAddress1;
         } else {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
+          ship_address_str1 = response.customer_details.customerAddress1;
+        }
+
+        if (response.customer_details.ship_customerAddress2 != '') {
+          ship_address_str2 = response.customer_details.ship_customerAddress2;
+        } else {
+          ship_address_str2 = response.customer_details.customerAddress2;
         }
 
 
@@ -990,20 +990,20 @@ export class AddDidpiComponent implements OnInit {
 
 
         this.addDid_section1.patchValue({
-          'address_1': response.customer_details[0].customerAddress1,
-          'address_2': response.customer_details[0].customerAddress2,
-          'address_3': address_3,
-          'Attn_1': response.customer_details[0].companyName,
-          'ship_to': ship_to_str,
-          'ship_address_1': ship_address_str1,
-          'ship_address_2': ship_address_str2,
-          'ship_address_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
+       
           'cusInvoiceNo': response.customer_invoice_no,
-          'terms': response.customer_details[0].terms_condition,
-
-          'Currency': response.customer_details[0].def_currency_id,
-          // 'PaymentVia': response.customer_details[0].def_payment_via,
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          'Attn_1': response.customer_details.kind_Attention,
+          'ship_to': response.customer_details.ship_to,
+          'ship_address_1': response.customer_details.ship_customerAddress1,
+          'ship_address_2':response.customer_details.ship_customerAddress2,
+          'ship_address_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+          'terms': response.terms_condition,
+          'Currency': response.def_currency_id,
+          'PaymentVia': response.def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
         });
       }
@@ -1026,7 +1026,7 @@ export class AddDidpiComponent implements OnInit {
           'CurrencyConversionRate': '',
         });
       }
-      $('#Payment4').val(response.customer_details[0].def_payment_via);
+      $('#Payment4').val(response.def_payment_via);
 
     });
   }

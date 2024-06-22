@@ -8,12 +8,15 @@ declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
+  //others
   userName: any
   userId: any;
   role_Permission: any;
@@ -22,7 +25,7 @@ export class NavbarComponent implements OnInit {
   GlobalSearch: FormGroup;
   pagesNameList: any;
 
-live:boolean=true;
+  live: boolean = true;
   SelectPageListId: any;
   //autocomplete-customer name
   searchResultTest: any;
@@ -98,16 +101,24 @@ live:boolean=true;
   dropdownVisible = false;
   overduePaymentForm: FormGroup;
   overduePaymentsBillerWise: any;
+  
   colorCodes: any;
   billerNameDisplay: any;
   //group checkbox
-  selectedBillIds_overdue: number[] = [];
+  selectedBillIds_overdue: { [customerId: number]: Set<number> } = {};
+  balamt: number = 0;
+list: any;
+//checkbox
 
-  constructor(private router: Router, private serverService: ServerService, private http: HttpClient, private fb: FormBuilder, private spinner: NgxSpinnerService) {
+
+
+  constructor(private router: Router, private serverService: ServerService, 
+    private http: HttpClient, private fb: FormBuilder, 
+    private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
-     // console.log(res);
+      // console.log(res);
       var kk = JSON.parse(res);
-    //  console.log(kk)
+      //  console.log(kk)
       if (kk.data == 'reload_profile_data') {
         this.userName = localStorage.getItem('user_name');
         this.userId = localStorage.getItem('erp_c4c_user_id');
@@ -116,16 +127,16 @@ live:boolean=true;
       }
     });
     this.serverService.closemodal.subscribe((res: any) => {
-     // console.log('val.type', res.type);
+      // console.log('val.type', res.type);
       this.PageList();
       setTimeout(() => {
         this.functionclose();
       }, 1000);
     });
     this.serverService.callbackfun.subscribe((val: any) => {
-     // console.log('val.type', val.type);
+      // console.log('val.type', val.type);
       if (val.type == 'quotation_list') {
-       // console.log(this.Quotation_list_send);
+        // console.log(this.Quotation_list_send);
         let api_reqs: any = {
           Quotation_list_send: this.Quotation_list_send,
           Quotation_per_send: this.Quotation_per_send
@@ -167,7 +178,7 @@ live:boolean=true;
     this.resellerList_ResellerDiscount = 0;
     this.resellerList_ResellerId = 'Empty';
     this.addSelectPageListCheckboxID_array = ["Customer New"];
-   // console.log("addSelectPageListCheckboxID_array----initial on load", this.addSelectPageListCheckboxID_array);
+    // console.log("addSelectPageListCheckboxID_array----initial on load", this.addSelectPageListCheckboxID_array);
     setTimeout(() => {
       this.userName = localStorage.getItem('user_name');
       this.userId = localStorage.getItem('erp_c4c_user_id');
@@ -181,7 +192,7 @@ live:boolean=true;
     this.roles = localStorage.getItem("role");
     this.get_permission();
     this.testVariable = [{ "id": 1, "name": "Credit Note" }, { "id": 2, "name": "Customer New" }, { "id": 3, "name": "Customer Project" }, { "id": 4, "name": " DID Number" }]
-  //  console.log(this.testVariable)
+    //  console.log(this.testVariable)
     this.GlobalSearch = new FormGroup({
 
       'GS_CustomerCode': new FormControl(null),
@@ -190,8 +201,8 @@ live:boolean=true;
       'GS_LicenseNumber': new FormControl(null),
 
     });
-    this.overduePaymentForm=new FormGroup({
-      
+    this.overduePaymentForm = new FormGroup({
+
     })
     this.customercontractForm = new FormGroup({
       'colorCU': new FormControl(null),
@@ -206,45 +217,45 @@ live:boolean=true;
       'outputValue': new FormControl(null),
     });
     this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
-    if(data!=''){
-      this.getCurrencyList = data.currency_data;
-    }  
- 
-     // console.log("this.getCurrencyList", this.getCurrencyList)
+      if (data != '') {
+        this.getCurrencyList = data.currency_data;
+      }
+
+      // console.log("this.getCurrencyList", this.getCurrencyList)
     });
     this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
-      if(data!=''){
+      if (data != '') {
         this.getCurrencyDetails = data.currency_data;
         this.currencyData = data.currency_data;
-      }  
-  
+      }
+
       this.currencies = ["SGD", "USD", "INR", "MYR", "EUR", "JPY", "THB", "AUD", "NZD", "IDR", "PHP"];
-     // console.log("this.getCurrencyDetails", this.getCurrencyDetails)
+      // console.log("this.getCurrencyDetails", this.getCurrencyDetails)
     });
 
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
-   
-      if(data!=''){
+
+      if (data != '') {
         this.postalInvoiceDetails = data;
-      }  
-    //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+      }
+      //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
     this.http.get<any>('https://erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
-    
-      if(data!=''){
+
+      if (data != '') {
         this.getTaskList = data.taskList;
       }
       // console.log("this.getTaskList", this.getTaskList)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/soa/overduePaymentsBillerList').subscribe((data: any) => {
-    
-      if(data!=''){
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/soa/overduePaymentsBillerList?user_id='+ localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
+     
+      if (data != '') {
         this.overduePaymentsBillerList = data.dataList;
       }
-     //  console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
+      //  console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
     })
 
-  
+
 
 
   }
@@ -263,37 +274,37 @@ live:boolean=true;
         this.GlobalSearchPermission = k[i]
       }
     }
-   // console.log(this.GlobalSearchPermission);
+    // console.log(this.GlobalSearchPermission);
   }
-// Inside your component class
-selectedBillIds: number[] = [];
+  // Inside your component class
+  selectedBillIds: number[] = [];
 
-// Inside your component class
-toggleSelection(event: any, billId: number) {
-  const target = event.target as HTMLInputElement; // Cast event.target to HTMLInputElement
-  const checked = target.checked;
+  // Inside your component class
+  toggleSelection(event: any, billId: number) {
+    const target = event.target as HTMLInputElement; // Cast event.target to HTMLInputElement
+    const checked = target.checked;
 
-  if (checked) {
+    if (checked) {
       // Add billId to the selectedBillIds array if it's not already there
       if (!this.selectedBillIds.includes(billId)) {
-          this.selectedBillIds.push(billId);
+        this.selectedBillIds.push(billId);
       }
-  } else {
+    } else {
       // Remove billId from the selectedBillIds array
       const index = this.selectedBillIds.indexOf(billId);
       if (index !== -1) {
-          this.selectedBillIds.splice(index, 1);
+        this.selectedBillIds.splice(index, 1);
       }
+    }
+    // Log the selectedBillIds array to the console
+    // console.log("Selected Bill IDs:", this.selectedBillIds);
   }
-  // Log the selectedBillIds array to the console
- // console.log("Selected Bill IDs:", this.selectedBillIds);
-}
 
 
-isSelected(billId: number): boolean {
+  isSelected(billId: number): boolean {
     // Check if the billId is in the selectedBillIds array
     return this.selectedBillIds.includes(billId);
-}
+  }
 
 
   selectEventCustomer(item: any) {
@@ -340,7 +351,7 @@ isSelected(billId: number): boolean {
 
         this.spinner.hide();
         this.contract_filter = true;
-// console.log("response.customer_contract.color", response.customer_contract.color)
+        // console.log("response.customer_contract.color", response.customer_contract.color)
 
         this.customerContractlist = response.customer_contract;
         this.resellerList = response.reseller_info;
@@ -391,7 +402,7 @@ isSelected(billId: number): boolean {
 
     if (event.target.checked == true) {
       var checkAll_ID: any = [];
-     // console.log("this.SelectPageList", this.SelectPageList)
+      // console.log("this.SelectPageList", this.SelectPageList)
 
       this.SelectPageList.forEach((element: any, index: any) => {
         $("#check-grp-SelectPage-" + index).prop('checked', true);
@@ -404,13 +415,13 @@ isSelected(billId: number): boolean {
       // console.log("checkedID", checkAll_ID)
       // console.log("this.addSelectPageListCheckboxID_array-Select All", this.addSelectPageListCheckboxID_array)
       this.PageIDs = this.addSelectPageListCheckboxID_array;
-     // console.log("this.PageIDs-Select All", this.PageIDs);
+      // console.log("this.PageIDs-Select All", this.PageIDs);
     } else {
       this.SelectPageList.forEach((element: any, index: any) => {
         $("#check-grp-SelectPage-" + index).prop('checked', false);
       });
       this.addSelectPageListCheckboxID_array = [];
-     // console.log("this.addSelectPageListCheckboxID_array-De Select All", this.addSelectPageListCheckboxID_array);
+      // console.log("this.addSelectPageListCheckboxID_array-De Select All", this.addSelectPageListCheckboxID_array);
       this.PageIDs = this.addSelectPageListCheckboxID_array;
       // console.log("this.PageIDs-De Select All", this.PageIDs);
     }
@@ -421,13 +432,13 @@ isSelected(billId: number): boolean {
 
 
   addSelectPageCHK(data: any, event: any) {
-   // console.log("Contract File Attachment Display - CheckBox ID", data);
+    // console.log("Contract File Attachment Display - CheckBox ID", data);
     this.SelectPageListId = data;
 
     if (event.target.checked == true) {
 
       this.addSelectPageListCheckboxID_array.push(data);
-     // console.log("Final BillerName Checkbox After checkbox selected list", this.addSelectPageListCheckboxID_array);
+      // console.log("Final BillerName Checkbox After checkbox selected list", this.addSelectPageListCheckboxID_array);
     }
     else {
       const index = this.addSelectPageListCheckboxID_array.findIndex((el: any) => el === data)
@@ -493,7 +504,7 @@ isSelected(billId: number): boolean {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-           // console.log("final error", error)
+            // console.log("final error", error)
           };
       }
     })
@@ -545,14 +556,14 @@ isSelected(billId: number): boolean {
               message: "Sorry, some server issue occur. Please contact admin",
               position: 'topRight'
             });
-           // console.log("final error", error)
+            // console.log("final error", error)
           };
       }
     })
 
 
   }
- 
+
   PaymentTransactionReports() {
     var userid = localStorage.getItem('erp_c4c_user_id');
     var username = localStorage.getItem('user_name');
@@ -562,7 +573,7 @@ isSelected(billId: number): boolean {
     // console.log("userid+username", userid + username);
     // console.log("payment_transaction_reports", payment_transaction_reports);
     var userDetails = btoa(userid + username)
-   // console.log("userDetails", userDetails)
+    // console.log("userDetails", userDetails)
     var url = "https://paymentinbound.cal4care.com/verify?uid=" + btoa(userid) + "&authToken=" + btoa(userid + username);
     window.open(url, '_blank');
   }
@@ -598,7 +609,7 @@ isSelected(billId: number): boolean {
       api_schGlo_req.customer_id = this.PG_customerId;
     }
 
-   // console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
+    // console.log(" this.PG_customerName-inside search global list", this.PG_customerName);
     api_schGlo_req.customer_name = this.PG_customerName;
     api_schGlo_req.customer_code = this.PG_CustomerCode;
 
@@ -613,7 +624,7 @@ isSelected(billId: number): boolean {
       });
       return false;
     } else {
-    //  console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
+      //  console.log("addSelectPageListCheckboxID_array----in search global list api-pagename", this.addSelectPageListCheckboxID_array)
       api_schGlo_req.pagename = this.addSelectPageListCheckboxID_array;
     }
 
@@ -623,9 +634,9 @@ isSelected(billId: number): boolean {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       // $('#ActionIdxx2').modal('hide');
-     // console.log(" response--pagelist", response)
+      // console.log(" response--pagelist", response)
       if (response != '') {
-      //  console.log("playboy", response.quotation_list)
+        //  console.log("playboy", response.quotation_list)
 
         this.SelectPageList = response.menuList;
         this.pageList = response.menuList;
@@ -654,7 +665,7 @@ isSelected(billId: number): boolean {
           this.serverService.global_search_quotation.next(api_reqs);
         } else {
           this.Quot_UI_Show = response.quotation_list;
-       //   console.log("Quotation Skipped")
+          //   console.log("Quotation Skipped")
         }
         if (response.proforma_invoice_list != 0 || response.proforma_invoice_list != '0') {
           this.PI_list_send = response.proforma_invoice_list.proforma_details;
@@ -669,7 +680,7 @@ isSelected(billId: number): boolean {
         } else {
           this.PI_UI_Show = response.proforma_invoice_list;
 
-        //  console.log("Performa invoice Skipped")
+          //  console.log("Performa invoice Skipped")
         }
 
         if (response.customer_list != 0 || response.customer_list != '0') {
@@ -683,14 +694,14 @@ isSelected(billId: number): boolean {
           this.serverService.global_search_customer.next(api_reqs);
         } else {
           this.Cust_UI_Show = response.customer_list;
-         // console.log("Customer List Skipped")
+          // console.log("Customer List Skipped")
         }
 
 
         if (response.invoice_list != 0 || response.invoice_list != '0') {
           this.Invoice_list_send = response.invoice_list.proforma_details;
           this.Invoice_UI_Show = response.invoice_list;
-        //  console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
+          //  console.log("this.Invoice_list_send---before send", this.Invoice_list_send);
           let api_reqs: any = {
             Invoice_list_send: this.Invoice_list_send,
             Invoice_per_send: this.Invoice_per_send,
@@ -700,7 +711,7 @@ isSelected(billId: number): boolean {
           this.serverService.global_search_invoice.next(api_reqs);
         } else {
           this.Invoice_UI_Show = response.invoice_list;
-         // console.log("Invoice List Skipped")
+          // console.log("Invoice List Skipped")
         }
 
 
@@ -732,7 +743,7 @@ isSelected(billId: number): boolean {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-       // console.log("final error", error);
+        // console.log("final error", error);
       };
 
 
@@ -744,9 +755,9 @@ isSelected(billId: number): boolean {
     // window.location.reload();
   }
   functionclose() {
-  //  console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
+    //  console.log("haiiyvgfuisghfadfabvginadsivfulksziadhkisfzlaisv");
     for (let i = 0; i < this.addSelectPageListCheckboxID_array.length; i++) {
-    //  console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
+      //  console.log("this.SelectPageList", this.addSelectPageListCheckboxID_array[i])
       if (this.addSelectPageListCheckboxID_array[i] == "Credit Note") {
         $("#check-grp-SelectPage-0").prop('checked', true);
       }
@@ -812,10 +823,10 @@ isSelected(billId: number): boolean {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-    //  console.log(" response--pagelist", response)
+      //  console.log(" response--pagelist", response)
       if (response != '') {
         this.SelectPageList = response.menuList;
-      //  console.log(" this.SelectPageList", this.SelectPageList)
+        //  console.log(" this.SelectPageList", this.SelectPageList)
       } else {
         Swal.close();
         iziToast.warning({
@@ -835,8 +846,8 @@ isSelected(billId: number): boolean {
         // console.log("final error", error);
       };
   }
-  overduePayments(billerID:any) {
-
+  overduePayments(billerID: any) {
+    this.spinner.show();
 
     let api_req: any = new Object();
     let api_page_req: any = new Object();
@@ -846,27 +857,30 @@ isSelected(billId: number): boolean {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_page_req.action = "overduePaymentsBillerWise";
     api_page_req.user_id = this.user_ids;
-    api_page_req.billerId=billerID;
-    api_page_req.customer_id="";
-    api_page_req.from_dt="";
-    api_page_req.to_dt="";
- 
+    api_page_req.billerId = billerID;
+    api_page_req.customer_id = "";
+    api_page_req.from_dt = "";
+    api_page_req.to_dt = "";
+
     api_req.element_data = api_page_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-
+      this.spinner.hide();
       if (response != '') {
-        this.overduePaymentsBillerWise=response.overduePayments;
-        this.colorCodes=response.colorCodes;
-        this.billerNameDisplay=response.billerName;
+        this.spinner.hide();
+        this.overduePaymentsBillerWise = response.overduePayments;
+        this.colorCodes = response.colorCodes;
+        this.billerNameDisplay = response.billerName;
         if (Array.isArray(this.overduePaymentsBillerWise)) {
-        //  console.log('this.overduePaymentsBillerWise is an array');
+            console.log('this.overduePaymentsBillerWise is an array');
+        } else {
+          this.spinner.hide();
+           console.log('this.overduePaymentsBillerWise is not an array');
+        }
+
       } else {
-         // console.log('this.overduePaymentsBillerWise is not an array');
-      }
-    
-      } else {
+        this.spinner.hide();
         Swal.close();
         iziToast.warning({
           message: "Response Failed",
@@ -877,60 +891,74 @@ isSelected(billId: number): boolean {
 
     }),
       (error: any) => {
-       // console.log("error",error)
+        // console.log("error",error)
 
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        
+
       };
   }
-  postalinv_sendPDF(billerID:any) {
+  multipleMailPostalInvoice() {
 
 
     let api_req: any = new Object();
     let api_page_req: any = new Object();
     api_req.moduleType = "invoice";
-    api_req.api_url = "postalPrint";
+    api_req.api_url = "multipleMailPostalInvoice";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_page_req.action = "postalPrint";
+    api_page_req.action = "multipleMailPostalInvoice";
     api_page_req.user_id = this.user_ids;
-    api_page_req.billId=billerID;
+    api_page_req.with_logo = 'yes';
+    api_page_req.billId = this.selectedBillIds;
+    api_page_req.email_state = 'yes';
+
     api_req.element_data = api_page_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-
-      if (response != '') {
-        var url = "https://paymentinbound.cal4care.com/verify?uid=" + btoa(billerID) + "&authToken=" + btoa(billerID + billerID);
-        window.open(url, '_blank');
-    
+      if (response.status == true) {
+        $('#sendtoPostFormId').modal('hide');
+        iziToast.success({
+          message: "Mail Sent Successfully",
+          position: 'topRight'
+        });
       } else {
-        Swal.close();
-        iziToast.warning({
-          message: "Response Failed",
+        iziToast.error({
+          message: "Mail Sent Failed",
           position: 'topRight'
         });
 
       }
-
     }),
       (error: any) => {
-      //  console.log("error",error)
+        // console.log("error",error)
 
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        
+
       };
   }
-
+  multiPrintPostalWithLogo() {
+    var url = "https://laravelapi.erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=yes";
+    window.open(url, '_blank');
+  }
+  multiPrintPostalWithoutLogo() {
+    var url = "https://laravelapi.erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=no";
+    window.open(url, '_blank');
+  }
+  postalinv_sendPDF(billerID: any) {
+    var url = "https://laravelapi.erp1.cal4care.com/api/postalPrint?billId=" + billerID;
+    window.open(url, '_blank');
+  }
+  postalinvwithoutLogo_sendPDF(billerID: any) {
+    var url = "https://laravelapi.erp1.cal4care.com/api/postalPrintWithoutLogo?billId=" + billerID;
+    window.open(url, '_blank');
+  }
   customerQuickMail() {
-
-
     let api_req: any = new Object();
     let api_quickMail_req: any = new Object();
     api_req.moduleType = "customer";
@@ -944,21 +972,16 @@ isSelected(billId: number): boolean {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-
       if (response != '') {
-
       } else {
         Swal.close();
         iziToast.warning({
           message: "Response Failed",
           position: 'topRight'
         });
-
       }
-
     }),
       (error: any) => {
-
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -967,8 +990,6 @@ isSelected(billId: number): boolean {
       };
   }
   searchCustomerData(data: any) {
-
-
     let api_req: any = new Object();
     let api_comCode_req: any = new Object();
     api_req.moduleType = "global";
@@ -982,10 +1003,10 @@ isSelected(billId: number): boolean {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-     // console.log(" response", response)
+      // console.log(" response", response)
       if (response != '') {
         this.searchResult = response.customerName;
-       // console.log(" this.searchResult", this.searchResult)
+        // console.log(" this.searchResult", this.searchResult)
         this.onFocusedCustomer({});
       } else {
         Swal.close();
@@ -1003,7 +1024,7 @@ isSelected(billId: number): boolean {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
   }
 
@@ -1020,7 +1041,7 @@ isSelected(billId: number): boolean {
     api_comCode_req.searchkey = data;
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer code_status response", response);
+      // console.log("vignesh-customer code_status response", response);
 
       this.searchResult_code = response.customerCode;
       // console.log("vignesh-advanced search result", this.searchResult_code);
@@ -1052,9 +1073,9 @@ isSelected(billId: number): boolean {
     api_comCode_req.searchkey = data;
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-    //  console.log("vignesh-customer code_status response", response);
+      //  console.log("vignesh-customer code_status response", response);
 
-    this.searchResult_DIDNumber = response.did_numbers;
+      this.searchResult_DIDNumber = response.did_numbers;
       // console.log("vignesh-advanced search result", this.searchResult_DIDNumber);
       this.onout_DIDNumber();
     });
@@ -1087,7 +1108,7 @@ isSelected(billId: number): boolean {
     api_comCode_req.searchkey = data;
     api_req.element_data = api_comCode_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-     // console.log("vignesh-customer code_status response", response);
+      // console.log("vignesh-customer code_status response", response);
 
       this.searchResult_LicenseNumber = response.license_key;
       // console.log("vignesh-advanced search result", this.searchResult_LicenseNumber);
@@ -1115,13 +1136,13 @@ isSelected(billId: number): boolean {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
-     // console.log(" this.PG_customerName-license number", this.PG_customerName);
+      // console.log(" this.PG_customerName-license number", this.PG_customerName);
       this.PG_LicenseKey = response.license_key;
 
     });
   }
   onout_DIDNumber() {
-   // console.log("DIDnumber check ip", this.PG_DIDNumber)
+    // console.log("DIDnumber check ip", this.PG_DIDNumber)
     let api_req: any = new Object();
     let api_DIDCode_req: any = new Object();
     api_req.moduleType = "global";
@@ -1135,7 +1156,7 @@ isSelected(billId: number): boolean {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.PG_customerId = response.customer_id;
       this.PG_customerName = response.customerName;
-     // console.log(" this.PG_customerName-DID number", this.PG_customerName);
+      // console.log(" this.PG_customerName-DID number", this.PG_customerName);
       this.PG_DIDNumbers = response.did_numbers;
 
     });
@@ -1144,7 +1165,7 @@ isSelected(billId: number): boolean {
 
   selected_LicenseNumber(item: any) {
     this.PG_LicenseNum = item;
-   // console.log(item)
+    // console.log(item)
     this.onout_LicenseNumber();
 
   }
@@ -1227,26 +1248,70 @@ isSelected(billId: number): boolean {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      //  console.log("final error", error);
+        //  console.log("final error", error);
       };
 
 
   }
-  toggleSelection_overdue(event: any, billId: number) {
-    var checked=event.target.checked;
-    if (checked) {
-      this.selectedBillIds_overdue.push(billId);
-    } else {
-      const index = this.selectedBillIds_overdue.indexOf(billId);
-      if (index !== -1) {
-        this.selectedBillIds_overdue.splice(index, 1);
-      }
-    }
-    console.log("checkbox-overdue",this.selectedBillIds_overdue);
-  }
+  toggleSelection_overdue(event: any, billId: number, balAmount: string, customerId: number): void {
+    const checked = event.target.checked;
+    const balance = parseFloat(balAmount);
 
-  isSelected_overdue(billId: number): boolean {
-   // console.log("selectedBillIds_overdue",this.selectedBillIds_overdue)
-    return this.selectedBillIds_overdue.includes(billId);
+    // Ensure the Set exists for the customer
+    if (!this.selectedBillIds_overdue[customerId]) {
+        this.selectedBillIds_overdue[customerId] = new Set<number>();
+    }
+
+    // Check if any other customer's checkboxes are already selected
+    let otherCustomerSelected = false;
+    for (const custId in this.selectedBillIds_overdue) {
+        if (parseInt(custId) !== customerId && this.selectedBillIds_overdue[custId].size > 0) {
+            otherCustomerSelected = true;
+            break;
+        }
+    }
+
+    // If another customer's checkboxes are selected, alert and return
+    if (otherCustomerSelected) {
+        alert("Don't select multiple customer");
+        event.target.checked = false; // Uncheck the checkbox
+        return;
+    }
+
+    // Proceed with selecting/deselecting the checkbox
+    if (checked) {
+        this.selectedBillIds_overdue[customerId].add(billId);
+        this.balamt += balance;
+    } else {
+        if (this.selectedBillIds_overdue[customerId].has(billId)) {
+            this.selectedBillIds_overdue[customerId].delete(billId);
+            this.balamt -= balance;
+        }
+    }
+
+    console.log("checkbox-overdue", this.selectedBillIds_overdue);
+    console.log("checkbox-overdue-balamt", this.balamt);
+}
+
+
+
+  isSelected_overdue(billId: number,customerId: number): boolean {
+    // console.log("selectedBillIds_overdue",this.selectedBillIds_overdue)
+    return this.selectedBillIds_overdue[customerId]?.has(billId) || false;
+  }
+  calculateSelectedTotals(customerId: number): number {
+    let total = 0;
+    if (this.selectedBillIds_overdue[customerId]) {
+      this.selectedBillIds_overdue[customerId].forEach(billId => {
+        const bill = this.overduePaymentsBillerWise
+          .find((cust: { title: { cus_id: number; }; }) => cust.title.cus_id === customerId)
+          ?.data.find((item: { billId: number; }) => item.billId === billId);
+        if (bill) {
+          total += parseFloat(bill.balanceAmount);
+        }
+      });
+    }
+   
+    return total;
   }
 }

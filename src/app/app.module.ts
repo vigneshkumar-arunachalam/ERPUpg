@@ -116,6 +116,7 @@ import { GstreportComponent } from './reports/gstreport/gstreport.component';
 
 
 
+
 // import { BsDropdownModule} from 'ngx-bootstrap/dropdown'; 
 
 @NgModule({
@@ -208,7 +209,8 @@ import { GstreportComponent } from './reports/gstreport/gstreport.component';
      InvoicereportsoldComponent,
      PrintpreviewComponent,
      PurchaseentryreportComponent,
-     GstreportComponent
+     GstreportComponent,
+     
      
     
   ],

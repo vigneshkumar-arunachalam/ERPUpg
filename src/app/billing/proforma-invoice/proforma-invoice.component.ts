@@ -79,7 +79,7 @@ export class ProformaInvoiceComponent implements OnInit {
   quotation_Emailtemplate_id: any;
   messageContent: any;
   mailContent: any;
-  FromEmailValue: any;
+  FromEmailValue: any='';
   Email_BillId: any;
   CBV_TemplateSelection: any;
   CBV_PDFLink: any;
@@ -134,7 +134,7 @@ export class ProformaInvoiceComponent implements OnInit {
   upd_searchName: any;
   upd_searchFlag: any;
   searchFlag: any;
-
+ 
   selected_billerId: any = [];
   getSearch: boolean = false;
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
@@ -271,6 +271,11 @@ export class ProformaInvoiceComponent implements OnInit {
   CBF_PaymentLink(event: any) {
     this.CBV_PaymentLink = event.target.checked;
   //  console.log(this.CBV_PaymentLink);
+
+  }
+  email_fromChange(event: any) {
+    this.FromEmailValue = event.target.value;
+  console.log(this.FromEmailValue);
 
   }
   searchBillerNameCHK(data: any, event: any) {
@@ -439,10 +444,13 @@ export class ProformaInvoiceComponent implements OnInit {
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
-        this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+        this.subjectValue =response.subject;
+        this.emailTo =response.company_email;
+        this.mailContent = tinymce.get('tinyID_89').setContent("<p>" + this.messageContent + "</p>");
+        
         this.emailForm.patchValue({
 
-          'tinyID': this.mailContent,
+          'tinyID_89': this.mailContent,
           'Subject_Content': response.subject,
 
 
@@ -450,13 +458,13 @@ export class ProformaInvoiceComponent implements OnInit {
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID': this.mailContent,
+            'tinyID_89': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID': this.mailContent,
+            'tinyID_89': this.mailContent,
           })
         }
 
@@ -484,26 +492,27 @@ export class ProformaInvoiceComponent implements OnInit {
    // console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/get_email_quotation_template";
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_email_invoice_template_pi";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_quotationTemplateDropdown_req.action = "get_email_quotation_template";
+    api_quotationTemplateDropdown_req.action = "get_email_invoice_template_pi";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID
+    api_quotationTemplateDropdown_req.quotation_id = this.EmailQuotationID;
+    api_quotationTemplateDropdown_req.billId = this.Email_BillId;
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
     //  console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyID_89').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
         this.emailForm.patchValue({
 
           'Subject_Content': response.crm_subject_name,
 
-          'tinyID': this.mailContent,
+          'tinyID_89': this.mailContent,
 
         });
 
@@ -647,10 +656,10 @@ export class ProformaInvoiceComponent implements OnInit {
     Swal.fire('Sending Email');
     Swal.showLoading();
 
-    this.FromEmailValue = $('#emailFrom').val();
-    this.emailTo = $('#emailto').val();
-    this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
+  //  this.FromEmailValue = $('#emailFrom').val();
+   // this.emailTo = $('#emailto').val();
+   // this.subjectValue = $('#subject').val();
+    this.msg_id = tinymce.get('tinyID_89').getContent();
     // console.log("msgid", this.msg_id)
     // console.log("email to", this.emailTo)
     // console.log("subject", this.subjectValue)
@@ -675,18 +684,20 @@ export class ProformaInvoiceComponent implements OnInit {
     api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_email_req.billId = this.Email_BillId;
 
-    api_email_req.fromEmailId = this.FromEmailValue;
+    
     if (this.FromEmailValue === null || this.FromEmailValue === '' || this.FromEmailValue === 'undefined' || this.FromEmailValue === undefined) {
 
       iziToast.warning({
         message: "Choose From Email Value",
         position: 'topRight'
       });
-
+      Swal.close();
       return false;
 
+    }else{
+      api_email_req.fromEmailId = this.FromEmailValue;
     }
-    api_email_req.toEmailId = this.emailTo;
+  
     if (this.emailTo === null) {
 
       iziToast.warning({
@@ -696,10 +707,12 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
+    }else{
+      api_email_req.toEmailId = this.emailTo;
     }
     // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
     api_email_req.pdf_state = pdf_state;
-    api_email_req.subject = this.subjectValue;
+   
     if (this.subjectValue === null || this.subjectValue === '' || this.subjectValue === 'undefined' || this.subjectValue === undefined) {
 
       iziToast.warning({
@@ -709,8 +722,10 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
+    }else{
+      api_email_req.subject = this.subjectValue;
     }
-    api_email_req.message = this.msg_id;
+
     if (this.msg_id === null) {
 
       iziToast.warning({
@@ -720,6 +735,8 @@ export class ProformaInvoiceComponent implements OnInit {
       Swal.close();
       return false;
 
+    }else{
+      api_email_req.message = this.msg_id;
     }
 
     api_req.element_data = api_email_req;

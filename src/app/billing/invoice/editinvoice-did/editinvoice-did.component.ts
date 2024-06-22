@@ -1556,10 +1556,7 @@ export class EditinvoiceDIDComponent implements OnInit {
             'invoiceNo': response.invoice_no,
             'CurrencyConversionRate': response.currencyValue,
           });
-  
-         
-  
-  
+
         }
         else {
   

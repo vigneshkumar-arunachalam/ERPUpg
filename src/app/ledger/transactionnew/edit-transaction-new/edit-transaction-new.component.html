@@ -18,7 +18,7 @@
                         <div class="col-lg-3"><label for="biller_name" class="col-form-label">Biller Name</label></div>
 
                         <div class="col-lg-9">
-                            <select id="biller_name" class="form-control" formControlName="billerName"
+                            <select id="biller_name9" class="form-control" formControlName="billerName"
                                 (change)="BillerChange($event)">
                                 <option [ngValue]="null" selected>Select Biller Name</option>
                                 <option *ngFor="let biller of billerDetails" value="{{biller.billerId}}">
@@ -248,7 +248,7 @@
                                                     class=" col-form-label">Currency</label></div>
 
                                             <div class="col-lg-4">
-                                                <select id="Currency" class="form-control"
+                                                <select id="Currency9" class="form-control"
                                                     (change)="getCurrencyConversion($event)"
                                                     (change)="getCurrencyValues($event)" formControlName="PE_Currency">
                                                     <option [ngValue]="null" selected>Select Currency</option>

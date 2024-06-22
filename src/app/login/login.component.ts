@@ -10,6 +10,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { interval, Subscription } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -38,7 +40,9 @@ export class LoginComponent implements OnInit {
   page_url: any;
   paramesh_ipAddress: any;
   qr_unique:any;
-  constructor(private router: Router, private route: ActivatedRoute, private serverService: ServerService, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
+  constructor(private router: Router, private route: ActivatedRoute, 
+    private serverService: ServerService, private bnIdle: BnNgIdleService, 
+    private spinner: NgxSpinnerService) {
     this.route.queryParams
       .subscribe(params => {
         console.log("params output value", params);
@@ -361,8 +365,9 @@ export class LoginComponent implements OnInit {
 
         if (this.userID != '') {
           Swal.close();
+       
           this.router.navigate(['/']);
-        }
+        }     
 
 
         Swal.close();
