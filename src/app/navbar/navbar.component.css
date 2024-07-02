@@ -424,3 +424,45 @@ border-radius: 50%;
   background: #04001f;
   color: #ffffff;
 }
+
+
+#paymentFollowersId .modal-content,
+#overdue_processPaymentId .modal-content,
+#paymentReminderMailId .modal-content,#overdue_processPaymentIdMultiple .modal-content,
+#payment_selectAllReminderMailId .modal-content
+{ 
+  background: #f7faff;
+  color:#01125f;
+  font-weight: 500;
+
+}
+#paymentFollowersId  .modal-dialog{
+  min-width: 50%;
+} 
+#overdue_processPaymentId  .modal-dialog,#payment_selectAllReminderMailId  .modal-dialog,
+#paymentReminderMailId  .modal-dialog,#overdue_processPaymentIdMultiple  .modal-dialog {
+  min-width: 70%;
+} 
+#paymentFollowersId .modal-content  .btn-primary,
+#overdue_processPaymentId .modal-content  .btn-primary,
+#paymentReminderMailId .modal-content  .btn-primary,
+#payment_selectAllReminderMailId .modal-content  .btn-primary,
+#overdue_processPaymentIdMultiple .modal-content  .btn-primary{
+  background: linear-gradient(to right, #262127, #54b7aa);
+  color: rgb(240 241 219);
+  box-shadow: none;
+}
+#overdue_processPaymentId  .form-control:disabled,
+.form-control[readonly] ,#overdue_processPaymentIdMultiple  .form-control:disabled,
+.form-control[readonly]{
+    background-color: #d9eee8 !important;
+    opacity: 0.6;
+    color: black!important;
+}
+.customer_details,.customer_details ul{display: flex;margin-bottom: 0;}
+.customer_details ul li img{width: 22px;cursor: pointer;margin-left: 15px;}
+.customer_details ul li img.show{display: block;}
+.customer_details ul li img.hide{display: none;}
+.customer_details ul li:hover .hide{display: block;}
+.customer_details ul li:hover .show{display: none;
+}

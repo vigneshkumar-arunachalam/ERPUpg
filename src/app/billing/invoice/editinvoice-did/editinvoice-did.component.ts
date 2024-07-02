@@ -224,6 +224,12 @@ export class EditinvoiceDIDComponent implements OnInit {
   ship_to_str_Final: any;
   customerName_Change: string;
   invoiceNumberValueEdit: any;
+  custAdr11: any;
+  custAdr21: any;
+  custAdr31: any;
+  ShipAdr11: any;
+  ShipAdr21: any;
+  ShipAdr31: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -1390,6 +1396,7 @@ export class EditinvoiceDIDComponent implements OnInit {
 
   Customer_selectDropdownData(customerId: any) {
   
+  
     this.spinner.show();
       this.customerName_Data = customerId;
       let api_req: any = new Object();
@@ -1444,7 +1451,8 @@ export class EditinvoiceDIDComponent implements OnInit {
           console.log("shipAddress3", this.shipAddress3_Final)
           console.log("ship to",  this.ship_to_str_Final)
           
-        
+          this.did_bill_code_section15 = response.customer_billcode_arr;
+          console.log("haripriyaaa",this.did_bill_code_section15);
  
       
           this.addDid_section1.patchValue({
@@ -1486,6 +1494,7 @@ export class EditinvoiceDIDComponent implements OnInit {
     }
 
     searchCustomer_selectDropdownData(data: any) {
+     
       this.spinner.show();
   
       // console.log("search data in dropdown", data)
@@ -1515,6 +1524,8 @@ export class EditinvoiceDIDComponent implements OnInit {
           this.ShipAdr1=response.customer_details.ship_customerAddress1;
           this.ShipAdr2=response.customer_details.ship_customerAddress2;
           this.ShipAdr3=response.customer_details.ship_city;
+          this.did_bill_code_section15 = response.customer_billcode_arr;
+         // console.log("bill code-did_bill_code_section15",this.did_bill_code_section15);
   
           if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
             this.shipAddress1_Final=this.custAdr1
@@ -1760,7 +1771,21 @@ export class EditinvoiceDIDComponent implements OnInit {
         this.send_cusName=response.billing_pararent_details[0].b_name;
         this.customerName_Data = response.billing_pararent_details[0].custId;
         this.customerName_Change = response.billing_pararent_details[0].b_name;
-        this.invoiceNumberValueEdit=response.billing_pararent_details[0].invoice_no
+        this.invoiceNumberValueEdit=response.billing_pararent_details[0].invoice_no;
+        let cus_address=response.billing_pararent_details[0].b_address;
+        let ship_address=response.billing_pararent_details[0].s_address;
+        let cus_address_break = cus_address.split('\n');
+       let ship_address_break = ship_address.split('\n');
+     
+
+
+      this.custAdr11=cus_address_break[0];
+      this.custAdr21=cus_address_break[1];
+      this.custAdr31=cus_address_break[2];
+      this.ShipAdr11=ship_address_break[0];
+      this.ShipAdr21=ship_address_break[1];
+      this.ShipAdr31=ship_address_break[2];
+      
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
         $('#sub_total_2').val(response.usage_subtotal.toFixed(2));
@@ -1773,13 +1798,13 @@ export class EditinvoiceDIDComponent implements OnInit {
           'BillTo': response.billing_pararent_details[0].b_name,
           'customer_name': response.billing_pararent_details[0].b_name,
           'customer_id_hd': response.billing_pararent_details[0].custId,
-          'address_1': response.billing_pararent_details[0].b_address,
-          'address_2': response.billing_pararent_details[0].b_address2,
-          'address_3': response.billing_pararent_details[0].b_address3,
+          'address_1': this.custAdr11,
+          'address_2': this.custAdr21,
+          'address_3': this.custAdr31,
           'Attn_1': response.billing_pararent_details[0].b_attn,
-          'ship_address_1': response.billing_pararent_details[0].s_address1,
-          'ship_address_2': response.billing_pararent_details[0].s_address2,
-          'shpi_address_3': response.billing_pararent_details[0].s_address3,
+          'shipTo_1':this.ShipAdr11,
+          'shipTo_2':this.ShipAdr21,
+          'shipTo_3':this.ShipAdr31,
           'Attn_2': response.billing_pararent_details[0].s_attn,
           'Ref': response.billing_pararent_details[0].ref,
           'invoiceNo': response.billing_pararent_details[0].invoice_no,

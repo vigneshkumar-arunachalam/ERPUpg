@@ -1401,6 +1401,7 @@ export class EditDidpiComponent implements OnInit {
   }
 
   Customer_selectDropdownData(customerId: any) {
+    
     this.spinner.show();
     this.customerName_Data = customerId;
     let api_req: any = new Object();
@@ -1420,7 +1421,8 @@ export class EditDidpiComponent implements OnInit {
 this.spinner.hide();
 
 
-
+this.did_bill_code_section15 = response.customer_billcode_arr;
+console.log(this.did_bill_code_section15);
 
         // this.did_bill_codexx = response.customer_billcode_arr;
         // this.did_bill_code_section1 = response.customer_billcode_arr;
@@ -1430,12 +1432,12 @@ this.spinner.hide();
           'address_1': response.customer_details[0].customerAddress1,
           'address_2': response.customer_details[0].customerAddress2,
           'address_3': response.customer_details[0].ship_customerAddress3,
-          'Attn_1': response.customer_details[0].companyName,
+          'Attn_1': response.customer_details[0].kind_Attention,
           'ship_to':  response.customer_details[0].ship_to,
           'shipTo_1':  response.customer_details[0].ship_customerAddress1,
           'shipTo_2':  response.customer_details[0].ship_customerAddress2,
           'shipTo_3':  response.customer_details[0].ship_customerAddress3,
-          'ship_attn': response.customer_details[0].companyName,
+          'ship_attn': response.customer_details[0].ship_attn,
           'cusInvoiceNo':response.customer_invoice_no,
         });
       }
@@ -1484,47 +1486,34 @@ this.spinner.hide();
         // this.did_bill_code_section1 = response.customer_billcode_arr;
 
        // this.FinalDiscount_DiscountType = response.billpardiscount[0].dis_type
-       var cus_add1=response.customer_details[0].customerAddress1;
-       var cus_add2=response.customer_details[0].customerAddress2;
-       var cus_add3=response.customer_details[0].city;
-       var cus_cusID=response.customer_details[0].customerId;
-       var cus_cusName=response.customer_details[0].customerName;
-       var cus_kindAttn= response.customer_details[0].kind_Attention;
-       var ship_shipTo= response.customer_details[0].ship_to;
-       var ship_add1= response.customer_details[0].ship_customerAddress1;
-       var ship_add2=response.customer_details[0].ship_customerAddress2;
-       var ship_add3= response.customer_details[0].ship_city;
-       var ship_shipAtn=response.customer_details[0].ship_attn;
+     
        var cusInvoiceNo= response.customer_invoice_no;    
-    
-       var terms= response.customer_details[0].terms_condition;
-       var Currency= response.customer_details[0].def_currency_id;
-       var PaymentVia= response.customer_details[0].def_payment_via;
-       var CurrencyConversionRate= response.currencyValue;
+       this.did_bill_code_section15 = response.customer_billcode_arr;
+       console.log(this.did_bill_code_section15);
 
         this.addDid_section1.patchValue({
       
-          'address_1': cus_add1,
-          'address_2': cus_add2,
-          'address_3':cus_add3,
-          "customer_id_hd": cus_cusID,
-          "b_name": cus_cusName,
-          "customer_name": cus_cusName,
+          'address_1': response.customer_details.customerAddress1,
+          'address_2': response.customer_details.customerAddress2,
+          'address_3': response.customer_details.customerAddress3,
+          "customer_id_hd": response.customer_details.customerId,
+          "b_name":response.customer_details.customerName,
+          "customer_name": response.customer_details.customerName,
         
        
-          "Attn_1": cus_kindAttn,
-          "ship_to": ship_shipTo,
-          "shipTo_1": ship_add1,
-          "shipTo_2": ship_add2,
-          "shipTo_3": ship_add3,
-          "Attn_2": ship_shipAtn,
+          "Attn_1": response.customer_details.kind_Attention,
+          "ship_to": response.customer_details.ship_to,
+          "shipTo_1":  response.customer_details.ship_customerAddress1,
+          "shipTo_2": response.customer_details.ship_customerAddress2,
+          "shipTo_3": response.customer_details.ship_customerAddress3,
+          "Attn_2": response.customer_details.ship_attn,
 
           'cusInvoiceNo': cusInvoiceNo,     
      
-          'terms': terms,
-          'Currency': Currency,
-          'PaymentVia': PaymentVia,
-          'CurrencyConversionRate':CurrencyConversionRate,
+          'terms': response.terms_condition,
+          'Currency': response.def_currency_id,
+          'PaymentVia': response.def_payment_via,
+          'CurrencyConversionRate':response.currencyValue,
 
 
         });

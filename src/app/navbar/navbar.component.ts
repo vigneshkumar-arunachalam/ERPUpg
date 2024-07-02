@@ -8,6 +8,7 @@ declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
@@ -101,19 +102,94 @@ export class NavbarComponent implements OnInit {
   dropdownVisible = false;
   overduePaymentForm: FormGroup;
   overduePaymentsBillerWise: any;
-  
+
   colorCodes: any;
   billerNameDisplay: any;
   //group checkbox
   selectedBillIds_overdue: { [customerId: number]: Set<number> } = {};
   balamt: number = 0;
-list: any;
-//checkbox
+  list: any;
+  //checkbox
+  //payment followers
+  paymentFollowers_List: any;
+  PaymentFoll_billid: any;
+  checkbox_ID_SingleParameter_invoiceShow_Value: any;
+  Checkbox_value_invoiceShow: any;
+  CheckBox_DynamicArrayList_invoiceShowPermission: any;
+  typeConvertionString_invoiceShowPermission: any;
+
+  //process payment
+  billID_processPayment: any;
+  invoiceDetails_payment: any;
+  paymentType_payment: any;
+  paymentDetails_payment: any;
+  paymentDetails_paymentLength: any;
+  paymentNotes: any;
+  PP_paymentMethod: any;
+  processPaymentForm: FormGroup;
+  isReadOnly: boolean = true;
+  PP_PaymentProcessID: any;
+  owingAmt: any;
+  datePipe: DatePipe = new DatePipe('en-US');
+  transformDate: any;
+  flg: boolean = false;
+  changePrepaidNoteValue: any;
+  creditShowFlag: boolean = false;
+  prepaidShowFlag: boolean = false;
+  creditResponse: any;
+  credit_note_id: any = 0;
+  prepaid_id: any = 0;
+  changeCreditNoteValue: any;
+  //multiple process payment
+  multipleprocessPaymentForm: FormGroup;
+  billBalances_overdue: any;
+  //email-landscape
+  emailForm: FormGroup;
+  Select_To_Type_radiobox_Value: any;
+  email_TemplateSelection: boolean = false;
+  Email_BillId: any;
+  email_template: any;
+  email_fromList: any;
+  email_crmTemplateList: any;
+  email_cc_userList: any;
+  email_groupMailList: any;
+  messageContent: any;
+  mailContent: any;
+  FromEmailValue: any;
+  SelectType_finance: any;
+  SelectType_company: any;
+  CBV_TemplateSelection: any;
+  CBV_PDFLink: any;
+  CBV_PaymentLink: any;
+  //email-checkbox
+  email_array_emailCC_Checkbox: any = [];
+  edit_array_emailCC_Checkbox: any = [];
+  groupSelect_emailCCId: any;
+  email_checkbox_value: any;
+  checkbox_value: any;
+  quotation_Emailtemplate_id: any;
+  multipleBillIDPaymentP: number[];
+  invoiceDetails_payment_m: any;
+  paymentType_payment_m: any;
+  paymentDetails_payment_m: any;
+  paymentDetails_paymentLength_m: any;
+  multipleBalAmount: any[];
+  multipleBillIDPaymentcust:any;
+  emailTo_overdue: any;
+  subjectValue_overdue: any;
+  msg_id_overdue: any;
+  Email_BillId_overdue: any;
+  types: any;
+  overdue_PaymentURL_result: any;
+  clickFlag: boolean=false;
+  overdue_selectedCustomerId: any;
+  selectAll_emailForm: FormGroup;
+  cbk_paymentLink_value: any;
+  cbk_demandLetterPDF_value: any;
 
 
-
-  constructor(private router: Router, private serverService: ServerService, 
-    private http: HttpClient, private fb: FormBuilder, 
+  constructor(private router: Router, private serverService: ServerService,
+    private http: HttpClient, private fb: FormBuilder,
     private spinner: NgxSpinnerService) {
     this.serverService.reload_profile.subscribe((res: any) => {
       // console.log(res);
@@ -173,6 +249,7 @@ list: any;
   keywordLicenseNumber = 'license_key';
   ngOnInit(): void {
     this.show = true;
+    this.Select_To_Type_radiobox_Value = 'finance';
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
     this.resellerList_CurrencyName = 'SGD';
     this.resellerList_ResellerDiscount = 0;
@@ -210,12 +287,71 @@ list: any;
     this.ContractDetailsForm = new FormGroup({
       'contractColor': new FormControl(null),
     });
+
+    this.processPaymentForm = new FormGroup({
+      'invoiceID': new FormControl(null),
+      'toal': new FormControl(null),
+      'biller': new FormControl(null),
+      'paid': new FormControl(null),
+      'customer': new FormControl(null),
+      'owing': new FormControl(null),
+      'amount': new FormControl(null),
+      'date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'paymenttype': new FormControl(null),
+      'paymenttype1': new FormControl(null),
+      'paymenttype2': new FormControl(null),
+      'note': new FormControl(null),
+      'paymentDetails': new FormControl(null),
+
+    });
+    this.multipleprocessPaymentForm = new FormGroup({
+      'm_invoiceID': new FormControl(null),
+      'm_toal': new FormControl(null),
+      'm_biller': new FormControl(null),
+      'm_paid': new FormControl(null),
+      'm_customer': new FormControl(null),
+      'm_owing': new FormControl(null),
+      'm_amount': new FormControl(null),
+      'm_date': new FormControl((new Date()).toISOString().substring(0, 10)),
+      'm_paymenttype': new FormControl(null),
+      'm_paymenttype1': new FormControl(null),
+      'm_paymenttype2': new FormControl(null),
+      'm_note': new FormControl(null),
+      'm_paymentDetails': new FormControl(null),
+
+    });
+    this.emailForm = new FormGroup({
+      'Subject_Content': new FormControl(null, Validators.required),
+      'email_to': new FormControl(null, Validators.required),
+      'radio_ApprovalBy': new FormControl(null, Validators.required),
+      'email_From': new FormControl(null, Validators.required),
+      'email_template': new FormControl(null, Validators.required),
+      'email_cc': new FormControl(null, Validators.required),
+      'formControlName="radio_ApprovalBy': new FormControl(null),
+      'cbk_paymentLink':new FormControl(null),
+      'cbk_demandLetterPDF':new FormControl(null),
+
+    });
+    this.selectAll_emailForm = new FormGroup({
+      'SA_email_From': new FormControl(null, Validators.required),
+      'SA_radio_ApprovalBy': new FormControl(null),
+      'SA_emailto': new FormControl(null, Validators.required),
+      'SA_email_cc': new FormControl(null),
+      'SA_Subject_Content':new FormControl(null, Validators.required),
+      'SA_email_template': new FormControl(null, Validators.required),
+      'SA_cbk_paymentLink':new FormControl(null),
+      'SA_cbk_demandLetterPDF':new FormControl(null),
+
+    });
     this.currencyConvertorForm = new FormGroup({
       'convertValue': new FormControl(null),
       'CurrencyFrom': new FormControl(null),
       'CurrencyTo': new FormControl(null),
       'outputValue': new FormControl(null),
     });
+    var date = new Date();
+    this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
+
     this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyList = data.currency_data;
@@ -247,8 +383,8 @@ list: any;
       }
       // console.log("this.getTaskList", this.getTaskList)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/soa/overduePaymentsBillerList?user_id='+ localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
-     
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/soa/overduePaymentsBillerList?user_id=' + localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
+
       if (data != '') {
         this.overduePaymentsBillerList = data.dataList;
       }
@@ -262,6 +398,40 @@ list: any;
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;
   }
+  PP_PaymentMethod(event: any) {
+    this.PP_paymentMethod = event.target.value;
+    if (event.target.value == 7 || event.target.value == 8) {
+      this.flg = true;
+    }
+    console.log("this.PP_paymentMethod", this.PP_paymentMethod)
+    this.PP_PaymentMethodDropdown();
+  }
+  handle_cbk_paymentLink(event:any){
+    this.cbk_paymentLink_value=event.target.checked
+  }
+  handle_cbk_demandLetterPDF(event:any){
+    this.cbk_demandLetterPDF_value=event.target.checked
+  }
+ 
+
+  handle_radioChange_email(event: any,id:any) {
+    console.log("event",event)
+    this.Select_To_Type_radiobox_Value = id;
+    console.log("this.Select_To_Type_radiobox_Value",this.Select_To_Type_radiobox_Value)
+    console.log(this.Select_To_Type_radiobox_Value);
+
+
+    if (this.Select_To_Type_radiobox_Value == 'finance') {
+      this.emailForm.patchValue({
+        'email_to': this.SelectType_finance,
+      })
+    } else {
+      this.emailForm.patchValue({
+        'email_to': this.SelectType_company,
+      })
+    }
+  }
+
   getConversionRate(fromCurrency: string, toCurrency: string): number {
     const rate = this.currencyData.find((data: { from_curr: string; to_curr: string; }) => data.from_curr === fromCurrency && data.to_curr === toCurrency);
     return rate ? rate.price : 1; // Return 1 if fromCurrency equals toCurrency
@@ -873,10 +1043,10 @@ list: any;
         this.colorCodes = response.colorCodes;
         this.billerNameDisplay = response.billerName;
         if (Array.isArray(this.overduePaymentsBillerWise)) {
-            console.log('this.overduePaymentsBillerWise is an array');
+          console.log('this.overduePaymentsBillerWise is an array');
         } else {
           this.spinner.hide();
-           console.log('this.overduePaymentsBillerWise is not an array');
+          console.log('this.overduePaymentsBillerWise is not an array');
         }
 
       } else {
@@ -957,6 +1127,61 @@ list: any;
   postalinvwithoutLogo_sendPDF(billerID: any) {
     var url = "https://laravelapi.erp1.cal4care.com/api/postalPrintWithoutLogo?billId=" + billerID;
     window.open(url, '_blank');
+  }
+  demandLetterPDF(billerID: any, customerID: any) {
+    var url = "https://laravelapi.erp1.cal4care.com/api/soa/generatePDF?billerId=" + billerID + "&customerId=" + customerID;
+    window.open(url, '_blank');
+  }
+  ConsolidatePDF(billId: any, customerID: any) {
+
+    var url = "https://laravelapi.erp1.cal4care.com/api/soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
+    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+  }
+  
+  landscapePDF(billId: any) {
+
+    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+  }
+  overduePaymentLink(billId: any, customerID: any) {
+    this.clickFlag=!this.clickFlag;
+    this.overdue_PaymentURL_result='';
+    this.overdue_selectedCustomerId = customerID;
+    let api_req: any = new Object();
+    let api_quickMail_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "soa/getPaymentLink";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quickMail_req.action = "getPaymentLink";
+    api_quickMail_req.user_id = this.user_ids;
+    api_quickMail_req.customerId = customerID;
+    api_quickMail_req.billerId = billId;
+    api_req.element_data = api_quickMail_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        this.overdue_PaymentURL_result=response.payment_url;
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
   }
   customerQuickMail() {
     let api_req: any = new Object();
@@ -1183,6 +1408,8 @@ list: any;
   handle_currencyFrom(event: any) {
     this.convetcurrencyFrom = event.target.value;
   }
+  
+
   handle_currencyTo(event: any) {
     this.convetcurrencyTo = event.target.value;
   }
@@ -1253,49 +1480,71 @@ list: any;
 
 
   }
+
   toggleSelection_overdue(event: any, billId: number, balAmount: string, customerId: number): void {
     const checked = event.target.checked;
     const balance = parseFloat(balAmount);
 
     // Ensure the Set exists for the customer
     if (!this.selectedBillIds_overdue[customerId]) {
-        this.selectedBillIds_overdue[customerId] = new Set<number>();
+      this.selectedBillIds_overdue[customerId] = new Set<number>();
+    }
+
+    // Ensure the balance map exists for the customer
+    if (!this.billBalances_overdue) {
+      this.billBalances_overdue = {};
     }
 
     // Check if any other customer's checkboxes are already selected
     let otherCustomerSelected = false;
     for (const custId in this.selectedBillIds_overdue) {
-        if (parseInt(custId) !== customerId && this.selectedBillIds_overdue[custId].size > 0) {
-            otherCustomerSelected = true;
-            break;
-        }
+      if (parseInt(custId) !== customerId && this.selectedBillIds_overdue[custId].size > 0) {
+        otherCustomerSelected = true;
+        break;
+      }
     }
 
     // If another customer's checkboxes are selected, alert and return
     if (otherCustomerSelected) {
-        alert("Don't select multiple customer");
-        event.target.checked = false; // Uncheck the checkbox
-        return;
+     // alert("Don't select multiple customer");
+      iziToast.warning({
+        message: "Don't select multiple customer",
+        position: 'topRight'
+      });
+      event.target.checked = false; // Uncheck the checkbox
+      return;
     }
 
     // Proceed with selecting/deselecting the checkbox
     if (checked) {
-        this.selectedBillIds_overdue[customerId].add(billId);
-        this.balamt += balance;
+      this.selectedBillIds_overdue[customerId].add(billId);
+      this.billBalances_overdue[billId] = balance;
+      this.balamt += balance;
     } else {
-        if (this.selectedBillIds_overdue[customerId].has(billId)) {
-            this.selectedBillIds_overdue[customerId].delete(billId);
-            this.balamt -= balance;
-        }
+      if (this.selectedBillIds_overdue[customerId].has(billId)) {
+        this.selectedBillIds_overdue[customerId].delete(billId);
+        delete this.billBalances_overdue[billId];
+        this.balamt -= balance;
+      }
     }
 
     console.log("checkbox-overdue", this.selectedBillIds_overdue);
     console.log("checkbox-overdue-balamt", this.balamt);
+    console.log("selected billIds for customer", customerId, Array.from(this.selectedBillIds_overdue[customerId]));
+    
+    this.multipleBillIDPaymentP = Array.from(this.selectedBillIds_overdue[customerId]);
+    this.multipleBillIDPaymentcust = customerId;
+
+    this.multipleBalAmount = this.multipleBillIDPaymentP.map(billId => this.billBalances_overdue[billId]);
+
+    console.log("this.multipleBillIDPaymentP", this.multipleBillIDPaymentP);
+    console.log("this.multipleBillIDPaymentcust", this.multipleBillIDPaymentcust);
+    console.log("this.multipleBalAmount", this.multipleBalAmount);
 }
 
 
 
-  isSelected_overdue(billId: number,customerId: number): boolean {
+  isSelected_overdue(billId: number, customerId: number): boolean {
     // console.log("selectedBillIds_overdue",this.selectedBillIds_overdue)
     return this.selectedBillIds_overdue[customerId]?.has(billId) || false;
   }
@@ -1311,7 +1560,966 @@ list: any;
         }
       });
     }
-   
+
     return total;
+  }
+
+
+  getPaymentFollowers(billid: any) {
+    this.spinner.show();
+    this.PaymentFoll_billid = billid;
+    let api_req: any = new Object();
+    let api_comCode_req: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/getPaymentFollowers";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_comCode_req.action = "getPaymentFollowers";
+    api_comCode_req.user_id = this.user_ids;
+    api_comCode_req.billId = this.PaymentFoll_billid;
+    api_req.element_data = api_comCode_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      // console.log(" response", response)
+      if (response != '') {
+        this.spinner.hide();
+        this.paymentFollowers_List = response.data.followers;
+        console.log(" this.paymentFollowers_List", this.paymentFollowers_List);
+        let idsArray = response.data.paymentFollowerIds.filter((id: string) => id !== '').map(Number);
+        this.CheckBox_DynamicArrayList_invoiceShowPermission = idsArray;
+        console.log("initial Select/Deselect list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+
+      } else {
+        this.spinner.hide();
+        Swal.close();
+        iziToast.warning({
+          message: "Payment Followers Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+
+  paymentFollowersUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_comCode_req: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/updatePaymentFollowers";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_comCode_req.action = "updatePaymentFollowers";
+    api_comCode_req.user_id = this.user_ids;
+    api_comCode_req.billId = this.PaymentFoll_billid;
+    api_comCode_req.follower_user_id = this.CheckBox_DynamicArrayList_invoiceShowPermission;
+    api_req.element_data = api_comCode_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      // console.log(" response", response)
+      if (response != '') {
+        this.spinner.hide();
+        $('#paymentFollowersId').modal('hide');
+        Swal.close();
+        iziToast.success({
+          message: "Payment Followers Updated Successfully",
+          position: 'topRight'
+        });
+
+      } else {
+        this.spinner.hide();
+        Swal.close();
+        iziToast.warning({
+          message: "Payment Followers Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+
+  paymentFollowersCheck(data: any, event: any) {
+    console.log("List - Checkbox ID", data);
+    this.checkbox_ID_SingleParameter_invoiceShow_Value = data;
+    this.Checkbox_value_invoiceShow = event.target.checked;
+    console.log(this.Checkbox_value_invoiceShow)
+    if (this.Checkbox_value_invoiceShow) {
+
+      this.CheckBox_DynamicArrayList_invoiceShowPermission.push(Number(data));
+      this.CheckBox_DynamicArrayList_invoiceShowPermission.join(',');
+      this.CheckBox_DynamicArrayList_invoiceShowPermission.sort();
+      console.log("Final check After checkbox selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission);
+
+    }
+    else {
+      const index: number = this.CheckBox_DynamicArrayList_invoiceShowPermission.indexOf(data);
+      console.log(index)
+      if (index == -1) {
+        this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
+      } else {
+        this.CheckBox_DynamicArrayList_invoiceShowPermission.splice(index, 1);
+      }
+      console.log("Final check After  de-selected list", this.CheckBox_DynamicArrayList_invoiceShowPermission)
+    }
+
+
+  }
+  clearPayProcess() {
+
+  }
+
+  processPaymentEdit(id: any) {
+    this.spinner.show();
+    this.billID_processPayment = id;
+    let api_req: any = new Object();
+    let api_processpaymentEdit: any = new Object();
+    api_req.moduleType = "proforma";
+    api_req.api_url = "invoice/invoice_payment_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_processpaymentEdit.action = "invoice_payment_details";
+
+    api_processpaymentEdit.billId = id;
+    api_processpaymentEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_processpaymentEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response != '') {
+        this.invoiceDetails_payment = response.invoice_details;
+        this.paymentType_payment = response.payment_type;
+        this.paymentDetails_payment = response.payment_details;
+        this.paymentDetails_paymentLength = response.payment_details.length;
+
+
+
+        if (response.payment_details != '') {
+
+          this.paymentNotes = response.payment_details[0].notes;
+          this.PP_PaymentProcessID = response.payment_details[0].processId;
+          this.owingAmt = response.owing_amount;
+
+        }
+
+
+
+        const date = new Date();
+        const transformDate1 = this.datePipe.transform(date, 'yyyy-MM-dd');
+        console.log("current date time", transformDate1)
+        this.processPaymentForm.patchValue({
+          'date': transformDate1,
+          'invoiceID': response.invoice_details[0].invoice_no,
+          'toal': response.invoice_details[0].netPayment,
+          'biller': response.invoice_details[0].billerName,
+          'paid': response.paid_amount,
+          'customer': response.invoice_details[0].customerName,
+          'owing': response.owing_amount,
+          'amount': response.owing_amount,
+
+
+        });
+
+        this.spinner.hide();
+
+        // this.getInvoice1({});
+      } else {
+
+        $('#processPaymentId_inv').modal("hide");
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  processPaymentEdit_multiple(id:any) {
+   // alert(this.multipleBillIDPaymentcust)
+    this.spinner.show();
+    // this.multipleprocessPaymentForm.reset();
+    if(this.multipleBillIDPaymentcust=='' ||this.multipleBillIDPaymentcust== undefined){
+      // alert("Don't Choose From Multiple Customer");
+      iziToast.warning({
+        message: "Customer atleast 1 customer",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else if(this.multipleBillIDPaymentcust != id){
+      iziToast.warning({
+       
+        message: "Don't Choose From Multiple Customer",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    }else{
+
+    }
+    let api_req: any = new Object();
+    let api_processpaymentEdit: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/invoice_payment_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_processpaymentEdit.action = "invoice_payment_details";
+
+     api_processpaymentEdit.billId =this.multipleBillIDPaymentP;
+    api_processpaymentEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_processpaymentEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $('#overdue_processPaymentIdMultiple').modal("show");
+      this.spinner.hide();
+      if (response != '') {
+        this.invoiceDetails_payment = response.invoice_details;
+        this.invoiceDetails_payment_m = response.invoice_details;
+        this.paymentType_payment_m = response.payment_type;
+        this.paymentDetails_payment_m = response.payment_details;
+        this.paymentDetails_paymentLength_m = response.payment_details.length;
+
+
+
+        if (response.payment_details != '') {
+
+          this.paymentNotes= response.payment_details[0].notes;
+          // this.PP_PaymentProcessID = response.payment_details[0].processId;
+          // this.owingAmt = response.owing_amount;
+
+        }
+
+        const date = new Date();
+        const transformDate1 = this.datePipe.transform(date, 'yyyy-MM-dd');
+        console.log("current date time", transformDate1)
+        this.multipleprocessPaymentForm.patchValue({
+          'm_date': transformDate1,
+          'm_invoiceID': response.invoice_details[0].cus_invoice_no,
+          'm_toal': response.invoice_details[0].netPayment,
+          'm_biller': response.invoice_details[0].billerName,
+          'm_paid': response.paidAmount,
+          'm_customer': response.invoice_details[0].customerName,
+          'm_owing': response.owing_amount,
+          'm_amount': response.owing_amount,
+
+
+        });
+
+        this.spinner.hide();
+
+        // this.getInvoice1({});
+      } else {
+
+        $('#overdue_processPaymentIdMultiple').modal("hide");
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  changeCreditNote(event: any) {
+    this.changeCreditNoteValue = event.target.value;
+    this.creditShowFlag = true;
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let credit_changeApi: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_credit_note_amount";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    credit_changeApi.action = "get_credit_note_amount";
+    credit_changeApi.user_id = localStorage.getItem('erp_c4c_user_id');
+    credit_changeApi.credit_note_id = this.changeCreditNoteValue;
+    api_req.element_data = credit_changeApi;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        var res = response;
+        var ow = $('#Owing').val();
+        if (parseFloat(ow) < parseFloat(res)) {
+          // console.log("this.owingAmt",ow);
+          // console.log("res",res);
+          // console.log("if this.owingAmt < res=amount value=this.owingAmt",ow)
+
+          this.processPaymentForm.patchValue({
+
+            'amount': ow,
+
+          });
+          // $('#amount').val(this.owingAmt);
+        } else {
+          // console.log("this.owingAmt",ow);
+          // console.log("res",res);
+          // console.log("if this.owingAmt >= res=amount value=res",res)
+          this.processPaymentForm.patchValue({
+
+            'amount': $('#Owing').val(),
+
+
+          });
+          // $('#amount').val(res);
+        }
+        this.spinner.hide();
+
+
+
+
+      } else {
+
+        this.spinner.hide();
+
+
+
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  paymentProcessEditShow(i: any) {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_payprocessEdit: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_edit_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_payprocessEdit.action = "get_edit_payment_process";
+    api_payprocessEdit.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_payprocessEdit.processId = i;
+
+    api_req.element_data = api_payprocessEdit;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response != '') {
+        this.spinner.hide();
+        // $('#note').val(response.payment_edit[0].notes);
+        // $('#Paid').val(response.payment_edit[0].paidAmount);
+        // $('#paytype').val(response.payment_edit[0].paymentMode);
+        // $('#dateee').val(response.payment_edit[0].processDate_show);
+
+        this.processPaymentForm.patchValue({
+          'date': response.payment_edit[0].processDate_show,
+          'amount': response.payment_edit[0].paidAmount,
+          'paymenttype': response.payment_edit[0].paymentMode,
+          'note': response.payment_edit[0].notes,
+        });
+
+      } else {
+        this.spinner.hide();
+
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  changePrepaidNote(event: any) {
+    this.changePrepaidNoteValue = event.target.value;
+    this.prepaidShowFlag = true;
+    this.spinner.show();
+    let api_req: any = new Object();
+    let prepaid_changeApi: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_prepaid_note_amount";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    prepaid_changeApi.action = "get_prepaid_note_amount";
+    prepaid_changeApi.user_id = localStorage.getItem('erp_c4c_user_id');
+    prepaid_changeApi.prepaid_id = this.changePrepaidNoteValue;
+    api_req.element_data = prepaid_changeApi;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        var res = response;
+        var ow = $('#Owing').val();
+        if (parseFloat(ow) < parseFloat(res)) {
+
+
+
+
+          this.processPaymentForm.patchValue({
+
+            'amount': ow,
+
+
+          });
+          // $('#amount').val(this.owingAmt);
+        } else {
+          // console.log("this.owingAmt",ow);
+          // console.log("res",res);
+          // console.log("if this.owingAmt >= res=amount value=res",res)
+          this.processPaymentForm.patchValue({
+
+            'amount': res,
+
+
+          });
+          // $('#amount').val(res);
+        }
+        this.spinner.hide();
+
+      } else {
+
+        this.spinner.hide();
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  PP_PaymentMethodDropdown() {
+
+    let api_req: any = new Object();
+    let api_pay_req: any = new Object();
+    api_req.moduleType = "customer";
+    api_req.api_url = "invoice/get_credit_note_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_pay_req.action = "get_credit_note_details";
+    api_pay_req.user_id = this.user_ids;
+    api_pay_req.billId = this.billID_processPayment;
+
+    api_pay_req.paytype_id = this.PP_paymentMethod;
+    api_req.element_data = api_pay_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+
+      if (response.status == true) {
+
+        this.creditResponse = response.credit_note;
+        if (response.credit_note.length > 0) {
+          this.credit_note_id = response.credit_note[0].credit_note_id;
+          this.prepaid_id = response.credit_note[0].prepaid_id;
+        }
+
+
+
+        console.log("this.creditResponse", this.creditResponse)
+        this.spinner.hide();
+      }
+      else {
+        var bal_amt = $('#Owing').val()
+        var vh = $('#amount').val();
+        // alert(vh)
+        var ff = this.processPaymentForm.value.amount;
+        // alert(ff)
+        // this.processPaymentForm.patchValue({
+        //   'amount': $('#Owing').val(),
+
+        // })
+        this.processPaymentForm.patchValue({
+          'amount': this.processPaymentForm.value.amount,
+
+        })
+
+
+      }
+    });
+
+
+
+
+  }
+  processPaymentUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_processpaymentUpdate: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_processpaymentUpdate.action = "update_payment_process";
+    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_processpaymentUpdate.bill_payment_process_id = this.billID_processPayment;
+    if (this.processPaymentForm.value.paymenttype === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Payment Type Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+      api_processpaymentUpdate.payment_method = this.processPaymentForm.value.paymenttype;
+    }
+    api_processpaymentUpdate.paymentDate = this.processPaymentForm.value.date;
+
+
+
+    if (this.processPaymentForm.value.amount === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Amount Value missing",
+        position: 'topRight'
+      });
+
+      return false;
+    }else{
+      api_processpaymentUpdate.amount = this.processPaymentForm.value.amount;
+    }
+
+    api_processpaymentUpdate.total_bal_amount = 0;
+ 
+    api_processpaymentUpdate.balAmt = this.processPaymentForm.value.owing;
+    api_processpaymentUpdate.note = this.processPaymentForm.value.note;
+    api_processpaymentUpdate.prepaid_id = this.prepaid_id;
+    api_processpaymentUpdate.credit_note_id = this.credit_note_id;
+
+    api_req.element_data = api_processpaymentUpdate;
+
+    $("#overdue_processPaymentId").attr("disabled", true);
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#overdue_processPaymentId").removeAttr("disabled");
+      if (response.status == true) {
+
+        this.spinner.hide();
+        $('#overdue_processPaymentId').modal("hide");
+        $('#amount').val('');
+        this.processPaymentForm.reset();
+        // this.getInvoice1({});
+        iziToast.success({
+          message: "Payment Process Updated Successfully",
+          position: 'topRight'
+
+        });
+        // this.getInvoice1({});
+
+      } else {
+        this.spinner.hide();
+        $('#overdue_processPaymentId').modal("hide");
+        iziToast.warning({
+          message: "Payment Process not displayed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  multipleprocessPaymentUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_processpaymentUpdate: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/update_payment_process";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_processpaymentUpdate.action = "update_payment_process";
+    api_processpaymentUpdate.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_processpaymentUpdate.bill_payment_process_id = this.multipleBillIDPaymentP;;
+    if (this.multipleprocessPaymentForm.value.m_paymenttype === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Payment Type Missing",
+        position: 'topRight'
+      });
+      return false;
+    } else {
+      api_processpaymentUpdate.payment_method = this.multipleprocessPaymentForm.value.m_paymenttype;
+    }
+    api_processpaymentUpdate.paymentDate = this.multipleprocessPaymentForm.value.m_date;
+
+
+
+    if (this.multipleBalAmount === null) {
+      this.spinner.hide();
+      iziToast.error({
+        message: "Amount Value missing",
+        position: 'topRight'
+      });
+
+      return false;
+    }else{
+      api_processpaymentUpdate.amount = this.multipleBalAmount;
+    }
+
+    api_processpaymentUpdate.total_bal_amount = 0;
+ 
+    api_processpaymentUpdate.balAmt = this.multipleprocessPaymentForm.value.m_owing;
+    api_processpaymentUpdate.note = this.multipleprocessPaymentForm.value.m_note;
+    // api_processpaymentUpdate.prepaid_id = this.prepaid_id;
+    // api_processpaymentUpdate.credit_note_id = this.credit_note_id;
+
+    api_req.element_data = api_processpaymentUpdate;
+
+    $("#overdue_processPaymentIdMultiple").attr("disabled", true);
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      $("#overdue_processPaymentIdMultiple").removeAttr("disabled");
+      if (response.status == true) {
+
+        this.spinner.hide();
+        $('#overdue_processPaymentIdMultiple').modal("hide");
+        $('#amount').val('');
+        this.processPaymentForm.reset();
+        // this.getInvoice1({});
+        iziToast.success({
+          message: "Payment Process Updated Successfully",
+          position: 'topRight'
+
+        });
+        // this.getInvoice1({});
+
+      } else {
+        this.spinner.hide();
+        $('#overdue_processPaymentIdMultiple').modal("hide");
+        iziToast.warning({
+          message: "Payment Process not displayed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+  }
+  getEmailDetails(id: any) {
+
+    this.email_TemplateSelection = false;
+    $('#temp').val('');
+
+    $('input:checkbox').removeAttr('checked');
+    this.emailForm.reset();
+    this.spinner.show();
+    this.Email_BillId_overdue = id;
+    let api_req: any = new Object();
+    let api_emailDetails: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/send_invoice_details";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_emailDetails.action = "send_invoice_details";
+    if (id != undefined) {
+      api_emailDetails.billId = id;
+    } else {
+      api_emailDetails.billId = '';
+    }
+
+
+    api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_req.element_data = api_emailDetails;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.email_fromList = response.email_from_arr;
+        this.email_groupMailList = response.group_mail;
+        this.email_crmTemplateList = response.crm_template_list;
+        this.email_cc_userList = response.cc_user;
+        this.messageContent = response.invoice_content;
+        this.SelectType_finance = response.finance_email;
+        this.SelectType_company = response.company_email;
+        this.types = response.type;
+      this.setDefaultRadio();
+        this.mailContent = tinymce.get('tinyID_overdue_in').setContent("<p>" + this.messageContent + "</p>");
+        this.emailForm.patchValue({
+
+          'tinyID_overdue_in': this.mailContent,
+          'Subject_Content': response.subject,
+          'cbk_paymentLink': response.payment_link,
+          'cbk_demandLetterPDF': response.demend_letter_pdf,
+        })
+        if (this.Select_To_Type_radiobox_Value == 'finance') {
+          this.emailForm.patchValue({
+            'email_to': response.finance_email,
+            'tinyID_overdue_in': this.mailContent,
+          })
+        }
+        else {
+          this.emailForm.patchValue({
+            'email_to': response.company_email,
+            'tinyID_overdue_in': this.mailContent,
+          })
+        }
+
+
+
+        //this.getInvoice1({});
+      } else {
+
+        $('#processPaymentId_inv').modal("hide");
+        iziToast.warning({
+          message: "Payment Process Details not displayed. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  setDefaultRadio() {
+    const defaultType = this.types.find((type: { check_status: string; }) => type.check_status === 'Yes');
+    if (defaultType) {
+      this.emailForm.patchValue({ radio_ApprovalBy: defaultType.type_id.toString() });
+    }
+  }
+  EditCHK_emailCC(data: any, event: any) {
+    console.log("List - CheckBox ID", data);
+    this.groupSelect_emailCCId = data;
+    this.checkbox_value = event.target.checked;
+    console.log(this.checkbox_value)
+    if (this.checkbox_value) {
+
+      this.edit_array_emailCC_Checkbox.push(data);
+      this.edit_array_emailCC_Checkbox.join(',');
+      console.log("Final Checkbox After checkbox selected list", this.edit_array_emailCC_Checkbox);
+    }
+    else {
+      const index = this.edit_array_emailCC_Checkbox.findIndex((el: any) => el === data)
+      if (index > -1) {
+        this.edit_array_emailCC_Checkbox.splice(index, 1);
+      }
+      console.log("Final Checkbox After Deselected selected list", this.edit_array_emailCC_Checkbox)
+
+    }
+  }
+  templateContentEmailDropdown(event: any) {
+    this.quotation_Emailtemplate_id = event.target.value;
+    console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
+    let api_req: any = new Object();
+    let api_quotationTemplateDropdown_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_email_invoice_template";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
+    api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_quotationTemplateDropdown_req.billId = this.Email_BillId;
+    api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
+    api_req.element_data = api_quotationTemplateDropdown_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      console.log("quotation-template Dropdown response", response)
+      this.messageContent = response.crm_template_content;
+      this.mailContent = tinymce.get('tinyID_overdue_in').setContent("<p>" + this.messageContent + "</p>");
+      $('#subject').val(response.crm_subject_name);
+      $('#tinyID_overdue_in').val(this.mailContent);
+      if (response != '') {
+        
+        this.emailForm.patchValue({
+
+          // 'Subject_Content': response.crm_subject_name,
+
+          // 'tinyID1_inv': this.mailContent,
+
+        });
+      }
+      else {
+        this.emailForm.patchValue({
+
+          'email_template': '',
+
+        });
+      }
+    });
+  }
+
+  sendMail_overdue() {
+    Swal.fire('Sending Email');
+    Swal.showLoading();
+
+    this.FromEmailValue = this.emailForm.value.email_From;
+
+    //  this.emailTo = $('#emailto').val();
+    this.emailTo_overdue = this.emailForm.value.email_to;
+    // this.subjectValue = $('#subject').val();
+    this.subjectValue_overdue = this.emailForm.value.Subject_Content;
+    this.msg_id_overdue = tinymce.get('tinyID_overdue_in').getContent();
+    console.log("msgid", this.msg_id_overdue)
+    console.log("email to", this.emailTo_overdue)
+    console.log("subject", this.subjectValue_overdue)
+    let api_req: any = new Object();
+    let api_email_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "soa/paymentRemainderMail";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_email_req.action = "paymentRemainderMail";
+    api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_email_req.ccEmailId = this.edit_array_emailCC_Checkbox;
+    api_email_req.billId = this.Email_BillId_overdue;
+    api_email_req.payment_link = this.cbk_paymentLink_value;
+    api_email_req.demend_letter_pdf = this.cbk_demandLetterPDF_value;
+
+    api_email_req.fromEmailId = this.FromEmailValue;
+    if (this.emailForm.value.email_From === null || this.emailForm.value.email_From === '' || this.emailForm.value.email_From === 'undefined' || this.emailForm.value.email_From === undefined) {
+
+      iziToast.warning({
+        message: "Choose From Email Value",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }
+    api_email_req.toEmailId = this.emailTo_overdue;
+    if (this.emailTo_overdue === null) {
+
+      iziToast.warning({
+        message: "Choose To Email Value",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }
+    // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
+    // api_email_req.pdf_state = pdf_state;
+    api_email_req.pdf_state = 0;
+    api_email_req.subject = this.subjectValue_overdue;
+    this.emailForm.value.Subject_Content
+
+    if (this.emailForm.value.Subject_Content === null || this.emailForm.value.Subject_Content === '' || this.emailForm.value.Subject_Content === 'undefined' || this.emailForm.value.Subject_Content === undefined) {
+      iziToast.warning({
+        message: "Choose Subject",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+    }
+    api_email_req.message = this.msg_id_overdue;
+    if (this.msg_id_overdue === null) {
+
+      iziToast.warning({
+        message: "Choose Message",
+        position: 'topRight'
+      });
+      Swal.close();
+      return false;
+
+    }
+
+    api_req.element_data = api_email_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      Swal.close();
+      console.log("response status", response.status);
+      if (response.status == true) {
+        $('#subject').val('');
+        $('#emailto').val('');
+        $("#TextEditorId").modal("hide");
+        tinymce.activeEditor.setContent("");
+
+        Swal.close();
+        iziToast.success({
+          message: "Email Notification Sent Successfully",
+          position: 'topRight'
+        });
+
+        $("#paymentReminderMailId").modal("hide");
+       // this.getInvoice1({});
+
+      }
+      else {
+        $('#subject').val('');
+        $('#emailto').val('');
+        $("#TextEditorId").modal("hide");
+        $("#paymentReminderMailId").modal("hide");
+        tinymce.activeEditor.setContent("");
+        Swal.close();
+      //  this.getInvoice1({});
+        iziToast.success({
+          message: "Email Notification Sent !!!!",
+          position: 'topRight'
+        });
+       // this.getInvoice1({});
+
+      }
+      Swal.close();
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+  }
+  PIEmailClear(){
+
   }
 }

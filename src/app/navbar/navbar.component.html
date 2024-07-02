@@ -1,636 +1,610 @@
 <header class="header-top">
-    <nav class="navbar navbar-light">
-        <div class="navbar-left">
-            <a href="#" class="sidebar-toggle">
-                <img class="svg" src="assets/img/svg/menus.png" style="width: 100%;" alt="img"></a>
-            <!-- <a class="navbar-brand" href="#"><img class="dark" src="assets/img/logo_dark.png" alt="svg"><img class="light" src="assets/img/logo_white.png" alt="img"></a> -->
-            <!-- <a class="navbar-brand" href="#"><img class="dark logo-size" src="assets/img/cal4care-logo-dark.png"
+  <nav class="navbar navbar-light">
+    <div class="navbar-left">
+      <a href="#" class="sidebar-toggle">
+        <img class="svg" src="assets/img/svg/menus.png" style="width: 100%;" alt="img"></a>
+      <!-- <a class="navbar-brand" href="#"><img class="dark" src="assets/img/logo_dark.png" alt="svg"><img class="light" src="assets/img/logo_white.png" alt="img"></a> -->
+      <!-- <a class="navbar-brand" href="#"><img class="dark logo-size" src="assets/img/cal4care-logo-dark.png"
                 alt="svg"><img class="light logo-size" src="assets/img/cal4care-logo-white.png" alt="img"></a> -->
 
 
 
-            <div class="top-menu">
+      <div class="top-menu">
 
 
-            </div>
-        </div>
-        <!-- ends: navbar-left -->
-        <!------------------TaskList-Task List-Starts  ---------------------->
-        <div class="modal fade" data-backdrop="false" id="TaskList" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered ActionId" role="document" style="max-width: 1000px;">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <!-- <span class="col-12 modal-title text-center"
+      </div>
+    </div>
+    <!-- ends: navbar-left -->
+    <!------------------TaskList-Task List-Starts  ---------------------->
+    <div class="modal fade" data-backdrop="false" id="TaskList" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered ActionId" role="document" style="max-width: 1000px;">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <span class="col-12 modal-title text-center"
                             style="margin-bottom: 0;font-size: 30px;font-weight: 500;color: #070096;">Task List
                         </span> -->
-                        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitlei" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+            <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitlei" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
                         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
                         background: linear-gradient(to right, #262127, #54b7aa);">
-                            Task List </h2>
-                        <button type="button" class="Close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+              Task List </h2>
+            <button type="button" class="Close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
 
-                        <div class="userDatatable global-shadow border-0 bg-white w-100">
-                            <div class="table-responsive">
-                                <table class="table mb-0 table-borderless">
-                                    <thead>
-                                        <tr class="userDatatable-header">
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
 
-                                            <th>
-                                                <span class="userDatatable-title">#</span>
-                                            </th>
+                      <th>
+                        <span class="userDatatable-title">#</span>
+                      </th>
 
-                                            <th>
-                                                <span class="userDatatable-title">Name</span>
-                                            </th>
-                                            <th>
-                                                <span class="userDatatable-title">Link</span>
-                                            </th>
+                      <th>
+                        <span class="userDatatable-title">Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Link</span>
+                      </th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-                                        <tr *ngFor="let list of getTaskList;let i = index" style="font-weight: 600;">
-                                            <td> {{list.id}}</td>
-                                            <td>{{list.name}}</td>
-                                            <td> <a href="{{list.link}}" target="_blank" alt="text"
-                                                    style="color:#6f0000">{{list.link}}</a>
-                                            </td>
+                    <tr *ngFor="let list of getTaskList;let i = index" style="font-weight: 600;">
+                      <td> {{list.id}}</td>
+                      <td>{{list.name}}</td>
+                      <td> <a href="{{list.link}}" target="_blank" alt="text" style="color:#6f0000">{{list.link}}</a>
+                      </td>
 
-                                        </tr>
+                    </tr>
 
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-dark" style="line-height: 10px;height: 40px;width: 80px;"
-                            data-dismiss="modal">
-                            Cancel
-                        </button>
-
-                    </div>
-                </div>
-
+                  </tbody>
+                </table>
+              </div>
             </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" style="line-height: 10px;height: 40px;width: 80px;"
+              data-dismiss="modal">
+              Cancel
+            </button>
+
+          </div>
         </div>
-        <!-------------------TaskList-Task List--Ends  ------------------------->
-        <!------------------ActionIdxx2-Global Search-Starts  ---------------------->
-        <div class="modal fade" data-backdrop="false" id="ActionIdxx2" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content addcustomernewallcss">
-                    <div class="modal-header " style="background-color: #cae0e0;">
-                        <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
-                            style="font-weight: 500;font-size:x-large; color: #861F41 !important;">Global Search
-                        </h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+      </div>
+    </div>
+    <!-------------------TaskList-Task List--Ends  ------------------------->
+    <!------------------ActionIdxx2-Global Search-Starts  ---------------------->
+    <div class="modal fade" data-backdrop="false" id="ActionIdxx2" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-                    </div>
-                    <div class="modal-body mousepoint mt-0">
-                        <div *ngIf="(show==false)">
-                            <label for="companyCode" class="col-lg-12 col-form-label"
-                                style="font-weight: 420;font-size:large; color: #C04000;padding-left:0;">Contract
-                                Details</label>
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content addcustomernewallcss">
+          <div class="modal-header " style="background-color: #cae0e0;">
+            <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
+              style="font-weight: 500;font-size:x-large; color: #861F41 !important;">Global Search
+            </h1>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
 
-                            <div class="userDatatable global-shadow border-0 bg-white w-100">
-                                <div class="table-responsive">
-                                    <table class="table mb-0 table-borderless">
-                                        <thead>
-                                            <tr class="userDatatable-header">
-                                                <th>Contract Name</th>
-                                                <th>Contract Desc</th>
-                                                <th>Remarks</th>
-                                                <th>Contract Period</th>
-                                                <th>Classfy</th>
+          </div>
+          <div class="modal-body mousepoint mt-0">
+            <div *ngIf="(show==false)">
+              <label for="companyCode" class="col-lg-12 col-form-label"
+                style="font-weight: 420;font-size:large; color: #C04000;padding-left:0;">Contract
+                Details</label>
 
-                                            </tr>
-                                        </thead>
-                                        <tbody *ngIf="this.contract_filter==true">
+              <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                  <table class="table mb-0 table-borderless">
+                    <thead>
+                      <tr class="userDatatable-header">
+                        <th>Contract Name</th>
+                        <th>Contract Desc</th>
+                        <th>Remarks</th>
+                        <th>Contract Period</th>
+                        <th>Classfy</th>
 
-                                            <tr *ngFor="let item of customerContractlist;let i=index">
-                                                <td>{{item.contract_name}}</td>
-                                                <td>{{item.contract_description}}</td>
-                                                <td>{{item.remark_desc}}</td>
-                                                <td>{{item.from_dt}}{{" "}}to {{" "}}{{item.to_dt}} </td>
-                                                <td>
-                                                    {{item.classification_name}} <br>
-                                                    <input type="color" value="{{item.color}}"
-                                                        [disabled]="isColorInputDisabled"
-                                                        (click)="toggleColorInput()" />
-                                                    <!-- <input type="color" formControlName="contractColor"
+                      </tr>
+                    </thead>
+                    <tbody *ngIf="this.contract_filter==true">
+
+                      <tr *ngFor="let item of customerContractlist;let i=index">
+                        <td>{{item.contract_name}}</td>
+                        <td>{{item.contract_description}}</td>
+                        <td>{{item.remark_desc}}</td>
+                        <td>{{item.from_dt}}{{" "}}to {{" "}}{{item.to_dt}} </td>
+                        <td>
+                          {{item.classification_name}} <br>
+                          <input type="color" value="{{item.color}}" [disabled]="isColorInputDisabled"
+                            (click)="toggleColorInput()" />
+                          <!-- <input type="color" formControlName="contractColor"
                                                     [disabled]="isColorInputDisabled"
                                                     (click)="toggleColorInput()" /> -->
 
-                                                </td>
-                                                <!-- <td>  <input type="color" />{{'#'+item.color}} </td> -->
+                        </td>
+                        <!-- <td>  <input type="color" />{{'#'+item.color}} </td> -->
 
-                                            </tr>
-
-
-
-                                        </tbody>
-                                        <tbody *ngIf="this.contract_filter==false">
-
-                                            <tr>
-                                                <td colspan="4">Contract Not Available</td>
-                                            </tr>
-
-                                        </tbody>
-
-                                    </table>
-                                </div>
-                            </div>
-                            <label for="companyRese" class="col-lg-12 col-form-label"
-                                style="font-weight: 420;font-size: large; color: #C04000;padding-left:0;">Reseller
-                                Information</label>
-
-                            <div class="userDatatable global-shadow border-0 bg-white w-100">
-                                <div class="table-responsive">
-                                    <table class="table mb-0 table-borderless">
-                                        <thead>
-                                            <tr class="userDatatable-header">
-                                                <th>Reseller Attributes</th>
-                                                <th>Reseller Values</th>
+                      </tr>
 
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Reseller Id</td>
-                                                <td>{{ this.resellerList_ResellerId}}</td>
 
-                                            </tr>
-                                            <tr>
-                                                <td>Currency</td>
-                                                <td>{{ this.resellerList_CurrencyName}}</td>
+                    </tbody>
+                    <tbody *ngIf="this.contract_filter==false">
 
-                                            </tr>
-                                            <tr>
-                                                <td>Discount</td>
-                                                <td>{{ this.resellerList_ResellerDiscount}}</td>
+                      <tr>
+                        <td colspan="4">Contract Not Available</td>
+                      </tr>
 
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-lg-12" style="padding-left:0">
-                                <label for="sendCustCredentials" class="col-lg-3 col-form-label"
-                                    style="font-weight: 420;color: blue; padding-left:0;">Send Customer
-                                    Credentials</label>
-                                <a href="#" id="sendQuickMailLink_3928">
+                    </tbody>
 
-                                    <i class="fa fa-fw fa-envelope tooltips" data-trigger="hover"
-                                        data-original-title="Quick Mail" title="Quick Mail"
-                                        style="font-size:17px; color:#C04000; width:18px;padding-left:-16;"
-                                        (click)="QuickMail_Customer()"></i>
-                                </a>
-                                <!-- <i class="fa-solid fa-envelope fa-beat-fade " style="color: #5a52eb;"></i> -->
-                            </div>
+                  </table>
+                </div>
+              </div>
+              <label for="companyRese" class="col-lg-12 col-form-label"
+                style="font-weight: 420;font-size: large; color: #C04000;padding-left:0;">Reseller
+                Information</label>
 
-                        </div>
-                        <form [formGroup]="GlobalSearch">
-                            <div class="row mt-2">
-                                <div class="col-lg-6">
-                                    <div class="col-lg-12" style="padding-left:0">
-                                        <label class="col-lg-3 col-form-label"
-                                            style="font-weight: 420;color: blue; padding-left:0;"> Select Pages<span
-                                                class="mandatoryField">*</span></label>
-                                        <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                                            (change)=" CHKAll_SelectPageSelectAll($event)">{{" "}}All Page
-                                        <div class="CheckboxScroll">
+              <div class="userDatatable global-shadow border-0 bg-white w-100">
+                <div class="table-responsive">
+                  <table class="table mb-0 table-borderless">
+                    <thead>
+                      <tr class="userDatatable-header">
+                        <th>Reseller Attributes</th>
+                        <th>Reseller Values</th>
 
-                                            <div *ngFor="let display of SelectPageList;let i =index;"
-                                                style="padding-left: 30px;">
-                                                <input type="checkbox" style="margin-right:5px ;"
-                                                    id="check-grp-SelectPage-{{i}}" [value]="display.menu_name"
-                                                    checked="{{display.checked=='true' ? 'checked':''}}"
-                                                    (change)="addSelectPageCHK(display.menu_name,$event)">{{display.menu_name}}
 
-                                            </div>
-                                        </div>
-                                    </div>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Reseller Id</td>
+                        <td>{{ this.resellerList_ResellerId}}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Currency</td>
+                        <td>{{ this.resellerList_CurrencyName}}</td>
+
+                      </tr>
+                      <tr>
+                        <td>Discount</td>
+                        <td>{{ this.resellerList_ResellerDiscount}}</td>
+
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-lg-12" style="padding-left:0">
+                <label for="sendCustCredentials" class="col-lg-3 col-form-label"
+                  style="font-weight: 420;color: blue; padding-left:0;">Send Customer
+                  Credentials</label>
+                <a href="#" id="sendQuickMailLink_3928">
+
+                  <i class="fa fa-fw fa-envelope tooltips" data-trigger="hover" data-original-title="Quick Mail"
+                    title="Quick Mail" style="font-size:17px; color:#C04000; width:18px;padding-left:-16;"
+                    (click)="QuickMail_Customer()"></i>
+                </a>
+                <!-- <i class="fa-solid fa-envelope fa-beat-fade " style="color: #5a52eb;"></i> -->
+              </div>
+
+            </div>
+            <form [formGroup]="GlobalSearch">
+              <div class="row mt-2">
+                <div class="col-lg-6">
+                  <div class="col-lg-12" style="padding-left:0">
+                    <label class="col-lg-3 col-form-label" style="font-weight: 420;color: blue; padding-left:0;"> Select
+                      Pages<span class="mandatoryField">*</span></label>
+                    <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
+                      (change)=" CHKAll_SelectPageSelectAll($event)">{{" "}}All Page
+                    <div class="CheckboxScroll">
+
+                      <div *ngFor="let display of SelectPageList;let i =index;" style="padding-left: 30px;">
+                        <input type="checkbox" style="margin-right:5px ;" id="check-grp-SelectPage-{{i}}"
+                          [value]="display.menu_name" checked="{{display.checked=='true' ? 'checked':''}}"
+                          (change)="addSelectPageCHK(display.menu_name,$event)">{{display.menu_name}}
+
+                      </div>
+                    </div>
+                  </div>
 
 
 
 
 
-                                </div>
+                </div>
 
-                                <div class="col-lg-6 ml-0">
-
-
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="ng-autocomplete">
-                                                <label for="GS_CustomerCode" class="col-lg-12 col-form-label"
-                                                    style="font-weight: 420;color: blue;">Customer
-                                                    Code<span class="mandatoryField">
-                                                        *</span></label>
-                                                <ng-autocomplete [data]="searchResult_code"
-                                                    [searchKeyword]="keywordCompanyCode"
-                                                    formControlName="GS_CustomerCode"
-                                                    (selected)='selected_CustomerCode($event)'
-                                                    (inputChanged)='inpChanged_CodeData($event)'
-                                                    (inputFocused)='onFocused_CustomerCode($event)'
-                                                    [itemTemplate]="itemTemplateCustomerCode"
-                                                    [notFoundTemplate]="notFoundTemplate">
-                                                </ng-autocomplete>
-
-                                                <ng-template #itemTemplateCustomerCode let-item>
-                                                    <a [innerHTML]="item.customerCode"></a>
-                                                </ng-template>
-
-                                                <ng-template #notFoundTemplate let-notFound>
-                                                    <div [innerHTML]="notFound"></div>
-                                                </ng-template>
-
-                                            </div>
-                                            <div *ngIf="GlobalSearch.controls['GS_CustomerCode'].invalid && (GlobalSearch.controls['GS_CustomerCode'].dirty || GlobalSearch.controls['GS_CustomerCode'].touched)"
-                                                class="alert alert-danger alertdangerCustomCSS mt-2">
-                                                Company Name is Required
-                                            </div>
-
-                                        </div>
-                                    </div>
+                <div class="col-lg-6 ml-0">
 
 
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="ng-autocomplete">
-                                                <label for="GS_CustomerName" class="col-lg-12 col-form-label"
-                                                    style="font-weight: 420;color: blue; ">Company
-                                                    Name<span class="mandatoryField">
-                                                        *</span></label>
-                                                <ng-autocomplete [data]="searchResult"
-                                                    [searchKeyword]="keywordCompanyName"
-                                                    formControlName="GS_CustomerName"
-                                                    (selected)='selectEventCustomer($event)'
-                                                    (inputChanged)='searchCustomerData($event)'
-                                                    (inputFocused)='onFocusedCustomer($event)'
-                                                    [itemTemplate]="itemTemplateCustomer"
-                                                    [notFoundTemplate]="notFoundTemplate">
-                                                </ng-autocomplete>
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_CustomerCode" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue;">Customer
+                          Code<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult_code" [searchKeyword]="keywordCompanyCode"
+                          formControlName="GS_CustomerCode" (selected)='selected_CustomerCode($event)'
+                          (inputChanged)='inpChanged_CodeData($event)' (inputFocused)='onFocused_CustomerCode($event)'
+                          [itemTemplate]="itemTemplateCustomerCode" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
 
-                                                <ng-template #itemTemplateCustomer let-item>
-                                                    <a [innerHTML]="item.customerName"></a>
-                                                </ng-template>
+                        <ng-template #itemTemplateCustomerCode let-item>
+                          <a [innerHTML]="item.customerCode"></a>
+                        </ng-template>
 
-                                                <ng-template #notFoundTemplate let-notFound>
-                                                    <div [innerHTML]="notFound"></div>
-                                                </ng-template>
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
 
-                                            </div>
-                                            <div *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
-                                                class="alert alert-danger alertdangerCustomCSS mt-2">
-                                                Company Name is Required
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="ng-autocomplete">
-                                                <label for="GS_DIDNumber" class="col-lg-12 col-form-label"
-                                                    style="font-weight: 420;color: blue; ">DID
-                                                    Number<span class="mandatoryField">
-                                                        *</span></label>
-                                                <ng-autocomplete [data]="searchResult_DIDNumber"
-                                                    [searchKeyword]="keywordDIDNumber" formControlName="GS_DIDNumber"
-                                                    (selected)='selected_DIDNumber($event)'
-                                                    (inputChanged)='inpChanged_DIDNumber($event)'
-                                                    (inputFocused)='onFocused_DIDNumber($event)'
-                                                    [itemTemplate]="itemTemplatedidnumbers"
-                                                    [notFoundTemplate]="notFoundTemplate">
-                                                </ng-autocomplete>
-
-                                                <ng-template #itemTemplatedidnumbers let-item>
-                                                    <a [innerHTML]="item.did_numbers"></a>
-                                                </ng-template>
-
-                                                <ng-template #notFoundTemplate let-notFound>
-                                                    <div [innerHTML]="notFound"></div>
-                                                </ng-template>
-
-                                            </div>
-                                            <div *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
-                                                class="alert alert-danger alertdangerCustomCSS mt-2">
-                                                Company Name is Required
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
-
-                                    <div class="col-lg-12">
-                                        <div class="form-group row">
-                                            <div class="ng-autocomplete">
-                                                <label for="GS_LicenseNumber" class="col-lg-12 col-form-label"
-                                                    style="font-weight: 420;color: blue; ">License
-                                                    Number<span class="mandatoryField">
-                                                        *</span></label>
-                                                <ng-autocomplete [data]="searchResult_LicenseNumber"
-                                                    [searchKeyword]="keywordLicenseNumber"
-                                                    formControlName="GS_LicenseNumber"
-                                                    (selected)='selected_LicenseNumber($event)'
-                                                    (inputChanged)='inpChanged_LicenseNumber($event)'
-                                                    (inputFocused)='onFocused_LicenseNumber($event)'
-                                                    [itemTemplate]="itemTemplateLicensenumbers"
-                                                    [notFoundTemplate]="notFoundTemplate">
-                                                </ng-autocomplete>
-
-                                                <ng-template #itemTemplateLicensenumbers let-item>
-                                                    <a [innerHTML]="item.license_key"></a>
-                                                </ng-template>
-
-                                                <ng-template #notFoundTemplate let-notFound>
-                                                    <div [innerHTML]="notFound"></div>
-                                                </ng-template>
-
-                                            </div>
-                                            <div *ngIf="GlobalSearch.controls['GS_LicenseNumber'].invalid && (GlobalSearch.controls['GS_LicenseNumber'].dirty || GlobalSearch.controls['GS_LicenseNumber'].touched)"
-                                                class="alert alert-danger alertdangerCustomCSS mt-2">
-                                                License Number is Required
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-
-                            </div>
-
-
-                        </form>
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_CustomerCode'].invalid && (GlobalSearch.controls['GS_CustomerCode'].dirty || GlobalSearch.controls['GS_CustomerCode'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        Company Name is Required
+                      </div>
 
                     </div>
+                  </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" (click)="searchGlobalList();">
-                            Search
-                        </button>
-                        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="gotoRoot()">
-                            Cancel
-                        </button>
+
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_CustomerName" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue; ">Company
+                          Name<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                          formControlName="GS_CustomerName" (selected)='selectEventCustomer($event)'
+                          (inputChanged)='searchCustomerData($event)' (inputFocused)='onFocusedCustomer($event)'
+                          [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateCustomer let-item>
+                          <a [innerHTML]="item.customerName"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_CustomerName'].invalid && (GlobalSearch.controls['GS_CustomerName'].dirty || GlobalSearch.controls['GS_CustomerName'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        Company Name is Required
+                      </div>
 
                     </div>
-                    <div *ngIf="this.dashboard==true">
-                        <!-- <app-ProformaInvoiceComponent></app-ProformaInvoiceComponent>
+                  </div>
+                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_DIDNumber" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue; ">DID
+                          Number<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult_DIDNumber" [searchKeyword]="keywordDIDNumber"
+                          formControlName="GS_DIDNumber" (selected)='selected_DIDNumber($event)'
+                          (inputChanged)='inpChanged_DIDNumber($event)' (inputFocused)='onFocused_DIDNumber($event)'
+                          [itemTemplate]="itemTemplatedidnumbers" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplatedidnumbers let-item>
+                          <a [innerHTML]="item.did_numbers"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_DIDNumber'].invalid && (GlobalSearch.controls['GS_DIDNumber'].dirty || GlobalSearch.controls['GS_DIDNumber'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        Company Name is Required
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <label class="col-lg-12 col-form-label" style="text-align: center;">-- OR --</label>
+
+                  <div class="col-lg-12">
+                    <div class="form-group row">
+                      <div class="ng-autocomplete">
+                        <label for="GS_LicenseNumber" class="col-lg-12 col-form-label"
+                          style="font-weight: 420;color: blue; ">License
+                          Number<span class="mandatoryField">
+                            *</span></label>
+                        <ng-autocomplete [data]="searchResult_LicenseNumber" [searchKeyword]="keywordLicenseNumber"
+                          formControlName="GS_LicenseNumber" (selected)='selected_LicenseNumber($event)'
+                          (inputChanged)='inpChanged_LicenseNumber($event)'
+                          (inputFocused)='onFocused_LicenseNumber($event)' [itemTemplate]="itemTemplateLicensenumbers"
+                          [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateLicensenumbers let-item>
+                          <a [innerHTML]="item.license_key"></a>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                          <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                      </div>
+                      <div
+                        *ngIf="GlobalSearch.controls['GS_LicenseNumber'].invalid && (GlobalSearch.controls['GS_LicenseNumber'].dirty || GlobalSearch.controls['GS_LicenseNumber'].touched)"
+                        class="alert alert-danger alertdangerCustomCSS mt-2">
+                        License Number is Required
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+
+
+            </form>
+
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="searchGlobalList();">
+              Search
+            </button>
+            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="gotoRoot()">
+              Cancel
+            </button>
+
+          </div>
+          <div *ngIf="this.dashboard==true">
+            <!-- <app-ProformaInvoiceComponent></app-ProformaInvoiceComponent>
                         <app-InvoiceComponent></app-InvoiceComponent> -->
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-        <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
-        <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Start  ------------------------->
-        <div class="modal fade" data-backdrop="false" id="ActionIdOutput" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="max-width: 100%;min-height:100% ;">
+      </div>
+    </div>
+    <!-------------------ActionIdxx2-Global Search--Ends  ------------------------->
+    <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Start  ------------------------->
+    <div class="modal fade" data-backdrop="false" id="ActionIdOutput" tabindex="-1" role="dialog"
+      aria-labelledby="exampleModalCenterTitle" aria-hidden="true" style="max-width: 100%;min-height:100% ;">
 
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-                <div class="modal-content addcustomernewallcss">
-                    <div class="modal-header">
-                        <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle">Global
-                            Search
-                        </h1>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                            (click)="closeModal()">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content addcustomernewallcss">
+          <div class="modal-header">
+            <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle">Global
+              Search
+            </h1>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
 
-                    </div>
-                    <div class="modal-body">
-
-
-                        <div class="accordion" id="accordionExample">
+          </div>
+          <div class="modal-body">
 
 
-                            <div class="card" *ngIf="(this.PI_UI_Show!=0)">
-                                <div class="card-header" id="headingOne">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left" type="button"
-                                            data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            <span>Proforma Invoice</span>
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </button>
-                                    </h2>
-                                </div>
+            <div class="accordion" id="accordionExample">
 
-                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                    data-parent="#accordionExample">
-                                    <div class="card-body" *ngIf="(this.PI_UI_Show!=0)">
-                                        <app-dup-proforma-invoice></app-dup-proforma-invoice>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card" *ngIf="(this.Invoice_UI_Show!=0)">
-                                <div class="card-header" id="headingTwo">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                            data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false"
-                                            aria-controls="collapseTwo">
-                                            <span>Invoice</span>
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </button>
-                                    </h2>
-                                </div>
-                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                    data-parent="#accordionExample">
-                                    <div class="card-body">
 
-                                        <app-dup-invoice></app-dup-invoice>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card" *ngIf="(this.Quot_UI_Show!=0)">
-                                <div class="card-header" id="headingThree">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                            data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
-                                            aria-controls="collapseThree">
-                                            <span>Quotation</span>
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </button>
-                                    </h2>
-                                </div>
-                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                    data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <app-dup-quotation-new></app-dup-quotation-new>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card" *ngIf="(this.Cust_UI_Show!=0)">
-                                <div class="card-header" id="headingFour">
-                                    <h2 class="mb-0">
-                                        <button class="btn btn-link btn-block text-left collapsed" type="button"
-                                            data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
-                                            aria-controls="collapseFour">
-                                            <span>Customer</span>
-                                            <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                                            <i class="fa fa-chevron-up" aria-hidden="true"></i>
-                                        </button>
-                                    </h2>
-                                </div>
-                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
-                                    data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <app-dup-customer-new-all></app-dup-customer-new-all>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
-                            Cancel
-                        </button>
-
-                    </div>
+              <div class="card" *ngIf="(this.PI_UI_Show!=0)">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                      data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      <span>Proforma Invoice</span>
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                      <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </button>
+                  </h2>
                 </div>
+
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                  data-parent="#accordionExample">
+                  <div class="card-body" *ngIf="(this.PI_UI_Show!=0)">
+                    <app-dup-proforma-invoice></app-dup-proforma-invoice>
+                  </div>
+                </div>
+              </div>
+              <div class="card" *ngIf="(this.Invoice_UI_Show!=0)">
+                <div class="card-header" id="headingTwo">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      <span>Invoice</span>
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                      <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+
+                    <app-dup-invoice></app-dup-invoice>
+                  </div>
+                </div>
+              </div>
+              <div class="card" *ngIf="(this.Quot_UI_Show!=0)">
+                <div class="card-header" id="headingThree">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      <span>Quotation</span>
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                      <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <app-dup-quotation-new></app-dup-quotation-new>
+                  </div>
+                </div>
+              </div>
+              <div class="card" *ngIf="(this.Cust_UI_Show!=0)">
+                <div class="card-header" id="headingFour">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                      data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                      <span>Customer</span>
+                      <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                      <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+                  <div class="card-body">
+                    <app-dup-customer-new-all></app-dup-customer-new-all>
+                  </div>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div class="modal-footer">
+
+            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="closeModal()">
+              Cancel
+            </button>
+
+          </div>
         </div>
-        <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Ends  ------------------------->
+      </div>
+    </div>
+    <!-------------------ActionIdxxModalAll-Global Search Output Accordin--Ends  ------------------------->
 
 
-        <!-- <div style="color:white">
+    <!-- <div style="color:white">
             Login Time: {{ currentTime }}
           </div> -->
 
-        <!-- <div style="color:white">
+    <!-- <div style="color:white">
             Elapsed Time: {{ currentReverseTime }}
           </div> -->
-        <!-- <div style="color: white;" *ngIf="remainingTime> 0">
+    <!-- <div style="color: white;" *ngIf="remainingTime> 0">
             <p>Time remaining: {{ formatTime(remainingTime) }}</p>
           </div> -->
-        <!-- <div style="color: white;" *ngIf="remainingTime> 0">
+    <!-- <div style="color: white;" *ngIf="remainingTime> 0">
             <p>Time remaining: {{ formatTime1(remainingTime) }}</p>
           </div> -->
-        <!-- <div  style="color: white;" *ngIf="remainingTime <= 0">
+    <!-- <div  style="color: white;" *ngIf="remainingTime <= 0">
             <p>Timer expired!</p>
           </div> -->
-        <!-- <app-timecounter >hello</app-timecounter> -->
+    <!-- <app-timecounter >hello</app-timecounter> -->
 
 
-        <div class="navbar-right">
+    <div class="navbar-right">
 
-            <ul class="navbar-right__menu">
+      <ul class="navbar-right__menu">
 
-                <!-- ends: nav-message -->
+        <!-- ends: nav-message -->
 
-                <!-- ends: .nav-notification -->
+        <!-- ends: .nav-notification -->
 
-                <!-- ends: .nav-settings -->
+        <!-- ends: .nav-settings -->
 
-                <!-- ends: .nav-support -->
+        <!-- ends: .nav-support -->
 
-                <!-- ends: .nav-flag-select -->
-                <li>
+        <!-- ends: .nav-flag-select -->
+        <li>
 
-                    <a href="javascript:;" class="navbar-brand" (click)="PaymentTransactionReports()"
-                        *ngIf="(this.payment_transaction_reports_Permission=='1')">
+          <a href="javascript:;" class="navbar-brand" (click)="PaymentTransactionReports()"
+            *ngIf="(this.payment_transaction_reports_Permission=='1')">
 
-                        <img class="svg" src="assets/img/icon2/paymentp.png" style="height: 30px;width:30px" alt="img"
-                            title="Payment Transaction Reports"></a>
-                </li>
-                <li>
+            <img class="svg" src="assets/img/icon2/paymentp.png" style="height: 30px;width:30px" alt="img"
+              title="Payment Transaction Reports"></a>
+        </li>
+        <li>
 
-                    <div style="position: relative;">
-                        <a href="javascript:;" class="navbar-brand" (click)="toggleDropdown()">
-                            <img class="svg" src="assets/img/icon2/warning.png" title="Overdue Payment"
-                                style="height: 30px;width:30px" alt="img">
-                        </a>
+          <div style="position: relative;">
+            <a href="javascript:;" class="navbar-brand" (click)="toggleDropdown()">
+              <img class="svg" src="assets/img/icon2/warning.png" title="Overdue Payment"
+                style="height: 30px;width:30px" alt="img">
+            </a>
 
-                        <div class="dropdown-menu" [class.show]="dropdownVisible">
-                            <div *ngFor="let list of overduePaymentsBillerList">
+            <div class="dropdown-menu" [class.show]="dropdownVisible">
+              <div *ngFor="let list of overduePaymentsBillerList">
 
-                                <span class="dropdown-list" (click)="overduePayments(list.billerId)" data-toggle="modal"
-                                    data-target="#overduePaymentFormId">
-                                    {{list.name}}<b style="padding: 0px 15px;">-</b>
-                                    <span class="badge badge-round badge-danger badge-lg">{{list.count}}
-                                    </span>
-                                </span>
+                <span class="dropdown-list" (click)="overduePayments(list.billerId)" data-toggle="modal"
+                  data-target="#overduePaymentFormId">
+                  {{list.name}}<b style="padding: 0px 15px;">-</b>
+                  <span class="badge badge-round badge-danger badge-lg">{{list.count}}
+                  </span>
+                </span>
 
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          </div>
 
 
-                </li>
-                <li>
-                    <a href="javascript:;" class="navbar-brand">
+        </li>
+        <li>
+          <a href="javascript:;" class="navbar-brand">
 
-                        <img class="svg" src="assets/img/icon2/exchange.png" style="height: 30px;width:30px" alt="img"
-                            title="Currency Conversion" data-toggle="modal" data-target="#currencyConvertorFormId"></a>
+            <img class="svg" src="assets/img/icon2/exchange.png" style="height: 30px;width:30px" alt="img"
+              title="Currency Conversion" data-toggle="modal" data-target="#currencyConvertorFormId"></a>
 
-                    <a href="javascript:;" class="navbar-brand">
+          <a href="javascript:;" class="navbar-brand">
 
-                        <img class="svg" src="assets/img/icon2/volatility.png" style="height: 30px;width:30px" alt="img"
-                            title="Current Currency Rate" data-toggle="modal"
-                            data-target="#currencyConvertorUIFormId"></a>
-                    <a href="javascript:;" class="navbar-brand">
+            <img class="svg" src="assets/img/icon2/volatility.png" style="height: 30px;width:30px" alt="img"
+              title="Current Currency Rate" data-toggle="modal" data-target="#currencyConvertorUIFormId"></a>
+          <a href="javascript:;" class="navbar-brand">
 
-                        <img class="svg" src="assets/img/icon2/postbox.png" style="height: 30px;width:30px" alt="img"
-                            title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a>
+            <img class="svg" src="assets/img/icon2/postbox.png" style="height: 30px;width:30px" alt="img"
+              title="Send to Post" data-toggle="modal" data-target="#sendtoPostFormId"></a>
 
-                    <a href="javascript:;" class="navbar-brand" (click)="PageList()"
-                        *ngIf="(this.GlobalSearchPermission==1148)">
+          <a href="javascript:;" class="navbar-brand" (click)="PageList()" *ngIf="(this.GlobalSearchPermission==1148)">
 
-                        <img class="svg" src="assets/img/icon2/Global_Searc.png" style="height: 30px;width:30px"
-                            (click)="showFunction()" alt="img" title="Global Search" data-toggle="modal"
-                            data-target="#ActionIdxx2"></a>
-                    <a href="javascript:;" class="navbar-brand">
-                        <img class="svg" src="assets/img/icon2/to-do-list.png" title="Task List"
-                            style="height: 30px;width:30px" alt="img" data-toggle="modal" data-target="#TaskList">
-                    </a>
-                </li>
+            <img class="svg" src="assets/img/icon2/Global_Searc.png" style="height: 30px;width:30px"
+              (click)="showFunction()" alt="img" title="Global Search" data-toggle="modal"
+              data-target="#ActionIdxx2"></a>
+          <a href="javascript:;" class="navbar-brand">
+            <img class="svg" src="assets/img/icon2/to-do-list.png" title="Task List" style="height: 30px;width:30px"
+              alt="img" data-toggle="modal" data-target="#TaskList">
+          </a>
+        </li>
 
-                <li class="nav-author">
+        <li class="nav-author">
 
-                    <!-- <a href="https://dev.cal4care.com/erp/quotationNew.php?ac=QuotationNew" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle"></a> -->
-                    <a href="https://dev.cal4care.com/erp/content.php" class="nav-item-toggle"><button
-                            class="btn btn-light">Old ERP Link</button></a>
-                </li>
-                <li class="nav-author">
-                    <div class="dropdown-custom">
-                        <a href="javascript:;" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt=""
-                                class="rounded-circle"></a>
-                        <div class="dropdown-wrapper">
-                            <div class="nav-author__info">
-                                <div class="author-img">
-                                    <img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle">
-                                </div>
+          <!-- <a href="https://dev.cal4care.com/erp/quotationNew.php?ac=QuotationNew" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle"></a> -->
+          <a href="https://dev.cal4care.com/erp/content.php" class="nav-item-toggle"><button class="btn btn-light">Old
+              ERP Link</button></a>
+        </li>
+        <li class="nav-author">
+          <div class="dropdown-custom">
+            <a href="javascript:;" class="nav-item-toggle"><img src="{{this.user_ProfileImage}}" alt=""
+                class="rounded-circle"></a>
+            <div class="dropdown-wrapper">
+              <div class="nav-author__info">
+                <div class="author-img">
+                  <img src="{{this.user_ProfileImage}}" alt="" class="rounded-circle">
+                </div>
 
-                                <div>
-                                    <h6>{{this.userName}}</h6>
-                                    <!-- <span>Designation</span> -->
-                                </div>
-                            </div>
-                            <div class="nav-author__options">
-                                <!-- <ul>
+                <div>
+                  <h6>{{this.userName}}</h6>
+                  <!-- <span>Designation</span> -->
+                </div>
+              </div>
+              <div class="nav-author__options">
+                <!-- <ul>
                                 <li>
                                     <a href="#">
                                         <span data-feather="user"></span> Profile</a>
@@ -643,310 +617,305 @@
                              
                                
                             </ul> -->
-                                <a href="#" class="nav-author__signout" (click)="logout()">
-                                    <!-- <span data-feather="log-out"></span> Sign Out</a> -->
-                                    <span></span> Sign Out</a>
-                            </div>
-                        </div>
-                        <!-- ends: .dropdown-wrapper -->
-                    </div>
-                </li>
-                <!-- ends: .nav-author -->
-            </ul>
-            <!-- ends: .navbar-right__menu -->
-            <div class="navbar-right__mobileAction d-md-none">
-                <a href="#" class="btn-search">
-                    <span data-feather="search"></span>
-                    <span data-feather="x"></span></a>
-                <a href="#" class="btn-author-action">
-                    <span data-feather="more-vertical"></span></a>
+                <a href="#" class="nav-author__signout" (click)="logout()">
+                  <!-- <span data-feather="log-out"></span> Sign Out</a> -->
+                  <span></span> Sign Out</a>
+              </div>
             </div>
-        </div>
+            <!-- ends: .dropdown-wrapper -->
+          </div>
+        </li>
+        <!-- ends: .nav-author -->
+      </ul>
+      <!-- ends: .navbar-right__menu -->
+      <div class="navbar-right__mobileAction d-md-none">
+        <a href="#" class="btn-search">
+          <span data-feather="search"></span>
+          <span data-feather="x"></span></a>
+        <a href="#" class="btn-author-action">
+          <span data-feather="more-vertical"></span></a>
+      </div>
+    </div>
 
-        <!-- ends: .navbar-right -->
-    </nav>
+    <!-- ends: .navbar-right -->
+  </nav>
 </header>
 
 
 <!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
 <div class="modal fade" id="currencyConvertorFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
-                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
-                    Currency Conversion</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    (click)="clearCurrencyConvert()">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+          Currency Conversion</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearCurrencyConvert()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <form [formGroup]="currencyConvertorForm">
+
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12 ">
+
+
+
+                <!-- Second Row -->
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label for="CurrencyFrom">Currency From</label>
+                    <select name="CurrencyFrom" class="form-control"
+                      (change)="handle_currencyFrom($event);currencyConvert()" formControlName="CurrencyFrom">
+                      <option [ngValue]="null" selected>Select Currency</option>
+                      <option *ngFor="let from of getCurrencyList" [value]="from.currency">{{
+                        from.currency }}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label for="CurrencyTo">Currency To</label>
+                    <select name="CurrencyTo" class="form-control"
+                      (change)="handle_currencyTo($event);currencyConvert()" formControlName="CurrencyTo">
+                      <option [ngValue]="null" selected>Select Currency</option>
+                      <option *ngFor="let from of getCurrencyList" [value]="from.currency">{{
+                        from.currency }}</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- First Row -->
+                <div class="form-group row">
+                  <div class="col-lg-6">
+                    <label for="convertValue">Value to Convert</label>
+                    <input type="text" class="form-control" (change)="handle_convertValue($event);currencyConvert()"
+                      (keyup)="handle_convertValue($event);currencyConvert()"
+                      placeholder="Enter the value to get converted from one currency to another currency"
+                      formControlName="convertValue" />
+                  </div>
+
+                  <div class="col-lg-6">
+                    <label for="convertedAmount" style="background-color: #edf1c5;">Converted
+                      Amount</label>
+                    <input type="text" class="form-control" placeholder="Converted Amount"
+                      style="background:linear-gradient(to right, #e1bfeb, #f2e5ef);color:#C04000 ;font-size:600 ;"
+                      formControlName="outputValue" />
+                  </div>
+                </div>
+
+              </div>
             </div>
-            <div class="modal-body">
-                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
-                <form [formGroup]="currencyConvertorForm">
+          </div>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12 ">
-
-
-
-                                <!-- Second Row -->
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label for="CurrencyFrom">Currency From</label>
-                                        <select name="CurrencyFrom" class="form-control"
-                                            (change)="handle_currencyFrom($event);currencyConvert()"
-                                            formControlName="CurrencyFrom">
-                                            <option [ngValue]="null" selected>Select Currency</option>
-                                            <option *ngFor="let from of getCurrencyList" [value]="from.currency">{{
-                                                from.currency }}</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <label for="CurrencyTo">Currency To</label>
-                                        <select name="CurrencyTo" class="form-control"
-                                            (change)="handle_currencyTo($event);currencyConvert()"
-                                            formControlName="CurrencyTo">
-                                            <option [ngValue]="null" selected>Select Currency</option>
-                                            <option *ngFor="let from of getCurrencyList" [value]="from.currency">{{
-                                                from.currency }}</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <!-- First Row -->
-                                <div class="form-group row">
-                                    <div class="col-lg-6">
-                                        <label for="convertValue">Value to Convert</label>
-                                        <input type="text" class="form-control"
-                                            (change)="handle_convertValue($event);currencyConvert()"
-                                            (keyup)="handle_convertValue($event);currencyConvert()"
-                                            placeholder="Enter the value to get converted from one currency to another currency"
-                                            formControlName="convertValue" />
-                                    </div>
-
-                                    <div class="col-lg-6">
-                                        <label for="convertedAmount" style="background-color: #edf1c5;">Converted
-                                            Amount</label>
-                                        <input type="text" class="form-control" placeholder="Converted Amount"
-                                            style="background:linear-gradient(to right, #e1bfeb, #f2e5ef);color:#C04000 ;font-size:600 ;"
-                                            formControlName="outputValue" />
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </form>
+        </form>
 
 
 
 
-            </div>
-            <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-primary" (click)="currencyConvert()">
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-primary" (click)="currencyConvert()">
                     Convert
                 </button> -->
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
-                    Cancel
-                </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
 
 
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
 </div>
 <!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
 
 <!-- -----------------------Modal-Add Purchase Entry Begin-----formGroup--------------------------- -->
 <div class="modal fade" id="currencyConvertorUIFormId" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
-                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #262127, #54b7aa);">
-                    Current Currency Rate </h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
-                <div class="userDatatable global-shadow border-0 bg-white w-100">
-                    <div class="table-responsive">
-                        <table class="table mb-0 table-borderless">
+          Current Currency Rate </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <div class="userDatatable global-shadow border-0 bg-white w-100">
+          <div class="table-responsive">
+            <table class="table mb-0 table-borderless">
 
-                            <thead>
-                                <tr class="userDatatable-header">
-                                    <th class="userDatatable-title">Currency</th>
-                                    <th *ngFor="let toCurrency of currencies" class="userDatatable-title">{{ toCurrency
-                                        }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let fromCurrency of currencies" class="userDatatable-header">
-                                    <td class="userDatatable-title"
-                                        style=" background: linear-gradient(to right, #200122, #6f0000);color: #fff;">{{
-                                        fromCurrency }}</td>
-                                    <td *ngFor="let toCurrency of currencies" style="text-align: left;"
-                                        class="table-warning">
-                                        <ng-container *ngIf="fromCurrency !== toCurrency">
-                                            {{ getConversionRate(fromCurrency, toCurrency) }}
-                                        </ng-container>
-                                        <ng-container *ngIf="fromCurrency === toCurrency">
-                                            1.0000
-                                        </ng-container>
-                                    </td>
-                                </tr>
-                            </tbody>
+              <thead>
+                <tr class="userDatatable-header">
+                  <th class="userDatatable-title">Currency</th>
+                  <th *ngFor="let toCurrency of currencies" class="userDatatable-title">{{ toCurrency
+                    }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let fromCurrency of currencies" class="userDatatable-header">
+                  <td class="userDatatable-title"
+                    style=" background: linear-gradient(to right, #200122, #6f0000);color: #fff;">{{
+                    fromCurrency }}</td>
+                  <td *ngFor="let toCurrency of currencies" style="text-align: left;" class="table-warning">
+                    <ng-container *ngIf="fromCurrency !== toCurrency">
+                      {{ getConversionRate(fromCurrency, toCurrency) }}
+                    </ng-container>
+                    <ng-container *ngIf="fromCurrency === toCurrency">
+                      1.0000
+                    </ng-container>
+                  </td>
+                </tr>
+              </tbody>
 
-                        </table>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
-                    Cancel
-                </button>
-
-
-            </div>
+            </table>
+          </div>
         </div>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
     </div>
+  </div>
 </div>
 <!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
 
 <!-- -----------------------Modal-Add Purchase Entry Begin-------------------------------- -->
 <div class="modal fade" id="sendtoPostFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
-                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #9d0f2f, #98a833);">
-                    Send to Post Invoice List</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+          Send to Post Invoice List</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
 
 
-                <!-- <form []="sendtoPostForm"> -->
+        <!-- <form []="sendtoPostForm"> -->
 
 
-                <div class="userDatatable global-shadow border-0 bg-white w-100">
-                    <div class="table-responsive ">
-                        <table class="table mb-0 table-borderless" *ngIf="postalInvoiceDetails">
-                            <thead>
-                                <tr class="userDatatable-header">
+        <div class="userDatatable global-shadow border-0 bg-white w-100">
+          <div class="table-responsive ">
+            <table class="table mb-0 table-borderless" *ngIf="postalInvoiceDetails">
+              <thead>
+                <tr class="userDatatable-header">
 
 
-                                    <th>
-                                        <span class="userDatatable-title">S.No</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Action</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Inv No</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Cus Inv No</span>
-                                    </th>
+                  <th>
+                    <span class="userDatatable-title">S.No</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Action</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Inv No</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Cus Inv No</span>
+                  </th>
 
-                                    <th>
-                                        <span class="userDatatable-title">Invoice Date</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Customer</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Total</span>
-                                    </th>
+                  <th>
+                    <span class="userDatatable-title">Invoice Date</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Customer</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Total</span>
+                  </th>
 
-                                    <th>
-                                        <span class="userDatatable-title">Send Type</span>
-                                    </th>
-                                    <th>
-                                        <span class="userDatatable-title">Generated By</span>
-                                    </th>
+                  <th>
+                    <span class="userDatatable-title">Send Type</span>
+                  </th>
+                  <th>
+                    <span class="userDatatable-title">Generated By</span>
+                  </th>
 
-                                    <th>
-                                        <span class="userDatatable-title">Currency</span>
-                                    </th>
+                  <th>
+                    <span class="userDatatable-title">Currency</span>
+                  </th>
 
-                                </tr>
-                            </thead>
-                            <tbody *ngFor="let list1 of postalInvoiceDetails?.postal_data ; let i = 'index+1'">
-                                <!-- <tr >
+                </tr>
+              </thead>
+              <tbody *ngFor="let list1 of postalInvoiceDetails?.postal_data ; let i = 'index+1'">
+                <!-- <tr >
                                         <td class="PIlistlabel" colspan="10"
                                           [ngStyle]="{'backgroundColor': list.colorCodes,'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
                                           {{list.billerName}}
                                         </td>
                                       </tr> -->
-                                <tr class="PIlistlabel"
-                                    [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
-                                    <td colspan="10">{{list1.biller_name}}</td>
-                                </tr>
+                <tr class="PIlistlabel"
+                  [ngStyle]="{'backgroundColor': list1.colorCode, 'color':'white','font-weight': '500','height':'25px','padding-left':'14px'}">
+                  <td colspan="10">{{list1.biller_name}}</td>
+                </tr>
 
-                                <tr *ngFor="let list of list1.datas;let k = 'index+1'">
-
-
-                                    <td>
-
-                                        <span> {{k}}</span>
+                <tr *ngFor="let list of list1.datas;let k = 'index+1'">
 
 
-                                    </td>
-                                    <td>
-                                        <span>
-                                            <input type="checkbox" [checked]="isSelected(list.billId)"
-                                                (change)="toggleSelection($event, list.billId)">
-                                        </span>
-                                    </td>
+                  <td>
 
-                                    <td>
-                                        <span>{{list.invoice_no}}</span>
-
-                                    </td>
-                                    <td>
-                                        <span>{{list.cus_invoice_no}}</span>
+                    <span> {{k}}</span>
 
 
-                                    </td>
+                  </td>
+                  <td>
+                    <span>
+                      <input type="checkbox" [checked]="isSelected(list.billId)"
+                        (change)="toggleSelection($event, list.billId)">
+                    </span>
+                  </td>
+
+                  <td>
+                    <span>{{list.invoice_no}}</span>
+
+                  </td>
+                  <td>
+                    <span>{{list.cus_invoice_no}}</span>
 
 
-                                    <td>
-                                        <span> {{list.billDate}}</span>
+                  </td>
+
+
+                  <td>
+                    <span> {{list.billDate}}</span>
 
 
 
-                                    </td>
-                                    <td>
-                                        <span> {{list.customerName}}</span>
-                                    </td>
+                  </td>
+                  <td>
+                    <span> {{list.customerName}}</span>
+                  </td>
 
 
-                                    <td>
-                                        <span> {{list.netPayment}}</span>
-                                    </td>
+                  <td>
+                    <span> {{list.netPayment}}</span>
+                  </td>
 
-                                    <!-- <td>
+                  <!-- <td>
 
                                             <span>
                                                 <i class="fas fa-chevron-down"></i>
@@ -954,257 +923,993 @@
                                             </span>
 
                                         </td> -->
-                                    <td>
-                                        <div class="d-flex justify-content-evenly align-items-center">
-                                            <span>
-                                                <!-- First icon -->
-                                                <i class="fa fa-file-pdf-o" style="color: #C04000;cursor: pointer;"
-                                                    title="PDF-LOGO" (click)="postalinv_sendPDF(list.billId)"></i>
-                                            </span>
-                                            <span class="mx-2"></span>
-                                            <span>
-                                                <!-- First icon -->
-                                                <i class="fa fa-file-pdf-o" style="color: #025552;cursor: pointer;"
-                                                    title="PDF W/O LOGO"
-                                                    (click)="postalinvwithoutLogo_sendPDF(list.billId)"></i>
-                                            </span>
-                                            <span class="mx-2"></span>
-                                            <!-- Adjust the space between icons using mx-* classes -->
-                                            <span>
-                                                <!-- Second icon -->
-                                                <i class="fas fa-envelope" style="color: #C04000;cursor:pointer;"
-                                                    title="Mail" (click)="postalinv_sendMail(list.billId)"></i>
-                                            </span>
-                                        </div>
-                                    </td>
-
-                                    <td>
-
-                                        <span>{{list.billgeneratedBy}}</span>
-
-                                    </td>
-
-                                    <td>
-
-                                        <span>{{list.currency_name}}</span>
-
-                                    </td>
-
-                                    <td>
-
-                                        <span>{{list.net_amt}}</span>
-
-                                    </td>
-
-                                </tr>
-
-
-                            </tbody>
-
-                        </table>
+                  <td>
+                    <div class="d-flex justify-content-evenly align-items-center">
+                      <span>
+                        <!-- First icon -->
+                        <i class="fa fa-file-pdf-o" style="color: #C04000;cursor: pointer;" title="PDF-LOGO"
+                          (click)="postalinv_sendPDF(list.billId)"></i>
+                      </span>
+                      <span class="mx-2"></span>
+                      <span>
+                        <!-- First icon -->
+                        <i class="fa fa-file-pdf-o" style="color: #025552;cursor: pointer;" title="PDF W/O LOGO"
+                          (click)="postalinvwithoutLogo_sendPDF(list.billId)"></i>
+                      </span>
+                      <span class="mx-2"></span>
+                      <!-- Adjust the space between icons using mx-* classes -->
+                      <span>
+                        <!-- Second icon -->
+                        <i class="fas fa-envelope" style="color: #C04000;cursor:pointer;" title="Mail"
+                          (click)="postalinv_sendMail(list.billId)"></i>
+                      </span>
                     </div>
-                </div>
+                  </td>
+
+                  <td>
+
+                    <span>{{list.billgeneratedBy}}</span>
+
+                  </td>
+
+                  <td>
+
+                    <span>{{list.currency_name}}</span>
+
+                  </td>
+
+                  <td>
+
+                    <span>{{list.net_amt}}</span>
+
+                  </td>
+
+                </tr>
 
 
-                <!-- </form> -->
+              </tbody>
 
-
-
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="multipleMailPostalInvoice()">
-                    Send
-                </button>
-                <button type="button" class="btn btn-primary" (click)=" multiPrintPostalWithLogo()">
-                    Multi Print
-                </button>
-                <button type="button" class="btn btn-primary" (click)="multiPrintPostalWithoutLogo()">
-                    Multi Print(W/O Logo)
-                </button>
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
-                    Cancel
-                </button>
-
-
-            </div>
+            </table>
+          </div>
         </div>
+
+
+        <!-- </form> -->
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="multipleMailPostalInvoice()">
+          Send
+        </button>
+        <button type="button" class="btn btn-primary" (click)=" multiPrintPostalWithLogo()">
+          Multi Print
+        </button>
+        <button type="button" class="btn btn-primary" (click)="multiPrintPostalWithoutLogo()">
+          Multi Print(W/O Logo)
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
     </div>
+  </div>
 </div>
 <!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
 
 <!-- -----------------------Modal-Over Due Payment Entry Begin-------------------------------- -->
 <div class="modal fade" id="overduePaymentFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
 
-                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
           background: linear-gradient(to right, #9d0f2f, #98a833);">
-                    Overdue Payments Customer List</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+          Overdue Payments Customer List</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
 
 
 
 
 
-                <div class="userDatatable global-shadow border-0 bg-white w-100">
-                    <div class="table-responsive ">
-                        <table class="table mb-0 table-borderless">
-                            <thead>
-                              <tr class="userDatatable-header">
-                                <th></th>
-                                <th><span class="userDatatable-title">S.No</span></th>
-                                <th><span class="userDatatable-title">Inv No</span></th>
-                                <th><span class="userDatatable-title">Cus Inv No</span></th>
-                                <th><span class="userDatatable-title">Invoice Date</span></th>
-                                <th><span class="userDatatable-title">Invoice Amt</span></th>
-                                <th><span class="userDatatable-title">Paid Amt</span></th>
-                                <th><span class="userDatatable-title">Balance Amt</span></th>
-                                <th><span class="userDatatable-title">Generated By</span></th>
-                                <th><span class="userDatatable-title">Currency</span></th>
-                                <th><span class="userDatatable-title">Aging</span></th>
-                                <th><span class="userDatatable-title">Action</span></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="PIlistlabel"
-                                  [ngStyle]="{'backgroundColor': 'rgb(212 204 184)', 'color':'#040436','font-weight': '500','height':'25px','padding-left':'14px'}">
-                                <td colspan="12">{{ this.billerNameDisplay }}</td>
-                               
-                              </tr>
-                              <!-- Outer ngFor for each biller -->
-                              <ng-container *ngFor="let list of overduePaymentsBillerWise; let i = index">
-                                <!-- Row for the biller title and actions -->
-                                <tr >
-                                  <td colspan="11" [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#861F41','color':'white'}">
-                                    {{ list.title.customerName }}{{"  "}}
-                                    <span *ngIf="calculateSelectedTotals(list.title.cus_id) > 0"  style="background-color: darkblue;">{{this.balamt}}</span>
-                                  </td>
-                                  <td colspan="1"  style="background-color:rgb(134, 31, 65) ;">
-                                    <div class="page">
-                                        <div class="dropdown">
-                                          <button class="btn1"><i class="fa fa-bars"></i></button>
-                                          <ul class="dropdown__list">
-                                            <li class="dropdown__item">
-                                              <a class="hover1" title="Overdue Consolidate Send Mail" data-toggle="modal" data-target="#paymentReminderMailId">
-                                                <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                                <img class="hide" src="assets/img/icon2/gmail-black.png">
-                                              </a>
-                                            </li>
-                                            <li class="dropdown__item">
-                                              <a class="hover2" title="Overdue Consolidate PDF">
-                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
-                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
-                                              </a>
-                                            </li>
-                                            <li class="dropdown__item">
-                                              <a class="hover1" title="Demand Letter PDF">
-                                                <img class="show" src="assets/img/icon2/resign-blue.png">
-                                                <img class="hide" src="assets/img/icon2/resign-black.png">
-                                              </a>
-                                            </li>
-                                         
-                                          </ul>
-                                        </div>
-                                      </div>
-                                </td>
-                               
-                                </tr>
-                              
-                                <!-- Nested ngFor for each payment detail, with check for list.data -->
-                                <ng-container *ngIf="list.data">
-                                  <tr *ngFor="let item of list.data; let j = index">
-                                    <td>
-                                      <input  type="checkbox" [checked]="isSelected_overdue(item.billId, list.title.cus_id)"
-                                             (change)="toggleSelection_overdue($event, item.billId,item.balanceAmount,list.title.cus_id)">
-                                    </td>
-                                 
-                                    <td><span>{{ item.row_count}}</span></td>
-                                    <td><span>{{ item.invoiceNo }}</span></td>
-                                    <td><span>{{ item.cusInvoiceNo }}</span></td>
-                                    <td><span>{{ item.billDate }}</span></td>
-                                    <td><span>{{ item.netPayment }}</span></td>
-                                    <td><span>{{ item.paidAmount }}</span></td>
-                                    <td style="color:red"><span>{{ item.balanceAmount }}</span></td>
-                                    <td><span>{{ item.generatedBy }}</span></td>
-                                    <td><span>{{ item.currency }}</span></td>
-                                    <td><span>{{ item.aging }}</span></td>
-                                    <td>
-                                      <div class="page">
-                                        <div class="dropdown">
-                                          <button class="btn1"><i class="fa fa-bars"></i></button>
-                                          <ul class="dropdown__list">
-                                            <li class="dropdown__item">
-                                              <a class="hover1" title="Payment Reminder Send Mail" data-toggle="modal" data-target="#paymentReminderMailId">
-                                                <img class="show" src="assets/img/icon2/gmail-blue.png">
-                                                <img class="hide" src="assets/img/icon2/gmail-black.png">
-                                              </a>
-                                            </li>
-                                            <li class="dropdown__item">
-                                              <a class="hover2" title="Payment Process">
-                                                <img class="hide" src="assets/img/icon2/P-black.png">
-                                                <img class="show" src="assets/img/icon2/P-blue.png">
-                                              </a>
-                                            </li>
-                                            <li class="dropdown__item">
-                                              <a class="hover1" title="Landscape PDF">
-                                                <img class="show" src="assets/img/icon2/pdf-blue.png">
-                                                <img class="hide" src="assets/img/icon2/pdf-black.png">
-                                              </a>
-                                            </li>
-                                            <li class="dropdown__item">
-                                              <a class="hover2" title="Payment Followers" data-toggle="modal" data-target="#paymentFollowersId">
-                                                <img class="show" src="assets/img/icon2/employee-blue.png">
-                                                <img class="hide" src="assets/img/icon2/employee-black.png">
-                                              </a>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </td>
-                                  </tr>
-                                </ng-container>
+        <div class="userDatatable global-shadow border-0 bg-white w-100">
+          <div class="table-responsive ">
+            <table class="table mb-0 table-borderless">
+              <thead>
+                <tr class="userDatatable-header">
+                  <th></th>
+                  <th><span class="userDatatable-title">S.No</span></th>
+                  <th><span class="userDatatable-title">Inv No</span></th>
+                  <th><span class="userDatatable-title">Cus Inv No</span></th>
+                  <th><span class="userDatatable-title">Invoice Date</span></th>
+                  <th><span class="userDatatable-title">Invoice Amt</span></th>
+                  <th><span class="userDatatable-title">Paid Amt</span></th>
+                  <th><span class="userDatatable-title">Balance Amt</span></th>
+                  <th><span class="userDatatable-title">Generated By</span></th>
+                  <th><span class="userDatatable-title">Currency</span></th>
+                  <th><span class="userDatatable-title">Aging</span></th>
+                  <th><span class="userDatatable-title">Action</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="PIlistlabel"
+                  [ngStyle]="{'backgroundColor': 'rgb(212 204 184)', 'color':'#040436','font-weight': '500','height':'25px','padding-left':'14px'}">
+                  <td colspan="12">{{ this.billerNameDisplay }}</td>
 
-                                <tr>
-                                    <td colspan="7" [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#f7d3d3','text-align':'center'}">
-                                      {{ list.totalAmount.title }}
-                                     
-                                    </td>
-                                    <td colspan="5" [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#f7d3d3'}">
-                                        {{ list.totalAmount.balanceAmount }}
-                                       
-                                      </td>
-                                  </tr>
-
-                              </ng-container>
-                            </tbody>
-                          </table>
-                          
-                          
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">
-                    Action
-                </button>
-
-                <button type="button" class="btn btn-dark" data-dismiss="modal">
-                    Cancel
-                </button>
+                </tr>
+                <!-- Outer ngFor for each biller -->
+                <ng-container *ngFor="let list of overduePaymentsBillerWise; let i = index">
+                  <!-- Row for the biller title and actions -->
+                  <tr>
+                    <td colspan="11"
+                      [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#861F41','color':'white'}">
+                      <span class="customer_details">{{ list.title.customerName }}{{" "}}
+                        <ul>
+                          <li>
+                            <a class="hover1" title="Overdue Consolidate Send Mail"
+                              (click)="processPaymentEdit_multiple(list.title.cus_id)">
+                              <img class="show" src="assets/img/icon2/pay-per-clickpp.png">
+                              <img class="hide" src="assets/img/icon2/pay-per-click-pp.png">
+                            </a>
+                          </li>
+                          <li>
+                            <a class="hover2" title="Payment Link"
+                              (click)="overduePaymentLink(list.data[0].billerId,list.data[0].custId)">
+                              <img class="show" src="assets/img/icon2/credit-card-show.png">
+                              <img class="hide" src="assets/img/icon2/credit-card-yellow.png">
+                            </a>
+                            <textarea *ngIf="clickFlag &&     
+                            overdue_selectedCustomerId  === list.data[0].custId" 
+                            style="width: fit-content!important;" id="textarea_list.data[0].custId">
+                              {{this.overdue_PaymentURL_result}}
+                            </textarea>
+                          </li>
 
 
-            </div>
+                        </ul>
+                      </span>
+                      <span *ngIf="calculateSelectedTotals(list.title.cus_id) > 0"
+                        style="background-color: darkblue;">{{this.balamt}}</span>
+                    </td>
+
+                    <td colspan="1" style="background-color:rgb(134, 31, 65) ;">
+                      <div class="page">
+                        <div class="dropdown">
+                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                          <ul class="dropdown__list">
+                            <li class="dropdown__item">
+                              <a class="hover1" title="Select All Consolidate Send Mail" data-toggle="modal"
+                                data-target="#payment_selectAllReminderMailId">
+                                <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                <img class="hide" src="assets/img/icon2/gmail-black.png">
+                              </a>
+                            </li>
+                            <li class="dropdown__item">
+                              <a class="hover2" title="Overdue Consolidate PDF"
+                                (click)="ConsolidatePDF(list.data[0].billerId,list.data[0].custId)">
+                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                <img class="hide" src="assets/img/icon2/pdf-black.png">
+                              </a>
+                            </li>
+                            <li class="dropdown__item">
+                              <a class="hover1" title="Demand Letter PDF"
+                                (click)="demandLetterPDF(list.data[0].billerId,list.data[0].custId)">
+                                <img class="show" src="assets/img/icon2/resign-blue.png">
+                                <img class="hide" src="assets/img/icon2/resign-black.png">
+                              </a>
+                            </li>
+
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <!-- Nested ngFor for each payment detail, with check for list.data -->
+                  <ng-container *ngIf="list.data">
+                    <tr *ngFor="let item of list.data; let j = index">
+                      <td>
+                        <input type="checkbox" [checked]="isSelected_overdue(item.billId, list.title.cus_id)"
+                          (change)="toggleSelection_overdue($event, item.billId,item.balanceAmount,list.title.cus_id)">
+                      </td>
+
+                      <td><span>{{ item.row_count}}</span></td>
+                      <td><span>{{ item.invoiceNo }}</span></td>
+                      <td><span>{{ item.cusInvoiceNo }}</span></td>
+                      <td><span>{{ item.billDate }}</span></td>
+                      <td><span>{{ item.netPayment }}</span></td>
+                      <td><span>{{ item.paidAmount }}</span></td>
+                      <td style="color:red"><span>{{ item.balanceAmount }}</span></td>
+                      <td><span>{{ item.generatedBy }}</span></td>
+                      <td><span>{{ item.currency }}</span></td>
+                      <td><span>{{ item.aging }}</span></td>
+                      <td>
+                        <div class="page">
+                          <div class="dropdown">
+                            <button class="btn1"><i class="fa fa-bars"></i></button>
+                            <ul class="dropdown__list">
+                              <li class="dropdown__item">
+                                <a class="hover1" title="Payment Reminder Send Mail"
+                                  (click)="getEmailDetails(item.billId)" data-toggle="modal"
+                                  data-target="#paymentReminderMailId">
+                                  <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                  <img class="hide" src="assets/img/icon2/gmail-black.png">
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover2" title="Payment Process" (click)="processPaymentEdit(item.billId)"
+                                  data-toggle="modal" data-target="#overdue_processPaymentId">
+                                  <img class="hide" src="assets/img/icon2/P-black.png">
+                                  <img class="show" src="assets/img/icon2/P-blue.png">
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover1" title="Landscape PDF" (click)="landscapePDF(item.billId)">
+                                  <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                  <img class="hide" src="assets/img/icon2/pdf-black.png">
+                                </a>
+                              </li>
+                              <li class="dropdown__item">
+                                <a class="hover2" title="Payment Followers" (click)="getPaymentFollowers(item.billId)"
+                                  data-toggle="modal" data-target="#paymentFollowersId">
+                                  <img class="show" src="assets/img/icon2/employee-blue.png">
+                                  <img class="hide" src="assets/img/icon2/employee-black.png">
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+
+                  <tr>
+                    <td colspan="7"
+                      [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#f7d3d3','text-align':'center'}">
+                      {{ list.totalAmount.title }}
+
+                    </td>
+                    <td colspan="5"
+                      [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#f7d3d3'}">
+                      {{ list.totalAmount.balanceAmount }}
+
+                    </td>
+                  </tr>
+
+                </ng-container>
+              </tbody>
+            </table>
+
+
+          </div>
         </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">
+          Action
+        </button>
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
     </div>
+  </div>
 </div>
 <!-------------------------- ------Modal-Add Purchase Entry ends-------------------------------------- -->
+
+<!----------Modal Pop Up (BEGIN)  for Overdue-Payment Followers ------------------>
+<div class="modal fade" id="paymentFollowersId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Payment Followers </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="row">
+          <div class="d-flex col-lg-4" *ngFor="let quot of paymentFollowers_List;let i=index">
+            <div class="d-flex">
+              <div class="">
+                <div class="checkbox-group-wrapper">
+                  <div class="checkbox-group">
+
+                    <input type="checkbox" id="{{ quot.userId }}" [value]="quot.userId"
+                      checked="{{quot.isChecked==true ? 'checked':''}}"
+                      (change)="paymentFollowersCheck(quot.userId,$event)">
+                    <label class="mt-2 ml-2" for="{{ quot.userId }}">{{quot.firstName}}</label>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="paymentFollowersUpdate()">
+          Update
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END) for Overdue-Payment Followers------------------>
+
+<!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
+<div class="modal fade" id="overdue_processPaymentId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Payment Process </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearPayProcess()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="processPaymentForm">
+          <div class="row">
+            <div class="col-lg-6">
+              <label>Invoice Id</label>
+              <input type="text" class="form-control" formControlName="invoiceID" [readonly]="isReadOnly">
+
+            </div>
+
+            <div class="col-lg-6">
+              <label>Total</label>
+              <input type="text" class="form-control" formControlName="toal" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Biller</label>
+              <input type="text" class="form-control" formControlName="biller" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Paid</label>
+              <input type="text" class="form-control" formControlName="paid" [readonly]="isReadOnly">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Customer</label>
+              <input type="text" class="form-control" formControlName="customer" [readonly]="isReadOnly">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Owing</label>
+              <input type="text" class="form-control" formControlName="owing" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Amount</label>
+              <input type="text" class="form-control" formControlName="amount">
+              <div
+                *ngIf="processPaymentForm.controls['amount'].invalid && (processPaymentForm.controls['amount'].dirty || processPaymentForm.controls['amount'].touched)"
+                class="alert alert-danger alertdangerCustomCSS mt-2">
+                Amount is Required(Number Format>0)
+              </div>
+
+            </div>
+
+            <div class="col-lg-6">
+              <label class="mt-4">Date</label>
+              <input type="date" class="form-control" formControlName="date">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Payment Type/Method</label>
+              <select class="form-control" formControlName="paymenttype" (change)="PP_PaymentMethod($event)">
+
+                <option [ngValue]="null" selected>Select Payment Method</option>
+
+                <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
+                  {{term.payment_type_name}}
+                </option>
+              </select>
+              <div *ngIf="(flg==true)" class="mt-2">
+                <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1"
+                  (change)="changeCreditNote($event)">
+
+                  <option [ngValue]="null" selected>Select credit note</option>
+
+                  <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
+                    {{term1.tot_amt}}
+                  </option>
+
+                </select>
+              </div>
+
+              <div *ngIf="(flg==true)" class="mt-2">
+                <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2"
+                  (change)="changePrepaidNote($event)">
+
+                  <option [ngValue]="null" selected>Select prepaid note</option>
+
+                  <option *ngFor="let term2 of creditResponse" value="{{term2.prepaid_id}}">
+                    {{term2.tot_amt}}
+                  </option>
+
+                </select>
+              </div>
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Note</label>
+
+              <textarea class="form-control" rows="3" formControlName="note"></textarea>
+
+            </div>
+            <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment;let i=index">
+              <label class="mt-4">Payment Details</label>
+
+
+              {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
+              {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
+              &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
+              <button type="button" style="margin-left: 10px;" title="Edit" class=" btn-warning btn-default btn-squared"
+                style="margin-right: 10px;" (click)="paymentProcessEditShow(pay.processId)"><i
+                  class="fa fa-pencil-square-o" style="margin-right:10;"></i>
+              </button>
+            </div>
+
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit" class="btn btn-primary" (click)="processPaymentUpdate()">Update
+
+        </button>
+
+
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- Process Payment Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (BEGIN) Multiple Process Payment------------------>
+<div class="modal fade" id="overdue_processPaymentIdMultiple" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Multiple Payment Process </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearPayProcess()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div *ngFor="let cc of invoiceDetails_payment_m;let i=index" class="col-lg-12" style="display:flex">
+          <div class="col-lg-6">
+            <label class="mt-4">{{i+1}}-Invoice No:</label>
+            <input type="text" class="form-control" [value]="cc.invoice_no" [readonly]="isReadOnly">
+          </div>
+          <div class="col-lg-6">
+            <label class="mt-4">{{i+1}}-Balance Amt:</label>
+            <input type="text" class="form-control" [value]="cc.bal_amt" [readonly]="isReadOnly">
+          </div>
+
+        </div>
+        <div>
+
+        </div>
+        <form [formGroup]="multipleprocessPaymentForm">
+          <div class="row">
+
+
+            <!-- <div class="col-lg-6">
+              <label>Invoice Id</label>
+              <input type="text" class="form-control" formControlName="m_invoiceID" [readonly]="isReadOnly">
+            </div> -->
+
+            <div class="col-lg-6">
+              <label class="mt-4">Total</label>
+              <input type="text" class="form-control" formControlName="m_toal" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Biller</label>
+              <input type="text" class="form-control" formControlName="m_biller" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Paid</label>
+              <input type="text" class="form-control" formControlName="m_paid" [readonly]="isReadOnly">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Customer</label>
+              <input type="text" class="form-control" formControlName="m_customer" [readonly]="isReadOnly">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Owing</label>
+              <input type="text" class="form-control" formControlName="m_owing" [readonly]="isReadOnly">
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Amount</label>
+              <input type="text" class="form-control" formControlName="m_amount">
+              <div
+                *ngIf="processPaymentForm.controls['amount'].invalid && (processPaymentForm.controls['amount'].dirty || processPaymentForm.controls['amount'].touched)"
+                class="alert alert-danger alertdangerCustomCSS mt-2">
+                Amount is Required(Number Format>0)
+              </div>
+
+            </div>
+
+            <div class="col-lg-6">
+              <label class="mt-4">Date</label>
+              <input type="date" class="form-control" formControlName="m_date">
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Payment Type/Method</label>
+              <select class="form-control" formControlName="m_paymenttype" (change)="PP_PaymentMethod($event)">
+
+                <option [ngValue]="null" selected>Select Payment Method</option>
+
+                <option *ngFor="let term of paymentType_payment_m" value="{{term.payment_type_id}}">
+                  {{term.payment_type_name}}
+                </option>
+              </select>
+
+            </div>
+            <div class="col-lg-6">
+              <label class="mt-4">Note</label>
+
+              <textarea class="form-control" rows="3" formControlName="m_note"></textarea>
+
+            </div>
+         <div *ngIf="this.paymentDetails_paymentLength_m>0">
+          <div  class="col-lg-12" *ngFor="let pay of paymentDetails_payment_m;let i=index">
+              <label class="mt-4">Payment Details</label>
+              
+
+              {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
+              {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
+              &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
+              <button type="button" style="margin-left: 10px;" title="Edit" class=" btn-warning btn-default btn-squared"
+                style="margin-right: 10px;" (click)="paymentProcessEditShow(pay.processId)"><i
+                  class="fa fa-pencil-square-o" style="margin-right:10;"></i>
+              </button>
+            </div>
+          </div>
+           
+
+          </div>
+
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="submit" class="btn btn-primary" (click)="multipleprocessPaymentUpdate()">Update
+
+        </button>
+
+
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
+          Cancel
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------- Process Payment Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (BEGIN) overdue-Email-Landscape------------------>
+
+<div class="modal fade" id="paymentReminderMailId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Email </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="emailForm">
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+              <div class="col-lg-10">
+                <select name="templat" class="form-control" formControlName="email_From"
+                  change="handle__email_from($event)">
+                  <option [ngValue]="null" selected>Select From</option>
+                  <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
+                    {{ from.from_email }}
+                  </option>
+                  <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                    {{ from.from_email }}
+                  </option> -->
+                </select>
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                  Please
+                  enter From Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+
+          
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+              <div class="col-md-9 col-9" style="display: flex;">
+                <div class="form-check" *ngFor="let type of types" style="margin-right: 10px;">
+                  <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
+                    [value]="type.type_id.toString()" (change)="handle_radioChange_email($event,type.type_id)" />
+          
+                  <label class="form-check-label" [for]="type.type">{{ type.type }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+              <div class="col-lg-10">
+                <input type="email" class="form-control" formControlName="email_to">
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                  Please
+                  enter To Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+
+              <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+              <div class="col-lg-10 email-cc-template">
+                <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
+                  <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}" formControlName="email_cc"
+                    (change)=" EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" formControlName="Subject_Content">
+                <div
+                  *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                  Subject is Required
+                </div>
+              </div>
+            </div>
+
+          </div>
+      
+          <div class="col-md-12 col-12" >
+            <div class="form-group row">
+              <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+              <div class="col-lg-10">
+                <select name="templat" class="form-control" formControlName="email_template"
+                  (change)="templateContentEmailDropdown($event)">
+                  <option [ngValue]="null" selected>Select Template</option>
+                  <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
+                    {{template.crm_template_name}}
+                  </option>
+                </select>
+                <br>
+
+                <div
+                  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 ">
+                  Template is Required
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+    
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Payment Link</span> :</label>
+              <div class="col-lg-10">
+                <input type="checkbox" formControlName="cbk_paymentLink" (change)="handle_cbk_paymentLink($event)">
+               
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Attach Demand Letter PDF</span> :</label>
+              <div class="col-lg-10">
+                <input type="checkbox"  formControlName="cbk_demandLetterPDF"
+                (change)="handle_cbk_demandLetterPDF($event)">
+               
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+              <div class="col-lg-10">
+                <editor id="tinyID_overdue_in" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                        </div>
+                    </div> -->
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sendMail_overdue()">Send
+          Mail
+
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------- Email-overdue-Landscape Pop up ends------------------------------------------>
+
+<!-----------------Modal Pop Up (BEGIN) overdue payment_selectAll ReminderMailId-Email-Landscape------------------>
+
+<div class="modal fade" id="payment_selectAllReminderMailId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+          Email </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="selectAll_emailForm">
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SA_email_From" class="col-lg-2 col-form-label"><span>From</span> :</label>
+              <div class="col-lg-10">
+                <select name="SA_email_From" class="form-control" formControlName="SA_email_From"
+                  change="handle__email_from($event)">
+                  <option [ngValue]="null" selected>Select From</option>
+                  <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
+                    {{ from.from_email }}
+                  </option>
+                  <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+                    {{ from.from_email }}
+                  </option> -->
+                </select>
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="selectAll_emailForm.controls['SA_email_From'].invalid && selectAll_emailForm.controls['SA_email_From'].touched">
+                  Please
+                  enter From Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SA_radio_ApprovalBy" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+              <div class="col-md-9 col-9" style="display: flex;">
+                <div class="form-check" *ngFor="let type of types" style="margin-right: 10px;">
+                  <input mdbRadio class="form-check-input" type="radio" formControlName="SA_radio_ApprovalBy"
+                    [value]="type.type_id.toString()" (change)="handle_radioChange_email($event,type.type_id)" />
+          
+                  <label class="form-check-label" [for]="type.type">{{ type.type }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="SA_emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+              <div class="col-lg-10">
+                <input type="email" class="form-control" formControlName="SA_emailto">
+                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                  *ngIf="selectAll_emailForm.controls['SA_emailto'].invalid && selectAll_emailForm.controls['SA_emailto'].touched">
+                  Please
+                  enter To Address
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+
+              <label for="SA_email_cc" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+              <div class="col-lg-10 email-cc-template">
+                <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
+                  <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}" formControlName="SA_email_cc"
+                    (change)=" EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" formControlName="SA_Subject_Content">
+                <div
+                  *ngIf="selectAll_emailForm.controls['SA_Subject_Content'].invalid && (selectAll_emailForm.controls['SA_Subject_Content'].dirty || selectAll_emailForm.controls['SA_Subject_Content'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                  Subject is Required
+                </div>
+              </div>
+            </div>
+
+          </div>
+      
+          <div class="col-md-12 col-12" >
+            <div class="form-group row">
+              <label for="SA_email_template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+              <div class="col-lg-10">
+                <select name="SA_email_template" class="form-control" formControlName="SA_email_template"
+                  (change)="templateContentEmailDropdown($event)">
+                  <option [ngValue]="null" selected>Select Template</option>
+                  <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
+                    {{template.crm_template_name}}
+                  </option>
+                </select>
+                <br>
+
+                <div
+                  *ngIf="selectAll_emailForm.controls['SA_email_template'].invalid && (selectAll_emailForm.controls['SA_email_template'].dirty || selectAll_emailForm.controls['SA_email_template'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS1 ">
+                  Template is Required
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+    
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Payment Link</span> :</label>
+              <div class="col-lg-10">
+                <input type="checkbox" formControlName="SA_cbk_paymentLink">
+               
+              </div>
+            </div>
+
+          </div>
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Attach Demand Letter PDF</span> :</label>
+              <div class="col-lg-10">
+                <input type="checkbox"  formControlName="SA_cbk_demandLetterPDF">
+               
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-md-12 col-12">
+            <div class="form-group row">
+              <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+              <div class="col-lg-10">
+                <editor id="tinyID_overdue_SA" [init]="{
+                                base_url: '/tinymce', 
+                                branding: false,
+                                suffix: '.min'
+                                    
+                            }"></editor>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-12 col-12">
+                        <div class="form-group row">
+                            <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
+
+                        </div>
+                    </div> -->
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="sendMail_overdue()">Send
+          Mail
+
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-------------- Email-overdue-payment_selectAll ReminderMailId Pop up ends------------------------------------------>
