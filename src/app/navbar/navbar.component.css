@@ -466,3 +466,21 @@ border-radius: 50%;
 .customer_details ul li:hover .hide{display: block;}
 .customer_details ul li:hover .show{display: none;
 }
+
+
+/* Search in overdue */
+#overduePaymentFormId .modal-body {
+  padding: 0 1.75rem;
+}
+#overduePaymentFormId .modal-body .card {
+  padding: 20px;
+  margin-bottom: 25px;
+  
+}
+#overduePaymentFormId .modal-body .card label{
+  font-weight: 600;
+  color: #01125f;
+  margin-bottom: 0;
+  
+}
+

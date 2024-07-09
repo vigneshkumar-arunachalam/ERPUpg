@@ -100,6 +100,7 @@
                       </td>
                       <td>
                         <span [innerHTML]="list.description">{{ list.description}}</span>
+                        <span><a *ngIf="list.attachment_name" class="pdfview" title="{{list.attachments}}" [href]="list.attachments" target="_blank">{{ list.attachment_name }}</a></span>
                       </td>
                       <td [innerHTML]="list.amount">
 

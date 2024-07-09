@@ -86,14 +86,24 @@ import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicer
 import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/printpreview.component';
 import { PurchaseentryreportComponent } from './reports/purchaseentryreport/purchaseentryreport.component';
 import { GstreportComponent } from './reports/gstreport/gstreport.component';
-
+import { GuruComponent } from './guru/guru.component';
+import { VoipswitchComponent } from './voipswitch/voipswitch.component';
+import { CreditmanagerComponent } from './voipswitch/creditmanager/creditmanager.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },{
-    path: 'gstreport', component: GstreportComponent
+    path: 'creditmanager', component: CreditmanagerComponent
   },{
+    path: 'voipswitch', component: VoipswitchComponent
+  },{
+    path: 'guru', component: GuruComponent
+  },
+  {
+    path: 'gstreport', component: GstreportComponent
+  },
+  {
     path: 'purchaseentryreport', component: PurchaseentryreportComponent
   },{
     path: 'printpreview', component: PrintpreviewComponent

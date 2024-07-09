@@ -151,6 +151,27 @@
     ],
     "isVisible": true,
     "value": "/crm--"
+}, {
+    "name": "VOIP Switch",
+    "icon":"unlock",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Credit Manager",
+            "icon": "check-square",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/creditmanager"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/voipsw--"
 }, 
 {
    "name": "Masters",

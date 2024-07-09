@@ -830,12 +830,12 @@ export class AddInvoiceComponent implements OnInit {
       this.spinner.hide();
 
       if (response.status == true) {
-        this.custAdr1=response.customer_details[0].customerAddress1;
-        this.custAdr2=response.customer_details[0].customerAddress2;
-        this.custAdr3=response.customer_details[0].city;
-        this.ShipAdr1=response.customer_details[0].ship_customerAddress1;
-        this.ShipAdr2=response.customer_details[0].ship_customerAddress2;
-        this.ShipAdr3=response.customer_details[0].ship_city;
+        this.custAdr1=response.customer_details.customerAddress1;
+        this.custAdr2=response.customer_details.customerAddress2;
+        this.custAdr3=response.customer_details.city;
+        this.ShipAdr1=response.customer_details.ship_customerAddress1;
+        this.ShipAdr2=response.customer_details.ship_customerAddress2;
+        this.ShipAdr3=response.customer_details.ship_city;
 
         if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
           this.shipAddress1_Final=this.custAdr1
@@ -853,11 +853,11 @@ export class AddInvoiceComponent implements OnInit {
         }else{
           this.shipAddress3_Final=this.ShipAdr3
         }
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null || response.customer_details[0].ship_to == undefined ) {
-          this.ship_to_str_Final= response.customer_details[0].customerName; 
+        if (response.customer_details.ship_to == '' || response.customer_details.ship_to == null || response.customer_details.ship_to == undefined ) {
+          this.ship_to_str_Final= response.customer_details.customerName; 
        
         } else {
-          this.ship_to_str_Final = response.customer_details[0].ship_to;
+          this.ship_to_str_Final = response.customer_details.ship_to;
         }
         console.log("shipAddress1",this.shipAddress1_Final)
         console.log("shipAddress2",this.shipAddress2_Final)
@@ -876,9 +876,9 @@ export class AddInvoiceComponent implements OnInit {
           'ship_address_2': response.customer_details.ship_customerAddress2,
           'ship_address_3': response.customer_details.ship_customerAddress3,
           'ship_attn': response.customer_details.ship_attn,
-          'terms': response.customer_details.terms_condition,
-          'Currency': response.customer_details.def_currency_id,
-          'PaymentVia': response.customer_details.def_payment_via,
+          'terms': response.terms_condition,
+          'Currency': response.def_currency_id,
+          'PaymentVia': response.def_payment_via,
           'CurrencyConversionRate': response.currencyValue,
         });
       }

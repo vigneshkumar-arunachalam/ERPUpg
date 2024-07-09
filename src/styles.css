@@ -29145,4 +29145,7 @@ li ul li a:hover .nav-icon{
     background-color: #2a75a7;
     outline: 1px solid #2a6994;
   }
+  .profile-section #qr_code_id img{
+    width: 170px!important;
+  }
 /* -----------------KS CODE -------------------------*/

@@ -92,7 +92,8 @@
             <h1 class="col-11 col-11 modal-title text-center text-center" id="addModalLongTitle"
               style="font-weight: 500;font-size:x-large; color: #861F41 !important;">Global Search
             </h1>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+              (click)="clearGlobalCustomerName()">
               <span aria-hidden="true">&times;</span>
             </button>
 
@@ -205,16 +206,17 @@
                   <div class="col-lg-12" style="padding-left:0">
                     <label class="col-lg-3 col-form-label" style="font-weight: 420;color: blue; padding-left:0;"> Select
                       Pages<span class="mandatoryField">*</span></label>
-                    <input class="checkbox" style="margin-left:5px ;" type="checkbox" id="check-3"
-                      (change)=" CHKAll_SelectPageSelectAll($event)">{{" "}}All Page
+                    <input type="checkbox" [checked]="allSelected" (change)="selectAll_menuList($event)"
+                      formControlName="SelectAll_menuName">All Page
                     <div class="CheckboxScroll">
-
-                      <div *ngFor="let display of SelectPageList;let i =index;" style="padding-left: 30px;">
-                        <input type="checkbox" style="margin-right:5px ;" id="check-grp-SelectPage-{{i}}"
-                          [value]="display.menu_name" checked="{{display.checked=='true' ? 'checked':''}}"
-                          (change)="addSelectPageCHK(display.menu_name,$event)">{{display.menu_name}}
-
+                      <div *ngFor="let menuItem of menuList">
+                        <label>
+                          <input type="checkbox" [checked]="menuItem.checked === 'true'"
+                            (change)="onCheckboxChange(menuItem, $event)">
+                          {{ menuItem.menu_name }}
+                        </label>
                       </div>
+
                     </div>
                   </div>
 
@@ -422,6 +424,7 @@
                   <div class="card-body" *ngIf="(this.PI_UI_Show!=0)">
                     <app-dup-proforma-invoice></app-dup-proforma-invoice>
                   </div>
+
                 </div>
               </div>
               <div class="card" *ngIf="(this.Invoice_UI_Show!=0)">
@@ -533,7 +536,6 @@
               title="Payment Transaction Reports"></a>
         </li>
         <li>
-
           <div style="position: relative;">
             <a href="javascript:;" class="navbar-brand" (click)="toggleDropdown()">
               <img class="svg" src="assets/img/icon2/warning.png" title="Overdue Payment"
@@ -543,7 +545,7 @@
             <div class="dropdown-menu" [class.show]="dropdownVisible">
               <div *ngFor="let list of overduePaymentsBillerList">
 
-                <span class="dropdown-list" (click)="overduePayments(list.billerId)" data-toggle="modal"
+                <span class="dropdown-list" (click)="overduePayments(list.billerId);" data-toggle="modal"
                   data-target="#overduePaymentFormId">
                   {{list.name}}<b style="padding: 0px 15px;">-</b>
                   <span class="badge badge-round badge-danger badge-lg">{{list.count}}
@@ -553,8 +555,6 @@
               </div>
             </div>
           </div>
-
-
         </li>
         <li>
           <a href="javascript:;" class="navbar-brand">
@@ -1019,8 +1019,57 @@
       <div class="modal-body">
         <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
 
+        <div class="card">
+          <form [formGroup]="overdueSearchForm">
+            <div class="row">
+              <div class="col-lg-4" style="display:inline-flex;align-items: center;">
+                <div> <label>Customer</label>
+                </div>
+                <!-- <div style="padding-left:10px"> <select name="OS_customer" formControlName="OS_customer" class="form-control"
+                        (change)="handle_overdue_CustomerChange($event)">
+                        <option value="null">Select Customers</option>
+                        <option *ngFor="let item of overdue_Customerlist" value="{{item.customerId}}">
+                          {{item.customerName}}
+                        </option>
+                      </select>
+                    </div> -->
+                <div class="ng-autocomplete">
+
+                  <ng-autocomplete [data]="OS_searchResult" [searchKeyword]="OS_keywordCustomerName"
+                    formControlName="OS_customer" (selected)='searchCustomer_selectDropdownData_OS($event)'
+                    (inputChanged)='searchCustomerData_OS($event)' (inputCleared)="clearSelection_OS($event)"
+                    (inputFocused)='onFocusedCustomer_OS($event)' [itemTemplate]="itemTemplateCustomer"
+                    [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
 
 
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+
+                </div>
+              </div>
+              <div class="col-lg-3" style="display:inline-flex;align-items: center;">
+                <div><label>From Date</label></div>
+                <div style="padding-left:10px"> <input style="margin-bottom: 0;" type="date" class="form-control"
+                    formControlName="OS_fromDate"></div>
+
+              </div>
+              <div class="col-lg-3" style="display:inline-flex;align-items: center;">
+                <div> <label>To Date</label></div>
+                <div style="padding-left:10px"> <input type="date" style="margin-bottom: 0;" class="form-control"
+                    formControlName="OS_toDate"></div>
+              </div>
+              <div class="col-lg-2">
+                <button type="button" class="btn btn-primary" (click)="overdueSearch()">Search</button>
+              </div>
+            </div>
+          </form>
+        </div>
 
 
         <div class="userDatatable global-shadow border-0 bg-white w-100">
@@ -1070,8 +1119,8 @@
                               <img class="hide" src="assets/img/icon2/credit-card-yellow.png">
                             </a>
                             <textarea *ngIf="clickFlag &&     
-                            overdue_selectedCustomerId  === list.data[0].custId" 
-                            style="width: fit-content!important;" id="textarea_list.data[0].custId">
+                            overdue_selectedCustomerId  === list.data[0].custId" style="width: fit-content!important;"
+                              id="textarea_list.data[0].custId">
                               {{this.overdue_PaymentURL_result}}
                             </textarea>
                           </li>
@@ -1089,8 +1138,9 @@
                           <button class="btn1"><i class="fa fa-bars"></i></button>
                           <ul class="dropdown__list">
                             <li class="dropdown__item">
-                              <a class="hover1" title="Select All Consolidate Send Mail" data-toggle="modal"
-                                data-target="#payment_selectAllReminderMailId">
+                              <a class="hover1" title="Select All Consolidate Send Mail"
+                                (click)="selectAll_getEmail(list.data[0].custId,list.data[0].billerId)"
+                                data-toggle="modal" data-target="#payment_selectAllReminderMailId">
                                 <img class="show" src="assets/img/icon2/gmail-blue.png">
                                 <img class="hide" src="assets/img/icon2/gmail-black.png">
                               </a>
@@ -1503,21 +1553,22 @@
               <textarea class="form-control" rows="3" formControlName="m_note"></textarea>
 
             </div>
-         <div *ngIf="this.paymentDetails_paymentLength_m>0">
-          <div  class="col-lg-12" *ngFor="let pay of paymentDetails_payment_m;let i=index">
-              <label class="mt-4">Payment Details</label>
-              
+            <div *ngIf="this.paymentDetails_paymentLength_m>0">
+              <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment_m;let i=index">
+                <label class="mt-4">Payment Details</label>
 
-              {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
-              {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
-              &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
-              <button type="button" style="margin-left: 10px;" title="Edit" class=" btn-warning btn-default btn-squared"
-                style="margin-right: 10px;" (click)="paymentProcessEditShow(pay.processId)"><i
-                  class="fa fa-pencil-square-o" style="margin-right:10;"></i>
-              </button>
+
+                {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
+                {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
+                &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
+                <button type="button" style="margin-left: 10px;" title="Edit"
+                  class=" btn-warning btn-default btn-squared" style="margin-right: 10px;"
+                  (click)="paymentProcessEditShow(pay.processId)"><i class="fa fa-pencil-square-o"
+                    style="margin-right:10;"></i>
+                </button>
+              </div>
             </div>
-          </div>
-           
+
 
           </div>
 
@@ -1588,7 +1639,7 @@
           </div>
 
 
-          
+
           <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
@@ -1596,7 +1647,7 @@
                 <div class="form-check" *ngFor="let type of types" style="margin-right: 10px;">
                   <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
                     [value]="type.type_id.toString()" (change)="handle_radioChange_email($event,type.type_id)" />
-          
+
                   <label class="form-check-label" [for]="type.type">{{ type.type }}</label>
                 </div>
               </div>
@@ -1645,8 +1696,8 @@
             </div>
 
           </div>
-      
-          <div class="col-md-12 col-12" >
+
+          <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
               <div class="col-lg-10">
@@ -1669,13 +1720,13 @@
 
             </div>
           </div>
-    
+
           <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Payment Link</span> :</label>
               <div class="col-lg-10">
                 <input type="checkbox" formControlName="cbk_paymentLink" (change)="handle_cbk_paymentLink($event)">
-               
+
               </div>
             </div>
 
@@ -1684,9 +1735,9 @@
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Attach Demand Letter PDF</span> :</label>
               <div class="col-lg-10">
-                <input type="checkbox"  formControlName="cbk_demandLetterPDF"
-                (change)="handle_cbk_demandLetterPDF($event)">
-               
+                <input type="checkbox" formControlName="cbk_demandLetterPDF"
+                  (change)="handle_cbk_demandLetterPDF($event)">
+
               </div>
             </div>
 
@@ -1732,8 +1783,8 @@
 
 <!-----------------Modal Pop Up (BEGIN) overdue payment_selectAll ReminderMailId-Email-Landscape------------------>
 
-<div class="modal fade" id="payment_selectAllReminderMailId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
+<div class="modal fade" id="payment_selectAllReminderMailId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -1757,7 +1808,7 @@
                 <select name="SA_email_From" class="form-control" formControlName="SA_email_From"
                   change="handle__email_from($event)">
                   <option [ngValue]="null" selected>Select From</option>
-                  <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
+                  <option *ngFor="let from of SA_email_fromList" value="{{ from.from_email }}">
                     {{ from.from_email }}
                   </option>
                   <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
@@ -1778,10 +1829,10 @@
             <div class="form-group row">
               <label for="SA_radio_ApprovalBy" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
               <div class="col-md-9 col-9" style="display: flex;">
-                <div class="form-check" *ngFor="let type of types" style="margin-right: 10px;">
+                <div class="form-check" *ngFor="let type of SA_types" style="margin-right: 10px;">
                   <input mdbRadio class="form-check-input" type="radio" formControlName="SA_radio_ApprovalBy"
-                    [value]="type.type_id.toString()" (change)="handle_radioChange_email($event,type.type_id)" />
-          
+                    [value]="type.type_id.toString()" (change)="SA_handle_radioChange_email($event,type.type_id)" />
+
                   <label class="form-check-label" [for]="type.type">{{ type.type }}</label>
                 </div>
               </div>
@@ -1808,9 +1859,9 @@
               <label for="SA_email_cc" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
 
               <div class="col-lg-10 email-cc-template">
-                <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
+                <div class="" *ngFor="let i =index;let display1 of SA_email_groupMailList;">
                   <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}" formControlName="SA_email_cc"
-                    (change)=" EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
+                    (change)=" SA_EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
                 </div>
               </div>
             </div>
@@ -1820,7 +1871,7 @@
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
               <div class="col-lg-10">
-                <input type="text" class="form-control" formControlName="SA_Subject_Content">
+                <input type="text" class="form-control" formControlName="SA_Subject_Content" id="SA_Subject_Content">
                 <div
                   *ngIf="selectAll_emailForm.controls['SA_Subject_Content'].invalid && (selectAll_emailForm.controls['SA_Subject_Content'].dirty || selectAll_emailForm.controls['SA_Subject_Content'].touched)"
                   class="alert alert-danger alertdangerCustomCSS1 mt-2">
@@ -1830,15 +1881,15 @@
             </div>
 
           </div>
-      
-          <div class="col-md-12 col-12" >
+
+          <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="SA_email_template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
               <div class="col-lg-10">
                 <select name="SA_email_template" class="form-control" formControlName="SA_email_template"
-                  (change)="templateContentEmailDropdown($event)">
+                  (change)="SA_templateContentEmailDropdown($event)">
                   <option [ngValue]="null" selected>Select Template</option>
-                  <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
+                  <option *ngFor="let template of SA_email_crmTemplateList" value="{{ template.crm_template_id }}">
                     {{template.crm_template_name}}
                   </option>
                 </select>
@@ -1854,13 +1905,13 @@
 
             </div>
           </div>
-    
+
           <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Payment Link</span> :</label>
               <div class="col-lg-10">
-                <input type="checkbox" formControlName="SA_cbk_paymentLink">
-               
+                <input type="checkbox" formControlName="SA_cbk_paymentLink" (change)="handle_SAcbkpaymentLink($event)">
+
               </div>
             </div>
 
@@ -1869,8 +1920,9 @@
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Attach Demand Letter PDF</span> :</label>
               <div class="col-lg-10">
-                <input type="checkbox"  formControlName="SA_cbk_demandLetterPDF">
-               
+                <input type="checkbox" formControlName="SA_cbk_demandLetterPDF"
+                  (change)="handle_SAcbkDemandLetter($event)">
+
               </div>
             </div>
 
@@ -1899,7 +1951,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="sendMail_overdue()">Send
+        <button type="button" class="btn btn-primary" (click)="SA_sendMail_overdue()">Send
           Mail
 
         </button>

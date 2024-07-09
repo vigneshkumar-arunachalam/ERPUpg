@@ -112,6 +112,9 @@ import { InvoicereportsoldComponent } from './reports/invoicereportsold/invoicer
 import { PrintpreviewComponent } from './reports/invoicereportsold/printpreview/printpreview.component';
 import { PurchaseentryreportComponent } from './reports/purchaseentryreport/purchaseentryreport.component';
 import { GstreportComponent } from './reports/gstreport/gstreport.component';
+import { GuruComponent } from './guru/guru.component';
+import { VoipswitchComponent } from './voipswitch/voipswitch.component';
+import { CreditmanagerComponent } from './voipswitch/creditmanager/creditmanager.component';
 
 
 
@@ -210,6 +213,9 @@ import { GstreportComponent } from './reports/gstreport/gstreport.component';
      PrintpreviewComponent,
      PurchaseentryreportComponent,
      GstreportComponent,
+     GuruComponent,
+     VoipswitchComponent,
+     CreditmanagerComponent,
      
      
     

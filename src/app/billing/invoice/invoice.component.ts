@@ -149,7 +149,8 @@ export class InvoiceComponent implements OnInit {
   TermCondition_BillerID: any;
   //recurring
   recurringDetails: any;
-  reccuringDuration: any;
+
+  reccuringDuration: string[];
   recurringDetails_fixed_next_dt: any;
   recurringDetails_usage_next_dt: any;
   recuringStatus: any;
@@ -363,7 +364,7 @@ export class InvoiceComponent implements OnInit {
       addresses_rc: this.fb.array([this.createAddress_rc()])
     });
     this.serverService.invoice_search1.subscribe((val: any) => {
-      console.log(val)
+     // console.log(val)
       // alert(val.type)
       // if (val.type == "search girlfriend") {
       //   this.search_values1 == 1;
@@ -398,20 +399,24 @@ export class InvoiceComponent implements OnInit {
 
     // });
     this.serverService.global_search_invoice.subscribe((val: any) => {
-      // console.log("before parse-global_search_invoice", val);
+      console.log("before parse-global_search_invoice", val);
       try {
         let jsonString: string;
         if (typeof val === 'object') {
           jsonString = JSON.stringify(val);
+        //  console.log("stringify", k);
         } else if (typeof val === 'string') {
           jsonString = val;
+         // console.log("string", k);
         } else {
-          console.error("Invalid type received:", typeof val);
+        //  console.error("Invalid type received:", typeof val);
           return; // Exit early if the type is not recognized
         }
         var k = JSON.parse(jsonString);
-        // console.log("after parse-global_search_invoice", k);
-        this.PI_list = k;
+       // console.log("after parse-global_search_invoice", k);
+        if (!k) {
+          this.PI_list = k;
+        }
         // if (k != '') {
         //   this.Global_search_filter = true;
         // } else {
@@ -1314,7 +1319,7 @@ export class InvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.response_total_cnt = response.total_cnt
-     // console.log("PI list", response);
+      // console.log("PI list", response);
       if (response.total_cnt == 0) {
         // iziToast.warning({
         //   message: "Sorry, No Matching Data",
@@ -1409,13 +1414,13 @@ export class InvoiceComponent implements OnInit {
             'company_Name': response.selected_filtervalues[0].name_serach
           })
         }
-       // console.log("this.edit_array_SearchBiller_Checkbox-list complete", this.edit_array_SearchBiller_Checkbox);
+        // console.log("this.edit_array_SearchBiller_Checkbox-list complete", this.edit_array_SearchBiller_Checkbox);
         if (response.selected_filtervalues[0].year_filter != '') {
           this.years_id = response.selected_filtervalues[0].year_filter;
           this.edit_array_Years_Checkbox = this.years_id.split(',');
           this.edit_array_Years_Checkbox = this.edit_array_Years_Checkbox.map((str: string) => parseInt(str, 10));
           this.edit_array_Years_Checkbox = Array.from(new Set(this.edit_array_Years_Checkbox));
-        //  console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
+          //  console.log("this.edit_array_Years_Checkbox-after list load", this.edit_array_Years_Checkbox);
         }
 
         if (response.proforma_details != null) {
@@ -1423,7 +1428,7 @@ export class InvoiceComponent implements OnInit {
 
             this.reseller_commissionState = response.proforma_details[j].commission_state;
             this.recurring_state_all = response.proforma_details[j].recuring_status;
-        //    console.log("this.reseller_commissionState", this.reseller_commissionState)
+            //    console.log("this.reseller_commissionState", this.reseller_commissionState)
             this.suspend_state = response.proforma_details[j].suspend;
           }
 
@@ -1462,7 +1467,7 @@ export class InvoiceComponent implements OnInit {
   }
 
   getInvoice(data: any) {
-   // alert(1)
+    // alert(1)
     console.log("getinvoice")
     this.spinner.show();
     console.log("billerid", this.edit_array_SearchBiller_Checkbox);
@@ -3506,7 +3511,7 @@ export class InvoiceComponent implements OnInit {
         this.recuringStatus1 = response.reccuring_details.recurring_state;
         this.recurring_State_value1 = response.reccuring_details.recurring_state;
 
-       
+
 
         this.setResellerRecurringForm.patchValue({
 
@@ -4958,7 +4963,7 @@ export class InvoiceComponent implements OnInit {
     api_recurringUpd.recurring_date = this.setResellerRecurringForm.value.recurringDate;
     api_recurringUpd.recurring_date_checkbox = this.CBV_setResellerRecurring;
     api_recurringUpd.recurringDuration = this.setResellerRecurringForm.value.recurringDuration;
-    
+
 
     api_req.element_data = api_recurringUpd;
 
@@ -4971,17 +4976,17 @@ export class InvoiceComponent implements OnInit {
           message: "Set Reseller Recurring Details Updated Successfully",
           position: 'topRight'
         });
-       
+
         this.getInvoice1({});
-     
+
       } else {
         iziToast.warning({
           message: "Check Response",
           position: 'topRight'
         });
-      
+
         this.getInvoice1({});
-     
+
 
       }
     }),
@@ -4991,9 +4996,9 @@ export class InvoiceComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-      
+
         this.getInvoice1({});
-       
+
         console.log("final error", error);
       };
 

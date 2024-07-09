@@ -258,6 +258,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   }
   editMulInvPayGroup() {
     this.spinner.show();
+    console.log("this.edit_array",this.edit_array)
 
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
@@ -486,10 +487,13 @@ export class MultipleInvPaymentComponent implements OnInit {
   // console.log("paymentChildID",paymentChildID)
   // console.log("i",i)
   // console.log("this.edit_array---before slice",this.edit_array)
-    if (i > -1) {
-      this.edit_array.splice(i, 1);
-    }
-   // console.log("this.edit_array---after slice",this.edit_array)
+
+
+  
+    // if (i > -1) {
+    //   this.edit_array.splice(i, 1);
+    // }
+    console.log("this.edit_array---after slice",this.edit_array)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -527,6 +531,7 @@ export class MultipleInvPaymentComponent implements OnInit {
               message: "Deleted successfully",
               position: 'topRight'
             });
+          //  this.mulInvPaymentList({});
             this.editMulInvPayGroup();
 
             // this.contractList({});
@@ -711,7 +716,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       checkbox.checked = isChecked;
     });
 
-   // console.log("Checkbox-all", this.edit_array);
+   console.log("Checkbox-all", this.edit_array);
   }
 
 
@@ -738,7 +743,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
       }
     }
-  //  console.log("Final Checkbox After checkbox selected list", this.edit_array);
+    console.log("Final Checkbox After checkbox selected list", this.edit_array);
   }
 
   selectAll_pending(event: any, i: any) {
@@ -1305,9 +1310,42 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     // api_mulInvpay.values = api_mulInvpay1;
-    api_mulInvpay.invoice_amt = parseFloat(addressDataAtIndex.invoice_amt).toFixed(2);
-    api_mulInvpay.paid_amt = parseFloat(addressDataAtIndex.paid_amt).toFixed(2);
-    api_mulInvpay.bal_amount = parseFloat(addressDataAtIndex.bal_amount).toFixed(2);
+   
+    if(parseFloat(addressDataAtIndex.invoice_amt).toFixed(2)!='NaN'){
+      api_mulInvpay.invoice_amt = parseFloat(addressDataAtIndex.invoice_amt).toFixed(2);
+    }else{
+      this.spinner.hide();
+      iziToast.error({
+        message: "Invoice Amount Missing.Select Appropriate Customer",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+    if(parseFloat(addressDataAtIndex.paid_amt).toFixed(2)!='NaN'){
+      api_mulInvpay.paid_amt = parseFloat(addressDataAtIndex.paid_amt).toFixed(2);
+    }else{
+      this.spinner.hide();
+      iziToast.error({
+        message: "Paid Amount Missing.Select Appropriate Customer",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+    if(parseFloat(addressDataAtIndex.bal_amount).toFixed(2)!='NaN'){
+      api_mulInvpay.bal_amount = parseFloat(addressDataAtIndex.bal_amount).toFixed(2);
+    }else{
+      this.spinner.hide();
+      iziToast.error({
+        message: "Balance Amount Missing.Select Appropriate Customer",
+        position: 'topRight'
+      });
+      return false;
+
+    }
+    
+   
     api_mulInvpay.bill_id = addressDataAtIndex.bill_id;
 
 

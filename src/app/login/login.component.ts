@@ -40,18 +40,20 @@ export class LoginComponent implements OnInit {
   page_url: any;
   paramesh_ipAddress: any;
   qr_unique:any;
+  unixTimestamp: number;
+
   constructor(private router: Router, private route: ActivatedRoute, 
     private serverService: ServerService, private bnIdle: BnNgIdleService, 
     private spinner: NgxSpinnerService) {
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+        // console.log("params output value", params);
         this.code_val = params['code_val'];
         this.uscode = params['uscode'];
         this.page_url = params['pageurl'];
-        console.log(this.code_val);
-        console.log(this.uscode);
-        console.log(this.page_url);
+        // console.log(this.code_val);
+        // console.log(this.uscode);
+        // console.log(this.page_url);
         if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
           this.old_erp_login();
         }
@@ -59,23 +61,23 @@ export class LoginComponent implements OnInit {
       }
       );
     this.websocket = new WebSocket('wss://myscoket.mconnectapps.com:4006');
-    console.log("this.websocket",this.websocket)
+    // console.log("this.websocket",this.websocket)
     var s = this;
-    console.log('s', s);
+    // console.log('s', s);
     this.websocket.onopen = function (event: any) {
-      console.log('socket connected');
+    //   console.log('socket connected');
     };
     this.websocket.onmessage = function (event: any) {
-      console.log(event.data)
+    //   console.log(event.data)
       s.getdatas = JSON.parse(event.data);
-      console.log('socket detail', localStorage.getItem('erp_c4c_user_id'));
+      console.log('socket detail', s.getdatas['0']);
       console.log(s.getdatas['0'])
-      if (s.getdatas['0'].userId) {
-        if (localStorage.getItem('erp_c4c_user_id') == null) {
+      if (s.getdatas['0'].userId && s.getdatas['0'].unique_id_en) {
+        if (localStorage.getItem('unique_id_en') == s.getdatas['0'].unique_id_en) {
           // s.qr_unique = s.getdatas['0'].unique_id_en;
           s.qrLogin();
         }
-        this.websocket.onclose;
+      //  this.websocket.onclose;
       }
       // if(s.getdatas.login_status=="login_successful"){
       //   s.qrLogin();
@@ -83,15 +85,16 @@ export class LoginComponent implements OnInit {
 
     };
 
-    this.websocket.onerror = function (event: any) {
-      this.spinner.hide();
-      console.log('error');
-      console.log(event.message);
-    };
-    this.websocket.onclose = function (event: any) {
-      this.spinner.hide();
-      console.log('close');
-    };
+    this.websocket.onerror = (event: any) => {
+        this.spinner.hide();
+        // console.log('error');
+        // console.log(event.message);
+      };
+  
+      this.websocket.onclose = (event: any) => {
+        this.spinner.hide();
+        // console.log('close');
+      };
 
   }
   //  code_val=WXpSalgyOXNaR1Z5Y0E9PQ==&uscode=TXprPQ==
@@ -100,13 +103,14 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
     this.getIPAddress();
+    this.unixTimestamp = Math.floor(Date.now() / 1000);
     this.loginForm = new FormGroup({
       username: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required),
       verify_otp_ctrl: new FormControl(null),
 
     });
-    this.subscribes('');
+   this.subscribes('');
 
   }
 
@@ -137,7 +141,7 @@ export class LoginComponent implements OnInit {
       this.spinner.hide();
       if (response != '') {
         this.paramesh_ipAddress=response;
-        console.log(" this.paramesh_ipAddress", this.paramesh_ipAddress)
+        // console.log(" this.paramesh_ipAddress", this.paramesh_ipAddress)
 
       } else {
         iziToast.warning({
@@ -151,7 +155,7 @@ export class LoginComponent implements OnInit {
         message: "Error",
         position: 'topRight'
       });
-      console.log("error",error)
+    //   console.log("error",error)
 
     };
 
@@ -176,13 +180,13 @@ export class LoginComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       $("#u_id").val(response.userId);
-      console.log("response", response);
+    //   console.log("response", response);
       this.loginDetails = response;
       this.userID = response.userId;
       this.userName = response.firstName;
       this.role = response.role;
 
-      console.log($("#u_id").val());
+    //   console.log($("#u_id").val());
       // return false;
       if ($("#u_id").val() != '') {
         localStorage.setItem('access_token', 'test')
@@ -193,7 +197,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('profile_image', response.profile_image)
         localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
 
-        console.log("profile_image", alert);
+        // console.log("profile_image", alert);
         this.router.navigate(['/']);
       }
 
@@ -236,14 +240,14 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('role', response.role)
       localStorage.setItem('profile_image', response.profile_image);
     //  localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
-      console.log("profile_image", alert);
-      console.log("olderp-login response", response)
+    //   console.log("profile_image", alert);
+    //   console.log("olderp-login response", response)
       if (response.userId != '') {
         setTimeout(() => {
           var k = '{"data":"reload_profile_data"}';
           this.serverService.reload_profile.next(k);
           // var v = btoa(this.page_url);
-          console.log('/' + this.page_url);
+        //   console.log('/' + this.page_url);
           // return false;
           this.router.navigate(['/' + this.page_url], { queryParams: { ids: btoa(response.userId) } });
           // this.router.navigate(['/'],{ queryParams: { ids: btoa(response.userId)}});
@@ -263,15 +267,17 @@ export class LoginComponent implements OnInit {
       this.level = 'M';
       this.width = 256;
       this.datas = uuidv4();
-      console.log("unique id from angular", this.datas)
-      this.typess = btoa('erp');
+    //   console.log("unique id from angular", this.datas)
+      localStorage.setItem('unique_id_en',this.datas);
+      this.typess = "ERP_login";//btoa('erp');
 
-      const data = [
+      const data = 
         {
           type: this.typess,
-          address: this.datas,
-        },
-      ];
+          unique_id: this.datas,
+          time:this.unixTimestamp
+        }
+      
 
 
 
@@ -320,8 +326,8 @@ export class LoginComponent implements OnInit {
     loginFormapi_req.username = this.loginForm.value.username;
     loginFormapi_req.password = this.loginForm.value.password;
     api_req.element_data = loginFormapi_req;
-    console.log("api req", api_req)
-    console.log("loginFormapi_req", loginFormapi_req)
+    // console.log("api req", api_req)
+    // console.log("loginFormapi_req", loginFormapi_req)
     // return false;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -360,7 +366,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('role', response.role)
         localStorage.setItem('profile_image', response.profile_image)
         localStorage.setItem('payment_transaction_reports', response.payment_transaction_reports)
-        console.log("profile_image", alert);
+        // console.log("profile_image", alert);
 
 
         if (this.userID != '') {

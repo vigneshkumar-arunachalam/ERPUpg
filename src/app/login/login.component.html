@@ -31,7 +31,10 @@
                                     <!-- <button type="button"  class="btn btn-danger btnchn" ></button> -->
                             </div>
                             <div *ngIf="!expired" style="font-size:12px;color:#FFF;padding:20px;text-align:center">
-                                <qr-code [value]="qrdata" [size]="width" [level]="level" style="display: flex;justify-content: center;"></qr-code>
+                                <qr-code [value]="qrdata" [size]="width" [level]="level" 
+                                style="display: flex;justify-content: center;">
+                                </qr-code>
+                                
                                 SCAN WITH CAL4CARE GROUPS MOBILE<br>
                                 No more remembering passwords! </div>
                         </div>

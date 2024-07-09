@@ -230,6 +230,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   ShipAdr11: any;
   ShipAdr21: any;
   ShipAdr31: any;
+  ShipAdr41: any;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -960,7 +961,7 @@ export class EditinvoiceDIDComponent implements OnInit {
       if (response.status == true) {
         this.addDid_section1.patchValue({
           // 'companyName':  this.billerID,
-          'invoiceNo': response.invoice_no,
+       //   'invoiceNo': response.invoice_no,
         //  'Currency': response.currency_id,
 
 
@@ -1419,10 +1420,10 @@ export class EditinvoiceDIDComponent implements OnInit {
   
           this.custAdr1=response.customer_details.customerAddress1;
           this.custAdr2=response.customer_details.customerAddress2;
-          this.custAdr3=response.customer_details.city;
+          this.custAdr3=response.customer_details.customerAddress3;
           this.ShipAdr1=response.customer_details.ship_customerAddress1;
           this.ShipAdr2=response.customer_details.ship_customerAddress2;
-          this.ShipAdr3=response.customer_details.ship_city;
+          this.ShipAdr3=response.customer_details.ship_customerAddress3;
   
           if(this.ShipAdr1==null || this.ShipAdr1=='' || this.ShipAdr1=='undefined' || this.ShipAdr1==undefined){
             this.shipAddress1_Final=this.custAdr1
@@ -1452,9 +1453,16 @@ export class EditinvoiceDIDComponent implements OnInit {
           console.log("ship to",  this.ship_to_str_Final)
           
           this.did_bill_code_section15 = response.customer_billcode_arr;
-          console.log("haripriyaaa",this.did_bill_code_section15);
- 
-      
+          console.log("billcode",this.did_bill_code_section15);
+          this.custAdr11=response.customer_details.customerAddress1;
+          this.custAdr21=response.customer_details.customerAddress2;
+          this.custAdr31=response.customer_details.customerAddress3;
+
+          this.ShipAdr11=response.customer_details.ship_customerAddress1;
+          this.ShipAdr21=response.customer_details.ship_customerAddress2;
+          this.ShipAdr31=response.customer_details.ship_customerAddress3;
+          this.ShipAdr41=response.customer_details.ship_to;
+
           this.addDid_section1.patchValue({
             'address_1': response.customer_details.customerAddress1,
             'address_2': response.customer_details.customerAddress2,
@@ -1520,10 +1528,11 @@ export class EditinvoiceDIDComponent implements OnInit {
         if (response.status == true) {
           this.custAdr1=response.customer_details.customerAddress1;
           this.custAdr2=response.customer_details.customerAddress2;
-          this.custAdr3=response.customer_details.city;
+          this.custAdr3=response.customer_details.customerAddress3;
           this.ShipAdr1=response.customer_details.ship_customerAddress1;
           this.ShipAdr2=response.customer_details.ship_customerAddress2;
-          this.ShipAdr3=response.customer_details.ship_city;
+          this.ShipAdr3=response.customer_details.ship_customerAddress3;
+          this.ShipAdr41=response.customer_details.ship_to;
           this.did_bill_code_section15 = response.customer_billcode_arr;
          // console.log("bill code-did_bill_code_section15",this.did_bill_code_section15);
   
@@ -1553,6 +1562,14 @@ export class EditinvoiceDIDComponent implements OnInit {
           // console.log("shipAddress2",this.shipAddress2_Final)
           // console.log("shipAddress3", this.shipAddress3_Final)
           // console.log("ship to",  this.ship_to_str_Final)
+          this.custAdr11=response.customer_details.customerAddress1;
+          this.custAdr21=response.customer_details.customerAddress2;
+          this.custAdr31=response.customer_details.customerAddress3;
+
+          this.ShipAdr11=response.customer_details.ship_customerAddress1;
+          this.ShipAdr21=response.customer_details.ship_customerAddress2;
+          this.ShipAdr31=response.customer_details.ship_customerAddress3;
+
           this.addDid_section1.patchValue({
             'address_1': response.customer_details.customerAddress1,
             'address_2': response.customer_details.customerAddress2,
@@ -1785,6 +1802,11 @@ export class EditinvoiceDIDComponent implements OnInit {
       this.ShipAdr11=ship_address_break[0];
       this.ShipAdr21=ship_address_break[1];
       this.ShipAdr31=ship_address_break[2];
+      this.ShipAdr41=response.billing_pararent_details[0].s_name;
+      console.log("this.ShipAdr11",this.ShipAdr11);
+      console.log("this.ShipAdr21",this.ShipAdr21);
+      console.log("this.ShipAdr31",this.ShipAdr31);
+
       
        // alert(response.billing_pararent_details[0].did_bill_code)
         $('#sub_total_1').val(response.fixed_subtotal.toFixed(2));
@@ -1802,6 +1824,7 @@ export class EditinvoiceDIDComponent implements OnInit {
           'address_2': this.custAdr21,
           'address_3': this.custAdr31,
           'Attn_1': response.billing_pararent_details[0].b_attn,
+          'ship_to': response.billing_pararent_details[0].s_name,
           'shipTo_1':this.ShipAdr11,
           'shipTo_2':this.ShipAdr21,
           'shipTo_3':this.ShipAdr31,
@@ -2106,6 +2129,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   }
 
   updateDidInvoice() {
+   
     this.spinner.show();
     let api_req: any = new Object();
     let api_updateDid_req: any = new Object();
@@ -2136,7 +2160,7 @@ export class EditinvoiceDIDComponent implements OnInit {
     // api_updateDid_req.billerId = this.addDid_section1.value.companyName;
     api_updateDid_req.company = this.BillerID_CompanyName;
     api_updateDid_req.billerId = this.BillerID_CompanyName;
-    api_updateDid_req.invoice_no = this.addDid_section1.value.invoiceNo;
+    api_updateDid_req.invoice_no = $('#inv_no').val();
 
     api_updateDid_req.customer_invoice_no = this.addDid_section1.value.cusInvoiceNo;
     api_updateDid_req.cus_invoice_no = $('#cusInvNo').val();
@@ -2180,31 +2204,36 @@ export class EditinvoiceDIDComponent implements OnInit {
     api_updateDid_req.b_address3 = this.addDid_section1.value.address_3;
 
    // api_updateDid_req.s_name = $('#shipto_editInvDID').val();
-    if (this.addDid_section1.value.ship_to == undefined) {
-      api_updateDid_req.s_name =  this.ship_to_str_Final;
-
+    if (this.ShipAdr41 == undefined) {
+      api_updateDid_req.s_name =  this.addDid_section1.value.ship_to;
     }
     else {
-      api_updateDid_req.s_name = this.addDid_section1.value.ship_to;
+      api_updateDid_req.s_name = this.ShipAdr41
     }
 
-
-    if(this.addDid_section1.value.shipTo_1==null){
-      api_updateDid_req.s_address1 =this.shipAddress1_Final 
+    api_updateDid_req.s_address1 = this.addDid_section1.value.shipTo_1;
+    api_updateDid_req.s_address2 = this.addDid_section1.value.shipTo_2;
+    api_updateDid_req.s_address3 = this.addDid_section1.value.shipTo_3;
+    if(this.ShipAdr11==undefined ){
+      api_updateDid_req.s_address1 = this.addDid_section1.value.shipTo_1;
     }else{
-      api_updateDid_req.s_address1 = this.addDid_section1.value.shipTo_1
-    }
-    if(this.addDid_section1.value.shipTo_2==null){
-      api_updateDid_req.s_address2 =this.shipAddress2_Final 
-    }else{
-      api_updateDid_req.s_address2 = this.addDid_section1.value.shipTo_2
+      api_updateDid_req.s_address1 = this.ShipAdr11;
     }
 
-    if(this.addDid_section1.value.shipTo_3==null){
-      api_updateDid_req.s_address3 =this.shipAddress3_Final 
+    if(this.ShipAdr21==undefined ){
+      api_updateDid_req.s_address2 = this.addDid_section1.value.shipTo_2;
     }else{
-      api_updateDid_req.s_address3 = this.addDid_section1.value.shipTo_3
+      api_updateDid_req.s_address2 = this.ShipAdr21;
     }
+    if(this.ShipAdr31==undefined ){
+      api_updateDid_req.s_address3 = this.addDid_section1.value.shipTo_3;
+    }else{
+      api_updateDid_req.s_address3 = this.ShipAdr31;
+    }
+  
+    // api_updateDid_req.s_address2 = this.ShipAdr21;
+    // api_updateDid_req.s_address3 = this.ShipAdr31;
+ 
     // api_updateDid_req.s_address1 = this.addDid_section1.value.ship_address_1;
     // api_updateDid_req.s_address2 = this.addDid_section1.value.ship_address_2;
     // api_updateDid_req.s_address3 = this.addDid_section1.value.ship_address_3;
