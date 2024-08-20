@@ -37,8 +37,24 @@ export class TransactionnewComponent implements OnInit {
   AdvanceSearchResult: any;
   isReadOnly:boolean=false;
   commentTransactionID: any;
+  transactionTypeNumber: any;
+  PC_Description: any;
+  PC_Type: any;
+  PC_Amount: any;
+  PC_Comments: any;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
+    // Declare dynamic variables
+    purchaseEntryNo: string;
+    vendorName: string;
+    invoiceNo: string;
+    contentOfPurchase: string;
+    poNumber: string;
+    currency: string;
+    currencyConversionRate: string;
+    taxAmount: string;
+    invoiceAmount: string;
+    comments: string;
   ngOnInit(): void {
     this.searchTransactionForm = new FormGroup({
       'search_billerName1': new FormControl(null),
@@ -84,6 +100,17 @@ export class TransactionnewComponent implements OnInit {
       'transaction_comments': new FormControl(null),
      
     });
+      // Initialize dynamic variables with default values
+      // this.purchaseEntryNo = '12345';
+      // this.vendorName = 'Vendor Inc.';
+      // this.invoiceNo = 'INV001';
+      // this.contentOfPurchase = 'Office Supplies';
+      // this.poNumber = 'PO123';
+      // this.currency = 'USD';
+      // this.currencyConversionRate = '1.0';
+      // this.taxAmount = '100';
+      // this.invoiceAmount = '1100';
+      // this.comments = 'N/A';
   }
   addtransactionGo() {
     this.router.navigate(['/AddTransactionNew'])
@@ -378,23 +405,32 @@ export class TransactionnewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
         this.spinner.hide();
-      
-      //  $("#TransactionManagementViewId").modal("hide");
+        this.transactionTypeNumber=response.type_of_trans;
         this.TransactionManagementViewForm.patchValue({
           'view_billerName': response.billerId,
           'view_Date': response.transaction_date,
           'view_priority': response.priority,
-          'view_PurchaseEntryNo': response.purchase_entry.purchaseEntryNo,
-          'view_VendorName': response.purchase_entry.vendorName,
-          'view_InvoiceNo': response.purchase_entry.invoiceNo,
-          'view_ContentofPurchase': response.purchase_entry.content_purchase,
-          'view_PONumber': response.purchase_entry.poNo,
-          'view_Currency': response.purchase_entry.currencyName,
-          'view_CurrencyConversionRate': response.purchase_entry.conversionRate,
-          'view_TaxAmount': response.purchase_entry.taxAmount,
-          'view_InvoiceAmount': response.purchase_entry.invoiceAmount,
-          'view_Comments':response.commands,
         });
+      //  $("#TransactionManagementViewId").modal("hide");
+      if(this.transactionTypeNumber==3){  
+        this.purchaseEntryNo = response.purchase_entry.purchaseEntryNo;
+        this.vendorName = response.purchase_entry.vendorName;
+        this.invoiceNo = response.purchase_entry.invoiceNo;
+        this.contentOfPurchase = response.purchase_entry.content_purchase;
+        this.poNumber = response.purchase_entry.poNo;
+        this.currency = response.purchase_entry.currencyName;
+        this.currencyConversionRate = response.purchase_entry.conversionRate;
+        this.taxAmount = response.purchase_entry.taxAmount;
+        this.invoiceAmount = response.purchase_entry.invoiceAmount;
+        this.comments = response.commands;
+      }  else if(this.transactionTypeNumber==5){
+        this.PC_Description=response.petty_cash.description;
+        this.PC_Type=response.petty_cash.type;
+        this.PC_Amount=response.petty_cash.amount;
+         this.PC_Comments=response.commands;
+         this.comments = response.commands;
+      }
+     
 
       } else {
         this.spinner.hide();

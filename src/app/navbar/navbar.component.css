@@ -34,6 +34,11 @@
   color: rgb(240 241 219);
   box-shadow: none;
 }
+#sendtoPostFormId tr:hover{
+  background-color: #f8efbd;
+}
+
+
 
 
 
@@ -483,4 +488,194 @@ border-radius: 50%;
   margin-bottom: 0;
   
 }
+
+.count{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 12px;
+    position: absolute;
+    top: -6px;
+    right: -14px;
+}
+.countRight{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: white; */
+    background: #a1f78df0;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 12px;
+    position: absolute;
+    top: -10px;
+    right: -16px;
+}
+.countRightBottom{
+  display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background: white; */
+    background: #eaadb3f0;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 12px;
+    position: absolute;
+    top: 26px;
+    right: -14px;
+}
+.countLeft {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: white; */
+  background: #f7cbf4f0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 12px;
+  position: absolute;
+  top: -10px;
+  right: 20px;
+}
+.countLeftBottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background: white; */
+  background: #ccf2eaf0;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 12px;
+  position: absolute;
+  top: 26px;
+  right: 20px;
+}
+
+
+
+/* Add some basic styles for the dropdown */
+.dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-menu li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.dropdown-menu li:hover {
+  text-transform: capitalize;
+}
+
+.show-menu {
+  display: block;
+}
+
+
+.badge.badge-lg,.dropdown-menu li {
+  display: flex;
+  align-items: center;
+}
+
+.email-cc-template{
+  height:150px;
+  overflow-y: scroll;
+}
+
+#RecuredInvoiceListFormId  .modal-dialog{
+  min-width: 80%;
+} 
+
+
+#ResellerRecuringFormId  .modal-dialog{
+  min-width: 80%;
+} 
+#RecuringInvoiceFormId .modal-dialog{
+  min-width: 80%;
+} 
+
+#RecurringInvoicenewFormId .modal-dialog{
+  min-width: 80%;
+} 
+#getRevenueDataListFormId .modal-dialog{
+  min-width: 100%;
+}
+
+#RecuringInvoiceFormId tr:nth-child(even):hover,#RecurringInvoicenewFormId tr:nth-child(even):hover,
+#ResellerRecuringFormId tr:nth-child(even):hover,#getRevenueDataListFormId tr:nth-child(even):hover,
+#RecuredInvoiceListFormId tr:nth-child(even):hover
+{
+  background: linear-gradient(to right, #c9f1a2, #df97b4);
+}
+
+#RecuringInvoiceFormId tr:nth-child(odd):hover,#RecurringInvoicenewFormId tr:nth-child(odd):hover,
+#ResellerRecuringFormId tr:nth-child(odd):hover,#getRevenueDataListFormId tr:nth-child(odd):hover,
+#RecuredInvoiceListFormId tr:nth-child(odd):hover
+ {
+  background: linear-gradient(to right, #f5fb97, #fcb35f);
+}
+
+#RecuringInvoiceFormId tr:hover td,#RecurringInvoicenewFormId tr:hover td,
+#ResellerRecuringFormId tr:hover td,#getRevenueDataListFormId tr:hover td,
+#RecuredInvoiceListFormId tr:hover td
+ {
+  color: #0000;
+  background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background 2s, color 2s;
+}
+#RecuringInvoiceFormId .userDatatable table tbody tr td,#RecurringInvoicenewFormId .userDatatable table tbody tr td,
+#ResellerRecuringFormId .userDatatable table tbody tr td,#getRevenueDataListFormId .userDatatable table tbody tr td,
+#RecuredInvoiceListFormId .userDatatable table tbody tr td {
+  border: 1px solid #C5D9E0;
+}
+#RecuringInvoiceFormId .userDatatable table thead tr th,#RecurringInvoicenewFormId .userDatatable table thead tr th,
+#ResellerRecuringFormId .userDatatable table thead tr th,#getRevenueDataListFormId .userDatatable table thead tr th,
+#RecuredInvoiceListFormId .userDatatable table thead tr th {
+  border: 1px solid #ebf2f4;
+}
+
+
+#getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(6),
+#getRevenueDataListFormId .userDatatable table  tr th:nth-child(6){
+  width: 20%;
+  white-space: normal;
+}
+#getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(2),
+#getRevenueDataListFormId .userDatatable table  tr th:nth-child(2),
+#getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(3),
+#getRevenueDataListFormId .userDatatable table  tr th:nth-child(3),
+#getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(4),
+#getRevenueDataListFormId .userDatatable table  tr th:nth-child(4),
+#getRevenueDataListFormId .userDatatable table tbody tr td:nth-child(5),
+#getRevenueDataListFormId .userDatatable table  tr th:nth-child(5){
+  width: 10%;
+}
+#getRevenueDataListFormId .modal-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 0px 1.75rem;
+}
+
+
 

@@ -550,8 +550,8 @@ datavalue:any;
            // alert('ttt'+response.quotation_child_det[index].header_split);
         
           formArray.push(this.fb.group({
-            "pd_productName_autocomplete": response.quotation_child_det[index].productName,
-            "pd_split": response.quotation_child_det[index].header_split,
+             "pd_productName_autocomplete": response.quotation_child_det[index].productName_desc,
+          //  "pd_split": response.quotation_child_det[index].header_split,
             "pd_productName_txtbox1": response.quotation_child_det[index].productName,
             "pd_productName_txtArea": response.quotation_child_det[index].productDesc,
             "pd_quantity_txtbox1": response.quotation_child_det[index].qty,
@@ -563,7 +563,7 @@ datavalue:any;
             "sub_dis_amt": response.quotation_child_det[index].dis_amt,
             "sub_dis_type": this.sub_dis_type,
             "sub_dis_val":  this.sub_dis_val,
-        //    "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
+            "pd_split": response.quotation_child_det[index].header_split == 1 ? true : false,
             "pd_GPTotal": response.quotation_child_det[index].group_total_display_status == 1 ? true : false,
             "pd_selectTax": response.quotation_child_det[index].tax_state == 1 ? true : false,
             "to_next_page": response.quotation_child_det[index].to_next_page == 1 ? true : false,
@@ -573,7 +573,8 @@ datavalue:any;
 
           
           
-          );   
+          );  
+          this.set_display_none(index); 
 
           
         }
@@ -643,19 +644,29 @@ datavalue:any;
         
         
 
-          for (let index = 0; index < response.quotation_child_det.length; index++) {
+          // for (let index = 0; index < response.quotation_child_det.length; index++) {
       
-             if(response.quotation_child_det[index].header_split == 1){
+          //    if(response.quotation_child_det[index].header_split == 1){
 
-              $('#pd_split_'+[index]).prop('checked',false);
-              setTimeout(()=>{
-                $('#pd_split_'+[index]).click();
-              },1000);
+          //     $('#pd_split_'+[index]).prop('checked',false);
+          //     setTimeout(()=>{
+          //       $('#pd_split_'+[index]).click();
+          //     },1000);
 
           
-              }          
-           }
+          //     }else{
+          //     $('#pd_split_'+[index]).prop('checked',false);
+
+
+          //     }          
+          //  }
         
+          for(let index = 0; index < response.quotation_child_det.length; index++){
+            setTimeout(()=>{
+              this.set_display_none(index);
+                  },1000);
+
+          }
 
 
       //         setTimeout(()=>{
@@ -924,9 +935,13 @@ datavalue:any;
 
     var addr = this.addQuotationInvoice_section2.value.addresses;
     for (let i = 0; i < addr.length; i++) {
+      const addressesArray = this.addQuotationInvoice_section2.get('addresses') as FormArray;
      // console.log(addr[i].pd_quantity_txtbox1)
       addr[i].pd_quotationChildId = $('#pd_quotationChildId_' + i).val();
       addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
+      // addr[i].pd_productName_autocomplete = $('#productName_autoCompl_' + i).val();
+      addr[i].pd_productName_autocomplete = addressesArray.at(i).get('pd_productName_autocomplete')?.value;
+      console.log("autocomplete quot",addr[i].pd_productName_autocomplete)
       addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
       addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
       addr[i].pd_sellingPrice = $('#pd_SP_' + i).val();
@@ -995,7 +1010,6 @@ datavalue:any;
 
     //  console.log("add quotation new save", response);
       if (response.status == true) {
-
         iziToast.success({
           title: 'Updated',
           message: 'Quotation Updated Successfully !',

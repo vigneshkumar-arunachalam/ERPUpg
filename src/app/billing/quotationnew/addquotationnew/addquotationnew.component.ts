@@ -903,9 +903,12 @@ export class AddquotationnewComponent implements OnInit {
           return false;
 
         }
-
+        const addressesArray = this.addQuotationInvoice_section2.get('addresses') as FormArray;
+      
        // console.log(addr[i].pd_quantity_txtbox1)
         addr[i].pd_productName_txtbox1 = $('#pd_productName_txtbox_' + i).val();
+        addr[i].pd_productName_autocomplete = addressesArray.at(i).get('pd_productName_autocomplete')?.value;
+         // addr[i].pd_productName_autocomplete = $('#productName_autoComple_' + i).val();
         addr[i].pd_productName_txtArea = $('#pd_productName_txtArea_' + i).val();
         addr[i].pd_quantity_txtbox1 = $('#pd_qty_' + i).val();
         addr[i].pd_sellingPrice = $('#pd_SP_' + i).val();
@@ -913,8 +916,7 @@ export class AddquotationnewComponent implements OnInit {
         addr[i].pd_Total = $('#pd_Total_' + i).val();
         addr[i].sub_dis_type = $('#sub_discount_type_' + i).val();
         addr[i].sub_dis_val = $('#sub_discount_val_' + i).val();
-        addr[i].sub_discount = $('#sub_discount_' + i).val();
-
+        addr[i].sub_discount = $('#sub_discount_' + i).val()
       }
 
 
@@ -924,10 +926,7 @@ export class AddquotationnewComponent implements OnInit {
 
       ($event.target as HTMLButtonElement).disabled = true;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-
         ($event.target as HTMLButtonElement).disabled = false;
-
        // console.log("add quotation new save", response);
         if (response.status == true) {
 

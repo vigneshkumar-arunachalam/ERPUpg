@@ -62,11 +62,17 @@ export class InvoicereportsoldComponent implements OnInit {
   redirect_status: any;
   fromDate1: string;
   Todt1: string;
+  IR_searchResult: any;
+  IR_CustomerName: any;
+  IR_CustomerID: any;
+  response_total_cnt: any;
+  response_total_cnt_print: any;
+  tax: any;
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
     private spinner: NgxSpinnerService, private injector: Injector, private http: HttpClient,
     private route: ActivatedRoute,
     private excelExportService: ExcelExportService, private fileDownloadService: FileDownloadService) { }
-
+    IR_keywordCompanyName = 'customerName';
   ngOnInit(): void {
     const currentDate = new Date().toISOString().split('T')[0];
     this.invoiceReportOld = new FormGroup({
@@ -93,23 +99,28 @@ export class InvoicereportsoldComponent implements OnInit {
     this.invoiceReportDetails();
     this.route.queryParams
       .subscribe(params => {
-
+console.log("params",params)
         this.Fromdt = params['Fromdt'];
         this.Todt = params['Todt'];
         this.billerId = params['billerId'];
+        this.sdn=params['billerId'];
         this.invoiceType = params['invoiceType'];
         this.performaType = params['performaType'];
         this.redirect_status = params['redirect_status'];
-        console.log("this.Fromdt inside onInit", this.Fromdt);
-        console.log("this.Todt inside onInit", this.Todt);
-        console.log("this.billerId inside onInit", this.billerId);
-        console.log("this.invoiceType inside onInit", this.invoiceType);
-        console.log("this.performaType inside onInit", this.performaType);
-        console.log("this.redirect_status inside onInit", this.redirect_status);
+        this.tax=params['tax'];
+         this.sdnTaxValue=params['tax'];
+        // console.log("this.Fromdt inside onInit", this.Fromdt);
+        // console.log("this.Todt inside onInit", this.Todt);
+        // console.log("this.billerId inside onInit", this.billerId);
+        // console.log("this.invoiceType inside onInit", this.invoiceType);
+        // console.log("this.performaType inside onInit", this.performaType);
+        // console.log("this.redirect_status inside onInit", this.redirect_status);
         //  this.getInvoiceReport();
       }
       );
+      this.getCustomer_initial(this.sdn);
     this.getInvoiceReport();
+   
     this.dataList = [
       { name: 'John', age: 30, email: 'john@example.com' },
       { name: 'Jane', age: 25, email: 'jane@example.com' },
@@ -118,6 +129,15 @@ export class InvoicereportsoldComponent implements OnInit {
     setTimeout(() => {
       this.function1();
     }, 6000);
+    if(!this.tax){
+      alert(this.tax)
+      setTimeout(() => {
+        alert("coming")
+        this.invoiceReportOld.patchValue({
+          'IR_taxssn':this.tax
+        });
+      }, 7000);
+    }
   }
   exportToExcel(): void {
     this.excelExportService.exportAsExcelFile(this.getInvoiceReportList, 'Sample');
@@ -174,20 +194,73 @@ export class InvoicereportsoldComponent implements OnInit {
         this.toDate = this.datePipe.transform(date2, 'yyyy-MM-dd');
         this.default_status_id = response.default_status_id;
         this.performa_type_id = response.performa_type_id;
-        this.sdn == response.default_biller_id;
-
+        this.sdn = response.default_biller_id;
+      
         this.invoiceReportOld.patchValue({
           'IR_From': this.fromDate,
           'IR_To': this.toDate,
           'IR_BillerName': response.default_biller_id,
           'IR_InvoiceType': response.default_status_id,
           'IR_InvoiceTypePerformaSales': response.performa_type_id,
+          'IR_taxssn':this.tax
         });
 
       } else {
         this.spinner.hide();
         iziToast.warning({
           message: "No Data Found",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        if (error.status === 500) {
+          this.spinner.hide();
+          iziToast.error({
+            message: "Sorry, a server error(500) occurred. Please try again later.",
+            position: 'topRight'
+          });
+        }
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  getCustomer_initial(billerId: any) {
+    this.spinner.show();
+    
+    this.sdn = billerId;
+
+
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "reports/getCustomer"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "reports/getCustomer";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_mulInvpay.billerId = billerId;
+
+    // api_mulInvpay.customerId ='';
+
+
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response != '') {
+        this.spinner.hide();
+        this.customerList = response.customer_data;
+        this.Taxnew = response.taxes;
+       // this.invoiceReportOld.controls['IR_CustomerName'].reset();
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "List Loading Failed",
           position: 'topRight'
         });
       }
@@ -337,7 +410,9 @@ export class InvoicereportsoldComponent implements OnInit {
         'IR_BillerName': this.billerId,
         'IR_InvoiceType': this.invoiceType,
         'IR_InvoiceTypePerformaSales': this.performaType,
+        'IR_taxssn':this.tax
       });
+      this.sdn=this.billerId;
     }
   }
   
@@ -353,6 +428,8 @@ export class InvoicereportsoldComponent implements OnInit {
     console.log("this.billerId-inside list report", this.billerId);
     console.log("this.invoiceType-inside list report", this.invoiceType);
     console.log("this.performaType-inside list report", this.performaType);
+    console.log("this.tax-inside list report", this.tax);
+    console.log("this.sdnTaxValue-inside list report", this.sdnTaxValue);
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "invoice";
@@ -371,7 +448,8 @@ export class InvoicereportsoldComponent implements OnInit {
       api_mulInvpay.billerId = this.invoiceReportOld.value.IR_BillerName;
     }
 
-    api_mulInvpay.customerId = this.invoiceReportOld.value.IR_CustomerName;
+   // api_mulInvpay.customerId = this.invoiceReportOld.value.IR_CustomerName;
+    api_mulInvpay.customerId =  this.IR_CustomerID;
     api_mulInvpay.billId = this.invoiceReportOld.value.IR_InvoiceNumber;
     if (this.redirect_status == 0 || this.redirect_status == '0') {
       api_mulInvpay.invoiceType = this.invoiceType;
@@ -418,6 +496,8 @@ export class InvoicereportsoldComponent implements OnInit {
         this.spinner.hide();
         this.getInvoiceReportList = response.reportsData.reports;
         this.getInvoiceReportTotals = response.reportsData.totals;
+        this.response_total_cnt=response.total_cnt;
+
         this.outputTax = response.tax;
 
         // this.withoutTaxValue=false;
@@ -462,7 +542,7 @@ export class InvoicereportsoldComponent implements OnInit {
       queryParams: {
 
         billerId: this.invoiceReportOld.value.IR_BillerName,
-        customerId: this.invoiceReportOld.value.IR_CustomerName,
+        customerId:this.IR_CustomerID ,
         billId: this.invoiceReportOld.value.IR_InvoiceNumber,
         invoiceType: this.invoiceReportOld.value.IR_InvoiceType,
         performaType: this.invoiceReportOld.value.IR_InvoiceTypePerformaSales,
@@ -498,7 +578,8 @@ export class InvoicereportsoldComponent implements OnInit {
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
     api_mulInvpay.billerId = this.invoiceReportOld.value.IR_BillerName;
-    api_mulInvpay.customerId = this.invoiceReportOld.value.IR_CustomerName;
+    // api_mulInvpay.customerId = this.invoiceReportOld.value.IR_CustomerName;this.IR_CustomerID
+    api_mulInvpay.customerId = this.IR_CustomerID;
     api_mulInvpay.billId = this.invoiceReportOld.value.IR_InvoiceNumber;
     api_mulInvpay.invoiceType = this.invoiceReportOld.value.IR_InvoiceType;
     api_mulInvpay.performaType = this.invoiceReportOld.value.IR_InvoiceTypePerformaSales;
@@ -521,6 +602,8 @@ export class InvoicereportsoldComponent implements OnInit {
         this.printPreviewSubTotals = response.reportsData.subtotals;
         this.printPreviewTotals = response.reportsData.totals;
         this.outputTaxPrint = response.tax;
+        this.sdnTaxValue=response.tax;
+        this.response_total_cnt_print=response.total_cnt;
 
         // this.withoutTaxValue=false;
         // this.without2TaxValue=false;
@@ -626,7 +709,8 @@ export class InvoicereportsoldComponent implements OnInit {
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
 
     api_mulInvpay.billerId = this.invoiceReportOld.value.IR_BillerName;
-    api_mulInvpay.customerId = this.invoiceReportOld.value.IR_CustomerName;
+    //api_mulInvpay.customerId = this.invoiceReportOld.value.IR_CustomerName;
+    api_mulInvpay.customerId = this.IR_CustomerID;
     api_mulInvpay.billId = this.invoiceReportOld.value.IR_InvoiceNumber;
     api_mulInvpay.invoiceType = this.invoiceReportOld.value.IR_InvoiceType;
     api_mulInvpay.performaType = this.invoiceReportOld.value.IR_InvoiceTypePerformaSales;
@@ -680,6 +764,65 @@ export class InvoicereportsoldComponent implements OnInit {
         });
         console.log("final error", error);
       };
+  }
+  IR_searchCustomerData(data: any) {
+
+    let api_req: any = new Object();
+    let api_Search_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "reports/getCustomer";
+    // api_req.api_url = "customer/cal/customer_name_search";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_Search_req.action = "reports/getCustomer";
+    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_Search_req.customerName = data;
+    api_Search_req.billerId= this.sdn;
+    api_req.element_data = api_Search_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+
+      if (response != '') {
+        this.IR_searchResult = response.customer_data;
+        console.log(" this.searchResult", this.IR_searchResult)
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  IR_selectEventCustomer(item: any) {
+    this.IR_searchResult = item.customerName;
+    console.log(item.customerId)
+    console.log(item.customerName)
+
+    this.IR_CustomerName = item.customerName;
+    this.IR_CustomerID = item.customerId;
+    // do something with selected item
+  }
+
+  IR_onFocusedCustomer(e: any) {
+    // do something when input is focused
+    console.log(e)
+  }
+  IR_clearSelection(e:any){
+    this.IR_searchResult = '';
+    this.IR_CustomerName = '';
+    this.IR_CustomerID = '';
   }
 
 

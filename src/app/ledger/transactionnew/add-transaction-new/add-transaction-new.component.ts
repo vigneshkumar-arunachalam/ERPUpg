@@ -351,7 +351,7 @@ export class AddTransactionNewComponent implements OnInit {
 
   addLoad() {
 
-
+this.spinner.show();
     let api_req: any = new Object();
     let api_loadAdd: any = new Object();
     api_req.moduleType = "purchase_entry_addnew";
@@ -371,7 +371,7 @@ export class AddTransactionNewComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response != '') {
-
+        this.spinner.hide();
         this.currencyDetails = response.currency_det;
         this.billerDetails = response.biller_det;
         this.vendorDetails = response.vendor_det;
@@ -394,14 +394,14 @@ export class AddTransactionNewComponent implements OnInit {
           'billerName': this.DefaultBillerIDValue,
           'PE_purchaseEntryNo': response.purchase_entry_no,
           'PE_Currency': currencyID,
-          'PE_currencyConversionRate': response.currency_converstion,
+          'PE_currencyConversionRate': response.conversionRate[0].currency_live_val,
 
         });
 
 
 
       } else {
-
+        this.spinner.hide();
 
         iziToast.warning({
           message: "Invoice Type Details not displayed. Please try again",
@@ -410,6 +410,7 @@ export class AddTransactionNewComponent implements OnInit {
       }
     }),
       (error: any) => {
+        this.spinner.hide();
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -502,16 +503,13 @@ export class AddTransactionNewComponent implements OnInit {
         this.productDetails = response.product_det;
         this.addTransaction_section1.patchValue({
           // 'PE_currencyConversionRate': response.currency_live_val,
-
         });
 
       }
       else {
-
       }
 
     });
-
   }
   BillerChange(event: any) {
     // alert(event.target.value)
@@ -932,9 +930,53 @@ export class AddTransactionNewComponent implements OnInit {
     }
     if (this.Select_Transaction_Type == 5) {
       this.saveVariable = "petty_cash_save";
-      data.append('petty_description', this.addTransaction_section1.value.PC_Description);
-      data.append('petty_type', this.addTransaction_section1.value.PC_Type);
-      data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
+      const pcDescription=this.addTransaction_section1.value.PC_Description
+      if (pcDescription === null || pcDescription =='') {
+
+        iziToast.error({
+          message: "Give Description of Petty Cash ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+  
+      }
+      else {
+        data.append('petty_description',pcDescription );
+      }
+      const pcType=this.addTransaction_section1.value.PC_Type
+      if (pcType === null) {
+
+        iziToast.error({
+          message: "Give Type of Petty Cash ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+  
+      }
+      else {
+        data.append('petty_type', this.addTransaction_section1.value.PC_Type);
+   
+      }
+      const pcAmount=this.addTransaction_section1.value.PC_Amount
+      if (pcAmount === null || pcAmount =='' ) {
+
+        iziToast.error({
+          message: "Give Amount of Petty Cash ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+  
+      }
+      else {
+        data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
+   
+      }
+    
+ 
+
       data.append('petty_attach_mobile', this.addTransaction_section1.value.CB_PC_AttachMobile);
       // data.append('file_attachment_name', this.addTransaction_section1.value.PC_FileAttachment);
       if (this.myFiles.length < 4) {

@@ -98,7 +98,7 @@ import { DupInvoiceComponent } from './billing/dup-invoice/dup-invoice.component
 import { DupAddInvoiceComponent } from './billing/dup-invoice/dup-add-invoice/dup-add-invoice.component';
 import { DupEditInvoiceComponent } from './billing/dup-invoice/dup-edit-invoice/dup-edit-invoice.component';
 import { DupEditInvoiceDIDComponent } from './billing/dup-invoice/dup-edit-invoice-did/dup-edit-invoice-did.component';
-import { DupCustomerNewAllComponent } from './masters/customer/dup-customer-new-all/dup-customer-new-all.component';
+import { DupCustomerNewAllComponent } from './masters/dup-customer-new-all/dup-customer-new-all.component';
 import { DupQuotationNewComponent } from './billing/dup-quotation-new/dup-quotation-new.component';
 import { DupAddQuotationNewComponent } from './billing/dup-quotation-new/dup-add-quotation-new/dup-add-quotation-new.component';
 import { DupEditQuotationNewComponent } from './billing/dup-quotation-new/dup-edit-quotation-new/dup-edit-quotation-new.component';
@@ -115,6 +115,9 @@ import { GstreportComponent } from './reports/gstreport/gstreport.component';
 import { GuruComponent } from './guru/guru.component';
 import { VoipswitchComponent } from './voipswitch/voipswitch.component';
 import { CreditmanagerComponent } from './voipswitch/creditmanager/creditmanager.component';
+import { PettyCashComponent } from './ledger/petty-cash/petty-cash.component';
+import { RecurringResellerComponent } from './billing/recurring-reseller/recurring-reseller.component';
+import { CstreportComponent } from './reports/cstreport/cstreport.component';
 
 
 
@@ -216,6 +219,9 @@ import { CreditmanagerComponent } from './voipswitch/creditmanager/creditmanager
      GuruComponent,
      VoipswitchComponent,
      CreditmanagerComponent,
+     PettyCashComponent,
+     RecurringResellerComponent,
+     CstreportComponent,
      
      
     

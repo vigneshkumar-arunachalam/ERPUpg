@@ -1178,7 +1178,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="add_VendorName" class="col-lg-12 col-form-label">Vendor Name</label>
                 <div class="col-lg-10">
@@ -1200,7 +1200,31 @@
                 </div>
 
               </div>
+            </div> -->
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="ng-autocomplete">
+                  <label for="companyName" class="col-lg-12 ">Vendor Name</label>
+                  <ng-autocomplete [data]="searchVendorResult" [searchKeyword]="keywordVendorName"
+                    formControlName="add_VendorName" (selected)='selectEventVendor($event)'
+                    (inputChanged)='searchVendorData($event)' (keyup)="keysearch($event)"
+                    (inputCleared)="clearVendorSelection($event)" (inputFocused)='onFocusedVendor($event)'
+                    [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                  <!-- <div class="x ng-star-inserted" (click)="clearSelection()"><i aria-label="Close" class="material-icons">close</i></div> -->
+
+                  <ng-template #itemTemplateVendor let-item>
+                    <a [innerHTML]="item.vendorName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+
+              </div>
             </div>
+
             <div class="col-lg-6">
               <div class="form-group row">
                 <label for="add_PurchaseType" class="col-lg-12 col-form-label">Purchase Type<span style="color: red;"> *</span></label>
@@ -1541,7 +1565,7 @@
       <div class="modal-body">
         <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
         <form [formGroup]="editEnquiryForm">
-
+        
           <div class="row">
             <div class="col-lg-6">
               <div class="form-group row">
@@ -1575,7 +1599,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
               <div class="form-group row">
                 <label for="edit_VendorName" class="col-lg-12 col-form-label">Vendor Name<span style="color: red;">*</span></label>
                 <div class="col-lg-12">
@@ -1588,6 +1612,29 @@
                     </option>
                   </select>
                 </div>
+              </div>
+            </div> -->
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <div class="ng-autocomplete">
+                  <label for="companyName" class="col-lg-12 ">Vendor Name</label>
+                  <ng-autocomplete [data]="searchVendorResult" [searchKeyword]="keywordVendorName"
+                    formControlName="edit_VendorName" (selected)='selectEventVendor($event)'
+                    (inputChanged)='searchVendorData($event)' (keyup)="keysearch($event)"
+                    (inputCleared)="clearVendorSelection($event)" (inputFocused)='onFocusedVendor($event)'
+                    [itemTemplate]="itemTemplateVendor" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+                  <!-- <div class="x ng-star-inserted" (click)="clearSelection()"><i aria-label="Close" class="material-icons">close</i></div> -->
+
+                  <ng-template #itemTemplateVendor let-item>
+                    <a [innerHTML]="item.vendorName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+
               </div>
             </div>
             <div class="col-lg-6">
@@ -1681,6 +1728,7 @@
 
 
         </form>
+     
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary"  (click)="updatePurchaseEntry()">

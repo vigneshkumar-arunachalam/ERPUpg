@@ -319,6 +319,7 @@ export class DupCustomerNewAllComponent implements OnInit {
   Global_search_filter_2: string;
   formGroup: any;
   data_value: any;
+  response_total_cnt: any;
 
 
   constructor(private http: HttpClient, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -1883,10 +1884,11 @@ export class DupCustomerNewAllComponent implements OnInit {
       console.log('12345678')
       $('#dupCussearchCustomerFormId').modal('hide');
       if (response.total_cnt == 0) {
-        iziToast.warning({
-          message: "No Matching Records",
-          position: 'topRight'
-        });
+        this.response_total_cnt=response.total_cnt;
+        // iziToast.warning({
+        //   message: "No Matching Records",
+        //   position: 'topRight'
+        // });
       }
       console.log("search username ", response)
       if (response.status != '') {
@@ -1941,10 +1943,11 @@ export class DupCustomerNewAllComponent implements OnInit {
       this.spinner.hide();
 
       if (response.total_cnt == 0) {
-        iziToast.warning({
-          message: "No Matching Records",
-          position: 'topRight'
-        });
+        this.response_total_cnt=response.total_cnt;
+        // iziToast.warning({
+        //   message: "No Matching Records",
+        //   position: 'topRight'
+        // });
       }
       if (response != '') {
 

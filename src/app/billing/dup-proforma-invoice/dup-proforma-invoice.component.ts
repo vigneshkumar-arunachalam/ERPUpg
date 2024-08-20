@@ -120,6 +120,7 @@ export class DupProformaInvoiceComponent implements OnInit {
   searchResult_CustomerName: any;
   Global_search_filter = false;
   pi_list_search: any;
+  response_total_cnt: any;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) {
     // alert("Pi constructor")
     this.serverService.global_search.subscribe((val: any) => {
@@ -822,7 +823,7 @@ export class DupProformaInvoiceComponent implements OnInit {
       if (response) {
 
         this.PI_list = response.proforma_details;
-
+        this.response_total_cnt=response.total_cnt;
         this.biller_list = response.biller_details;
         // this.payLink=response.proforma_details[0].payment_link;
 

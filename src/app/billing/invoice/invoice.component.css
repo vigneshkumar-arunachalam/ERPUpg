@@ -173,7 +173,9 @@ tr:nth-child(odd) {background: #FFF}
   max-width: 70% !important;
 }
 
-
+#inv_ResellerCommissionFormId .modal-dialog{
+  min-width: 85% !important;
+}
 
 label {
   font-weight: 500;

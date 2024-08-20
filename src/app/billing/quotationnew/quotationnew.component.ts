@@ -169,6 +169,7 @@ export class QuotationnewComponent implements OnInit {
   Global_search_filter = false;
   selected_billerId: any = [];
   getSearch:boolean=false;
+  response_total_cnt: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
      // console.log(params)
@@ -610,6 +611,7 @@ export class QuotationnewComponent implements OnInit {
      // console.log("qoutation list", response);
       if (response) {
         this.quotation_list = response.quotation_details;
+        this.response_total_cnt=response.total_cnt;
      //   console.log(this.quotation_list)
         this.spinner.hide();
       }
@@ -684,6 +686,7 @@ export class QuotationnewComponent implements OnInit {
         // Swal.close();
         this.spinner.hide();
         this.quotation_list = response.quotation_details;
+        this.response_total_cnt=response.total_cnt;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit
         this.quotationPermission_ActualPrice = response.quotation_permission_arr.actual_price

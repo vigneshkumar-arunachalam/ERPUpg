@@ -64,6 +64,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   searchResult_CustomerID: any;
   searchResult_CustomerName: any;
   searchMulInvForm: FormGroup;
+  response_total_cnt: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
@@ -255,6 +256,11 @@ export class MultipleInvPaymentComponent implements OnInit {
     // this.addPI_section2 = this.fb.group({
     //   addresses: this.fb.array([this.createAddress()])
     // });
+  }
+  clearEditMulInv(){
+    this.edit_array=[];
+  //  console.log("this.edit_array",this.edit_array)
+    this.mulInvPaymentList({})
   }
   editMulInvPayGroup() {
     this.spinner.show();
@@ -914,7 +920,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.off_set = list_data.offset;
     api_mulInvpay.limit_val = list_data.limit;
-    // api_mulInvpay.search_txt = this.searchResult_CustomerName;
+    api_mulInvpay.search_txt = this.searchResult_CustomerName;
     api_mulInvpay.current_page = "";
     api_mulInvpay.customer_id = this.searchResult_CustomerID;
     api_req.element_data = api_mulInvpay;
@@ -923,6 +929,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         this.mulInvPay_list = response.dataList;
+        this.response_total_cnt=response.total_cnt;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#searchInvoiceFormId").modal("hide");
         $("#searchInvoiceFormId").modal("hide");
@@ -960,7 +967,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
     api_mulInvpay.off_set = list_data.offset;
     api_mulInvpay.limit_val = list_data.limit;
-    // api_mulInvpay.search_txt = this.searchResult_CustomerName;
+    api_mulInvpay.search_txt = this.searchResult_CustomerName;
     api_mulInvpay.current_page = "";
     api_mulInvpay.customer_id = this.searchResult_CustomerID;
     api_req.element_data = api_mulInvpay;
@@ -969,6 +976,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         this.mulInvPay_list = response.dataList;
+        this.response_total_cnt=response.total_cnt;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#searchInvoiceFormId").modal("hide");
         $('#searchMulInvPayId').modal('hide');

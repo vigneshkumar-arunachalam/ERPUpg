@@ -98,27 +98,59 @@ export class AppComponent {
 
   // }
 
-  onActivate(event: any) {
+  onActivate(event: any): any {
     this.file_path = this.router.url;
+    if (this.router.url == '/login' ) {
+        this.templateAuthView = true;
+        localStorage.clear();
+        return false;
+    }
     // console.log(this.router.url);
-     if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
+    if (localStorage.getItem('access_token')) {
+      $('#ActionIdOutput').modal('hide');
+      $('#ActionIdxx2').modal('hide');
+        this.templateAuthView = false;
+      
+    }
+    else if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
       localStorage.clear();
-      this.templateAuthView == false
+      this.templateAuthView == true
         this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode,pageurl:this.pageurl}});
         // this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode}});
       
    
-    }else if (localStorage.getItem('access_token')) {
-    $('#ActionIdOutput').modal('hide');
-    $('#ActionIdxx2').modal('hide');
-      // $("body").removeClass("modal-open");
-      this.templateAuthView = false;
-
-    } else {
-      this.templateAuthView = true;
-      this.router.navigate(['/login']);
     }
-    
-  }
+  
+    else {
+        this.router.navigate(['/login']);
+        this.templateAuthView = true;
+    }
 
+
+  }
+// below is the login code that worked on or before 11.07.2024 for onActivate(event:any)
+
+  // onActivate(event: any) {
+  //   this.file_path = this.router.url;
+    
+  // if (this.code_val != '' && this.code_val != undefined && this.code_val != 'undefined' && this.code_val != 'null' && this.code_val != null && this.uscode != '' && this.uscode != 'undefined' && this.uscode != undefined && this.uscode != 'null' && this.uscode != null) {
+  //     localStorage.clear();
+  //     this.templateAuthView == true
+  //       this.router.navigate(['/login'],{queryParams:{code_val:this.code_val,uscode:this.uscode,pageurl:this.pageurl}});
+   
+  //   }else if (localStorage.getItem('access_token')) {
+  //   $('#ActionIdOutput').modal('hide');
+  //   $('#ActionIdxx2').modal('hide');
+     
+  //     this.templateAuthView = false;
+
+  //   } else {
+  //     this.templateAuthView = true;
+  //     this.router.navigate(['/login']);
+  //   }
+    
+  // }
+
+
+ 
 }

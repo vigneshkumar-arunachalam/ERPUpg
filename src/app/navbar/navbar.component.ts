@@ -9,6 +9,7 @@ declare var iziToast: any;
 declare var tinymce: any;
 import { NgxSpinnerService } from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
+
 interface Page {
   menu_name: string;
   pageId: number;
@@ -112,6 +113,7 @@ export class NavbarComponent implements OnInit {
   billerNameDisplay: any;
   //group checkbox
   selectedBillIds_overdue: { [customerId: number]: Set<number> } = {};
+  billBalances_overdue: { [billId: number]: number } = {};
   balamt: number = 0;
   list: any;
   //checkbox
@@ -147,7 +149,7 @@ export class NavbarComponent implements OnInit {
   changeCreditNoteValue: any;
   //multiple process payment
   multipleprocessPaymentForm: FormGroup;
-  billBalances_overdue: any;
+
   //email-landscape
   emailForm: FormGroup;
   Select_To_Type_radiobox_Value: any;
@@ -229,7 +231,23 @@ export class NavbarComponent implements OnInit {
   OS_searchResult: any;
   OS_search_CustID: any;
   OS_search_CustName: any;
+  postalInvoiceCount: any;
+  sendtoPostalPermission: any;
+  SA_Email_BillerId_overdue: any;
+  SA_Email_customerid_overdue: any;
+  getRecurredListValue: any;
+  ResellerRecuringApprovalList: any;
+  getRecuringInvoiceList: any[] = [];
+  getRecuringInvoiceTitleList: any[] = [];
+  combinedData: { title: any, invoices: any[] }[] = [];
+  selectedBillIds_RecurringInvoice: number[] = [];
+  deselectedBillIds_RecurringInvoice: number[] = [];
 
+  //reseller recurring
+  arrayRecurringReseller: any[] = [];
+  overdueResponse: any;
+  getRevenueDataList: any;
+  Email_BillerId_overdue: any;
 
   constructor(private router: Router, private serverService: ServerService,
     private http: HttpClient, private fb: FormBuilder,
@@ -403,14 +421,14 @@ export class NavbarComponent implements OnInit {
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
 
-    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyList = data.currency_data;
       }
 
       // console.log("this.getCurrencyList", this.getCurrencyList)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyDetails = data.currency_data;
         this.currencyData = data.currency_data;
@@ -427,7 +445,14 @@ export class NavbarComponent implements OnInit {
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
-    this.http.get<any>('https://erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+
+      if (data != '') {
+        this.postalInvoiceCount = data.count;
+      }
+      //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+    });
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
 
       if (data != '') {
         this.getTaskList = data.taskList;
@@ -439,7 +464,7 @@ export class NavbarComponent implements OnInit {
       if (data != '') {
         this.overduePaymentsBillerList = data.dataList;
       }
-      //  console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
+      console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
     })
 
   }
@@ -502,12 +527,16 @@ export class NavbarComponent implements OnInit {
     return rate ? rate.price : 1; // Return 1 if fromCurrency equals toCurrency
   }
   get_permission() {
-    // console.log("this.roles",this.roles)
+    // console.log("this.roles", this.roles)
     var k: any = this.roles.split(',');
     for (var i = 0; i <= k.length; i++) {
       if (k[i] == 1148) {
         this.GlobalSearchPermission = k[i]
       }
+      if (k[i] == 1129) {
+        this.sendtoPostalPermission = k[i]
+      }
+
     }
     // console.log(this.GlobalSearchPermission);
   }
@@ -743,7 +772,9 @@ export class NavbarComponent implements OnInit {
           };
       }
     })
-
+  }
+  clearPostalInvoice() {
+    this.selectedBillIds = [];
 
   }
   postalinv_sendMail(billId: any) {
@@ -771,6 +802,20 @@ export class NavbarComponent implements OnInit {
         api_req.element_data = api_reqD1;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
+            this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+
+              if (data != '') {
+                this.postalInvoiceDetails = data;
+              }
+              //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+            });
+            this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+
+              if (data != '') {
+                this.postalInvoiceCount = data.count;
+              }
+              //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+            });
             this.spinner.hide();
             iziToast.success({
               message: "Mail Sent Successfully",
@@ -795,8 +840,6 @@ export class NavbarComponent implements OnInit {
           };
       }
     })
-
-
   }
 
   PaymentTransactionReports() {
@@ -946,30 +989,20 @@ export class NavbarComponent implements OnInit {
           this.Invoice_UI_Show = response.invoice_list;
           // console.log("Invoice List Skipped")
         }
-
-
         // console.log(this.Quotation_list_send);
 
         // console.log("without json stringfy,this.Customer_list_send", this.Customer_list_send);
         // console.log("with json stringfy,this.Customer_list_send", JSON.stringify(this.Customer_list_send));
         this.dashboard = true;
-
-
         var api_req: any = '{"type":"hello","proformalist":this.PI_list_send}';
-
         $('#ActionIdOutput').modal('show');
-
-
       } else {
         Swal.close();
         iziToast.warning({
           message: "Response Failed",
           position: 'topRight'
         });
-
       }
-
-
     }),
       (error: any) => {
 
@@ -979,8 +1012,6 @@ export class NavbarComponent implements OnInit {
         });
         // console.log("final error", error);
       };
-
-
   }
   gotoRoot() {
 
@@ -1084,45 +1115,33 @@ export class NavbarComponent implements OnInit {
         // console.log("final error", error);
       };
   }
-  overduePayments(billerID: any) {
-    this.spinner.show();
+  LicenseOverDue() {
+
 
     let api_req: any = new Object();
     let api_page_req: any = new Object();
     api_req.moduleType = "soa";
-    api_req.api_url = "soa/overduePaymentsBillerWise";
+    api_req.api_url = "soa/getOverdueOwingAmount";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_page_req.action = "overduePaymentsBillerWise";
+    api_page_req.action = "soa/getOverdueOwingAmount";
     api_page_req.user_id = this.user_ids;
-    api_page_req.billerId = billerID;
-    api_page_req.customer_id = "";
-    api_page_req.from_dt = "";
-    api_page_req.to_dt = "";
-
     api_req.element_data = api_page_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      this.spinner.hide();
+      //  console.log(" response--pagelist", response)
       if (response != '') {
-        this.spinner.hide();
+        this.overdueResponse = response;
         this.overduePaymentsBillerWise = response.overduePayments;
-        this.colorCodes = response.colorCodes;
-        this.billerNameDisplay = response.billerName;
-        this.billerIDDisplay = response.billerId;
-       // this.getCustomers_Search();
-          this.searchCustomerData_OS({});
-
-        if (Array.isArray(this.overduePaymentsBillerWise)) {
-          console.log('this.overduePaymentsBillerWise is an array');
+        console.log("this.overdueResponse", this.overdueResponse)
+        if (Array.isArray(this.overdueResponse)) {
+          console.log('overdueResponse is an array:', this.overdueResponse);
         } else {
-          this.spinner.hide();
-          console.log('this.overduePaymentsBillerWise is not an array');
+          console.log('overdueResponse is not an array');
         }
 
       } else {
-        this.spinner.hide();
         Swal.close();
         iziToast.warning({
           message: "Response Failed",
@@ -1133,14 +1152,142 @@ export class NavbarComponent implements OnInit {
 
     }),
       (error: any) => {
-        // console.log("error",error)
 
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-
+        // console.log("final error", error);
       };
+  }
+  revenueAmountCountOverDue() {
+    $('#overduePaymentFormId').modal('hide');
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/getRevenueData";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "soa/getRevenueData";
+    api_page_req.user_id = this.user_ids;
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      //  console.log(" response--pagelist", response)
+      if (response != '') {
+
+        $('#getRevenueDataListFormId').modal('show');
+        this.getRevenueDataList = response.data;
+
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  overduePayments(billerID: any, name: any) {
+
+    if (name === 'license') {
+      $('#overduePaymentFormId').modal('show');
+      this.LicenseOverDue();
+    } else if (name === 'revenue_amount_count') {
+      $('#overduePaymentFormId').modal('hide');
+
+      this.revenueAmountCountOverDue();
+
+    } else {
+    
+      this.spinner.show();
+
+      let api_req: any = new Object();
+      let api_page_req: any = new Object();
+      api_req.moduleType = "soa";
+      api_req.api_url = "soa/overduePaymentsBillerWise";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_page_req.action = "overduePaymentsBillerWise";
+      api_page_req.user_id = this.user_ids;
+      api_page_req.billerId = billerID;
+      api_page_req.customer_id = "";
+      api_page_req.from_dt = "";
+      api_page_req.to_dt = "";
+
+      api_req.element_data = api_page_req;
+
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        this.spinner.hide();
+        if (response != '') {
+          this.spinner.hide();
+          this.multipleBillIDPaymentP=[];
+          this.overduePaymentsBillerWise = '';
+          this.overduePaymentsBillerWise =[];
+          this.selectedBillIds_overdue={}
+          this.overduePaymentsBillerWise = response[0].overduePayments;
+          this.colorCodes = response.colorCodes;
+
+          // if (Array.isArray(this.overdueResponse)) {
+          //   console.log('overdueResponse is an array:', this.overdueResponse);
+          // } else {
+          //   console.log('overdueResponse is not an array');
+          // }
+
+
+          // this.getCustomers_Search();
+          this.searchCustomerData_OS({});
+          this.overdueResponse = '';
+          this.overdueResponse = response;
+          this.billerNameDisplay = response[0].billerName;
+          this.billerIDDisplay = response[0].billerId;
+          $('#overduePaymentFormId').modal('hide');
+          $('#overduePaymentFormId').modal('show');
+
+          if (Array.isArray(this.overduePaymentsBillerWise)) {
+            console.log('this.overduePaymentsBillerWise is an array');
+          } else {
+            this.spinner.hide();
+            console.log('this.overduePaymentsBillerWise is not an array');
+          }
+
+        } else {
+          this.spinner.hide();
+          Swal.close();
+          iziToast.warning({
+            message: "Response Failed",
+            position: 'topRight'
+          });
+
+        }
+
+      }),
+        (error: any) => {
+          // console.log("error",error)
+
+          iziToast.error({
+            message: "Sorry, some server issue occur. Please contact admin",
+            position: 'topRight'
+          });
+
+        };
+
+    }
+
   }
   multipleMailPostalInvoice() {
     console.log("this.selectedBillIds", this.selectedBillIds)
@@ -1181,6 +1328,13 @@ export class NavbarComponent implements OnInit {
               this.postalInvoiceDetails = data;
             }
           });
+          this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+
+            if (data != '') {
+              this.postalInvoiceCount = data.count;
+            }
+            //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
+          });
           $('#sendtoPostFormId').modal('show');
 
         } else {
@@ -1211,21 +1365,21 @@ export class NavbarComponent implements OnInit {
         position: 'topRight'
       });
       return false;
-    } else{
+    } else {
       var url = "https://laravelapi.erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=yes";
       window.open(url, '_blank');
     }
-   
+
   }
   multiPrintPostalWithoutLogo() {
- 
+
     if (this.selectedBillIds.length === 0) {
       iziToast.error({
         message: "Select atleast 1",
         position: 'topRight'
       });
       return false;
-    } else{
+    } else {
       var url = "https://laravelapi.erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=no";
       window.open(url, '_blank');
     }
@@ -1252,7 +1406,7 @@ export class NavbarComponent implements OnInit {
 
   landscapePDF(billId: any) {
 
-    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
@@ -1324,62 +1478,73 @@ export class NavbarComponent implements OnInit {
         // console.log("final error", error);
       };
   }
+  clearOverdue() {
+    this.OS_search_CustID = '';
+    this.OS_search_CustName = '';
+    this.overdueSearchForm.controls['OS_customer'].reset();
+    this.multipleBillIDPaymentP=[];
+    this.searchCustomerData_OS({});
+   
+  }
   searchCustomer_selectDropdownData_OS(item: any) {
     this.OS_searchResult = item.customerName;
     console.log(item.customerId)
     console.log(item.customerName)
-    this.OS_search_CustID=item.customerId;
-    this.OS_search_CustName=item.customerName;
+    this.OS_search_CustID = item.customerId;
+    this.OS_search_CustName = item.customerName;
 
-    
+
     // do something with selected item
   }
   searchCustomerData_OS(data: any) {
 
+    if (data.length > 3) {
+      this.spinner.show();
+      this.OS_searchResult = data
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "soa";
+      api_req.api_url = "soa/getCustomers";
+      // api_req.api_url = "customer/cal/customer_name_search";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "getCustomers";
+      api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      api_Search_req.billerId = this.billerIDDisplay;
+      api_Search_req.customerName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        this.spinner.hide();
+        if (response != '') {
+          this.spinner.hide();
+          this.OS_searchResult = response.customer_names;
+          console.log(" this.OS_searchResult", this.OS_searchResult)
+        } else {
+          Swal.close();
+          this.spinner.hide();
+          iziToast.warning({
+            message: "Response Failed",
+            position: 'topRight'
+          });
 
-    this.OS_searchResult = data
-    let api_req: any = new Object();
-    let api_Search_req: any = new Object();
-    api_req.moduleType = "soa";
-    api_req.api_url = "soa/getCustomers";
-    // api_req.api_url = "customer/cal/customer_name_search";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_Search_req.action = "getCustomers";
-    api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_Search_req.billerId = this.billerIDDisplay;
-    api_Search_req.customerName = data;
-    api_req.element_data = api_Search_req;
+        }
 
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      }),
+        (error: any) => {
 
-
-      if (response != '') {
-        this.OS_searchResult = response.customer_names;
-        console.log(" this.OS_searchResult", this.OS_searchResult)
-      } else {
-        Swal.close();
-        iziToast.warning({
-          message: "Response Failed",
-          position: 'topRight'
-        });
-
-      }
-
-    }),
-      (error: any) => {
-
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
-      };
+          iziToast.error({
+            message: "Sorry, some server issue occur. Please contact admin",
+            position: 'topRight'
+          });
+          console.log("final error", error);
+        };
+    }
   }
-  clearSelection_OS(event:any){
+  clearSelection_OS(event: any) {
+    this.clearOverdue();
 
   }
-  onFocusedCustomer_OS(event:any){
+  onFocusedCustomer_OS(event: any) {
 
   }
   handle_overdue_CustomerChange(event: any) {
@@ -1391,6 +1556,7 @@ export class NavbarComponent implements OnInit {
 
   }
   overdueSearch() {
+    this.spinner.show();
     let api_req: any = new Object();
     let api_quickMail_req: any = new Object();
     api_req.moduleType = "soa";
@@ -1408,12 +1574,19 @@ export class NavbarComponent implements OnInit {
     api_req.element_data = api_quickMail_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-
+      this.spinner.hide();
       if (response != '') {
+       
+        this.spinner.hide();
+        this.overdueResponse = '';
+        this.selectedBillIds_overdue={};
+        this.overdueResponse = response;
+        this.overduePaymentsBillerWise = '';
         this.overduePaymentsBillerWise = response.overduePayments;
 
       } else {
         Swal.close();
+        this.spinner.hide();
         iziToast.warning({
           message: "Search Response Failed",
           position: 'topRight'
@@ -1425,8 +1598,48 @@ export class NavbarComponent implements OnInit {
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        // console.log("final error", error);
       };
+  }
+  approveResellerRecurring() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_comCode_req: any = new Object();
+    api_req.moduleType = "pettycash";
+    api_req.api_url = "recurring/resellerRecuringApproval";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_comCode_req.action = "recurring/resellerRecuringApproval";
+    api_comCode_req.user_id = this.user_ids;
+    api_comCode_req.resellerCommId = this.arrayRecurringReseller;
+    api_req.element_data = api_comCode_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response != '') {
+        this.spinner.hide();
+        this.arrayRecurringReseller = [];
+        this.getResellerRecuringApprovalList();
+        Swal.close();
+        iziToast.success({
+          message: "Approved",
+          position: 'topRight'
+        });
+      } else {
+        Swal.close();
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+      };
+
   }
   searchCustomerData(data: any) {
     let api_req: any = new Object();
@@ -1442,7 +1655,6 @@ export class NavbarComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      // console.log(" response", response)
       if (response != '') {
         this.searchResult = response.customerName;
         // console.log(" this.searchResult", this.searchResult)
@@ -1453,12 +1665,9 @@ export class NavbarComponent implements OnInit {
           message: "Response Failed",
           position: 'topRight'
         });
-
       }
-
     }),
       (error: any) => {
-
         iziToast.error({
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
@@ -1694,8 +1903,26 @@ export class NavbarComponent implements OnInit {
 
 
   }
+  check(event: any, item: any, custId: any) {
+    console.log("event", event);
+    console.log("item", item);
+    console.log("custId", custId);
+  }
+  // toggleSelection_overdue1(event: any, billId: number, balAmount: string, customerId: number): void {
+  //   console.log("toggle selection");
+  //   console.log("billId",billId);
+  //   console.log("balAmount",balAmount);
+  //   console.log("customerId",customerId);
 
+  // }
   toggleSelection_overdue(event: any, billId: number, balAmount: string, customerId: number): void {
+    //  console.log("toggle selection");
+    //  console.log("billId",billId);
+    //  console.log("balAmount",balAmount);
+    //  console.log("customerId",customerId);
+
+
+
     const checked = event.target.checked;
     const balance = parseFloat(balAmount);
 
@@ -1754,29 +1981,62 @@ export class NavbarComponent implements OnInit {
     console.log("this.multipleBillIDPaymentP", this.multipleBillIDPaymentP);
     console.log("this.multipleBillIDPaymentcust", this.multipleBillIDPaymentcust);
     console.log("this.multipleBalAmount", this.multipleBalAmount);
+
+    console.log("Selected Bills for Customer:", this.selectedBillIds_overdue[customerId]);
+    console.log("this.multipleBillIDPaymentP", this.multipleBillIDPaymentP);
+    console.log("Bill Balances:", this.billBalances_overdue);
   }
 
 
 
   isSelected_overdue(billId: number, customerId: number): boolean {
+    // console.log("billid",billId);
+    // console.log("customerId",customerId);
+
     // console.log("selectedBillIds_overdue",this.selectedBillIds_overdue)
     return this.selectedBillIds_overdue[customerId]?.has(billId) || false;
   }
+  // calculateSelectedTotals(customerId: number): number {
+
+  //   let total = 0;
+  //   if (this.selectedBillIds_overdue[customerId]) {
+  //     this.selectedBillIds_overdue[customerId].forEach(billId => {
+  //       const bill = this.overduePaymentsBillerWise
+  //         .find((cust: { title: { cus_id: number; }; }) => cust.title.cus_id === customerId)
+  //         ?.data.find((item: { billId: number; }) => item.billId === billId);
+  //       if (bill) {
+  //         total += parseFloat(bill.balanceAmount);
+  //       }
+  //     });
+  //   }
+
+  //   return total;
+  // }
   calculateSelectedTotals(customerId: number): number {
     let total = 0;
-    if (this.selectedBillIds_overdue[customerId]) {
-      this.selectedBillIds_overdue[customerId].forEach(billId => {
-        const bill = this.overduePaymentsBillerWise
-          .find((cust: { title: { cus_id: number; }; }) => cust.title.cus_id === customerId)
-          ?.data.find((item: { billId: number; }) => item.billId === billId);
-        if (bill) {
-          total += parseFloat(bill.balanceAmount);
-        }
-      });
+
+    // Ensure this.selectedBillIds_overdue and billBalances_overdue are defined
+    const selectedBills = this.selectedBillIds_overdue[customerId];
+    if (!selectedBills) {
+      // console.error(`No bills selected for customer ${customerId}`);
+      return 0;
     }
 
-    return total;
+    // Iterate through selected bills and sum their balances
+    selectedBills.forEach(billId => {
+      const balance = this.billBalances_overdue[billId];
+      if (balance === undefined) {
+        console.error(`Balance not found for bill ID ${billId}`);
+      } else {
+        total += balance;
+
+      }
+    });
+
+    return parseFloat(total.toFixed(2));
+
   }
+
 
 
   getPaymentFollowers(billid: any) {
@@ -1978,7 +2238,8 @@ export class NavbarComponent implements OnInit {
       };
   }
   processPaymentEdit_multiple(id: any) {
-    // alert(this.multipleBillIDPaymentcust)
+    //alert(this.multipleBillIDPaymentcust)
+
     this.spinner.show();
     // this.multipleprocessPaymentForm.reset();
     if (this.multipleBillIDPaymentcust == '' || this.multipleBillIDPaymentcust == undefined) {
@@ -2038,10 +2299,10 @@ export class NavbarComponent implements OnInit {
         this.multipleprocessPaymentForm.patchValue({
           'm_date': transformDate1,
           'm_invoiceID': response.invoice_details[0].cus_invoice_no,
-          'm_toal': response.invoice_details[0].netPayment,
+          'm_customer': response.invoice_details[0].customerName,
           'm_biller': response.invoice_details[0].billerName,
           'm_paid': response.paidAmount,
-          'm_customer': response.invoice_details[0].customerName,
+          'm_toal': response.net_amount,
           'm_owing': response.owing_amount,
           'm_amount': response.owing_amount,
 
@@ -2100,6 +2361,7 @@ export class NavbarComponent implements OnInit {
             'amount': ow,
 
           });
+
           // $('#amount').val(this.owingAmt);
         } else {
           // console.log("this.owingAmt",ow);
@@ -2467,7 +2729,7 @@ export class NavbarComponent implements OnInit {
 
       };
   }
-  getEmailDetails(id: any) {
+  getEmailDetails(billid: any, billerId: any) {
 
     this.email_TemplateSelection = false;
     $('#temp').val('');
@@ -2475,7 +2737,9 @@ export class NavbarComponent implements OnInit {
     $('input:checkbox').removeAttr('checked');
     this.emailForm.reset();
     this.spinner.show();
-    this.Email_BillId_overdue = id;
+    this.Email_BillId_overdue = billid;
+    this.Email_BillerId_overdue = billerId;
+    console.log("this.Email_BillId_overdue", this.Email_BillId_overdue)
     let api_req: any = new Object();
     let api_emailDetails: any = new Object();
     api_req.moduleType = "soa";
@@ -2483,8 +2747,8 @@ export class NavbarComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_emailDetails.action = "send_invoice_details";
-    if (id != undefined) {
-      api_emailDetails.billId = id;
+    if (billid != undefined) {
+      api_emailDetails.billId = billid;
     } else {
       api_emailDetails.billId = '';
     }
@@ -2599,8 +2863,9 @@ export class NavbarComponent implements OnInit {
 
     }
   }
-  templateContentEmailDropdown(event: any) {
-    alert("hi")
+  templateContentEmailDropdown_single(event: any) {
+    this.spinner.show();
+    // alert("hi")
     this.quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
@@ -2611,6 +2876,7 @@ export class NavbarComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_quotationTemplateDropdown_req.billerId = this.Email_BillerId_overdue;
     api_quotationTemplateDropdown_req.billId = this.Email_BillId_overdue;
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
@@ -2622,7 +2888,7 @@ export class NavbarComponent implements OnInit {
       $('#subject').val(response.crm_subject_name);
       $('#tinyID_overdue_in').val(this.mailContent);
       if (response != '') {
-
+        this.spinner.hide();
         this.emailForm.patchValue({
 
           // 'Subject_Content': response.crm_subject_name,
@@ -2632,6 +2898,7 @@ export class NavbarComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
         this.emailForm.patchValue({
 
           'email_template': '',
@@ -2641,6 +2908,8 @@ export class NavbarComponent implements OnInit {
     });
   }
   SA_templateContentEmailDropdown(event: any) {
+    this.spinner.show();
+    // alert("hi")
     this.SA_quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.SA_quotation_Emailtemplate_id);
     let api_req: any = new Object();
@@ -2651,18 +2920,25 @@ export class NavbarComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_quotationTemplateDropdown_req.billId = this.SA_Email_BillId_overdue;
+    if(this.multipleBillIDPaymentP.length === 0){
+      iziToast.warning({
+        message: "Choose atleast one checkbox",
+        position: 'topRight'
+      });
+      return false;
+    }
+    api_quotationTemplateDropdown_req.billId = this.multipleBillIDPaymentP;
     api_quotationTemplateDropdown_req.template_id = this.SA_quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-template Dropdown response", response)
       this.SA_messageContent = response.crm_template_content;
-      this.SA_mailContent = tinymce.get('tinyID_overdue_in').setContent("<p>" + this.SA_messageContent + "</p>");
+      this.SA_mailContent = tinymce.get('tinyID_overdue_SA').setContent("<p>" + this.SA_messageContent + "</p>");
       $('#SA_Subject_Content').val(response.crm_subject_name);
       $('#tinyID_overdue_SA').val(this.SA_mailContent);
       if (response != '') {
-
+        this.spinner.hide();
         this.selectAll_emailForm.patchValue({
 
           // 'Subject_Content': response.crm_subject_name,
@@ -2672,6 +2948,7 @@ export class NavbarComponent implements OnInit {
         });
       }
       else {
+        this.spinner.hide();
         this.selectAll_emailForm.patchValue({
 
           'SA_email_template': '',
@@ -2823,13 +3100,22 @@ export class NavbarComponent implements OnInit {
     let api_req: any = new Object();
     let api_email_req: any = new Object();
     api_req.moduleType = "invoice";
-    api_req.api_url = "soa/paymentRemainderMail";
+    api_req.api_url = "soa/paymentRemainderMailStatement";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_email_req.action = "paymentRemainderMail";
+    api_email_req.action = "paymentRemainderMailStatement";
     api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_email_req.ccEmailId = this.SA_edit_array_emailCC_Checkbox;
-    api_email_req.billId = this.SA_Email_BillId_overdue;
+    // api_email_req.billId = this.SA_Email_BillId_overdue;
+    // api_email_req.custId = this.SA_Email_BillId_overdue;
+    // api_email_req.billerId = this.SA_Email_BillId_overdue;
+
+
+
+    api_email_req.billId = this.multipleBillIDPaymentP;
+    api_email_req.billerId = this.SA_Email_BillerId_overdue;
+    api_email_req.custId = this.SA_Email_customerid_overdue;
+
     api_email_req.payment_link = this.SA_cbkpaymentLink_value;
     api_email_req.demend_letter_pdf = this.SA_cbkDemandLetter_value;
 
@@ -2928,9 +3214,21 @@ export class NavbarComponent implements OnInit {
   PIEmailClear() {
 
   }
-  selectAll_getEmail(customerid: any, billId: any) {
 
-    this.SA_Email_BillId_overdue = billId
+  selectAll_getEmail(customerid: any, billerId: any, billId: any) {
+
+    if(this.multipleBillIDPaymentP==undefined){
+      iziToast.error({
+        message: "Select atleast 1 checkbox",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      $('#payment_selectAllReminderMailId').modal('show');
+      this.spinner.show();
+    this.SA_Email_BillId_overdue = billId;
+    this.SA_Email_BillerId_overdue = billerId;
+    this.SA_Email_customerid_overdue = customerid;
     let api_req: any = new Object();
     let api_page_req: any = new Object();
     api_req.moduleType = "soa";
@@ -2939,11 +3237,15 @@ export class NavbarComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_page_req.action = "send_invoice_data";
     api_page_req.user_id = this.user_ids;
+  
+    api_page_req.billId = this.multipleBillIDPaymentP;
     api_page_req.custId = customerid;
     api_req.element_data = api_page_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
       if (response.status == true) {
+        this.spinner.hide();
         this.SA_email_fromList = response.email_from_arr;
         this.SA_email_groupMailList = response.group_mail;
         this.SA_email_crmTemplateList = response.crm_template_list;
@@ -2968,21 +3270,139 @@ export class NavbarComponent implements OnInit {
           })
         }
         else {
+          this.spinner.hide();
           this.selectAll_emailForm.patchValue({
             'SA_emailto': response.company_email,
             'tinyID_overdue_SA': this.mailContent,
           })
         }
+      } else {
+        this.spinner.hide();
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        // console.log("error",error)
 
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+      };
+    }
+    
+  }
 
+  getRecurredList() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "pettycash";
+    api_req.api_url = "recurring/getRecurredList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/getRecurredList";
+    api_page_req.user_id = this.user_ids;
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+
+        this.getRecurredListValue = response.data;
 
 
       } else {
+        this.spinner.hide();
 
 
       }
     }),
       (error: any) => {
+        this.spinner.hide();
+        // console.log("error",error)
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+
+      };
+  }
+
+  getResellerRecuringApprovalList() {
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "pettycash";
+    api_req.api_url = "recurring/getResellerRecuringApprovalList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/getResellerRecuringApprovalList";
+    api_page_req.user_id = this.user_ids;
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+        this.ResellerRecuringApprovalList = response.data;
+
+
+      } else {
+        this.spinner.hide();
+
+      }
+    }),
+      (error: any) => {
+        // console.log("error",error)
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+
+      };
+  }
+
+
+  getRecurringInvoice() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "pettycash";
+    api_req.api_url = "recurring/recuringApprovalInvoiceList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/recuringApprovalInvoiceList";
+    api_page_req.user_id = this.user_ids;
+
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+
+
+        this.combinedData = response.data.map((item: { title: any[]; dataList: any; }) => ({
+          title: item.title[0],  // Assuming only one title per group
+          invoices: item.dataList
+        }));
+
+      } else {
+        this.spinner.hide();
+
+
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
         // console.log("error",error)
 
         iziToast.error({
@@ -3016,5 +3436,119 @@ export class NavbarComponent implements OnInit {
     // console.log('Selected Checkbox Names:', this.selectedPageNames);
   }
 
+  // Toggle all checkboxes
+  toggleAll_RecurringInvoice(event: any) {
+    const checked = event.target.checked;
+    this.combinedData.forEach(group => {
+      group.invoices.forEach(invoice => {
+        invoice.selected = checked;
+      });
+    });
+    this.logOverallSelection_RecurringInvoice();
+  }
 
+  // Check if all checkboxes are selected
+  isAllChecked_RecurringInvoice(): boolean {
+    return this.combinedData.every(group =>
+      group.invoices.every(invoice => invoice.selected)
+    );
+  }
+
+  // Update Check All checkbox state based on individual checkboxes
+  updateCheckAllState_RecurringInvoice() {
+    const allChecked = this.isAllChecked_RecurringInvoice();
+    const checkAllElement = document.getElementById('check-all-RI') as HTMLInputElement;
+    if (checkAllElement) {
+      checkAllElement.checked = allChecked;
+    }
+    this.logOverallSelection_RecurringInvoice();
+  }
+
+  // Log individual checkbox selection/deselection
+  logIndividualSelection_RecurringInvoice(item: any) {
+    if (item.selected) {
+      console.log(`Selected Bill ID: ${item.billId}`);
+    } else {
+      console.log(`Deselected Bill ID: ${item.billId}`);
+    }
+    this.updateCheckAllState_RecurringInvoice(); // Update Check All checkbox state
+  }
+
+  // Log overall selection state
+  logOverallSelection_RecurringInvoice() {
+    const selectedSet = new Set<number>();
+    const deselectedSet = new Set<number>();
+
+    this.combinedData.forEach(group => {
+      group.invoices.forEach(invoice => {
+        if (invoice.selected) {
+          selectedSet.add(invoice.billId);
+        } else {
+          deselectedSet.add(invoice.billId);
+        }
+      });
+    });
+
+    // Convert Sets to arrays
+    this.selectedBillIds_RecurringInvoice = [...selectedSet];
+    this.deselectedBillIds_RecurringInvoice = [...deselectedSet];
+
+    // Log the results
+    console.log(`Selected Bill IDs: ${this.selectedBillIds_RecurringInvoice.join(', ')}`);
+    console.log(`Deselected Bill IDs: ${this.deselectedBillIds_RecurringInvoice.join(', ')}`);
+  }
+
+  selectAll_RecurringReseller(event: any) {
+
+    const isChecked = event.target.checked;
+    this.ResellerRecuringApprovalList.forEach((list: any) => {
+
+      list.isChecked = isChecked;
+      if (isChecked) {
+        if (!this.arrayRecurringReseller.includes(list.reseller_comm_id)) {
+          this.arrayRecurringReseller.push(list.reseller_comm_id);
+        }
+      } else {
+
+        const index = this.arrayRecurringReseller.findIndex((el: any) => el === list.reseller_comm_id);
+        if (index > -1) {
+          this.arrayRecurringReseller.splice(index, 1);
+        }
+      }
+    });
+
+    // Update the state of all checkboxes in the DOM
+    const checkboxes = document.querySelectorAll('.checkbox-group__single1 input[type="checkbox"]');
+    checkboxes.forEach((checkbox: any) => {
+      checkbox.checked = isChecked;
+    });
+
+    console.log("Checkbox-all", this.arrayRecurringReseller);
+  }
+
+
+  EditChk_RecurringReseller(reseller_comm_id: any, event: any) {
+
+
+    this.checkbox_value = event.target.checked;
+    // console.log(this.checkbox_value);
+
+    // Check if data is not undefined
+    if (reseller_comm_id !== undefined) {
+      if (this.checkbox_value) {
+        // Check if data is not already in the array and is not undefined
+        if (!this.arrayRecurringReseller.includes(reseller_comm_id)) {
+          this.arrayRecurringReseller.push(reseller_comm_id);
+        }
+        // console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      } else {
+        const index = this.arrayRecurringReseller.findIndex((el: any) => el === reseller_comm_id);
+        if (index > -1) {
+          this.arrayRecurringReseller.splice(index, 1);
+        }
+        //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
+      }
+    }
+    console.log("Final Checkbox After checkbox selected list", this.arrayRecurringReseller);
+  }
 }

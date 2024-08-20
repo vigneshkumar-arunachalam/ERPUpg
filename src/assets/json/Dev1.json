@@ -21,6 +21,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/ledgerPurchaseEntry"
+        },{
+            "name": "Petty Cash",
+            "icon": "shopping-bag",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/pettyCash"
         }
        
 
@@ -107,6 +115,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/resellerPayment"
+        },{
+            "name": "Recurring Reseller",
+            "icon": "image",
+            "IDs": [2077],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/recurringReseller"
         },{
             "name": "Recurring Date Update",
             "icon": "slack",
@@ -254,12 +270,12 @@
     "icon":"settings",
     "isActive": false,
     "menuId":5,
-    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "IDs": [],
     "Type": "Main Menu",
     "children": [{
             "name": "Profile Details",
             "icon": "grid",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "IDs": [],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -278,7 +294,7 @@
     "IDs": [6071, 6072, 6073, 6074, 6075],
     "Type": "Main Menu",
     "children": [{
-            "name": "Invoice Reports Old",
+            "name": "Invoice Reports",
             "icon": "printer",
             "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",
@@ -301,7 +317,16 @@
             "subchild": [],
             "isVisible": true,
             "value": "/gstreport"
+        },{
+            "name": "SST Report-Cal4Care Pte Ltd",
+            "icon": "gift",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/sstreport"
         }
+       
        
 
     ],

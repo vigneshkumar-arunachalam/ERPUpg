@@ -137,6 +137,7 @@ export class ProformaInvoiceComponent implements OnInit {
  
   selected_billerId: any = [];
   getSearch: boolean = false;
+  response_total_cnt: any;
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
     this.serverService.global_search.subscribe((val: any) => {
       // console.log("before parse", val)
@@ -373,6 +374,8 @@ export class ProformaInvoiceComponent implements OnInit {
      // console.log("vignesh-customer_status response", response);
 
       this.searchResult = response.customer_names;
+      this.searchResult_CustomerName = response.customer_names;
+
      // console.log("vignesh-advanced search result", this.searchResult);
       if (response.status = true) {
       }
@@ -920,6 +923,7 @@ export class ProformaInvoiceComponent implements OnInit {
         this.Search_Permission = response.proforma_permission_arr.search;
         this.Permission_share = response.proforma_permission_arr.share;
         this.Permission_view = response.proforma_permission_arr.view;
+        this.response_total_cnt=response.total_cnt;
 
         if (response.selected_filtervalues[0].biller_ids != '') {
           this.selected_billerId = response.selected_filtervalues[0].biller_ids;

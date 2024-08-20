@@ -131,10 +131,14 @@ export class PurchaseEntryComponent implements OnInit {
   notPaidEntries: any;
   paidEntries: any;
   partialPaidEntries: any;
+  searchVendorResult: any;
+  searchResult_vendorId: any;
+  searchResult_vendorName: any;
 
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
     private spinner: NgxSpinnerService, private injector: Injector, private http: HttpClient) { }
-  keywordCompanyName = 'vendorName';
+  keywordCompanyName = 'companyName';
+  keywordVendorName='vendorName'
   ngOnInit(): void {
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
 
@@ -296,7 +300,9 @@ export class PurchaseEntryComponent implements OnInit {
     this.recurringEditVendorID = event.target.value;
   }
   handle_company(event: any) {
+ 
     this.recurringEditBillerID = event.target.value;
+    this.getPurchaseDetails();
   }
 
   handle_purchaseType(event: any) {
@@ -353,6 +359,36 @@ export class PurchaseEntryComponent implements OnInit {
   
         this.addEnquiryForm.patchValue({
           'add_convAmount': response.currency_live_val,
+        });
+      }
+    });
+
+
+  }
+  getPurchaseDetails(){
+    this.spinner.show();
+  
+    let api_req: any = new Object();
+    let api_recurring: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/getPurchaseDetails"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_recurring.action = "getPurchaseDetails";
+    api_recurring.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_recurring.biller_id=this.recurringEditBillerID ;
+    api_req.element_data = api_recurring;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status = true) {
+        this.spinner.hide();
+        this.recurringEditCurrencyID= response.default_currency_id;
+        this.editEnquiryForm.patchValue({
+          'edit_billerName': response.defaults_biller_id,
+          'edit_Currency': response.default_currency_id,
+          'edit_convAmount': response.currency_converstion[0].currency_live_val,
+          'edit_PurchaseEntryNo': response.purchase_entry_no,
         });
       }
     });
@@ -667,6 +703,8 @@ export class PurchaseEntryComponent implements OnInit {
   getCurrencyValues(event: any) {
     this.spinner.show();
     this.getCurrencyCode = event.target.value;
+    this.recurringEditCurrencyID= event.target.value;
+    alert( this.recurringEditCurrencyID);
     let api_req: any = new Object();
     let api_getInvoiceDetails_req: any = new Object();
     api_req.moduleType = "base";
@@ -843,7 +881,7 @@ export class PurchaseEntryComponent implements OnInit {
       api_mulInvpay.company = this.addEnquiryForm.value.add_billerName1;
     }
 
-    var vendorname=this.addEnquiryForm.value.add_VendorName;
+    var vendorname=this.searchResult_vendorId;
     if (vendorname=== null || vendorname=== undefined || vendorname=== 'undefined') {
     
       iziToast.error({
@@ -854,7 +892,7 @@ export class PurchaseEntryComponent implements OnInit {
       return false;
     }else{
       
-      api_mulInvpay.vendorId = this.addEnquiryForm.value.add_VendorName;
+      api_mulInvpay.vendorId = this.searchResult_vendorId;
     }
    
     var purchaseentrynumber=this.addEnquiryForm.value.add_PurchaseEntryNo;
@@ -1040,7 +1078,7 @@ export class PurchaseEntryComponent implements OnInit {
           'edit_billerName': response.billerId,
           'edit_PurchaseEntryNo': response.purchaseEntryNo,
           'edit_PurchaseEntryDate': response.purchaseEntryDate,
-          'edit_VendorName': response.vendorId,
+          'edit_VendorName': response.vendorName,
           'edit_PurchaseType': response.purchase_type_id,
           'edit_InvoiceNo': response.invoiceNo,
           'edit_purchaseContent': response.content_purchase,
@@ -1287,6 +1325,7 @@ export class PurchaseEntryComponent implements OnInit {
     api_mulInvpay.poNo = this.editEnquiryForm.value.edit_PONo;
     api_mulInvpay.company = this.recurringEditBillerID;
     api_mulInvpay.conversionRate = this.editEnquiryForm.value.edit_convAmount;
+    
     api_mulInvpay.currency = this.recurringEditCurrencyID;
     api_mulInvpay.taxAmount = this.editEnquiryForm.value.edit_taxAmount;
     api_mulInvpay.purchaseEntryId = this.editpurchaseEntryID;
@@ -1520,7 +1559,7 @@ export class PurchaseEntryComponent implements OnInit {
           'add_billerName1': this.DefaultBillerIDValue,
           'add_PurchaseEntryNo': response.purchase_entry_no,
           'add_Currency': response.default_currency_id,
-          'add_convAmount': response.currency_converstion,
+          'add_convAmount': response.conversionRate[0].currency_live_val,
 
         });
 
@@ -1670,7 +1709,65 @@ export class PurchaseEntryComponent implements OnInit {
     })
   }
  
-  
+  clearVendorSelection(event: any) {
+    console.log("clear selection", event)
+    // console.log("event.customerId",event.customerId)
+    // console.log("event.customerName",event.customerName)
+    this.searchResult_vendorId = '';
+    this.searchResult_vendorName = '';
+    this.recurringEditVendorID='';
+    console.log("AutoComplete-vendor ID", this.searchResult_vendorId)
+    console.log("AutoComplete-vendor Name", this.searchResult_vendorName)
+  }
+  selectEventVendor(item: any) {
+    console.log(item)
+    this.searchResult_vendorId = item.vendorId;
+    this.recurringEditVendorID=this.searchResult_vendorId;
+    this.searchResult_vendorName = item.vendorName;
+    console.log("AutoComplete-vendor ID", this.searchResult_vendorId)
+    console.log("AutoComplete-vendor Name", this.searchResult_vendorName)
+
+  }
+  searchVendorData(data: any) {
+
+    if (data.length > 0) {
+      // this.spinner.show();
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "base";
+      api_req.api_url = "base/getVendorSearchList";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "getVendorSearchList";
+      api_Search_req.user_id = this.user_ids;
+      api_Search_req.vendorName = data;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        console.log("vignesh-customer_status response", response);
+        // this.searchResult = response[0];
+        this.searchVendorResult = response.vendorName;
+        console.log("vignesh-advanced search result", this.searchVendorResult);
+        if (response! = null) {
+          this.searchVendorResult = response.vendorName;
+          this.spinner.hide();
+        }
+        else {
+          // iziToast.warning({
+          //   message: "Sorry, No Matching Data",
+          //   position: 'topRight'
+          // });
+
+        }
+      });
+
+    }
+
+
+  }
+  onFocusedVendor(e: any) {
+    // do something when input is focused
+  }
  
 
 

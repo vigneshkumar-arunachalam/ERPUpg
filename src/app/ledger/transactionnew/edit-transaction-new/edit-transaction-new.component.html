@@ -21,7 +21,7 @@
                             <select id="biller_name9" class="form-control" formControlName="billerName"
                                 (change)="BillerChange($event)">
                                 <option [ngValue]="null" selected>Select Biller Name</option>
-                                <option *ngFor="let biller of billerDetails" value="{{biller.billerId}}">
+                                <option *ngFor="let biller of PC_billerDetails" value="{{biller.billerId}}">
                                     {{biller.billerName}}
                                 </option>
                             </select>

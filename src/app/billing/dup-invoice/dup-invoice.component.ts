@@ -1268,7 +1268,8 @@ export class DupInvoiceComponent implements OnInit {
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.response_total_cnt = response.total_cnt
+      this.response_total_cnt = response.total_cnt;
+     
      // console.log("PI list", response);
       if (response.total_cnt == 0) {
         // iziToast.warning({
@@ -1546,7 +1547,8 @@ export class DupInvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
      // console.log("PI list", response);
-      this.response_total_cnt = response.total_cnt
+      
+      this.response_total_cnt = response.total_cnt;
 
       if (response.total_cnt == 0) {
         // iziToast.warning({

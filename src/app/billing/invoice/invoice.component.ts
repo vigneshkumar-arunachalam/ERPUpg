@@ -535,15 +535,15 @@ export class InvoiceComponent implements OnInit {
       'formControlName="radio_ApprovalBy': new FormControl(null),
 
     });
-    this.setResellerRecurringForm = new FormGroup({
-      'date': new FormControl(null),
-      'recurring_state': new FormControl(null),
-      'recurringDtCBX': new FormControl(null),
-      'recurringDate': new FormControl(null),
-      'recurringDuration': new FormControl(null),
+    // this.setResellerRecurringForm = new FormGroup({
+    //   'date': new FormControl(null),
+    //   'recurring_state': new FormControl(null),
+    //   'recurringDtCBX': new FormControl(null),
+    //   'recurringDate': new FormControl(null),
+    //   'recurringDuration': new FormControl(null),
 
 
-    });
+    // });
 
     this.RecurringForm = new FormGroup({
       'date': new FormControl(null),
@@ -595,6 +595,14 @@ export class InvoiceComponent implements OnInit {
       'billId': new FormControl(null),
       'grossAmount': new FormControl(null),
       'pdf_show': new FormControl(null),
+      // 'rs_fromDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+      // 'to_fromDate': new FormControl((new Date()).toISOString().substring(0, 10)),
+     'date': new FormControl(null),
+      'recurring_state': new FormControl(null),
+      'recurringDtCBX': new FormControl(null),
+      'recurringDate': new FormControl(null),
+      'recurringDuration': new FormControl(null),
+      'nextRecDt': new FormControl(null),
     });
 
 
@@ -1509,7 +1517,7 @@ export class InvoiceComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("PI list", response);
-      this.response_total_cnt = response.total_cnt
+      this.response_total_cnt = response.total_cnt;
 
       if (response.total_cnt == 0) {
         // iziToast.warning({
@@ -3009,6 +3017,13 @@ export class InvoiceComponent implements OnInit {
     window.open(url, '_blank');
     console.log("url", url)
   }
+  dopdf(do_id: any,i: any) {
+    $("#ActionId" + i).modal("hide");
+    // var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
+     var url = "https://laravelapi.erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
+    window.open(url, '_blank');
+    console.log("url", url)
+  }
   get_actualcost_details(id: any, i: any) {
     $("#ActionId" + i).modal("hide");
     this.spinner.show();
@@ -4434,6 +4449,8 @@ export class InvoiceComponent implements OnInit {
   }
 
   get_WFA_ResellerCommission(id: any, i: any) {
+
+   this.RecurringEdit(id,i);
     this.CommissionType1 = [];
     this.billId_ResellerCommissionId = id;
     $("#ActionId" + i).modal("hide");
@@ -4459,6 +4476,8 @@ export class InvoiceComponent implements OnInit {
         this.resellercommissiontype2 = response;
         this.ResellerName_Customer = response.editcommList[0].reseller_name;
         this.ResellerId_Customer = response.editcommList[0].reseller_id;
+        this.recuringStatus1 = response.editcommList[0].recurring_state;
+
         for (let i = 0; i < response.editcommList.length; i++) {
           var gh = response.editcommList[i].commIndex;
           this.commissionGrossAmount = response.editcommList[i].grossAmount;
@@ -4486,6 +4505,14 @@ export class InvoiceComponent implements OnInit {
             "reseller_id": response.editcommList[i].reseller_id,
             "billId": response.editcommList[i].billId,
             "grossAmount": response.editcommList[i].grossAmount,
+            'date': response.editcommList[i].recured_date_new,
+            'recurring_state': response.editcommList[i].recurring_state== 1 ? true : false,
+            'recurringDtCBX': response.editcommList[i].recurring_date_checkbox,
+            'recurringDate': response.editcommList[i].recurring_date,
+            'recurringDuration': response.editcommList[i].recurring_duration,
+            'nextRecDt': response.editcommList[i].next_recurring_date,
+
+            
 
           });
 
@@ -4630,6 +4657,13 @@ export class InvoiceComponent implements OnInit {
     api_resCommEdit.reseller_id = this.ResellerId_Customer;
     api_resCommEdit.grossAmount = this.inv_resellerCommissionForm.value.grossAmount;
 
+
+    api_resCommEdit.recured_date_new = this.inv_resellerCommissionForm.value.date;
+    api_resCommEdit.recurring_state = this.recurring_State_value; 
+    api_resCommEdit.recurring_date = this.inv_resellerCommissionForm.value.recurringDate;
+    api_resCommEdit.recurring_date_checkbox = this.CBV_setResellerRecurring;
+    api_resCommEdit.recurringDuration = this.inv_resellerCommissionForm.value.recurringDuration;
+    api_resCommEdit.next_recurring_date = this.inv_resellerCommissionForm.value.nextRecDt;
     api_req.element_data = api_resCommEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {

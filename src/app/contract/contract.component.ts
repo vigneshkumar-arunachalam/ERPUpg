@@ -107,6 +107,7 @@ export class ContractComponent implements OnInit {
   j: any;
   myFiles_add1: any;
   getResult: any;
+  response_total_cnt: any;
   constructor(private serverService: ServerService, public sanitizer: DomSanitizer,
     private router: Router, private fb: FormBuilder, private spinner: NgxSpinnerService) {
     this.addressForm = this.fb.group({
@@ -1997,15 +1998,14 @@ export class ContractComponent implements OnInit {
         this.spinner.hide();
         $('#searchContractId').modal('hide');
         this.result = response.customer_contract_details;
+        this.response_total_cnt=response.total_cnt;
         this.edit_array = [];
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 
       } else {
         this.spinner.hide();
-        iziToast.warning({
-          message: "Record Not found",
-          position: 'topRight'
-        });
+        this.result = [];
+        this.response_total_cnt=0;
         $('#searchContractId').modal('hide');
       }
     }),

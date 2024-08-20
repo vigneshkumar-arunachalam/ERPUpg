@@ -256,6 +256,7 @@ export class DidinvoiceComponent implements OnInit {
   years_id: any;
 
   getSearch: boolean = false;
+  response_total_cnt: any;
 
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService,) {
     this.addressForm = this.fb.group({
@@ -699,6 +700,7 @@ export class DidinvoiceComponent implements OnInit {
     api_req.element_data = api_DidList;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.response_total_cnt=response.total_cnt;
 
 
       if (response.total_cnt == 0) {

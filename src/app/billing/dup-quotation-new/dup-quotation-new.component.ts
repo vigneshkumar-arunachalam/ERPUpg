@@ -171,6 +171,7 @@ export class DupQuotationNewComponent implements OnInit {
   searchdatavalue =false;
   quotation_list1: any;
   quotation_list2: any =[];
+  response_total_cnt: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService) {
     this.route.queryParams.subscribe(params => {
       // console.log(params)
@@ -658,6 +659,7 @@ export class DupQuotationNewComponent implements OnInit {
         // Swal.close();
         this.spinner.hide();
         this.quotation_list = response.quotation_details;
+        this.response_total_cnt=response.total_cnt;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit;
         this.quotationPermission_Edit = response.quotation_permission_arr.edit
         this.quotationPermission_ActualPrice = response.quotation_permission_arr.actual_price

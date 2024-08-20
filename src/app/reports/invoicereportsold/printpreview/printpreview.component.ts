@@ -36,6 +36,7 @@ export class PrintpreviewComponent implements OnInit {
   printPreviewList: any;
   printPreviewSubTotals: any;
   printPreviewTotals: any;
+  response_total_cnt: any;
 
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
     private spinner: NgxSpinnerService, private route: ActivatedRoute, private injector: Injector, private http: HttpClient) { }
@@ -61,6 +62,7 @@ export class PrintpreviewComponent implements OnInit {
         this.tax = params['tax'];
       }
       );
+      console.log("this.customerId", this.customerId)
       this.getInvoiceReportPrintPreview();
       console.log("this.without_tax", this.without_tax)
   }
@@ -99,6 +101,7 @@ export class PrintpreviewComponent implements OnInit {
         this.printPreviewList=response.reportsData.reports;
         this.printPreviewSubTotals=response.reportsData.subtotals;
         this.printPreviewTotals=response.reportsData.totals;
+        this.response_total_cnt=response.total_cnt;
         console.log("this.printPreviewList",this.printPreviewList)
         console.log("this.printPreviewSubTotals",this.printPreviewSubTotals)
         console.log("this.printPreviewTotals",this.printPreviewTotals)

@@ -43,6 +43,8 @@ export class PurchaseentryreportComponent implements OnInit {
   invoiceType: any;
   performaType: any;
   redirect_status: any;
+  response_total_cnt: number;
+  response_total_cnt_PRPrint: number;
  
   constructor(private serverService: ServerService, private router: Router, private datePipe: DatePipe,
     private spinner: NgxSpinnerService, private injector: Injector,private route: ActivatedRoute, 
@@ -147,6 +149,7 @@ export class PurchaseentryreportComponent implements OnInit {
         this.spinner.hide();
         this.getPurchaseEntryReportList=response.reports.reportsData;
         this.getPurchaseEntryReportTotal=response.reports.totals;
+        this.response_total_cnt=response.total_cnt;
        
     
 
@@ -205,7 +208,7 @@ export class PurchaseentryreportComponent implements OnInit {
         this.spinner.hide();
         this.PurchaseEntryPrintList=response.reports.reportsData;
         this.getPurchaseEntryPrintTotal=response.reports.totals;
-       
+        this.response_total_cnt_PRPrint=response.total_cnt;
     
 
       } else {
@@ -247,8 +250,8 @@ export class PurchaseentryreportComponent implements OnInit {
   }
   ExportReport() {
     this.spinner.show();
-    this.printPreview=true;
-    this.go=false;
+    // this.printPreview=true;
+    // this.go=false;
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "reports";
@@ -274,8 +277,7 @@ export class PurchaseentryreportComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response !='') {
         this.spinner.hide();
-        this.PurchaseEntryPrintList=response.reports.reportsData;
-        this.getPurchaseEntryPrintTotal=response.reports.totals;
+     
        
         this.ExcelReportList1=response.reports;
         console.log("this.ExcelReportList1",this.ExcelReportList1)

@@ -1,0 +1,148 @@
+<div class="contents-section">
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card quotation">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i>
+              Home</a>
+            <span class="breadcrumb-item active">SST Report-Cal4Care Pte Ltd</span>
+          </h3>
+          <div class="col-lg-3 quotation-btn-section">
+            <form [formGroup]="YearsForm">
+              <div class="form-group row">
+                <div>
+                  <label for="years" class="col-lg-12 col-form-label" style="color:red;font-weight: 600;">Year</label>
+                </div>
+                <div>
+                  <select name="years" class="form-control" (change)="yearChange($event)" formControlName="years">
+                    <option *ngFor="let from of yearsList" value="{{ from}}">
+                      {{ from }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="card-body">
+          <div style="display: flex;" class="col-lg-12">
+            <div class="tax-table-container col-lg-3">
+              <h2 class="col-6  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+                        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                        background: linear-gradient(to right, #200122, #6f0000);">
+                TAX - {{this.currentYear}}</h2>
+              <table class="tax-table col-lg-10">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Inv Tax(6)</th>
+                    <th>Inv Tax(8)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of monthReportList;let i=index;"
+                    [ngStyle]="{'background-color': row.color === 'Yes' ? 'rgb(9 10 10)' : '','font-weight':row.color === 'Yes' ? '500' : '','color': row.color === 'Yes' ? '#efeded' : ''}">
+                    <td>{{ row.month }}</td>
+                    <td *ngIf="row.color === 'No'">{{ row.received_taxAmount6 }}</td>
+                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport(row)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ row.received_taxAmount6 }}</td>
+                    <td *ngIf="row.color === 'No'">{{ row.received_taxAmount8 }}</td>
+                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport(row)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ row.received_taxAmount8 }}</td>
+                  </tr>
+                <tfoot>
+                  <tr class="total" *ngFor="let list of monthReportTotal">
+                    <td>Total</td>
+                    <td>{{list.tax6}}</td>
+                    <td>{{list.tax8}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <div class="tax-table-container col-lg-9">
+              <h2 class="col-4  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(236, 247, 183);background: #200122; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #262127, #54b7aa);">
+                TURNOVER - {{this.currentYear}}</h2>
+              <table class="tax-table">
+                <thead>
+                  <tr>
+                    <th>Month</th>
+                    <th>Net Amt(6)</th>
+                    <th>Net Amt(8)</th>
+                    <th>Calculated(6)</th>
+                    <th>Calculated(8)</th>
+                    <th>Received(6)</th>
+                    <th>Received(8)</th>
+                    <th>Actual(6)</th>
+                    <th>Actual(8)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let list of turnReportList"
+                    [ngStyle]="{'background-color': list.color === 'Yes' ? 'rgb(9 10 10)' : '','font-weight':list.color === 'Yes' ? '500' : '','color': list.color === 'Yes' ? '#efeded' : ''}">
+                    <td style="text-align: center;">{{list.month}}</td>
+                    <td *ngIf="list.color === 'No'">{{list.netPayment6}}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.netPayment6 }}</td>
+                    <td *ngIf="list.color === 'No'">{{list.netPayment8}}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.netPayment8 }}</td>
+                    <td *ngIf="list.color === 'No'">{{ list.taxAmount6 }}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.taxAmount6 }}</td>
+                    <td *ngIf="list.color === 'No'">{{ list.taxAmount8 }}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.taxAmount8 }}</td>
+                    <td *ngIf="list.color === 'No'">{{list.received_taxAmount6}}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.received_taxAmount6 }}</td>
+                    <td *ngIf="list.color === 'No'">{{list.received_taxAmount8}}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.received_taxAmount8 }}</td>
+                    <td *ngIf="list.color === 'No'">{{ list.actual_netPayment6 }}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.actual_netPayment6 }}</td>
+                    <td *ngIf="list.color === 'No'">{{ list.actual_netPayment8 }}</td>
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                      title="Redirect to Invoice Report">{{ list.actual_netPayment8 }}</td>
+                  </tr>
+                  <tr class="subtotal">
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>Total Turnover Month</th>
+                    <th>Net Amt(6)</th>
+                    <th>Net Amt(8)</th>
+                  </tr>
+                  <tr *ngFor="let list of turnoverTotal">
+                    <td colspan="1" style="background-color: gainsboro;border:3px dashed #224b5a;color:maroon">
+                      {{list.month}}</td>
+                    <td colspan="1" style="background-color: rgb(237, 247, 197);border:3px dashed #224b5a;">
+                      {{list.turnoverTotal6}}</td>
+                    <td colspan="1" style="background-color: rgb(237, 247, 197);border:3px dashed #224b5a;">
+                      {{list.turnoverTotal8}}</td>
+                  </tr>
+                </tfoot>
+                <tfoot>
+                  <tr class="total" *ngFor="let list of turnReportTotal">
+                    <td>Total</td>
+                    <td>{{list.tot_net6}}</td>
+                    <td>{{list.tot_net8}}</td>
+                    <td>{{list.tot_gross_6}}</td>
+                    <td>{{list.tot_gross_8}}</td>
+                    <td>{{list.tot_rec_tax6}}</td>
+                    <td>{{list.tot_rec_tax8}}</td>
+                    <td>{{list.tot_act_gross_6}}</td>
+                    <td>{{list.tot_act_gross_8}}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

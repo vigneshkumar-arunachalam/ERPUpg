@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
 import { ServerService } from 'src/app/services/server.service';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HttpClient } from '@angular/common/http';
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -24,9 +25,14 @@ export class ProfiledetailsComponent implements OnInit {
   // file = Array();
   //file
   signature_billerid: any = [];
-  files_Signature: any  = [];
+  files_Signature: File[] = [];
+  // files_Signature: any  = [];
+  signature_billerName: any  = [];
+  orignal_filename: any  = [];
+  user_signature_id: any  = [];
+  signature_filename:any  = [];
     
-  constructor(private serverService: ServerService, private fb: FormBuilder,private spinner:NgxSpinnerService) { }
+  constructor(private serverService: ServerService,private http: HttpClient, private fb: FormBuilder,private spinner:NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.ProfileDetails();
@@ -97,15 +103,184 @@ export class ProfiledetailsComponent implements OnInit {
 
 
   }
-  showPreviewImage(billerid: any, event: any) {
-   
+  onFileChange(event: any) {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      this.ProfileDetailsForm.patchValue({
+        photo: file
+      });
+    }
+  }
+  UpdateProfileDetails(){
+    this.spinner.show();
 
+    const formData = new FormData();
+    formData.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+    formData.append('firstName', this.ProfileDetailsForm.value.firstName);
+    formData.append('lastName', this.ProfileDetailsForm.value.lastName);
+    const photoFile = this.ProfileDetailsForm.get('photo')?.value;
+    if (photoFile) {
+      formData.append('profile_image', photoFile);
+    }else{
+        iziToast.error({
+          title: 'Error,Check Photo Format',
+          message: 'Contract not Saved !',
+          position:'topRight',
+        });
+
+      }
+    
+     
+   
+    // formData.append('billerId', this.signature_billerid);  
+    // formData.append('billerName', this.signature_billerName);
+    // formData.append('user_signature_id', this.user_signature_id);
+    //  formData.append('signature_filename', this.files_Signature);
+  
+    // this.files_Signature.forEach((file, index) => {
+    //   formData.append(`signature_filename_billerid_${this.signature_billerid}`, file);
+    // });
+
+    for (let i = 0; i < this.files_Signature.length; i++) {
+      const file = this.files_Signature[i];
+      const billerId = this.signature_billerid[i];
+      const billerName = this.signature_billerName[i];
+      const count=i;
+      // formData.append(`signature_filename_${i}_billerid_${billerId}`, file);
+      formData.append(`signature_filename_${i}`, file);
+      formData.append(`billerId_${i}`, billerId);
+      formData.append(`billerName_${i}`, billerName);
+     
+      // formData.append(`count_${i}`, count);
+      //  formData.append('user_signature_id', this.user_signature_id);
+    //  formData.append('signature_filename', this.files_Signature[i]);
+    }
+
+    formData.append('action', 'update_profile_details');
+    $.ajax({
+      type: 'POST',
+      url: 'https://laravelapi.erp1.cal4care.com/api/common/update_profile_details',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: formData,
+      success: (result: any) => {
+        this.spinner.hide();
+        if (result.status === true) {
+        
+        }else if(result.status === false){
+          this.spinner.hide();
+            iziToast.error({
+            title: 'Error,Check Missing Field Values',
+            message: 'Contract not Saved !',
+            position:'topRight',
+          });
+        }
+       
+      },
+      error: (err: any) => {
+        this.spinner.hide();
+        console.log(err);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'An error occurred while saving the contract.',
+        });
+      }
+    });
+
+  }
+  UpdateProfileDetails2(): void {
+
+   
+      const formData = new FormData();
+      formData.append('firstName', this.ProfileDetailsForm.get('firstName')?.value);
+      formData.append('lastName', this.ProfileDetailsForm.get('lastName')?.value);
+
+      const photoFile = this.ProfileDetailsForm.get('photo')?.value;
+      if (photoFile) {
+        formData.append('profile_image', photoFile);
+      }
+
+      this.userSignatureDetailsList.forEach((signature: any, index: any) => {
+        const signatureControl = this.ProfileDetailsForm.get(`signature${index}`);
+        if (signatureControl?.value) {
+          formData.append(`signature${index}`, signatureControl.value);
+        }
+      });
+      formData.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+      formData.append('action', 'update_profile_details');
+      // Simulate form submission (replace with actual API call)
+      console.log('Form Data:', formData);
+      
+      // Perform API call
+      // this.yourService.updateProfile(formData).subscribe(response => {
+      //   console.log('Profile updated successfully', response);
+      // }, error => {
+      //   console.error('Error updating profile', error);
+      // });
+      $.ajax({
+        type: 'POST',
+        url: 'https://laravelapi.erp1.cal4care.com/api/common/update_profile_details',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: (result: any) => {
+          this.spinner.hide();
+          if (result.status === true) {
+          
+          }else if(result.status === false){
+            this.spinner.hide();
+              iziToast.error({
+              title: 'Error,Check Missing Field Values',
+              message: 'Contract not Saved !',
+              position:'topRight',
+            });
+          }
+         
+        },
+        error: (err: any) => {
+          this.spinner.hide();
+          console.log(err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An error occurred while saving the contract.',
+          });
+        }
+      });
+     
+  }
+  showPreviewImage(all: any, event: any) {
+  
+    // if (event.target.files.length > 0) {
+    //   const file = event.target.files[0];
+    //   this.ProfileDetailsForm.patchValue({
+    //     photo: file
+    //   });
+    // }
+       
+   
     for (let i = 0; i < event.target.files.length; i++) {
-      var file = event.target.files[i]
-      this.files_Signature.push(file);
+      var file = event.target.files[i];
+
+      if (!this.files_Signature.some(f => f.name === file.name && f.size === file.size)) {
+        this.files_Signature.push(file);
+      }
       console.log(this.files_Signature);
-      this.signature_billerid.push(billerid)
+     
+      this.signature_billerid.push(all.billerId);
+      this.signature_billerName.push(all.billerName);
+      this.orignal_filename.push(all.orignal_filename);
+      this.signature_filename.push(all.signature_filename);
+      this.user_signature_id.push(all.user_signature_id);
       console.log("push_billerid(signature)", this.signature_billerid);
+      console.log("signature_billerName", this.signature_billerName);
+      console.log("orignal_filename", this.orignal_filename);
+      console.log("signature_filename", this.signature_filename);
+      console.log("signature_filename", this.files_Signature);
+      console.log("user_signature_id", this.user_signature_id);
     }
 
     if (event.target.files && event.target.files[0]) {
@@ -116,6 +291,13 @@ export class ProfiledetailsComponent implements OnInit {
       reader.readAsDataURL(event.target.files[0]);
     }
 
+  }
+  showPreviewImage1(billerId: number, event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.ProfileDetailsForm.patchValue({ [`signature${billerId}`]: file });
+      this.ProfileDetailsForm.get(`signature${billerId}`)?.updateValueAndValidity();
+    }
   }
 
 

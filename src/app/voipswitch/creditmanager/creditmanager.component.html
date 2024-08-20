@@ -28,6 +28,7 @@
             <ul class="nav nav-pills" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#SGSwitch1" role="tab" aria-controls="SGSwitch1"
+                (click)="creditManagerList()"
                   aria-selected="true" > SG VOIP Switch New</a>
               </li>
               <!-- <li class="nav-item">
@@ -39,7 +40,8 @@
                   aria-selected="false" >KL VOIP Switch</a>
               </li> -->
               <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#SwitchAll" role="tab" aria-controls="SwitchAll" aria-selected="false"
+                <a class="nav-link" data-toggle="tab" href="#SwitchAll" role="tab" (click)="voipSwitchAllList()"
+                aria-controls="SwitchAll" aria-selected="false"
                   >VOIP Switch-All</a>
               </li>
   
@@ -56,15 +58,21 @@
                         <div id="main">
                           <div>
                             <div class="accordion" id="faaq">
-                              <div class="card" *ngFor="let name of reseller_name_list; let i = index;">
+                              <div class="card" *ngFor="let name of getVoipDataListValues; let i = index;">
                                 <div class="card-header" [id]="'faaqhead' + i" >
                                   <a href="#" class="btn btn-header-link collapsed" [attr.data-toggle]="'collapse'"
                                     [attr.data-target]="'#faaq' + i" aria-expanded="true"
-                                    (click)="getResellerPaymentdetails({},name.customerId)"
+                                    (click)="getResellerPaymentdetails({},name.customer_id)"
                                     [attr.aria-controls]="'faaq' + i" style="display:flex;justify-content: space-between;">
-                                    <span style="width:33.3%">{{name.customerName}}</span>
-                                    <span style="width:33.3%">Retail:500</span>   
-                                    <span style="width:33.3%">AUTO CREDIT:ENABLED</span>   
+                                    <span style="width:33.3%">{{name.customer_name}}</span>
+                                 
+                                    <span style="width:33.3%" >{{name.account_type}}:{{name.current_balance}}</span>
+                
+                                    <span style="width:33.3%" *ngIf="name.account_status==true">Account Status:Enabled</span>
+                                    <span style="width:33.3%" *ngIf="name.account_status==false">Account Status:Disabled</span> 
+                                    
+                                    <span style="width:33.3%" *ngIf="name.auto_credit==1">Auto Credit:Enabled</span>
+                                    <span style="width:33.3%" *ngIf="name.auto_credit==0">Auto Credit:Disabled</span>    
                                   </a>
                                 
                                 </div>
@@ -73,7 +81,7 @@
                                  data-parent="#faaq">
                                   <div class="card-body">
                                     <div class="table-responsive" style="display: table-cell;width: 50%;">
-                                        <table class="table mb-0 table-borderless" >
+                                        <table class="table mb-0 table-borderless" id="kirumi">
                                           <thead>
                                             <tr class="userDatatable-header">
                                       
@@ -91,18 +99,20 @@
                                           </thead>
                                       
                                       
-                                          <tbody>
+                                          <tbody >
                                       
-                                            <tr *ngFor="let item of data">
-                                      
-                                              <td>{{ item.id }}</td>
-                                              <td>{{ item.companyCurrency }}</td>
+                                            <tr *ngFor="let item of filteredVoipData;let i=index">
+                                             
+                                              <td>{{ item.client_id }}</td>
+                                              <td>{{ item.currency }}</td>
                                               <td>{{ item.login }}</td>
-                                              <td>{{ item.currentBalance }}</td>
-                                              <td>{{ item.minBalance }}</td>
-                                              <td>{{ item.maxBalance }}</td>
-                                              <td>{{ item.accountType }}</td>
-                                              <td></td>
+                                              <td>{{ item.current_balance }}</td>
+                                              <td>{{ item.min_balance }}</td>
+                                              <td>{{ item.max_balance }}</td>
+                                              <td>{{ item.account_type }}</td>
+                                              <td *ngIf="item.account_status==false" (click)="activate_vssg_client(item.client_id)"><button class="btn btn-primary">Activate</button></td>
+                                              <td *ngIf="item.account_status==true" (click)="Deactivate_vssg_client(item.client_id)"><button class="btn btn-primary">Deactivate</button>
+                                              </td>
                                             </tr>
                                           </tbody>
                                       
@@ -165,9 +175,7 @@
                       </table>
                     </div>
                   </div>
-                 
                 
-        
                 </div>
   
                 <!-- PartialPaid entry sub menu ends -->
@@ -178,44 +186,38 @@
                 <div class="card-body" id="delivery-order-section">
                     <div style="text-align:center">
                     <div> 
-                        <input type="checkbox">
+                        <input type="checkbox" [(ngModel)]="SGVOIPSwitchChangeValue" (change)="SGVOIPSwitchChange($event)">
                         <label class="ml-2">SG VOIP Switch New</label>
                     </div>
                     <div class="update-btn">
-                        <button type="button" class="btn-primary mb-4">Update Credit</button>
+                        <button type="button" class="btn-primary mb-4" (click)="addTopupBalanceVoipData()">Update Credit</button>
                     </div>
                 </div>
                   <div class="userDatatable global-shadow border-0 bg-white" style="width: 70%;margin: 0 auto;">
                     <div class="table-responsive">
-                      <table class="table mb-0 table-borderless" >
+                      <table class="table mb-0 table-borderless" id="kirumi2">
                         <thead>
                             <tr class="userDatatable-header">
                               <th class="userDatatable-title" style="color: aliceblue;">S.no</th>
                               <th class="userDatatable-title" style="color: aliceblue;">Server Name</th>
-                              <th class="userDatatable-title" style="color: aliceblue;">No of record</th>
+                              <th class="userDatatable-title" style="color: aliceblue;">No of Record</th>
                               <th class="userDatatable-title" style="color: aliceblue;">User</th>
                               <th class="userDatatable-title" style="color: aliceblue;">Updated On</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr *ngFor="let item of tableData; let i = index">
+                            <tr *ngFor="let item of voipSwitchAllListValue; let i = index">
                               <td>{{ i + 1 }}</td>
-                              <td>{{ item.serverName }}</td>
-                              <td>{{ item.noOfRecord }}</td>
-                              <td>{{ item.user }}</td>
-                              <td>{{ item.updatedOn }}</td>
+                              <td>{{ item.server_name }}</td>
+                              <td>{{ item.credit_count }}</td>
+                              <td>{{ item.updated_user }}</td>
+                              <td>{{ item.created_dt }}</td>
                             </tr>
                           </tbody>
                       </table>
                     </div>
                   </div>
-               
-        
                 </div>
-  
-  
-  
-  
                 <!-- Paid sub menu ends -->
               </div>
 

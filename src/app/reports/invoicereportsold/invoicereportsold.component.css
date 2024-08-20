@@ -135,6 +135,7 @@ tr:nth-child(odd) {background: #FFF}
  ::ng-deep .autocomplete-container .input-container input{
    background: transparent;
  }
+ 
  .ng-autocomplete 
  ::ng-deep .autocomplete-container .input-container input:focus {
    outline: none;
@@ -409,11 +410,11 @@ ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
  ::ng-deep .autocomplete-container .input-container input{
    border: none;
   padding-left: 1.4rem;
-  box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #f4e0f3 !important;
-  background: none;
   font-family: inherit;
   color: #252525;
-  border-color: #6d5dfc!important;
+  border: none;
+  padding: 4px 8px !important;
+  background: linear-gradient(to right, #eaf5ae, #b0f2b1);
  }
 
 

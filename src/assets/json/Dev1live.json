@@ -62,6 +62,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/recurringChecker"
+        },{
+            "name": "Multiple Invoice Payment",
+            "icon": "sliders",
+            "IDs": [3007],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/multipleInvPayment"
         }
         
       
@@ -150,12 +158,12 @@
     "icon":"settings",
     "isActive": false,
     "menuId":5,
-    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "IDs": [],
     "Type": "Main Menu",
     "children": [{
             "name": "Profile Details",
             "icon": "grid",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "IDs": [],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -166,6 +174,52 @@
     ],
     "isVisible": true,
     "value": "/profiledetails"
+},{
+    "name": "Reports",
+    "icon":"pie-chart",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [8001,8002,8003,5509,9913,2044,8004,1135],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Invoice Reports",
+            "icon": "printer",
+            "IDs": [9913],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/invoiceReportsOld"
+        },{
+            "name": "Purchase Entry Report",
+            "icon": "cast",
+            "IDs": [8003],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/purchaseentryreport"
+        },{
+            "name": "GST Report-Cal4Care Pte Ltd",
+            "icon": "play-circle",
+            "IDs": [1135],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/gstreport"
+        },{
+            "name": "SST Report-Cal4Care Pte Ltd",
+            "icon": "gift",
+            "IDs": [1135],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/sstreport"
+        }
+       
+       
+
+    ],
+    "isVisible": true,
+    "value": "/reports--"
 },
 {
     "name": "3CX",

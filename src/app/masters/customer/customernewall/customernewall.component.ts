@@ -315,6 +315,7 @@ export class CustomernewallComponent implements OnInit {
   Clicked: boolean = false;
   defaultBillerID_edit: any;
   dcare: boolean=true;
+  response_total_cnt: any;
 
 
   constructor(private http: HttpClient, private serverService: ServerService, private fb: FormBuilder, private spinner: NgxSpinnerService) {
@@ -1857,11 +1858,14 @@ export class CustomernewallComponent implements OnInit {
       // this.spinner.hide();
       console.log('12345678')
       $('#searchCustomerFormId').modal('hide');
+      this.response_total_cnt=response.total_cnt;
       if (response.total_cnt == 0) {
-        iziToast.warning({
-          message: "No Matching Records",
-          position: 'topRight'
-        });
+        this.response_total_cnt=response.total_cnt;
+      
+        // iziToast.warning({
+        //   message: "No Matching Records",
+        //   position: 'topRight'
+        // });
       }
       console.log("search username ", response)
       if (response.status != '') {
@@ -1875,7 +1879,7 @@ export class CustomernewallComponent implements OnInit {
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $('#searchCustomerFormId').modal('hide');
 
-
+        this.response_total_cnt=response.total_cnt;
       }
       else {
         iziToast.warning({
@@ -1911,15 +1915,16 @@ export class CustomernewallComponent implements OnInit {
     api_req.element_data = get_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log('hgyrdrrd')
+      //console.log('hgyrdrrd')
       $('#searchCustomerFormId').modal('hide');
       this.spinner.hide();
-
+      
       if (response.total_cnt == 0) {
-        iziToast.warning({
-          message: "No Matching Records",
-          position: 'topRight'
-        });
+        this.response_total_cnt=response.total_cnt;
+        // iziToast.warning({
+        //   message: "No Matching Records",
+        //   position: 'topRight'
+        // });
       }
       if (response != '') {
 

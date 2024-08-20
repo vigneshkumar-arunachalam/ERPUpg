@@ -525,9 +525,9 @@ th {
   color: #e4ebf5;
 }
 
-td {
+/* td {
   border-bottom: 1px solid #c91a71 !important;
-}
+} */
 
 .userDatatable table tr:nth-child(even) {
   background: rgb(241, 238, 241)
@@ -668,4 +668,29 @@ ul.nav.nav-pills .show>.nav-link {
   padding: 5px 10px;
   border: none;
   border-radius: 20px;
+}
+#kirumi th,#kirumi td{
+  
+  border: 1px solid #C5D9E0;
+  line-height: 26px;
+  padding: 2px 5px !important;
+}
+#kirumi tr:nth-child(odd):hover{
+  background-color: bisque;
+}
+#kirumi tr:nth-child(even):hover{
+  background-color: rgb(214, 240, 167);
+}
+
+#kirumi2 th,#kirumi2 td{
+  
+  border: 1px solid #C5D9E0;
+  line-height: 26px;
+  padding: 2px 5px !important;
+}
+#kirumi2 tr:nth-child(odd):hover{
+  background-color: bisque;
+}
+#kirumi2 tr:nth-child(even):hover{
+  background-color: rgb(214, 240, 167);
 }

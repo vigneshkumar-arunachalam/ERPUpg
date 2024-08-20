@@ -78,11 +78,12 @@ export class EditTransactionNewComponent implements OnInit {
   prodResult:any;
   Clicked: boolean = false;
   add_billerNameID: any;
+  PC_billerDetails: any;
 
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.addLoad();
+  //  this.addLoad();
 
 
     this.route.queryParams
@@ -94,9 +95,12 @@ export class EditTransactionNewComponent implements OnInit {
 
 
         // console.log("Transactional approval ID", this.TransactionApprovalID);
-        // console.log("e_Transaction_Type_id", this.edit_TransactionTpeID);
+        console.log("e_Transaction_Type_id", this.edit_TransactionTpeID);
+        console.log("e_Transaction_Type_id:", this.edit_TransactionTpeID, "Type:", typeof this.edit_TransactionTpeID);
+
       }
       );
+      
 
     // if(this.edit_TransactionTpeID==5){
     //   $('#PurchaseEntry').removeClass('active');
@@ -119,13 +123,14 @@ export class EditTransactionNewComponent implements OnInit {
 
       case '3':
         $('#PurchaseEntry_link').addClass('active');
-        
-        setTimeout(() => {
-          this.editPurchaseEntry();
-        }, 2000)
+        this.editPurchaseEntry();
+        // setTimeout(() => {
+          
+        // }, 2000)
      
         break;
       case '5':
+ 
         $('#PurchaseEntry').addClass('fade');
         $('#PurchaseEntry').removeClass('active');
         $('#PettyCash_link').addClass('active');
@@ -137,6 +142,8 @@ export class EditTransactionNewComponent implements OnInit {
       case '6':
         $('#VendorOrder_link').addClass('active');
         break;
+    
+        
       case '7':
         $('#PurchaseEntry').removeClass('active');
         $('#PurchaseEntry').addClass('fade');
@@ -329,6 +336,14 @@ export class EditTransactionNewComponent implements OnInit {
 
 
     });
+    // if(this.edit_TransactionTpeID==5){
+    //   $('#PurchaseEntry').removeClass('active');
+    //   $('#PettyCash').addClass('active');
+   
+    //   setTimeout(() => {
+    //     this.editPettyCash();
+    //   }, 5000)
+    // }
 
 
   }
@@ -440,10 +455,10 @@ export class EditTransactionNewComponent implements OnInit {
         this.addTransaction_section1.patchValue({
           // 'setInvoice': response.selected_invoice_type
         });
-        setTimeout(() => {
-          $('#biller_name9').val(response.defaults_biller_id);
-         $('#Currency9').val(currencyID);
-        }, 1000)
+        // setTimeout(() => {
+        //   $('#biller_name9').val(response.defaults_biller_id);
+        //  $('#Currency9').val(currencyID);
+        // }, 1000)
         this.addTransaction_section1.patchValue({
           'billerName': this.DefaultBillerIDValue,
           'PE_purchaseEntryNo': response.purchase_entry_no,
@@ -522,6 +537,7 @@ export class EditTransactionNewComponent implements OnInit {
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_getPaymentDetails_req.action = "payment_entry_invoice_no";
     api_getPaymentDetails_req.billerId = this.DefaultBillerIDValue;
+    api_getPaymentDetails_req.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_getPaymentDetails_req;
 
 
@@ -545,7 +561,7 @@ export class EditTransactionNewComponent implements OnInit {
   }
 
   editPurchaseEntry() {
-this.spinner.show();
+  this.spinner.show();
     let api_req: any = new Object();
     let api_loadEdit: any = new Object();
     api_req.moduleType = "transaction_entry";
@@ -553,7 +569,8 @@ this.spinner.show();
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_loadEdit.action = "purchase_entry_edit";
-    api_loadEdit.transaction_approval_id = this.TransactionApprovalID
+    api_loadEdit.transaction_approval_id = this.TransactionApprovalID;
+    api_loadEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_loadEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -561,6 +578,7 @@ this.spinner.show();
       if (response != '') {
         this.spinner.hide();
         this.billerID =response.transaction_details[0].billerId;
+        this.PC_billerDetails=response.billerDetails;
         this.addTransaction_section1.patchValue({
           'billerName': response.transaction_details[0].billerId,
           'trans_Date': response.transaction_details[0].transaction_date,
@@ -660,7 +678,7 @@ this.spinner.show();
       };
   }
   editPettyCash() {
-    // alert("hi")
+
     // alert(this.TransactionApprovalID)
     let api_req: any = new Object();
     let api_loadEdit: any = new Object();
@@ -670,6 +688,7 @@ this.spinner.show();
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_loadEdit.action = "petty_cash_edit";
     api_loadEdit.transaction_approval_id = this.TransactionApprovalID;
+    api_loadEdit.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_loadEdit;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -677,6 +696,7 @@ this.spinner.show();
       if (response != '') {
 
         this.PC_edit_TypeValue = response.pettycash_details[0].type,
+        this.PC_billerDetails=response.billerDetails;
 
           this.addTransaction_section1.patchValue({
             'billerName': response.transaction_details[0].billerId,
@@ -692,6 +712,7 @@ this.spinner.show();
 
 
           })
+         
 
 
           if (response.trans_file == null) {
@@ -1067,7 +1088,8 @@ this.spinner.show();
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-
+            this.editPurchaseEntry();
+            this.editPettyCash();
             iziToast.success({
               message: "File Attachment Deleted successfully",
               position: 'topRight'
@@ -1135,7 +1157,38 @@ this.spinner.show();
   BillerChange(event: any) {
     this.billerID = event.target.value;
     this.add_billerNameID = event.target.value;
-    this.addLoad();
+    // this.addLoad();
+    this.getPurchaseDetails();
+  }
+  getPurchaseDetails(){
+    this.spinner.show();
+  
+    let api_req: any = new Object();
+    let api_recurring: any = new Object();
+    api_req.moduleType = "transaction_entry";
+    api_req.api_url = "transaction_entry/getPurchaseDetails"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_recurring.action = "getPurchaseDetails";
+    api_recurring.user_id = localStorage.getItem("erp_c4c_user_id");
+    api_recurring.biller_id= this.add_billerNameID ;
+    api_req.element_data = api_recurring;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status = true) {
+        this.spinner.hide();
+  
+        this.addTransaction_section1.patchValue({
+          'billerName': response.defaults_biller_id,
+          'PE_Currency': response.default_currency_id,
+          'PE_currencyConversionRate': response.currency_converstion[0].currency_live_val,
+          'PE_purchaseEntryNo': response.purchase_entry_no,
+        });
+      }
+    });
+
+
   }
 
 
@@ -1184,6 +1237,7 @@ this.spinner.show();
           message: "Fill Vendor Name  ",
           position: 'topRight'
         });
+        
         this.spinner.hide();
         return false;
       }
@@ -1306,9 +1360,53 @@ this.spinner.show();
 
       this.updateVariable = "petty_cash_update";
       data.append('transaction_approval_id', this.TransactionApprovalID);
-      data.append('petty_description', this.addTransaction_section1.value.PC_Description);
-      data.append('petty_type', this.addTransaction_section1.value.PC_Type);
-      data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
+      const pcDescription=this.addTransaction_section1.value.PC_Description
+      if (pcDescription === null || pcDescription =='') {
+
+        iziToast.error({
+          message: "Give Description of Petty Cash ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+  
+      }
+      else {
+        data.append('petty_description',this.addTransaction_section1.value.PC_Description );
+      }
+      const pcType=this.addTransaction_section1.value.PC_Type
+      if (pcType === null) {
+
+        iziToast.error({
+          message: "Give Type of Petty Cash ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+  
+      }
+      else {
+        data.append('petty_type', this.addTransaction_section1.value.PC_Type);
+   
+      }
+      const pcAmount=this.addTransaction_section1.value.PC_Amount
+      if (pcAmount === null || pcAmount =='' ) {
+
+        iziToast.error({
+          message: "Give Amount of Petty Cash ",
+          position: 'topRight'
+        });
+        this.spinner.hide();
+        return false;
+  
+      }
+      else {
+        data.append('petty_amount', this.addTransaction_section1.value.PC_Amount);
+   
+      }
+    
+     
+     
 
       // console.log("this.getFileAttachmentResult", this.getFileAttachmentResult);
       // console.log("this.getFileAttachmentResult", this.myFilesUpdate.length);
@@ -1414,8 +1512,8 @@ this.spinner.show();
     var self = this;
     $.ajax({
       type: 'POST',
-      // url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
-       url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+       url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+      // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
       cache: false,
       contentType: false,
       processData: false,
@@ -1463,6 +1561,7 @@ this.spinner.show();
   SelectTransactionType_Log() {
     this.Select_Transaction_Type = 'Logistics'
   }
+  
   SelectTransactionType_VO() {
     this.Select_Transaction_Type = 'VendorOrder'
   }

@@ -1,87 +1,288 @@
 <div class="contents-section">
 
-    <div class="row no-gutters">
-      <div class="col-lg-12 mb-30">
-        <div class="card">
-          <div class="card-header color-dark fw-500" >
-            <h3 class="card-header-section">
-              <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-              <span class="breadcrumb-item active">Guru Management</span>
-            </h3>
-  
-  
-            <div class="quotation-btn-section">
-  
-             
-             
-              <button type="button"  title="Add Guru Details"
-             
-                class="btn btn-primary btn-default btn-squared" (click)="addGuruGo()" style="margin-right: 10px;"><i
-                  class="fas fa-plus" style="margin-right:10;"></i>Add 
-              </button>
-              <button type="button"  class="btn btn-primary" 
-              
-                title="Search Guru Details" (click)="searchGuruGo()">
-                <i class="fas fa-search" style="margin-right:10;"></i>Search
-              </button>
-            </div>
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section">
+            <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">Guru Management</span>
+          </h3>
+
+
+          <div class="quotation-btn-section">
+
+
+
+            <button type="button" title="Add Guru Details" class="btn btn-primary btn-default btn-squared"
+              (click)="addGuruGo()" style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:10;"></i>Add
+            </button>
+            <button type="button" class="btn btn-primary" title="Search Guru Details" (click)="searchGuruGo()">
+              <i class="fas fa-search" style="margin-right:10;"></i>Search
+            </button>
           </div>
-          <div class="card-body">
-            <div class="userDatatable global-shadow border-0 bg-white w-100">
-              <div class="table-responsive">
-                <table class="table mb-0 table-borderless">
-                  <thead>
-                    <tr class="userDatatable-header">
-  
-                      <th>
-                        <input type="checkbox" >
-                      </th>
-  
-                      <th>
-                        <span class="userDatatable-title">Biller Name</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Customer Name</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Description</span>
-                      </th>
-  
-                      <th>
-                        <span class="userDatatable-title">Account Type</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">URL</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Changed By</span>
-                      </th>
-                      <th>
-                        <span class="userDatatable-title">Action</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody *ngFor="let list of guru_list; let i = index">
-                   
-                    <tr>
-               
-                      <td>
-                        <input type="checkbox" >
-                      </td>
-                      <td><span>{{ list.billerName}}</span></td>
-                      <td><span>{{ list.customerName}}</span></td>
-                      <td><span>{{ list.description}}</span></td>
-                      <td><span>{{ list.account_type}}</span></td>
-                      <td><span>{{ list.webpage_url}}</span></td>
-                      <td><span>{{ list.userName}}</span></td>
-                    
-                    </tr>
-                  </tbody>
-                </table>
+        </div>
+        <div class="card-body">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+
+                    <th>
+                      <input type="checkbox">
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">Biller Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Customer Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Description</span>
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">Account Type</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">URL</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Changed By</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngFor="let list of guru_list; let i = index">
+                  <tr>
+                    <td colspan="8" style="background-color: black;color:azure;text-align: left;">{{list.customerName}}
+                    </td>
+
+                  </tr>
+                  <tr>
+
+                    <td>
+                      <input type="checkbox">
+                    </td>
+                    <td><span>{{ list.billerName}}</span></td>
+                    <td><span>{{ list.customerName}}</span></td>
+                    <td><span>{{ list.description}}</span></td>
+                    <td><span>{{ list.account_type}}</span></td>
+                    <!-- <td><span>{{ list.webpage_url}}</span></td> -->
+                    <td>
+                      <a href="{{ list.webpage_url }}">{{ list.webpage_url }}</a>
+                    </td>
+                    <td><span>{{ list.userName}}</span></td>
+                    <td>1</td>
+
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
+
   </div>
+
+
+  <!----------Modal Pop Up (BEGIN) for advanced search Petty Cash ------------------>
+  <div class="modal fade" id="addGuruDetailsFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content addcustomernewallcss">
+
+        <div class="modal-header">
+          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #262127, #54b7aa);">
+            ADD GURU DETAILS </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="addGuru_FormGroup">
+            <div class="row">
+              <div class="col-12">
+
+                <section>
+
+                  <div>
+
+                    <div class="table-responsive">
+                      <table class="add-contact-table-section">
+                        <thead>
+                          <tr class="userDatatable-header">
+
+                            <th><span class="userDatatable-title">Biller Name</span></th>
+
+                            <th><span class="userDatatable-title">Customer Name</span></th>
+                            <th><span class="userDatatable-title">Description</span>
+                            </th>
+                            <th><span class="userDatatable-title">
+                                Account Type</span></th>
+                            <th><span class="userDatatable-title">
+                                UserName</span></th>
+                            <th><span class="userDatatable-title">
+                                GURU</span></th>
+                            <th><span class="userDatatable-title">URL</span>
+                            </th>
+                            <th><span class="userDatatable-title">S Perm</span>
+                            </th>
+
+                          </tr>
+                        </thead>
+                        <tbody formArrayName="addresses"
+                          *ngFor="let address of addressControls.controls; let i = index;">
+
+
+                          <tr [formGroupName]="i" class="marginSpace">
+                            <td>
+
+
+                              <div class="userDatatable-content">
+                                <select name="billerId" id="pd_billername_txtbox_{{i}}" class="form-control"
+                                  formControlName="billerId">
+                                  <option [ngValue]="0" selected>Select Biller</option>
+
+                                  <option *ngFor="let bill of billerDetails" value="{{bill.billerId}}">
+                                    {{bill.billerName}}
+                                  </option>
+
+                                </select>
+
+                                <!--                                           
+                                                <input type="text" class="form-control mt-2 mb-2"
+                                                    formControlName="pd_billername"
+                                                    id="pd_billername_txtbox_{{i}}" /> -->
+
+                              </div>
+                            </td>
+                            <td>
+                              <!-- <div class="userDatatable-content">
+
+
+
+                                <input type="text" class="form-control mt-2 mb-2" formControlName="pd_customername"
+                                  id="pd_customername_txtbox_{{i}}" />
+
+
+                              </div> -->
+
+
+                              <div class="ng-autocomplete userDatatable-content">
+                                <!-- <label for="companyName" class="col-lg-12 "></label> -->
+                                <ng-autocomplete id="pd_customername_txtbox_{{i}}" [data]="searchResult_customerName"
+                                  [searchKeyword]="keyword_customerName" formControlName="customer_id"
+                                  (selected)='selectEventCustomer($event, i)'
+                                  (inputChanged)='searchCustomerName($event)' (inputFocused)='onFocusedCustomer($event)'
+                                  [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                                </ng-autocomplete>
+
+                                <ng-template #itemTemplateCustomer let-item>
+                                  <a [innerHTML]="item.customerName"></a>
+                                </ng-template>
+
+                                <ng-template #notFoundTemplate let-notFound>
+                                  <div [innerHTML]="notFound"></div>
+                                </ng-template>
+
+                              </div>
+
+                            </td>
+
+                            <td>
+                              <div class="userDatatable-content">
+                                <textarea class="form-control mt-2 mb-2" row="2" formControlName="description"
+                                  id="pd_description_txtArea_{{i}}"></textarea>
+                              </div>
+                            </td>
+                            <td>
+                              <div class="userDatatable-content">
+                                <select name="account_type" id="pd_accountType_{{i}}" class="form-control"
+                                  formControlName="account_type">
+                                  <option [ngValue]="0" selected>Select Type</option>
+
+                                  <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
+                                    {{bill.value}}
+                                  </option>
+
+                                </select>
+
+                                <!-- <input type="text" class="form-control" 
+                                                    formControlName="pd_accountType" id="pd_accountType_{{i}}" /> -->
+
+                              </div>
+                            </td>
+                            <td>
+                              <div class="userDatatable-content">
+                                <input type="text" class="form-control" formControlName="pwd_username"
+                                  id="pd_username_{{i}}" />
+                              </div>
+                            </td>
+                            <td>
+                              <div class="userDatatable-content">
+                                <input type="text" class="form-control" formControlName="pwd_guru" id="pd_guru_{{i}}" />
+                              </div>
+                            </td>
+                            <td>
+                              <div class="userDatatable-content">
+                                <input type="url" class="form-control" formControlName="webpage_url" id="pd_url_{{i}}" />
+
+                              </div>
+                            </td>
+                            <td>
+                              <div class="userDatatable-content">
+                                <input type="checkbox" formControlName="special_per" id="pd_s_perm_{{i}}">
+
+                              </div>
+                            </td>
+
+                          </tr>
+
+                        </tbody>
+
+                      </table>
+                    </div>
+
+
+
+                  </div>
+                </section>
+
+                <div class="text-right">
+
+
+                  <button type="button" class="btn btn-dark btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                    style="margin-right: 10px;">
+                    <i class="fas fa-plus" style="margin-right:0;"> Add</i>
+                  </button>
+                </div>
+
+              </div>
+
+
+            </div>
+          </form>
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" (click)="insertGuruDetails()">
+            Save
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------Modal Pop Up (END)  for advanced search Petty Cash ------------------>
