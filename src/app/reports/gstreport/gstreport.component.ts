@@ -93,7 +93,7 @@ export class GstreportComponent implements OnInit {
       };
   }
   quarter1(searchData: any[]): any{
-    alert("hi")
+   // alert("hi")
     console.log("within list",searchData)
 
     const queryParams = searchData.map(data => 

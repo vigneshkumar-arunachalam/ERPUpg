@@ -146,16 +146,16 @@ export class PurchaseEntryComponent implements OnInit {
     this.addLoad();
     this.yearsAPI();
 
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/purchaseEntry/getMonthValues').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/purchaseEntry/getMonthValues').subscribe((data: any) => {
       this.getMonthValues = data.months;
      // console.log("this.getMonthValues", this.getMonthValues)
     })
 
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
      // console.log("this.getVendorCode", this.getVendorCode)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
       this.getVendorList = data.vendorList;
      // console.log("this.getVendorCode", this.getVendorCode)
     })
@@ -1510,7 +1510,7 @@ export class PurchaseEntryComponent implements OnInit {
   addVendorNameGo() {
     // $('#addPurchaseEntryFormId').modal('hide');
     
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
     //  console.log("this.getVendorCode", this.getVendorCode)
     });
@@ -1523,7 +1523,7 @@ export class PurchaseEntryComponent implements OnInit {
     let api_req: any = new Object();
     let api_loadAdd: any = new Object();
     api_req.moduleType = "purchase_entry_addnew";
-    api_req.api_url = "transaction_entry/purchase_entry_addnew";
+    api_req.api_url = "purchaseEntry/purchase_entry_addnew";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_loadAdd.action = "purchase_entry_addnew";

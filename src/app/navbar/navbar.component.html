@@ -556,23 +556,35 @@
               </div>
             </div>
           </div> -->
-          <div class="dropdown">
+          <!-- <div class="dropdown">
             <div class="dropdown-container">
               <a href="javascript:;" class="dropdown-button"><img class="svg" src="assets/img/icon2/warning.png"
                   title="Overdue Payment" style="height: 30px;width:30px" alt="img"></a>
               <ul class="dropdown-menu dropdown-select">
-                <li *ngFor="let list of overduePaymentsBillerList" 
-                (click)="overduePayments(list.billerId,list.name);">{{list.name}}<b
-                    style="padding: 0px 15px;">-</b><span class="badge badge-round badge-danger badge-lg">{{list.count}}
+                <li *ngFor="let list of overduePaymentsBillerList" (click)="overduePayments(list.billerId,list.name);">
+                  {{list.name}}<b style="padding: 0px 15px;">-</b><span
+                    class="badge badge-round badge-danger badge-lg">{{list.count}}
                   </span></li>
 
               </ul>
             </div>
+          </div> -->
+          <div class="dropdown">
+            <div class="dropdown-container" (click)="$event.stopPropagation()">
+              <a href="javascript:;" class="dropdown-button" (click)="toggleMenu($event)">
+                <img class="svg" src="assets/img/icon2/warning.png" title="Overdue Payment" style="height: 30px;width:30px" alt="img">
+              </a>
+              <ul class="dropdown-menu dropdown-select" [class.show-menu]="isMenuVisible">
+                <li *ngFor="let list of overduePaymentsBillerList" (click)="overduePayments(list.billerId, list.name)">
+                  {{ list.name }}<b style="padding: 0px 15px;">-</b>
+                  <span class="badge badge-round badge-danger badge-lg">{{ list.count }}</span>
+                </li>
+              </ul>
+            </div>
           </div>
-
         </li>
         <li>
-          <a href="javascript:;" class="navbar-brand" style=" position: relative;">
+          <!-- <a href="javascript:;" class="navbar-brand" style=" position: relative;">
             <span class="countLeft" title="Recurring Invoice new" data-toggle="modal"
               data-target="#RecurringInvoicenewFormId">30</span>
             <span class="countLeftBottom" title="Recurred Invoice" data-toggle="modal" (click)="getRecurredList()"
@@ -583,8 +595,8 @@
               data-target="#RecuringInvoiceFormId">30</span>
             <span class="countRightBottom" title="Reseller Recuring List" data-toggle="modal"
               data-target="#ResellerRecuringFormId" (click)="getResellerRecuringApprovalList()">30</span>
-          </a>
-          
+          </a> -->
+
 
           <a href="javascript:;" class="navbar-brand">
 
@@ -738,7 +750,7 @@
                     <input type="text" class="form-control" placeholder="Converted Amount"
                       style="background:linear-gradient(to right, #e1bfeb, #f2e5ef);color:#C04000 ;font-size:600 ;"
                       formControlName="outputValue" />
-                
+
                   </div>
                 </div>
 
@@ -1142,18 +1154,18 @@
                 </tr>
               </thead>
               <tbody>
-                
+
 
                 <!-- Outer ngFor for each biller -->
                 <ng-container *ngFor="let item of overdueResponse; let j = index">
-                  <tr class="PIlistlabel" 
-                  [ngStyle]="{'backgroundColor': item.colorCodes , 'color':'#040436','font-weight': '500','height':'25px','padding-left':'14px'}">
-                  <td colspan="12">{{ item.billerName }}</td>
-                </tr>
+                  <tr class="PIlistlabel"
+                    [ngStyle]="{'backgroundColor': item.colorCodes , 'color':'#040436','font-weight': '500','height':'25px','padding-left':'14px'}">
+                    <td colspan="12">{{ item.billerName }}</td>
+                  </tr>
                   <ng-container *ngFor="let list of item.overduePayments; let i = index">
                     <!-- Row for the biller title and actions -->
                     <tr>
-                      <td colspan="10" 
+                      <td colspan="10"
                         [ngStyle]="{'font-weight': '500','padding-left':'14px','background-color':'#861F41','color':'white'}">
                         <span class="customer_details">{{ list.title.customerName }}{{" "}}
                           <ul>
@@ -2478,7 +2490,7 @@
 
       </div>
       <div class="modal-footer">
-       
+
 
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Cancel

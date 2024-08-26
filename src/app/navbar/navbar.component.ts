@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener  } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServerService } from '../services/server.service';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
@@ -21,8 +21,9 @@ interface Page {
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
 
+export class NavbarComponent implements OnInit {
+  isMenuVisible = false;
   //others
   userName: any
   userId: any;
@@ -421,14 +422,14 @@ export class NavbarComponent implements OnInit {
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
 
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyList').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyList = data.currency_data;
       }
 
       // console.log("this.getCurrencyList", this.getCurrencyList)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/getCurrencyDetails').subscribe((data: any) => {
       if (data != '') {
         this.getCurrencyDetails = data.currency_data;
         this.currencyData = data.currency_data;
@@ -438,28 +439,28 @@ export class NavbarComponent implements OnInit {
       // console.log("this.getCurrencyDetails", this.getCurrencyDetails)
     });
 
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
 
       if (data != '') {
         this.postalInvoiceDetails = data;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
 
       if (data != '') {
         this.postalInvoiceCount = data.count;
       }
       //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/base/getTaskList').subscribe((data: any) => {
 
       if (data != '') {
         this.getTaskList = data.taskList;
       }
       // console.log("this.getTaskList", this.getTaskList)
     });
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/soa/overduePaymentsBillerList?user_id=' + localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/soa/overduePaymentsBillerList?user_id=' + localStorage.getItem('erp_c4c_user_id')).subscribe((data: any) => {
 
       if (data != '') {
         this.overduePaymentsBillerList = data.dataList;
@@ -467,6 +468,10 @@ export class NavbarComponent implements OnInit {
       console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
     })
 
+  }
+  toggleMenu(event: Event): void {
+    event.stopPropagation();
+    this.isMenuVisible = !this.isMenuVisible;
   }
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;
@@ -802,14 +807,14 @@ export class NavbarComponent implements OnInit {
         api_req.element_data = api_reqD1;
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+            this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
 
               if (data != '') {
                 this.postalInvoiceDetails = data;
               }
               //  console.log("this.postalInvoiceDetails", this.postalInvoiceDetails)
             });
-            this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+            this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
 
               if (data != '') {
                 this.postalInvoiceCount = data.count;
@@ -1202,7 +1207,7 @@ export class NavbarComponent implements OnInit {
       };
   }
   overduePayments(billerID: any, name: any) {
-
+    this.isMenuVisible = false;
     if (name === 'license') {
       $('#overduePaymentFormId').modal('show');
       this.LicenseOverDue();
@@ -1322,13 +1327,13 @@ export class NavbarComponent implements OnInit {
             message: "Mail Sent Successfully",
             position: 'topRight'
           });
-          this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
+          this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoice').subscribe((data: any) => {
 
             if (data != '') {
               this.postalInvoiceDetails = data;
             }
           });
-          this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
+          this.http.get<any>('https://erp1.cal4care.com/api/sendPostalInvoiceCount').subscribe((data: any) => {
 
             if (data != '') {
               this.postalInvoiceCount = data.count;
@@ -1366,7 +1371,7 @@ export class NavbarComponent implements OnInit {
       });
       return false;
     } else {
-      var url = "https://laravelapi.erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=yes";
+      var url = "https://erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=yes";
       window.open(url, '_blank');
     }
 
@@ -1380,25 +1385,25 @@ export class NavbarComponent implements OnInit {
       });
       return false;
     } else {
-      var url = "https://laravelapi.erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=no";
+      var url = "https://erp1.cal4care.com/api/multiPrintPostal?billId=" + this.selectedBillIds + "&with_logo=no";
       window.open(url, '_blank');
     }
   }
   postalinv_sendPDF(billerID: any) {
-    var url = "https://laravelapi.erp1.cal4care.com/api/postalPrint?billId=" + billerID;
+    var url = "https://erp1.cal4care.com/api/postalPrint?billId=" + billerID;
     window.open(url, '_blank');
   }
   postalinvwithoutLogo_sendPDF(billerID: any) {
-    var url = "https://laravelapi.erp1.cal4care.com/api/postalPrintWithoutLogo?billId=" + billerID;
+    var url = "https://erp1.cal4care.com/api/postalPrintWithoutLogo?billId=" + billerID;
     window.open(url, '_blank');
   }
   demandLetterPDF(billerID: any, customerID: any) {
-    var url = "https://laravelapi.erp1.cal4care.com/api/soa/generatePDF?billerId=" + billerID + "&customerId=" + customerID;
+    var url = "https://erp1.cal4care.com/api/soa/generatePDF?billerId=" + billerID + "&customerId=" + customerID;
     window.open(url, '_blank');
   }
   ConsolidatePDF(billId: any, customerID: any) {
 
-    var url = "https://laravelapi.erp1.cal4care.com/api/soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
+    var url = "https://erp1.cal4care.com/api/soa/generateStatement?billerId=" + billId + "&customerId=" + customerID;
     // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
@@ -1406,7 +1411,7 @@ export class NavbarComponent implements OnInit {
 
   landscapePDF(billId: any) {
 
-    var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
+    var url = "https://erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     // var url = "https://laravelapi.erp1.cal4care.com/api/invoice/getBillpdf?billId=" + billId + "";
     window.open(url, '_blank');
     console.log("url", url)
@@ -2245,7 +2250,7 @@ export class NavbarComponent implements OnInit {
     if (this.multipleBillIDPaymentcust == '' || this.multipleBillIDPaymentcust == undefined) {
       // alert("Don't Choose From Multiple Customer");
       iziToast.warning({
-        message: "Customer atleast 1 customer",
+        message: "Customer atleast one customer",
         position: 'topRight'
       });
       this.spinner.hide();
@@ -2865,13 +2870,13 @@ export class NavbarComponent implements OnInit {
   }
   templateContentEmailDropdown_single(event: any) {
     this.spinner.show();
-    // alert("hi")
+    //alert("hi")
     this.quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/get_email_invoice_template";
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/get_email_invoice_template";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
@@ -2914,17 +2919,18 @@ export class NavbarComponent implements OnInit {
     console.log("quotation dropdown ID check", this.SA_quotation_Emailtemplate_id);
     let api_req: any = new Object();
     let api_quotationTemplateDropdown_req: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/get_email_invoice_template";
+    api_req.moduleType = "soa";
+    api_req.api_url = "soa/get_email_invoice_template";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_quotationTemplateDropdown_req.action = "get_email_invoice_template";
     api_quotationTemplateDropdown_req.user_id = localStorage.getItem('erp_c4c_user_id');
     if(this.multipleBillIDPaymentP.length === 0){
       iziToast.warning({
-        message: "Choose atleast one checkbox",
+        message: "Choose atleast one customer invoice",
         position: 'topRight'
       });
+      this.spinner.hide();
       return false;
     }
     api_quotationTemplateDropdown_req.billId = this.multipleBillIDPaymentP;
@@ -3216,12 +3222,14 @@ export class NavbarComponent implements OnInit {
   }
 
   selectAll_getEmail(customerid: any, billerId: any, billId: any) {
+  // alert("email")
 
-    if(this.multipleBillIDPaymentP==undefined){
+    if(this.multipleBillIDPaymentP.length === 0){
       iziToast.error({
-        message: "Select atleast 1 checkbox",
+        message: "Select atleast one Bill ID",
         position: 'topRight'
       });
+      this.spinner.hide();
       return false;
     }else{
       $('#payment_selectAllReminderMailId').modal('show');
@@ -3551,4 +3559,17 @@ export class NavbarComponent implements OnInit {
     }
     console.log("Final Checkbox After checkbox selected list", this.arrayRecurringReseller);
   }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event): void {
+    if (!this.isClickInsideDropdown(event)) {
+      this.isMenuVisible = false;
+    }
+    
+  }
+  private isClickInsideDropdown(event: Event): boolean {
+    const dropdownElement = document.querySelector('.dropdown-container');
+    return dropdownElement?.contains(event.target as Node) || false;
+  }
+
 }

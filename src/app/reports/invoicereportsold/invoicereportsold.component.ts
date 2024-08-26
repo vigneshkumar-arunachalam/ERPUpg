@@ -130,9 +130,9 @@ console.log("params",params)
       this.function1();
     }, 6000);
     if(!this.tax){
-      alert(this.tax)
+  
       setTimeout(() => {
-        alert("coming")
+     
         this.invoiceReportOld.patchValue({
           'IR_taxssn':this.tax
         });

@@ -77,10 +77,12 @@
 .userDatatable-header {
   background-color: white !important;
 }
+
 .userDatatable-header th {
   background: #6d5dfc;
 
 }
+
 .userDatatable-header th span {
   color: #e4ebf5;
 }
@@ -437,13 +439,6 @@ tr:hover {
   background-color: rgb(246, 236, 233) !important;
 }
 
-
-
-
-
-
-
-
 .ng-autocomplete ::ng-deep .autocomplete-container .input-container input {
   border: none;
   padding-left: 1.4rem;
@@ -492,6 +487,67 @@ tr:hover {
   visibility: visible;
 }
 
-#addGuruDetailsFormId .modal-dialog{
+#addGuruDetailsFormId .modal-dialog {
+  min-width: 100%;
+}
+
+#editGuruDetailsFormId .modal-dialog {
   min-width: 80%;
+}
+
+#userAccessGuruDetailsFormId .modal-dialog {
+  min-width: 80%;
+}
+#searchGuruFormId .modal-dialog {
+  min-width: 60%;
+  min-height: 100%;
+  overflow-y: hidden !important;
+}
+
+
+#addGuruDetailsFormId .modal-content button.close,
+#editGuruDetailsFormId .modal-content button.close,
+#userAccessGuruDetailsFormId .modal-content button.close {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  /* color: #9baacf; */
+  color: #f9021b;
+  transition: all 0.5s ease;
+}
+
+tr:nth-child(even):hover {
+  background: linear-gradient(to right, #c9f1a2, #df97b4);
+}
+
+tr:nth-child(odd):hover {
+  background: linear-gradient(to right, #f5fb97, #fcb35f);
+}
+
+#addGuruDetailsFormId tr:nth-child(even):hover,
+#editGuruDetailsFormId tr:nth-child(even):hover {
+  background: linear-gradient(to right, #e5f2d8, #f2e9ed);
+}
+
+#addGuruDetailsFormId tr:nth-child(odd):hover,
+#editGuruDetailsFormId tr:nth-child(odd):hover {
+  background: linear-gradient(to right, #f5f5f1, #f5ede5);
+}
+
+.userDatatable  table  tbody tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr th{
+  border:1px solid #aeb3b6;
+}
+td {
+  border-bottom: 1px solid #c5d9e0 !important;
 }

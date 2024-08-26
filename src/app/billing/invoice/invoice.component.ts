@@ -3020,7 +3020,7 @@ export class InvoiceComponent implements OnInit {
   dopdf(do_id: any,i: any) {
     $("#ActionId" + i).modal("hide");
     // var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
-     var url = "https://laravelapi.erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
+     var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + do_id + "";
     window.open(url, '_blank');
     console.log("url", url)
   }

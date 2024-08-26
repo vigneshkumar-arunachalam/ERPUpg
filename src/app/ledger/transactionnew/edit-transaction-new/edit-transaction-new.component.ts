@@ -83,7 +83,7 @@ export class EditTransactionNewComponent implements OnInit {
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-  //  this.addLoad();
+    //this.addLoad();
 
 
     this.route.queryParams
@@ -344,8 +344,9 @@ export class EditTransactionNewComponent implements OnInit {
     //     this.editPettyCash();
     //   }, 5000)
     // }
+    
 
-
+  
   }
   CB_Fn_PE_AttachMobile(event: any) {
 
@@ -579,6 +580,11 @@ export class EditTransactionNewComponent implements OnInit {
         this.spinner.hide();
         this.billerID =response.transaction_details[0].billerId;
         this.PC_billerDetails=response.billerDetails;
+        this.currencyDetails = response.currency_det;
+        this.vendorDetails = response.vendor_det;
+        this.purchaseTypeDetails = response.purchase_type_det;
+        this.taxProviderDetails = response.tax_provider_det;
+        this.categoryDetails = response.category_det;
         this.addTransaction_section1.patchValue({
           'billerName': response.transaction_details[0].billerId,
           'trans_Date': response.transaction_details[0].transaction_date,
@@ -1512,7 +1518,7 @@ export class EditTransactionNewComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-       url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
+       url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
       // url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.updateVariable + '',
       cache: false,
       contentType: false,

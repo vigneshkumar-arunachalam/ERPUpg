@@ -78,7 +78,7 @@ export class AddTransactionNewComponent implements OnInit {
   ngOnInit(): void {
     this.addLoad();
     // this.addLoad_2();
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/vendor/getVendorCode').subscribe((data: any) => {
       this.getVendorCode = data.vendorCode;
      // console.log("this.getVendorCode", this.getVendorCode)
     })
@@ -303,7 +303,7 @@ export class AddTransactionNewComponent implements OnInit {
 
   }
   VendorAPIList(){
-    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
+    this.http.get<any>('https://erp1.cal4care.com/api/base/getVendorList').subscribe((data: any) => {
       this.vendorDetails = data.vendorList;
      // console.log("this.getVendorCode", this.getVendorCode)
     })
@@ -1079,7 +1079,7 @@ this.spinner.show();
     $.ajax({
       type: 'POST',
 
-      url: 'https://laravelapi.erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
+      url: 'https://erp1.cal4care.com/api/transaction_entry/' + this.saveVariable + '',
       cache: false,
       contentType: false,
       processData: false,

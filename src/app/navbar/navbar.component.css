@@ -39,6 +39,14 @@
 }
 
 
+.dropdown-menu {
+  display: none;
+}
+
+.show-menu {
+  display: block;
+}
+
 
 
 
