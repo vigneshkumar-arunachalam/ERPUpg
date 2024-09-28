@@ -374,7 +374,7 @@
                                                     </thead>
                                                     <tbody >
                                                         <!-- Pending Payments Data -->
-                                                        <tr *ngFor="let list1 of list; let k = index">
+                                                        <tr *ngFor="let list1 of Pay_Pending_list[i]; let k = index">
                                                             <td >
                                                                 <div class="d-flex">
                                                                     <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -399,10 +399,11 @@
                                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                                         <ul class="dropdown__list">
                                                                             <li class="dropdown__item">
-                                                                                <a *ngIf="list1.performa_invoice == 1" class="hover4" title="Invoice to Proforma" data-toggle="modal" (click)="InvoicetoProforma(list1.billId)">
+                                                                                <a *ngIf="list1.performa_invoice == 1" class="hover4" title="Proforma to Invoice" data-toggle="modal" 
+                                                                                (click)="InvoicetoProforma(list1.billId,k)">
                                                                                     <img class="show" src="assets/img/icon2/invoice-pi.png">
                                                                                     <img class="hide" src="assets/img/icon2/invoice-pi.png">
-                                                                                    <span><b style="padding: 0px 20px;">-</b><strong>Invoice to Proforma</strong></span>
+                                                                                    <span><b style="padding: 0px 20px;">-</b><strong>Proforma to Invoice</strong></span>
                                                                                 </a>
                                                                                 <a *ngIf="list1.performa_invoice == 0" class="hover4">
                                                                                     <span><b style="padding: 0px 20px;">-</b><strong></strong></span>

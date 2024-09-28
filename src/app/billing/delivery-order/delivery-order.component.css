@@ -301,11 +301,11 @@ select {
   max-width: 95%;
 }
 
-#emailFormId .modal-dialog {
+#DO_emailFormId .modal-dialog {
   max-width: 65%;
 }
 
-#emailFormId label {
+#DO_emailFormId label {
   font-weight: 500;
 }
 
@@ -364,7 +364,7 @@ label.col-lg-2.col-form-label {
 
 #delivery-order-section .userDatatable table td
 {
-  padding: 4px 0px 4px !important;
+  padding: 4px 4px 4px !important;
   white-space: normal;
   width: 25%;
 }
@@ -396,6 +396,7 @@ label.col-lg-2.col-form-label {
   padding: 0px;
 } */
 
+
 .ng-autocomplete::ng-deep .autocomplete-container .input-container input {
 
   text-align: left;
@@ -407,7 +408,7 @@ label.col-lg-2.col-form-label {
   font-size: 14px;
   font-weight: 400;
   line-height: 1.5;
-  background-color: #fff;
+  background-color: #f9f9fa;;
   background-clip: padding-box;
   /* border: 1px solid #f1f2f6; */
   border: 1px solid #beeaca;
@@ -530,7 +531,7 @@ td {
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
 }
 
-#addDoFormId .modal-content button.close,
+/* #addDoFormId .modal-content button.close,
 #editDoFormId .modal-content button.close {
   width: 2rem;
   height: 2rem;
@@ -542,8 +543,52 @@ td {
   cursor: pointer;
   color: #9baacf;
   transition: all 0.5s ease;
-}
+} */
 
 ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
   padding: 0px 0px!important;
 }
+
+
+.userDatatable  table  tbody tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  tbody  td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr td{
+  border:1px solid #C5D9E0;
+}
+.userDatatable  table  thead tr th{
+  border:1px solid #aeb3b6;
+}
+/* .userDatatable  table  thead tr th span{
+  border:1px solid #aeb3b6;
+} */
+td {
+  border-bottom: 1px solid #c5d9e0 !important;
+}
+th {
+  border-bottom: 1px solid #c5d9e0 !important;
+}
+
+
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input {
+  border: 1px solid #033555 !important;
+  
+}
+
+.modal-content button.close{
+  width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+

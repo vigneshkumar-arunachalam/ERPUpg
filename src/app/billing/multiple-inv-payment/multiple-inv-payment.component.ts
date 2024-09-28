@@ -102,6 +102,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   addAddress(): void {
+    
     $('.date-value').val(this.currentDate);
     this.addresses = this.addPI_section2.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
@@ -124,7 +125,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     return this.fb.group({
       // customer_id:'',
       customer_name: '',
-      paymentDate: '',
+     paymentDate: [new Date().toISOString()],
       invoice_amt: '',
       bal_amount: '',
       paid_amt: '',
@@ -883,9 +884,10 @@ export class MultipleInvPaymentComponent implements OnInit {
         this.spinner.hide();
 
         this.Pay_Pending_list[i] = response.data;
+        // this.Pay_Pending_list = response.data;
         this.Pay_Pending_list_show[i] = true;
        // console.log("this.Pay_Pending_list", this.Pay_Pending_list)
-
+       this.cdr.detectChanges();
         $("#searchInvoiceFormId").modal("hide");
 
       } else {
@@ -1006,10 +1008,12 @@ export class MultipleInvPaymentComponent implements OnInit {
     return list_data;
   }
 
-  InvoicetoProforma(id: any) {
+  InvoicetoProforma(id: any,k:any) {
+   
+    console.log("k",k);
 
     Swal.fire({
-      title: 'Are you sure to convert Invoice to Proforma?',
+      title: 'Are you sure to convert Proforma to Invoice?',
       text: "You won't be able to revert this!",
       icon: 'warning',
       showCancelButton: true,
@@ -1023,10 +1027,10 @@ export class MultipleInvPaymentComponent implements OnInit {
         let api_req: any = new Object();
         let api_reqProf: any = new Object();
         api_req.moduleType = "invoice";
-        api_req.api_url = "invoice/invoice_to_proforma";
+        api_req.api_url = "invoice/proforma_convert_to_invoice";
         api_req.api_type = "web";
         api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-        api_reqProf.action = "invoice_to_proforma";
+        api_reqProf.action = "proforma_convert_to_invoice";
         api_reqProf.user_id = localStorage.getItem('erp_c4c_user_id');
         api_reqProf.billId = id;
 
@@ -1034,13 +1038,21 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-
-
+            
+           // this.payment_pending_inv_list(k);
             iziToast.success({
               message: "Invoice to Proforma converted Successfully",
               position: 'topRight'
             });
-            this.payment_pending_inv_list({});
+            setTimeout(() => {
+             
+              this.payment_pending_inv_list(k);
+            }, 1000); // Delay of 2000ms (2 seconds)
+             
+           // this.payment_pending_inv_list(k);
+           // this.payment_pending_inv_list({});
+           
+           // payment_pending_inv_list(i: any)
           } else {
             iziToast.warning({
               message: "Invoice to Proforma not converted. Please try again",

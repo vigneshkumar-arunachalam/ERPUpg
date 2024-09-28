@@ -131,6 +131,7 @@ export class CreditmanagerComponent implements OnInit {
 
   }
   creditManagerList() {
+ 
     this.spinner.show();
     let api_req: any = new Object();
     let api_year: any = new Object();
@@ -149,10 +150,10 @@ export class CreditmanagerComponent implements OnInit {
        
         this.getVoipDataListValues=response.data;
         this.filteredVoipData = this.getVoipDataListValues;
-       // console.log("this.getVoipDataListValues",   this.getVoipDataListValues)
+       console.log("this.getVoipDataListValues",   this.getVoipDataListValues)
        
       } else {
-
+        this.spinner.hide();
       }
     }),
       (error: any) => {

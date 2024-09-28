@@ -42,6 +42,20 @@ export class TransactionnewComponent implements OnInit {
   PC_Type: any;
   PC_Amount: any;
   PC_Comments: any;
+  Cus_CustomerName: any;
+  Cus_billerName: any;
+  Cus_address1: any;
+  Cus_address2: any;
+  Cus_City: any;
+  Cus_state: any;
+  Cus_zipcode: any;
+  Cus_country: any;
+  Cus_phone: any;
+  Cus_mobilephone: any;
+  Cus_fax: any;
+  Cus_email: any;
+  Cus_financeemail: any;
+  Cus_Contactperson: any;
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService, private fb: FormBuilder) { }
   keywordCompanyName = 'customerName';
     // Declare dynamic variables
@@ -429,6 +443,22 @@ export class TransactionnewComponent implements OnInit {
         this.PC_Amount=response.petty_cash.amount;
          this.PC_Comments=response.commands;
          this.comments = response.commands;
+      }else if(this.transactionTypeNumber==64){
+        this.Cus_CustomerName=response.transData[0].companyName;
+        this.Cus_billerName=response.transData[0].billerId;
+        this.Cus_address1=response.transData[0].customerAddress1;
+        this.Cus_address2=response.transData[0].customerAddress2;
+        this.Cus_City=response.transData[0].city;
+        this.Cus_state=response.transData[0].state;
+        this.Cus_zipcode=response.transData[0].zipCode;
+
+        this.Cus_country=response.transData[0].country;
+        this.Cus_phone=response.transData[0].customerPhone;
+        this.Cus_mobilephone=response.transData[0].mobilePhone;
+        this.Cus_fax=response.transData[0].fax;
+        this.Cus_email=response.transData[0].email;
+        this.Cus_financeemail=response.transData[0].finance_email;
+        this.Cus_Contactperson=response.transData[0].customerName;
       }
      
 

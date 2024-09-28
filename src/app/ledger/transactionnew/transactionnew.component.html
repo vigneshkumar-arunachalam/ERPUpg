@@ -289,6 +289,7 @@
                 <h4>Dynamic Values</h4>
               </div> -->
               <div *ngIf="this.transactionTypeNumber==3" class="transaction-panel">
+                3
                   <div class="transaction-form-group">
                       <label for="view_PurchaseEntryNo" class="col-form-label">Purchase Entry No</label>
                       <!-- <input type="text" class="form-control" [value]="purchaseEntryNo" readonly
@@ -366,6 +367,7 @@
                 </div>
               </div>
               <div *ngIf="this.transactionTypeNumber==5" class="transaction-panel">
+                5
       
                   <div class="transaction-form-group ">
                 
@@ -395,6 +397,81 @@
                       <span>{{comments}}</span>
                     </div>
               </div>
+           
+              <div *ngIf="this.transactionTypeNumber==64" class="transaction-panel">
+              
+     
+                <div class="transaction-form-group ">
+              
+                    <label for="view_PurchaseEntryNo" class="col-form-label">Customer Name</label>
+                  <span>{{Cus_CustomerName}}</span>
+                  </div>
+                <div class="transaction-form-group ">
+                   <label for="view_VendorName" class="col-form-label">Biller Name</label>
+                   <span>{{Cus_billerName}}</span>
+                  </div>
+
+                <div class="transaction-form-group">
+              
+                    <label for="view_InvoiceNo" class="col-form-label">Address-1	</label>
+                    <span>{{Cus_address1}}</span>
+                  </div>
+                <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Address-2</label>
+                    <span>{{Cus_address2}}</span>
+                  </div>
+
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">City</label>
+                   
+                    <span>{{Cus_City}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">State</label>
+                   
+                    <span>{{Cus_state}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Zip Code</label>
+                   
+                    <span>{{Cus_zipcode}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Country	</label>
+                   
+                    <span>{{Cus_country}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Phone</label>
+                   
+                    <span>{{Cus_phone}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Mobile Phone</label>
+                   
+                    <span>{{Cus_mobilephone}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Fax</label>
+                   
+                    <span>{{Cus_fax}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Email</label>
+                   
+                    <span>{{Cus_email}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Finance Email</label>
+                   
+                    <span>{{Cus_financeemail}}</span>
+                  </div>
+                  <div class="transaction-form-group">
+                    <label for="view_ContentofPurchase" class="col-form-label">Contact Person</label>
+                   
+                    <span>{{Cus_Contactperson}}</span>
+                  </div>
+            </div>
 
 
             </div>

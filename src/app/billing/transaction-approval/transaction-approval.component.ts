@@ -31,7 +31,7 @@ export class TransactionApprovalComponent implements OnInit {
   tabValue: any;
   //pagination
   recordNotFound = false;
-  pageLimit = 10;
+  pageLimit = 100;
   paginationData: any = { "info": "hide" };
   paginationData1: any = { "info": "hide" };
   offset_count = 1;
@@ -39,6 +39,11 @@ export class TransactionApprovalComponent implements OnInit {
   edit_array: any = [];
   groupSelectCommonId: any;
   checkbox_value: any;
+  //checkbox group-main
+  edit_arrayMain: any = [];
+  groupSelectCommonIdMain: any;
+  checkbox_valueMain: any;
+
   // quotationNew: any;
   quotationID: any;
   FromID: any;
@@ -56,6 +61,49 @@ export class TransactionApprovalComponent implements OnInit {
   mainApprovalPendingCount: any;
   //other
   BeforeApprovalTransactionAproveView_TransactionApproveID: any;
+  transactionTypeNumber: any;
+  purchaseEntryNo: any;
+  vendorName: any;
+  invoiceNo: any;
+  contentOfPurchase: any;
+  poNumber: any;
+  currency: any;
+  currencyConversionRate: any;
+  taxAmount: any;
+  invoiceAmount: any;
+  comments: any;
+  PC_Description: any;
+  PC_Type: any;
+  PC_Amount: any;
+  PC_CustomerName: any;
+  PC_BIllerName: any;
+  PC_Address1: any;
+  PC_Address2: any;
+  PC_City: any;
+  PC_State: any;
+  PC_ZipCode: any;
+  PC_Phone: any;
+  PC_Country: any;
+  PC_MobilePhone: any;
+  PC_Fax: any;
+  PC_Email: any;
+  PC_FinanceEmail: any;
+  PC_ContactPerson: any;
+  //view customer
+  Cus_CustomerName: any;
+  Cus_billerName: any;
+  Cus_address1: any;
+  Cus_address2: any;
+  Cus_City: any;
+  Cus_state: any;
+  Cus_zipcode: any;
+  Cus_country: any;
+  Cus_phone: any;
+  Cus_mobilephone: any;
+  Cus_fax: any;
+  Cus_email: any;
+  Cus_financeemail: any;
+  Cus_Contactperson: any;
 
   constructor(public serverService: ServerService, private fb: FormBuilder, private router: Router, private spinner: NgxSpinnerService) { }
 
@@ -115,45 +163,65 @@ export class TransactionApprovalComponent implements OnInit {
       this.transApprovalList.forEach((element: any, index: any) => {
         $("#check-transapp-grp-" + index).prop('checked', false);
       });
-
     }
-
   }
+
   selectAll_Main(event: any) {
+    // Check if the event target is checked
+    const isChecked = event.target.checked;
 
-    if (event.target.checked == true) {
+    // Iterate over the mulInvPay_list array
+    this.transApprovalList_Main.forEach((list: any) => {
+      // Update the checkbox state for each item
+      list.isChecked = isChecked;
 
-      this.transApprovalList_Main.forEach((element: any, index: any) => {
-        $("#check-transapp-grp-" + index).prop('checked', true);
-      });
-    } else {
-      this.transApprovalList_Main.forEach((element: any, index: any) => {
-        $("#check-transapp-grp-" + index).prop('checked', false);
-      });
+      // If it's checked, add transaction_approval_id to the edit_array
+      if (isChecked) {
+        if (!this.edit_arrayMain.includes(list.transaction_approval_id)) {
+          this.edit_arrayMain.push(list.transaction_approval_id);
+        }
+      } else {
+        // If it's unchecked, remove transaction_approval_id from the edit_array
+        const index = this.edit_arrayMain.findIndex((el: any) => el === list.transaction_approval_id);
+        if (index > -1) {
+          this.edit_arrayMain.splice(index, 1);
+        }
+      }
+    });
+    //  console.log("Checkbox-all", this.edit_arrayMain);
+    // Update the state of all checkboxes in the DOM
+    const checkboxes = document.querySelectorAll('.checkbox-group__single input[type="checkbox"]');
+    checkboxes.forEach((checkbox: any) => {
+      checkbox.checked = isChecked;
+    });
 
-    }
-
+    // console.log("Checkbox-all", this.edit_arrayMain);
   }
 
-  EditCHK(data: any, event: any) {
+  EditCHK(transaction_approval_id: any, event: any) {
 
-    this.groupSelectCommonId = data;
-    this.checkbox_value = event.target.checked;
+    //  console.log("List - CheckBox ID", data);
+    this.groupSelectCommonIdMain = transaction_approval_id;
+    this.checkbox_valueMain = event.target.checked;
+    // console.log(this.checkbox_value);
 
-    if (this.checkbox_value) {
-
-      this.edit_array.push(data);
-      this.edit_array.join(',');
-      // console.log("Final Checkbox After checkbox selected list", this.edit_array);
-    }
-    else {
-      const index = this.edit_array.findIndex((el: any) => el === data)
-      if (index > -1) {
-        this.edit_array.splice(index, 1);
+    // Check if data is not undefined
+    if (transaction_approval_id !== undefined) {
+      if (this.checkbox_valueMain) {
+        // Check if data is not already in the array and is not undefined
+        if (!this.edit_arrayMain.includes(transaction_approval_id)) {
+          this.edit_arrayMain.push(transaction_approval_id);
+        }
+        // console.log("Final Checkbox After checkbox selected list", this.edit_arrayMain);
+      } else {
+        const index = this.edit_arrayMain.findIndex((el: any) => el === transaction_approval_id);
+        if (index > -1) {
+          this.edit_arrayMain.splice(index, 1);
+        }
+        //  console.log("Final Checkbox After Deselected selected list", this.edit_arrayMain);
       }
-      // console.log("Final Checkbox After Deselected selected list", this.edit_array)
-
     }
+    //  console.log("Final Checkbox After checkbox selected list", this.edit_arrayMain);
   }
   getSampleCSV() {
     console.log("test");
@@ -181,6 +249,7 @@ export class TransactionApprovalComponent implements OnInit {
         //  }
         this.transApprovalList_Main = response.trans_approve_list;
         this.tabValue = response.tab_name;
+
 
         this.mainApprovalPendingCount = response.trans_approve_pending_cnt;
         // console.log("this.quotationApprovalPendingCount", this.quotationApprovalPendingCount)
@@ -348,15 +417,80 @@ export class TransactionApprovalComponent implements OnInit {
     });
 
   }
-  BeforeApprovaltransactionApprovalView_Main(billerName: any, transaction_date: any, priority: any) {
 
 
-    this.BeforeApprovaltransactionApprovalViewForm.setValue({
-      'BeforeApprovalbillerName': billerName,
-      'BeforeApprovalDate': transaction_date,
-      'BeforeApprovalpriority': priority,
+  BeforeApprovaltransactionApprovalView_Main(transaction_approval_id: any, type_of_trans: any) {
+    this.spinner.show();
 
+    let api_req: any = new Object();
+    let BeforeApprovalTransactionAproveViewFn_req: any = new Object();
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/viewApprovalDetails";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    BeforeApprovalTransactionAproveViewFn_req.action = "viewApprovalDetails";
+    BeforeApprovalTransactionAproveViewFn_req.user_id = localStorage.getItem('erp_c4c_user_id');
+    BeforeApprovalTransactionAproveViewFn_req.trans_id = transaction_approval_id;
+    api_req.element_data = BeforeApprovalTransactionAproveViewFn_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        this.transactionTypeNumber = type_of_trans;
+        //purchase entry
+        if (this.transactionTypeNumber == 3) {
+          this.purchaseEntryNo = response.transData[0].purchaseEntryNo;
+          this.vendorName = response.transData[0].vendorId;
+          this.invoiceNo = response.transData[0].invoiceNo;
+          this.contentOfPurchase = response.transData[0].content_purchase;
+          this.poNumber = response.transData[0].poNo;
+          this.currency = response.transData[0].currencyId;
+          this.currencyConversionRate = response.transData[0].conversionRate;
+          this.taxAmount = response.transData[0].taxAmount;
+          this.invoiceAmount = response.transData[0].invoiceAmount;
+        } else if (this.transactionTypeNumber == 5) { //petty cash
+          this.comments = response.data.commands;
+          this.PC_Description = response.transData[0].petty_description;
+          this.PC_Type = response.transData[0].petty_type;
+          this.PC_Amount = response.transData[0].petty_amount;
+        } else if(this.transactionTypeNumber == 64){
+          this.Cus_CustomerName = response.transData[0].companyName;
+          this.Cus_billerName = response.transData[0].billerId;
+          this.Cus_address1 = response.transData[0].customerAddress1;
+          this.Cus_address2 = response.transData[0].customerAddress2;
+          this.Cus_City = response.transData[0].city;
+          this.Cus_state = response.transData[0].state;
+          this.Cus_zipcode = response.transData[0].zipCode;
+
+          this.Cus_country = response.transData[0].country;
+          this.Cus_phone = response.transData[0].customerPhone;
+          this.Cus_mobilephone = response.transData[0].mobilePhone;
+          this.Cus_fax = response.transData[0].fax;
+          this.Cus_email = response.transData[0].email;
+          this.Cus_financeemail = response.transData[0].finance_email;
+          this.Cus_Contactperson = response.transData[0].customerName;
+        }
+        this.BeforeApprovaltransactionApprovalViewForm.setValue({
+          'BeforeApprovalbillerName': response.data.billerId,
+          'BeforeApprovalDate': response.data.transaction_date,
+          'BeforeApprovalpriority': response.data.priority,
+        });
+
+
+        // this.getTransactionApprovalList({});
+        iziToast.success({
+          message: "View Details Displayed",
+          position: 'topRight'
+        });
+      }
+      else {
+        iziToast.warning({
+          message: "Not Ok",
+          position: 'topRight'
+        });
+      }
     });
+
 
   }
   transactionApprovalView(billerName: any, transaction_date: any, priority: any) {
@@ -462,18 +596,18 @@ export class TransactionApprovalComponent implements OnInit {
 
   }
   transactionApprovalCommentEdit_Main(id: any) {
- 
+
     this.TransactionApprovalID = id;
 
     let api_req: any = new Object();
     let transAproveComment_edit_req: any = new Object();
-    api_req.moduleType = "transaction_approval";
-    api_req.api_url = "transaction_approval/get_main_comments";
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/getCommands";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    transAproveComment_edit_req.action = "get_main_comments";
+    transAproveComment_edit_req.action = "getCommands";
     transAproveComment_edit_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    transAproveComment_edit_req.transaction_approval_id = this.TransactionApprovalID;
+    transAproveComment_edit_req.trans_id = this.TransactionApprovalID;
     api_req.element_data = transAproveComment_edit_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -507,7 +641,7 @@ export class TransactionApprovalComponent implements OnInit {
   }
   transactionApprovalCommentsUpdate($event: MouseEvent) {
 
-this.spinner.show();
+    this.spinner.show();
     let api_req: any = new Object();
     let transAproveComment_update_req: any = new Object();
     api_req.moduleType = "transaction_approval";
@@ -527,7 +661,7 @@ this.spinner.show();
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
         // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
-        $("#BeforeApprovaltransactionApprovalCommentsId").modal("hide");
+        $("#BeforeApprovaltransactionApprovalCommentsIdMain").modal("hide");
         this.getTransactionApprovalList({});
 
 
@@ -547,25 +681,26 @@ this.spinner.show();
   }
   transactionApprovalCommentsUpdate_Main(event: any) {
 
-this.spinner.show();
+    this.spinner.show();
     let api_req: any = new Object();
     let transAproveComment_update_req: any = new Object();
-    api_req.moduleType = "transaction_approval";
-    api_req.api_url = "transaction_approval/update_main_comments";
+    api_req.moduleType = "transactionApprovalList";
+    api_req.api_url = "transaction_approval/updatecommands";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    transAproveComment_update_req.action = "update_main_comments";
+    transAproveComment_update_req.action = "updatecommands";
     transAproveComment_update_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    transAproveComment_update_req.transaction_approval_id = this.TransactionApprovalID;
-    transAproveComment_update_req.comments = this.BeforeApprovaltransactionApprovalCommentsForm_main.value.BeforeApprovalComments;
+    transAproveComment_update_req.trans_id = this.TransactionApprovalID;
+    transAproveComment_update_req.checkbox =this.checkboxCB_BeforeApprovalToggleStatus;
+    transAproveComment_update_req.commands = this.BeforeApprovaltransactionApprovalCommentsForm_main.value.BeforeApprovalComments;
     api_req.element_data = transAproveComment_update_req;
 
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-this.spinner.hide();
+      this.spinner.hide();
       if (response.status == true) {
         // this.BeforeApprovaltransactionApprovalCommentsForm.reset();
-        $("#BeforeApprovaltransactionApprovalCommentsForm_main").modal("hide");
+        $("#BeforeApprovaltransactionApprovalCommentsIdMain").modal("hide");
         this.getMainList({});
 
 
@@ -666,7 +801,7 @@ this.spinner.hide();
       confirmButtonText: 'Yes, Approve it!'
     }).then((result: any) => {
       if (result.value) {
-this.spinner.show();
+        this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotAprove_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -712,7 +847,7 @@ this.spinner.show();
       confirmButtonText: 'Yes, Approve it!'
     }).then((result: any) => {
       if (result.value) {
-this.spinner.show();
+        this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotAprove_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -760,7 +895,7 @@ this.spinner.show();
       confirmButtonText: 'Yes, delete it!'
     }).then((result: any) => {
       if (result.value) {
-this.spinner.show();
+        this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotReject_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -806,7 +941,7 @@ this.spinner.show();
       confirmButtonText: 'Yes, delete it!'
     }).then((result: any) => {
       if (result.value) {
-this.spinner.show();
+        this.spinner.show();
         let api_req: any = new Object();
         let transAproveQuotReject_req: any = new Object();
         api_req.moduleType = "transaction_approval";
@@ -854,7 +989,7 @@ this.spinner.show();
       confirmButtonText: 'Yes, delete it!'
     }).then((result: any) => {
       if (result.value) {
-this.spinner.show();
+        this.spinner.show();
         let api_req: any = new Object();
         let mainappr: any = new Object();
         api_req.moduleType = "transaction_approval";

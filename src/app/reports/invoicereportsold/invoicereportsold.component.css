@@ -226,6 +226,7 @@ border-radius: 50%;
   border: 1px solid #ddd;
   border-radius: 5px;
 }
+
 #quotationSharedPersonId .modal-dialog {
   max-width: 50%;
 }
@@ -457,5 +458,6 @@ tr:hover {
   background-color: rgb(211, 244, 102)!important;
 
 }
+
 
 

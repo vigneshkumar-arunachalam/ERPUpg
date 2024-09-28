@@ -81,16 +81,9 @@ export class DuplicateDOComponent implements OnInit {
     this.loadADD();
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
-
+       // console.log("params output value", params);
         this.editDeliveryID = params['e_editBillID'];
-
-
-
-        console.log("edit biller id", this.editDeliveryID);
-
-
-
+        // console.log("edit biller id", this.editDeliveryID);
         this.editDo();
       }
       );
@@ -137,12 +130,12 @@ export class DuplicateDOComponent implements OnInit {
   handleChange_EXTRALogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_Export_logo = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export_logo);
+   // console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
 
@@ -165,26 +158,26 @@ export class DuplicateDOComponent implements OnInit {
     if (this.radio_Value_warranty == 1) {
       this.radio_Value_warranty="no";
       $('#description_details').val(Nowarranty);
-      console.log($('#description_details').val());
+    //  console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 2) {
       this.radio_Value_warranty="one";
 
       $('#description_details').val(Onewarranty);
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 3) {
       this.radio_Value_warranty="two";
       $('#description_details').val(Twowarranty);
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
     if (this.radio_Value_warranty == 4) {
       this.radio_Value_warranty="none";
       $('#description_details').val(Nonewarranty);
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
 
@@ -200,11 +193,11 @@ export class DuplicateDOComponent implements OnInit {
     this.addresses.push(this.editAddress_FormControl());
 
     this.itre = this.itre + 1;
-    console.log(this.addresses);
-    console.log(this.itre);
+    // console.log(this.addresses);
+    // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log(this.test[index]);
+     // console.log(this.test[index]);
 
 
     });
@@ -237,8 +230,8 @@ export class DuplicateDOComponent implements OnInit {
       if (result.value) {
 
 
-        console.log(i)
-        console.log(this.addresses)
+        // console.log(i)
+        // console.log(this.addresses)
         this.addresses.removeAt(i);
         var addr = this.editDo_section2.value.addresses;
         var list_cnt = addr.length;
@@ -280,7 +273,7 @@ export class DuplicateDOComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-      console.log("response-load-pi", response)
+    //  console.log("response-load-pi", response)
       this.editDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
@@ -294,19 +287,19 @@ export class DuplicateDOComponent implements OnInit {
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
     this.radioSelectFooterChecked = evt.target.checked;
-    console.log("event only", evt)
-    console.log("evt.target", evt.target)
-    console.log("evt.target.checked", evt.target.checked)
-    console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
-    console.log(" evt.target.value radioSelectFooter", evt.target.value)
+    // console.log("event only", evt)
+    // console.log("evt.target", evt.target)
+    // console.log("evt.target.checked", evt.target.checked)
+    // console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
+    // console.log(" evt.target.value radioSelectFooter", evt.target.value)
 
-    console.log("radio button value", radioSelectFooter);
+    // console.log("radio button value", radioSelectFooter);
   }
 
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
-    console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
+   // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
 
 
   }
@@ -424,8 +417,8 @@ export class DuplicateDOComponent implements OnInit {
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -439,7 +432,7 @@ export class DuplicateDOComponent implements OnInit {
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("customer_address_details---response", response)
+     // console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
@@ -557,7 +550,7 @@ export class DuplicateDOComponent implements OnInit {
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -576,7 +569,7 @@ export class DuplicateDOComponent implements OnInit {
   dynamicChange_footer(val: any) {
     this.spinner.show();
     this.billerID = val;
-    console.log("billerID check", this.billerID);
+   // console.log("billerID check", this.billerID);
   
     let api_req: any = new Object();
     let api_dynamicDropdown_req: any = new Object();
@@ -593,8 +586,8 @@ export class DuplicateDOComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       this.FooterDetails = response.footer_details;
-      console.log("dynamic Dropdown change response", response)
-      console.log("dynamic term condition change response", response.quotation_terms_cond)
+      // console.log("dynamic Dropdown change response", response)
+      // console.log("dynamic term condition change response", response.quotation_terms_cond)
       // this.FooterDetails = response.footer_details;
       this.currencyOld_RadioValue = response.currency_id;
       this.dynamicTermsConditions_Currency = response.quotation_terms_cond;
@@ -685,7 +678,7 @@ export class DuplicateDOComponent implements OnInit {
     
         for (let index = 0; index < response.delivery_details.length; index++) {
 
-          console.log('delivery_details++index' + index);
+        //  console.log('delivery_details++index' + index);
 
 
           formArray.push(this.fb.group({
@@ -701,9 +694,9 @@ export class DuplicateDOComponent implements OnInit {
         }
 
 
-        console.log(formArray)
+      //  console.log(formArray)
         this.editDo_section2.setControl('addresses', formArray);
-        console.log(this.addresses);
+       // console.log(this.addresses);
         this.editAddress();
         this.removeAddresstest(response.delivery_details.length);
 
@@ -711,8 +704,8 @@ export class DuplicateDOComponent implements OnInit {
     });
   }
   removeAddresstest(i: number) {
-    console.log(i)
-    console.log(this.addresses)
+    // console.log(i)
+    // console.log(this.addresses)
     this.addresses.removeAt(i);
    
 
@@ -721,7 +714,7 @@ export class DuplicateDOComponent implements OnInit {
   descriptionPermission(event: any) {
 
     this.description_details_show_state = event.target.checked;
-    console.log(this.description_details_show_state);
+   // console.log(this.description_details_show_state);
 
 
     if (this.description_details_show_state = event.target.checked) {
@@ -749,7 +742,7 @@ export class DuplicateDOComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-      console.log("response-load-pi", response)
+     // console.log("response-load-pi", response)
       this.editDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
@@ -793,7 +786,7 @@ export class DuplicateDOComponent implements OnInit {
     api_updateDO_req.description_details_show_state = this.description_details_show_state;
     //section 2
     var addr = this.editDo_section2.value.addresses;
-    console.log("addr",addr)
+   // console.log("addr",addr)
     for (let i = 0; i < addr.length-1; i++) {
 
       addr[i].deliveryChildId = $('#deliveryChildId_' + i).val();
@@ -814,7 +807,7 @@ export class DuplicateDOComponent implements OnInit {
     api_req.element_data = api_updateDO_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-      console.log("add quotation new save", response);
+     // console.log("add quotation new save", response);
       if (response.status == true) {
 
         iziToast.success({
@@ -838,7 +831,7 @@ export class DuplicateDOComponent implements OnInit {
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
     this.goBack();
   }

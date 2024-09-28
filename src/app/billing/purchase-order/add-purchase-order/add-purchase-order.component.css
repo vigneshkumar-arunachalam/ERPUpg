@@ -468,6 +468,8 @@ select{
    animation: bg-hue 2s linear infinite;
  }
 
+ 
+
  .form-control{
   border: 1px solid #e1e1e1;
   background: transparent;

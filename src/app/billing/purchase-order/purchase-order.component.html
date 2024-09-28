@@ -28,7 +28,7 @@
           
           </div>
 
-          <div class="card-body" id="delivery-order-section">
+          <div class="card-body">
             <div class="userDatatable global-shadow border-0 bg-white w-100">
               <div class="table-responsive">
                 <table class="table mb-0 table-borderless">
@@ -91,7 +91,7 @@
                     </td>
 
                     <td>
-                      <div class="page">
+                      <div class="page" style="padding-left: 10px;">
 
                         <div class="dropdown">
                           <button class="btn1"><i class="fa fa-bars"></i></button>
@@ -115,7 +115,8 @@
                             </li>
 
                             <li class="dropdown__item" *ngIf="(PO_Permission_mail==1)">
-                              <a class="hover3" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
+                              <a class="hover3" title="Email-Landscape" data-toggle="modal" 
+                              data-target="#emailFormId_po"
                                 (click)="getEmailDetails(list.po_id)">
                                 <img class="show" src="assets/img/icon2/gmail-blue.png">
                                 <img class="hide" src="assets/img/icon2/gmail-black.png">
@@ -202,7 +203,10 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle1">Advanced Search</h2>
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+        Advanced Search </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -226,7 +230,7 @@
                     </ng-autocomplete>
   
                     <ng-template #itemTemplateCustomer let-item>
-                      <a [innerHTML]="item.customerName"></a>
+                      <a [innerHTML]="item.vendorName"></a>
                     </ng-template>
   
                     <ng-template #notFoundTemplate let-notFound>
@@ -263,12 +267,16 @@
 
 <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
-<div class="modal fade" id="emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="emailFormId_po" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
+       
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+        Email </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -281,45 +289,17 @@
             <div class="form-group row">
               <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
               <div class="col-lg-10">
-                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From">
-                  <option [ngValue]="null" selected disabled>Select From</option>
-                  <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
-                    {{ from.from_email }}
-                  </option>
-                </select>
+      
+                <input type="email" id="emailFrom" class="form-control" formControlName="emailFrom">
                 <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
-                  *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                  *ngIf="emailForm.controls['emailFrom'].invalid && emailForm.controls['emailFrom'].touched">
                   Please
-                  enter To Address
+                  enter From Address
                 </div>
               </div>
             </div>
 
           </div>
-
-
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
-              <div class="col-md-9 col-9" style="display: flex;">
-                <div class="form-check" style="margin-right: 10px;">
-                  <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy" id="company"
-                    (change)="handle_radioChange_email($event)" />
-
-                  <label class="form-check-label" for="company"> Company
-                  </label>
-                </div>
-
-                <div class="form-check">
-                  <input mdbRadio class="form-check-input" type="radio" name="radio_ApprovalBy" id="finance"
-                    [checked]="true" (change)="handle_radioChange_email($event)" />
-                  <label class="form-check-label" for="finance">Finance
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
@@ -334,9 +314,6 @@
             </div>
 
           </div>
-     
-        
-
           <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
@@ -349,14 +326,13 @@
                 </div>
               </div>
             </div>
-
           </div>
           
           <div class="col-md-12 col-12">
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
               <div class="col-lg-10">
-                <editor id="tinyID" [init]="{
+                <editor id="tinyID_po" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'

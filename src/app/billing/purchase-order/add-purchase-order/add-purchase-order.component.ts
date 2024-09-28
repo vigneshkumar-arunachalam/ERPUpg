@@ -534,7 +534,7 @@ export class AddPurchaseOrderComponent implements OnInit {
         this.vendor_Name = response.vendorName;
         this.addDo_section1.patchValue({
 
-          'vendorCompany': response.vendorName,
+          'vendorCompany': response.kind_atten,
           'customerAddress1': response.vendor_address,
 
         });

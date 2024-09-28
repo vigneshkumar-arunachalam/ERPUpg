@@ -70,9 +70,10 @@
                                         </span></a>
                                     <a class="btn btn-xs btn-white border-light " data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
-                                        (click)="getTransactionApprovalList({})">Quotation<span class="notification-alert">
+                                        (click)="getTransactionApprovalList({})">Quotation<span
+                                            class="notification-alert">
 
-                                          {{this.quotationApprovalPendingCount}}
+                                            {{this.quotationApprovalPendingCount}}
                                         </span></a>
                                     <a class="btn btn-xs btn-white border-light" data-toggle="tab"
                                         area-controls="f_overview" aria-selected="false" href="javascript:void(0);"
@@ -110,110 +111,83 @@
                         </div>
                     </div>
                     <div class="card-body" *ngIf="tabValue=='main'">
-                        <nav class="atbd-page">
-                            <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
-                    
-                              <li class="page-item">
-                                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                                      href="javascript:void(0)"
-                                      (click)="paginationData.backtab=='show' ? getMainList({'offset':paginationData.start}) : false"><i
-                                          class="fas fa-angle-left"></i></a>
-                              </li>
-                              <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                                  <a class="page-link" href="javascript:void(0)"
-                                      (click)="getMainList({'offset':paginationData.back})"><i
-                                          class="fas fa-angle-double-left"></i></a>
-                              </li>
-                              <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                                  *ngFor="let pagination of paginationData.data;let i=index">
-                                  <a class="page-link" href="javascript:void(0)"
-                                      (click)=" pagination.load ==true ? getMainList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                              </li>
-                    
-                              <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                                  <a class="page-link" href="javascript:void(0)"
-                                      (click)="getMainList({'offset':paginationData.next})"><i
-                                          class="fas fa-angle-double-right"></i></a>
-                              </li>
-                    
-                              <li class="page-item">
-                                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                                      href="javascript:void(0)"
-                                      (click)="paginationData.nexttab =='show' ? getMainList({'offset':paginationData.end}) : false"><i
-                                          class="fas fa-angle-right"></i></a>
-                              </li>
-                          </ul>
-                          </nav>
-                        
-                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table" >
-                            <div class="table-responsive " >
-                                <table class="table mb-0 table-borderless" >
-                                    <thead >
-                                        <tr >
-                    
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-calendar-minus"></i> Transaction Approval</a>
+                              <span class="breadcrumb-item active">Main-Pending Approval</span>
+                            </h3>
+                        </div>
+
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
                                             <th>
                                                 <div class="d-flex align-items-center">
                                                     <div class="custom-checkbox  check-all">
-                                                        <input class="checkbox" type="checkbox" id="check-3"
+                                                        <input class="checkbox" type="checkbox" id="check-water"
                                                             (change)="selectAll_Main($event)">
-                                                        <label for="check-3">
-                    
+                                                        <label for="check-water">
+
                                                         </label>
                                                     </div>
                                                 </div>
                                             </th>
-                                            <th>
-                                                <span class="userDatatable-title">Tic.No</span>
+                                            <th class="userDatatable-title">
+                                                <span>Tic.No</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Date</span>
+                                            </th>
+                                            <th class="userDatatable-title">
+                                                <span>Biller</span>
                                             </th>
                                             <th>
-                                                <span class="userDatatable-title">Date</span>
+                                                <span>Customer / Vendor</span>
                                             </th>
                                             <th>
-                                                <span class="userDatatable-title">Biller</span>
+                                                <span>Transactions Type</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Priority</span>
+                                            </th>
+
+                                            <th>
+                                                <span>Requestor </span>
                                             </th>
                                             <th>
-                                                <span class="userDatatable-title">Customer/Vendor</span>
+                                                <span>Description</span>
                                             </th>
                                             <th>
-                                                <span class="userDatatable-title">Transactions Type</span>
+                                                <span>Amt</span>
                                             </th>
-                    
+
                                             <th>
-                                                <span class="userDatatable-title">Priority</span>
-                                            </th>
-                    
-                                            <th>
-                                                <span class="userDatatable-title">Requestor </span>
+                                                <span>Curr</span>
                                             </th>
                                             <th>
-                                                <span class="userDatatable-title">Description</span>
+                                                <span>Conv.Amt</span>
                                             </th>
+
                                             <th>
-                                                <span class="userDatatable-title">Amt</span>
+                                                <span>App By</span>
                                             </th>
-                    
+
+
                                             <th>
-                                                <span class="userDatatable-title">Curr</span>
-                                            </th>
-                                            <th>
-                                                <span class="userDatatable-title">Conv.Amt</span>
-                                            </th>
-                                      
-                                            <th>
-                                                <span class="userDatatable-title">App By</span>
-                                            </th>
-                    
-                    
-                                            <th>
-                                                <span class="userDatatable-title">Action</span>
+                                                <span>Action</span>
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="userDatatable-header" *ngFor="let list of transApprovalList_Main; let i = index" [ngSwitch]="list.approval_staus">
-                    
-                                        <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;" >
-                                           
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_Main; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'"   >
+
                                             <td>
                                                 <div class="d-flex">
                                                     <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -229,15 +203,15 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                    
+
                                                 </div>
                                             </td>
-                    
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
                                             <td>
-                                                 {{ list.transaction_entry_dt}}
+                                                {{ list.transaction_entry_dt}}
                                             </td>
                                             <td>
                                                 <!-- <span><button type="button" class="buttonClass"
@@ -246,27 +220,34 @@
                                                     </button>
                                                     </span> -->
 
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                               
-                    
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
-                                                 {{ list.customerName}}
+                                                {{ list.customerName}}
+                                                <span *ngIf="list.entry_state_str=='T'">
+                                                    <span style="background-color: rosybrown;color:black;width:fit-content">T</span>
+
+                                                </span>
+                                                <span *ngIf="list.entry_state_str=='Y'">
+                                                    <span style="background-color: rgb(144, 243, 141);color:black;width:fit-content">Y</span>
+                                                </span>
                                             </td>
-                    
+
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                    
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                    
+
                                             <td>
                                                 <span> {{ list.description.trim()}}</span>
                                                 <!-- <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
@@ -274,7 +255,7 @@
                                                         list.quotation_no}}</button></span> -->
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -282,75 +263,93 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                      
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                    
+
                                             <td>
-                    
+
                                                 <div class="page">
-                    
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                    
-                    
-                    
+
+
+
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#BeforeApprovaltransactionApprovalViewId" (click)="BeforeApprovaltransactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority);before( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
-                    
+                                                                    data-target="#BeforeApprovaltransactionApprovalViewId"
+                                                                    (click)="BeforeApprovaltransactionApprovalView_Main(list.transaction_approval_id,list.type_of_trans);before( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+
                                                                 </a>
-                    
+
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="hover2" title="Approve"  *ngIf="(list.approval_link_state=='1')" (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id)" >
-                                                                    <img class="show" src="assets/img/icon2/approvedx-green.png">
-                                                                    <img class="hide" src="assets/img/icon2/approvedx-black.png">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
                                                                 </a>
-                    
+
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="hover3" title="Reject" (click)="transactionApprovalReject_Main( list.transaction_approval_id)" >
-                                                                    <img class="show" src="assets/img/icon2/delete-red.png">
-                                                                    <img class="hide" src="assets/img/icon2/delete-black.png">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover4" title="Comments" data-toggle="modal"
-                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsIdMain" (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png">                                                                   
+                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsIdMain"
+                                                                    (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
                                                                 </a>
                                                             </li>
-                                     
+
                                                         </ul>
-                    
+
                                                     </div>
-                    
+
                                                 </div>
-                    
+
                                             </td>
-                                       
+
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                      <br>
-                      
-                      <br>
+                        <br>
+
+                        <br>
+                        <div class="card-header color-dark fw-500">
+                            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-calendar-plus"></i> Transaction Approval</a>
+                              <span class="breadcrumb-item active">Main-After Approval</span>
+                            </h3>
+                        </div>
                         <div class="userDatatable global-shadow border-0 bg-white w-100 normal-table">
                             <div class="table-responsive ">
                                 <table class="table mb-0 table-borderless">
                                     <thead>
                                         <tr class="userDatatable-header">
-                        
-                        
+
+
                                             <th>
                                                 <span class="userDatatable-title">Tic.No</span>
                                             </th>
@@ -366,11 +365,11 @@
                                             <th>
                                                 <span class="userDatatable-title">Transactions Type</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">Priority</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">Requestor </span>
                                             </th>
@@ -380,29 +379,31 @@
                                             <th>
                                                 <span class="userDatatable-title">Amt</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">Curr</span>
                                             </th>
                                             <th>
                                                 <span class="userDatatable-title">Conv.Amt</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">App By</span>
                                             </th>
-                                            
-                        
+
+
                                             <th>
                                                 <span class="userDatatable-title">Action</span>
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="userDatatable-header" *ngFor="let list of transApprovalList_Main; let i = index" [ngSwitch]="list.approval_staus">
-                        
-                                        <tr *ngSwitchCase="'1'" style="background-color:#99ffbb;">
-                        
-                        
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList_Main; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'1'">
+
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
@@ -416,27 +417,27 @@
                                                     </button>
                                                     </span> -->
 
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                            
-                                            
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
                                                 <span> {{ list.customerName}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.description}}</span>
                                                 <!-- <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
@@ -444,7 +445,7 @@
                                                         list.quotation_no}}</button></span> -->
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -452,47 +453,56 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                        
+
                                             <td>
-                        
+
                                                 <div class="page">
-                        
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                        
-                        
-                        
+
+
+
                                                             <li class="dropdown__item">
-                                                                <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#transactionApprovalViewId" (click)="transactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
+                                                                <!-- <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority)"> -->
+                                                                   
+                                                                    <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#BeforeApprovaltransactionApprovalViewId"
+                                                                    (click)="BeforeApprovaltransactionApprovalView_Main(list.transaction_approval_id,list.type_of_trans);before( list.transaction_approval_id)"> <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
                                                                 </a>
-                        
+
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Comments" data-toggle="modal"
-                                                                    data-target="#transactionApprovalCommentsIdMain" (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png">                                                                  
+                                                                    data-target="#transactionApprovalCommentsIdMain"
+                                                                    (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
                                                                 </a>
                                                             </li>
                                                         </ul>
-                        
+
                                                     </div>
-                        
+
                                                 </div>
-                        
+
                                             </td>
                                         </tr>
-                                        <tr *ngSwitchCase="'2'" style="background-color:DarkSlateGrey;">
-                        
-                        
+                                        <tr *ngSwitchCase="'2'">
+
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
@@ -505,11 +515,11 @@
                                                         list.billerCode}}
                                                     </button>
                                                     </span> -->
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                            
-                        
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
                                                 <span> {{ list.customerName}}</span>
@@ -520,11 +530,11 @@
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.description}}</span>
                                                 <!-- <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
@@ -532,7 +542,7 @@
                                                     list.quotation_no}}</button></span> -->
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -540,47 +550,53 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                    
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                        
+
                                             <td>
-                        
+
                                                 <div class="page">
-                        
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                        
-                        
-                        
+
+
+
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#transactionApprovalViewId" (click)="transactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
                                                                 </a>
-                        
+
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Comments" data-toggle="modal"
-                                                                    data-target="#transactionApprovalCommentsIdMain" (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png"> 
+                                                                    data-target="#transactionApprovalCommentsIdMain"
+                                                                    (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
                                                                 </a>
                                                             </li>
                                                         </ul>
-                        
+
                                                     </div>
-                        
+
                                                 </div>
-                        
+
                                             </td>
                                         </tr>
-                                        <tr *ngSwitchCase="'3'" style="background-color:#ff3333;color: white;">
-                        
-                        
+                                        <tr *ngSwitchCase="'3'">
+
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
@@ -594,11 +610,11 @@
                                                     </button>
                                                     </span> -->
 
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                            
-                        
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
                                                 <span> {{ list.customerName}}</span>
@@ -606,15 +622,15 @@
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.description}}</span>
                                                 <!-- <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
@@ -622,7 +638,7 @@
                                                     list.quotation_no}}</button></span> -->
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -630,129 +646,135 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                    
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                        
+
                                             <td>
-                        
+
                                                 <div class="page">
-                        
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                        
-                        
-                        
+
+
+
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#transactionApprovalViewId" (click)="transactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView_Main(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
                                                                 </a>
-                        
+
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Comments" data-toggle="modal"
-                                                                    data-target="#transactionApprovalCommentsId" (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png"> 
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit_Main( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
                                                                 </a>
                                                             </li>
                                                         </ul>
-                        
+
                                                     </div>
-                        
+
                                                 </div>
-                        
+
                                             </td>
                                         </tr>
-                                    
-                                    
+
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <nav class="atbd-page">
                             <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
-                    
-                            <li class="page-item">
-                                <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
-                                    href="javascript:void(0)"
-                                    (click)="paginationData1.backtab=='show' ? getMainList1({'offset':paginationData1.start}) : false"><i
-                                        class="fas fa-angle-left"></i></a>
-                            </li>
-                            <li class="page-item" *ngIf="paginationData1.backtab =='show'">
-                                <a class="page-link" href="javascript:void(0)"
-                                    (click)="getMainList1({'offset':paginationData1.back})"><i
-                                        class="fas fa-angle-double-left"></i></a>
-                            </li>
-                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                                *ngFor="let pagination of paginationData1.data;let i=index">
-                                <a class="page-link" href="javascript:void(0)"
-                                    (click)=" pagination.load ==true ? getMainList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                            </li>
-                    
-                            <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
-                                <a class="page-link" href="javascript:void(0)"
-                                    (click)="getMainList1({'offset':paginationData1.next})"><i
-                                        class="fas fa-angle-double-right"></i></a>
-                            </li>
-                    
-                            <li class="page-item">
-                                <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                                    href="javascript:void(0)"
-                                    (click)="paginationData1.nexttab =='show' ? getMainList1({'offset':paginationData1.end}) : false"><i
-                                        class="fas fa-angle-right"></i></a>
-                            </li>
-                        </ul>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? getMainList1({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getMainList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getMainList1({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? getMainList1({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
                         </nav>
-                       
+
                     </div>
                     <div class="card-body" *ngIf="tabValue=='quotation'">
                         <nav class="atbd-page">
                             <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
-            
-                              <li class="page-item">
-                                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                                      href="javascript:void(0)"
-                                      (click)="paginationData.backtab=='show' ? getTransactionApprovalList({'offset':paginationData.start}) : false"><i
-                                          class="fas fa-angle-left"></i></a>
-                              </li>
-                              <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                                  <a class="page-link" href="javascript:void(0)"
-                                      (click)="getTransactionApprovalList({'offset':paginationData.back})"><i
-                                          class="fas fa-angle-double-left"></i></a>
-                              </li>
-                              <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                                  *ngFor="let pagination of paginationData.data;let i=index">
-                                  <a class="page-link" href="javascript:void(0)"
-                                      (click)=" pagination.load ==true ? getTransactionApprovalList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                              </li>
-            
-                              <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                                  <a class="page-link" href="javascript:void(0)"
-                                      (click)="getTransactionApprovalList({'offset':paginationData.next})"><i
-                                          class="fas fa-angle-double-right"></i></a>
-                              </li>
-            
-                              <li class="page-item">
-                                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                                      href="javascript:void(0)"
-                                      (click)="paginationData.nexttab =='show' ? getTransactionApprovalList({'offset':paginationData.end}) : false"><i
-                                          class="fas fa-angle-right"></i></a>
-                              </li>
-                          </ul>
-                          </nav>
-                        
-                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table" >
-                            <div class="table-responsive " >
-                                <table class="table mb-0 table-borderless" >
-                                    <thead >
-                                        <tr >
+
+                                <li class="page-item">
+                                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData.backtab=='show' ? getTransactionApprovalList({'offset':paginationData.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getTransactionApprovalList({'offset':paginationData.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getTransactionApprovalList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getTransactionApprovalList({'offset':paginationData.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData.nexttab =='show' ? getTransactionApprovalList({'offset':paginationData.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
 
                                             <th>
                                                 <div class="d-flex align-items-center">
@@ -801,7 +823,7 @@
                                             <th>
                                                 <span class="userDatatable-title">Conv.Amt</span>
                                             </th>
-                                      
+
                                             <th>
                                                 <span class="userDatatable-title">App By</span>
                                             </th>
@@ -812,10 +834,12 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="userDatatable-header" *ngFor="let list of transApprovalList; let i = index" [ngSwitch]="list.approval_staus">
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
 
-                                        <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;" >
-                                                                                     
+                                        <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;">
+
                                             <td>
                                                 <div class="d-flex">
                                                     <div class="userDatatable__imgWrapper d-flex align-items-center">
@@ -847,10 +871,10 @@
                                                         list.billerCode}}
                                                     </button>
                                                     </span> -->
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                               
+                                                        list.billerCode}}</button></span>
+
 
                                             </td>
                                             <td>
@@ -870,7 +894,8 @@
 
                                             <td>
                                                 <span> {{ list.description}}</span>
-                                                <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
                                                         [ngStyle]="{'backgroundColor': 'yellow'}">{{
                                                         list.quotation_no}}</button></span>
                                             </td>
@@ -883,7 +908,7 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                      
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
@@ -900,38 +925,54 @@
 
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#BeforeApprovaltransactionApprovalViewId" (click)="BeforeApprovaltransactionApprovalView(list.billerName,list.transaction_date_view,list.priority);before( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
+                                                                    data-target="#BeforeApprovaltransactionApprovalViewId"
+                                                                    (click)="BeforeApprovaltransactionApprovalView(list.billerName,list.transaction_date_view,list.priority);before( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
 
                                                                 </a>
 
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="hover2" title="Approve"  *ngIf="(list.approval_link_state=='1')" (click)="transactionApprovalQuotationApproved( list.transaction_approval_id)" >
-                                                                    <img class="show" src="assets/img/icon2/approvedx-green.png">
-                                                                    <img class="hide" src="assets/img/icon2/approvedx-black.png">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
                                                                 </a>
 
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="hover3" title="Reject" (click)="transactionApprovalReject( list.transaction_approval_id)" >
-                                                                    <img class="show" src="assets/img/icon2/delete-red.png">
-                                                                    <img class="hide" src="assets/img/icon2/delete-black.png">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover4" title="Comments" data-toggle="modal"
-                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsId" (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-<img class="hide" src="assets/img/icon2/comment-b.png">
+                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
 
                                                                 </a>
                                                             </li>
                                                             <li class="dropdown__item">
-                                                                <a class="hover5" title="Quotation Edit" (click)="transactionApprovalQuotationEdit( list.link_approval_id,list.enquiry_from_id,list.enquiry_product_description,list.quotation_valid_day,list.duplicate_version)" >
-                                                                    <img class="show" src="assets/img/icon2/edit-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/edit-black.png">
+                                                                <a class="hover5" title="Quotation Edit"
+                                                                    (click)="transactionApprovalQuotationEdit( list.link_approval_id,list.enquiry_from_id,list.enquiry_product_description,list.quotation_valid_day,list.duplicate_version)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/edit-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/edit-black.png">
                                                                 </a>
                                                             </li>
                                                             <!-- <li class="dropdown__item">
@@ -940,7 +981,7 @@
                                                                 </a>
                                                             </li> -->
 
-                                                           
+
                                                         </ul>
 
                                                     </div>
@@ -948,23 +989,23 @@
                                                 </div>
 
                                             </td>
-                                       
+
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                      <br>
-                      
-                      <br>
+                        <br>
+
+                        <br>
                         <div class="userDatatable global-shadow border-0 bg-white w-100 normal-table">
                             <div class="table-responsive ">
                                 <table class="table mb-0 table-borderless">
                                     <thead>
                                         <tr class="userDatatable-header">
-                        
-                        
+
+
                                             <th>
                                                 <span class="userDatatable-title">Tic.No</span>
                                             </th>
@@ -980,11 +1021,11 @@
                                             <th>
                                                 <span class="userDatatable-title">Transactions Type</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">Priority</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">Requestor </span>
                                             </th>
@@ -994,29 +1035,31 @@
                                             <th>
                                                 <span class="userDatatable-title">Amt</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">Curr</span>
                                             </th>
                                             <th>
                                                 <span class="userDatatable-title">Conv.Amt</span>
                                             </th>
-                                            
+
                                             <th>
                                                 <span class="userDatatable-title">App By</span>
                                             </th>
-                                            
-                        
+
+
                                             <th>
                                                 <span class="userDatatable-title">Action</span>
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody class="userDatatable-header" *ngFor="let list of transApprovalList; let i = index" [ngSwitch]="list.approval_staus">
-                        
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
                                         <tr *ngSwitchCase="'1'" style="background-color:#99ffbb;">
-                        
-                        
+
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
@@ -1029,35 +1072,36 @@
                                                         list.billerCode}}
                                                     </button>
                                                     </span> -->
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                            
-                                            
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
                                                 <span> {{ list.customerName}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.description}}</span>
-                                                <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
                                                         [ngStyle]="{'backgroundColor': 'yellow'}">{{
                                                         list.quotation_no}}</button></span>
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -1065,49 +1109,55 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                            
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                        
+
                                             <td>
-                        
+
                                                 <div class="page">
-                        
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                        
-                        
-                        
+
+
+
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#transactionApprovalViewId" (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
-                                                                    
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+
                                                                 </a>
-                        
+
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Comments" data-toggle="modal"
-                                                                    data-target="#transactionApprovalCommentsId" (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png">  
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
 
                                                                 </a>
                                                             </li>
                                                         </ul>
-                        
+
                                                     </div>
-                        
+
                                                 </div>
-                        
+
                                             </td>
                                         </tr>
                                         <tr *ngSwitchCase="'2'" style="background-color:DarkSlateGrey;">
-                        
-                        
+
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
@@ -1121,11 +1171,11 @@
                                                     </button>
                                                     </span> -->
 
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                            
-                        
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
                                                 <span> {{ list.customerName}}</span>
@@ -1136,19 +1186,20 @@
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.description}}</span>
-                                                <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
-                                                    [ngStyle]="{'backgroundColor': 'yellow'}">{{
-                                                    list.quotation_no}}</button></span>
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                        [ngStyle]="{'backgroundColor': 'yellow'}">{{
+                                                        list.quotation_no}}</button></span>
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -1156,48 +1207,54 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                    
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                        
+
                                             <td>
-                        
+
                                                 <div class="page">
-                        
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                        
-                        
-                        
+
+
+
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#transactionApprovalViewId" (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
                                                                 </a>
-                        
+
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Comments" data-toggle="modal"
-                                                                    data-target="#transactionApprovalCommentsId" (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png">   
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
 
                                                                 </a>
                                                             </li>
                                                         </ul>
-                        
+
                                                     </div>
-                        
+
                                                 </div>
-                        
+
                                             </td>
                                         </tr>
                                         <tr *ngSwitchCase="'3'" style="background-color:#ff3333;color: white;">
-                        
-                        
+
+
                                             <td>
                                                 <span> {{ list.transaction_approval_id}}</span>
                                             </td>
@@ -1211,11 +1268,11 @@
                                                     </button>
                                                     </span> -->
 
-                                                    <span><button type="button" class="btn_new buttonClass {{
+                                                <span><button type="button" class="btn_new buttonClass {{
                                                         list.billerCode}}">{{
-                                                    list.billerCode}}</button></span>
-                                            
-                        
+                                                        list.billerCode}}</button></span>
+
+
                                             </td>
                                             <td>
                                                 <span> {{ list.customerName}}</span>
@@ -1223,23 +1280,24 @@
                                             <td>
                                                 <span> {{ list.approve_type}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.priority}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.firstName}}</span>
                                             </td>
-                        
+
                                             <td>
                                                 <span> {{ list.description}}</span>
-                                                <span><button type="button" class="buttonClass2" (click)="transactionApprovalPDF(list.link_approval_id)"
-                                                    [ngStyle]="{'backgroundColor': 'yellow'}">{{
-                                                    list.quotation_no}}</button></span>
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                        [ngStyle]="{'backgroundColor': 'yellow'}">{{
+                                                        list.quotation_no}}</button></span>
                                             </td>
                                             <td>
-                                                <span> {{ list.grand_total}}</span>
+                                                <span> {{ list.amount}}</span>
                                             </td>
                                             <td>
                                                 <span> {{ list.currencyId}}</span>
@@ -1247,88 +1305,719 @@
                                             <td>
                                                 <span> {{ list.grand_total}}</span>
                                             </td>
-                                    
+
                                             <td>
                                                 <span> {{ list.approved_by_name}}</span>
                                             </td>
-                        
+
                                             <td>
-                        
+
                                                 <div class="page">
-                        
+
                                                     <div class="dropdown">
                                                         <button class="btn1"><i class="fa fa-bars"></i></button>
                                                         <ul class="dropdown__list">
-                        
-                        
-                        
+
+
+
                                                             <li class="dropdown__item">
                                                                 <a class="hover1" title="View" data-toggle="modal"
-                                                                    data-target="#transactionApprovalViewId" (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
-                                                                    <img class="show" src="assets/img/icon2/eye-blue.png">
-                                                                    <img class="hide" src="assets/img/icon2/eye-black.png">                        
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
                                                                 </a>
-                        
+
                                                             </li>
                                                             <li class="dropdown__item">
                                                                 <a class="hover2" title="Comments" data-toggle="modal"
-                                                                    data-target="#transactionApprovalCommentsId" (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
-                                                                    <img class="show" src="assets/img/icon2/comment-bl.png">
-                                                                    <img class="hide" src="assets/img/icon2/comment-b.png">                                                                   
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
                                                                 </a>
                                                             </li>
                                                         </ul>
-                        
+
                                                     </div>
-                        
+
                                                 </div>
-                        
+
                                             </td>
                                         </tr>
-                                    
-                                    
+
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <nav class="atbd-page">
                             <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
-            
-                            <li class="page-item">
-                                <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
-                                    href="javascript:void(0)"
-                                    (click)="paginationData1.backtab=='show' ? getTransactionApprovalList1({'offset':paginationData1.start}) : false"><i
-                                        class="fas fa-angle-left"></i></a>
-                            </li>
-                            <li class="page-item" *ngIf="paginationData1.backtab =='show'">
-                                <a class="page-link" href="javascript:void(0)"
-                                    (click)="getTransactionApprovalList1({'offset':paginationData1.back})"><i
-                                        class="fas fa-angle-double-left"></i></a>
-                            </li>
-                            <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                                *ngFor="let pagination of paginationData1.data;let i=index">
-                                <a class="page-link" href="javascript:void(0)"
-                                    (click)=" pagination.load ==true ? getTransactionApprovalList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                            </li>
-            
-                            <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
-                                <a class="page-link" href="javascript:void(0)"
-                                    (click)="getTransactionApprovalList1({'offset':paginationData1.next})"><i
-                                        class="fas fa-angle-double-right"></i></a>
-                            </li>
-            
-                            <li class="page-item">
-                                <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                                    href="javascript:void(0)"
-                                    (click)="paginationData1.nexttab =='show' ? getTransactionApprovalList1({'offset':paginationData1.end}) : false"><i
-                                        class="fas fa-angle-right"></i></a>
-                            </li>
-                        </ul>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? getTransactionApprovalList1({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getTransactionApprovalList1({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getTransactionApprovalList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getTransactionApprovalList1({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? getTransactionApprovalList1({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
                         </nav>
-                       
+
                     </div>
-                  
+                    <div class="card-body" *ngIf="tabValue=='product'">
+
+
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 check-box-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr>
+
+                                            <th>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="custom-checkbox  check-all">
+                                                        <input class="checkbox" type="checkbox" id="check-3"
+                                                            (change)="selectAll($event)">
+                                                        <label for="check-3">
+
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Tic.No</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Date</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Biller</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Customer/Vendor</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Transactions Type</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Priority</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Requestor </span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Description</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Avl</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Req</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Bal</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">App By</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span class="userDatatable-title">Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'0'" style="background-color:#f7f7d4;">
+
+                                            <td>
+                                                <div class="d-flex">
+                                                    <div class="userDatatable__imgWrapper d-flex align-items-center">
+                                                        <div class="checkbox-group-wrapper">
+                                                            <div class="checkbox-group d-flex">
+                                                                <div
+                                                                    class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                                                    <input class="checkbox" type="checkbox"
+                                                                        id="check-transapp-grp-{{i}}"
+                                                                        (change)="EditCHK(list.transaction_approval_id,$event)">
+                                                                    <label for="check-transapp-grp-{{i}}"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.transaction_approval_id}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.transaction_entry_dt}}</span>
+                                            </td>
+                                            <td>
+                                                <!-- <span><button type="button" class="buttonClass"
+                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                        list.billerCode}}
+                                                    </button>
+                                                    </span> -->
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.description}}</span>
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                        [ngStyle]="{'backgroundColor': 'yellow'}">{{
+                                                        list.quotation_no}}</button></span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.amount}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.currencyId}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.grand_total}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approved_by_name}}</span>
+                                            </td>
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#BeforeApprovaltransactionApprovalViewId"
+                                                                    (click)="BeforeApprovaltransactionApprovalView(list.billerName,list.transaction_date_view,list.priority);before( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Approve"
+                                                                    *ngIf="(list.approval_link_state=='1')"
+                                                                    (click)="transactionApprovalQuotationApproved( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/approvedx-green.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/approvedx-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover3" title="Reject"
+                                                                    (click)="transactionApprovalReject( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/delete-red.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/delete-black.png">
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover4" title="Comments" data-toggle="modal"
+                                                                    data-target="#BeforeApprovaltransactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
+
+                                                                </a>
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover5" title="Quotation Edit"
+                                                                    (click)="transactionApprovalQuotationEdit( list.link_approval_id,list.enquiry_from_id,list.enquiry_product_description,list.quotation_valid_day,list.duplicate_version)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/edit-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/edit-black.png">
+                                                                </a>
+                                                            </li>
+                                                            <!-- <li class="dropdown__item">
+                                                                <a class="remove" title="PDF" (click)="transactionApprovalQuotationEdit( list.link_approval_id)" >
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#009688" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+                                                                </a>
+                                                            </li> -->
+
+
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+
+                        <br>
+                        <div class="userDatatable global-shadow border-0 bg-white w-100 normal-table">
+                            <div class="table-responsive ">
+                                <table class="table mb-0 table-borderless">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+
+
+                                            <th>
+                                                <span class="userDatatable-title">Tic.No</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Date</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Biller</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Customer/Vendor</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Transactions Type</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Priority</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Requestor </span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Description</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Amt</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">Curr</span>
+                                            </th>
+                                            <th>
+                                                <span class="userDatatable-title">Conv.Amt</span>
+                                            </th>
+
+                                            <th>
+                                                <span class="userDatatable-title">App By</span>
+                                            </th>
+
+
+                                            <th>
+                                                <span class="userDatatable-title">Action</span>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="userDatatable-header"
+                                        *ngFor="let list of transApprovalList; let i = index"
+                                        [ngSwitch]="list.approval_staus">
+
+                                        <tr *ngSwitchCase="'1'" style="background-color:#99ffbb;">
+
+
+                                            <td>
+                                                <span> {{ list.transaction_approval_id}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.transaction_entry_dt}}</span>
+                                            </td>
+                                            <td>
+                                                <!-- <span><button type="button" class="buttonClass"
+                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                        list.billerCode}}
+                                                    </button>
+                                                    </span> -->
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.description}}</span>
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                        [ngStyle]="{'backgroundColor': 'yellow'}">{{
+                                                        list.quotation_no}}</button></span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.amount}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.currencyId}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.grand_total}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approved_by_name}}</span>
+                                            </td>
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Comments" data-toggle="modal"
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
+
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr *ngSwitchCase="'2'" style="background-color:DarkSlateGrey;">
+
+
+                                            <td>
+                                                <span> {{ list.transaction_approval_id}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.transaction_entry_dt}}</span>
+                                            </td>
+                                            <td>
+                                                <!-- <span><button type="button" class="buttonClass"
+                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                        list.billerCode}}
+                                                    </button>
+                                                    </span> -->
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.description}}</span>
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                        [ngStyle]="{'backgroundColor': 'yellow'}">{{
+                                                        list.quotation_no}}</button></span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.amount}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.currencyId}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.grand_total}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approved_by_name}}</span>
+                                            </td>
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Comments" data-toggle="modal"
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
+
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                        <tr *ngSwitchCase="'3'" style="background-color:#ff3333;color: white;">
+
+
+                                            <td>
+                                                <span> {{ list.transaction_approval_id}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.transaction_entry_dt}}</span>
+                                            </td>
+                                            <td>
+                                                <!-- <span><button type="button" class="buttonClass"
+                                                        [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                        list.billerCode}}
+                                                    </button>
+                                                    </span> -->
+
+                                                <span><button type="button" class="btn_new buttonClass {{
+                                                        list.billerCode}}">{{
+                                                        list.billerCode}}</button></span>
+
+
+                                            </td>
+                                            <td>
+                                                <span> {{ list.customerName}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.approve_type}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.priority}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.firstName}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.description}}</span>
+                                                <span><button type="button" class="buttonClass2"
+                                                        (click)="transactionApprovalPDF(list.link_approval_id)"
+                                                        [ngStyle]="{'backgroundColor': 'yellow'}">{{
+                                                        list.quotation_no}}</button></span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.amount}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.currencyId}}</span>
+                                            </td>
+                                            <td>
+                                                <span> {{ list.grand_total}}</span>
+                                            </td>
+
+                                            <td>
+                                                <span> {{ list.approved_by_name}}</span>
+                                            </td>
+
+                                            <td>
+
+                                                <div class="page">
+
+                                                    <div class="dropdown">
+                                                        <button class="btn1"><i class="fa fa-bars"></i></button>
+                                                        <ul class="dropdown__list">
+
+
+
+                                                            <li class="dropdown__item">
+                                                                <a class="hover1" title="View" data-toggle="modal"
+                                                                    data-target="#transactionApprovalViewId"
+                                                                    (click)="transactionApprovalView(list.billerName,list.transaction_date_view,list.priority)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/eye-blue.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/eye-black.png">
+                                                                </a>
+
+                                                            </li>
+                                                            <li class="dropdown__item">
+                                                                <a class="hover2" title="Comments" data-toggle="modal"
+                                                                    data-target="#transactionApprovalCommentsId"
+                                                                    (click)="transactionApprovalCommentEdit( list.transaction_approval_id)">
+                                                                    <img class="show"
+                                                                        src="assets/img/icon2/comment-bl.png">
+                                                                    <img class="hide"
+                                                                        src="assets/img/icon2/comment-b.png">
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <nav class="atbd-page">
+                            <ul class="pagination mb-0" *ngIf="paginationData1.info == 'show'">
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.backtab=='show' ? 'page-link' :'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.backtab=='show' ? getTransactionApprovalList1({'offset':paginationData1.start}) : false"><i
+                                            class="fas fa-angle-left"></i></a>
+                                </li>
+                                <li class="page-item" *ngIf="paginationData1.backtab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getTransactionApprovalList1({'offset':paginationData1.back})"><i
+                                            class="fas fa-angle-double-left"></i></a>
+                                </li>
+                                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                                    *ngFor="let pagination of paginationData1.data;let i=index">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)=" pagination.load ==true ? getTransactionApprovalList1({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                                        <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                                </li>
+
+                                <li class="page-item" *ngIf="paginationData1.nexttab =='show'">
+                                    <a class="page-link" href="javascript:void(0)"
+                                        (click)="getTransactionApprovalList1({'offset':paginationData1.next})"><i
+                                            class="fas fa-angle-double-right"></i></a>
+                                </li>
+
+                                <li class="page-item">
+                                    <a [class]="paginationData1.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                                        href="javascript:void(0)"
+                                        (click)="paginationData1.nexttab =='show' ? getTransactionApprovalList1({'offset':paginationData1.end}) : false"><i
+                                            class="fas fa-angle-right"></i></a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -1339,11 +2028,14 @@
 <!-- -----------------------Modal-view begins-------------------------------- -->
 <div class="modal fade" id="BeforeApprovaltransactionApprovalViewId" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header modelHeaderCSS">
-                <h2 class="modal-title" id="exampleModalLongTitle">
-                    Transaction Approval Management </h2>
+
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #200122, #6f0000);">
+                    View Transaction Approval Management </h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1351,63 +2043,272 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="BeforeApprovaltransactionApprovalViewForm">
-
                     <div class="modal-body commentCSS">
                         <div class="row">
-                            <div class="col-lg-12">
+
+                            <!-- Form Control Values -->
+
+
+                            <div class="col-lg-6">
                                 <div class="form-group row">
                                     <div class="col-lg-4">
-                                        <label for="BA_bill_name" class="col-lg-12 col-form-label">Biller Name</label>
+                                        <label for="BeforeApprovalbillerName" class="col-lg-12 col-form-label">Biller
+                                            Name</label>
                                     </div>
                                     <div class="col-lg-8">
-                                      
-                                        <input type="text" class="form-control" formControlName="BeforeApprovalbillerName"
-                                        [attr.readonly]= "isReadOnly" id="BA_bill_name" />{{this.BillerName}}
+                                        <input type="text" class="form-control"
+                                            formControlName="BeforeApprovalbillerName" [attr.readonly]="isReadOnly"
+                                            id="BeforeApprovalbillerName" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
                                     <div class="col-lg-4">
-                                        <label for="BA_dat" class="col-lg-12 col-form-label">Date</label>
+                                        <label for="BeforeApprovalDate" class="col-lg-12 col-form-label">Date</label>
                                     </div>
                                     <div class="col-lg-8">
-                                      
                                         <input type="text" class="form-control" formControlName="BeforeApprovalDate"
-                                        [attr.readonly]= "isReadOnly" id="BA_dat" />{{ this.date}}
+                                            [attr.readonly]="isReadOnly" id="BeforeApprovalDate" />
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group row">
                                     <div class="col-lg-4">
-                                        <label for="BA_prioty" class="col-lg-12 col-form-label">Priority</label>
+                                        <label for="BeforeApprovalpriority"
+                                            class="col-lg-12 col-form-label">Priority</label>
                                     </div>
                                     <div class="col-lg-8">
-                                      
                                         <input type="text" class="form-control" formControlName="BeforeApprovalpriority"
-                                        [attr.readonly]= "isReadOnly"  id="BA_prioty" />{{ this.Priority}}
+                                            [attr.readonly]="isReadOnly" id="BeforeApprovalpriority" />
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div *ngIf="this.transactionTypeNumber==3" class="transaction-panel">
+                                <div class="transaction-form-group">
+                                    <label for="view_PurchaseEntryNo" class="col-form-label">Purchase Entry No</label>
+
+                                    <span>{{purchaseEntryNo}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                    <label for="view_VendorName" class="col-form-label">Vendor Name</label>
+
+                                    <span>{{vendorName}}</span>
+                                </div>
+
+                                <div class="transaction-form-group">
+
+                                    <label for="view_InvoiceNo" class="col-form-label">Invoice No</label>
+
+                                    <span>{{invoiceNo}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                    <label for="view_ContentofPurchase" class="col-form-label">Content of
+                                        Purchase</label>
+
+                                    <span>{{contentOfPurchase}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+
+                                    <label for="view_PONumber" class="col-form-label">PO Number</label>
+
+
+
+                                    <span>{{poNumber}}</span>
+                                </div>
+
+                                <div class="transaction-form-group">
+
+                                    <label for="view_Currency" class="col-form-label">Currency</label>
+
+
+                                    <span>{{currency}}</span>
+                                </div>
+
+                                <div class="transaction-form-group">
+
+                                    <label for="view_CurrencyConversionRate" class="col-form-label">Currency Conversion
+                                        Rate</label>
+
+                                    <span>{{currencyConversionRate}}</span>
+                                </div>
+
+                                <div class="transaction-form-group">
+
+                                    <label for="view_TaxAmount" class=" col-form-label">Tax Amount</label>
+
+
+                                    <span>{{taxAmount}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+
+                                    <label for="view_InvoiceAmount" class="col-form-label">Invoice Amount</label>
+
+
+                                    <span>{{invoiceAmount}}</span>
+
+                                </div>
+
+                                <div class="transaction-form-group ">
+
+                                    <label for="view_Comments" class="col-form-label">Comments</label>
+
+                                    <textarea class="form-control" [value]="comments" readonly
+                                        id="view_Comments"></textarea>
+                                </div>
+                            </div>
+                            <div *ngIf="this.transactionTypeNumber==5" class="transaction-panel">
+
+                                <div class="transaction-form-group ">
+
+                                    <label for="view_PurchaseEntryNo" class="col-form-label">Description</label>
+
+
+                                    <span>{{PC_Description}}</span>
+                                </div>
+                                <div class="transaction-form-group ">
+
+                                    <label for="view_VendorName" class="col-form-label">Type</label>
+
+
+                                    <span>{{PC_Type}}</span>
+                                </div>
+
+                                <div class="transaction-form-group">
+
+                                    <label for="view_InvoiceNo" class="col-form-label">Amount</label>
+
+
+                                    <span>{{PC_Amount}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                    <label for="view_ContentofPurchase" class="col-form-label">Comments</label>
+
+                                    <span>{{comments}}</span>
+                                </div>
+                            </div>
+                          
+                            <div *ngIf="this.transactionTypeNumber==64" class="transaction-panel">
+                                <div class="transaction-form-group ">
+                              
+                                  <label for="view_PurchaseEntryNo" class="col-form-label">Customer Name</label>
+                                  <span>{{Cus_CustomerName}}</span>
+                                </div>
+                                <div class="transaction-form-group ">
+                                  <label for="view_VendorName" class="col-form-label">Biller Name</label>
+                                  <span>{{Cus_billerName}}</span>
+                                </div>
+                              
+                                <div class="transaction-form-group">
+                              
+                                  <label for="view_InvoiceNo" class="col-form-label">Address-1 </label>
+                                  <span>{{Cus_address1}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Address-2</label>
+                                  <span>{{Cus_address2}}</span>
+                                </div>
+                              
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">City</label>
+                              
+                                  <span>{{Cus_City}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">State</label>
+                              
+                                  <span>{{Cus_state}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Zip Code</label>
+                              
+                                  <span>{{Cus_zipcode}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Country </label>
+                              
+                                  <span>{{Cus_country}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Phone</label>
+                              
+                                  <span>{{Cus_phone}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Mobile Phone</label>
+                              
+                                  <span>{{Cus_mobilephone}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Fax</label>
+                              
+                                  <span>{{Cus_fax}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Email</label>
+                              
+                                  <span>{{Cus_email}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Finance Email</label>
+                              
+                                  <span>{{Cus_financeemail}}</span>
+                                </div>
+                                <div class="transaction-form-group">
+                                  <label for="view_ContentofPurchase" class="col-form-label">Contact Person</label>
+                              
+                                  <span>{{Cus_Contactperson}}</span>
+                                </div>
+                              </div>
+                              <div *ngIf="this.transactionTypeNumber==11" class="transaction-panel table-responsive" >
+                             
+                                <table class="table mb-0 table-borderless">
+                                  <thead>
+                                    <tr class="userDatatable-header">
+                                      <th> <span class="userDatatable-title">Task Name</span></th>
+                                      <th> <span class="userDatatable-title">Task Status</span></th>
+                                      <th> <span class="userDatatable-title">Reason</span></th>
+                                      <th> <span class="userDatatable-title">Attachment</span></th>
+                                    
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                      <td></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                      
+                                  
+                
+                                
+                              </div>
 
 
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" (click)="BeforeApprovalTransactionAproveViewFn()" >
-                           Approve
-                        </button>
-                        <button type="button" class="btn btn-dark" data-dismiss="modal">
-                            Reject
-                        </button>
-        
-                    </div>
                 </form>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="BeforeApprovalTransactionAproveViewFn()">
+                        Approve
+                    </button>
+                    <button type="button" class="btn btn-dark" data-dismiss="modal">
+                        Reject
+                    </button>
+
+                </div>
+
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -1423,8 +2324,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header modelHeaderCSS">
-                <h2 class="modal-title" id="exampleModalLongTitle">
-                    Transaction Approval Management </h2>
+               
+                    <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #200122, #6f0000);">
+                             Transaction Approval Management </h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1441,9 +2345,9 @@
                                         <label for="bill_name" class="col-lg-12 col-form-label">Biller Name</label>
                                     </div>
                                     <div class="col-lg-8">
-                                      
+
                                         <input type="text" class="form-control" formControlName="billerName"
-                                        [attr.readonly]= "isReadOnly" id="bill_name" />
+                                            [attr.readonly]="isReadOnly" id="bill_name" />
                                     </div>
                                 </div>
                             </div>
@@ -1454,9 +2358,9 @@
                                         <label for="dat" class="col-lg-12 col-form-label">Date</label>
                                     </div>
                                     <div class="col-lg-8">
-                                      
+
                                         <input type="text" class="form-control" formControlName="Date"
-                                        [attr.readonly]= "isReadOnly" id="dat" />
+                                            [attr.readonly]="isReadOnly" id="dat" />
                                     </div>
                                 </div>
                             </div>
@@ -1467,9 +2371,9 @@
                                         <label for="prioty" class="col-lg-12 col-form-label">Priority</label>
                                     </div>
                                     <div class="col-lg-8">
-                                      
+
                                         <input type="text" class="form-control" formControlName="priority"
-                                        [attr.readonly]= "isReadOnly"  id="prioty" />
+                                            [attr.readonly]="isReadOnly" id="prioty" />
                                     </div>
                                 </div>
                             </div>
@@ -1477,9 +2381,10 @@
 
                         </div>
                     </div>
+                   
                 </form>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -1494,8 +2399,11 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header modelHeaderCSS">
-                <h2 class="modal-title" id="exampleModalLongTitle">
-                    Comments Entry </h2>
+               
+                    <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+                    background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                    background: linear-gradient(to right, #200122, #6f0000);">
+                              Comments Entry</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1513,7 +2421,9 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <!-- <label for="Comments1" class="col-lg-12 col-form-label">{{this.commentDisplayResult}}</label><br> -->
-                                        <label style="color: rgb(23, 74, 150);" for="Comments1" class="col-lg-12 col-form-label" [innerHtml]="this.commentDisplayResult"></label><br>
+                                        <label style="color: rgb(23, 74, 150);" for="Comments1"
+                                            class="col-lg-12 col-form-label"
+                                            [innerHtml]="this.commentDisplayResult"></label><br>
 
                                         <textarea class="form-control" formControlName="Comments" id="transComments1"
                                             rows="3"></textarea>
@@ -1527,7 +2437,8 @@
                                         <label for="toggle" class="col-lg-12 col-form-label">Toggle Off </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="checkbox" class="switch mt-2" formControlName="toggleOff" (change)="CB_Toggle($event)" />
+                                        <input type="checkbox" class="switch mt-2" formControlName="toggleOff"
+                                            (change)="CB_Toggle($event)" />
                                     </div>
                                 </div>
                             </div>
@@ -1536,7 +2447,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="transactionApprovalCommentsUpdateAfterApproval($event)">
+                <button type="button" class="btn btn-primary"
+                    (click)="transactionApprovalCommentsUpdateAfterApproval($event)">
                     Save
                 </button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1556,8 +2468,10 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header modelHeaderCSS">
-                <h2 class="modal-title" id="exampleModalLongTitle">
-                    Comments Entry </h2>
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #200122, #6f0000);">
+                          Comments Entry</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1575,7 +2489,9 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <!-- <label for="Comments1" class="col-lg-12 col-form-label">{{this.commentDisplayResult}}</label><br> -->
-                                        <label style="color: rgb(23, 74, 150);" for="Comments1" class="col-lg-12 col-form-label" [innerHtml]="this.commentDisplayResult"></label><br>
+                                        <label style="color: rgb(23, 74, 150);" for="Comments1"
+                                            class="col-lg-12 col-form-label"
+                                            [innerHtml]="this.commentDisplayResult"></label><br>
 
                                         <textarea class="form-control" formControlName="Comments" id="transComments1"
                                             rows="3"></textarea>
@@ -1589,7 +2505,8 @@
                                         <label for="toggle" class="col-lg-12 col-form-label">Toggle Off </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="checkbox" class="switch mt-2" formControlName="toggleOff" (change)="CB_Toggle($event)" />
+                                        <input type="checkbox" class="switch mt-2" formControlName="toggleOff"
+                                            (change)="CB_Toggle($event)" />
                                     </div>
                                 </div>
                             </div>
@@ -1598,7 +2515,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" (click)="transactionApprovalCommentsUpdateAfterApproval_Main($event)">
+                <button type="button" class="btn btn-primary"
+                    (click)="transactionApprovalCommentsUpdateAfterApproval_Main($event)">
                     Save
                 </button>
                 <button type="button" class="btn btn-dark" data-dismiss="modal">
@@ -1618,8 +2536,10 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header modelHeaderCSS">
-                <h2 class="modal-title" id="exampleModalLongTitle">
-                    Comments Entry </h2>
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #200122, #6f0000);">
+                          Comments Entry</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1636,9 +2556,11 @@
                                         <label for="transComments" class="col-lg-12 col-form-label">Comments</label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <label style="color: rgb(23, 74, 150);" for="Comments1" class="col-lg-12 col-form-label" [innerHtml]="this.commentDisplayResult"></label><br>
-                                        <textarea class="form-control" formControlName="BeforeApprovalComments" id="transComments"
-                                            rows="3"></textarea>
+                                        <label style="color: rgb(23, 74, 150);" for="Comments1"
+                                            class="col-lg-12 col-form-label"
+                                            [innerHtml]="this.commentDisplayResult"></label><br>
+                                        <textarea class="form-control" formControlName="BeforeApprovalComments"
+                                            id="transComments" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1649,7 +2571,9 @@
                                         <label for="toggle" class="col-lg-12 col-form-label">Toggle Off </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="checkbox" class="switch mt-2" formControlName="BeforeApprovaltoggleOff" (change)="CB_BeforeApprovalToggle($event)" />
+                                        <input type="checkbox" class="switch mt-2"
+                                            formControlName="BeforeApprovaltoggleOff"
+                                            (change)="CB_BeforeApprovalToggle($event)" />
                                     </div>
                                 </div>
                             </div>
@@ -1678,8 +2602,10 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header modelHeaderCSS">
-                <h2 class="modal-title" id="exampleModalLongTitle">
-                    Comments Entry </h2>
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(230, 241, 12);background: #200122; /* fallback for old browsers */
+                background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(to right, #200122, #6f0000);">
+                          Comments Entry</h2>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -1687,18 +2613,20 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="BeforeApprovaltransactionApprovalCommentsForm_main">
-                
+
                     <div class="modal-body commentCSS">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group row">
                                     <div class="col-lg-4">
-                                        <label for="transComments" class="col-lg-12 col-form-label">Comments</label>
+                                        <label for="transComments" class="col-lg-12 col-form-label mt-2">Comments</label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <label style="color: rgb(23, 74, 150);" for="Comments1" class="col-lg-12 col-form-label" [innerHtml]="this.commentDisplayResult"></label><br>
-                                        <textarea class="form-control" formControlName="BeforeApprovalComments" id="transComments"
-                                            rows="3"></textarea>
+                                        <label style="color: rgb(23, 74, 150);" for="Comments1"
+                                            class="col-lg-12 col-form-label"
+                                            [innerHtml]="this.commentDisplayResult"></label><br>
+                                        <textarea class="form-control" formControlName="BeforeApprovalComments"
+                                            id="transComments" rows="3"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1709,7 +2637,9 @@
                                         <label for="toggle" class="col-lg-12 col-form-label">Toggle Off </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <input type="checkbox" class="switch mt-2" formControlName="BeforeApprovaltoggleOff" (change)="CB_BeforeApprovalToggle($event)" />
+                                        <input type="checkbox" class="switch mt-2"
+                                            formControlName="BeforeApprovaltoggleOff"
+                                            (change)="CB_BeforeApprovalToggle($event)" />
                                     </div>
                                 </div>
                             </div>

@@ -111,7 +111,8 @@
                           </li>
 
                           <li class="dropdown__item">
-                            <a class="hover4" title="Email-Landscape" data-toggle="modal" data-target="#emailFormId"
+                            <a class="hover4" title="Email-Landscape" 
+                          
                               (click)="getEmailDetails(list.billerId)">
                               <img class="show" src="assets/img/icon2/gmail-blue.png">
                               <img class="hide" src="assets/img/icon2/gmail-black.png">
@@ -230,7 +231,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Select Invoice Details</h2>
+        <!-- <h2 class="col-11 modal-title text-center">Select Invoice Details</h2> -->
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+        Select Invoice Details </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -316,12 +321,16 @@
 
 <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
-<div class="modal fade" id="emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="DO_emailFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
+       
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+       Email </h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -466,7 +475,7 @@
             <div class="form-group row">
               <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
               <div class="col-lg-10">
-                <editor id="tinyID" [init]="{
+                <editor id="tinyIDDO" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'
@@ -501,10 +510,10 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced search
-        </h2>
-
-
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+        Advanced Search </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

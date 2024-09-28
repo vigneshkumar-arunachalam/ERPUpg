@@ -118,6 +118,7 @@ import { CreditmanagerComponent } from './voipswitch/creditmanager/creditmanager
 import { PettyCashComponent } from './ledger/petty-cash/petty-cash.component';
 import { RecurringResellerComponent } from './billing/recurring-reseller/recurring-reseller.component';
 import { CstreportComponent } from './reports/cstreport/cstreport.component';
+import { VsprovisionComponent } from './vsprovision/vsprovision.component';
 
 
 
@@ -222,6 +223,7 @@ import { CstreportComponent } from './reports/cstreport/cstreport.component';
      PettyCashComponent,
      RecurringResellerComponent,
      CstreportComponent,
+     VsprovisionComponent,
      
      
     

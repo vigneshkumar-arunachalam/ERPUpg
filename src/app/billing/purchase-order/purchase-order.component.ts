@@ -66,10 +66,11 @@ PO_Permission_view:any;
   CBV_TemplateSelection: any;
   CBV_PDFLink: any;
   CBV_PaymentLink: any;
+  Email_poId: any;
 
   constructor(private serverService: ServerService, private router: Router, private spinner: NgxSpinnerService) { }
 
-  keywordCustomerName = 'customerName';
+  keywordCustomerName = 'vendorName';
   ngOnInit(): void {
     this.PurchaseOrderList({});
     this.searchPurchaseOrderForm = new FormGroup({
@@ -78,10 +79,7 @@ PO_Permission_view:any;
     this.emailForm = new FormGroup({
       'Subject_Content': new FormControl(null, Validators.required),
       'email_to': new FormControl(null, Validators.required),
-      'radio_ApprovalBy': new FormControl(null, Validators.required),
-      'email_From': new FormControl(null, Validators.required),
-   
-
+      'emailFrom': new FormControl(null, Validators.required),
     });
   }
   handle_radioChange_email(event: any) {
@@ -164,18 +162,18 @@ PO_Permission_view:any;
 
     let api_req: any = new Object();
     let api_Search_req: any = new Object();
-    api_req.moduleType = "quotation";
-    api_req.api_url = "quotation/quot_customer_name";
+    api_req.moduleType = "purchaseorder";
+    api_req.api_url = "purchaseorder/vendor_name_details";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_Search_req.action = "quot_customer_name";
+    api_Search_req.action = "vendor_name_details";
     api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
     // api_Search_req.billerId = this.addDeliveryOrderForm.value.companyName;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("vignesh-customer_name response", response);
-      this.AdvanceSearchResult = response.customer_list;
+      this.AdvanceSearchResult = response.vendor_list;
 
       if (response.status = true) {
 
@@ -186,8 +184,8 @@ PO_Permission_view:any;
   }
   selectEventCustomer(item: any) {
     console.log(item)
-    this.searchResult1_CustomerID = item.customerId;
-    this.searchResult1_CustomerName = item.customerName;
+    this.searchResult1_CustomerID = item.vendorId;
+    this.searchResult1_CustomerName = item.vendorName;
     console.log("AutoComplete-customer ID", this.searchResult1_CustomerID)
     console.log("AutoComplete-customer Name", this.searchResult1_CustomerName)
 
@@ -251,18 +249,18 @@ PO_Permission_view:any;
     })
   }
  
-  getEmailDetails(id: any) {
+  getEmailDetails(poid: any) {
     this.spinner.show();
-    this.Email_BillId = id;
+    this.Email_poId = poid;
     let api_req: any = new Object();
     let api_emailDetails: any = new Object();
-    api_req.moduleType = "invoice";
-    api_req.api_url = "invoice/send_invoice_details";
+    api_req.moduleType = "purchaseorder";
+    api_req.api_url = "purchaseorder/getMailDetails";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_emailDetails.action = "send_invoice_details";
+    api_emailDetails.action = "getMailDetails";
 
-    api_emailDetails.billId = id;
+    api_emailDetails.poId = poid;
     api_emailDetails.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_emailDetails;
 
@@ -270,44 +268,25 @@ PO_Permission_view:any;
       this.spinner.hide();
       if (response.status == true) {
 
-        this.email_fromList = response.email_from_arr;
-        this.email_groupMailList = response.group_mail;
-        this.email_crmTemplateList = response.crm_template_list;
-        this.email_cc_userList = response.cc_user;
-        this.messageContent = response.invoice_content;
-        this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+        this.messageContent = response.content;
+        this.FromEmailValue=response.fromEmail;
+        this.subjectValue =response.subject;
+        this.mailContent = tinymce.get('tinyID_po').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID': this.mailContent,
+          'tinyID_po': this.mailContent,
           'Subject_Content': response.subject,
+          'emailFrom': response.fromEmail,
 
 
         })
-        if (this.Select_To_Type_radiobox_Value == 'finance') {
-          this.emailForm.patchValue({
-            'email_to': response.finance_email,
-            'tinyID': this.mailContent,
-          })
-        }
-        else {
-          this.emailForm.patchValue({
-            'email_to': response.company_email,
-            'tinyID': this.mailContent,
-          })
-        }
-
-
-        // iziToast.success({
-        //   message: "Email Details displayed Successfully",
-        //   position: 'topRight'
-
-        // });
+    
         this.PurchaseOrderList({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#emailFormId_po').modal("hide");
         iziToast.warning({
-          message: "Payment Process Details not displayed. Please try again",
+          message: "Email Details not displayed. Please try again",
           position: 'topRight'
         });
       }
@@ -324,24 +303,13 @@ PO_Permission_view:any;
     Swal.fire('Sending Email');
     Swal.showLoading();
 
-    this.FromEmailValue = $('#emailFrom').val();
-    this.emailTo = $('#emailto').val();
-    this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
+ 
+    this.emailTo = this.emailForm.value.email_to;
+  
+    this.msg_id = tinymce.get('tinyID_po').getContent();
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
-    var pdf_state = 0
-    if (this.CBV_TemplateSelection == true || this.CBV_PDFLink == true || this.CBV_PaymentLink == true) {
-      var pdf_state = 1;
-      console.log("if condition if any checkbox selects", pdf_state)
-    }
-    else {
-      var pdf_state = 0;
-      console.log("if condition if none of checkbox selects", pdf_state)
-    }
-
-
     let api_req: any = new Object();
     let api_email_req: any = new Object();
     api_req.moduleType = "invoice";
@@ -350,7 +318,8 @@ PO_Permission_view:any;
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_email_req.action = "invoice_details_sendmail";
     api_email_req.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_email_req.billId = this.Email_BillId;
+    api_email_req.poId =this.Email_poId;
+ 
 
     api_email_req.fromEmailId = this.FromEmailValue;
     if (this.FromEmailValue === null || this.FromEmailValue === '' || this.FromEmailValue === 'undefined' || this.FromEmailValue === undefined) {
@@ -374,7 +343,7 @@ PO_Permission_view:any;
 
     }
     // api_email_req.cc_email = this.edit_array_emailCC_Checkbox;
-    api_email_req.pdf_state = pdf_state;
+
     api_email_req.subject = this.subjectValue;
     if (this.subjectValue === null || this.subjectValue === '' || this.subjectValue === 'undefined' || this.subjectValue === undefined) {
 
@@ -438,7 +407,7 @@ PO_Permission_view:any;
     }
   }
   pdf(purchaseOrderId: any) {
-    var url = "https://erp1.cal4care.com/api/purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
+    var url = "https://laravelapi.erp1.cal4care.com/api/purchaseorder/getPurchaseOrderPdfShow?poId=" + purchaseOrderId + "";
     window.open(url, '_blank');
     console.log("url", url)
 

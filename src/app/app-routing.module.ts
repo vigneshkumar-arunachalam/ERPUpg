@@ -44,23 +44,23 @@ import { LicenseCreditComponent } from './license-credit/license-credit.componen
 import { AddDidpiComponent } from './billing/proforma-invoice/add-didpi/add-didpi.component';
 import { EditDidpiComponent } from './billing/proforma-invoice/edit-didpi/edit-didpi.component';
 
-import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component'; 
-import { EditDoComponent } from './billing/delivery-order/edit-do/edit-do.component'; 
-import {AddDoComponent} from './billing/delivery-order/add-do/add-do.component'; 
-import { PurchaseOrderComponent } from './billing/purchase-order/purchase-order.component'; 
-import { AddPurchaseOrderComponent } from './billing/purchase-order/add-purchase-order/add-purchase-order.component'; 
-import { EditPurchaseOrderComponent } from './billing/purchase-order/edit-purchase-order/edit-purchase-order.component'; 
-import { LedgerComponent } from './ledger/ledger.component'; 
+import { DeliveryOrderComponent } from './billing/delivery-order/delivery-order.component';
+import { EditDoComponent } from './billing/delivery-order/edit-do/edit-do.component';
+import { AddDoComponent } from './billing/delivery-order/add-do/add-do.component';
+import { PurchaseOrderComponent } from './billing/purchase-order/purchase-order.component';
+import { AddPurchaseOrderComponent } from './billing/purchase-order/add-purchase-order/add-purchase-order.component';
+import { EditPurchaseOrderComponent } from './billing/purchase-order/edit-purchase-order/edit-purchase-order.component';
+import { LedgerComponent } from './ledger/ledger.component';
 import { TransactionnewComponent } from './ledger/transactionnew/transactionnew.component';
-import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component'; 
-import { EditTransactionNewComponent } from './ledger/transactionnew/edit-transaction-new/edit-transaction-new.component'; 
-import { ResellerManagementComponent } from './masters/reseller-management/reseller-management.component'; 
+import { AddTransactionNewComponent } from './ledger/transactionnew/add-transaction-new/add-transaction-new.component';
+import { EditTransactionNewComponent } from './ledger/transactionnew/edit-transaction-new/edit-transaction-new.component';
+import { ResellerManagementComponent } from './masters/reseller-management/reseller-management.component';
 import { PipeComponent } from './pipe/pipe.component';
 import { CrmComponent } from './crm/crm.component';
-import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component'; 
-import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component'; 
-import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component'; 
-import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component'; 
+import { EnquirynewComponent } from './crm/enquirynew/enquirynew.component';
+import { AddNewEnquiryComponent } from './crm/enquirynew/add-new-enquiry/add-new-enquiry.component';
+import { DuplicateDOComponent } from './billing/delivery-order/duplicate-do/duplicate-do.component';
+import { EditNewEnquiryComponent } from './crm/enquirynew/edit-new-enquiry/edit-new-enquiry.component';
 import { ResellerPaymentComponent } from './billing/reseller-payment/reseller-payment.component';
 import { EditinvoiceDIDComponent } from './billing/invoice/editinvoice-did/editinvoice-did.component';
 import { DatetimeTestComponent } from './datetime-test/datetime-test.component';
@@ -92,21 +92,25 @@ import { CreditmanagerComponent } from './voipswitch/creditmanager/creditmanager
 import { PettyCashComponent } from './ledger/petty-cash/petty-cash.component';
 import { RecurringResellerComponent } from './billing/recurring-reseller/recurring-reseller.component';
 import { CstreportComponent } from './reports/cstreport/cstreport.component';
+import { VsprovisionComponent } from './vsprovision/vsprovision.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
-  },{
+  }, {
+    path: 'vsprovision', component: VsprovisionComponent
+  },
+  {
     path: 'sstreport', component: CstreportComponent
-  },{
+  }, {
     path: 'recurringReseller', component: RecurringResellerComponent
-  },{
+  }, {
     path: 'pettyCash', component: PettyCashComponent
-  },{
+  }, {
     path: 'creditmanager', component: CreditmanagerComponent
-  },{
+  }, {
     path: 'voipswitch', component: VoipswitchComponent
-  },{
+  }, {
     path: 'guru', component: GuruComponent
   },
   {
@@ -114,41 +118,41 @@ const routes: Routes = [
   },
   {
     path: 'purchaseentryreport', component: PurchaseentryreportComponent
-  },{
+  }, {
     path: 'printpreview', component: PrintpreviewComponent
-  },{
+  }, {
     path: 'reports', component: ReportsComponent
-  },{
+  }, {
     path: 'invoiceReportsOld', component: InvoicereportsoldComponent
-  },{
+  }, {
     path: 'ledgerPurchaseEntry', component: PurchaseEntryComponent
-  },{
+  }, {
     path: 'addquotationnewsdn', component: AddquotaionnewsdnComponent
-  },{
+  }, {
     path: 'multipleInvPayment', component: MultipleInvPaymentComponent
-  },{
+  }, {
     path: 'recurringChecker', component: RecurringCheckerComponent
-  },{
+  }, {
     path: 'recurringDateupdate', component: RecurringDateupdateComponent
-  },{
+  }, {
     path: 'dupAddQuotation', component: DupAddQuotationNewComponent
-  },{
+  }, {
     path: 'dupEditQuotation', component: DupEditQuotationNewComponent
-  },{
+  }, {
     path: 'dupCustomerNewAll', component: DupCustomerNewAllComponent
-  },{
+  }, {
     path: 'dupEditInvoiceDID', component: DupEditInvoiceDIDComponent
-  },{
+  }, {
     path: 'dupEditInvoice', component: DupEditInvoiceComponent
-  },{
+  }, {
     path: 'dupAddInvoice', component: DupAddInvoiceComponent
-  },{
+  }, {
     path: 'dupInvoiceList', component: DupInvoiceComponent
-  },{
+  }, {
     path: 'dupPIList', component: DupProformaInvoiceComponent
-  },{
+  }, {
     path: 'dupPIAdd', component: DupAddPIComponent
-  },{
+  }, {
     path: 'dupPIEdit', component: DupEditPIComponent
   }, {
     path: 'test2', component: DatetimeTestComponent
@@ -249,7 +253,7 @@ const routes: Routes = [
   {
     path: 'EditPI', component: EditPIComponent
   },
-  
+
   {
     path: 'ProformaInvoice', component: ProformaInvoiceComponent
   },
@@ -281,10 +285,10 @@ const routes: Routes = [
     path: 'contractname', component: ContractnameComponent
   },
   {
-    path: 'Contractclassification', component: ContractclassificationComponent 
+    path: 'Contractclassification', component: ContractclassificationComponent
   },
   {
-    path: 'contractmasterfile', component: ContractmasterfileComponent 
+    path: 'contractmasterfile', component: ContractmasterfileComponent
   },
 
   {
@@ -296,11 +300,11 @@ const routes: Routes = [
   {
     path: 'addcontract', component: AddComponent
   },
-  
+
   {
     path: 'contract', component: ContractComponent
   },
-  
+
   {
     path: 'first', component: FirstComponent
   },
@@ -327,24 +331,24 @@ const routes: Routes = [
   },
   {
     path: 'sidebar', component: SidebarComponent
-  }, 
+  },
   {
     path: 'sidebar2', component: Sidebar2Component
   },
   {
-    path:'masters',component:MastersComponent
+    path: 'masters', component: MastersComponent
   }
   ,
   {
-    path:'test',component:TestComponent
+    path: 'test', component: TestComponent
   },
   {
-    path:'table',component:TableComponent
+    path: 'table', component: TableComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ useHash: true })],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

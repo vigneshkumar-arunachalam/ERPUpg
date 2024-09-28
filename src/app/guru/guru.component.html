@@ -1,4 +1,4 @@
-<div class="contents-section">
+<div class="contents-section" *ngIf="this.googleAuthentication_status==true">
 
   <div class="row no-gutters">
     <div class="col-lg-12 mb-30">
@@ -163,7 +163,7 @@
 
   </div>
 
-
+</div>
   <!----------Modal Pop Up (BEGIN) add  ------------------>
   <div class="modal fade" id="addGuruDetailsFormId" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -175,7 +175,8 @@
       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
       background: linear-gradient(to right, #262127, #54b7aa);">
             ADD GURU DETAILS </h2>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close"
+          (click)="clearForm()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -252,7 +253,7 @@
                               </div> -->
 
 
-                              <div class="ng-autocomplete userDatatable-content">
+                              <div class="ng-autocomplete userDatatable-content" >
                                 <!-- <label for="companyName" class="col-lg-12 "></label> -->
                                 <ng-autocomplete id="pd_customername_txtbox_{{i}}" [data]="searchResult_customerName"
                                   [searchKeyword]="keyword_customerName" formControlName="customer_id"
@@ -429,7 +430,7 @@
 
 
                               <div class="userDatatable-content">
-                                <select name="billerId" id="pd_billername_txtbox_{{i}}" class="form-control"
+                                <select name="billerId" id="pd_e_billername_txtbox_{{i}}" class="form-control"
                                   formControlName="billerId">
                                   <option [ngValue]="0" selected>Select Biller</option>
 
@@ -460,7 +461,7 @@
 
                               <div class="ng-autocomplete userDatatable-content">
                                 <!-- <label for="companyName" class="col-lg-12 "></label> -->
-                                <ng-autocomplete id="pd_customername_txtbox_{{i}}" [data]="searchResult_customerName"
+                                <ng-autocomplete id="pd_e_customername_txtbox_{{i}}" [data]="searchResult_customerName"
                                   [searchKeyword]="keyword_customerName" formControlName="customerName"
                                   (selected)='selectEventCustomer($event, i)'
                                   (inputChanged)='searchCustomerName($event)' (inputFocused)='onFocusedCustomer($event)'
@@ -476,21 +477,21 @@
                                 </ng-template>
 
                               </div>
-                              <input type="hidden" formControlName="customer_id">
+                              <input type="hidden" formControlName="customer_id" id="pd_e_customerID_txtbox_{{i}}">
 
                             </td>
 
                             <td>
                               <div class="userDatatable-content">
                                 <textarea class="form-control mt-2 mb-2" row="2" formControlName="description"
-                                  id="pd_description_txtArea_{{i}}"></textarea>
+                                  id="pd_e_description_txtArea_{{i}}"></textarea>
                                 <input type="hidden" formControlName="guru_details_id">
                               </div>
 
                             </td>
                             <td>
                               <div class="userDatatable-content">
-                                <select name="account_type" id="pd_accountType_{{i}}" class="form-control"
+                                <select name="account_type" id="pd_e_accountType_{{i}}" class="form-control"
                                   formControlName="account_type">
                                   <option [ngValue]="0" selected>Select Type</option>
 
@@ -508,31 +509,32 @@
                             <td>
                               <div class="userDatatable-content">
                                 <input type="text" class="form-control" formControlName="pwd_username"
-                                  id="pd_username_{{i}}" />
+                                  id="pd_e_username_{{i}}" />
                               </div>
                             </td>
                             <td>
                               <div class="userDatatable-content">
-                                <input type="text" class="form-control" formControlName="pwd_guru" id="pd_guru_{{i}}" />
+                                <input type="text" class="form-control" formControlName="pwd_guru" 
+                                id="pd_e_guru_{{i}}" />
                               </div>
                             </td>
                             <td>
                               <div class="userDatatable-content">
                                 <input type="url" class="form-control" formControlName="webpage_url"
-                                  id="pd_url_{{i}}" />
+                                  id="pd_e_url_{{i}}" />
 
                               </div>
                             </td>
                             <td>
                               <div class="userDatatable-content">
-                                <input type="checkbox" formControlName="special_per" id="pd_s_perm_{{i}}">
+                                <input type="checkbox" formControlName="special_per" id="pd_e_s_perm_{{i}}">
 
                               </div>
                             </td>
                             <td *ngIf="i>0">
                               <div *ngIf="i>0" class="userDatatable-content d-inline-block">
                                 <button type="button" class="btn btn-danger btn-sm"
-                                  (click)="removeAddress(i)">X</button>
+                                  (click)="removeAddressedit(i)">X</button>
 
                               </div>
                             </td>
@@ -735,7 +737,9 @@
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <input type="text" class="form-control" formControlName="google_AuthenticationCode" />
+                    <input type="text" class="form-control" 
+                    (keyup.enter)="GoogleAuthenticationValidation()"
+                    formControlName="google_AuthenticationCode" />
                   </div>
 
                 </div>

@@ -88,7 +88,7 @@ isReadonly:boolean=true;
 
   ngOnInit(): void {
 
-    this.loadADD();
+   // this.loadADD();
     this.ADDLoadDO();
     this.radioSelectWarranty == 'no';
     $('#description_details').val("No Warranty");
@@ -96,16 +96,16 @@ isReadonly:boolean=true;
     this.Get_add_delivery_order();
     this.route.queryParams
       .subscribe(params => {
-        console.log("params output value", params);
+      //  console.log("params output value", params);
         this.customerID_Add_DO = params['customerID_P'];
         this.customerName_Add_DO = params['customerName_P'];
         this.invoice_Add_DO = params['invoice_p'];
         this.warranty_Add_DO = params['warranty_p'];
 
-        console.log("this.customerID_Add_DO", this.customerID_Add_DO);
-        console.log(" this.customerName_Add_DO", this.customerName_Add_DO);
-        console.log(" this.invoice_Add_DO", this.invoice_Add_DO);
-        console.log(" this.warranty_Add_DO", this.warranty_Add_DO);
+        // console.log("this.customerID_Add_DO", this.customerID_Add_DO);
+        // console.log(" this.customerName_Add_DO", this.customerName_Add_DO);
+        // console.log(" this.invoice_Add_DO", this.invoice_Add_DO);
+        // console.log(" this.warranty_Add_DO", this.warranty_Add_DO);
 
 
       }
@@ -153,18 +153,18 @@ isReadonly:boolean=true;
   handleChange_EXTRALogo(data: any, evt: any) {
 
     this.radioID_Logo = data;
-    console.log("evt", evt.target.checked)
-    console.log("evt-value", evt.target.value)
-    console.log("evt-id", evt.target.id)
+    // console.log("evt", evt.target.checked)
+    // console.log("evt-value", evt.target.value)
+    // console.log("evt-id", evt.target.id)
     this.radio_Value_Export_logo = evt.target.value;
     // var xyz = id;
-    console.log("radio button value", this.radio_Value_Export_logo);
+    // console.log("radio button value", this.radio_Value_Export_logo);
     // console.log("radio button id value", xyz);
   }
   handleChange_warrantyImp(evt: any) {
 
     this.radioSelectWarranty = evt.target.value;
-    console.log("radio button value", this.radioSelectWarranty);
+  //  console.log("radio button value", this.radioSelectWarranty);
 
     var Nowarranty = "No Warranty";
     var Onewarranty = "Above items are One year warranty from the date of delivery";
@@ -175,25 +175,25 @@ isReadonly:boolean=true;
 
       $('#description_details').val(Nowarranty);
      
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
     if (this.radioSelectWarranty == 'one') {
 
       $('#description_details').val(Onewarranty);
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
     if (this.radioSelectWarranty == 'two') {
 
       $('#description_details').val(Twowarranty);
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
     if (this.radioSelectWarranty == 'none') {
 
       $('#description_details').val(nonewarranty);
-      console.log($('#description_details').val());
+     // console.log($('#description_details').val());
 
     }
 
@@ -212,11 +212,11 @@ isReadonly:boolean=true;
     this.addresses.push(this.editAddress_FormControl());
 
     this.itre = this.itre + 1;
-    console.log(this.addresses);
-    console.log(this.itre);
+    // console.log(this.addresses);
+    // console.log(this.itre);
     this.addressControls.controls.forEach((elt, index) => {
       this.test[index] = true;
-      console.log(this.test[index]);
+      // console.log(this.test[index]);
 
 
     });
@@ -247,8 +247,8 @@ isReadonly:boolean=true;
       if (result.value) {
 
 
-        console.log(i)
-        console.log(this.addresses)
+        // console.log(i)
+        // console.log(this.addresses)
         this.addresses.removeAt(i);
         var addr = this.addDo_section2.value.addresses;
         var list_cnt = addr.length;
@@ -271,7 +271,7 @@ isReadonly:boolean=true;
     api_req.element_data = addAPI;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
-      console.log("response-load-pi", response)
+      // console.log("response-load-pi", response)
     });
 
   }
@@ -289,9 +289,11 @@ isReadonly:boolean=true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-      console.log("response-load-pi", response)
+     //  console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
         'dcNo': response.delivery_no,
+        'companyName': response.defaults_biller_id,
+
       });
     });
 
@@ -313,7 +315,7 @@ isReadonly:boolean=true;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       // this.companyNameList = response.biller_details;
       this.FooterDetails = response.footer_list_details;
-      console.log("response-load-pi", response)
+     // console.log("response-load-pi", response)
       this.addDo_section1.patchValue({
         'dcNo': response.delivery_no,
       });
@@ -356,7 +358,7 @@ isReadonly:boolean=true;
         message: "Sorry, some server issue occur. Please contact admin",
         position: 'topRight'
       });
-      console.log("final error", error);
+     // console.log("final error", error);
     }
 
 
@@ -368,19 +370,18 @@ isReadonly:boolean=true;
   handleChange(evt: any) {
     var radioSelectFooter = evt.target.value;
     this.radioSelectFooterChecked = evt.target.checked;
-    console.log("event only", evt)
-    console.log("evt.target", evt.target)
-    console.log("evt.target.checked", evt.target.checked)
-    console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
-    console.log(" evt.target.value radioSelectFooter", evt.target.value)
-
-    console.log("radio button value", radioSelectFooter);
+    // console.log("event only", evt)
+    // console.log("evt.target", evt.target)
+    // console.log("evt.target.checked", evt.target.checked)
+    // console.log("evt.target.checked global variable", this.radioSelectFooterChecked)
+    // console.log(" evt.target.value radioSelectFooter", evt.target.value)
+    // console.log("radio button value", radioSelectFooter);
   }
 
   radioCurrencyChange(event: any) {
 
     this.currencyNew_RadioValue = event.target.value;
-    console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
+    // console.log("this.currencyNew_RadioValue", this.currencyNew_RadioValue)
 
 
   }
@@ -497,8 +498,8 @@ isReadonly:boolean=true;
     this.spinner.show();
     this.customer_ID = data.customerId;
     this.customer_NAME = data.customerName;
-    console.log("search data in dropdown", data)
-    console.log("search data-customer Id", data.customerId)
+    // console.log("search data in dropdown", data)
+    // console.log("search data-customer Id", data.customerId)
     this.customerName_Data = data.customerId;
     let api_req: any = new Object();
     let api_SearchCUST_req: any = new Object();
@@ -512,90 +513,21 @@ isReadonly:boolean=true;
     api_req.element_data = api_SearchCUST_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      console.log("customer_address_details---response", response)
+     // console.log("customer_address_details---response", response)
       if (response.status == true) {
         // console.log('address'+response.customer_details[0].customerAddress1);
 
-
-        var address_3;
-        var ship_to_str, ship_address_str1, ship_address_str2, ship_address_str3;
-
-        if (response.customer_details[0].city != '') {
-          address_3 = response.customer_details[0].city;
-        }
-        if (address_3 != '' && response.customer_details[0].state != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].state;
-        } else {
-          address_3 = response.customer_details[0].state;
-        }
-        if (address_3 != '' && response.customer_details[0].country != '') {
-          address_3 = address_3 + ' ,' + response.customer_details[0].country;
-        } else {
-          address_3 = response.customer_details[0].country;
-        }
-
-
-
-
-        if (response.customer_details[0].ship_to == '' || response.customer_details[0].ship_to == null) {
-
-          ship_to_str = response.customer_details[0].customerName;
-
-        } else {
-          ship_to_str = response.customer_details[0].ship_to;
-        }
-
-        if (response.customer_details[0].ship_customerAddress1 == '' || response.customer_details[0].ship_customerAddress1 == null) {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-        } else {
-          ship_address_str1 = response.customer_details[0].ship_customerAddress1;
-
-        }
-
-        if (response.customer_details[0].ship_customerAddress2 == '' || response.customer_details[0].ship_customerAddress2 == null) {
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-        } else {
-          ship_address_str2 = response.customer_details[0].ship_customerAddress2;
-        }
-
-
-        if (response.customer_details[0].ship_city != '') {
-          ship_address_str3 = response.customer_details[0].city;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_state != '' && response.customer_details[0].ship_state != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_state;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_state == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_state;
-        }
-        if (ship_address_str3 != '' && response.customer_details[0].ship_country != '' && response.customer_details[0].ship_country != null) {
-          ship_address_str3 = ship_address_str3 + ' ,' + response.customer_details[0].ship_country;
-        } else if (ship_address_str3 != '' && response.customer_details[0].ship_country == null) {
-          ship_address_str3 = ship_address_str3;
-        } else {
-          ship_address_str3 = response.customer_details[0].ship_country;
-        }
-
-        if (response.customer_details[0].ship_to == '') {
-          ship_address_str1 = response.customer_details[0].customerAddress1;
-          ship_address_str2 = response.customer_details[0].customerAddress2;
-          ship_address_str3 = address_3;
-        }
-
-
-
         this.addDo_section1.patchValue({
-          'customerAddress1': response.customer_details[0].customerAddress1,
-          'customerAddress2': response.customer_details[0].customerAddress2,
-          'customerAddress3': address_3,
-          'kind_Attention': response.customer_details[0].bill_attn,
-          'ship_to': ship_to_str,
-          'ship_address_1': ship_address_str1,
-          'ship_address_2': ship_address_str2,
-          'ship_address_3': ship_address_str3,
-          'ship_attn': response.customer_details[0].companyName,
-          'terms': response.customer_details[0].terms_condition,
+          'customerAddress1': response.customer_details.customerAddress1,
+          'customerAddress2': response.customer_details.customerAddress2,
+          'customerAddress3': response.customer_details.customerAddress3,
+          'kind_Attention': response.customer_details.kind_Attention,
+          'ship_to': response.customer_details.ship_to,
+          'ship_address_1': response.customer_details.ship_customerAddress1,
+          'ship_address_2': response.customer_details.ship_customerAddress2,
+          'ship_address_3': response.customer_details.ship_customerAddress3,
+          'ship_attn': response.customer_details.ship_attn,
+          'terms': response.customer_details.terms_condition,
         });
       }
       else {
@@ -630,7 +562,7 @@ isReadonly:boolean=true;
     api_Search_req.key_word = data;
     api_req.element_data = api_Search_req;
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      console.log("vignesh-customer_name response", response);
+     // console.log("vignesh-customer_name response", response);
       this.searchResult = response.customer_list;
 
       if (response.status = true) {
@@ -652,7 +584,7 @@ isReadonly:boolean=true;
   descriptionPermission(event: any) {
 
     this.description_details_show_state = event.target.checked;
-    console.log(this.description_details_show_state);
+   // console.log(this.description_details_show_state);
 
 
     if (this.description_details_show_state = event.target.checked) {
@@ -667,6 +599,7 @@ isReadonly:boolean=true;
 
 
   AddDO($event: MouseEvent) {
+    this.spinner.show();
 
     let api_req: any = new Object();
     let api_saveDO_req: any = new Object();
@@ -686,14 +619,28 @@ isReadonly:boolean=true;
         message: "Select Company Name",
         position: 'topRight'
       });
+      this.spinner.hide();
       return false;
+
 
     } else {
       api_saveDO_req.company = this.addDo_section1.value.companyName;
     }
 
     api_saveDO_req.do_no = this.addDo_section1.value.dcNo;
-    api_saveDO_req.pdf_footer_id = this.addDo_section1.value.e_selectFooter;
+    if (this.addDo_section1.value.e_selectFooter === null || this.addDo_section1.value.e_selectFooter === undefined) {
+
+      iziToast.warning({
+        message: "Select Footer",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    } else {
+      api_saveDO_req.pdf_footer_id = this.addDo_section1.value.e_selectFooter;
+    }
+   
     api_saveDO_req.dcDate = this.addDo_section1.value.dcDate;
 
     if (this.customerName_Data === null || this.customerName_Data === undefined) {
@@ -702,6 +649,7 @@ isReadonly:boolean=true;
         message: "Select Customer Name / Bill",
         position: 'topRight'
       });
+      this.spinner.hide();
       return false;
 
     } else {
@@ -725,6 +673,7 @@ isReadonly:boolean=true;
         message: "Select Warranty",
         position: 'topRight'
       });
+      this.spinner.hide();
       return false;
 
     } else {
@@ -734,7 +683,8 @@ isReadonly:boolean=true;
    
     
 
-    api_saveDO_req.description_details = this.addDo_section1.value.description_details;
+    // api_saveDO_req.description_details = this.addDo_section1.value.description_details;
+    api_saveDO_req.description_details = $('#description_details').val();
     api_saveDO_req.description_details_show_state = this.description_details_show_state;
 
 
@@ -753,6 +703,7 @@ isReadonly:boolean=true;
           message: "Select Minimum 1 Product Details",
           position: 'topRight'
         });
+        this.spinner.hide();
         return false;
 
       }
@@ -764,9 +715,20 @@ isReadonly:boolean=true;
 
 
     }
+    if(addr.length>0){
+      api_saveDO_req.values = addr;
+    }else{
+      iziToast.warning({
+        message: "Select Minimum 1 Product Details",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+
+    }
 
 
-    api_saveDO_req.values = addr;
+ 
 
 
     //section-3 
@@ -779,12 +741,14 @@ isReadonly:boolean=true;
 
       ($event.target as HTMLButtonElement).disabled = false;
       if (response.status == true) {
-        this.router.navigate(['/deliveryOrder']);
+        this.router.navigate(['/deliveryorder']);
         iziToast.success({
           message: "Delivery Order saved successfully",
           position: 'topRight'
         });
         this.gotoDOList();
+        this.spinner.hide();
+        window.location.reload();
 
       }
       else if (response.status === 500) {
@@ -793,6 +757,7 @@ isReadonly:boolean=true;
           message: "Invoice not added Successfully",
           position: 'topRight'
         });
+        this.spinner.hide();
         this.gotoDOList();
       }
       else {
@@ -812,7 +777,7 @@ isReadonly:boolean=true;
           message: "Sorry, some server issue occur. Please contact admin",
           position: 'topRight'
         });
-        console.log("500", error);
+       // console.log("500", error);
       }
 
     this.gotoDOList();

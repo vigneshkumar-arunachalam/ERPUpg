@@ -498,6 +498,11 @@ tr:hover {
 #userAccessGuruDetailsFormId .modal-dialog {
   min-width: 80%;
 }
+
+/* #GoogleAuthenticationGuruFormId .modal-dialog {
+  min-width: 100%;
+  min-height: 100%;
+} */
 #searchGuruFormId .modal-dialog {
   min-width: 60%;
   min-height: 100%;
@@ -539,15 +544,65 @@ tr:nth-child(odd):hover {
   background: linear-gradient(to right, #f5f5f1, #f5ede5);
 }
 
-.userDatatable  table  tbody tr td{
-  border:1px solid #C5D9E0;
+.userDatatable table tbody tr td {
+  border: 1px solid #C5D9E0;
 }
-.userDatatable  table  thead tr td{
-  border:1px solid #C5D9E0;
+
+.userDatatable table thead tr td {
+  border: 1px solid #C5D9E0;
 }
-.userDatatable  table  thead tr th{
-  border:1px solid #aeb3b6;
+
+.userDatatable table thead tr th {
+  border: 1px solid #aeb3b6;
 }
+
 td {
   border-bottom: 1px solid #c5d9e0 !important;
+}
+
+.ng-autocomplete {
+  padding: 0;
+}
+
+#editGuruDetailsFormId .userDatatable-content,#addGuruDetailsFormId .userDatatable-content {
+  line-height: 0 !important;
+  font-weight: normal
+}
+
+#editGuruDetailsFormId .modal-dialog,#addGuruDetailsFormId .modal-dialog {
+  max-width: 90%;
+
+}
+
+#editGuruDetailsFormId .modal-content,#addGuruDetailsFormId .modal-content {
+  max-width: 90%;
+  min-height: 500px;
+}
+
+#editGuruDetailsFormId ::ng-deep .autocomplete-container .suggestions-container ul li a,
+#addGuruDetailsFormId ::ng-deep .autocomplete-container .suggestions-container ul li a  {
+  font-size: 12px;
+  padding: 8px;
+  line-height: 22px;
+  text-align: left;
+}
+
+#editGuruDetailsFormId ::ng-deep .input-container,
+#addGuruDetailsFormId ::ng-deep .input-container {
+  border: 1px solid #d6d3ea;
+  border-radius: 5px;
+
+  height: 42px;
+}
+
+#editGuruDetailsFormId ::ng-deep .ng-autocomplete .autocomplete-container .input-container input,
+#addGuruDetailsFormId ::ng-deep .ng-autocomplete .autocomplete-container .input-container input {
+  border: none !important;
+  box-shadow: none !important;
+  white-space: nowrap;
+  width: 115px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  display: block;
 }

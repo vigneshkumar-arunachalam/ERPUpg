@@ -16,6 +16,7 @@ export class ServerService {
   invoice_search: Subject<any> = new Subject();
   invoice_search1: Subject<any> = new Subject();
 
+
   constructor(private http: HttpClient) {
 
   }
@@ -26,9 +27,8 @@ export class ServerService {
         'Content-Type': 'application/json'
       })
     };
-   let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
+  let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
  // let url = "https://erp1.cal4care.com/api/"+postData.api_url;
-
     let posting: any[] = postData;
     return this.http.post(url, posting, httpOptions);
   }

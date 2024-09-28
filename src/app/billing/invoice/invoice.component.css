@@ -587,10 +587,10 @@ label.col-lg-2.col-form-label{text-align: right;}
   border-radius: 5px;
 }
 
+/* 
+tr:hover {background-color: rgb(246, 236, 233)!important;} */
 
-tr:hover {background-color: rgb(246, 236, 233)!important;}
-
-
+tr:hover {background-color: rgb(241, 245, 160)!important;}
 
 #suspendInvoiceFormId .modal-dialog {
   max-width: 95%;
@@ -704,3 +704,13 @@ tr:hover {background-color: rgb(246, 236, 233)!important;}
 #colorID .userDatatable table tbody tr td:nth-child(5) {
   width: 0% !important;
 }
+
+tbody td{
+  height: 1px;border-bottom:2px solid rgb(43, 57, 2);padding:0px 0px!important;
+  border:1px solid #eff5f1;
+}
+thead tr th{
+  border:1px solid #eff5f1;
+  /* border:5px solid #aeb3b6; */
+}
+

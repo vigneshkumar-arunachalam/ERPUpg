@@ -83,20 +83,16 @@ export class EditPurchaseOrderComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         console.log("params output value", params);
-
         this.edit_purchaseOrderID = params['e_purchaseOrder_Id'];
-
-
-
         console.log("edit purchase order id", this.edit_purchaseOrderID);
+        setTimeout(() => {
+          this.editPurchaseOrder();
+        }, 1000);
 
 
         setTimeout(() => {
-          this.editPurchaseOrder();
-         
-          
-
-        }, 1000);
+          this.totalCalculate();
+        }, 2000);
        
        
 
@@ -735,6 +731,7 @@ export class EditPurchaseOrderComponent implements OnInit {
         this.removeAddresstest(response.purchaseorderchild_details.length);
         this.billerChangeDetails1(this.customernameID);
         this.getTaxCals();
+        this.totalCalculate();
         // this.getInvoice({});
       } else {
 

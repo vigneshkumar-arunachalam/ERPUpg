@@ -587,7 +587,7 @@ console.log(data)
 
   pdf(deliveryId: any) {
 
-    var url = "https://erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + deliveryId + "";
+    var url = "https://laravelapi.erp1.cal4care.com/api/deliveryorder/getDOpdfShow?deliveryId=" + deliveryId + "";
     window.open(url, '_blank');
     console.log("url", url)
   }
@@ -649,8 +649,9 @@ console.log(data)
   }
 
   getEmailDetails(id: any) {
-
+   
     this.spinner.show();
+    $('#DO_emailFormId').modal('show');
     this.Email_BillId = id;
     let api_req: any = new Object();
     let api_emailDetails: any = new Object();
@@ -666,17 +667,17 @@ console.log(data)
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status == true) {
+      if (response != '') {
 
         this.email_fromList = response.email_from_arr;
         this.email_groupMailList = response.group_mail;
         this.email_crmTemplateList = response.crm_template_list;
         this.email_cc_userList = response.cc_user;
         this.messageContent = response.invoice_content;
-        this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+        this.mailContent = tinymce.get('tinyIDDO').setContent("<p>" + this.messageContent + "</p>");
         this.emailForm.patchValue({
 
-          'tinyID': this.mailContent,
+          'tinyIDDO': this.mailContent,
           'Subject_Content': response.subject,
 
 
@@ -684,13 +685,13 @@ console.log(data)
         if (this.Select_To_Type_radiobox_Value == 'finance') {
           this.emailForm.patchValue({
             'email_to': response.finance_email,
-            'tinyID': this.mailContent,
+            'tinyIDDO': this.mailContent,
           })
         }
         else {
           this.emailForm.patchValue({
             'email_to': response.company_email,
-            'tinyID': this.mailContent,
+            'tinyIDDO': this.mailContent,
           })
         }
 
@@ -703,9 +704,9 @@ console.log(data)
         this.DOList({});
       } else {
 
-        $('#processPaymentFormId').modal("hide");
+        $('#DO_emailFormId').modal("hide");
         iziToast.warning({
-          message: "Payment Process Details not displayed. Please try again",
+          message: "Email Details not displayed. Please try again",
           position: 'topRight'
         });
       }
@@ -819,13 +820,13 @@ console.log(data)
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       console.log("quotation-template Dropdown response", response)
       this.messageContent = response.crm_template_content
-      this.mailContent = tinymce.get('tinyID').setContent("<p>" + this.messageContent + "</p>");
+      this.mailContent = tinymce.get('tinyIDDO').setContent("<p>" + this.messageContent + "</p>");
       if (response != '') {
         this.emailForm.patchValue({
 
           'Subject_Content': response.crm_subject_name,
 
-          'tinyID': this.mailContent,
+          'tinyIDDO': this.mailContent,
 
         });
 
@@ -849,7 +850,7 @@ console.log(data)
     this.FromEmailValue = $('#emailFrom').val();
     this.emailTo = $('#emailto').val();
     this.subjectValue = $('#subject').val();
-    this.msg_id = tinymce.get('tinyID').getContent();
+    this.msg_id = tinymce.get('tinyIDDO').getContent();
     console.log("msgid", this.msg_id)
     console.log("email to", this.emailTo)
     console.log("subject", this.subjectValue)
