@@ -64,7 +64,7 @@
                 </thead>
                 <tbody *ngFor="let list of guru_list; let i = index">
                   <tr>
-                    <td colspan="8" style="background-color: black;color:azure;text-align: left;">{{list.customerName}}
+                    <td colspan="8" style="background-color: #153d62;color:azure;text-align: left;">{{list.customerName}}
                     </td>
 
                   </tr>
@@ -80,7 +80,7 @@
                     <td><span>{{ item.account_type}}</span></td>
                     <!-- <td><span>{{ list.webpage_url}}</span></td> -->
                     <td>
-                      <a href="{{ item.webpage_url }}">{{ item.webpage_url }}</a>
+                      <a href="{{ item.webpage_url }}" target="_blank">{{ item.webpage_url }}</a>
                     </td>
                     <td><span>{{ item.userName}}</span></td>
                     <td>
@@ -284,7 +284,7 @@
                               <div class="userDatatable-content">
                                 <select name="account_type" id="pd_accountType_{{i}}" class="form-control"
                                   formControlName="account_type">
-                                  <option [ngValue]="0" selected>Select Type</option>
+                                  <option [ngValue]="0" selected disabled>Select Type</option>
 
                                   <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
                                     {{bill.value}}
@@ -432,7 +432,7 @@
                               <div class="userDatatable-content">
                                 <select name="billerId" id="pd_e_billername_txtbox_{{i}}" class="form-control"
                                   formControlName="billerId">
-                                  <option [ngValue]="0" selected>Select Biller</option>
+                                  <option [ngValue]="0" selected disabled>Select Biller</option>
 
                                   <option *ngFor="let bill of billerDetails" value="{{bill.billerId}}">
                                     {{bill.billerName}}
@@ -493,7 +493,7 @@
                               <div class="userDatatable-content">
                                 <select name="account_type" id="pd_e_accountType_{{i}}" class="form-control"
                                   formControlName="account_type">
-                                  <option [ngValue]="0" selected>Select Type</option>
+                                  <option [ngValue]="0" selected disabled>Select Type</option>
 
                                   <option *ngFor="let bill of AccountType" value="{{bill.account_type_id}}">
                                     {{bill.value}}
@@ -657,7 +657,7 @@
 
                 </div>
                 <div class="col-lg-3">
-                  <select class="form-control" formControlName="user" (change)="userChange($event)">
+                  <select class="form-control" formControlName="user" (change)="userChange($event)" id="userVVV">
                     <option [ngValue]="null" selected disabled>Select User</option>
                     <option *ngFor="let term of UserAccessGroup" value="{{term.access_group_id}}">
                       {{term.access_name}}

@@ -93,10 +93,13 @@ import { PettyCashComponent } from './ledger/petty-cash/petty-cash.component';
 import { RecurringResellerComponent } from './billing/recurring-reseller/recurring-reseller.component';
 import { CstreportComponent } from './reports/cstreport/cstreport.component';
 import { VsprovisionComponent } from './vsprovision/vsprovision.component';
+import { DemotestComponent } from './demotest/demotest.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  }, {
+    path: 'demotest', component: DemotestComponent
   }, {
     path: 'vsprovision', component: VsprovisionComponent
   },

@@ -451,7 +451,8 @@ label.col-lg-2.col-form-label{text-align: right;}
 
  .form-control{
   border: 1px solid #e1e1e1;
-  background: transparent;}
+  background: transparent;
+}
  .form-control:focus {
   outline: none;
   border: 2px solid transparent;

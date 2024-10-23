@@ -13,6 +13,7 @@ import Swal from 'sweetalert2'
 import { ChangeDetectorRef } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { NgZone } from '@angular/core';
 
 
 @Component({
@@ -66,7 +67,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   searchMulInvForm: FormGroup;
   response_total_cnt: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
-    private route: ActivatedRoute, private router: Router, private fb: FormBuilder,
+    private route: ActivatedRoute, private router: Router, private fb: FormBuilder,private zone:NgZone,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -1044,10 +1045,14 @@ export class MultipleInvPaymentComponent implements OnInit {
               message: "Invoice to Proforma converted Successfully",
               position: 'topRight'
             });
+           
+
             setTimeout(() => {
-             
-              this.payment_pending_inv_list(k);
-            }, 1000); // Delay of 2000ms (2 seconds)
+              this.zone.run(() => {
+                this.payment_pending_inv_list(k);
+              });
+              this.cdr.detectChanges();  // Trigger Angular to detect changes
+            }, 1000);
              
            // this.payment_pending_inv_list(k);
            // this.payment_pending_inv_list({});

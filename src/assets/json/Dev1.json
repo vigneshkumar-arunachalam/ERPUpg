@@ -311,6 +311,36 @@
     ],
     "isVisible": true,
     "value": "/reports--"
+},{
+    "name": "Tools",
+    "icon":"tool",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [9964,6034,2043,6115,6064,7021,7022,7023,6044,2039,1165,7014,7084,2060,2038,2083],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "Guru",
+            "icon": "lock",
+            "IDs": [7011,7012,7013,7014,7015],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/guru"
+        },{
+            "name": "VS Provisional",
+            "icon": "user-check",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/vsprovision"
+        }
+       
+       
+
+    ],
+    "isVisible": true,
+    "value": "/reports--"
 },
 {
     "name": "3CX",

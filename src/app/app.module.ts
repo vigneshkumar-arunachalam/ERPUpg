@@ -119,6 +119,8 @@ import { PettyCashComponent } from './ledger/petty-cash/petty-cash.component';
 import { RecurringResellerComponent } from './billing/recurring-reseller/recurring-reseller.component';
 import { CstreportComponent } from './reports/cstreport/cstreport.component';
 import { VsprovisionComponent } from './vsprovision/vsprovision.component';
+import { DemotestComponent } from './demotest/demotest.component';
+import { AddressPipe } from './pipe1/address.pipe';
 
 
 
@@ -224,6 +226,9 @@ import { VsprovisionComponent } from './vsprovision/vsprovision.component';
      RecurringResellerComponent,
      CstreportComponent,
      VsprovisionComponent,
+     DemotestComponent,
+     AddressPipe
+     
      
      
     

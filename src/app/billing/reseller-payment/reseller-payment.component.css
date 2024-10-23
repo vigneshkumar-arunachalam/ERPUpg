@@ -747,3 +747,49 @@ input[type="checkbox"]:disabled {
 
 tr:hover {background-color: rgb(246, 236, 233)!important;}
 
+ /* search in list starts*/
+ .search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto;
+  padding:7px;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-search {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  border-radius: 25px;
+  font-size: 16px;
+  transition: width 0.3s ease;
+  background-color: #fff;
+}
+
+.custom-search:focus {
+  width: 85%;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: #555;
+  padding-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.search-btn:hover {
+  color: #007bff;
+}
+ /* search in list ends*/
+
+

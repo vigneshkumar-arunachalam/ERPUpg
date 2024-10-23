@@ -79,15 +79,15 @@
 }
 
 .userDatatable-header th {
-  background: #6d5dfc;
+
+  /* background: #6d5dfc; */
+  background: #a40826;
 
 }
 
 .userDatatable-header th span {
   color: #e4ebf5;
 }
-
-
 
 .dropdown {
   position: relative;

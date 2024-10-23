@@ -2741,6 +2741,7 @@ export class NavbarComponent implements OnInit {
       };
   }
   getEmailDetails(billid: any, billerId: any) {
+   
 
     this.email_TemplateSelection = false;
     $('#temp').val('');
@@ -2758,6 +2759,7 @@ export class NavbarComponent implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_emailDetails.action = "send_invoice_details";
+    console.log("billid-09",billid)
     if (billid != undefined) {
       api_emailDetails.billId = billid;
     } else {
@@ -2875,6 +2877,7 @@ export class NavbarComponent implements OnInit {
     }
   }
   templateContentEmailDropdown_single(event: any) {
+   // alert("double")
     this.spinner.show();
     //alert("hi")
     this.quotation_Emailtemplate_id = event.target.value;
@@ -2892,7 +2895,8 @@ export class NavbarComponent implements OnInit {
     // api_quotationTemplateDropdown_req.billerId = this.Email_BillerId_overdue;
     // api_quotationTemplateDropdown_req.billId = this.Email_BillId_overdue;
     api_quotationTemplateDropdown_req.billerId = this.Email_BillerId_overdue;
-    api_quotationTemplateDropdown_req.billId = this.multipleBillIDPaymentP;
+    //api_quotationTemplateDropdown_req.billId = this.multipleBillIDPaymentP;
+    api_quotationTemplateDropdown_req.billId =this.Email_BillId_overdue;
     api_quotationTemplateDropdown_req.template_id = this.quotation_Emailtemplate_id;
     api_req.element_data = api_quotationTemplateDropdown_req;
 
@@ -2924,6 +2928,7 @@ export class NavbarComponent implements OnInit {
   }
   SA_templateContentEmailDropdown(event: any) {
     this.spinner.show();
+    // alert("single")
    //  alert("hi")
     this.SA_quotation_Emailtemplate_id = event.target.value;
     console.log("quotation dropdown ID check", this.SA_quotation_Emailtemplate_id);

@@ -322,7 +322,11 @@ export class GuruComponent implements OnInit {
           'user': response.selected_access_group,
 
         });
-
+        
+        setTimeout(() => { 
+          $('#userVVV').val(response.selected_access_group);
+        }, 1000);
+      
         // if (this.googleAuthentication_status == false) {
 
         // } else {
@@ -344,6 +348,56 @@ export class GuruComponent implements OnInit {
       };
 
   }
+  userPermissionUpdate() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_getReseller: any = new Object();
+    api_req.moduleType = "guru";
+    api_req.api_url = "guru/updateUserAccessGroup";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_getReseller.action = "guru/updateUserAccessGroup";
+    api_getReseller.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_getReseller.guru_details_id = this.guru_details_id;
+    api_getReseller.access_userid = this.CheckBox_DynamicArrayList_invoiceShowPermission;
+    api_getReseller.access_group = this.access_groupValue;
+    api_req.element_data = api_getReseller;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      this.spinner.hide();
+      if (response.status == true) {
+        this.spinner.hide();
+
+        iziToast.success({
+          message: "Success",
+          position: 'topRight'
+        });
+        this.guruForm.controls['user'].reset();
+        $('#userAccessGuruDetailsFormId').modal('hide');
+
+
+
+      } else {
+
+
+        iziToast.warning({
+          message: " Details not Updated. Please try again",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+
 
   GoogleAuthenticationValidation() {
     this.spinner.show();
@@ -534,7 +588,7 @@ export class GuruComponent implements OnInit {
         this.editGuru_FormGroup.value.editaddresses[i].description = $('#pd_e_description_txtArea_' + i).val();
       }
 
-      if ($('#pd_e_accountType_' + i).val() == null || $('#pd_e_accountType_' + i).val() == '') {
+      if ($('#pd_e_accountType_' + i).val() == null || $('#pd_e_accountType_' + i).val() == ''|| $('#pd_e_accountType_' + i).val() == '0' || $('#pd_e_accountType_' + i).val() == 0) {
         iziToast.error({
           message: "Account Type Missing",
           position: 'topRight'
@@ -800,54 +854,6 @@ export class GuruComponent implements OnInit {
   userChange(event: any) {
     this.access_groupValue = event.target.value;
   }
-  userPermissionUpdate() {
-    this.spinner.show();
-
-    let api_req: any = new Object();
-    let api_getReseller: any = new Object();
-    api_req.moduleType = "guru";
-    api_req.api_url = "guru/updateUserAccessGroup";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_getReseller.action = "guru/updateUserAccessGroup";
-    api_getReseller.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_getReseller.guru_details_id = this.guru_details_id;
-    api_getReseller.access_userid = this.CheckBox_DynamicArrayList_invoiceShowPermission;
-    api_getReseller.access_group = this.access_groupValue;
-    api_req.element_data = api_getReseller;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-
-      this.spinner.hide();
-      if (response.status == true) {
-        this.spinner.hide();
-
-        iziToast.success({
-          message: "Success",
-          position: 'topRight'
-        });
-
-        $('#userAccessGuruDetailsFormId').modal('hide');
-
-
-      } else {
-
-
-        iziToast.warning({
-          message: "Payment Process Details not displayed. Please try again",
-          position: 'topRight'
-        });
-      }
-    }),
-      (error: any) => {
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
-      };
-
-  }
 
   InvoiceShowCHK(userId: any, event: any) {
     console.log("List - Checkbox ID", userId);
@@ -967,7 +973,7 @@ export class GuruComponent implements OnInit {
                 message: "Deleted successfully",
                 position: 'topRight'
               });
-              this.edit_array_guru=[];
+              this.edit_array_guru = [];
               this.guruList();
             }
             else {
