@@ -66,8 +66,10 @@ export class MultipleInvPaymentComponent implements OnInit {
   searchResult_CustomerName: any;
   searchMulInvForm: FormGroup;
   response_total_cnt: any;
+  customerNameData: any;
+  variableCustomerData: any;
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
-    private route: ActivatedRoute, private router: Router, private fb: FormBuilder,private zone:NgZone,
+    private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
     this.addPI_section2 = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -103,7 +105,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   addAddress(): void {
-    
+
     $('.date-value').val(this.currentDate);
     this.addresses = this.addPI_section2.get('addresses') as FormArray;
     this.addresses.push(this.createAddress());
@@ -126,7 +128,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     return this.fb.group({
       // customer_id:'',
       customer_name: '',
-     paymentDate: [new Date().toISOString()],
+      paymentDate: [new Date().toISOString()],
       invoice_amt: '',
       bal_amount: '',
       paid_amt: '',
@@ -175,8 +177,9 @@ export class MultipleInvPaymentComponent implements OnInit {
   }
   addMulInvPay() {
     // window.location.reload();
-    this.Pay_Pending_list = []
-    $('.date-value').val(this.currentDate);
+    // this.Pay_Pending_list = []
+    // $('.date-value').val(this.currentDate);
+    this.router.navigate(['/addMulInvPay']);
 
 
   }
@@ -187,7 +190,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     this.searchResult_CustomerName = event.target.value
   }
   clearSelection(event: any) {
-   // console.log("clear selection", event)
+    // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID = '';
@@ -196,14 +199,18 @@ export class MultipleInvPaymentComponent implements OnInit {
     // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
   }
   selectEventCustomer(item: any) {
-   // console.log(item)
+    // console.log(item)
     this.searchResult_CustomerID = item.customerId;
     this.searchResult_CustomerName = item.customerName;
     // console.log("AutoComplete-customer ID", this.searchResult_CustomerID)
     // console.log("AutoComplete-customer Name", this.searchResult_CustomerName)
 
   }
+
+
   searchCustomerData(data: any) {
+
+    this.variableCustomerData = data;
 
     if (data.length > 0) {
       // this.spinner.show();
@@ -219,10 +226,10 @@ export class MultipleInvPaymentComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-       // console.log("vignesh-customer_status response", response);
+        // console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult = response.customer_names;
-       // console.log("vignesh-advanced search result", this.searchResult);
+        // console.log("vignesh-advanced search result", this.searchResult);
         if (response! = null) {
           this.searchResult = response.customer_names;
           this.spinner.hide();
@@ -253,20 +260,20 @@ export class MultipleInvPaymentComponent implements OnInit {
     });
     this.addAddress()
 
-     // this.clearSelection1({},{})
+    // this.clearSelection1({},{})
 
     // this.addPI_section2 = this.fb.group({
     //   addresses: this.fb.array([this.createAddress()])
     // });
   }
-  clearEditMulInv(){
-    this.edit_array=[];
-  //  console.log("this.edit_array",this.edit_array)
+  clearEditMulInv() {
+    this.edit_array = [];
+    //  console.log("this.edit_array",this.edit_array)
     this.mulInvPaymentList({})
   }
   editMulInvPayGroup() {
     this.spinner.show();
-    console.log("this.edit_array",this.edit_array)
+    console.log("this.edit_array", this.edit_array)
 
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
@@ -299,7 +306,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           this.CustomerIDUpdate = response[index].customerId;
           this.invAmtDropDown = response[index].invoiceNo;
           this.dropdownData[index] = response[index].invoiceNo;
-         // console.log("this.dropdownData[index]", this.dropdownData[index]);
+          // console.log("this.dropdownData[index]", this.dropdownData[index]);
           // let billIds = response[index].invoiceNo.map((invoiceItem: any) => invoiceItem.billId);
 
           formArray.push(this.fb.group({
@@ -335,7 +342,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         // }
         this.editMulInvGroupForm.setControl('edit_addresses', formArray);
-       // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
+        // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
 
       } else {
         this.spinner.hide();
@@ -356,6 +363,27 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
   }
+  editMulInvPayGroup1() {
+    const paymentIdsStrings = this.edit_array;
+    const paymentIdsNumbers = paymentIdsStrings.map((id: string) => parseInt(id));
+    console.log("this.edit_array---length", this.edit_array.length)
+    if (this.edit_array.length > 0) {
+      this.router.navigate(['/editMulInvPay'], {
+        queryParams: {
+          paymentIdsNumbers: paymentIdsNumbers,
+        }
+      });
+
+    } else {
+      iziToast.warning({
+        message: "Select Atleast 1 Group to Edit",
+        position: 'topRight'
+      });
+
+    }
+
+
+  }
   updateMulInvPayment() {
     this.spinner.show();
 
@@ -369,11 +397,11 @@ export class MultipleInvPaymentComponent implements OnInit {
     addRPAPI.user_id = localStorage.getItem('erp_c4c_user_id');
     addRPAPI.billchild_values = this.editMulInvGroupForm.value.edit_addresses;
     // var abc=  this.editMulInvGroupForm.value.edit_addresses.get('customer_name').value;
-  //  var bg= (this.editMulInvGroupForm.get('edit_addresses') as FormArray).at(0).get('customer_name').value;
-  //  console.log("bg",bg)
-  //  alert(bg);
-  //  return false;
-// alert(this.searchResult_CustomerID_add)
+    //  var bg= (this.editMulInvGroupForm.get('edit_addresses') as FormArray).at(0).get('customer_name').value;
+    //  console.log("bg",bg)
+    //  alert(bg);
+    //  return false;
+    // alert(this.searchResult_CustomerID_add)
     // if (this.searchResult_CustomerID_add == '' || this.searchResult_CustomerID_add == 'undefined' || this.searchResult_CustomerID_add == undefined) {
     //   this.spinner.hide();
     //   iziToast.error({
@@ -419,19 +447,19 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   }
   selectEventCustomer_add(item: any, i: any) {
-   // console.log(item)
+    // console.log(item)
     this.searchResult_CustomerID_add = item.customerId;
     this.searchResult_CustomerName_add = item.customerName.trim();
-    // console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
-    // console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
+     console.log("AutoComplete-customer ID", this.searchResult_CustomerID_add)
+     console.log("AutoComplete-customer Name", this.searchResult_CustomerName_add)
     this.cusID[i] = item.customerId;
-  //  console.log("this.cusID[i]", this.cusID[i])
+    //  console.log("this.cusID[i]", this.cusID[i])
     this.payment_pending_inv_list(i);
 
   }
 
   clearSelection1(event: any, i: any) {
-   // console.log("clear selection", event)
+    // console.log("clear selection", event)
     // console.log("event.customerId",event.customerId)
     // console.log("event.customerName",event.customerName)
     this.searchResult_CustomerID_add = '';
@@ -462,10 +490,10 @@ export class MultipleInvPaymentComponent implements OnInit {
       api_req.element_data = api_Search_req;
       this.serverService.sendServer(api_req).subscribe((response: any) => {
 
-       // console.log("vignesh-customer_status response", response);
+        // console.log("vignesh-customer_status response", response);
         // this.searchResult = response[0];
         this.searchResult_add = response.customer_names;
-       // console.log("vignesh-advanced search result", this.searchResult_add);
+        // console.log("vignesh-advanced search result", this.searchResult_add);
         if (response! = null) {
           this.searchResult_add = response.customer_names;
           this.spinner.hide();
@@ -491,17 +519,17 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     var paymentChildID = this.editMulInvGroupForm.value.edit_addresses[i].payment_child_id;
-   //vignesh- to delete id from array since paramesh not given api
-  // console.log("paymentChildID",paymentChildID)
-  // console.log("i",i)
-  // console.log("this.edit_array---before slice",this.edit_array)
+    //vignesh- to delete id from array since paramesh not given api
+    // console.log("paymentChildID",paymentChildID)
+    // console.log("i",i)
+    // console.log("this.edit_array---before slice",this.edit_array)
 
 
-  
+
     // if (i > -1) {
     //   this.edit_array.splice(i, 1);
     // }
-    console.log("this.edit_array---after slice",this.edit_array)
+    console.log("this.edit_array---after slice", this.edit_array)
 
     Swal.fire({
       title: 'Are you sure?',
@@ -530,16 +558,16 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.success == true) {
-           
+
             this.spinner.hide();
-           // this.edit_array = [];
-          // $("#editMulInvPayId").modal("hide");
+            // this.edit_array = [];
+            // $("#editMulInvPayId").modal("hide");
 
             iziToast.success({
               message: "Deleted successfully",
               position: 'topRight'
             });
-          //  this.mulInvPaymentList({});
+            //  this.mulInvPaymentList({});
             this.editMulInvPayGroup();
 
             // this.contractList({});
@@ -584,7 +612,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           // Convert strings to numbers
           let inv_id_numbers: number[] = inv_id.map(Number);
 
-         // console.log(inv_id_numbers);
+          // console.log(inv_id_numbers);
 
           api_singleDelete.inv_id = inv_id_numbers;
           api_req.element_data = api_singleDelete;
@@ -592,7 +620,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           this.serverService.sendServer(api_req).subscribe((response: any) => {
             if (response.status == "true") {
               this.edit_array = [];
-             // console.log("array content after delete", this.edit_array)
+              // console.log("array content after delete", this.edit_array)
               this.spinner.hide();
               iziToast.success({
                 message: "Deleted Successfully",
@@ -724,16 +752,16 @@ export class MultipleInvPaymentComponent implements OnInit {
       checkbox.checked = isChecked;
     });
 
-   console.log("Checkbox-all", this.edit_array);
+    console.log("Checkbox-all", this.edit_array);
   }
 
 
   EditCHK(data: any, event: any) {
 
-  //  console.log("List - CheckBox ID", data);
+    //  console.log("List - CheckBox ID", data);
     this.groupSelectCommonId = data;
     this.checkbox_value = event.target.checked;
-   // console.log(this.checkbox_value);
+    // console.log(this.checkbox_value);
 
     // Check if data is not undefined
     if (data !== undefined) {
@@ -742,13 +770,13 @@ export class MultipleInvPaymentComponent implements OnInit {
         if (!this.edit_array.includes(data)) {
           this.edit_array.push(data);
         }
-       // console.log("Final Checkbox After checkbox selected list", this.edit_array);
+        // console.log("Final Checkbox After checkbox selected list", this.edit_array);
       } else {
         const index = this.edit_array.findIndex((el: any) => el === data);
         if (index > -1) {
           this.edit_array.splice(index, 1);
         }
-      //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
+        //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
       }
     }
     console.log("Final Checkbox After checkbox selected list", this.edit_array);
@@ -757,7 +785,7 @@ export class MultipleInvPaymentComponent implements OnInit {
   selectAll_pending(event: any, i: any) {
 
     // Check if the event target is checked
-   // console.log("jdhff", i);
+    // console.log("jdhff", i);
     const isChecked1 = event.target.checked;
     // Reset both totals
     this.BalanceAmounttotal = 0;
@@ -768,7 +796,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
     // Iterate over the Pay_Pending_list array
     this.Pay_Pending_list[i].forEach((list: any) => {
-     // console.log("list", list)
+      // console.log("list", list)
       // Update the checkbox state for each item
       list.isChecked = isChecked1;
 
@@ -810,10 +838,10 @@ export class MultipleInvPaymentComponent implements OnInit {
 
   EditCHK_pending(data: any, event: any, i: any) {
 
-   // console.log("List - CheckBox ID", data);
+    // console.log("List - CheckBox ID", data);
     this.groupSelectCommonId_pending = data;
     this.checkbox_value_pending = event.target.checked;
-  //  console.log(this.checkbox_value_pending);
+    //  console.log(this.checkbox_value_pending);
 
     // Check if data is not undefined
     if (data !== undefined) {
@@ -887,8 +915,8 @@ export class MultipleInvPaymentComponent implements OnInit {
         this.Pay_Pending_list[i] = response.data;
         // this.Pay_Pending_list = response.data;
         this.Pay_Pending_list_show[i] = true;
-       // console.log("this.Pay_Pending_list", this.Pay_Pending_list)
-       this.cdr.detectChanges();
+        // console.log("this.Pay_Pending_list", this.Pay_Pending_list)
+        this.cdr.detectChanges();
         $("#searchInvoiceFormId").modal("hide");
 
       } else {
@@ -932,7 +960,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         this.mulInvPay_list = response.dataList;
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#searchInvoiceFormId").modal("hide");
         $("#searchInvoiceFormId").modal("hide");
@@ -979,7 +1007,7 @@ export class MultipleInvPaymentComponent implements OnInit {
       if (response != '') {
         this.spinner.hide();
         this.mulInvPay_list = response.dataList;
-        this.response_total_cnt=response.total_cnt;
+        this.response_total_cnt = response.total_cnt;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
         $("#searchInvoiceFormId").modal("hide");
         $('#searchMulInvPayId').modal('hide');
@@ -1009,9 +1037,9 @@ export class MultipleInvPaymentComponent implements OnInit {
     return list_data;
   }
 
-  InvoicetoProforma(id: any,k:any) {
-   
-    console.log("k",k);
+  InvoicetoProforma(id: any, k: any) {
+
+    console.log("k", k);
 
     Swal.fire({
       title: 'Are you sure to convert Proforma to Invoice?',
@@ -1039,25 +1067,20 @@ export class MultipleInvPaymentComponent implements OnInit {
 
         this.serverService.sendServer(api_req).subscribe((response: any) => {
           if (response.status == true) {
-            
-           // this.payment_pending_inv_list(k);
+
+            // this.payment_pending_inv_list(k);
             iziToast.success({
               message: "Invoice to Proforma converted Successfully",
               position: 'topRight'
             });
-           
 
-            setTimeout(() => {
-              this.zone.run(() => {
-                this.payment_pending_inv_list(k);
-              });
-              this.cdr.detectChanges();  // Trigger Angular to detect changes
-            }, 1000);
-             
-           // this.payment_pending_inv_list(k);
-           // this.payment_pending_inv_list({});
-           
-           // payment_pending_inv_list(i: any)
+            this.searchCustomerDa();
+            this.payment_pending_inv_list(k);
+
+            // this.payment_pending_inv_list(k);
+            // this.payment_pending_inv_list({});
+
+            // payment_pending_inv_list(i: any)
           } else {
             iziToast.warning({
               message: "Invoice to Proforma not converted. Please try again",
@@ -1075,6 +1098,44 @@ export class MultipleInvPaymentComponent implements OnInit {
           };
       }
     })
+
+
+  }
+  searchCustomerDa() {
+
+
+    if (this.variableCustomerData.length > 0) {
+      // this.spinner.show();
+      let api_req: any = new Object();
+      let api_Search_req: any = new Object();
+      api_req.moduleType = "customer";
+      api_req.api_url = "customer/customer_name_search";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      api_Search_req.action = "customer_name_search";
+      api_Search_req.user_id = this.user_ids;
+      api_Search_req.customerName = this.variableCustomerData;
+      api_req.element_data = api_Search_req;
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+        // console.log("vignesh-customer_status response", response);
+        // this.searchResult = response[0];
+        this.searchResult = response.customer_names;
+        // console.log("vignesh-advanced search result", this.searchResult);
+        if (response! = null) {
+          this.searchResult = response.customer_names;
+          this.spinner.hide();
+        }
+        else {
+          // iziToast.warning({
+          //   message: "Sorry, No Matching Data",
+          //   position: 'topRight'
+          // });
+
+        }
+      });
+
+    }
 
 
   }
@@ -1126,7 +1187,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     // api_mulInvpay.bal_amount=$('#pd_balAmount_' + i).val();
 
     var check = addressDataAtIndex.paymentDate;
-  //  console.log("samu", check);
+    //  console.log("samu", check);
     if (check == '' || check == 'undefined' || check == undefined) {
       iziToast.error({
         message: "Payment Method Missing",
@@ -1194,7 +1255,7 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     // var addr = this.addPI_section2.value.addresses;
-  //  console.log("this.addPI_section2.value.addresses", this.addPI_section2.value.addresses)
+    //  console.log("this.addPI_section2.value.addresses", this.addPI_section2.value.addresses)
     // for (let i = 0; i < addr.length; i++) {
 
 
@@ -1335,10 +1396,10 @@ export class MultipleInvPaymentComponent implements OnInit {
 
 
     // api_mulInvpay.values = api_mulInvpay1;
-   
-    if(parseFloat(addressDataAtIndex.invoice_amt).toFixed(2)!='NaN'){
+
+    if (parseFloat(addressDataAtIndex.invoice_amt).toFixed(2) != 'NaN') {
       api_mulInvpay.invoice_amt = parseFloat(addressDataAtIndex.invoice_amt).toFixed(2);
-    }else{
+    } else {
       this.spinner.hide();
       iziToast.error({
         message: "Invoice Amount Missing.Select Appropriate Customer",
@@ -1347,9 +1408,9 @@ export class MultipleInvPaymentComponent implements OnInit {
       return false;
 
     }
-    if(parseFloat(addressDataAtIndex.paid_amt).toFixed(2)!='NaN'){
+    if (parseFloat(addressDataAtIndex.paid_amt).toFixed(2) != 'NaN') {
       api_mulInvpay.paid_amt = parseFloat(addressDataAtIndex.paid_amt).toFixed(2);
-    }else{
+    } else {
       this.spinner.hide();
       iziToast.error({
         message: "Paid Amount Missing.Select Appropriate Customer",
@@ -1358,9 +1419,9 @@ export class MultipleInvPaymentComponent implements OnInit {
       return false;
 
     }
-    if(parseFloat(addressDataAtIndex.bal_amount).toFixed(2)!='NaN'){
+    if (parseFloat(addressDataAtIndex.bal_amount).toFixed(2) != 'NaN') {
       api_mulInvpay.bal_amount = parseFloat(addressDataAtIndex.bal_amount).toFixed(2);
-    }else{
+    } else {
       this.spinner.hide();
       iziToast.error({
         message: "Balance Amount Missing.Select Appropriate Customer",
@@ -1369,8 +1430,8 @@ export class MultipleInvPaymentComponent implements OnInit {
       return false;
 
     }
-    
-   
+
+
     api_mulInvpay.bill_id = addressDataAtIndex.bill_id;
 
 
@@ -1410,7 +1471,7 @@ export class MultipleInvPaymentComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         this.spinner.hide();
-       // this.mulInvPaymentList({});
+        // this.mulInvPaymentList({});
         this.mulInvPay_list = response.dataList;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.total_cnt, 'page_limit': this.pageLimit });
 

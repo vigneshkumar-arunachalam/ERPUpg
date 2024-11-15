@@ -548,7 +548,9 @@ export class ContractComponent implements OnInit {
 
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
+     // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_save',
+      url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_save',
+
       cache: false,
       contentType: false,
       processData: false,
@@ -1084,7 +1086,8 @@ export class ContractComponent implements OnInit {
     var self = this;
     $.ajax({
       type: 'POST',
-      url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
+     // url: 'https://erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
+      url: 'https://laravelapi.erp1.cal4care.com/api/customer_contract/customer_contract_attachment_file_save',
       cache: false,
       contentType: false,
       processData: false,

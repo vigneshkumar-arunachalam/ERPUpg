@@ -121,6 +121,27 @@ import { CstreportComponent } from './reports/cstreport/cstreport.component';
 import { VsprovisionComponent } from './vsprovision/vsprovision.component';
 import { DemotestComponent } from './demotest/demotest.component';
 import { AddressPipe } from './pipe1/address.pipe';
+import { AddMulInvPayComponent } from './billing/multiple-inv-payment/add-mul-inv-pay/add-mul-inv-pay.component';
+import { EditMulInvPayComponent } from './billing/multiple-inv-payment/edit-mul-inv-pay/edit-mul-inv-pay.component';
+import { StockComponent } from './stock/stock.component';
+import { ProductMasterComponent } from './stock/product-master/product-master.component';
+import { StockDIDMasterComponent } from './stock/stock-didmaster/stock-didmaster.component';
+import { StockInventoryEntryComponent } from './stock/stock-inventory-entry/stock-inventory-entry.component';
+import { StockDIDInventoryEntryComponent } from './stock/stock-didinventory-entry/stock-didinventory-entry.component';
+import { StockDIDNumberCatalogComponent } from './stock/stock-didnumber-catalog/stock-didnumber-catalog.component';
+import { CurrentstockComponent } from './stock/currentstock/currentstock.component';
+import { RateCatalogComponent } from './stock/rate-catalog/rate-catalog.component';
+import { RMAIssueComponent } from './stock/rmaissue/rmaissue.component';
+import { ProductCategoryComponent } from './stock/product-master/product-category/product-category.component';
+import { CurrentStockMasterComponent } from './stock/product-master/current-stock-master/current-stock-master.component';
+
+import { ProductMaster1Component } from './stock/product-master/product-master1/product-master1.component';
+import { PEVoipTrendComponent } from './ledger/pevoip-trend/pevoip-trend.component';
+import { AddGenStockComponent } from './stock/currentstock/add-gen-stock/add-gen-stock.component';
+import { EditGenStockComponent } from './stock/currentstock/edit-gen-stock/edit-gen-stock.component';
+import { RateCatelogMasterComponent } from './stock/product-master/rate-catelog-master/rate-catelog-master.component';
+import { AddRateCatalogComponent } from './stock/rate-catalog/add-rate-catalog/add-rate-catalog.component';
+import { EditRateCatalogComponent } from './stock/rate-catalog/edit-rate-catalog/edit-rate-catalog.component';
 
 
 
@@ -227,11 +248,29 @@ import { AddressPipe } from './pipe1/address.pipe';
      CstreportComponent,
      VsprovisionComponent,
      DemotestComponent,
-     AddressPipe
-     
-     
-     
-    
+     AddressPipe,
+     AddMulInvPayComponent,
+     EditMulInvPayComponent,
+     StockComponent,
+     ProductMasterComponent,
+     StockDIDMasterComponent,
+     StockInventoryEntryComponent,
+     StockDIDInventoryEntryComponent,
+     StockDIDNumberCatalogComponent,
+     CurrentstockComponent,
+     RateCatalogComponent,
+     RMAIssueComponent,
+     ProductCategoryComponent,
+     CurrentStockMasterComponent,
+   
+     ProductMaster1Component,
+     PEVoipTrendComponent,
+     AddGenStockComponent,
+     EditGenStockComponent,
+     RateCatelogMasterComponent,
+     AddRateCatalogComponent,
+     EditRateCatalogComponent,
+ 
   ],
   imports: [
     BrowserModule,CanvasJSAngularChartsModule, 

@@ -6,6 +6,7 @@ import { Subject, Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ServerService {
+   baseUrl = 'https://laravelapi.erp1.cal4care.com/api/'; 
   reload_profile: Subject<any> = new Subject();
   global_search: Subject<any> = new Subject();
   global_search_invoice: Subject<any> = new Subject();
@@ -27,11 +28,23 @@ export class ServerService {
         'Content-Type': 'application/json'
       })
     };
- let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
-  // let url = "https://erp1.cal4care.com/api/"+postData.api_url;
+    // let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
+    // let url = "https://erp1.cal4care.com/api/"+postData.api_url;
+    let url="http://127.0.0.1:8000/api/"+postData.api_url;
     let posting: any[] = postData;
     return this.http.post(url, posting, httpOptions);
   }
+
+  sendServerMulInvPay(api_req: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      // Add any other headers if required
+    });
+
+    return this.http.post(`${this.baseUrl}${api_req.api_url}`, api_req, { headers });
+    
+  }
+
   sendServerpath(postData: any[]) {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -66,9 +79,9 @@ export class ServerService {
     };
   }
 
- 
-  
-  
+
+
+
   pagination(list_info: any) {
 
     var start, eu, next, back, limit, total_count, offset, last_val, last_final_val, current, pagination: any, btn_length;

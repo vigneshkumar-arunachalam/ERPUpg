@@ -989,13 +989,16 @@
     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
+           
             <div class="modal-header">
-                <h2 class="col-12 col-12 modal-title text-center text-center">Quotation Shared Person</h2>
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+              background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+              background: linear-gradient(to right, #262127, #54b7aa);">
+                  Quotation Shared Person </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+                  <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+              </div>
             <div class="modal-body quotationsharedCSS">
 
                     <div class="">
@@ -1006,14 +1009,14 @@
                                     <div class="">
                                         <div class="checkbox-group-wrapper">
                                             <div class="checkbox-group d-flex">
-                                                <div class="on-off-toggle">
+                                                <div >
 
                                                     <input type="checkbox" id="{{ quot.user_id }}"
-                                                        [value]="quot.user_id" class="on-off-toggle__input"
+                                                        [value]="quot.user_id" 
                                                         checked="{{quot.chk_val=='true' ? 'checked':''}}"
                                                         (change)="QuotationSharedCHK(quot.user_id,$event)">
                                                     <label for="{{ quot.user_id }}"
-                                                        class="on-off-toggle__slider "></label>
+                                                        ></label>
                                                 </div>
                                             </div>
                                         </div>

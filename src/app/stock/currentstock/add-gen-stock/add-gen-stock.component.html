@@ -1,0 +1,264 @@
+<div class="contents-section addquotation-section" style="cursor:pointer;" id="abc">
+
+    <div class="card">
+        <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active">Add Current Stock Management</span>
+            </h3>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <form [formGroup]="addPI_section2">
+            <div class="row">
+                <div class="col-12" formArrayName="addresses">
+                    <ng-container *ngFor="let address of addressControls.controls; let i = index;">
+                        <!-- Customer Invoices Row -->
+                        <section>
+                            <!-- Table for Customer Invoices -->
+                            <div>
+                                <div class="table-responsive">
+                                    <table class="add-contact-table-section">
+                                        <!-- Table Header -->
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">Category -1</span></th>
+                                                <th><span class="userDatatable-title">Product Color -1</span></th>
+                                                <th><span class="userDatatable-title">Product FontSize -1</span></th>
+                                                <th><span class="userDatatable-title">Qty Color-1</span></th>
+                                                <th><span class="userDatatable-title">Qty FontSize-1</span></th>
+
+
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+
+                                            <!-- Individual Row -->
+                                            <tr [formGroupName]="i">
+                                                <!-- Customer Name -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+
+                                                        <select class="form-control" formControlName="productcategory1"
+                                                            id="pd_category1{{i}}" name="productcategory1">
+                                                            <option value="" disabled selected>Select Product Category
+                                                                Name
+                                                            </option>
+                                                            <option *ngFor="let classif of productCategoryNameList"
+                                                                value="{{classif.product_category_id}}">
+                                                                {{classif.product_category_name}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Other Input Fields -->
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <!-- <input type="hidden" class="form-control" formControlName="customer_id"
+                                                         value=" " /> -->
+                                                        <input type="color" class="form-control"
+                                                            formControlName="productColor1"
+                                                            id="pd_productColor1{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="productFontSize1"
+                                                            id="pd_productFontSize1{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="color" class="form-control"
+                                                            formControlName="productQtyColor1"
+                                                            id="pd_productQtyColor1{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 160px;">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="productQtyFontSize1"
+                                                            id="pd_productQtyFontSize1{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Payment Type -->
+
+                                            </tr>
+                                        </tbody>
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">Category -2</span></th>
+                                                <th><span class="userDatatable-title">Product Color -2</span></th>
+                                                <th><span class="userDatatable-title">Product FontSize -2</span></th>
+                                                <th><span class="userDatatable-title">Qty Color-2</span></th>
+                                                <th><span class="userDatatable-title">Qty FontSize-2</span></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr [formGroupName]="i">
+                                                <!-- Customer Name -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="productcategory2"
+                                                            id="pd_category2{{i}}" name="productcategory2">
+                                                            <option value="" disabled selected>Select Product Category
+                                                                Name
+                                                            </option>
+                                                            <option *ngFor="let classif of productCategoryNameList"
+                                                                value="{{classif.product_category_id}}">
+                                                                {{classif.product_category_name}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Other Input Fields -->
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <!-- <input type="hidden" class="form-control" formControlName="customer_id"
+                                                         value=" " /> -->
+                                                        <input type="color" class="form-control"
+                                                            formControlName="productColor2"
+                                                            id="pd_productColor2{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="productFontSize2"
+                                                            id="pd_productFontSize2{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="color" class="form-control"
+                                                            formControlName="productQtyColor2"
+                                                            id="pd_productQtyColor2{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 160px;">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="productQtyFontSize2"
+                                                            id="pd_productQtyFontSize2{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Payment Type -->
+
+                                            </tr>
+                                        </tbody>
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">Category -3</span></th>
+                                                <th><span class="userDatatable-title">Product Color -3</span></th>
+                                                <th><span class="userDatatable-title">Product FontSize -3</span></th>
+                                                <th><span class="userDatatable-title">Qty Color-3</span></th>
+                                                <th><span class="userDatatable-title">Qty FontSize-3</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr [formGroupName]="i">
+                                                <!-- Customer Name -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="productcategory3"
+                                                            id="pd_category3{{i}}" name="productcategory3">
+                                                            <option value="" disabled selected>Select Product Category
+                                                                Name
+                                                            </option>
+                                                            <option *ngFor="let classif of productCategoryNameList"
+                                                                value="{{classif.product_category_id}}">
+                                                                {{classif.product_category_name}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Other Input Fields -->
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <!-- <input type="hidden" class="form-control" formControlName="customer_id"
+                                                         value=" " /> -->
+                                                        <input type="color" class="form-control"
+                                                            formControlName="productColor3"
+                                                            id="pd_productColor3{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="productFontSize3"
+                                                            id="pd_productFontSize3{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="color" class="form-control"
+                                                            formControlName="productQtyColor3"
+                                                            id="pd_productQtyColor3{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 160px;">
+                                                        <input type="text" class="form-control"
+                                                            formControlName="productQtyFontSize3"
+                                                            id="pd_productQtyFontSize3{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Payment Type -->
+
+                                            </tr>
+
+
+                                        </tbody>
+                                        <div *ngIf="i > 0" class="userDatatable-content d-inline-block">
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="removeAddress(i)">X</button>
+                                        </div>
+                                        
+                                      
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- End of Customer Invoices Row -->
+
+
+
+                        <hr>
+                        <div class="text-right" style="margin: 20px;">
+                            <button type="button" class="btn btn-primary btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
+            
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary mr-4 " (click)="save(i)">Submit</button>
+                            <button type="button" class="btn btn-dark" >Cancel</button>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+      
+    </form>
+    </div>
+
+</div>

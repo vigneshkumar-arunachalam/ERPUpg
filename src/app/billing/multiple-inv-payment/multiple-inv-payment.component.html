@@ -19,7 +19,7 @@
 
                         <button type="button" title="Edit Multiple"
                             class="btn btn-primary btn-default btn-squared" data-toggle="modal"
-                            (click)="editMulInvPayGroup()" style="margin-right: 10px;">
+                            (click)="editMulInvPayGroup1()" style="margin-right: 10px;">
                             <i class="fa fa-pencil-square-o" style="margin-right:0;"></i>
                             Edit Group Payment Entry
                         </button>
@@ -381,7 +381,9 @@
                                                                         <div class="checkbox-group-wrapper">
                                                                             <div class="checkbox-group d-flex">
                                                                                 <div *ngIf="list1.performa_invoice == 0" class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                                                    <input class="checkbox checkbox-group__single{{j}}" type="checkbox" id="check-grp-pendingInv{{i}}{{k}}" (change)="EditCHK_pending(list1.billId,$event,j)">
+                                                                                    <input class="checkbox checkbox-group__single{{j}}" 
+                                                                                    type="checkbox" id="check-grp-pendingInv{{i}}{{k}}" 
+                                                                                    (change)="EditCHK_pending(list1.billId,$event,j)">
                                                                                     <label for="check-grp-pendingInv{{i}}{{k}}"></label>
                                                                                 </div>
                                                                             </div>

@@ -1,0 +1,168 @@
+<div class="contents-section addquotation-section" style="cursor:pointer;" id="abc">
+
+    <div class="card">
+        <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active">Edit Multiple Invoice Details</span>
+            </h3>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <!-- <h2 style="text-align: center;">Enter Invoice Details</h2> -->
+        <form [formGroup]="editMulInvGroupForm">
+            <div class="row">
+                <div class="col-12" >
+                    
+                        <!-- Customer Invoices Row -->
+                        <section>
+                            <!-- Table for Customer Invoices -->
+                            <div>
+                                <div class="table-responsive">
+                                    <table class="add-contact-table-section">
+                                        <!-- Table Header -->
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">Customer Name</span></th>
+                                                <th><span class="userDatatable-title">Invoice No</span></th>
+                                                <th><span class="userDatatable-title">Date</span></th>
+                                                <th><span class="userDatatable-title">Invoice Amount</span></th>
+                                                <th><span class="userDatatable-title">Balance Amount</span></th>
+                                                <th><span class="userDatatable-title">Paid Amount</span></th>
+                                                <th><span class="userDatatable-title">Payment Type/Method</span></th>
+                                                <th><span class="userDatatable-title">Note</span></th>
+                                                <th><span class="userDatatable-title">Action</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody formArrayName="edit_addresses">
+                                            <ng-container *ngFor="let address of editaddressControls.controls; let i = index;">
+                                            <!-- Individual Row -->
+                                            <tr [formGroupName]="i">
+                                                <!-- Customer Name -->
+                                                <td style="width: 240px;">
+                                                    <div class="userDatatable-content">
+                                                        <!-- Autocomplete for Customer Name -->
+                                                        <ng-autocomplete [data]="searchResult_add"
+                                                            [searchKeyword]="keywordCompanyName_add"
+                                                            formControlName="customer_name"
+                                                            id="pd_company_Name_{{i}}"
+                                                            (selected)='selectEventCustomer_add($event,i)'
+                                                            (inputChanged)='searchCustomerData_add($event)'
+                                                            (inputCleared)="clearSelection1($event,i)"
+                                                            (inputFocused)='onFocusedCustomer_add($event)'
+                                                            [itemTemplate]="itemTemplateCustomer"
+                                                            [notFoundTemplate]="notFoundTemplate">
+                                                        </ng-autocomplete>
+                                                        <ng-template #itemTemplateCustomer let-item>
+                                                            <a [innerHTML]="item.customerName"></a>
+                                                        </ng-template>
+                                                        <ng-template #notFoundTemplate let-notFound>
+                                                            <div [innerHTML]="notFound"></div>
+                                                        </ng-template>
+                                                    </div>
+                                                    
+                                                </td>
+                                                
+                                                <!-- Other Input Fields -->
+                                                 <!-- Invoice No -->
+                                                <td>
+                                                    <div *ngFor="let dropdown of dropdownData; let k = index" style="width: 190px;">
+                                                        <select *ngIf="dropdown && dropdown.length && k == i" class="form-control" formControlName="invoice_no"
+                                                            id="pd_invoiceNumber_{{i}}" name="invoice_no">
+                                                            <option value="" disabled selected>Select Invoice Number</option>
+                                                            <option *ngFor="let term of dropdown"
+                                                                [value]="term.billId">{{term.customer_inv_no}}</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="date" class="form-control date-value" formControlName="paymentDate"
+                                                            id="pd_date_{{i}}" value=" " />
+                                                            <input type="hidden"  formControlName="customer_id">
+                                                            <input type="hidden"  formControlName="payment_child_id">
+                                                            <input type="hidden"  formControlName="processId">
+                                                            <input type="hidden"  formControlName="billid">
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="text" class="form-control" formControlName="invoice_amt"
+                                                            id="pd_invAmount_{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control"
+                                                            formControlName="balance_amt"
+                                                            id="pd_balAmount_{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 160px;">
+                                                        <input type="number" class="form-control" formControlName="paid_amt"
+                                                             id="pd_paidAmount_{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Payment Type -->
+                                                <td>
+                                                    <div class="userDatatable-content" style="width: 160px;">
+                                                        <select class="form-control" formControlName="payment_method"
+                                                            id="pd_paymenttype_{{i}}" name="payment_method">
+                                                            <option value="" disabled selected>Select Payment Method</option>
+                                                            <option *ngFor="let term of paymentType_payment"
+                                                                [value]="term.payment_type_id">{{term.payment_type_name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Note -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <textarea class="form-control" rows="5" 
+                                                            formControlName="note" id="pd_note_{{i}}">
+                                                        </textarea>
+                                                    </div>
+                                                </td>
+                                                <!-- Action -->
+                                                <td>
+                                                    <div  class="userDatatable-content d-inline-block">
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                            (click)="removeAddress_edit(i)">X</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- End of Customer Invoices Row -->
+    
+                    
+                   
+                   
+                    
+                </div>
+            </div>
+        </form>
+      
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="updateMulInvPayment()">
+                Update
+            </button>
+            <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearEditMulInv()">
+                Close
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+

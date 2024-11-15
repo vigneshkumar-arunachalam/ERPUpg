@@ -3,7 +3,7 @@
   <div class="row no-gutters">
     <div class="col-lg-12 mb-30">
       <div class="card">
-        <div class="card-header color-dark fw-500" >
+        <div class="card-header color-dark fw-500">
           <h3 class="card-header-section">
             <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
             <span class="breadcrumb-item active">Invoice and Payment Process</span>
@@ -24,14 +24,12 @@
           data-toggle="modal" data-target="#DailyPaymentChartFormId" style="margin-right: 10px;"><i
             class="fas  fa-bar-chart" style="margin-right:10;"></i>Daily Payment
         </button> -->
-            <button type="button"  title="Add New Invoice"
-            *ngIf="(  this.invoicePermissionList_add==1)"
+            <button type="button" title="Add New Invoice" *ngIf="(  this.invoicePermissionList_add==1)"
               class="btn btn-primary btn-default btn-squared" (click)="addPIGo()" style="margin-right: 10px;"><i
                 class="fas fa-plus" style="margin-right:10;"></i>Add
             </button>
-            <button type="button"  class="btn btn-primary" data-toggle="modal"
-            *ngIf="(  this.invoicePermissionList_Search==1)"
-              title="Search" (click)="clearSearch()">
+            <button type="button" class="btn btn-primary" data-toggle="modal"
+              *ngIf="(  this.invoicePermissionList_Search==1)" title="Search" (click)="clearSearch()">
               <i class="fas fa-search" style="margin-right:10;"></i>Search
             </button>
           </div>
@@ -147,22 +145,26 @@
                             <div class="recurring-Status tooltip" *ngIf="(list.recuring_status==1)"
                               [ngStyle]="{'color': list.recuring_status== '1' ? 'red' : 'blue'}">
                               R
-                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;min-width: 160px;">Fixed Month Dur-{{ list.fixed_duration }}<br>Usage Month Dur-{{ list.usage_duration }}</span>
+                              <span class="tooltiptext"
+                                style="background-color: #FFCC66;font-size: 12px;min-width: 160px;">Fixed Month Dur-{{
+                                list.fixed_duration }}<br>Usage Month Dur-{{ list.usage_duration }}</span>
                             </div>
-                      
+
                             <div class="recurring-Status tooltip" *ngIf="(list.commission_state==1)"
-                            [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
+                              [ngStyle]="{'color': list.commission_state== '1' ? 'red' : 'blue'}">
                               C
                               <!-- Tooltip text -->
-                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;">{{ list.commission_info }}</span>
+                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;">{{
+                                list.commission_info }}</span>
                             </div>
                             <div class="recurring-Status tooltip" *ngIf="(list.commission_state_new==1)"
-                            [ngStyle]="{'color': list.commission_state_new== '1' ? 'green' : 'grey'}">
+                              [ngStyle]="{'color': list.commission_state_new== '1' ? 'green' : 'grey'}">
                               C
                               <!-- Tooltip text -->
-                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;">{{ list.commission_info_new }}</span>
+                              <span class="tooltiptext" style="background-color: #FFCC66;font-size: 12px;">{{
+                                list.commission_info_new }}</span>
                             </div>
-                        
+
                             <span class="recurring-Status" (click)="pdf(list.billId)"><img class="show"
                                 src="assets/img/icon2/pdf-yellow.png" style="width: 20px;"></span>
                           </div>
@@ -222,7 +224,8 @@
 
                                         <img class="show" src="assets/img/icon2/R-red.png">
                                         <img class="hide" src="assets/img/icon2/R-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller Recurring</strong></span>
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
+                                            Recurring</strong></span>
                                       </a>
                                       <a *ngIf="(recurring_Status=='0')" class="hover4" title="Recurring1"
                                         data-toggle="modal" data-target="#RecurringFormIdPE_inv"
@@ -230,7 +233,8 @@
 
                                         <img class="show" src="assets/img/icon2/R-blue.png">
                                         <img class="hide" src="assets/img/icon2/R-black.png">
-                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller Recurring</strong></span>
+                                        <span><b style="padding: 0px 20px;">-</b><strong>Set Reseller
+                                            Recurring</strong></span>
                                       </a>
 
                                     </li>
@@ -507,7 +511,7 @@
 
                                       </li>
                                       <li class="dropdown__item" *ngIf="(list.do_status=='yes')">
-                                        <a class="hover3" title="DO-PDF" data-toggle="modal" 
+                                        <a class="hover3" title="DO-PDF" data-toggle="modal"
                                           (click)="dopdf(list.do_id,i)">
                                           <img class="show" src="assets/img/icon2/pdf-blue.png">
                                           <img class="hide" src="assets/img/icon2/pdf-black.png">
@@ -641,7 +645,7 @@
                   </tr>
 
                 </tbody>
-               
+
                 <!-- <tbody *ngIf="response_total_cnt == 0">
                   <tr>
                       <td colspan="9" style="height: 50px; font-weight: 600; line-height: 1.5;font-style:italic; padding-top: 25px; text-align: center;background-color: red;">
@@ -650,87 +654,89 @@
                   </tr>
               </tbody> -->
               </table>
-            
-            
-          </div>
-          <br>
-          <div *ngIf="this.Global_search_filter==false">
-            <nav class="atbd-page" *ngIf="(response_total_cnt>0)">
-              <ul class="pagination mb-20" *ngIf="paginationData.info == 'show'">
-                <li class="page-item">
-                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
-                    href="javascript:void(0)"
-                    (click)="paginationData.backtab=='show' ? getInvoice({'offset':paginationData.start}) : false"><i
-                      class="fas fa-angle-left"></i></a>
-                </li>
-                <li class="page-item" *ngIf="paginationData.backtab =='show'">
-                  <a class="page-link" href="javascript:void(0)" (click)="getInvoice({'offset':paginationData.back})"><i
-                      class="fas fa-angle-double-left"></i></a>
-                </li>
-                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
-                  *ngFor="let pagination of paginationData.data;let i=index">
-                  <a class="page-link" href="javascript:void(0)"
-                    (click)=" pagination.load ==true ? getInvoice({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
-                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
-                </li>
-                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
-                  <a class="page-link" href="javascript:void(0)" (click)="getInvoice({'offset':paginationData.next})"><i
-                      class="fas fa-angle-double-right"></i></a>
-                </li>
-                <li class="page-item">
-                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
-                    href="javascript:void(0)"
-                    (click)="paginationData.nexttab =='show' ? getInvoice({'offset':paginationData.end}) : false"><i
-                      class="fas fa-angle-right"></i></a>
-                </li>
-                <li class="dropdown__item">
-                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
 
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
 
-       
-          <table border="0" cellspacing="0" cellpadding="0" style="width:100%" >
-            <tbody >
-              <tr *ngIf="this.response_total_cnt>0">
-                <!-- <td width="20" bgcolor="#d9b3ff">&nbsp;</td>
+            </div>
+            <br>
+            <div *ngIf="this.Global_search_filter==false">
+              <nav class="atbd-page" *ngIf="(response_total_cnt>0)">
+                <ul class="pagination mb-20" *ngIf="paginationData.info == 'show'">
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? getInvoice({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="getInvoice({'offset':paginationData.back})"><i class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? getInvoice({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="getInvoice({'offset':paginationData.next})"><i class="fas fa-angle-double-right"></i></a>
+                  </li>
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? getInvoice({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                  <li class="dropdown__item">
+                    <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+
+
+            <table border="0" cellspacing="0" cellpadding="0" style="width:100%">
+              <tbody>
+                <tr *ngIf="this.response_total_cnt>0">
+                  <!-- <td width="20" bgcolor="#d9b3ff">&nbsp;</td>
                 <td width="100" style="padding-left:20px;">Recurring </td> -->
-                <td width="20" bgcolor="#d0ffc3">&nbsp;</td>
-                <td width="100" style="padding-left:20px;">Paid </td>
-                <td width="20" bgcolor="#fffeb3">&nbsp;</td>
-                <td width="100" style="padding-left:20px;">Partial Paid</td>
-                <td width="20" bgcolor="#ffb8b8" style="width: 0%;">&nbsp;</td>
-                <td width="100" style="padding-left:20px;"> Not Paid </td>
-                <td width="20" bgcolor="#FA600C">&nbsp;</td>
-                <td width="100" style="padding-left:20px;"> Cancel </td>
-                <td width="20" bgcolor="#aeffff">&nbsp;</td>
-                <td width="100" style="padding-left:20px;"> Write OFF </td>
-              </tr>
-              <tr *ngIf="this.response_total_cnt==0">
-           
+                  <td width="20" bgcolor="#d0ffc3">&nbsp;</td>
+                  <td width="100" style="padding-left:20px;">Paid </td>
+                  <td width="20" bgcolor="#fffeb3">&nbsp;</td>
+                  <td width="100" style="padding-left:20px;">Partial Paid</td>
+                  <td width="20" bgcolor="#ffb8b8" style="width: 0%;">&nbsp;</td>
+                  <td width="100" style="padding-left:20px;"> Not Paid </td>
+                  <td width="20" bgcolor="#FA600C">&nbsp;</td>
+                  <td width="100" style="padding-left:20px;"> Cancel </td>
+                  <td width="20" bgcolor="#aeffff">&nbsp;</td>
+                  <td width="100" style="padding-left:20px;"> Write OFF </td>
+                </tr>
+                <tr *ngIf="this.response_total_cnt==0">
+
                   <div style="text-align: center;">
                     <div>
-                      <img src="data:image/png;base64,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" alt="">
+                      <img
+                        src="data:image/png;base64,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"
+                        alt="">
                     </div>
                     <div style="font-size: larger;font-weight: 600;color: red;">No Matching Records Found</div>
-                   
+
                   </div>
-              </tr>
-            </tbody>
-          </table>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
 
-</div>
 
-
-<!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<!-- <div class="modal fade" id="processPaymentId_inv1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
+  <!-- <div class="modal fade" id="processPaymentId_inv1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -822,104 +828,81 @@
     </div>
   </div>
 </div> -->
-<!-------------- Process Payment Pop up ends------------------------------------------>
+  <!-------------- Process Payment Pop up ends------------------------------------------>
 
-<!-----------------Modal Pop Up-BEGIN-Invoice Sending Method------------------>
-<div class="modal fade" id="InvoiceSendingMethodFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Invoice Sending Method
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="InvoiceSendingMethodForm">
-          <div class="row">
-            <div>
-              <label>Invoice Sending Method</label>
+  <!-----------------Modal Pop Up-BEGIN-Invoice Sending Method------------------>
+  <div class="modal fade" id="InvoiceSendingMethodFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Invoice Sending Method
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="InvoiceSendingMethodForm">
+            <div class="row">
+              <div>
+                <label>Invoice Sending Method</label>
+              </div>
+              <div class="ml-4">
+                <div class="form-check form-check-inline ">
+                  <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                    name="InvoiceSendingInput" id="1" value="1" (change)="radio_InvoiceSendingInput($event)">
+                  <label class="form-check-label" for="ByPost" style="color: #960057 !important;">By Post</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                    name="InvoiceSendingInput" id="3" value="2" (change)="radio_InvoiceSendingInput($event)">
+                  <label class="form-check-label" for="ByEmail" style="color: #960057 !important;">By Email</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
+                    name="InvoiceSendingInput" id="0" value="0" (change)="radio_InvoiceSendingInput($event)">
+                  <label class="form-check-label" for="None" style="color: #960057 !important;">None </label>
+                </div>
+              </div>
+
+
             </div>
-            <div class="ml-4">
-              <div class="form-check form-check-inline ">
-                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-                  name="InvoiceSendingInput" id="1" value="1" (change)="radio_InvoiceSendingInput($event)">
-                <label class="form-check-label" for="ByPost" style="color: #960057 !important;">By Post</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-                  name="InvoiceSendingInput" id="3" value="2" (change)="radio_InvoiceSendingInput($event)">
-                <label class="form-check-label" for="ByEmail" style="color: #960057 !important;">By Email</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" formControlName="InvoiceSendingInput"
-                  name="InvoiceSendingInput" id="0" value="0" (change)="radio_InvoiceSendingInput($event)">
-                <label class="form-check-label" for="None" style="color: #960057 !important;">None </label>
-              </div>
-            </div>
+          </form>
 
 
-          </div>
-        </form>
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-primary" (click)="setInvoice_Post()">Save</button>
 
 
-      </div>
-      <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
-        <button type="submit" class="btn btn-primary" (click)="setInvoice_Post()">Save</button>
-
-
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-------------- -Modal Pop Up-ENDS-Invoice Sending Method------------------------------------------>
+  <!-------------- -Modal Pop Up-ENDS-Invoice Sending Method------------------------------------------>
 
-<!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
-<div class="modal fade" id="sharPerissionFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle">Share Permission
-        </h2>
+  <!----------Modal Pop Up (BEGIN)  for Invoice Show Permission ------------------>
+  <div class="modal fade" id="sharPerissionFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+            Share Permission </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       
-          <!-- <div class="">
-            <div class="row">
-              <div class="d-flex col-lg-6" *ngFor="let quot of invoiceShowPermission_List;let i =index">
-                <div class="d-flex">
-                  <div class="">
-                    <div class="checkbox-group-wrapper">
-                      <div class="checkbox-group d-flex">
-                        <div class="on-off-toggle">
-                          <input class="checkbox" type="checkbox" id="check-grp1-{{i}}"
-                            checked="{{quot.chk_val=='true' ? 'checked':''}}"
-                            (change)="InvoiceShowCHK(quot.user_id,$event)">
-                          <label for="check-grp1-{{i}}"></label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                <span class="">{{quot.firstName}}</span>
-
-              </div>
-            </div>
-          </div> -->
           <div class="row">
             <div class="d-flex col-lg-4" *ngFor="let quot of invoiceShowPermission_List;let i=index">
               <div class="d-flex">
@@ -928,9 +911,9 @@
                     <div class="checkbox-group">
 
                       <input type="checkbox" id="{{ quot.user_id }}" [value]="quot.user_id"
-                        checked="{{quot.chk_val=='true' ? 'checked':''}}" class="chb chb-3"
+                        checked="{{quot.chk_val=='true' ? 'checked':''}}"
                         (change)="InvoiceShowCHK(quot.user_id,$event)">
-                      <label class="mt-2" for="{{ quot.user_id }}">{{quot.firstName}}</label>
+                      <label class="mt-2 ml-2" for="{{ quot.user_id }}">{{quot.firstName}}</label>
 
                     </div>
                   </div>
@@ -938,1075 +921,1076 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="modal-footer">
 
-      
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-primary" (click)="invoiceSharPermissionUpdate()">
-          Update
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Close
-        </button>
+          <button type="button" class="btn btn-primary" (click)="invoiceSharPermissionUpdate()">
+            Update
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!----------Modal Pop Up (END) for Invoice Show Permission------------------>
 
-<!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
-<div class="modal fade" id="processPaymentId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Payment Process
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearPayProcess()">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="processPaymentForm">
-          <div class="row">
-            <div class="col-lg-6">
-              <label>Invoice Id</label>
-              <input type="text" class="form-control" formControlName="invoiceID" id="invoiceID"
-                [readonly]="isReadOnly">
 
-            </div>
 
-            <div class="col-lg-6">
-              <label>Total</label>
-              <input type="text" class="form-control" formControlName="toal" id="toal" [readonly]="isReadOnly">
+  <!----------Modal Pop Up (END) for Invoice Show Permission------------------>
 
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Biller</label>
-              <input type="text" class="form-control" formControlName="biller" id="biller" [readonly]="isReadOnly">
+  <!-----------------Modal Pop Up (BEGIN) Process Payment------------------>
+  <div class="modal fade" id="processPaymentId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Payment Process
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearPayProcess()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="processPaymentForm">
+            <div class="row">
+              <div class="col-lg-6">
+                <label>Invoice Id</label>
+                <input type="text" class="form-control" formControlName="invoiceID" id="invoiceID"
+                  [readonly]="isReadOnly">
 
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Paid</label>
-              <input type="text" class="form-control" id="Paid" formControlName="paid" [readonly]="isReadOnly">
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Customer</label>
-              <input type="text" class="form-control" id="Customer" formControlName="customer" [readonly]="isReadOnly">
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Owing</label>
-              <input type="text" class="form-control" id="Owing" formControlName="owing" [readonly]="isReadOnly">
-
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Amount</label>
-              <input type="text" class="form-control" formControlName="amount" id="amount">
-              <div
-                *ngIf="processPaymentForm.controls['amount'].invalid && (processPaymentForm.controls['amount'].dirty || processPaymentForm.controls['amount'].touched)"
-                class="alert alert-danger alertdangerCustomCSS mt-2">
-                Amount is Required(Number Format>0)
               </div>
 
-            </div>
+              <div class="col-lg-6">
+                <label>Total</label>
+                <input type="text" class="form-control" formControlName="toal" id="toal" [readonly]="isReadOnly">
 
-            <div class="col-lg-6">
-              <label class="mt-4">Date</label>
-              <input type="date" class="form-control" formControlName="date" id="dateee">
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Payment Type/Method</label>
-              <select class="form-control" formControlName="paymenttype" id="paytype"
-                (change)="PP_PaymentMethod($event)">
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Biller</label>
+                <input type="text" class="form-control" formControlName="biller" id="biller" [readonly]="isReadOnly">
 
-                <option [ngValue]="null" selected>Select Payment Method</option>
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Paid</label>
+                <input type="text" class="form-control" id="Paid" formControlName="paid" [readonly]="isReadOnly">
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Customer</label>
+                <input type="text" class="form-control" id="Customer" formControlName="customer"
+                  [readonly]="isReadOnly">
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Owing</label>
+                <input type="text" class="form-control" id="Owing" formControlName="owing" [readonly]="isReadOnly">
 
-                <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
-                  {{term.payment_type_name}}
-                </option>
-              </select>
-              <div *ngIf="(flg==true)" class="mt-2">
-                <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1"
-                  (change)="changeCreditNote($event)" id="paytype1">
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Amount</label>
+                <input type="text" class="form-control" formControlName="amount" id="amount">
+                <div
+                  *ngIf="processPaymentForm.controls['amount'].invalid && (processPaymentForm.controls['amount'].dirty || processPaymentForm.controls['amount'].touched)"
+                  class="alert alert-danger alertdangerCustomCSS mt-2">
+                  Amount is Required(Number Format>0)
+                </div>
 
-                  <option [ngValue]="null" selected>Select credit note</option>
+              </div>
 
-                  <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
-                    {{term1.tot_amt}}
+              <div class="col-lg-6">
+                <label class="mt-4">Date</label>
+                <input type="date" class="form-control" formControlName="date" id="dateee">
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Payment Type/Method</label>
+                <select class="form-control" formControlName="paymenttype" id="paytype"
+                  (change)="PP_PaymentMethod($event)">
+
+                  <option [ngValue]="null" selected>Select Payment Method</option>
+
+                  <option *ngFor="let term of paymentType_payment" value="{{term.payment_type_id}}">
+                    {{term.payment_type_name}}
                   </option>
-
                 </select>
+                <div *ngIf="(flg==true)" class="mt-2">
+                  <select *ngIf="(PP_paymentMethod==7)" class="form-control" formControlName="paymenttype1"
+                    (change)="changeCreditNote($event)" id="paytype1">
+
+                    <option [ngValue]="null" selected>Select credit note</option>
+
+                    <option *ngFor="let term1 of creditResponse" value="{{term1.credit_note_id}}">
+                      {{term1.tot_amt}}
+                    </option>
+
+                  </select>
+                </div>
+
+                <div *ngIf="(flg==true)" class="mt-2">
+                  <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2"
+                    (change)="changePrepaidNote($event)" id="paytype2">
+
+                    <option [ngValue]="null" selected>Select prepaid note</option>
+
+                    <option *ngFor="let term2 of creditResponse" value="{{term2.prepaid_id}}">
+                      {{term2.tot_amt}}
+                    </option>
+
+                  </select>
+                </div>
+
+              </div>
+              <div class="col-lg-6">
+                <label class="mt-4">Note</label>
+
+                <textarea class="form-control" rows="3" formControlName="note" id="note"></textarea>
+
+              </div>
+              <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment;let i=index">
+                <label class="mt-4">Payment Details</label>
+
+
+                {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
+                {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
+                &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
+                <button type="button" style="margin-left: 10px;" *ngIf="(invoicePermissionList_add==1)" title="Edit"
+                  class=" btn-warning btn-default btn-squared" style="margin-right: 10px;"
+                  (click)="paymentProcessEditShow(pay.processId)"><i class="fa fa-pencil-square-o"
+                    style="margin-right:10;"></i>
+                </button>
               </div>
 
-              <div *ngIf="(flg==true)" class="mt-2">
-                <select *ngIf="(PP_paymentMethod==8)" class="form-control" formControlName="paymenttype2"
-                  (change)="changePrepaidNote($event)" id="paytype2">
-
-                  <option [ngValue]="null" selected>Select prepaid note</option>
-
-                  <option *ngFor="let term2 of creditResponse" value="{{term2.prepaid_id}}">
-                    {{term2.tot_amt}}
-                  </option>
-
-                </select>
-              </div>
-
-            </div>
-            <div class="col-lg-6">
-              <label class="mt-4">Note</label>
-
-              <textarea class="form-control" rows="3" formControlName="note" id="note"></textarea>
-
-            </div>
-            <div class="col-lg-12" *ngFor="let pay of paymentDetails_payment;let i=index">
-              <label class="mt-4">Payment Details</label>
-
-
-              {{pay.paidAmount}}&nbsp; {{pay.payment_type_name}}&nbsp; from &nbsp;
-              {{pay.firstName}}&nbsp; on &nbsp; {{pay.processDate}}
-              &nbsp; <b>{{paymentNotes}}</b>&nbsp;&nbsp;
-              <button type="button" style="margin-left: 10px;" *ngIf="(invoicePermissionList_add==1)" title="Edit"
-                class=" btn-warning btn-default btn-squared" style="margin-right: 10px;"
-                (click)="paymentProcessEditShow(pay.processId)"><i class="fa fa-pencil-square-o"
-                  style="margin-right:10;"></i>
-              </button>
             </div>
 
-          </div>
-
-        </form>
+          </form>
 
 
-      </div>
-      <div class="modal-footer">
+        </div>
+        <div class="modal-footer">
 
-        <button type="submit" class="btn btn-primary" (click)="processPaymentUpdate()">Update
+          <button type="submit" class="btn btn-primary" (click)="processPaymentUpdate()">Update
 
-        </button>
+          </button>
 
 
-        <!-- <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPaymentProcess()">
+          <!-- <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPaymentProcess()">
           Cancel
         </button> -->
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
-          Cancel
-        </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearPayProcess()">
+            Cancel
+          </button>
 
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-------------- Process Payment Pop up ends------------------------------------------>
+  <!-------------- Process Payment Pop up ends------------------------------------------>
 
-<!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
+  <!-----------------Modal Pop Up (BEGIN) Email-Landscape------------------>
 
-<div class="modal fade" id="emailFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
+  <div class="modal fade" id="emailFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="emailForm">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="emailForm">
 
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
-              <div class="col-lg-10">
-                <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
-                  change="handle__email_from($event)">
-                  <option [ngValue]="null" selected>Select From</option>
-                  <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
-                    {{ from.from_email }}
-                  </option>
-                  <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="emailFrom" class="col-lg-2 col-form-label"><span>From</span> :</label>
+                <div class="col-lg-10">
+                  <select name="templat" id="emailFrom" class="form-control" formControlName="email_From"
+                    change="handle__email_from($event)">
+                    <option [ngValue]="null" selected>Select From</option>
+                    <option *ngFor="let from of email_fromList" value="{{ from.from_email }}">
+                      {{ from.from_email }}
+                    </option>
+                    <!-- <option *ngFor="let from of email_fromList" value="{{ from.email_from_id }}">
                     {{ from.from_email }}
                   </option> -->
-                </select>
-                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
-                  *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
-                  Please
-                  enter From Address
+                  </select>
+                  <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                    *ngIf="emailForm.controls['email_From'].invalid && emailForm.controls['email_From'].touched">
+                    Please
+                    enter From Address
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
+                <div class="col-md-9 col-9" style="display: flex;">
+                  <div class="form-check" style="margin-right: 10px;">
+                    <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
+                      name="radio_ApprovalBy" id="company" (change)="handle_radioChange_email($event);" />
+
+                    <label class="form-check-label" for="company"> Company
+                    </label>
+                  </div>
+
+                  <div class="form-check">
+                    <input mdbRadio class="form-check-input" type="radio" formControlName="radio_ApprovalBy"
+                      name="radio_ApprovalBy" id="finance" [checked]="true"
+                      (change)="handle_radioChange_email($event)" />
+                    <label class="form-check-label" for="finance">Finance
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
 
-          </div>
-
-
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="emailto" class="col-lg-2 col-form-label"><span>Select To Type</span> :</label>
-              <div class="col-md-9 col-9" style="display: flex;">
-                <div class="form-check" style="margin-right: 10px;">
-                  <input mdbRadio class="form-check-input" type="radio" 
-                  formControlName="radio_ApprovalBy" name="radio_ApprovalBy" id="company"
-                    (change)="handle_radioChange_email($event);" />
-
-                  <label class="form-check-label" for="company"> Company
-                  </label>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
+                <div class="col-lg-10">
+                  <input type="email" id="emailto" class="form-control" formControlName="email_to">
+                  <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
+                    *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
+                    Please
+                    enter To Address
+                  </div>
                 </div>
+              </div>
 
-                <div class="form-check">
-                  <input mdbRadio class="form-check-input" type="radio" 
-                  formControlName="radio_ApprovalBy" name="radio_ApprovalBy" id="finance"
-                    [checked]="true" (change)="handle_radioChange_email($event)" />
-                  <label class="form-check-label" for="finance">Finance
-                  </label>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+
+                <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
+
+                <div class="col-lg-10 email-cc-template">
+                  <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
+                    <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}" formControlName="email_cc"
+                      (change)=" EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="emailPDFType" class="col-lg-2 col-form-label"><span> Payment</span> :</label>
+                <div class="col-lg-10 mt-2">
 
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="emailto" class="col-lg-2 col-form-label"><span>To </span>:</label>
-              <div class="col-lg-10">
-                <input type="email" id="emailto" class="form-control" formControlName="email_to">
-                <div class="alert alert-danger alertdangerCustomCSS1  mt-2"
-                  *ngIf="emailForm.controls['email_to'].invalid && emailForm.controls['email_to'].touched">
-                  Please
-                  enter To Address
-                </div>
-              </div>
-            </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
+                      (change)="CBF_PDFLink($event)">
+                    <label class="form-check-label" for="PDF Link">PDF Link</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
+                      [(ngModel)]="email_TemplateSelection" (change)="CBF_TemplateSelection($event)" id="temp">
+                    <label class="form-check-label" for="Template Selection"> Template Selection</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
+                      (change)="CBF_PaymentLink($event)">
+                    <label class="form-check-label" for="Payment Link">Payment Link</label>
+                  </div>
 
-          </div>
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-
-              <label for="emailto" class="col-lg-2 col-form-label"><span>CC Group</span> :</label>
-
-              <div class="col-lg-10 email-cc-template">
-                <div class="" *ngFor="let i =index;let display1 of email_groupMailList;">
-                  <input class="checkbox" type="checkbox" id="check-grp-cc-{{i}}" formControlName="email_cc"
-                    (change)=" EditCHK_emailCC(display1.group_id,$event)" />{{display1.group_name}}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="emailPDFType" class="col-lg-2 col-form-label"><span> Payment</span> :</label>
-              <div class="col-lg-10 mt-2">
-
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="PDF Link" value="option1"
-                    (change)="CBF_PDFLink($event)">
-                  <label class="form-check-label" for="PDF Link">PDF Link</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="Template Selection" value="option2"
-                    [(ngModel)]="email_TemplateSelection" (change)="CBF_TemplateSelection($event)" id="temp">
-                  <label class="form-check-label" for="Template Selection"> Template Selection</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="Payment Link" value="option3"
-                    (change)="CBF_PaymentLink($event)">
-                  <label class="form-check-label" for="Payment Link">Payment Link</label>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
-              <div class="col-lg-10">
-                <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
-                <div
-                  *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
-                  class="alert alert-danger alertdangerCustomCSS1 mt-2">
-                  Subject is Required
                 </div>
               </div>
             </div>
 
-          </div>
-          <div class="col-md-12 col-12" *ngIf="(CBV_TemplateSelection==true)">
-            <div class="form-group row">
-              <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
-              <div class="col-lg-10">
-                <select name="templat" id="template" class="form-control" formControlName="email_template"
-                  (change)="templateContentEmailDropdown($event)">
-                  <option [ngValue]="null" selected>Select Template</option>
-                  <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
-                    {{template.crm_template_name}}
-                  </option>
-                </select>
-                <br>
-
-                <div
-                  *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
-                  class="alert alert-danger alertdangerCustomCSS1 ">
-                  Template is Required
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="subject" class="col-lg-2 col-form-label"><span>Subject</span> :</label>
+                <div class="col-lg-10">
+                  <input type="text" id="subject" class="form-control" formControlName="Subject_Content">
+                  <div
+                    *ngIf="emailForm.controls['Subject_Content'].invalid && (emailForm.controls['Subject_Content'].dirty || emailForm.controls['Subject_Content'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 mt-2">
+                    Subject is Required
+                  </div>
                 </div>
               </div>
 
-
             </div>
-          </div>
-          <div class="col-md-12 col-12">
-            <div class="form-group row">
-              <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
-              <div class="col-lg-10">
-                <editor id="tinyID1_inv" [init]="{
+            <div class="col-md-12 col-12" *ngIf="(CBV_TemplateSelection==true)">
+              <div class="form-group row">
+                <label for="template" class="col-lg-2 col-form-label"><span>Template</span> :</label>
+                <div class="col-lg-10">
+                  <select name="templat" id="template" class="form-control" formControlName="email_template"
+                    (change)="templateContentEmailDropdown($event)">
+                    <option [ngValue]="null" selected>Select Template</option>
+                    <option *ngFor="let template of email_crmTemplateList" value="{{ template.crm_template_id }}">
+                      {{template.crm_template_name}}
+                    </option>
+                  </select>
+                  <br>
+
+                  <div
+                    *ngIf="emailForm.controls['email_template'].invalid && (emailForm.controls['email_template'].dirty || emailForm.controls['email_template'].touched)"
+                    class="alert alert-danger alertdangerCustomCSS1 ">
+                    Template is Required
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+            <div class="col-md-12 col-12">
+              <div class="form-group row">
+                <label for="subject" class="col-lg-2 col-form-label"><span>Message</span> :</label>
+                <div class="col-lg-10">
+                  <editor id="tinyID1_inv" [init]="{
                                 base_url: '/tinymce', 
                                 branding: false,
                                 suffix: '.min'
                                     
                             }"></editor>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- <div class="col-md-12 col-12">
+            <!-- <div class="col-md-12 col-12">
                         <div class="form-group row">
                             <label for="Attachment" class="col-lg-2 col-form-label"><span>Attachment</span> :</label>
 
                         </div>
                     </div> -->
 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="sendMail()">Send
-          Mail
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="sendMail()">Send
+            Mail
 
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
-          Close
-        </button>
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="PIEmailClear()">
+            Close
+          </button>
 
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-------------- Email-Landscape Pop up ends------------------------------------------>
-
-
-<!-----------------Modal Pop Up-Recurring-Begin------------------>
-<div class="modal fade" id="RecurringFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Select New Recurring Options
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="RecurringForm">
-
-          <div class="col-lg-12 mt-4">
-            <div class="row">
-              <div class="col-lg-4">
-                <label class="form-label">Date</label>
-              </div>
-              <div class="col-lg-8">
-                <input type="date" class="form-control" formControlName="date" id="date123">
-              </div>
-            </div>
-          </div>
+  <!-------------- Email-Landscape Pop up ends------------------------------------------>
 
 
-          <div class="col-lg-12 mt-4">
-            <div class="row">
-              <div class="col-lg-4">
-                <label class="form-label">Recurring</label>
-              </div>
+  <!-----------------Modal Pop Up-Recurring-Begin------------------>
+  <div class="modal fade" id="RecurringFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Select New Recurring Options
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="RecurringForm">
 
-              <div class="col-lg-8">
-                <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
-                  <input class="form-check-input" type="radio" formControlName="recurring_state" name="recurring_state"
-                    checked="{{ity.id==recuringStatus ? 'checked':''}}" id="{{ity.id}}" value="{{ity.id}}"
-                    (change)="radio_recurring($event)">
-                  <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
+            <div class="col-lg-12 mt-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label class="form-label">Date</label>
+                </div>
+                <div class="col-lg-8">
+                  <input type="date" class="form-control" formControlName="date" id="date123">
                 </div>
               </div>
-
-
-            </div>
-          </div>
-
-          <div class="col-lg-12 mt-4">
-            <div class="row">
-              <div class="col-lg-4">
-                <label class="form-label">Fixed Charge Dt</label>
-              </div>
-              <div class="col-lg-8" style="display: flex;">
-                <input type="checkbox" formControlName="fixedChargeDtCBX" (change)="CBF_FixedChargeDtFn($event)">
-                <input type="date" class="form-control ml-4" formControlName="fixedChargeDt_value">
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-12 mt-4">
-            <div class="row">
-              <div class="col-lg-4">
-                <label class="form-label">Fixed Charge Duration</label>
-                <p>Next Rec Dt : {{this.recurringDetails_fixed_next_dt}}</p>
-              </div>
-              <div class="col-lg-8">
-                <select class="form-control" formControlName="fixedChargeDuration">
-                  <option *ngFor="let term of reccuringDuration" value="{{term}}">
-                    {{term}}
-                  </option>
-
-                </select>
-
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-12 mt-4">
-            <div class="row">
-              <div class="col-lg-4">
-                <label class="form-label">Usage Charge Dt</label>
-              </div>
-              <div class="col-lg-8" style="display: flex;">
-                <input type="checkbox" formControlName="usageChargeDtCBX" (change)="CBF_UsageChargeDtFn($event)">
-                <input type="date" class="form-control ml-4" formControlName="usageChargeDt_value">
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-12 mt-4">
-            <div class="row">
-              <div class="col-lg-4">
-                <label class="form-label">Usage Charges Duration</label>
-                <p>Next Rec Dt : {{this.recurringDetails_usage_next_dt}}</p>
-              </div>
-              <div class="col-lg-8">
-                <select class="form-control" formControlName="usageChargeDuration">
-                  <option *ngFor="let term of reccuringDuration" value="{{term}}">
-                    {{term}}
-                  </option>
-
-                </select>
-
-              </div>
-            </div>
-          </div>
-
-        </form>
-
-
-      </div>
-      <div class="modal-footer">
-
-        <button type="submit" class="btn btn-primary" (click)="RecurringUpdate()">Save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-<!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
-
-<!-----------------Modal Pop Up-Recurring-Begin------------------>
-<div class="modal fade" id="RecurringFormIdPE_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Reseller Recurring
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="setResellerRecurringForm">
-
-          
-         
-
-        </form>
-
-
-      </div>
-      <div class="modal-footer">
-
-        <button type="submit" class="btn btn-primary" (click)="setResellerRecurringUpdate()">Save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-<!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
-
-
-<!-----------------Modal Pop Up (BEGIN) Coupon Assign------------------>
-<div class="modal fade" id="couponAssignFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Select Coupon Code
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="couponAssignForm">
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="col-lg-6">
-                <label>Coupon Code - % - Amt</label>
-              </div>
-              <div class="col-lg-6">
-                <select class="form-control" formControlName="couponCode">
-                  <option [ngValue]="null" selected>Select Coupon Code</option>
-
-                  <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
-                                    {{term.enquiry_from_name}}
-                                </option> -->
-                </select>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-<!--------------  Coupon Assign Pop up ends------------------------------------------>
-
-
-<!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
-<div class="modal fade" id="fileAttachmentFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">File Attachment
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="FileAttachmentForm">
-
-          <div class="modal-body">
-            <div>
-              <label style="color: hsl(226, 59%, 21%)!important;">
-                Attached Files</label>
             </div>
 
-            <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;" style="padding-left: 30px;">
 
-              {{display1.uploadFileName}}
-              <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
-                checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
-                (change)="EditCHK(display1.common_attachmentId,$event)">
-              <button type="button" class="btn btn-link"
-                (click)="fileAttachmentDelete(display1.common_attachmentId) "><span class="bi bi-trash"></span>
+            <div class="col-lg-12 mt-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label class="form-label">Recurring</label>
+                </div>
 
-              </button>
+                <div class="col-lg-8">
+                  <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
+                    <input class="form-check-input" type="radio" formControlName="recurring_state"
+                      name="recurring_state" checked="{{ity.id==recuringStatus ? 'checked':''}}" id="{{ity.id}}"
+                      value="{{ity.id}}" (change)="radio_recurring($event)">
+                    <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
+                  </div>
+                </div>
 
+
+              </div>
             </div>
 
             <div class="col-lg-12 mt-4">
-              <div class="form-group row">
+              <div class="row">
                 <div class="col-lg-4">
-                  <label>
-                    Select New Attachment</label>
+                  <label class="form-label">Fixed Charge Dt</label>
                 </div>
-                <div class="col-lg-8" style="padding-left: 30px;">
-
-                  <!-- <label for="file">File</label> -->
-
-                  <input class="col-lg-6" formControlName="file" id="file" type="file" multiple class="form-control"
-                    (change)="onFileChange($event)">
-
+                <div class="col-lg-8" style="display: flex;">
+                  <input type="checkbox" formControlName="fixedChargeDtCBX" (change)="CBF_FixedChargeDtFn($event)">
+                  <input type="date" class="form-control ml-4" formControlName="fixedChargeDt_value">
                 </div>
               </div>
             </div>
 
+            <div class="col-lg-12 mt-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label class="form-label">Fixed Charge Duration</label>
+                  <p>Next Rec Dt : {{this.recurringDetails_fixed_next_dt}}</p>
+                </div>
+                <div class="col-lg-8">
+                  <select class="form-control" formControlName="fixedChargeDuration">
+                    <option *ngFor="let term of reccuringDuration" value="{{term}}">
+                      {{term}}
+                    </option>
 
+                  </select>
 
-
-          </div>
-
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="fileAttachmentUpdate()">Save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearFile()">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-<!-------------- File Attachment Pop up ends------------------------------------------>
-
-
-
-
-<!------------------------ set Terms & Condition pop up start  ---------->
-
-<div class="modal fade" id="settermsConditionFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Terms Condition Details
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="setTermConditionForm">
-          <div class="row">
-            <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4">
-                <label>Terms Condition </label>
-              </div>
-              <div class="col-lg-6">
-                <select class="form-control" formControlName="setTerm" name="setTerm">
-                  <option [ngValue]="null" selected>Select term Condition</option>
-
-                  <option *ngFor="let term of TermDetailsList" value="{{term}}">
-                    {{term}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="setTermsConditionUpdate()">Update</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setTermsConditionClear()">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!----------set Terms & Condition pop up END ------------------>
-
-
-<!----------------------Revenue Details Modal Pop Up Starts------------------------------->
-<div class="modal fade" id="InvoiceRevenueFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center">Invoice Revenue Details</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="RevenueDetails1Form">
-          <div class="row">
-            <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4 mt-2" style="padding-left: 150px;">
-                <label>Select Revenue </label>
-              </div>
-              <div class="col-lg-4">
-                <select name="abc" class="form-control" formControlName="revenue">
-                  <option [ngValue]="null" selected>Select Revenue</option>
-
-                  <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
-                    {{rev.revenue_type_name}}
-                  </option>
-                </select>
-              </div>
-              <div class="col-lg-4 mb-2">
-                <input type="checkbox" title="Check/Uncheck Revenue Details" formControlName="Revenuestate"
-                  (change)="CBF_RevenueStateFn($event)">
+                </div>
               </div>
             </div>
 
-          </div>
+            <div class="col-lg-12 mt-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label class="form-label">Usage Charge Dt</label>
+                </div>
+                <div class="col-lg-8" style="display: flex;">
+                  <input type="checkbox" formControlName="usageChargeDtCBX" (change)="CBF_UsageChargeDtFn($event)">
+                  <input type="date" class="form-control ml-4" formControlName="usageChargeDt_value">
+                </div>
+              </div>
+            </div>
 
-        </form>
+            <div class="col-lg-12 mt-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <label class="form-label">Usage Charges Duration</label>
+                  <p>Next Rec Dt : {{this.recurringDetails_usage_next_dt}}</p>
+                </div>
+                <div class="col-lg-8">
+                  <select class="form-control" formControlName="usageChargeDuration">
+                    <option *ngFor="let term of reccuringDuration" value="{{term}}">
+                      {{term}}
+                    </option>
 
-        <form [formGroup]="revenueaddressForm" *ngIf="(CBV_RevenueState==true)">
+                  </select>
+
+                </div>
+              </div>
+            </div>
+
+          </form>
 
 
-          <div class="col-12">
+        </div>
+        <div class="modal-footer">
 
-            <section>
+          <button type="submit" class="btn btn-primary" (click)="RecurringUpdate()">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
+
+  <!-----------------Modal Pop Up-Recurring-Begin------------------>
+  <div class="modal fade" id="RecurringFormIdPE_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Reseller Recurring
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="setResellerRecurringForm">
+
+
+
+
+          </form>
+
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="submit" class="btn btn-primary" (click)="setResellerRecurringUpdate()">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-------------- -Modal Pop Up-ENDS-Recurring------------------------------------------>
+
+
+  <!-----------------Modal Pop Up (BEGIN) Coupon Assign------------------>
+  <div class="modal fade" id="couponAssignFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Select Coupon Code
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="couponAssignForm">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="col-lg-6">
+                  <label>Coupon Code - % - Amt</label>
+                </div>
+                <div class="col-lg-6">
+                  <select class="form-control" formControlName="couponCode">
+                    <option [ngValue]="null" selected>Select Coupon Code</option>
+
+                    <!-- <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                                    {{term.enquiry_from_name}}
+                                </option> -->
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--------------  Coupon Assign Pop up ends------------------------------------------>
+
+
+  <!-----------------Modal Pop Up (BEGIN) File Attachment------------------>
+  <div class="modal fade" id="fileAttachmentFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">File Attachment
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="FileAttachmentForm">
+
+            <div class="modal-body">
               <div>
-                <div class="row">
-                  <div class="col-12">
+                <label style="color: hsl(226, 59%, 21%)!important;">
+                  Attached Files</label>
+              </div>
+
+              <div *ngFor="let i =index;let display1 of  getFileAttachmentResult;" style="padding-left: 30px;">
+
+                {{display1.uploadFileName}}
+                <input class="checkbox" type="checkbox" id="check-grp-{{i}}"
+                  checked="{{display1.quotation_pdf_add == '1' ? 'checked' : ''}}"
+                  (change)="EditCHK(display1.common_attachmentId,$event)">
+                <button type="button" class="btn btn-link"
+                  (click)="fileAttachmentDelete(display1.common_attachmentId) "><span class="bi bi-trash"></span>
+
+                </button>
+
+              </div>
+
+              <div class="col-lg-12 mt-4">
+                <div class="form-group row">
+                  <div class="col-lg-4">
+                    <label>
+                      Select New Attachment</label>
+                  </div>
+                  <div class="col-lg-8" style="padding-left: 30px;">
+
+                    <!-- <label for="file">File</label> -->
+
+                    <input class="col-lg-6" formControlName="file" id="file" type="file" multiple class="form-control"
+                      (change)="onFileChange($event)">
 
                   </div>
-
                 </div>
-                <div class="card-body">
-                  <div class="userDatatable global-shadow border-0 bg-white w-100">
-                    <div class="table-responsive">
-                      <table class="add-contact-table-section">
-                        <thead>
-                          <tr class="userDatatable-header">
-
-                            <th> <span class="userDatatable-title">S.No</span>
-                            </th>
-                            <th> <span class="userDatatable-title">Product Name</span>
-                            </th>
-                            <th><span class="userDatatable-title">Description</span></th>
-
-                            <th><span class="userDatatable-title">Revenue Amt</span></th>
-                            <th><span class="userDatatable-title">Select Revenue Type</span>
-                            </th>
-
-
-                          </tr>
-                        </thead>
-                        <tbody formArrayName="revenueaddresses"
-                          *ngFor="let revenueaddress of revenueaddressControls.controls; let i = index;">
-                          <tr [formGroupName]="i" class="mt-4">
-
-
-                            <td style="text-align: center;">
-                              <div class="userDatatable-content">
-                                <input type="hidden" formControlName="child_id">
-                                <span>{{i+1}}</span>
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <!-- <span>{{dev.productName}}</span>  -->
-                                <input type="text" formControlName="revenueProductName_child" [readonly]="isReadOnly">
-                              </div>
-
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <!-- {{dev.productDesc}} -->
-                                <input type="text" formControlName="revenueProductDesc_child" [readonly]="isReadOnly">
-                              </div>
-
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <input type="text" formControlName="revenueAmount_child">
-
-                              </div>
-                            </td>
-                            <td>
-                              <div class="userDatatable-content">
-                                <div class="col-lg-12">
-                                  <select class="form-control" formControlName="revenueType_child">
-                                    <option [ngValue]="null" selected>Select Revenue</option>
-
-                                    <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
-                                      {{rev.revenue_type_name}}
-                                    </option>
-                                  </select>
-                                </div>
-                              </div>
-                            </td>
+              </div>
 
 
 
-                          </tr>
-                        </tbody>
 
-                      </table>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="fileAttachmentUpdate()">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearFile()">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-------------- File Attachment Pop up ends------------------------------------------>
+
+
+
+
+  <!------------------------ set Terms & Condition pop up start  ---------->
+
+  <div class="modal fade" id="settermsConditionFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Terms Condition Details
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="setTermConditionForm">
+            <div class="row">
+              <div class="col-lg-12" style="display: flex;">
+                <div class="col-lg-4">
+                  <label>Terms Condition </label>
+                </div>
+                <div class="col-lg-6">
+                  <select class="form-control" formControlName="setTerm" name="setTerm">
+                    <option [ngValue]="null" selected>Select term Condition</option>
+
+                    <option *ngFor="let term of TermDetailsList" value="{{term}}">
+                      {{term}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="setTermsConditionUpdate()">Update</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setTermsConditionClear()">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!----------set Terms & Condition pop up END ------------------>
+
+
+  <!----------------------Revenue Details Modal Pop Up Starts------------------------------->
+  <div class="modal fade" id="InvoiceRevenueFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center">Invoice Revenue Details</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="RevenueDetails1Form">
+            <div class="row">
+              <div class="col-lg-12" style="display: flex;">
+                <div class="col-lg-4 mt-2" style="padding-left: 150px;">
+                  <label>Select Revenue </label>
+                </div>
+                <div class="col-lg-4">
+                  <select name="abc" class="form-control" formControlName="revenue">
+                    <option [ngValue]="null" selected>Select Revenue</option>
+
+                    <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
+                      {{rev.revenue_type_name}}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-lg-4 mb-2">
+                  <input type="checkbox" title="Check/Uncheck Revenue Details" formControlName="Revenuestate"
+                    (change)="CBF_RevenueStateFn($event)">
+                </div>
+              </div>
+
+            </div>
+
+          </form>
+
+          <form [formGroup]="revenueaddressForm" *ngIf="(CBV_RevenueState==true)">
+
+
+            <div class="col-12">
+
+              <section>
+
+                <div>
+                  <div class="row">
+                    <div class="col-12">
 
                     </div>
 
                   </div>
-                </div>
+                  <div class="card-body">
+                    <div class="userDatatable global-shadow border-0 bg-white w-100">
+                      <div class="table-responsive">
+                        <table class="add-contact-table-section">
+                          <thead>
+                            <tr class="userDatatable-header">
 
-              </div>
-            </section>
+                              <th> <span class="userDatatable-title">S.No</span>
+                              </th>
+                              <th> <span class="userDatatable-title">Product Name</span>
+                              </th>
+                              <th><span class="userDatatable-title">Description</span></th>
 
-
-
-          </div>
-
-
-
-        </form>
-
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-primary" (click)="invoiceRevenueUpdate()">
-          Save
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+                              <th><span class="userDatatable-title">Revenue Amt</span></th>
+                              <th><span class="userDatatable-title">Select Revenue Type</span>
+                              </th>
 
 
-<!----------------------- Revenue Details Modal Pop up Ends ------------------------------>
+                            </tr>
+                          </thead>
+                          <tbody formArrayName="revenueaddresses"
+                            *ngFor="let revenueaddress of revenueaddressControls.controls; let i = index;">
+                            <tr [formGroupName]="i" class="mt-4">
 
 
-<!------------------------ Delivery Order start  ---------->
+                              <td style="text-align: center;">
+                                <div class="userDatatable-content">
+                                  <input type="hidden" formControlName="child_id">
+                                  <span>{{i+1}}</span>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="userDatatable-content">
+                                  <!-- <span>{{dev.productName}}</span>  -->
+                                  <input type="text" formControlName="revenueProductName_child" [readonly]="isReadOnly">
+                                </div>
 
-<div class="modal fade" id="DeliveryOrderFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Delivery Order Conversion
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+                              </td>
+                              <td>
+                                <div class="userDatatable-content">
+                                  <!-- {{dev.productDesc}} -->
+                                  <input type="text" formControlName="revenueProductDesc_child" [readonly]="isReadOnly">
+                                </div>
 
-        <form [formGroup]="DeliveryOrderForm">
-          <div class="row">
-            <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4 mt-2">
-                <label>Warranty </label>
-              </div>
-              <div class="col-lg-6">
-                <select class="form-control" formControlName="warranty">
-                  <option [ngValue]="null" selected>Select Warranty</option>
+                              </td>
+                              <td>
+                                <div class="userDatatable-content">
+                                  <input type="text" formControlName="revenueAmount_child">
 
-                  <option *ngFor="let term of warrantyList" value="{{term.id}}">
-                    {{term.name}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="DeliveryOrderUpdate()">Update</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
+                                </div>
+                              </td>
+                              <td>
+                                <div class="userDatatable-content">
+                                  <div class="col-lg-12">
+                                    <select class="form-control" formControlName="revenueType_child">
+                                      <option [ngValue]="null" selected>Select Revenue</option>
 
-      </div>
-    </div>
-  </div>
-</div>
+                                      <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
+                                        {{rev.revenue_type_name}}
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </td>
 
 
-<!----------Delivery Order END ------------------>
 
-<!---------------------- set Invoice Type Name pop up start  -------------------------->
+                            </tr>
+                          </tbody>
 
-<div class="modal fade" id="setInvoiceTypeNameFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Invoice Type Details
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="setInvoiceType">
-          <div class="row">
-            <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-4 mt-2">
-                <label>Select Invoice Type</label>
-              </div>
-              <div class="col-lg-6">
-                <select class="form-control" formControlName="setInvoice" name="setInvoice">
-                  <option [ngValue]="null" selected>Select invoice From</option>
+                        </table>
 
-                  <option *ngFor="let invTy of InvoiceTypeList" value="{{invTy}}">
-                    {{invTy}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="setInvoiceTypeNameUpdate()">Update</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setInvoiceTypeClear()">
-          Cancel
-        </button>
+                      </div>
 
-      </div>
-    </div>
-  </div>
-</div>
-
-<!------------------- set Invoice Type Name pop up end ---------------->
-
-<!------------------------ Notes start  ---------->
-
-<div class="modal fade" id="NotesFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Invoice Notes
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <form [formGroup]="NotesForm">
-          <div class="row">
-            <div class="col-lg-12" style="display: flex;">
-              <div class="col-lg-2">
-                <label>Add Notes </label>
-              </div>
-              <div class="col-lg-10">
-                <textarea formControlName="note" cols="4" class="form-control"></textarea>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="setNotes()">Save</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-<!----------Notes END ------------------>
-
-
-<!------------------------  Reseller Commission Details start  ---------->
-
-<div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
-  role="document">
-    <div class="modal-content addcontractmastercss">
-      <div class="modal-header">
-        <h2 class=" col-12 col-12 modal-title text-center text-center " id="addModalLongTitle">Reseller Commission Details</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <form [formGroup]="inv_resellerCommissionForm">
-          <div class="row">
-            <div class="col-lg-6" style="display: flex; ">
-              <div class="col-lg-3 ">
-                <label>Reseller Name </label>
-              </div>
-              <div class="col-lg-9">
-                <div class="form-group row">
-                  <div class="ng-autocomplete" style="padding: 4px 5px !important;">
-
-                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
-                      formControlName="reseller_name" (selected)='selectEventReseller($event)'
-                      (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
-                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
-                      style="padding: 4px 5px !important;">
-                    </ng-autocomplete>
-
-                    <ng-template #itemTemplateCustomer let-item>
-                      <a [innerHTML]="item.customerName"></a>
-                    </ng-template>
-
-                    <ng-template #notFoundTemplate let-notFound>
-                      <div [innerHTML]="notFound"></div>
-                    </ng-template>
-
+                    </div>
                   </div>
 
+                </div>
+              </section>
 
+
+
+            </div>
+
+
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" class="btn btn-primary" (click)="invoiceRevenueUpdate()">
+            Save
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!----------------------- Revenue Details Modal Pop up Ends ------------------------------>
+
+
+  <!------------------------ Delivery Order start  ---------->
+
+  <div class="modal fade" id="DeliveryOrderFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Delivery Order Conversion
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form [formGroup]="DeliveryOrderForm">
+            <div class="row">
+              <div class="col-lg-12" style="display: flex;">
+                <div class="col-lg-4 mt-2">
+                  <label>Warranty </label>
+                </div>
+                <div class="col-lg-6">
+                  <select class="form-control" formControlName="warranty">
+                    <option [ngValue]="null" selected>Select Warranty</option>
+
+                    <option *ngFor="let term of warrantyList" value="{{term.id}}">
+                      {{term.name}}
+                    </option>
+                  </select>
                 </div>
               </div>
-              <input type="hidden" formControlName="billChildid1" id="billChildid1" />
             </div>
-            <div class="col-lg-6" style="display: flex;">
-              <div class="col-lg-3">
-                <label>Commission Type </label>
-              </div>
-              <div class="col-lg-9">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="DeliveryOrderUpdate()">Update</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
-                <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
-                  <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
-                  <input class="form-check-input" type="radio" name=CommissionType_ id="CommissionType_{{k}}"
-                    checked="{{item.id==this.CommissionType1 ? 'checked':''}}" (change)="radio_commissionType($event)"
-                    value={{item.id}}>
+        </div>
+      </div>
+    </div>
+  </div>
 
-                  <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+
+  <!----------Delivery Order END ------------------>
+
+  <!---------------------- set Invoice Type Name pop up start  -------------------------->
+
+  <div class="modal fade" id="setInvoiceTypeNameFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Invoice Type Details
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="setInvoiceType">
+            <div class="row">
+              <div class="col-lg-12" style="display: flex;">
+                <div class="col-lg-4 mt-2">
+                  <label>Select Invoice Type</label>
+                </div>
+                <div class="col-lg-6">
+                  <select class="form-control" formControlName="setInvoice" name="setInvoice">
+                    <option [ngValue]="null" selected>Select invoice From</option>
+
+                    <option *ngFor="let invTy of InvoiceTypeList" value="{{invTy}}">
+                      {{invTy}}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 " style="display: flex;">
-              <div class="col-lg-3 ">
-                <label>Commission Value </label>
-              </div>
-              <div class="col-lg-9">
-                <input type="number" class="form-control" formControlName="commission_value"
-                  id="CommissionValue_WFA_ID1_" (keyup)="commissionValueAutoFill()">
-              </div>
-            </div>
-            <div class="col-lg-6 " style="display: flex;">
-              <div class="col-lg-3 ">
-                <label>Commission Amount </label>
-              </div>
-              <div class="col-lg-9">
-                <input type="number" class="form-control" formControlName="commission_amt"
-                  id="CommissionAmount1_WFA_ID1_">
-                <input type="hidden" class="form-control" id="reseller_comm_id" formControlName="reseller_comm_id">
-                <input type="hidden" class="form-control" id="commIndex" formControlName="commIndex">
-                <input type="hidden" class="form-control" id="reseller_id" formControlName="reseller_id">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="setInvoiceTypeNameUpdate()">Update</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="setInvoiceTypeClear()">
+            Cancel
+          </button>
 
-                <input type="hidden" class="form-control" id="billId" formControlName="billId">
-                <input type="hidden" class="form-control" id="grossAmount" formControlName="grossAmount">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!------------------- set Invoice Type Name pop up end ---------------->
+
+  <!------------------------ Notes start  ---------->
+
+  <div class="modal fade" id="NotesFormId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Invoice Notes
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form [formGroup]="NotesForm">
+            <div class="row">
+              <div class="col-lg-12" style="display: flex;">
+                <div class="col-lg-2">
+                  <label>Add Notes </label>
+                </div>
+                <div class="col-lg-10">
+                  <textarea formControlName="note" cols="4" class="form-control"></textarea>
+                </div>
               </div>
             </div>
-            <div class="col-lg-6 " style="display: flex;">
-              <div class="col-lg-3 ">
-                <label>PDF Show </label>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="setNotes()">Save</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!----------Notes END ------------------>
+
+
+  <!------------------------  Reseller Commission Details start  ---------->
+
+  <div class="modal fade" id="inv_ResellerCommissionFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content addcontractmastercss">
+        <div class="modal-header">
+          <h2 class=" col-12 col-12 modal-title text-center text-center " id="addModalLongTitle">Reseller Commission
+            Details</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form [formGroup]="inv_resellerCommissionForm">
+            <div class="row">
+              <div class="col-lg-6" style="display: flex; ">
+                <div class="col-lg-3 ">
+                  <label>Reseller Name </label>
+                </div>
+                <div class="col-lg-9">
+                  <div class="form-group row">
+                    <div class="ng-autocomplete" style="padding: 4px 5px !important;">
+
+                      <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordResellerName" id="reseller_name"
+                        formControlName="reseller_name" (selected)='selectEventReseller($event)'
+                        (inputChanged)='searchResellerData($event)' (inputFocused)='onFocusedReseller($event)'
+                        [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate"
+                        style="padding: 4px 5px !important;">
+                      </ng-autocomplete>
+
+                      <ng-template #itemTemplateCustomer let-item>
+                        <a [innerHTML]="item.customerName"></a>
+                      </ng-template>
+
+                      <ng-template #notFoundTemplate let-notFound>
+                        <div [innerHTML]="notFound"></div>
+                      </ng-template>
+
+                    </div>
+
+
+                  </div>
+                </div>
+                <input type="hidden" formControlName="billChildid1" id="billChildid1" />
               </div>
-              <div class="col-lg-9">
-                <input type="checkbox" formControlName="pdf_show" id="pdf_show" (change)="CBF_PdfShow($event)">
+              <div class="col-lg-6" style="display: flex;">
+                <div class="col-lg-3">
+                  <label>Commission Type </label>
+                </div>
+                <div class="col-lg-9">
+
+                  <div class="form-check form-check-inline" *ngFor="let item of resellercommissiontype;let k=index">
+                    <!-- <div *ngFor="let item1 of this.CommissionType;let i=index"> -->
+                    <input class="form-check-input" type="radio" name=CommissionType_ id="CommissionType_{{k}}"
+                      checked="{{item.id==this.CommissionType1 ? 'checked':''}}" (change)="radio_commissionType($event)"
+                      value={{item.id}}>
+
+                    <label class="form-check-label" for="{{item.id}}">{{item.name}}</label>
+                  </div>
+                </div>
               </div>
-            </div>
-            <!-- <div class="col-lg-12 mt-2" style="display: flex;">
+              <div class="col-lg-6 " style="display: flex;">
+                <div class="col-lg-3 ">
+                  <label>Commission Value </label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="number" class="form-control" formControlName="commission_value"
+                    id="CommissionValue_WFA_ID1_" (keyup)="commissionValueAutoFill()">
+                </div>
+              </div>
+              <div class="col-lg-6 " style="display: flex;">
+                <div class="col-lg-3 ">
+                  <label>Commission Amount </label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="number" class="form-control" formControlName="commission_amt"
+                    id="CommissionAmount1_WFA_ID1_">
+                  <input type="hidden" class="form-control" id="reseller_comm_id" formControlName="reseller_comm_id">
+                  <input type="hidden" class="form-control" id="commIndex" formControlName="commIndex">
+                  <input type="hidden" class="form-control" id="reseller_id" formControlName="reseller_id">
+
+                  <input type="hidden" class="form-control" id="billId" formControlName="billId">
+                  <input type="hidden" class="form-control" id="grossAmount" formControlName="grossAmount">
+                </div>
+              </div>
+              <div class="col-lg-6 " style="display: flex;">
+                <div class="col-lg-3 ">
+                  <label>PDF Show </label>
+                </div>
+                <div class="col-lg-9">
+                  <input type="checkbox" formControlName="pdf_show" id="pdf_show" (change)="CBF_PdfShow($event)">
+                </div>
+              </div>
+              <!-- <div class="col-lg-12 mt-2" style="display: flex;">
               <div class="col-lg-3 ">
                 <label>From Date </label>
               </div>
@@ -2023,386 +2007,388 @@
               </div>
             </div> -->
 
-            <div class="col-lg-6" style="display: flex;">
-            
-              <div class="col-lg-3">
-                <label class="form-label">Date</label>
-              </div>
-              <div class="col-lg-9">
-                <input type="date" class="form-control" formControlName="date" >
-              </div>
-        
-          </div>
+              <div class="col-lg-6" style="display: flex;">
 
-
-          <div class="col-lg-6" style="display: flex;">
-           
-              <div class="col-lg-3">
-                <label class="form-label">Recurring</label>
-              </div>
-
-              <div class="col-lg-9">
-                <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
-                  <input class="form-check-input" type="radio" formControlName="recurring_state" name="recurring_state"
-                    checked="{{ity.id==recuringStatus1 ? 'checked':''}}" id="{{ity.id}}" value="{{ity.id}}"
-                    (change)="radio_recurring($event)">
-                  <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
+                <div class="col-lg-3">
+                  <label class="form-label">Date</label>
                 </div>
+                <div class="col-lg-9">
+                  <input type="date" class="form-control" formControlName="date">
+                </div>
+
               </div>
+
+
+              <div class="col-lg-6" style="display: flex;">
+
+                <div class="col-lg-3">
+                  <label class="form-label">Recurring</label>
+                </div>
+
+                <div class="col-lg-9">
+                  <div class="form-check form-check-inline" *ngFor="let ity of recurringState;let i=index">
+                    <input class="form-check-input" type="radio" formControlName="recurring_state"
+                      name="recurring_state" checked="{{ity.id==recuringStatus1 ? 'checked':''}}" id="{{ity.id}}"
+                      value="{{ity.id}}" (change)="radio_recurring($event)">
+                    <label class="form-check-label" for="{{ity.id}}">{{ity.name}} </label>
+                  </div>
+                </div>
+
+
+              </div>
+
+
+              <div class="col-lg-6 mt-2 mb-2" style="display: flex;">
+
+                <div class="col-lg-3">
+                  <label class="form-label">Recurring Date</label>
+                </div>
+                <div class="col-lg-9" style="display: flex;">
+                  <input type="checkbox" formControlName="recurringDtCBX"
+                    (change)="CBF_setResellerRecurringDtFn($event)">
+                  <input type="date" class="form-control ml-4" formControlName="recurringDate">
+                </div>
+
+              </div>
+
+              <div class="col-lg-6" style="display: flex;">
+
+                <div class="col-lg-3">
+                  <label class="form-label">Recurring Duration</label>
+
+                </div>
+                <div class="col-lg-9">
+                  <select class="form-control" formControlName="recurringDuration">
+                    <option *ngFor="let term of reccuringDuration" value="{{term}}">
+                      {{term}}
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+              <div class="col-lg-6" style="display: flex;">
+
+                <div class="col-lg-3">
+                  <label class="form-label">Next Rec Dt</label>
+
+                </div>
+                <div class="col-lg-9">
+                  <input type="month" class="form-control" formControlName="nextRecDt">
+
+                </div>
+
+              </div>
+
 
 
             </div>
-          
 
-          <div class="col-lg-6 mt-2 mb-2" style="display: flex;">
-            
-              <div class="col-lg-3">
-                <label class="form-label">Recurring Date</label>
-              </div>
-              <div class="col-lg-9" style="display: flex;">
-                <input type="checkbox" formControlName="recurringDtCBX" (change)="CBF_setResellerRecurringDtFn($event)">
-                <input type="date" class="form-control ml-4" formControlName="recurringDate">
-              </div>
-          
-          </div>
+          </form>
 
-          <div class="col-lg-6" style="display: flex;">
-            
-              <div class="col-lg-3">
-                <label class="form-label">Recurring Duration</label>
-              
-              </div>
-              <div class="col-lg-9">
-                <select class="form-control" formControlName="recurringDuration">
-                  <option *ngFor="let term of reccuringDuration" value="{{term}}">
-                    {{term}}
-                  </option>
-
-                </select>
-
-              </div>
-            
-          </div>
-          <div class="col-lg-6" style="display: flex;">
-           
-            <div class="col-lg-3">
-              <label class="form-label">Next Rec Dt</label>
-         
-            </div>
-            <div class="col-lg-9">
-              <input type="month" class="form-control" formControlName="nextRecDt">
-
-            </div>
-          
         </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
-       
-
-          </div>
-
-        </form>
-
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="update_WFA_ResellerCommission()">Update</button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!----------Reseller Commission Details END ------------------>
-
-
-
-<!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
-<div class="modal fade" id="setActualCostId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class=" col-12 modal-title text-center" id="invoiceAttachModalLongTitle">Actual Price Update
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body quotationsharedCSS">
-        <form [formGroup]="setActualCostForm">
-
-
-          <div class="userDatatable global-shadow border-0 bg-white w-100">
-            <div class="table-responsive ">
-              <table class="table mb-0 table-borderless">
-                <thead>
-                  <tr class="userDatatable-header">
-
-
-                    <th>
-                      <span class="userDatatable-title">S.No</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Product Name</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Description</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Quantity</span>
-                    </th>
-
-                    <th>
-                      <span class="userDatatable-title">Unit</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Price</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Net Total</span>
-                    </th>
-
-                    <th>
-                      <span class="userDatatable-title">Act Price(%)</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Act Price</span>
-                    </th>
-
-                    <th>
-                      <span class="userDatatable-title">Act Net Total</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Diff Amt</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <tr *ngFor="let list of actualCost_ProductList ; let i = 'index+1'">
-
-
-                    <td>
-
-                      <span> {{i}}</span>
-                      <input type="hidden" id="AP_sno_{{i}}" value="{{i}}">
-                      <input type="hidden" id="quotationChildId_{{i}}" value="{{list.billChildid}}">
-
-                    </td>
-                    <td>
-                      <span>{{list.productName}}</span>
-                      <input type="hidden" id="AP_productName_{{i}}" value="{{list.productName}}">
-                    </td>
-                    <td>
-                      <span>{{list.productDesc}}</span>
-                      <input type="hidden" id="AP_productDescription_{{i}}" value="{{list.productDesc}}">
-                    </td>
-                    <td>
-                      <span>{{list.quantity}}</span>
-                      <input type="hidden" id="product_qty_{{i}}" value="{{list.quantity}}">
-
-                    </td>
-
-
-                    <td>
-                      <span> {{list.unit}}</span>
-                      <input type="hidden" id="product_unit{{i}}" value="{{list.unit}}">
-
-
-                    </td>
-                    <td *ngIf="list.productName=='Courier' || list.productName=='Other'">
-                      <!-- <input type="hidden" id="product_rate_{{i}}" value="{{list.price}}" > -->
-                      <input type="hidden" id="invisiable_state_{{i}}" value="{{list.invisiable_state}}">
-                      <input type="text" id="price_{{i}}" value="0" (keyup)="get_actual_total()" class="form-control" />
-                      <input type="hidden" name="product_rate_334837" id="product_rate_{{i}}">
-                    </td>
-
-
-                    <td *ngIf="list.productName!='Courier' && list.productName!='Other'">
-                      <input type="hidden" id="invisiable_state_{{i}}" value="{{list.invisiable_state}}">
-                      <span>{{ list.rate}}</span>
-
-                      <!-- <span>{{ list.totat_amt}}</span> just modified for net total  -->
-                      <input type="hidden" id="product_rate_{{i}}" value="{{list.rate}}">
-                    </td>
-
-                    <td>
-
-                      <span>{{list.net_amt}}</span>
-                      <input type="hidden" id="product_net_amt_{{i}}" value="{{list.net_amt}}"
-                        (keyup)="get_actual_total()" />
-                    </td>
-
-                    <td>
-                      <input type="text" style="width: 50%;margin: 5px auto;" id="actual_percentage_{{i}}"
-                        class="form-control" (keyup)="get_actual_total()" value="{{list.actual_percentage}}" />
-
-                    </td>
-
-                    <td>
-                      <input type="text" style="width: 50%;margin: 5px auto;" class="form-control"
-                        id="actual_cost_{{i}}" value="{{list.actual_cost}}" (keyup)="get_actual_total()" />
-
-                    </td>
-
-                    <td>
-                      <input type="text" style="width: 50%;margin: 5px auto;" class="form-control"
-                        id="actual_net_tot_{{i}}" (keyup)="get_actual_total()" value="{{ list.actual_net_tot}}" />
-
-                    </td>
-                    <td>
-                      <input type="text" style="width: 50%;margin: 5px auto;" class="form-control"
-                        id="act_diff_amt_{{i}}" value="{{ list.act_diff_amt}}" />
-
-                    </td>
-                  </tr>
-
-
-                </tbody>
-                <tfoot>
-                  <tr>
-
-                    <td valign="top" bgcolor="#FFFFF" colspan="6" align="left"
-                      style="border-bottom:none; border:1px solid #d0d0d0; text-align: end;     padding: 0px 15px!important;">
-                      <input type="hidden" name="quotationChildId_count" id="quotationChildId_count"
-                        value="{{this.quotationChildId_count}}">
-                      <strong>Total</strong>
-                    </td>
+  <!----------Reseller Commission Details END ------------------>
 
 
 
+  <!----------Modal Pop Up (BEGIN)  for set actual cost in customer Contract------------------>
+  <div class="modal fade" id="setActualCostId_inv" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class=" col-12 modal-title text-center" id="invoiceAttachModalLongTitle">Actual Price Update
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body quotationsharedCSS">
+          <form [formGroup]="setActualCostForm">
 
-                    <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
-                      <strong>0</strong>
-                    </td>
 
-                    <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
-                      &nbsp;</td>
-
-                    <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
-                      <strong><span id="actual_cost_tot">0</span></strong>
-                    </td>
-
-                    <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
-                      <strong><span id="actual_net_tot">0</span></strong>
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive ">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
 
 
-                    </td>
-                    <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
-                      <strong><span id="act_diff_amt_tot">0</span></strong>
-                    </td>
-                  </tr>
-                </tfoot>
-              </table>
+                      <th>
+                        <span class="userDatatable-title">S.No</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Description</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Quantity</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Unit</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Price</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Net Total</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Act Price(%)</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Act Price</span>
+                      </th>
+
+                      <th>
+                        <span class="userDatatable-title">Act Net Total</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Diff Amt</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <tr *ngFor="let list of actualCost_ProductList ; let i = 'index+1'">
+
+
+                      <td>
+
+                        <span> {{i}}</span>
+                        <input type="hidden" id="AP_sno_{{i}}" value="{{i}}">
+                        <input type="hidden" id="quotationChildId_{{i}}" value="{{list.billChildid}}">
+
+                      </td>
+                      <td>
+                        <span>{{list.productName}}</span>
+                        <input type="hidden" id="AP_productName_{{i}}" value="{{list.productName}}">
+                      </td>
+                      <td>
+                        <span>{{list.productDesc}}</span>
+                        <input type="hidden" id="AP_productDescription_{{i}}" value="{{list.productDesc}}">
+                      </td>
+                      <td>
+                        <span>{{list.quantity}}</span>
+                        <input type="hidden" id="product_qty_{{i}}" value="{{list.quantity}}">
+
+                      </td>
+
+
+                      <td>
+                        <span> {{list.unit}}</span>
+                        <input type="hidden" id="product_unit{{i}}" value="{{list.unit}}">
+
+
+                      </td>
+                      <td *ngIf="list.productName=='Courier' || list.productName=='Other'">
+                        <!-- <input type="hidden" id="product_rate_{{i}}" value="{{list.price}}" > -->
+                        <input type="hidden" id="invisiable_state_{{i}}" value="{{list.invisiable_state}}">
+                        <input type="text" id="price_{{i}}" value="0" (keyup)="get_actual_total()"
+                          class="form-control" />
+                        <input type="hidden" name="product_rate_334837" id="product_rate_{{i}}">
+                      </td>
+
+
+                      <td *ngIf="list.productName!='Courier' && list.productName!='Other'">
+                        <input type="hidden" id="invisiable_state_{{i}}" value="{{list.invisiable_state}}">
+                        <span>{{ list.rate}}</span>
+
+                        <!-- <span>{{ list.totat_amt}}</span> just modified for net total  -->
+                        <input type="hidden" id="product_rate_{{i}}" value="{{list.rate}}">
+                      </td>
+
+                      <td>
+
+                        <span>{{list.net_amt}}</span>
+                        <input type="hidden" id="product_net_amt_{{i}}" value="{{list.net_amt}}"
+                          (keyup)="get_actual_total()" />
+                      </td>
+
+                      <td>
+                        <input type="text" style="width: 50%;margin: 5px auto;" id="actual_percentage_{{i}}"
+                          class="form-control" (keyup)="get_actual_total()" value="{{list.actual_percentage}}" />
+
+                      </td>
+
+                      <td>
+                        <input type="text" style="width: 50%;margin: 5px auto;" class="form-control"
+                          id="actual_cost_{{i}}" value="{{list.actual_cost}}" (keyup)="get_actual_total()" />
+
+                      </td>
+
+                      <td>
+                        <input type="text" style="width: 50%;margin: 5px auto;" class="form-control"
+                          id="actual_net_tot_{{i}}" (keyup)="get_actual_total()" value="{{ list.actual_net_tot}}" />
+
+                      </td>
+                      <td>
+                        <input type="text" style="width: 50%;margin: 5px auto;" class="form-control"
+                          id="act_diff_amt_{{i}}" value="{{ list.act_diff_amt}}" />
+
+                      </td>
+                    </tr>
+
+
+                  </tbody>
+                  <tfoot>
+                    <tr>
+
+                      <td valign="top" bgcolor="#FFFFF" colspan="6" align="left"
+                        style="border-bottom:none; border:1px solid #d0d0d0; text-align: end;     padding: 0px 15px!important;">
+                        <input type="hidden" name="quotationChildId_count" id="quotationChildId_count"
+                          value="{{this.quotationChildId_count}}">
+                        <strong>Total</strong>
+                      </td>
+
+
+
+
+                      <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
+                        <strong>0</strong>
+                      </td>
+
+                      <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
+                        &nbsp;</td>
+
+                      <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
+                        <strong><span id="actual_cost_tot">0</span></strong>
+                      </td>
+
+                      <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
+                        <strong><span id="actual_net_tot">0</span></strong>
+
+
+                      </td>
+                      <td valign="top" bgcolor="#FFFFF" style="border-bottom:none; border:1px solid #d0d0d0">
+                        <strong><span id="act_diff_amt_tot">0</span></strong>
+                      </td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
             </div>
-          </div>
 
 
-        </form>
-      </div>
-      <div class="modal-footer">
+          </form>
+        </div>
+        <div class="modal-footer">
 
-        <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
-          Save
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Close
-        </button>
+          <button type="button" class="btn btn-primary" (click)="setActualCostSave()">
+            Save
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
+  <!----------Modal Pop Up (END)  for set actual cost in customer Contract------------------>
 
-<!-----------------Modal Pop Up (BEGIN) Licence Details ------------------>
-<div class="modal fade" id="LicenseDetailsFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Licence Details
-        </h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body quotationsharedCSS">
-        <!-- <form [formGroup]="LicenseDetailsForm"> -->
-        <div class="card-body">
-          <div class="userDatatable global-shadow border-0 bg-white w-100">
-            <div class="table-responsive">
-              <table class="table mb-0 table-borderless">
-                <thead>
-                  <tr class="userDatatable-header">
+  <!-----------------Modal Pop Up (BEGIN) Licence Details ------------------>
+  <div class="modal fade" id="LicenseDetailsFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center">Licence Details
+          </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body quotationsharedCSS">
+          <!-- <form [formGroup]="LicenseDetailsForm"> -->
+          <div class="card-body">
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
 
-                    <th>
-                      <span class="userDatatable-title">LIC CODE </span>
-                    </th>
+                      <th>
+                        <span class="userDatatable-title">LIC CODE </span>
+                      </th>
 
-                    <th>
-                      <span class="userDatatable-title">Biller</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Pur Date </span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Issue Date </span>
-                    </th>
+                      <th>
+                        <span class="userDatatable-title">Biller</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Pur Date </span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Issue Date </span>
+                      </th>
 
-                    <th>
-                      <span class="userDatatable-title">Category</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Product</span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">License Key </span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Prim Lic </span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Key Exp </span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">Email </span>
-                    </th>
-                    <th>
-                      <span class="userDatatable-title">ATTC FILE </span>
-                    </th>
+                      <th>
+                        <span class="userDatatable-title">Category</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Product</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">License Key </span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Prim Lic </span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Key Exp </span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Email </span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">ATTC FILE </span>
+                      </th>
 
 
-                    <!-- <th>
+                      <!-- <th>
                         <span class="userDatatable-title">Action</span>
                       </th> -->
-                  </tr>
-                </thead>
-                <tbody *ngFor="let list of LicenseDetailsList; let i = index">
-                  <tr>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of LicenseDetailsList; let i = index">
+                    <tr>
 
-                    <td>
-                      {{ list.license_no}}
+                      <td>
+                        {{ list.license_no}}
 
-                    </td>
-                    <td> <span><button type="button" class="buttonClass"
-                          [ngStyle]="{backgroundColor: list.colorCodes}">{{
-                          list.billerCode}}</button></span></td>
+                      </td>
+                      <td> <span><button type="button" class="buttonClass"
+                            [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                            list.billerCode}}</button></span></td>
 
-                    <!-- <td><span>{{ list.billerCode}}</span></td> -->
-                    <td><span>{{ list.lic_pur_date}}</span></td>
-                    <td><span>{{ list.issueDate}}</span></td>
-                    <td><span>{{ list.category_name}}</span></td>
-                    <td><span>{{ list.license_product_name}}</span></td>
-                    <td><span>{{ list.license_key }}</span></td>
-                    <td><span>{{ list.primary_license}}</span></td>
+                      <!-- <td><span>{{ list.billerCode}}</span></td> -->
+                      <td><span>{{ list.lic_pur_date}}</span></td>
+                      <td><span>{{ list.issueDate}}</span></td>
+                      <td><span>{{ list.category_name}}</span></td>
+                      <td><span>{{ list.license_product_name}}</span></td>
+                      <td><span>{{ list.license_key }}</span></td>
+                      <td><span>{{ list.primary_license}}</span></td>
 
-                    <td><span>{{ list.key_exp_date }}</span></td>
-                    <td><span>{{ list.activation_email}}</span></td>
-                    <td><span>{{ list.license_key_original_filename}}</span></td>
+                      <td><span>{{ list.key_exp_date }}</span></td>
+                      <td><span>{{ list.activation_email}}</span></td>
+                      <td><span>{{ list.license_key_original_filename}}</span></td>
 
-                    <!-- <td>
+                      <!-- <td>
                         <div class="page">
 
                           <div class="dropdown">
@@ -2440,286 +2426,291 @@
                           </div>
                         </div>
                       </td>   -->
-                  </tr>
+                    </tr>
 
 
-                </tbody>
-              </table>
+                  </tbody>
+                </table>
+              </div>
             </div>
+
+
+
           </div>
-
-
+          <!-- </form> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
         </div>
-        <!-- </form> -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
       </div>
     </div>
   </div>
-</div>
-<!-------------- Licence Details Pop up ends------------------------------------------>
+  <!-------------- Licence Details Pop up ends------------------------------------------>
 
 
-<!-----------------Modal Pop Up (BEGIN) add new Pop Up  in customer Contract Classification------------------>
-<div class="modal fade" id="InvoicetoQuotationFormId_inv" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content addcontractmastercss">
-      <div class="modal-header">
-        <h2 class="col-12 modal-title text-center" id="addModalLongTitle">Enquiry From Details</h2>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2> -->
-        <form [formGroup]="addNewQuotationPopUpForm" id="ngForm">
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
-                <div class="col-lg-12">
-                  <select name="enqFormValue" id="enq_From" class="form-control" formControlName="enquiryFrom_addPopUP">
-                    <option [ngValue]="null" selected>Select Enquiry From</option>
+  <!-----------------Modal Pop Up (BEGIN) add new Pop Up  in customer Contract Classification------------------>
+  <div class="modal fade" id="InvoicetoQuotationFormId_inv" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content addcontractmastercss">
+        <div class="modal-header">
+          <h2 class="col-12 modal-title text-center" id="addModalLongTitle">Enquiry From Details</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">Enquiry From Details</h2> -->
+          <form [formGroup]="addNewQuotationPopUpForm" id="ngForm">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <label for="enq_From" class="col-lg-12 col-form-label">Enquiry From</label>
+                  <div class="col-lg-12">
+                    <select name="enqFormValue" id="enq_From" class="form-control"
+                      formControlName="enquiryFrom_addPopUP">
+                      <option [ngValue]="null" selected>Select Enquiry From</option>
 
-                    <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
-                      {{term.enquiry_from_name}}
-                    </option>
+                      <option *ngFor="let term of enquiryFromList" value="{{term.enquiry_from_id}}">
+                        {{term.enquiry_from_name}}
+                      </option>
 
 
-                  </select>
-                  <div
-                    *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
-                    class="alert alert-danger alertdangerCustomCSS mt-2">
-                    * Required *
+                    </select>
+                    <div
+                      *ngIf="addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquiryFrom_addPopUP'].touched)"
+                      class="alert alert-danger alertdangerCustomCSS mt-2">
+                      * Required *
+                    </div>
                   </div>
-                </div>
 
+                </div>
               </div>
+
+
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
+                  <div class="col-lg-12">
+                    <input type="text" class="form-control" formControlName="enquirySubject_addPopUP"
+                      id="enq_subject" />
+                    <div
+                      *ngIf="addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].touched)"
+                      class="alert alert-danger alertdangerCustomCSS mt-2">
+                      * Required *
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group row">
+                  <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
+                  <div class="col-lg-12">
+                    <select name="quotValidity" id="quot_val" class="form-control"
+                      formControlName="quotationValidity_addPopUP">
+                      <option [ngValue]="null" selected>Select Quotation Validity</option>
+                      <option *ngFor="let validity of quotationValidityList" value="{{validity}}">
+                        {{validity}}
+                      </option>
+                    </select>
+                    <div
+                      *ngIf="addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].dirty || addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].touched)"
+                      class="alert alert-danger alertdangerCustomCSS mt-2">
+                      * Required *
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+
+
             </div>
 
+          </form>
 
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="enq_subject" class="col-lg-12 col-form-label">Enquiry Subject</label>
-                <div class="col-lg-12">
-                  <input type="text" class="form-control" formControlName="enquirySubject_addPopUP" id="enq_subject" />
-                  <div
-                    *ngIf="addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].dirty || addNewQuotationPopUpForm.controls['enquirySubject_addPopUP'].touched)"
-                    class="alert alert-danger alertdangerCustomCSS mt-2">
-                    * Required *
-                  </div>
-                </div>
+        </div>
+        <div class="modal-footer">
 
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="form-group row">
-                <label for="quot_val" class="col-lg-12 col-form-label">Quotation Validity (Days)</label>
-                <div class="col-lg-12">
-                  <select name="quotValidity" id="quot_val" class="form-control"
-                    formControlName="quotationValidity_addPopUP">
-                    <option [ngValue]="null" selected>Select Quotation Validity</option>
-                    <option *ngFor="let validity of quotationValidityList" value="{{validity}}">
-                      {{validity}}
-                    </option>
-                  </select>
-                  <div
-                    *ngIf="addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].invalid && (addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].dirty || addNewQuotationPopUpForm.controls['quotationValidity_addPopUP'].touched)"
-                    class="alert alert-danger alertdangerCustomCSS mt-2">
-                    * Required *
-                  </div>
-                </div>
-
-              </div>
-            </div>
+          <button type="submit" class="btn btn-primary" form="ngForm"
+            (click)=" invoicetoQuotationSave()">Inv->Quot</button>
 
 
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Cancel
+          </button>
 
-          </div>
-
-        </form>
-
-      </div>
-      <div class="modal-footer">
-
-        <button type="submit" class="btn btn-primary" form="ngForm"
-          (click)=" invoicetoQuotationSave()">Inv->Quot</button>
-
-
-        <button type="button" class="btn btn-dark" data-dismiss="modal">
-          Cancel
-        </button>
-
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-------------- vignesh Add New Quotation Pop up ends------------------------------------------>
+  <!-------------- vignesh Add New Quotation Pop up ends------------------------------------------>
 
 
 
 
-<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
-<div class="modal fade" id="searchInvoiceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content searchQuotationCSS">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced Search
-        </h2>
+  <!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+  <div class="modal fade" id="searchInvoiceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced
+            Search
+          </h2>
 
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="searchInvoiceForm">
-          <div class="row">
-            <div class="col-lg-3 searchScrollCss">
-              <div class="form-group">
-                <label for="temp5" class="col-lg-12 ">Biller Name</label>
-                <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
-                  <input type="checkbox" id="{{biller.billerId}}" [value]="biller.billerId"
-                    checked="{{biller.chk_val=='true' ? 'checked':''}}"
-                    (change)="searchBillerNameCHK(biller.billerId,$event)">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="searchInvoiceForm">
+            <div class="row">
+              <div class="col-lg-3 searchScrollCss">
+                <div class="form-group">
+                  <label for="temp5" class="col-lg-12 ">Biller Name</label>
+                  <div class="col-lg-12 " *ngFor="let biller of biller_list;let i =index">
+                    <input type="checkbox" id="{{biller.billerId}}" [value]="biller.billerId"
+                      checked="{{biller.chk_val=='true' ? 'checked':''}}"
+                      (change)="searchBillerNameCHK(biller.billerId,$event)">
 
 
-                  {{biller.billerName}}
+                    {{biller.billerName}}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-3">
-              <div class="form-group row">
-                <div class="ng-autocomplete">
-                  <label for="companyName" class="col-lg-12 ">Search Text</label>
-                  <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
-                    formControlName="company_Name" (selected)='selectEventCustomer($event)'
-                    (inputChanged)='searchCustomerData($event)' (keyup)="keysearch($event)"
-                    (inputCleared)="clearSelection($event)" (inputFocused)='onFocusedCustomer($event)'
-                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
-                  </ng-autocomplete>
-                  <!-- <div class="x ng-star-inserted" (click)="clearSelection()"><i aria-label="Close" class="material-icons">close</i></div> -->
+              <div class="col-lg-3">
+                <div class="form-group row">
+                  <div class="ng-autocomplete">
+                    <label for="companyName" class="col-lg-12 ">Search Text</label>
+                    <ng-autocomplete [data]="searchResult" [searchKeyword]="keywordCompanyName"
+                      formControlName="company_Name" (selected)='selectEventCustomer($event)'
+                      (inputChanged)='searchCustomerData($event)' (keyup)="keysearch($event)"
+                      (inputCleared)="clearSelection($event)" (inputFocused)='onFocusedCustomer($event)'
+                      [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                    </ng-autocomplete>
+                    <!-- <div class="x ng-star-inserted" (click)="clearSelection()"><i aria-label="Close" class="material-icons">close</i></div> -->
 
-                  <ng-template #itemTemplateCustomer let-item>
-                    <a [innerHTML]="item.customerName"></a>
-                  </ng-template>
+                    <ng-template #itemTemplateCustomer let-item>
+                      <a [innerHTML]="item.customerName"></a>
+                    </ng-template>
 
-                  <ng-template #notFoundTemplate let-notFound>
-                    <div [innerHTML]="notFound"></div>
-                  </ng-template>
-                </div>
+                    <ng-template #notFoundTemplate let-notFound>
+                      <div [innerHTML]="notFound"></div>
+                    </ng-template>
+                  </div>
 
-              </div>
-            </div>
-            <div class="col-lg-2 searchScrollCss">
-              <div class="form-group">
-                <label for="temp1" class="col-lg-12 ">Years</label>
-                <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
-                  <input type="checkbox" id="{{yrs.year}}" [value]="yrs.year" [checked]="yrs.chk_val === 'true'"
-                    (change)="yearsCHK(yrs.year,$event)">
-
-                  {{yrs.year}}
-                </div>
-
-              </div>
-            </div>
-            <div class="col-lg-2 searchScrollCss">
-              <div class="form-group">
-                <label for="temp1" class="col-lg-12 ">Invoice Type</label>
-                <div class="col-lg-12">
-                  <select id="Payment" class="form-control" formControlName="InvType" (change)="dynamicChange($event)">
-                    <option [ngValue]="null" selected>Select Invoice Type</option>
-                    <option *ngFor="let exp of exportState_Radio" value="{{exp.id}}">
-                      {{exp.name}}
-                    </option>
-                  </select>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-2 searchScrollCss">
-              <div class="form-group">
-                <label for="temp1" class="col-lg-12 ">Others</label>
-                <!-- <div class="col-lg-12 " *ngFor="let srs of searchOthers;let i =index">
+              <div class="col-lg-2 searchScrollCss">
+                <div class="form-group">
+                  <label for="temp1" class="col-lg-12 ">Years</label>
+                  <div class="col-lg-12 " *ngFor="let yrs of yearsList;let i =index">
+                    <input type="checkbox" id="{{yrs.year}}" [value]="yrs.year" [checked]="yrs.chk_val === 'true'"
+                      (change)="yearsCHK(yrs.year,$event)">
+
+                    {{yrs.year}}
+                  </div>
+
+                </div>
+              </div>
+              <div class="col-lg-2 searchScrollCss">
+                <div class="form-group">
+                  <label for="temp1" class="col-lg-12 ">Invoice Type</label>
+                  <div class="col-lg-12">
+                    <select id="Payment" class="form-control" formControlName="InvType"
+                      (change)="dynamicChange($event)">
+                      <option [ngValue]="null" selected>Select Invoice Type</option>
+                      <option *ngFor="let exp of exportState_Radio" value="{{exp.id}}">
+                        {{exp.name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-2 searchScrollCss">
+                <div class="form-group">
+                  <label for="temp1" class="col-lg-12 ">Others</label>
+                  <!-- <div class="col-lg-12 " *ngFor="let srs of searchOthers;let i =index">
                   
                   <input type="checkbox" id="{{srs}}"
                   formControlName="others"  (change)="SearchOtherCheckAllCHK(srs,$event)">
                   {{srs}}
                 </div> -->
-                <div class="col-lg-12 ">
+                  <div class="col-lg-12 ">
 
-                  <input type="checkbox" formControlName="recurring_only" (change)="recurring_onlyCHK($event)">
-                  Select Recurring Only<br>
-                  <input type="checkbox" formControlName="dont_select_did_invoice"
-                    (change)="dont_select_did_invoiceCHK($event)">
-                  Don't Select DID Invoice <br>
-                  <input type="checkbox" formControlName="RevenueTypeWiseShow"
-                    (change)="RevenueTypeWiseShowCHK($event)">
-                  Revenue Type Wise Show
-                </div>
-                <div class="col-lg-12" *ngIf="(CBV_RevenueTypeWiseShow==true)">
-                  <select id="revenueType" class="form-control" (change)="handleChange_RevenueTypeWiseShow($event)"
-                    formControlName="revenueTypewiseCBKshow">
-                    <option [ngValue]="null" selected>Select Invoice Type</option>
-                    <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
-                      {{rev.revenue_type_name}}
-                    </option>
-                  </select>
+                    <input type="checkbox" formControlName="recurring_only" (change)="recurring_onlyCHK($event)">
+                    Select Recurring Only<br>
+                    <input type="checkbox" formControlName="dont_select_did_invoice"
+                      (change)="dont_select_did_invoiceCHK($event)">
+                    Don't Select DID Invoice <br>
+                    <input type="checkbox" formControlName="RevenueTypeWiseShow"
+                      (change)="RevenueTypeWiseShowCHK($event)">
+                    Revenue Type Wise Show
+                  </div>
+                  <div class="col-lg-12" *ngIf="(CBV_RevenueTypeWiseShow==true)">
+                    <select id="revenueType" class="form-control" (change)="handleChange_RevenueTypeWiseShow($event)"
+                      formControlName="revenueTypewiseCBKshow">
+                      <option [ngValue]="null" selected>Select Invoice Type</option>
+                      <option *ngFor="let rev of revenueTypeList" value="{{rev.revenue_type_id}}">
+                        {{rev.revenue_type_name}}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
+
+
+
+
             </div>
+          </form>
 
+        </div>
+        <div class="modal-footer">
 
-
-
-          </div>
-        </form>
-
-      </div>
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-primary" (click)="getSearch1();getInvoice1({});">
-          Search
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearSearch()">
-          Close
-        </button>
+          <button type="button" class="btn btn-primary" (click)="getSearch1();getInvoice1({});">
+            Search
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal" (click)="clearSearch()">
+            Close
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
+  <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
 
-<!----------Modal Pop Up (BEGIN)  for suspend invoice ------------------>
-<div class="modal fade" id="suspendInvoiceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content searchQuotationCSS">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Suspend Invoice
-          List
-        </h2>
+  <!----------Modal Pop Up (BEGIN)  for suspend invoice ------------------>
+  <div class="modal fade" id="suspendInvoiceFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Suspend
+            Invoice
+            List
+          </h2>
 
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
 
-        <div class="userDatatable global-shadow border-0 bg-white w-100">
-          <div class="table-responsive">
-            <table class="table mb-0 table-borderless">
-              <thead>
-                <tr class="userDatatable-header">
-                  <th style="width: 5%;">
-                    <!-- <div class="d-flex align-items-center">
+          <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="table-responsive">
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+                    <th style="width: 5%;">
+                      <!-- <div class="d-flex align-items-center">
                         <div class="custom-checkbox  check-all">
                             <input class="checkbox" type="checkbox" id="check-3"
                                 (change)="selectAll($event)">
@@ -2728,194 +2719,194 @@
                             </label>
                         </div>
                     </div> -->
-                  </th>
-                  <th style="width: 5%;">
-                    <span class="userDatatable-title">Serial No</span>
-                  </th>
+                    </th>
+                    <th style="width: 5%;">
+                      <span class="userDatatable-title">Serial No</span>
+                    </th>
 
-                  <th style="width: 10%;">
-                    <span class="userDatatable-title">Invoice No</span>
-                  </th>
+                    <th style="width: 10%;">
+                      <span class="userDatatable-title">Invoice No</span>
+                    </th>
 
-                  <th style="width: 10%;">
-                    <span class="userDatatable-title">Customer Invoice No</span>
-                  </th>
-                  <th style="width: 10%;">
-                    <span class="userDatatable-title">Date</span>
-                  </th>
-                  <th style="width: 30%;">
-                    <span class="userDatatable-title">Customer Name</span>
-                  </th>
+                    <th style="width: 10%;">
+                      <span class="userDatatable-title">Customer Invoice No</span>
+                    </th>
+                    <th style="width: 10%;">
+                      <span class="userDatatable-title">Date</span>
+                    </th>
+                    <th style="width: 30%;">
+                      <span class="userDatatable-title">Customer Name</span>
+                    </th>
 
-                  <th style="width: 10%;">
-                    <span class="userDatatable-title">Total</span>
-                  </th>
-                  <th style="width: 8%;">
-                    <span class="userDatatable-title">Currency</span>
-                  </th>
+                    <th style="width: 10%;">
+                      <span class="userDatatable-title">Total</span>
+                    </th>
+                    <th style="width: 8%;">
+                      <span class="userDatatable-title">Currency</span>
+                    </th>
 
-                  <th style="width: 8%;">
-                    <span class="userDatatable-title">Generated By</span>
-                  </th>
+                    <th style="width: 8%;">
+                      <span class="userDatatable-title">Generated By</span>
+                    </th>
 
 
 
-                  <th style="width: 8%;">
-                    <span class="userDatatable-title">Action</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
+                    <th style="width: 8%;">
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
 
-                <tr *ngFor="let list1 of suspendList; let i = index">
-                  <td>
-                    <div class="d-flex">
-                      <div class="userDatatable__imgWrapper d-flex align-items-center">
-                        <div class="checkbox-group-wrapper">
-                          <div class="checkbox-group d-flex">
-                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                              <input class="checkbox" type="checkbox" id="check-grp-suspend-{{i}}"
-                                (change)=" EditCHKAllSuspend(list1.billId,$event)">
-                              <label for="check-grp-suspend-{{i}}"></label>
+                  <tr *ngFor="let list1 of suspendList; let i = index">
+                    <td>
+                      <div class="d-flex">
+                        <div class="userDatatable__imgWrapper d-flex align-items-center">
+                          <div class="checkbox-group-wrapper">
+                            <div class="checkbox-group d-flex">
+                              <div class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
+                                <input class="checkbox" type="checkbox" id="check-grp-suspend-{{i}}"
+                                  (change)=" EditCHKAllSuspend(list1.billId,$event)">
+                                <label for="check-grp-suspend-{{i}}"></label>
+                              </div>
                             </div>
                           </div>
                         </div>
+
                       </div>
-
-                    </div>
-                  </td>
-                  <td><span>{{ i+1}}</span></td>
-                  <td>
-                    <span>{{ list1.invoice_no}}</span>
-                  </td>
-                  <td><span>{{ list1.cus_invoice_no}}</span></td>
-                  <td><span>{{ list1.billlDate}}</span></td>
-                  <td><span>{{ list1.customerName}}</span></td>
-                  <td><span>{{ list1.netPayment}}</span></td>
-                  <td>
-                    <span>{{ list1.currency_name}}</span>
+                    </td>
+                    <td><span>{{ i+1}}</span></td>
+                    <td>
+                      <span>{{ list1.invoice_no}}</span>
+                    </td>
+                    <td><span>{{ list1.cus_invoice_no}}</span></td>
+                    <td><span>{{ list1.billlDate}}</span></td>
+                    <td><span>{{ list1.customerName}}</span></td>
+                    <td><span>{{ list1.netPayment}}</span></td>
+                    <td>
+                      <span>{{ list1.currency_name}}</span>
 
 
-                  </td>
+                    </td>
 
 
 
-                  <td><span>{{ list1.user_name}}</span></td>
+                    <td><span>{{ list1.user_name}}</span></td>
 
-                  <td>
-                    <div class="page">
+                    <td>
+                      <div class="page">
 
-                      <div style="text-align: center;">
-                        <a (click)="deletesuspendInvoice(list1.billId)">
-                          <img src="assets/img/icon2/delete-blue.png" style="width:30px">
-                          <!-- <img class="hide" src="assets/img/icon2/delete-black.png"> -->
+                        <div style="text-align: center;">
+                          <a (click)="deletesuspendInvoice(list1.billId)">
+                            <img src="assets/img/icon2/delete-blue.png" style="width:30px">
+                            <!-- <img class="hide" src="assets/img/icon2/delete-black.png"> -->
 
 
-                        </a>
+                          </a>
+                        </div>
+
                       </div>
-
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
 
 
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
+
         </div>
+        <div class="modal-footer">
+          <div class="quotation-btn-section">
 
-      </div>
-      <div class="modal-footer">
-        <div class="quotation-btn-section">
-
-          <button type="button" class="btn btn-primary btn-default btn-squared" (click)="deleteAllsuspendInvoice()"
-            style="margin-right: 10px;"><i class="fas fa-trash" style="margin-right:10;"></i>Delete All
-          </button>
+            <button type="button" class="btn btn-primary btn-default btn-squared" (click)="deleteAllsuspendInvoice()"
+              style="margin-right: 10px;"><i class="fas fa-trash" style="margin-right:10;"></i>Delete All
+            </button>
 
 
-          <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
-            style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
-          </button>
+            <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
+              style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
+            </button>
+          </div>
+
+
         </div>
-
-
       </div>
     </div>
   </div>
-</div>
-<!----------Modal Pop Up (END)  for suspend invoice  ------------------>
+  <!----------Modal Pop Up (END)  for suspend invoice  ------------------>
 
 
 
-<!----------Modal Pop Up (BEGIN)  for Monthly Turn Over Chart ------------------>
-<div class="modal fade" id="monthlyTurnOverChartFormId" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content searchQuotationCSS">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Monthly Turn
-          Over
-        </h2>
+  <!----------Modal Pop Up (BEGIN)  for Monthly Turn Over Chart ------------------>
+  <div class="modal fade" id="monthlyTurnOverChartFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Monthly Turn
+            Over
+          </h2>
 
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <div>
-          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <div class="quotation-btn-section">
-
-          <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
-            style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <div class="modal-body">
+
+          <div>
+            <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <div class="quotation-btn-section">
+
+            <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
+              style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
+            </button>
+          </div>
 
 
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!----------Modal Pop Up (END)  for Monthly Turn Over Chart  ------------------>
+  <!----------Modal Pop Up (END)  for Monthly Turn Over Chart  ------------------>
 
-<!----------Modal Pop Up (BEGIN)  for Daily Payment Chart ------------------>
-<div class="modal fade" id="DailyPaymentChartFormId" tabindex="-1" role="dialog"
-  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-    <div class="modal-content searchQuotationCSS">
-      <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Daily Payment
-        </h2>
+  <!----------Modal Pop Up (BEGIN)  for Daily Payment Chart ------------------>
+  <div class="modal fade" id="DailyPaymentChartFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+          <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Daily Payment
+          </h2>
 
 
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-
-        <div>
-          <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>
-        </div>
-
-      </div>
-      <div class="modal-footer">
-        <div class="quotation-btn-section">
-
-          <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
-            style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
           </button>
         </div>
+        <div class="modal-body">
+
+          <div>
+            <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'560px'}"></canvasjs-chart>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <div class="quotation-btn-section">
+
+            <button type="button" class="btn btn-dark btn-default btn-squared" data-dismiss="modal"
+              style="margin-right: 10px;"><i class="fas fa-window-close" style="margin-right:10;"></i>Close
+            </button>
+          </div>
 
 
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!----------Modal Pop Up (END)  for Daily Payment Chart  ------------------>
+  <!----------Modal Pop Up (END)  for Daily Payment Chart  ------------------>
