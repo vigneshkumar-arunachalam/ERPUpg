@@ -41,14 +41,14 @@ export class EditRateCatalogComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(params => {
-    this.ProductCategoryNameList();
+        this.ProductCategoryNameList();
 
         this.EditIDstock_inv_rpt_id = params['stock_inv_catelog_id'];
-        console.log("receiving to edit",this.EditIDstock_inv_rpt_id );
+        console.log("receiving to edit", this.EditIDstock_inv_rpt_id);
         setTimeout(() => {
-           this.viewEditList();
+          this.viewEditList();
         }, 2000);
-       
+
       }
       );
 
@@ -68,7 +68,7 @@ export class EditRateCatalogComponent implements OnInit {
   createAddress(): FormGroup {
     return this.fb.group({
       // customer_id:'',
-      stockInvCatelogId: '',
+      stock_inv_catelog_id: '',
       productcategory1: '',
       productcategory2: '',
       productcategory3: '',
@@ -84,25 +84,25 @@ export class EditRateCatalogComponent implements OnInit {
       productQtyFontSize1: '',
       productQtyFontSize2: '',
       productQtyFontSize3: '',
-      productConvColor1:'',
-      product10Color1:'',
-      product20Color1:'',
-      product30Color1:'',
-      product40Color1:'',
-      product50Color1:'',
-      productConvColor2:'',
-      product10Color2:'',
-      product20Color2:'',
-      product30Color2:'',
-      product40Color2:'',
-      product50Color2:'',
-      productConvColor3:'',
-      product10Color3:'',
-      product20Color3:'',
-      product30Color3:'',
-      product40Color3:'',
-      product50Color3:'',
-   
+      productConvColor1: '',
+      product10Color1: '',
+      product20Color1: '',
+      product30Color1: '',
+      product40Color1: '',
+      product50Color1: '',
+      productConvColor2: '',
+      product10Color2: '',
+      product20Color2: '',
+      product30Color2: '',
+      product40Color2: '',
+      product50Color2: '',
+      productConvColor3: '',
+      product10Color3: '',
+      product20Color3: '',
+      product30Color3: '',
+      product40Color3: '',
+      product50Color3: '',
+
     });
   }
 
@@ -144,7 +144,7 @@ export class EditRateCatalogComponent implements OnInit {
 
   }
   viewEditList() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
     api_req.moduleType = "inventory_catelog_stock";
@@ -158,55 +158,56 @@ export class EditRateCatalogComponent implements OnInit {
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
+    
       if (response.status == 'success') {
 
         this.spinner.hide();
-  
+
 
         const formArray = new FormArray([]);
 
-             
-          formArray.push(this.fb.group({
-              "productcategory1": response.data.category_id_1,
-             "productColor1": response.data.category_color_1,
-             "productFontSize1": response.data.category_fontsize_1,
-             "productQtyColor1": response.data.pur_color_1,
-             "productQtyFontSize1": response.data.pur_fontsize_1,
-             "productConvColor1": response.data.conv_color_1,
-             "product10Color1": response.data.price_color_1_10,
-             "product20Color1": response.data.price_color_1_20,
-             "product30Color1": response.data.price_color_1_30,
-             "product40Color1": response.data.price_color_1_40,
-             "product50Color1": response.data.price_color_1_50,
 
-             "productcategory2": response.data.category_id_2,
-             "productColor2": response.data.category_color_2,
-             "productFontSize2": response.data.category_fontsize_2,
-             "productQtyColor2": response.data.pur_color_2,
-             "productQtyFontSize2": response.data.pur_fontsize_2,
-             "productConvColor2": response.data.conv_color_2,
-             "product10Color2": response.data.price_color_2_10,
-             "product20Color2": response.data.price_color_2_20,
-             "product30Color2": response.data.price_color_2_30,
-             "product40Color2": response.data.price_color_2_40,
-             "product50Color2": response.data.price_color_2_50,
+        formArray.push(this.fb.group({
+          "productcategory1": response.data.category_id_1,
+          "productColor1": response.data.category_color_1,
+          "productFontSize1": response.data.category_fontsize_1,
+          "productQtyColor1": response.data.pur_color_1,
+          "productQtyFontSize1": response.data.pur_fontsize_1,
+          "productConvColor1": response.data.conv_color_1,
+          "product10Color1": response.data.price_color_1_10,
+          "product20Color1": response.data.price_color_1_20,
+          "product30Color1": response.data.price_color_1_30,
+          "product40Color1": response.data.price_color_1_40,
+          "product50Color1": response.data.price_color_1_50,
 
-             "productcategory3": response.data.category_id_3,
-             "productColor3": response.data.category_color_3,
-             "productFontSize3": response.data.category_fontsize_3,
-             "productQtyColor3": response.data.pur_color_3,
-             "productQtyFontSize3": response.data.pur_fontsize_3,
-             "productConvColor3": response.data.conv_color_3,
-             "product10Color3": response.data.price_color_3_10,
-             "product20Color3": response.data.price_color_3_20,
-             "product30Color3": response.data.price_color_3_30,
-             "product40Color3": response.data.price_color_3_40,
-             "product50Color3": response.data.price_color_3_50,
+          "productcategory2": response.data.category_id_2,
+          "productColor2": response.data.category_color_2,
+          "productFontSize2": response.data.category_fontsize_2,
+          "productQtyColor2": response.data.pur_color_2,
+          "productQtyFontSize2": response.data.pur_fontsize_2,
+          "productConvColor2": response.data.conv_color_2,
+          "product10Color2": response.data.price_color_2_10,
+          "product20Color2": response.data.price_color_2_20,
+          "product30Color2": response.data.price_color_2_30,
+          "product40Color2": response.data.price_color_2_40,
+          "product50Color2": response.data.price_color_2_50,
 
-          })
+          "productcategory3": response.data.category_id_3,
+          "productColor3": response.data.category_color_3,
+          "productFontSize3": response.data.category_fontsize_3,
+          "productQtyColor3": response.data.pur_color_3,
+          "productQtyFontSize3": response.data.pur_fontsize_3,
+          "productConvColor3": response.data.conv_color_3,
+          "product10Color3": response.data.price_color_3_10,
+          "product20Color3": response.data.price_color_3_20,
+          "product30Color3": response.data.price_color_3_30,
+          "product40Color3": response.data.price_color_3_40,
+          "product50Color3": response.data.price_color_3_50,
+          "stock_inv_catelog_id": response.data.stock_inv_catelog_id,
 
-          );  
+        })
+
+        );
 
         this.addPI_section2.setControl('addresses', formArray);
 
@@ -228,40 +229,15 @@ export class EditRateCatalogComponent implements OnInit {
 
   }
   update(i: any) {
-
-
     this.spinner.show();
     let api_req: any = new Object();
     let api_mulInvpay: any = new Object();
     api_req.moduleType = "inventory_catelog_stock";
-    api_req.api_url = "inventory_catelog_stock/insert"
+    api_req.api_url = "inventory_catelog_stock/update"
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_mulInvpay.action = "inventory_catelog_stock/insert";
+    api_mulInvpay.action = "inventory_catelog_stock/update";
     api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
-    // api_mulInvpay.customerId = this.addPI_section2.value.addresses[0].customer_name.customerId;
-
-    // const addressesArray = this.addPI_section2.get('addresses') as FormArray;
-    // const addressDataAtIndex = addressesArray.at(i).value; // Get data at index i
-
-    // api_mulInvpay.category_id_1 = addressDataAtIndex.productcategory1;
-    // api_mulInvpay.category_color_1 = addressDataAtIndex.productColor1;
-    // api_mulInvpay.category_fontsize_1 = addressDataAtIndex.productFontSize1;
-    // api_mulInvpay.qty_color_1 = addressDataAtIndex.productQtyColor1;
-    // api_mulInvpay.qty_fontsize_1 = addressDataAtIndex.productQtyFontSize1;
-
-    // api_mulInvpay.category_id_2 = addressDataAtIndex.productcategory2;
-    // api_mulInvpay.category_color_2 = addressDataAtIndex.productColor2;
-    // api_mulInvpay.category_fontsize_2 = addressDataAtIndex.productFontSize2;
-    // api_mulInvpay.qty_color_2 = addressDataAtIndex.productQtyColor2;
-    // api_mulInvpay.qty_fontsize_2 = addressDataAtIndex.productQtyFontSize2;
-
-    // api_mulInvpay.category_id_3 = addressDataAtIndex.productcategory3;
-    // api_mulInvpay.category_color_3 = addressDataAtIndex.productColor3;
-    // api_mulInvpay.category_fontsize_3 = addressDataAtIndex.productFontSize3;
-    // api_mulInvpay.qty_color_3 = addressDataAtIndex.productQtyColor3;
-    // api_mulInvpay.qty_fontsize_3 = addressDataAtIndex.productQtyFontSize3;
-
 
     var addr = this.addPI_section2.value.addresses;
 
@@ -269,8 +245,8 @@ export class EditRateCatalogComponent implements OnInit {
     for (let i = 0; i < addr.length; i++) {
 
       // console.log(addr[i].pd_quantity_txtbox1)
-      
-      addr[i].stock_inv_catelog_id = $('#pd_stockInvCatelogId' + i).val();
+      // stock_inv_catelog_id
+      // addr[i].stock_inv_catelog_id = $('#pd_stockInvCatelogId' + i).val();
       addr[i].category_id_1 = $('#pd_category1' + i).val();
       addr[i].category_color_1 = $('#pd_productColor1' + i).val();
       addr[i].category_fontsize_1 = $('#pd_productFontSize1' + i).val();
@@ -317,12 +293,13 @@ export class EditRateCatalogComponent implements OnInit {
 
         this.router.navigate(['/rateCatalog']);
         iziToast.success({
-          message: "Saved Successfully",
+          message: "Updated Successfully",
           position: 'topRight'
         });
 
       } else {
         this.spinner.hide();
+        this.router.navigate(['/rateCatalog']);
         iziToast.warning({
           message: "Data Already Saved",
           position: 'topRight'
@@ -337,6 +314,9 @@ export class EditRateCatalogComponent implements OnInit {
         });
         console.log("final error", error);
       };
+  }
+  goBack() {
+    this.router.navigate(['/rateCatalog']);
   }
 
 }

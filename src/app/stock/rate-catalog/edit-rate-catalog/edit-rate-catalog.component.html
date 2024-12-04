@@ -69,8 +69,8 @@
                                                         <input type="color" class="form-control"
                                                             formControlName="productColor1"
                                                             id="pd_productColor1{{i}}" />
-                                                        <input type="text" class="form-control"
-                                                            formControlName="stockInvCatelogId"
+                                                        <input type="hidden" class="form-control"
+                                                            formControlName="stock_inv_catelog_id"
                                                             id="pd_stockInvCatelogId{{i}}" />
                                                     </div>
                                                 </td>
@@ -414,15 +414,15 @@
 
 
                         <hr>
-                        <div class="text-right" style="margin: 20px;">
+                        <!-- <div class="text-right" style="margin: 20px;">
                             <button type="button" class="btn btn-primary btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
                                 style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
             
-                        </div>
+                        </div> -->
                         <div class="modal-footer">
 
-                            <button type="button" class="btn btn-primary mr-4 " (click)="update(i)">Submit</button>
-                            <button type="button" class="btn btn-dark" >Cancel</button>
+                            <button type="button" class="btn btn-primary mr-4 " (click)="update(i)">Update</button>
+                            <button type="button" class="btn btn-dark" (click)="goBack()" >Cancel</button>
                         </div>
                     </ng-container>
 

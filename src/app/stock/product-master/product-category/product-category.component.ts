@@ -49,12 +49,13 @@ export class ProductCategoryComponent implements OnInit {
     });
     this.searchProductCategory = new FormGroup({
       'search_ProductCategoryName': new FormControl(null),
-
     });
 
   }
   addProdCatGo() {
-    $('#addProductCategoryFormId').modal('show');
+   
+    this.getProductCategoryCode();
+  
   }
   searchProdCatGo() {
     $('#searchProductCategoryFormId').modal('show');
@@ -112,6 +113,48 @@ export class ProductCategoryComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
+  getProductCategoryCode() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_postUPd: any = new Object();
+    api_req.moduleType = "product_category";
+    api_req.api_url = "product_master/getProductCategoryCode";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postUPd.action = "getProductCategoryCode";
+
+    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+   
+    api_req.element_data = api_postUPd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+        $('#addProductCategoryFormId').modal('show');
+        this.spinner.hide();
+        this.addProductCategory.patchValue({
+          'add_ProductCategoryCode': response.product_category_code,
+          
+        });
+
+      } else {
+        iziToast.warning({
+          message: "View List Loading Failed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
   view(productId: any) {
     this.spinner.show();
     $('#viewProductCategoryFormId').modal('show');
@@ -133,8 +176,8 @@ export class ProductCategoryComponent implements OnInit {
 
         this.spinner.hide();
         this.viewProductCategory.patchValue({
-          'view_ProductCategoryCode': response.data.product_category_code,
-          'view_ProductCategoryName': response.data.product_category_name,
+          'view_ProductCategoryCode': response.data.productCode,
+          'view_ProductCategoryName': response.data.productName,
         });
 
       } else {
@@ -210,9 +253,41 @@ export class ProductCategoryComponent implements OnInit {
     api_postUPd.action = "insertProductDetails";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.product_category_code = this.addProductCategory.value.add_ProductCategoryCode;
-    api_postUPd.product_category_name = this.addProductCategory.value.add_ProductCategoryName;
-    api_postUPd.purchase_rate_per = this.addProductCategory.value.add_PurchasePrice;
+    if (this.addProductCategory.value.add_ProductCategoryCode == null || this.addProductCategory.value.add_ProductCategoryCode == '') {
+      iziToast.error({
+        message: "Category Code Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_postUPd.product_category_code = this.addProductCategory.value.add_ProductCategoryCode;
+    }
+
+    if (this.addProductCategory.value.add_ProductCategoryName == null || this.addProductCategory.value.add_ProductCategoryName == '') {
+      iziToast.error({
+        message: "Category Name Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_postUPd.product_category_name = this.addProductCategory.value.add_ProductCategoryName;
+    }
+   
+
+    if (this.addProductCategory.value.add_PurchasePrice == null || this.addProductCategory.value.add_PurchasePrice == '') {
+      iziToast.error({
+        message: "Purchase Price Missing",
+        position: 'topRight'
+      });
+      this.spinner.hide();
+      return false;
+    } else {
+      api_postUPd.purchase_rate_per = this.addProductCategory.value.add_PurchasePrice;
+    }
+   
+   
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {

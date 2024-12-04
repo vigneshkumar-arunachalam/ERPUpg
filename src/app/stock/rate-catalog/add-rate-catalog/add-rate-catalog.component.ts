@@ -236,5 +236,8 @@ export class AddRateCatalogComponent implements OnInit {
         console.log("final error", error);
       };
   }
+  goBack() {
+    this.router.navigate(['/rateCatalog']);
+  }
 
 }

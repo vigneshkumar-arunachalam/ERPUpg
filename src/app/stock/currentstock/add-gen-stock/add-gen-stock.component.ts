@@ -205,5 +205,8 @@ export class AddGenStockComponent implements OnInit {
         console.log("final error", error);
       };
   }
+  goBack() {
+    this.router.navigate(['/CurrentStockMaster']);
+  }
 
 }

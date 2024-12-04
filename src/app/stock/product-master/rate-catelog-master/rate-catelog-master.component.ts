@@ -418,10 +418,10 @@ export class RateCatelogMasterComponent implements OnInit {
           let api_req: any = new Object();
           let api_singleDelete: any = new Object();
           api_req.moduleType = "product_current_stock";
-          api_req.api_url = "product_current_stock/delete";
+          api_req.api_url = "inventory_catelog_stock/delete";
           api_req.api_type = "web";
           api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-          api_singleDelete.action = "delete";
+          api_singleDelete.action = "inventory_catelog_stock/delete";
           api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
 
           api_singleDelete.stock_inv_catelog_id = stock_inv_catelog_id;

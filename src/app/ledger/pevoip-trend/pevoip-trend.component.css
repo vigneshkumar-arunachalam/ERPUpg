@@ -29,15 +29,7 @@
 }
 
 /* common userdatable ends, customization begins */
-.userDatatable-header th:nth-child(4) {
-    /* width: 50px; */
-}
 
-.userDatatable tbody tr td:nth-child(4) {
-    /* width: 50px;
-    width: 15%; */
-    text-wrap: wrap;
-}
 
 .button {
     padding: 0.6em 1.5em;
@@ -152,19 +144,11 @@ i.fa.fa-bars {
     border-radius: 5px !important;
 }
 
-.userDatatable table tbody tr td:nth-child(2) {
-    width: 100px;
 
-}
 
-.userDatatable table td {
-    white-space: normal;
-}
 
-.userDatatable table td:nth-child(1) {
-    white-space: nowrap;
 
-}
+
 
 #searchPettyCashFormId .modal-dialog {
     max-width: 65%;
@@ -326,3 +310,162 @@ tr:nth-child(even):hover {
 .userDatatable table thead tr th {
     border: 1px solid #ebf2f4;
 }
+
+
+
+
+
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+  
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+  
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+  
+      .status-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+  
+        &.status-green {
+          background-color: green;
+          color: white;
+        }
+  
+        &.status-red {
+          background-color: red;
+          color: white;
+        }
+  
+        &.status-yellow {
+          background-color: yellow;
+          color: black;
+        }
+      }
+  
+      .bx {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  
+  
+
+
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  /* .fa-circle {
+    margin: 2px;
+    font-size: 14px;
+  } */
+  
+
+  .fa-circle {
+    font-size: 16px;
+    margin: 2px;
+  }
+
+
+      /* Accordion Header Styling */
+.accordion .card-header {
+    /* background: linear-gradient(45deg, #1e90ff, #007bff); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .accordion .card-header:hover {
+    /* background: linear-gradient(45deg, #007bff, #0056b3); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: #fff;
+    transform: scale(1.02);
+  }
+  
+  /* Button inside the header */
+  .accordion .card-header button {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px;
+  }
+  
+  .accordion .card-header button:focus {
+    outline: none;
+  }
+  
+  /* Accordion Body Styling */
+  .accordion .card-body {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Active Header */
+  .accordion .card-header.active {
+    /* background: linear-gradient(45deg, #0056b3, #003f7f); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: #fff;
+  }
+  
+  /* Accordion Container Styling */
+  .accordion {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  /* Card Styling */
+  .accordion .card {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  /* Smooth Transition for Collapsing */
+  .collapse {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Add some shadow for the entire accordion */
+  .accordion {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  

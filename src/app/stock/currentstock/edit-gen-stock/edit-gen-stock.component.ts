@@ -67,6 +67,7 @@ export class EditGenStockComponent implements OnInit {
   createAddress(): FormGroup {
     return this.fb.group({
       // customer_id:'',
+      stock_inv_rpt_id: '',
       productcategory1: '',
       productcategory2: '',
       productcategory3: '',
@@ -123,7 +124,7 @@ export class EditGenStockComponent implements OnInit {
 
   }
   viewEditList() {
-
+    this.spinner.show();
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
     api_req.moduleType = "product_current_stock";
@@ -164,6 +165,7 @@ export class EditGenStockComponent implements OnInit {
              "productFontSize3": response.data.category_fontsize_3,
              "productQtyColor3": response.data.qty_color_3,
              "productQtyFontSize3": response.data.qty_fontsize_3,
+             "stock_inv_rpt_id": response.data.stock_inv_rpt_id
 
           })
 
@@ -187,6 +189,78 @@ export class EditGenStockComponent implements OnInit {
         console.log("final error", error);
       };
 
+  }
+  update() {
+
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_mulInvpay: any = new Object();
+    api_req.moduleType = "product_current_stock";
+    api_req.api_url = "product_current_stock/update"
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_mulInvpay.action = "update";
+    api_mulInvpay.user_id = localStorage.getItem("erp_c4c_user_id");
+     var addr = this.addPI_section2.value.addresses;
+
+    for (let i = 0; i < addr.length; i++) {
+
+      // console.log(addr[i].pd_quantity_txtbox1)
+    //  addr[i].stock_inv_catelog_id = $('#pd_category1' + i).val();
+
+      addr[i].category_id_1 = $('#pd_category1' + i).val();
+      addr[i].category_color_1 = $('#pd_productColor1' + i).val();
+      addr[i].category_fontsize_1 = $('#pd_productFontSize1' + i).val();
+      addr[i].qty_color_1 = $('#pd_productQtyColor1' + i).val();
+      addr[i].qty_fontsize_1 = $('#pd_productQtyFontSize1' + i).val();
+      addr[i].category_id_2 = $('#pd_category2' + i).val();
+      addr[i].category_color_2 = $('#pd_productColor2' + i).val();
+      addr[i].category_fontsize_2 = $('#pd_productFontSize2' + i).val();
+      addr[i].qty_color_2 = $('#pd_productQtyColor2' + i).val();
+      addr[i].qty_fontsize_2 = $('#pd_productQtyFontSize2' + i).val();
+      addr[i].category_id_3 = $('#pd_category3' + i).val();
+      addr[i].category_color_3 = $('#pd_productColor3' + i).val();
+      addr[i].category_fontsize_3 = $('#pd_productFontSize3' + i).val();
+      addr[i].qty_color_3 = $('#pd_productQtyColor3' + i).val();
+      addr[i].qty_fontsize_3 = $('#pd_productQtyFontSize3' + i).val();
+
+    }
+
+
+    api_mulInvpay.products = addr;
+    api_req.element_data = api_mulInvpay;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      if (response.status == true) {
+        this.spinner.hide();
+        iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
+     
+          this.router.navigate(['/CurrentStockMaster']);
+       
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Data Already Saved",
+          position: 'topRight'
+        });
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+  }
+  goBack() {
+    this.router.navigate(['/CurrentStockMaster']);
   }
 
 }
