@@ -65,14 +65,14 @@
             </form>
            
 
-            <div class="userDatatable global-shadow border-0 bg-white w-100">
+            <div class="userDatatable global-shadow border-0 bg-white w-100" id="cg">
               <div class="table-responsive" >
                 <div class="table-container">
                   <table class="table mb-0 table-borderless">
                     <thead>
                       <tr class="userDatatable-header">
                         
-                        <th style="border: 1px solid #e4ebf5;width: 30% !important;    white-space: normal;">
+                        <th style="border: 1px solid #e4ebf5;white-space: normal;">
                           <span class="userDatatable-title">Vendor Name</span>
                         </th>
                         <th style="border: 1px solid #e4ebf5;" *ngFor="let month of months">
@@ -82,50 +82,135 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let vendor of vendorData | keyvalue">
-                        <td style="width: 30% !important;    white-space: normal;">{{ vendor.key }}</td>
-                        <td *ngFor="let monthIndex of months; let i = index">
-                          <ng-container *ngIf="vendor.value[i + 1]">
-                            <ng-container *ngFor="let entry of vendor.value[i + 1].entries; let entryIndex = index">
-                              <!-- <i
-                                *ngFor="let row of [].constructor(entry.entryRow)"
-                                class="fa fa-circle"
-                                [ngStyle]="{ color: getStatusColor(entry.status) }"
-                              ></i> -->
-
-                              <ng-container *ngIf="entryIndex < entry.entryRow">
-                                <i
-                                  class="fa fa-circle"
-                                  [ngStyle]="{ color: getStatusColor(entry.status) }"
-                                ></i>
+                      <ng-container *ngFor="let vendor of VendorData">
+                        <tr>
+                          <td class="gradient-cell">{{ vendor.vendorName }}</td>
+                      
+                          <!-- Loop through each month -->
+                          <td *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                            <!-- Filter entries by month -->
+                            <ng-container *ngFor="let entry of getEntriesForMonthAndVendor(vendor.data, month)">
+                              
+                              <!-- Handle entryRow conditions -->
+                              <ng-container [ngSwitch]="entry.entryRow">
+                      
+                                <!-- Cond1: entryRow = 1 -->
+                                <ng-container *ngSwitchCase="1">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                </ng-container>
+                      
+                                <!-- Cond2: entryRow = 2 -->
+                                <ng-container *ngSwitchCase="2">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                  <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                     class="fa fa-circle" 
+                                     style="color: #ccc; margin: 2px;"></i> -->
+                                </ng-container>
+                      
+                                <!-- Cond3: entryRow = 3 -->
+                                <ng-container *ngSwitchCase="3">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                  <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                     class="fa fa-circle" 
+                                     style="color: #ccc; margin: 2px;"></i> -->
+                                </ng-container>
+                                <ng-container *ngSwitchCase="4">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                  <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                     class="fa fa-circle" 
+                                     style="color: #ccc; margin: 2px;"></i> -->
+                                </ng-container>
+                                <ng-container *ngSwitchCase="5">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                  <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                     class="fa fa-circle" 
+                                     style="color: #ccc; margin: 2px;"></i> -->
+                                </ng-container>
+                                <ng-container *ngSwitchCase="6">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                  <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                     class="fa fa-circle" 
+                                     style="color: #ccc; margin: 2px;"></i> -->
+                                </ng-container>
+                                <ng-container *ngSwitchCase="7">
+                                  <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                     class="fa fa-check-circle" 
+                                     style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
+                                  <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #880808; margin: 2px;"></i>
+                                  <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                     class="fa fa-circle" 
+                                     style="color: #ccc; margin: 2px;"></i> -->
+                                </ng-container>
+                      
                               </ng-container>
                             </ng-container>
-                          </ng-container>
-                        </td>
-                      </tr>
+                          </td>
+                        </tr>
+                      </ng-container>
+                      
                     </tbody>
                   </table>
-                  
-                  
-                  
                 </div>
-                
-           
-                
-                
-
               </div>
-
-
             </div>
           </div>
-
           <div class="card-body">
-                                 
-            <div *ngIf="resellerKeys?.length > 0; else loading">
-             
+            <div *ngIf="vendorList?.length > 0; else loading">
               <div class="accordion" id="accordionPEVOIP">
-                <div class="card" *ngFor="let key of resellerKeys; let i = index">
+                <div class="card" *ngFor="let vendor of vendorList; let i = index">
                   <!-- Accordion Header -->
                   <div class="card-header" [id]="'headingpevoip' + i">
                     <h2 class="mb-0">
@@ -134,20 +219,20 @@
                               [attr.data-target]="'#collapse' + i"
                               aria-expanded="false"
                               [attr.aria-controls]="'collapse' + i">
-                        {{ key }}
+                        {{ vendor.vendorName }}
                       </button>
                     </h2>
                   </div>
-              
+                
                   <!-- Accordion Content -->
                   <div [id]="'collapse' + i" class="collapse"
                        [attr.aria-labelledby]="'headingpevoip' + i"
                        data-parent="#accordionPEVOIP">
                     <div class="card-body">
-                      <!-- Hi This is the content to display -->
+                      <p>Vendor Data</p>
                       <form [formGroup]="addPI_section2">
                         <div class="col-12" formArrayName="addresses">
-                          <ng-container *ngFor="let address of addressControls.controls; let i = index;">
+                          <ng-container *ngFor="let address of addressControls.controls; let i = index;" [formGroupName]="i">
                             <div class="table-responsive">
                               <table class="add-contact-table-section">
                                   <!-- Table Header -->
@@ -163,11 +248,7 @@
                                           <th><span class="userDatatable-title">IDD Amount</span></th>
                                           <th><span class="userDatatable-title">Local Amount</span></th>
                                           <th><span class="userDatatable-title">Action</span></th>
-                                        
-      
-      
                                       </tr>
-      
                                   </thead>
                                   <tbody *ngFor="let monthIndex of months; let n = index">
                                    
@@ -177,8 +258,6 @@
       
                                       <!-- Individual Row -->
                                       <tr [formGroupName]="i" >
-                                      
-                                         
                                           <td>
                                             <div class="userDatatable-content">
     
@@ -236,7 +315,6 @@
                                               <input type="number" class="form-control"
                                                   formControlName="usageAmount2"
                                                   id="pd_usageAmount2{{i}}" />
-  
                                           </div>
                                         </td>
     
@@ -260,13 +338,11 @@
                                                 <input type="text" class="form-control"
                                                     formControlName="IDDAmount1"
                                                     id="pd_IDDAmount1{{i}}" />
-    
                                             </div>
                                             <div class="userDatatable-content" >
                                               <input type="text" class="form-control"
                                                   formControlName="IDDAmount2"
                                                   id="pd_IDDAmount2{{i}}" />
-  
                                           </div>
 
                                         </td>
@@ -281,21 +357,14 @@
                                               <input type="text" class="form-control"
                                                   formControlName="localAmount2"
                                                   id="pd_localAmount2{{i}}" />
-  
                                           </div>
                                         </td>
                                         <td>
                                             <div class="userDatatable-content" >
                                               
-    
+
                                             </div>
                                         </td>
-                                       
-                                     
-                                          <!-- Customer Name -->
-                                          
-                                      
-      
                                       </tr>
                                   </tbody>
                               </table>
@@ -303,8 +372,7 @@
                           </ng-container>
                           </div>
                       </form>
-                  
-                      
+                      <!-- Add additional vendor-specific content here -->
                     </div>
                   </div>
                 </div>
@@ -313,8 +381,10 @@
             <ng-template #loading>
               <p>Loading data...</p>
             </ng-template>
-
           </div>
+          
+          
+      
         </div>
       </div>
 

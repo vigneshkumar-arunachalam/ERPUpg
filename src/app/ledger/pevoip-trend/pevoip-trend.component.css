@@ -289,12 +289,12 @@ select {
 }
 
 
-tr:nth-child(even):hover {
+#cg tr:nth-child(even):hover {
     background: linear-gradient(to right, #c9f1a2, #df97b4);
   }
 
-  tr:nth-child(odd):hover {
-    background: linear-gradient(to right, #f5fb97, #fcb35f);
+#cg tr:nth-child(odd):hover {
+    background: linear-gradient(to right, #f3f4e6, #f4c5d9);
   }
 
   tr:hover td {
@@ -468,4 +468,26 @@ tr:nth-child(even):hover {
   .accordion {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+
+
+
+  .gradient-cell {
+    /* Gradient background */
+    background: linear-gradient(135deg, #fa0b0bc7, #82f77e);
+    color: #000000; /* Text color for readability */
+    padding: 10px;
+    text-align: center; /* Center-align text */
+    border-radius: 8px; /* Rounded corners */
+    font-weight: 500; /* Make text bold */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
+}
+
+/* Hover effect */
+.gradient-cell:hover {
+    background: linear-gradient(135deg, #ff6a00, #ff9966);
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    cursor: pointer; /* Change cursor to pointer */
+}
+.table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
+.table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
   
