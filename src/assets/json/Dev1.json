@@ -406,7 +406,31 @@
             "icon": "file-text",
             "IDs": [9961,9962,9963,9964,9965],
             "Type": "Sub Menu",
-            "subchild": [],
+            "subchild": [{
+			"name": "DID Number Catalog",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDNumberCatalog"
+				},	{
+				"name": "DID Provider",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDProvider"
+				},	{
+				"name": "DID TrunkName",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDTrunkName"
+				}],
             "isVisible": true,
 		"value": "/stockDIDMaster"
 		}

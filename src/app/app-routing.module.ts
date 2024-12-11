@@ -113,10 +113,29 @@ import { EditGenStockComponent } from './stock/currentstock/edit-gen-stock/edit-
 import { RateCatelogMasterComponent } from './stock/product-master/rate-catelog-master/rate-catelog-master.component';
 import { AddRateCatalogComponent } from './stock/rate-catalog/add-rate-catalog/add-rate-catalog.component';
 import { EditRateCatalogComponent } from './stock/rate-catalog/edit-rate-catalog/edit-rate-catalog.component';
+import { DIDNumberCatalogComponent } from './stock/stock-didmaster/didnumber-catalog/didnumber-catalog.component';
+import { DIDProviderComponent } from './stock/stock-didmaster/didprovider/didprovider.component';
+import { DIDTrunkNameComponent } from './stock/stock-didmaster/didtrunk-name/didtrunk-name.component';
+import { AddDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-catalog/add-didnum-cat-stock/add-didnum-cat-stock.component';
+import { EditDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-catalog/edit-didnum-cat-stock/edit-didnum-cat-stock.component';
+
+
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'editDIDNumberCatalog', component: EditDIDNumCatStockComponent
+  },{
+    path: 'addDIDNumberCatalog', component: AddDIDNumCatStockComponent
+  },{
+    path: 'DIDNumberCatalog', component: DIDNumberCatalogComponent
+  },
+  {
+    path: 'DIDProvider', component: DIDProviderComponent
+  },
+  {
+    path: 'DIDTrunkName', component: DIDTrunkNameComponent
   },{
     path: 'AddRateCatalog', component: AddRateCatalogComponent
   },{
