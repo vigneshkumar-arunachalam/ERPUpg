@@ -29,6 +29,7 @@ export class ProductCategoryComponent implements OnInit {
   searchProductCategory: FormGroup;
   response_total_cnt: any;
   editApprovalStatus: any;
+  editproduct_category_id: any;
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -36,6 +37,7 @@ export class ProductCategoryComponent implements OnInit {
     this.viewProductCategory = new FormGroup({
       'view_ProductCategoryCode': new FormControl(null),
       'view_ProductCategoryName': new FormControl(null),
+      'view_PurchasePrice': new FormControl(null),
     });
     this.editProductCategory = new FormGroup({
       'edit_ProductCategoryCode': new FormControl(null),
@@ -155,19 +157,19 @@ export class ProductCategoryComponent implements OnInit {
       };
 
   }
-  view(productId: any) {
+  view(product_category_id: any) {
     this.spinner.show();
     $('#viewProductCategoryFormId').modal('show');
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "product_master";
-    api_req.api_url = "product_master/viewProductDetails";
+    api_req.moduleType = "product_category_management";
+    api_req.api_url = "viewProductDetails";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "product_master/viewProductDetails";
+    api_postUPd.action = "viewProductDetails";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.productId = productId;
+    api_postUPd.product_category_id = product_category_id;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -176,8 +178,9 @@ export class ProductCategoryComponent implements OnInit {
 
         this.spinner.hide();
         this.viewProductCategory.patchValue({
-          'view_ProductCategoryCode': response.data.productCode,
-          'view_ProductCategoryName': response.data.productName,
+          'view_ProductCategoryCode': response.data.product_category_code,
+          'view_ProductCategoryName': response.data.product_category_name,
+          'view_PurchasePrice': response.data.purchase_rate_per,
         });
 
       } else {
@@ -200,6 +203,7 @@ export class ProductCategoryComponent implements OnInit {
   edit(product_category_id: any) {
     this.spinner.show();
     $('#editProductCategoryFormId').modal('show');
+    this.editproduct_category_id=product_category_id;
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
     api_req.moduleType = "product_category";
@@ -226,7 +230,7 @@ export class ProductCategoryComponent implements OnInit {
 
       } else {
         iziToast.warning({
-          message: "View List Loading Failed. Please try again",
+          message: "Failed. Please try again",
           position: 'topRight'
         });
 
@@ -296,7 +300,7 @@ export class ProductCategoryComponent implements OnInit {
 
         this.spinner.hide();
         $('#addProductCategoryFormId').modal('hide');
-
+        this.productCategoryList({});
       } else {
         iziToast.warning({
           message: "View List Loading Failed. Please try again",
@@ -369,7 +373,7 @@ export class ProductCategoryComponent implements OnInit {
     api_postUPd.product_category_code = this.editProductCategory.value.edit_ProductCategoryCode;
     api_postUPd.product_category_name = this.editProductCategory.value.edit_ProductCategoryName;
     api_postUPd.purchase_rate_per = this.editProductCategory.value.edit_PurchasePrice;
-    api_postUPd.product_category_id = this.editProductCategory.value.edit_ProductCategoryCode;
+    api_postUPd.product_category_id = this.editproduct_category_id;
     api_postUPd.status =   this.editApprovalStatus;
     api_req.element_data = api_postUPd;
 
@@ -378,7 +382,7 @@ export class ProductCategoryComponent implements OnInit {
       if (response.status == true) {
         $('#editProductCategoryFormId').modal('hide');
         this.spinner.hide();
-
+        this.productCategoryList({});
 
       } else {
         iziToast.warning({

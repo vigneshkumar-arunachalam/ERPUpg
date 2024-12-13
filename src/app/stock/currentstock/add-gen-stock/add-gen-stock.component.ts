@@ -181,6 +181,8 @@ export class AddGenStockComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         this.spinner.hide();
+       
+        this.router.navigate(['/CurrentStockMaster']);
 
         this.spinner.hide();
         iziToast.success({

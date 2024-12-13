@@ -336,3 +336,9 @@ tr:nth-child(even):hover {
 .userDatatable table thead tr th {
     border: 1px solid #ebf2f4;
 }
+
+
+.red-row {
+    background-color: rgb(252, 255, 164);
+    color: rgb(6, 6, 6); /* Optional: Adjust text color for better contrast */
+}

@@ -43,7 +43,145 @@
     ],
     "isVisible": true,
     "value": "/ledger--"
-},
+},{
+    "name": "Stock",
+    "icon":"database",
+    "isActive": false,
+    "menuId":6,
+    "IDs": [6115],
+    "Type": "Main Menu",
+    "children": [
+        {
+            "name": "Product Master",
+            "icon": "edit",
+            "IDs": [6115],
+            "Type": "Sub Menu",
+            "subchild": [
+			{
+				"name": "Product Category",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/ProductCategory"
+				},	{
+				"name": "Product Master-1",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/ProductMaster1"
+				},	{
+				"name": "Current Stock Master",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/CurrentStockMaster"
+				},	{
+				"name": "Rate Catalog Master",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/rateCatalog"
+				}
+				
+							],
+            "isVisible": true,
+            "value": "/stockproductmaster1"
+        },{
+            "name": "DID Master",
+            "icon": "file-text",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [{
+			"name": "DID Number Catalog",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDNumberCatalog"
+				},	{
+				"name": "DID Provider",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDProvider"
+				},	{
+				"name": "DID TrunkName",
+				"icon": "box",
+				"IDs": [5011, 5012, 5013, 5014, 5015],
+				"Type": "Sub Menu",
+				"subchild": [],
+				"isVisible": true,
+				"value": "/DIDTrunkName"
+				}],
+            "isVisible": true,
+		"value": "/stockDIDMaster1"
+		}
+        ,{
+            "name": "Stock Inventory Entry",
+            "icon": "anchor",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/StockInventoryEntry"
+		}
+        ,{
+            "name": "DID Master",
+            "icon": "user-check",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/stockDIDMaster"
+        } ,{
+            "name": "Current Stock",
+            "icon": "check-square",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/Currentstock"
+        } ,{
+            "name": "Rate Catalog",
+            "icon": "clock",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/RateCatalog"
+        } ,{
+            "name": "RMA Issue",
+            "icon": "cpu",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/RMAIssue"
+        },{
+            "name": "DID Number Catalog",
+            "icon": "watch",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/StockDIDNumberCatalog"
+        }
+    ],
+    "isVisible": true,
+    "value": "/stock1"
+}, 
+
     {
     "name": "Billing",
     "icon": "airplay",
@@ -350,144 +488,6 @@
     "isVisible": true,
     "value": "/reports--"
 },
-{
-    "name": "Stock",
-    "icon":"database",
-    "isActive": false,
-    "menuId":6,
-    "IDs": [6115],
-    "Type": "Main Menu",
-    "children": [
-        {
-            "name": "Product Master",
-            "icon": "edit",
-            "IDs": [6115],
-            "Type": "Sub Menu",
-            "subchild": [
-			{
-				"name": "Product Category",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/ProductCategory"
-				},	{
-				"name": "Product Master-1",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/ProductMaster1"
-				},	{
-				"name": "Current Stock Master",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/CurrentStockMaster"
-				},	{
-				"name": "Rate Catalog Master",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/rateCatalog"
-				}
-				
-							],
-            "isVisible": true,
-            "value": "/stockproductmaster"
-        },{
-            "name": "DID Master",
-            "icon": "file-text",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [{
-			"name": "DID Number Catalog",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/DIDNumberCatalog"
-				},	{
-				"name": "DID Provider",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/DIDProvider"
-				},	{
-				"name": "DID TrunkName",
-				"icon": "box",
-				"IDs": [5011, 5012, 5013, 5014, 5015],
-				"Type": "Sub Menu",
-				"subchild": [],
-				"isVisible": true,
-				"value": "/DIDTrunkName"
-				}],
-            "isVisible": true,
-		"value": "/stockDIDMaster"
-		}
-        ,{
-            "name": "Stock Inventory Entry",
-            "icon": "anchor",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/StockInventoryEntry"
-		}
-        ,{
-            "name": "DID Master",
-            "icon": "user-check",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/stockDIDMaster"
-        } ,{
-            "name": "Current Stock",
-            "icon": "check-square",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/Currentstock"
-        } ,{
-            "name": "Rate Catalog",
-            "icon": "clock",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/RateCatalog"
-        } ,{
-            "name": "RMA Issue",
-            "icon": "cpu",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/RMAIssue"
-        },{
-            "name": "DID Number Catalog",
-            "icon": "watch",
-            "IDs": [9961,9962,9963,9964,9965],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/StockDIDNumberCatalog"
-        }
-    ],
-    "isVisible": true,
-    "value": "/stock"
-}, 
 {
     "name": "3CX",
     "icon":"save",

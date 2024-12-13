@@ -99,12 +99,23 @@ export class CurrentStockMasterComponent implements OnInit {
     this.router.navigate(['/editCurrentStock'], {
       queryParams: {
         stock_inv_rpt_id: stock_inv_rpt_id,
+        editviewStatus:0
+      }
+    });
+
+  }
+  view(stock_inv_rpt_id: any) {
+    console.log("before sending to edit",stock_inv_rpt_id)
+    this.router.navigate(['/editCurrentStock'], {
+      queryParams: {
+        stock_inv_rpt_id: stock_inv_rpt_id,
+        editviewStatus:1
       }
     });
 
   }
   searchProdCatGo() {
-    $('#searchProductCategoryFormId').modal('show');
+   // $('#searchProductCategoryFormId').modal('show');
   }
   ChangeProductCatName(event:any){
 
@@ -166,48 +177,7 @@ export class CurrentStockMasterComponent implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  view(product_category_id: any) {
-    this.spinner.show();
-    $('#viewProductCategoryFormId').modal('show');
-    let api_req: any = new Object();
-    let api_postUPd: any = new Object();
-    api_req.moduleType = "product_category";
-    api_req.api_url = "viewProductDetails";
-    api_req.api_type = "web";
-    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "viewProductDetails";
 
-    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.product_category_id = product_category_id;
-    api_req.element_data = api_postUPd;
-
-    this.serverService.sendServer(api_req).subscribe((response: any) => {
-      this.spinner.hide();
-      if (response.status == true) {
-
-        this.spinner.hide();
-        this.viewProductCategory.patchValue({
-          'view_ProductCategoryCode': response.data.product_category_code,
-          'view_ProductCategoryName': response.data.product_category_name,
-        });
-
-      } else {
-        iziToast.warning({
-          message: "View List Loading Failed. Please try again",
-          position: 'topRight'
-        });
-
-      }
-    }),
-      (error: any) => {
-        iziToast.error({
-          message: "Sorry, some server issue occur. Please contact admin",
-          position: 'topRight'
-        });
-        console.log("final error", error);
-      };
-
-  }
  
   Add() {
     this.spinner.show();

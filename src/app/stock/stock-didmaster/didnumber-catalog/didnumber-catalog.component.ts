@@ -75,7 +75,7 @@ export class DIDNumberCatalogComponent implements OnInit {
     });
   }
   searchProdCatGo() {
-    $('#searchProductCategoryFormId').modal('show');
+  //  $('#searchProductCategoryFormId').modal('show');
   }
 
 

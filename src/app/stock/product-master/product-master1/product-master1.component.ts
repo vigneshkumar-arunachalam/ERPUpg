@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from 'src/app/services/server.service';
 import { FormControl, FormGroup, Validators, FormArray, FormBuilder } from '@angular/forms';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 declare var $: any
@@ -30,7 +31,16 @@ export class ProductMaster1Component implements OnInit {
   response_total_cnt: any;
   editApprovalStatus: any;
   productCategoryNameList: any;
-  constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
+  productCatID: any;
+  productSerialNoVal: any;
+
+  // file attachment
+  myFiles: string[] = [];
+  getProductCode: any;
+  imageShow: any;
+
+  constructor(private serverService: ServerService, 
+    private http: HttpClient,private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
     this.productCategoryList({});
@@ -40,9 +50,12 @@ export class ProductMaster1Component implements OnInit {
       'view_ProductCategoryName': new FormControl(null),
     });
     this.editProductCategory = new FormGroup({
-      'edit_ProductCategoryCode': new FormControl(null),
-      'edit_ProductCategoryName': new FormControl(null),
-      'edit_PurchasePrice': new FormControl(null),
+      'edit_ProductMasterCode': new FormControl(null),
+      'edit_ProductMasterCatName': new FormControl(null),
+      'edit_ProductMasterName': new FormControl(null),
+      'edit_ProductMasterDesc': new FormControl(null),
+      'edit_ProductMasterAttachment': new FormControl(null),
+      'edit_ProductMasterSerialNo': new FormControl(null),
     });
     this.addProductMaster = new FormGroup({
       'add_ProductMasterCode': new FormControl(null),
@@ -56,21 +69,40 @@ export class ProductMaster1Component implements OnInit {
       'search_ProductCategoryName': new FormControl(null),
 
     });
+    this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/product_master/getProductCode').subscribe((data: any) => {
+    
+        this.getProductCode = data.pcode;
+      
+
+       console.log("this.getProductCode", this.getProductCode)
+    });
+
 
   }
   addProdCatGo() {
     $('#addProductCategoryFormId').modal('show');
   }
   searchProdCatGo() {
-    $('#searchProductCategoryFormId').modal('show');
+   // $('#searchProductCategoryFormId').modal('show');
   }
   ChangeProductCatName(event:any){
+    this.productCatID=event.target.value;
+    console.log("this.productCatID",this.productCatID);
 
+  }
+  productSerialNo(event:any){
+    this.productSerialNoVal=event.target.checked;
+    console.log(" this.productSerialNoVal", this.productSerialNoVal);
   }
   fileAttachmentEvent(event:any){
 
   }
+  onFileChange(event: any) {
 
+    for (var i = 0; i < event.target.files.length; i++) {
+      this.myFiles.push(event.target.files[i]);
+    }
+  }
 
   productCategoryList(data: any) {
     this.spinner.show();
@@ -165,31 +197,38 @@ export class ProductMaster1Component implements OnInit {
       };
 
   }
-  edit(product_category_id: any) {
+  edit(productId: any) {
     this.spinner.show();
     $('#editProductCategoryFormId').modal('show');
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "product_category";
-    api_req.api_url = "viewProductDetails";
+    api_req.moduleType = "product_master";
+    api_req.api_url = "product_master/editProduct";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "viewProductDetails";
+    api_postUPd.action = "editProduct";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.product_category_id = product_category_id;
+    api_postUPd.product_id = productId;
+    api_postUPd.temp = productId;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
+        this.imageShow=response.product_img;
 
         this.spinner.hide();
-        this.editApprovalStatus=response.data.status;
+       
+        
         this.editProductCategory.patchValue({
-          'edit_ProductCategoryCode': response.data.product_category_code,
-          'edit_ProductCategoryName': response.data.product_category_name,
-          'edit_PurchasePrice': response.data.purchase_rate_per,
+          'edit_ProductMasterCode': response.productCode,
+          'edit_ProductMasterCatName': response.product_category_id,
+          'edit_ProductMasterName': response.productName,
+
+          'edit_ProductMasterDesc': response.productDesc,
+          'edit_ProductMasterAttachment': response.product_img,
+          'edit_ProductMasterSerialNo': response.serial_no_state,
         });
 
       } else {
@@ -209,7 +248,7 @@ export class ProductMaster1Component implements OnInit {
       };
 
   }
-  Add() {
+  Add1() {
     this.spinner.show();
     $('#addProductCategoryFormId').modal('show');
     let api_req: any = new Object();
@@ -219,11 +258,22 @@ export class ProductMaster1Component implements OnInit {
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
     api_postUPd.action = "insertProductDetails";
-
+    // 'add_ProductMasterCode': new FormControl(null),
+    // 'add_ProductMasterCatName': new FormControl(null),
+    // 'add_ProductMasterName': new FormControl(null),
+    // 'add_ProductMasterDesc': new FormControl(null),
+    // 'add_ProductMasterAttachment': new FormControl(null),
+    // 'add_ProductMasterSerialNo': new FormControl(null),
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.product_category_code = this.addProductMaster.value.add_ProductCategoryCode;
-    api_postUPd.product_category_name = this.addProductMaster.value.add_ProductCategoryName;
-    api_postUPd.purchase_rate_per = this.addProductMaster.value.add_PurchasePrice;
+    api_postUPd.productCode = this.addProductMaster.value.add_ProductMasterCode;
+    api_postUPd.product_category_id =  this.productCatID;
+    api_postUPd.productDesc = this.addProductMaster.value.add_ProductMasterDesc;
+    api_postUPd.quantity = "";
+    api_postUPd.unit = "";
+    api_postUPd.rate = "";
+    api_postUPd.serial_no_state = this.productSerialNoVal;
+    api_postUPd.productName = this.addProductMaster.value.add_ProductMasterName;
+    api_postUPd.product_img = this.addProductMaster.value.add_ProductMasterAttachment;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -425,4 +475,91 @@ export class ProductMaster1Component implements OnInit {
         };
   
     }
+
+    Add() {
+    
+      //  this.addProductMaster.reset();
+        //  var data = new FormData();
+        Swal.fire('File Updating');
+        Swal.showLoading();
+    
+        if (this.myFiles.length == 0) {
+          Swal.close();
+          iziToast.warning({
+            message: "Attachment File Missing",
+            position: 'topRight'
+          });
+        }
+    
+        if (this.myFiles.length > 0) {
+    
+          const data = new FormData();
+    
+          for (var i = 0; i < this.myFiles.length; i++) {
+            data.append("product_img[]", this.myFiles[i]);
+          }
+          // for (var j = 0; j < this.edit_array.length; j++) {
+          //   data.append("quotation_pdf_add[]", this.edit_array[j]);
+          // }
+    
+          data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+          data.append('productCode',  this.getProductCode);
+          data.append('product_category_id', this.productCatID);
+          data.append('productDesc', this.addProductMaster.value.add_ProductMasterDesc);
+          data.append('quantity', "");
+          data.append('unit', "");
+          data.append('rate', "");
+           data.append('serial_no_state', this.productSerialNoVal);
+           data.append('rate', "");
+           data.append('productName', this.addProductMaster.value.add_ProductMasterName);
+          data.append('action', "insertProductDetails");
+    
+    
+          var self = this;
+          $.ajax({
+            type: 'POST',
+            url: 'https://laravelapi.erp1.cal4care.com/api/product_master/insertProductDetails',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (result: any) {
+              if (result.status == true) {
+                self.productCategoryList({});
+              //  console.log(result);
+                Swal.close();
+                $("#addProductCategoryFormId").modal("hide");
+                this.edit_array = [];
+    
+                iziToast.success({
+                  message: "File Attachment Saved successfully",
+                  position: 'topRight'
+                });
+              }
+              else {
+                Swal.close();
+                $("#addProductCategoryFormId").modal("hide");
+    
+                iziToast.warning({
+                  message: "File Attachment Update Failed",
+                  position: 'topRight'
+                });
+              }
+            },
+            error: function (err: any) {
+    
+              console.log("err", err)
+              iziToast.error({
+                message: "Server Side Error",
+                position: 'topRight'
+              });
+              Swal.close();
+              $("#addProductCategoryFormId").modal("hide");
+            }
+    
+          })
+    
+    
+        }
+      }
 }

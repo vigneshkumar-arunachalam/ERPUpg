@@ -9,11 +9,11 @@
               <span class="breadcrumb-item active">DID Provider Management</span>
             </h3>
             <div class="quotation-btn-section">
-              <button type="button" title="Add Guru Details" class="btn btn-primary btn-default btn-squared"
+              <button type="button" title="Add DID Provider" class="btn btn-primary btn-default btn-squared"
                 (click)="addProdCatGo()" style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:10;"></i>Add
               </button>
              
-              <button type="button" class="btn btn-primary btn-default btn-squared" title="Search Guru Details"
+              <button type="button" class="btn btn-primary btn-default btn-squared" title="Search DID Provider"
                 (click)="searchProdCatGo()" style="margin-right: 10px;">
                 <i class="fas fa-search" style="margin-right:10px;"></i>Search
               </button>
@@ -218,10 +218,14 @@ aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        <h2 *ngIf="this.editApprovalStatus==0" class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
         background: linear-gradient(to right, #262127, #54b7aa);">
-       Update Product Category Management </h2>
+       View DID Provider Management </h2>
+       <h2 *ngIf="this.editApprovalStatus==1" class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #262127, #54b7aa);">
+      Update DID Provider Management </h2>
       <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -256,8 +260,8 @@ aria-hidden="true">
         </form>
   
       </div>
-      <div class="modal-footer" *ngIf="this.editApprovalStatus==1">
-        <button type="button " class="btn btn-primary" (click)="update()">Update</button>
+      <div class="modal-footer" >
+        <button type="button" *ngIf="this.editApprovalStatus==1" class="btn btn-primary" (click)="update()">Update</button>
    
         <button type="button" class="btn btn-dark" data-dismiss="modal">
           Close

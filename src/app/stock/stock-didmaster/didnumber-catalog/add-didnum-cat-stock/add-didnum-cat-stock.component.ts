@@ -181,13 +181,14 @@ export class AddDIDNumCatStockComponent implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       if (response.status == true) {
         this.spinner.hide();
+        this.router.navigate(['/DIDNumberCatalog']);
 
         this.spinner.hide();
         iziToast.success({
           message: "Saved Successfully",
           position: 'topRight'
         });
-        this.router.navigate(['/DIDNumberCatalog']);
+        
 
       } else {
         this.spinner.hide();

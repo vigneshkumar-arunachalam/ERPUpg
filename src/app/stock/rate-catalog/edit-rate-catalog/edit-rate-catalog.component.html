@@ -4,7 +4,8 @@
     <div class="card">
         <div class="card-header color-dark fw-500">
             <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-                <span class="breadcrumb-item active">Update Current Stock Management</span>
+                <span *ngIf="editviewstatus==0" class="breadcrumb-item active">View Rate Catalog Management </span>
+                <span *ngIf="editviewstatus==1" class="breadcrumb-item active">Update Rate Catalog Management</span>
             </h3>
 
         </div>
@@ -26,8 +27,8 @@
                                                 <th><span class="userDatatable-title">Category -1</span></th>
                                                 <th><span class="userDatatable-title">Product Color -1</span></th>
                                                 <th><span class="userDatatable-title">Product FontSize -1</span></th>
-                                                <th><span class="userDatatable-title">Qty Color-1</span></th>
-                                                <th><span class="userDatatable-title">Qty FontSize-1</span></th>
+                                                <th><span class="userDatatable-title">Act Color-1</span></th>
+                                                <th><span class="userDatatable-title">FontSize-1</span></th>
 
                                                 <th><span class="userDatatable-title">Conv Color-1</span></th>
                                                 <th><span class="userDatatable-title">10 Color-1</span></th>
@@ -157,8 +158,8 @@
                                                 <th><span class="userDatatable-title">Category -2</span></th>
                                                 <th><span class="userDatatable-title">Product Color -2</span></th>
                                                 <th><span class="userDatatable-title">Product FontSize -2</span></th>
-                                                <th><span class="userDatatable-title">Qty Color-2</span></th>
-                                                <th><span class="userDatatable-title">Qty FontSize-2</span></th>
+                                                <th><span class="userDatatable-title">Act Color-2</span></th>
+                                                <th><span class="userDatatable-title">FontSize-2</span></th>
 
                                                 <th><span class="userDatatable-title">Conv Color-2</span></th>
                                                 <th><span class="userDatatable-title">10 Color-2</span></th>
@@ -279,8 +280,8 @@
                                                 <th><span class="userDatatable-title">Category -3</span></th>
                                                 <th><span class="userDatatable-title">Product Color -3</span></th>
                                                 <th><span class="userDatatable-title">Product FontSize -3</span></th>
-                                                <th><span class="userDatatable-title">Qty Color-3</span></th>
-                                                <th><span class="userDatatable-title">Qty FontSize-3</span></th>
+                                                <th><span class="userDatatable-title">Act Color-3</span></th>
+                                                <th><span class="userDatatable-title">FontSize-3</span></th>
 
                                                 <th><span class="userDatatable-title">Conv Color-3</span></th>
                                                 <th><span class="userDatatable-title">10 Color-3</span></th>
@@ -421,7 +422,7 @@
                         </div> -->
                         <div class="modal-footer">
 
-                            <button type="button" class="btn btn-primary mr-4 " (click)="update(i)">Update</button>
+                            <button *ngIf="editviewstatus==1" type="button" class="btn btn-primary mr-4 " (click)="update(i)">Update</button>
                             <button type="button" class="btn btn-dark" (click)="goBack()" >Cancel</button>
                         </div>
                     </ng-container>

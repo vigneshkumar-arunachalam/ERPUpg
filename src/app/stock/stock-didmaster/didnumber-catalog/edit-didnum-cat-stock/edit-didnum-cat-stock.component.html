@@ -4,7 +4,8 @@
     <div class="card">
         <div class="card-header color-dark fw-500">
             <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-                <span class="breadcrumb-item active">Update DID Number Catalog Management</span>
+                <span *ngIf="this.EditViewStatus==1" class="breadcrumb-item active">Update DID Number Catalog Management</span>
+                <span *ngIf="this.EditViewStatus==0" class="breadcrumb-item active">View DID Number Catalog Management</span>
             </h3>
 
         </div>
@@ -261,9 +262,9 @@
 
 
 
-        <div class="modal-footer" *ngIf="this.EditViewStatus==1">
+        <div class="modal-footer" >
 
-            <button type="button" class="btn btn-primary mr-4 " (click)="update()">Update</button>
+            <button *ngIf="this.EditViewStatus==1" type="button" class="btn btn-primary mr-4 " (click)="update()">Update</button>
             <button type="button" class="btn btn-dark" (click)="goBack()">Cancel</button>
         </div>
 

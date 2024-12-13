@@ -27,6 +27,7 @@ export class EditRateCatalogComponent implements OnInit {
   user_ids: string;
   productCategoryNameList: any;
   EditIDstock_inv_rpt_id: any;
+  editviewstatus: any;
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
@@ -42,8 +43,9 @@ export class EditRateCatalogComponent implements OnInit {
     this.route.queryParams
       .subscribe(params => {
         this.ProductCategoryNameList();
-
+        
         this.EditIDstock_inv_rpt_id = params['stock_inv_catelog_id'];
+        this.editviewstatus = params['editviewstatus'];
         console.log("receiving to edit", this.EditIDstock_inv_rpt_id);
         setTimeout(() => {
           this.viewEditList();
