@@ -174,7 +174,8 @@ i.fa.fa-bars {
     min-width: 50%;
 }
 
-#addProductCategoryFormId .btn-primary,#editProductCategoryFormId .btn-primary,
+#addProductCategoryFormId .btn-primary,
+#editProductCategoryFormId .btn-primary,
 #viewProductCategoryFormId .btn-primary,
 #searchProductCategoryFormId .btn-primary {
     background: linear-gradient(to right, #262127, #54b7aa);
@@ -182,8 +183,10 @@ i.fa.fa-bars {
     box-shadow: none;
 }
 
-#addProductCategoryFormId label,#editProductCategoryFormId label,
-#viewProductCategoryFormId label,#searchProductCategoryFormId label,
+#addProductCategoryFormId label,
+#editProductCategoryFormId label,
+#viewProductCategoryFormId label,
+#searchProductCategoryFormId label,
 #searchPettyCashFormId label {
     font-weight: 500;
     color: #051b5a !important;
@@ -315,24 +318,27 @@ select {
 }
 
 
-tr:nth-child(even):hover {
+#tv4 tr:nth-child(even):hover {
     background: linear-gradient(to right, #c9f1a2, #df97b4);
-  }
+}
 
-  tr:nth-child(odd):hover {
+#tv4 tr:nth-child(odd):hover {
     background: linear-gradient(to right, #f5fb97, #fcb35f);
-  }
+}
 
-  tr:hover td {
+#tv4 tr:hover td {
     color: #0000;
     background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
     -webkit-background-clip: text;
     background-clip: text;
     transition: background 2s, color 2s;
-  }
-  .userDatatable table tbody tr td {
+}
+
+.userDatatable table tbody tr td {
     border: 1px solid #C5D9E0;
 }
+
 .userDatatable table thead tr th {
     border: 1px solid #ebf2f4;
 }
+

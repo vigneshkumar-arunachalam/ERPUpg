@@ -36,6 +36,7 @@ export class DIDTrunkNameComponent implements OnInit {
   DIDProviderID: any;
   editdid_trunk_name_id: any;
   did_trunk_name_id: any;
+  viewEditStatus: any;
   constructor(private serverService: ServerService, private router: Router, 
     private http: HttpClient,private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
@@ -223,7 +224,8 @@ export class DIDTrunkNameComponent implements OnInit {
       };
 
   }
-  edit(did_trunk_name_id: any) {
+  edit(did_trunk_name_id: any,value:any) {
+    this.viewEditStatus=value;
     this.spinner.show();
     $('#editProductCategoryFormId').modal('show');
     this.editdid_trunk_name_id=did_trunk_name_id;
