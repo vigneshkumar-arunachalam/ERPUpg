@@ -1,0 +1,393 @@
+<div class="contents-section">
+
+    <div class="row no-gutters">
+      <div class="col-lg-12 mb-30">
+        <div class="card">
+          <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section">
+              <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+              <span class="breadcrumb-item active">Purchase Entry-MrVoip Trend</span>
+            </h3>
+          </div>
+  
+            <div class="card-body">
+              <form [formGroup]="initialLoadForm">
+                <div class="row" >
+                  <div class="col-lg-2 ">
+                    <div class="form-group">
+                      <label for="yearType" class="col-lg-12 "><strong>Select Years</strong></label>
+                      <div class="col-lg-12">
+                        <select id="yearTypeid" class="form-control" style="background-color: aliceblue;"
+                        formControlName="yearType" (change)="yearChange($event)">
+                          <option [ngValue]="null" selected>Choose Years</option>
+                          <option *ngFor="let exp of yearsList" value="{{exp.yearId}}">
+                            {{exp.value}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-2 ">
+                    <div class="form-group">
+                      <label for="monthType" class="col-lg-12 "><strong>Select Month</strong></label>
+                      <div class="col-lg-12">
+                        <select id="monthTypeid" class="form-control" 
+                        style="background-color: aliceblue;" formControlName="monthType" (change)="monthChange($event)">
+                          <option [ngValue]="null" selected>Choose Month</option>
+                          <option *ngFor="let exp of monthList" value="{{exp.monthId}}">
+                            {{exp.value}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+    
+                  <div class="col-lg-2 ">
+                    <div class="form-group">
+                      <label for="billerType" class="col-lg-12 "><strong>Select Biller</strong></label>
+                      <div class="col-lg-12" >
+                        <select id="billerTypeid" class="form-control" 
+                        style="background-color: aliceblue;" formControlName="billerType" (change)="billerChange($event)">
+                       
+    
+                          <option [ngValue]="null" selected>Choose Biller</option>
+                          <option *ngFor="let exp of billerList" [value]="exp.billerId">
+                            {{ exp.billerName }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+    
+                </div>
+  
+              </form>
+             
+  
+              <div class="userDatatable global-shadow border-0 bg-white w-100" id="cg">
+                <div class="table-responsive" >
+                  <div class="table-container">
+                    <table class="table mb-0 table-borderless">
+                      <thead>
+                        <tr class="userDatatable-header">
+                          
+                          <th style="border: 1px solid #e4ebf5;white-space: normal;">
+                            <span class="userDatatable-title">Vendor Name</span>
+                          </th>
+                          <th style="border: 1px solid #e4ebf5;" *ngFor="let month of months">
+                            <span class="userDatatable-title">{{ month }}</span>
+                          </th>
+  
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let vendor of VendorData">
+                          <tr>
+                            <td class="gradient-cell">{{ vendor.vendorName }}</td>
+                        
+                            <!-- Loop through each month -->
+                            <td *ngFor="let month of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]">
+                              <!-- Filter entries by month -->
+                              <ng-container *ngFor="let entry of getEntriesForMonthAndVendor(vendor.data, month)">
+                                
+                                <!-- Handle entryRow conditions -->
+                                <ng-container [ngSwitch]="entry.entryRow">
+                        
+                                  <!-- Cond1: entryRow = 1 -->
+                                  <ng-container *ngSwitchCase="1">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                  </ng-container>
+                        
+                                  <!-- Cond2: entryRow = 2 -->
+                                  <ng-container *ngSwitchCase="2">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                    <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                       class="fa fa-circle" 
+                                       style="color: #ccc; margin: 2px;"></i> -->
+                                  </ng-container>
+                        
+                                  <!-- Cond3: entryRow = 3 -->
+                                  <ng-container *ngSwitchCase="3">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                    <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                       class="fa fa-circle" 
+                                       style="color: #ccc; margin: 2px;"></i> -->
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="4">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                    <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                       class="fa fa-circle" 
+                                       style="color: #ccc; margin: 2px;"></i> -->
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="5">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                    <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                       class="fa fa-circle" 
+                                       style="color: #ccc; margin: 2px;"></i> -->
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="6">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                    <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                       class="fa fa-circle" 
+                                       style="color: #ccc; margin: 2px;"></i> -->
+                                  </ng-container>
+                                  <ng-container *ngSwitchCase="7">
+                                    <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
+                                       class="fa fa-check-circle" 
+                                       style="color: green; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #ffcc00; margin: 2px;"></i>
+                                    <i *ngIf="!entry.purchase_trend_id && entry.status === 3" 
+                                       class="fa fa-times-circle" 
+                                       style="color: #880808; margin: 2px;"></i>
+                                    <!-- <i *ngIf="!entry.purchase_trend_id && entry.status" 
+                                       class="fa fa-circle" 
+                                       style="color: #ccc; margin: 2px;"></i> -->
+                                  </ng-container>
+                        
+                                </ng-container>
+                              </ng-container>
+                            </td>
+                          </tr>
+                        </ng-container>
+                        
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div *ngIf="vendorList?.length > 0; else loading">
+                <div class="accordion" id="accordionPEVOIP">
+                  <div class="card" *ngFor="let vendor of vendorList; let i = index">
+                    <!-- Accordion Header -->
+                    <div class="card-header" [id]="'headingpevoip' + i">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link" type="button"
+                                [attr.data-toggle]="'collapse'"
+                                [attr.data-target]="'#collapse' + i"
+                                aria-expanded="false"
+                                [attr.aria-controls]="'collapse' + i">
+                          {{ vendor.vendorName }}
+                        </button>
+                      </h2>
+                    </div>
+                  
+                    <!-- Accordion Content -->
+                    <div [id]="'collapse' + i" class="collapse"
+                         [attr.aria-labelledby]="'headingpevoip' + i"
+                         data-parent="#accordionPEVOIP">
+                      <div class="card-body">
+                        <p>Vendor Data</p>
+                        <form [formGroup]="addPI_section2">
+                          <div class="col-12" formArrayName="addresses">
+                            <ng-container *ngFor="let address of addressControls.controls; let i = index;" [formGroupName]="i">
+                              <div class="table-responsive">
+                                <table class="add-contact-table-section">
+                                    <!-- Table Header -->
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                            <th><span class="userDatatable-title">Invoice No</span></th>
+                                            <th><span class="userDatatable-title">Invoice Amount</span></th>
+                                            <th><span class="userDatatable-title">Curr Conv Rate</span></th>
+                                            <th><span class="userDatatable-title">Fixed Amount</span></th>
+                                            <th><span class="userDatatable-title">Usage Amount</span></th>
+        
+                                            <th><span class="userDatatable-title">Other Amount</span></th>
+                                            <th><span class="userDatatable-title">IDD Amount</span></th>
+                                            <th><span class="userDatatable-title">Local Amount</span></th>
+                                            <th><span class="userDatatable-title">Action</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody *ngFor="let monthIndex of months; let n = index">
+                                     
+                                      <tr>
+                                        <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;">{{monthIndex}}</td>
+                                      </tr>
+        
+                                        <!-- Individual Row -->
+                                        <tr [formGroupName]="i" >
+                                            <td>
+                                              <div class="userDatatable-content">
+      
+                                                <input type="text" class="form-control"
+                                                formControlName="invoiceNo"
+                                                id="pd_invoiceNo{{i}}" />
+                                              </div>
+                                          </td>
+                                          <!-- Other Input Fields -->
+                                          <!-- Date -->
+                                          <td>
+                                              <div class="userDatatable-content">
+                                                  
+                                                  <input type="number" class="form-control"
+                                                      formControlName="invoiceAmount1"
+                                                      id="pd_invoiceAmount1{{i}}" />
+                                              </div>
+                                              <div class="userDatatable-content">
+                                               
+                                                <input type="number" class="form-control"
+                                                    formControlName="invoiceAmount2"
+                                                    id="pd_invoiceAmount2{{i}}" />
+                                            </div>
+                                          </td>
+                                          <!-- Invoice Amount -->
+                                          <td>
+                                              <div class="userDatatable-content">
+                                                  <input type="text" class="form-control"
+                                                      formControlName="currConvRate"
+                                                      id="pd_currConvRate{{i}}" />
+                                              </div>
+                                          </td>
+                                          <!-- Balance Amount -->
+                                          <td>
+                                              <div class="userDatatable-content">
+                                                  <input type="number" class="form-control"
+                                                      formControlName="fixedAmount1"
+                                                      id="pd_fixedAmount1{{i}}" />
+                                              </div>
+                                              <div class="userDatatable-content">
+                                                <input type="number" class="form-control"
+                                                    formControlName="fixedAmount2"
+                                                    id="pd_fixedAmount2{{i}}" />
+                                            </div>
+                                          </td>
+                                          <!-- Paid Amount -->
+                                          <td>
+                                              <div class="userDatatable-content" >
+                                                  <input type="number" class="form-control"
+                                                      formControlName="usageAmount1"
+                                                      id="pd_usageAmount1{{i}}" />
+      
+                                              </div>
+                                              <div class="userDatatable-content" >
+                                                <input type="number" class="form-control"
+                                                    formControlName="usageAmount2"
+                                                    id="pd_usageAmount2{{i}}" />
+                                            </div>
+                                          </td>
+      
+                                          <!-- Payment Type Conv Color-1 -->
+                                          <td>
+                                              <div class="userDatatable-content" >
+                                                  <input type="text" class="form-control"
+                                                      formControlName="otherAmount1"
+                                                      id="pd_otherAmount{{i}}" />
+      
+                                              </div>
+                                              <div class="userDatatable-content" >
+                                                <input type="text" class="form-control"
+                                                    formControlName="otherAmount2"
+                                                    id="pd_otherAmount{{i}}" />
+    
+                                            </div>
+                                          </td>
+                                          <td>
+                                              <div class="userDatatable-content" >
+                                                  <input type="text" class="form-control"
+                                                      formControlName="IDDAmount1"
+                                                      id="pd_IDDAmount1{{i}}" />
+                                              </div>
+                                              <div class="userDatatable-content" >
+                                                <input type="text" class="form-control"
+                                                    formControlName="IDDAmount2"
+                                                    id="pd_IDDAmount2{{i}}" />
+                                            </div>
+  
+                                          </td>
+                                          <td>
+                                              <div class="userDatatable-content" >
+                                                  <input type="text" class="form-control"
+                                                      formControlName="localAmount1"
+                                                      id="pd_localAmount1{{i}}" />
+      
+                                              </div>
+                                              <div class="userDatatable-content" >
+                                                <input type="text" class="form-control"
+                                                    formControlName="localAmount2"
+                                                    id="pd_localAmount2{{i}}" />
+                                            </div>
+                                          </td>
+                                          <td>
+                                              <div class="userDatatable-content" >
+                                                
+  
+                                              </div>
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </ng-container>
+                            </div>
+                        </form>
+                        <!-- Add additional vendor-specific content here -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #loading>
+                <p>Loading data...</p>
+              </ng-template>
+            </div>
+            
+            
+        
+          </div>
+        </div>
+  
+      </div>
+  
+    </div>

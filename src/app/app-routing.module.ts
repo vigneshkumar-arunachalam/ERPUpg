@@ -118,12 +118,24 @@ import { DIDProviderComponent } from './stock/stock-didmaster/didprovider/didpro
 import { DIDTrunkNameComponent } from './stock/stock-didmaster/didtrunk-name/didtrunk-name.component';
 import { AddDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-catalog/add-didnum-cat-stock/add-didnum-cat-stock.component';
 import { EditDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-catalog/edit-didnum-cat-stock/edit-didnum-cat-stock.component';
+import { Nx3233Component } from './nx3233/nx3233.component';
+import { PurchaseEntryYearlyComponent } from './ledger/purchase-entry-yearly/purchase-entry-yearly.component';
+import { PurchaseEntryMrVoipTrendComponent } from './ledger/purchase-entry-mr-voip-trend/purchase-entry-mr-voip-trend.component';
+import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-call4tel-trend/purchase-entry-call4tel-trend.component';
 
 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'PEMrCall4telTrend', component: PurchaseEntryCall4telTrendComponent
+  },{
+    path: 'PEMrVoipTrend', component: PurchaseEntryMrVoipTrendComponent
+  },{
+    path: 'PEYearly', component: PurchaseEntryYearlyComponent
+  },{
+    path: 'nx32', component: Nx3233Component
   },{
     path: 'editDIDNumberCatalog', component: EditDIDNumCatStockComponent
   },{

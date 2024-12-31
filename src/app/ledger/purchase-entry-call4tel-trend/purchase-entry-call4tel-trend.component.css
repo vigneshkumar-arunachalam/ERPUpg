@@ -29,15 +29,7 @@
 }
 
 /* common userdatable ends, customization begins */
-.userDatatable-header th:nth-child(4) {
-    /* width: 50px; */
-}
 
-.userDatatable tbody tr td:nth-child(4) {
-    /* width: 50px;
-    width: 15%; */
-    text-wrap: wrap;
-}
 
 .button {
     padding: 0.6em 1.5em;
@@ -152,19 +144,11 @@ i.fa.fa-bars {
     border-radius: 5px !important;
 }
 
-.userDatatable table tbody tr td:nth-child(2) {
-    width: 100px;
 
-}
 
-.userDatatable table td {
-    white-space: normal;
-}
 
-.userDatatable table td:nth-child(1) {
-    white-space: nowrap;
 
-}
+
 
 #searchPettyCashFormId .modal-dialog {
     max-width: 65%;
@@ -174,28 +158,21 @@ i.fa.fa-bars {
     min-width: 50%;
 }
 
-#addProductCategoryFormId .btn-primary,
-#editProductCategoryFormId .btn-primary,
-#viewProductCategoryFormId .btn-primary,
-#searchProductCategoryFormId .btn-primary {
+#pettycashEditFormId .btn-primary,
+#searchPettyCashFormId .btn-primary {
     background: linear-gradient(to right, #262127, #54b7aa);
     color: rgb(240 241 219);
     box-shadow: none;
 }
 
-#addProductCategoryFormId label,
-#editProductCategoryFormId label,
-#viewProductCategoryFormId label,
-#searchProductCategoryFormId label,
+#pettycashEditFormId label,
 #searchPettyCashFormId label {
     font-weight: 500;
     color: #051b5a !important;
 }
 
-#addProductCategoryFormId .modal-content button.close,
-#editProductCategoryFormId .modal-content button.close,
-#viewProductCategoryFormId .modal-content button.close,
-#searchProductCategoryFormId .modal-content button.close {
+#pettycashEditFormId .modal-content button.close,
+#searchPettyCashFormId .modal-content button.close {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -208,17 +185,11 @@ i.fa.fa-bars {
     transition: all 0.5s ease;
 }
 
-#addProductCategoryFormId .modal-body .form-control:hover,
-#editProductCategoryFormId .modal-body .form-control:hover,
-#viewProductCategoryFormId .modal-body .form-control:hover,
-#searchProductCategoryFormId .modal-body .form-control:hover {
+#pettycashEditFormId .modal-body .form-control:hover {
     background-color: #f1e80724;
 }
 
-#addProductCategoryFormId .form-control:focus,
-#editProductCategoryFormId .form-control:focus,
-#viewProductCategoryFormId .form-control:focus,
-#searchProductCategoryFormId .form-control:focus {
+#pettycashEditFormId .form-control:focus {
     outline: none;
     box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
     border: 2px solid transparent !important;
@@ -318,46 +289,205 @@ select {
 }
 
 
-#tv4 tr:nth-child(even):hover {
+#cg tr:nth-child(even):hover {
     background: linear-gradient(to right, #c9f1a2, #df97b4);
-}
+  }
 
-#tv4 tr:nth-child(odd):hover {
-    background: linear-gradient(to right, #f5fb97, #fcb35f);
-}
+#cg tr:nth-child(odd):hover {
+    background: linear-gradient(to right, #f3f4e6, #f4c5d9);
+  }
 
-#tv4 tr:hover td {
+  tr:hover td {
     color: #0000;
     background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
     -webkit-background-clip: text;
     background-clip: text;
     transition: background 2s, color 2s;
-}
-
-.userDatatable table tbody tr td {
+  }
+  .userDatatable table tbody tr td {
     border: 1px solid #C5D9E0;
 }
-
 .userDatatable table thead tr th {
     border: 1px solid #ebf2f4;
 }
 
-.red-row {
-    background-color: rgb(252, 255, 164);
-    color: rgb(6, 6, 6); /* Optional: Adjust text color for better contrast */
-}
 
 
-.modal-content button.close {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
+
+.table-container {
+    max-width: 100%;
+    overflow-x: auto;
+  
+    table {
+      width: 100%;
+      border-collapse: collapse;
+  
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+      }
+  
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+  
+      .status-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+  
+        &.status-green {
+          background-color: green;
+          color: white;
+        }
+  
+        &.status-red {
+          background-color: red;
+          color: white;
+        }
+  
+        &.status-yellow {
+          background-color: yellow;
+          color: black;
+        }
+      }
+  
+      .bx {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  
+  
+
+
+
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+  }
+  
+  /* .fa-circle {
+    margin: 2px;
+    font-size: 14px;
+  } */
+  
+
+  .fa-circle {
+    font-size: 16px;
+    margin: 2px;
+  }
+
+
+      /* Accordion Header Styling */
+.accordion .card-header {
+    /* background: linear-gradient(45deg, #1e90ff, #007bff); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: white;
+    font-weight: bold;
     cursor: pointer;
-    color: #f9021b;
-    transition: all 0.5s ease;
+    transition: background 0.3s ease, transform 0.2s ease;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .accordion .card-header:hover {
+    /* background: linear-gradient(45deg, #007bff, #0056b3); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: #fff;
+    transform: scale(1.02);
+  }
+  
+  /* Button inside the header */
+  .accordion .card-header button {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 10px;
+  }
+  
+  .accordion .card-header button:focus {
+    outline: none;
+  }
+  
+  /* Accordion Body Styling */
+  .accordion .card-body {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Active Header */
+  .accordion .card-header.active {
+    /* background: linear-gradient(45deg, #0056b3, #003f7f); */
+    background: linear-gradient(to right, #2980b9 0%, #2c3e50 40%);
+    color: #fff;
+  }
+  
+  /* Accordion Container Styling */
+  .accordion {
+    width: 100%;
+    margin: 20px auto;
+    border-radius: 10px;
+  }
+  
+  /* Card Styling */
+  .accordion .card {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  /* Smooth Transition for Collapsing */
+  .collapse {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Add some shadow for the entire accordion */
+  .accordion {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+
+
+  .gradient-cell {
+    /* Gradient background */
+    background: linear-gradient(135deg, #fa0b0bc7, #82f77e);
+    color: #000000; /* Text color for readability */
+    padding: 10px;
+    text-align: center; /* Center-align text */
+    border-radius: 8px; /* Rounded corners */
+    font-weight: 500; /* Make text bold */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth hover transition */
 }
 
+/* Hover effect */
+.gradient-cell:hover {
+    background: linear-gradient(135deg, #ff6a00, #ff9966);
+    transform: scale(1.05); /* Slightly enlarge on hover */
+    cursor: pointer; /* Change cursor to pointer */
+}
+.table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
+.table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
+  

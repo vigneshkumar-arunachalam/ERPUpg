@@ -584,9 +584,9 @@
           </div>
         </li>
         <li>
-          <!-- <a href="javascript:;" class="navbar-brand" style=" position: relative;">
-            <span class="countLeft" title="Recurring Invoice new" data-toggle="modal"
-              data-target="#RecurringInvoicenewFormId">30</span>
+          <a href="javascript:;" class="navbar-brand" style=" position: relative;">
+            <span class="countLeft" title="Recurring Invoice new" data-toggle="modal" (click)="getRecurringDemo()"
+              data-target="#RecurringInvoicenewFormId">5</span>
             <span class="countLeftBottom" title="Recurred Invoice" data-toggle="modal" (click)="getRecurredList()"
               data-target="#RecuredInvoiceListFormId">30</span>
             <img class="svg" src="assets/img/icon2/cycle.png" style="height: 30px;width:30px;" alt="img"
@@ -595,7 +595,7 @@
               data-target="#RecuringInvoiceFormId">30</span>
             <span class="countRightBottom" title="Reseller Recuring List" data-toggle="modal"
               data-target="#ResellerRecuringFormId" (click)="getResellerRecuringApprovalList()">30</span>
-          </a> -->
+          </a>
 
 
           <a href="javascript:;" class="navbar-brand">
@@ -2323,7 +2323,9 @@
                     All</label>
                 </div>
                 <div style="margin-left: 12px;margin-top: 20px;">
-                  <input type="checkbox" id="check-all-RIN">
+                  <!-- <input type="checkbox" id="check-all-RIN"> -->
+                  <input type="checkbox" id="check-all-demo" class="checkbox"
+                  (change)="selectAll_RecurringDemo($event)">
                 </div>
               </div>
               <div style="display: flex;">
@@ -2332,7 +2334,7 @@
                     Approval Invoice List</label>
                 </div>
                 <div style="margin-left: 8px;margin-top: 8px;">
-                  <button type="button" class="btn btn-primary" data-dismiss="modal">
+                  <button type="button" class="btn btn-primary" (click)="loadRecurring()">
                     Load Recurring
                   </button>
                 </div>
@@ -2345,7 +2347,9 @@
               <thead>
                 <tr class="userDatatable-header">
                   <th class="userDatatable-title">S.No</th>
-                  <th class="userDatatable-title">Action</th>
+                  <th class="userDatatable-title">Action
+                   
+                  </th>
                   <th class="userDatatable-title">Invoice No</th>
                   <th class="userDatatable-title">Invoice Date</th>
                   <th class="userDatatable-title">Customer</th>
@@ -2355,56 +2359,36 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1</td>
-                  <td><input type="checkbox"></td>
-                  <td>20210958</td>
-                  <td>01-09-2021</td>
-                  <td>Durian Fresh Sdn. Bhd.</td>
-                  <td>1489.3</td>
-                  <td>RK</td>
-                  <td>MYR</td>
+              
+                <tr *ngFor="let item of  recurringDemoList;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>
+                    
+                                
+                    <div class="d-flex">
+                      <div class="userDatatable__imgWrapper d-flex align-items-center">
+                        <div class="checkbox-group-wrapper">
+                          <div class="checkbox-group d-flex">
+                            <div class="checkbox-theme-default custom-checkbox checkbox-group__single1 d-flex">
+                              <input class="checkbox" type="checkbox" id="check-RecurringDemo{{i}}"
+                                (change)="EditChk_RecurringDemo(item.billId,$event)">
+                              <label for="check-RecurringDemo{{i}}"></label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                                
+                  </td>
+                  <td>{{item.invoice_no}}</td>
+                  <td>{{item.billDate}}</td>
+                  <td>{{item.customerName}}</td>
+                  <td>{{item.netPayment}}</td>
+                  <td>{{item.generatedBy}}</td>
+                  <td>{{item.currency_name}}</td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td><input type="checkbox"></td>
-                  <td>20211094</td>
-                  <td>01-10-2021</td>
-                  <td>Durian Fresh Sdn. Bhd.</td>
-                  <td>1489.3</td>
-                  <td>RK</td>
-                  <td>MYR</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td><input type="checkbox"></td>
-                  <td>20230017</td>
-                  <td>30-01-2024</td>
-                  <td>VIVA Communications Pvt. Ltd.</td>
-                  <td>330</td>
-                  <td>NV</td>
-                  <td>USD</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td><input type="checkbox"></td>
-                  <td>20230190</td>
-                  <td>28-01-2024</td>
-                  <td>Amalan International Pte Ltd</td>
-                  <td>21.6</td>
-                  <td>NV</td>
-                  <td>SGD</td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td><input type="checkbox"></td>
-                  <td>20230236</td>
-                  <td>28-01-2024</td>
-                  <td>OCCASIONS CATERING PTE. LTD.</td>
-                  <td>90.6</td>
-                  <td>NV</td>
-                  <td>SGD</td>
-                </tr>
+             
 
               </tbody>
 
@@ -2414,10 +2398,10 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="getRecurringDemoApproval('Invoice')">
           Invoice Approval
         </button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal">
+        <button type="button" class="btn btn-warning" data-dismiss="modal" (click)="getRecurringDemoApproval('Reject')">
           Reject
         </button>
 

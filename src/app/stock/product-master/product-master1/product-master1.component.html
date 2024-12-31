@@ -50,7 +50,7 @@
                   </thead>
                   <tbody >
                   
-                    <tr *ngFor="let item of productCategoryList1;let i=index">
+                    <tr *ngFor="let item of productCategoryList1;let i=index" [ngClass]="{'red-row': item.approval_status == '2'}">
   
                       
                       <td><span>{{ item.productCode}}</span></td>
@@ -320,11 +320,11 @@ aria-hidden="true">
              <div class="col-lg-12 ">
                <div class="form-group row">
                    <div class="col-lg-6">
-                       <label for="add_ProductMasterSerialNo" class="col-lg-12 col-form-label">Serial Number Available</label>
+                       <label for="edit_ProductMasterSerialNo" class="col-lg-12 col-form-label">Serial Number Available</label>
                      </div>
                  
                  <div class="col-lg-6 mt-2">
-                   <input type="checkbox"  formControlName="add_ProductMasterSerialNo" (change)="productSerialNo($event)">
+                   <input type="checkbox"  formControlName="edit_ProductMasterSerialNo" (change)="productSerialNo($event)">
                  </div>
                </div>
              </div>
@@ -512,7 +512,7 @@ aria-hidden="true">
 
 
    <!----------Modal Pop Up (BEGIN)  for Quotation Approval in customer Contract------------------>
-<div class="modal fade" id="prodMasterApprovalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+<div class="modal fade" id="prodMasterApprovalId1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 aria-hidden="true">
 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content quotApprovalcss">
@@ -523,107 +523,7 @@ aria-hidden="true">
             </button>
         </div>
         <div class="modal-body">
-            <form [formGroup]="productMasterApprovalForm">
-                <h3 style="color: #df631c;font-weight: 500;">Are you sure to send to approval?</h3>
-                <table class="demoTable" style="height: 20;">
-                    <tr>
-                        <td style="vertical-align: text-top;"><strong>Approval Type </strong></td>
-                        <td>
-                            <table class="demoTable">
-                                <tr>
-                                    <td>
-
-                                        <div class="form-check">
-                                            <input mdbRadio class="form-check-input" type="radio"
-                                                name="radio_ApprovalBy" id="single" checked
-                                                (change)="handle_radioChange($event)" />
-                                            <label class="form-check-label" for="single"> Single
-                                                Approval</label>
-                                        </div>
-                                        <br>
-                                        <!-- Default checked radio -->
-                                        <div class="form-check">
-                                            <input mdbRadio class="form-check-input" type="radio"
-                                                name="radio_ApprovalBy" id="double"
-                                                (change)="handle_radioChange($event)" />
-                                            <label class="form-check-label" for="double"> Double Approval
-                                            </label>
-                                        </div>
-
-
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <br>
-                    <br>
-                    <tr>
-                        <td><strong>Approval By </strong>
-                        </td>
-                        <td>
-                            <table class="demoTable">
-                                <tr style="display: inline-flex ">
-                                    <td>
-                                        <div class="head-depart-per-section">
-                                            <div class="head-depart-per"><input type="checkbox"
-                                                    formControlName="cm_chk" [(ngModel)]="checked"
-                                                    (change)="eventCheck_CM_QuotPermission($event)"
-                                                    style="margin-right:10px;" /> CM</div>
-                                            <div class="head-depart-per"> <input type="checkbox"
-                                                    formControlName="cd_chk" [(ngModel)]="checked"
-                                                    (change)="eventCheck_CD_QuotPermission($event)"
-                                                    style="margin-right:10px;" /> CD</div>
-                                        </div>
-                                        <br>
-
-                                    </td>
-
-                                </tr>
-                                <br>
-                                <div>
-                                    <div>
-                                        <tr *ngFor="let display1 of prodMasterApprovalResult;let i =index">
-                                            <td>
-                                                <input type="radio" id="{{i}}"
-                                                    [attr.disabled]="approval_Show_hide ? '' : null"
-                                                    formControlName="radio_approvalPermission"
-                                                    value="{{display1.userId}}"
-                                                    (change)="handleChange($event,display1.userId)" />
-                                                <label for="{{i}}"
-                                                    class="col-lg-6 col-form-label">{{display1.firstName}}</label>
-
-                                            </td>
-
-                                            <!-- <td>{{display1.firstName}}</td> -->
-                                        </tr>
-                                    </div>
-                                    <div>
-                                        <textarea *ngIf="textarea_Show_hide" formControlName="comments_approvedBy"
-                                            placeholder="Approval By Comments"></textarea>
-                                        <textarea *ngIf="textarea1_Show_hide"
-                                            class="form-control textareaformcontrol" rows="3"
-                                            placeholder="Approval By Comments"
-                                            formControlName="comments_approvedBy"></textarea>
-                                    </div>
-                                </div>
-
-
-                            </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><strong>Comments </strong></td>
-                        <td>
-                            <div>
-                                <textarea class="form-control mt-2 textareaformcontrol"
-                                    formControlName="approval_comments" id="descrip" rows="3"></textarea>
-
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+           
         </div>
         <div class="modal-footer">
 
@@ -638,6 +538,142 @@ aria-hidden="true">
 </div>
 </div>
 <!----------Modal Pop Up (END)  for Quotation Approval in customer Contract------------------>
+
+
+
+
+
+ <!----------Modal Pop Up (BEGIN)  for Approval ------------------>
+ <div class="modal fade" id="prodMasterApprovalId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+   <div class="modal-content searchQuotationCSS">
+     <div class="modal-header">
+       <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #262127, #54b7aa);">
+      Product Master Approval </h2>
+     <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+       <span aria-hidden="true">&times;</span>
+     </button>
+     </div>
+     <div class="modal-body">
+      <form [formGroup]="productMasterApprovalForm">
+        <h3 style="color: #df631c;font-weight: 500;">Are you sure to send to approval?</h3>
+        <table class="demoTable" style="height: 20;">
+            <tr>
+                <td style="vertical-align: text-top;"><strong>Approval Type </strong></td>
+                <td>
+                    <table class="demoTable">
+                        <tr>
+                            <td>
+
+                                <div class="form-check">
+                                    <input mdbRadio class="form-check-input" type="radio"
+                                        name="radio_ApprovalBy" id="single" checked
+                                        (change)="handle_radioChange($event)" />
+                                    <label class="form-check-label" for="single"> Single
+                                        Approval</label>
+                                </div>
+                                <br>
+                                <!-- Default checked radio -->
+                                <div class="form-check">
+                                    <input mdbRadio class="form-check-input" type="radio"
+                                        name="radio_ApprovalBy" id="double"
+                                        (change)="handle_radioChange($event)" />
+                                    <label class="form-check-label" for="double"> Double Approval
+                                    </label>
+                                </div>
+
+
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <br>
+            <br>
+            <tr>
+                <td><strong>Approval By </strong>
+                </td>
+                <td>
+                    <table class="demoTable">
+                        <tr style="display: inline-flex ">
+                            <td>
+                                <div class="head-depart-per-section">
+                                    <div class="head-depart-per"><input type="checkbox"
+                                            formControlName="cm_chk" [(ngModel)]="checked"
+                                            (change)="eventCheck_CM_QuotPermission($event)"
+                                            style="margin-right:10px;" /> CM</div>
+                                    <div class="head-depart-per"> <input type="checkbox"
+                                            formControlName="cd_chk" [(ngModel)]="checked"
+                                            (change)="eventCheck_CD_QuotPermission($event)"
+                                            style="margin-right:10px;" /> CD</div>
+                                </div>
+                                <br>
+
+                            </td>
+
+                        </tr>
+                        <br>
+                        <div>
+                            <div>
+                                <tr *ngFor="let display1 of prodMasterApprovalResult;let i =index">
+                                    <td>
+                                        <input type="radio" id="{{i}}"
+                                            [attr.disabled]="approval_Show_hide ? '' : null"
+                                            formControlName="radio_approvalPermission"
+                                            value="{{display1.userId}}"
+                                            (change)="handleChange($event,display1.userId)" />
+                                        <label for="{{i}}"
+                                            class="col-lg-6 col-form-label">{{display1.firstName}}</label>
+
+                                    </td>
+
+                                    <!-- <td>{{display1.firstName}}</td> -->
+                                </tr>
+                            </div>
+                            <div>
+                                <textarea *ngIf="textarea_Show_hide" formControlName="comments_approvedBy"
+                                    placeholder="Approval By Comments"></textarea>
+                                <textarea *ngIf="textarea1_Show_hide"
+                                    class="form-control textareaformcontrol" rows="3"
+                                    placeholder="Approval By Comments"
+                                    formControlName="comments_approvedBy"></textarea>
+                            </div>
+                        </div>
+
+
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>Comments </strong></td>
+                <td>
+                    <div>
+                        <textarea class="form-control mt-2 textareaformcontrol"
+                            formControlName="approval_comments" id="descrip" rows="3"></textarea>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+ 
+     </div>
+     <div class="modal-footer">
+
+      <button type="button" class="btn btn-primary" (click)="prodMgmtApprovalUpdate()">
+          Update
+      </button>
+      <button type="button" class="btn btn-dark"  data-dismiss="modal">
+          Cancel
+      </button>
+  </div>
+   </div>
+ </div>
+ </div>
+ <!----------Modal Pop Up (END)  for Approval ------------------>
 
  
 

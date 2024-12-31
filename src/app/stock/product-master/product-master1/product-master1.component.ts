@@ -70,6 +70,7 @@ export class ProductMaster1Component implements OnInit {
       'edit_ProductMasterDesc': new FormControl(null),
       'edit_ProductMasterAttachment': new FormControl(null),
       'edit_ProductMasterSerialNo': new FormControl(null),
+      
     });
     this.addProductMaster = new FormGroup({
       'add_ProductMasterCode': new FormControl(null),
@@ -102,6 +103,12 @@ export class ProductMaster1Component implements OnInit {
 
   }
   addProdCatGo() {
+    this.addProductMaster.controls['add_ProductMasterCatName'].reset();
+    this.addProductMaster.controls['add_ProductMasterName'].reset();
+    this.addProductMaster.controls['add_ProductMasterDesc'].reset();
+    this.addProductMaster.controls['add_ProductMasterAttachment'].reset();
+    this.addProductMaster.controls['add_ProductMasterSerialNo'].reset();
+  
     $('#addProductCategoryFormId').modal('show');
   }
   searchProdCatGo() {
@@ -385,8 +392,10 @@ export class ProductMaster1Component implements OnInit {
         this.imageShow=response.product_img;
         this.approval_status=response.approval_status;
 
+
         this.spinner.hide();
-       
+       console.log('serial_no_state:', response.serial_no_state, typeof response.serial_no_state);
+
         
         this.editProductCategory.patchValue({
           'edit_ProductMasterCode': response.productCode,
@@ -523,7 +532,7 @@ export class ProductMaster1Component implements OnInit {
     api_postUPd.product_category_name = this.editProductCategory.value.edit_ProductCategoryName;
     api_postUPd.purchase_rate_per = this.editProductCategory.value.edit_PurchasePrice;
     api_postUPd.product_category_id = this.editProductCategory.value.edit_ProductCategoryCode;
-    api_postUPd.status =   this.editApprovalStatus;
+    api_postUPd.status =  this.approval_status;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -827,11 +836,11 @@ export class ProductMaster1Component implements OnInit {
           this.spinner.show();
           let api_req: any = new Object();
           let quot_approvalUpdate_req: any = new Object();
-          api_req.moduleType = "quotation";
-          api_req.api_url = "quotation/quotation_send_to_approval";
+          api_req.moduleType = "product_master";
+          api_req.api_url = "product_master/sendProductCategoryApproval";
           api_req.api_type = "web";
           api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-          quot_approvalUpdate_req.action = "quotation_send_to_approval";
+          quot_approvalUpdate_req.action = "product_master/sendProductCategoryApproval";
           quot_approvalUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
           quot_approvalUpdate_req.product_category_hd_id = this.prodMasterApprovalEditID;
          
@@ -853,10 +862,10 @@ export class ProductMaster1Component implements OnInit {
       
           api_req.element_data = quot_approvalUpdate_req;
       
-          $("#quotationApprovalId").attr("disabled", true);
+          $("#prodMasterApprovalId").attr("disabled", true);
           this.serverService.sendServer(api_req).subscribe((response: any) => {
             this.spinner.hide();
-            $("#quotationApprovalId").removeAttr("disabled");
+            $("#prodMasterApprovalId").removeAttr("disabled");
           //  console.log("response status", response.status);
             if (response.status == true) {
       
@@ -864,12 +873,12 @@ export class ProductMaster1Component implements OnInit {
                 message: "Quotation Sent for Approval",
                 position: 'topRight'
               });
-              $("#quotationApprovalId").modal("hide");
+              $("#prodMasterApprovalId").modal("hide");
               this.productCategoryList({});
       
             }
             else {
-              $("#quotationApprovalId").modal("hide");
+              $("#prodMasterApprovalId").modal("hide");
               iziToast.error({
                 message: "Data Not Found",
                 position: 'topRight'

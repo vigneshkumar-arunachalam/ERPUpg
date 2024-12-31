@@ -315,15 +315,15 @@ select {
 }
 
 
-tr:nth-child(even):hover {
+#tv3 tr:nth-child(even):hover {
     background: linear-gradient(to right, #c9f1a2, #df97b4);
   }
 
-  tr:nth-child(odd):hover {
+  #tv3 tr:nth-child(odd):hover {
     background: linear-gradient(to right, #f5fb97, #fcb35f);
   }
 
-  tr:hover td {
+  #tv3 tr:hover td {
     color: #0000;
     background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
     -webkit-background-clip: text;
@@ -341,4 +341,17 @@ tr:nth-child(even):hover {
 .red-row {
     background-color: rgb(252, 255, 164);
     color: rgb(6, 6, 6); /* Optional: Adjust text color for better contrast */
+}
+
+.modal-content button.close {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
 }

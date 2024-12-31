@@ -30,6 +30,20 @@ export class ProductCategoryComponent implements OnInit {
   response_total_cnt: any;
   editApprovalStatus: any;
   editproduct_category_id: any;
+
+  productMasterApprovalForm: FormGroup;
+  checked = true;
+  Approval_Type_radiobox_Value: any = 'single';
+   //approval
+   approval_Show_hide: boolean = true;
+   textarea_Show_hide: boolean;
+   textarea1_Show_hide: boolean;
+   approval_comments: any;
+   approvalUserID_Radio: any;
+   quotationApprovedBy: any;
+  prodMasterApprovalResult: any;
+  prodMasterApprovalEditID: any;
+
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
@@ -56,11 +70,114 @@ export class ProductCategoryComponent implements OnInit {
   }
   addProdCatGo() {
    
+    this.addProductCategory.controls['add_ProductCategoryName'].reset();
+    this.addProductCategory.controls['add_PurchasePrice'].reset();
+   
     this.getProductCategoryCode();
   
   }
   searchProdCatGo() {
     $('#searchProductCategoryFormId').modal('show');
+  }
+  handle_radioChange(event: any) {
+    this.Approval_Type_radiobox_Value = event.target.id;
+    // console.log(this.Approval_Type_radiobox_Value);
+
+    if (this.Approval_Type_radiobox_Value == "single") {
+      this.approval_Show_hide = true;
+
+    }
+    else if (this.Approval_Type_radiobox_Value == "double") {
+     // console.log(this.Approval_Type_radiobox_Value);
+      this.approval_Show_hide = false;
+
+    }
+  }
+  checkbox_CM_ProdMgtPermission:any;
+  checkbox_CD_ProdMgtPermission:any;
+  eventCheck_CM_QuotPermission(event: any) {
+    this.checkbox_CM_ProdMgtPermission = event.target.checked;
+   // console.log(this.checkbox_CM_QuotPermission)
+  }
+  eventCheck_CD_QuotPermission(event: any) {
+    this.checkbox_CD_ProdMgtPermission = event.target.checked;
+   // console.log(this.checkbox_CM_QuotPermission)
+  }
+  handleChange(evt: any, userId: any) {
+
+    this.approvalUserID_Radio = userId;
+    var xyz = evt.target.id;
+    this.quotationApprovedBy = this.approvalUserID_Radio;
+   // console.log(xyz, "target");
+    if (xyz == "0") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = true;
+      this.textarea1_Show_hide = false;
+    }
+    else if (xyz == "1") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "2") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "3") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "4") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "5") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "6") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "7") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "8") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
+    else if (xyz == "9") {
+      // console.log(xyz);
+      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      this.textarea_Show_hide = false;
+      this.textarea1_Show_hide = true;
+
+    }
   }
 
 
@@ -221,7 +338,7 @@ export class ProductCategoryComponent implements OnInit {
       if (response.status == true) {
 
         this.spinner.hide();
-        this.editApprovalStatus=response.data.status;
+        this.editApprovalStatus=response.data.approval_status;
         this.editProductCategory.patchValue({
           'edit_ProductCategoryCode': response.data.product_category_code,
           'edit_ProductCategoryName': response.data.product_category_name,
@@ -456,6 +573,117 @@ export class ProductCategoryComponent implements OnInit {
         }
       })
 
+    }
+    prodMasterApprovalEdit(id: any) {
+ 
+      this.prodMasterApprovalEditID=id;
+      //this.quotationApproval_ID = id;
+      let api_req: any = new Object();
+      let quot_approval_req: any = new Object();
+      api_req.moduleType = "product_category";
+      api_req.api_url = "product_category/getUserS";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      quot_approval_req.action = "product_category/getUserS";
+      
+      quot_approval_req.user_id = localStorage.getItem('erp_c4c_user_id');
+  
+      api_req.element_data = quot_approval_req;
+  
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+      //  console.log("response status", response.status);
+        if (response.status == true) {
+          $("#prodMasterApprovalId").modal("show");
+          this.prodMasterApprovalResult = response.data;
+  
+          // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
+  
+        }
+        else {
+          $("#prodMasterApprovalId").modal("hide");
+          iziToast.error({
+            message: "Data Not Found",
+            position: 'topRight'
+          });
+          // this.editInvoiceGroupForm.reset();
+          // this.contractList();
+        }
+      }), (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+      //  console.log("final error", error);
+      }
+  
+    }
+
+    prodMgmtApprovalUpdate() {
+
+      if (this.quotationApprovedBy == undefined || this.quotationApprovedBy == 'undefined' || this.quotationApprovedBy == '') {
+        this.quotationApprovedBy = '';
+      }
+      this.spinner.show();
+      let api_req: any = new Object();
+      let quot_approvalUpdate_req: any = new Object();
+      api_req.moduleType = "product_category";
+      api_req.api_url = "product_category/sendProductCategoryApproval";
+      api_req.api_type = "web";
+      api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+      quot_approvalUpdate_req.action = "product_category/sendProductCategoryApproval";
+      quot_approvalUpdate_req.user_id = localStorage.getItem('erp_c4c_user_id');
+      quot_approvalUpdate_req.product_category_hd_id = this.prodMasterApprovalEditID;
+     
+      quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
+      quot_approvalUpdate_req.quotation_comments = this.productMasterApprovalForm.value.comments_approvedBy;
+      quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
+      quot_approvalUpdate_req.email_to = "rm@corp.cal4care.com";
+     // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
+      if (this.Approval_Type_radiobox_Value == "double" && this.quotationApprovedBy == '') {
+  
+        iziToast.warning({
+          message: "Select Approval By for Double Approval",
+          position: 'topRight'
+        });
+        return false;
+  
+      }
+      quot_approvalUpdate_req.assigned_comments = this.productMasterApprovalForm.value.approval_comments;
+  
+      api_req.element_data = quot_approvalUpdate_req;
+  
+      $("#prodMasterApprovalId").attr("disabled", true);
+      this.serverService.sendServer(api_req).subscribe((response: any) => {
+        this.spinner.hide();
+        $("#prodMasterApprovalId").removeAttr("disabled");
+      //  console.log("response status", response.status);
+        if (response.status == true) {
+  
+          iziToast.success({
+            message: "Quotation Sent for Approval",
+            position: 'topRight'
+          });
+          $("#prodMasterApprovalId").modal("hide");
+          this.productCategoryList({});
+  
+        }
+        else {
+          $("#prodMasterApprovalId").modal("hide");
+          iziToast.error({
+            message: "Data Not Found",
+            position: 'topRight'
+          });
+  
+        }
+      }), (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      }
+  
+  
     }
 
 

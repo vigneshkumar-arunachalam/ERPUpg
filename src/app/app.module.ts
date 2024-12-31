@@ -147,7 +147,10 @@ import { DIDProviderComponent } from './stock/stock-didmaster/didprovider/didpro
 import { DIDTrunkNameComponent } from './stock/stock-didmaster/didtrunk-name/didtrunk-name.component';
 import { AddDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-catalog/add-didnum-cat-stock/add-didnum-cat-stock.component';
 import { EditDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-catalog/edit-didnum-cat-stock/edit-didnum-cat-stock.component';
-
+import { Nx3233Component } from './nx3233/nx3233.component';
+import { PurchaseEntryYearlyComponent } from './ledger/purchase-entry-yearly/purchase-entry-yearly.component';
+import { PurchaseEntryMrVoipTrendComponent } from './ledger/purchase-entry-mr-voip-trend/purchase-entry-mr-voip-trend.component';
+import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-call4tel-trend/purchase-entry-call4tel-trend.component';
 
 
 
@@ -280,6 +283,10 @@ import { EditDIDNumCatStockComponent } from './stock/stock-didmaster/didnumber-c
      DIDTrunkNameComponent,
      AddDIDNumCatStockComponent,
      EditDIDNumCatStockComponent,
+     Nx3233Component,
+     PurchaseEntryYearlyComponent,
+     PurchaseEntryMrVoipTrendComponent,
+     PurchaseEntryCall4telTrendComponent,
  
   ],
   imports: [

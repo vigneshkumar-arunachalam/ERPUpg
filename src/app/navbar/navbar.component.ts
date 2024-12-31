@@ -253,6 +253,10 @@ export class NavbarComponent implements OnInit {
   billeridArray: any[] = [];
   mailCustomerID: any;
   uniqueBillerIds: any[] = [];
+  recurringDemoList: any;
+  //reseller Demo
+  arrayRecurringDemo: any[] = [];
+ 
 
   constructor(private router: Router, private serverService: ServerService,
     private http: HttpClient, private fb: FormBuilder,
@@ -3619,6 +3623,59 @@ export class NavbarComponent implements OnInit {
     }
     console.log("Final Checkbox After checkbox selected list", this.arrayRecurringReseller);
   }
+  selectAll_RecurringDemo(event: any) {
+
+    const isChecked = event.target.checked;
+    this.recurringDemoList.forEach((list: any) => {
+
+      list.isChecked = isChecked;
+      if (isChecked) {
+        if (!this.arrayRecurringDemo.includes(list.billId)) {
+          this.arrayRecurringDemo.push(list.billId);
+        }
+      } else {
+
+        const index = this.arrayRecurringDemo.findIndex((el: any) => el === list.billId);
+        if (index > -1) {
+          this.arrayRecurringDemo.splice(index, 1);
+        }
+      }
+    });
+
+    // Update the state of all checkboxes in the DOM
+    const checkboxes = document.querySelectorAll('.checkbox-group__single1 input[type="checkbox"]');
+    checkboxes.forEach((checkbox: any) => {
+      checkbox.checked = isChecked;
+    });
+
+    console.log("Checkbox-all-billId", this.arrayRecurringDemo);
+  }
+
+
+  EditChk_RecurringDemo(billId: any, event: any) {
+
+
+    this.checkbox_value = event.target.checked;
+    // console.log(this.checkbox_value);
+
+    // Check if data is not undefined
+    if (billId !== undefined) {
+      if (this.checkbox_value) {
+        // Check if data is not already in the array and is not undefined
+        if (!this.arrayRecurringDemo.includes(billId)) {
+          this.arrayRecurringDemo.push(billId);
+        }
+        // console.log("Final Checkbox After checkbox selected list", this.edit_array);
+      } else {
+        const index = this.arrayRecurringDemo.findIndex((el: any) => el === billId);
+        if (index > -1) {
+          this.arrayRecurringDemo.splice(index, 1);
+        }
+        //  console.log("Final Checkbox After Deselected selected list", this.edit_array);
+      }
+    }
+    console.log("Final Checkbox After checkbox selected list-billId", this.arrayRecurringDemo);
+  }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event): void {
@@ -3631,5 +3688,133 @@ export class NavbarComponent implements OnInit {
     const dropdownElement = document.querySelector('.dropdown-container');
     return dropdownElement?.contains(event.target as Node) || false;
   }
+
+
+  getRecurringDemo() {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/newRecuringApprovalInvoiceList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/newRecuringApprovalInvoiceList";
+    api_page_req.user_id = this.user_ids;
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+    
+      if (response != '') {
+        this.spinner.hide();
+        this.recurringDemoList=response.data;
+        
+       
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  getRecurringDemoApproval(value:any) {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/recuringApprovalInvoiceNew";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/recuringApprovalInvoiceNew";
+    api_page_req.user_id = this.user_ids;
+    api_page_req.actval = value;
+    api_page_req.approval_id = this.arrayRecurringDemo;
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+    
+      if (response.status== true) {
+        this.spinner.hide();
+        location.reload();
+        
+       
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  loadRecurring() {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/get_queueing";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/get_queueing";
+    api_page_req.user_id = this.user_ids;
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+    
+      if (response.status== true) {
+        this.spinner.hide();
+      //  location.reload();
+        
+       
+
+      } else {
+        // Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+
 
 }

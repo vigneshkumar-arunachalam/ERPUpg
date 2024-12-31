@@ -92,6 +92,7 @@
 
 .dropdown__item {
     list-style-type: none;
+    
 }
 
 .dropdown__link {
@@ -169,13 +170,15 @@ i.fa.fa-bars {
 #searchPettyCashFormId .modal-dialog {
     max-width: 65%;
 }
+#addSerialNoFormID .modal-dialog {
+    max-width: 95%;
+}
 
 #pettycashEditFormId .modal-dialog {
     min-width: 50%;
 }
 
-#addProductCategoryFormId .btn-primary,
-#editProductCategoryFormId .btn-primary,
+#fileAttachmentNX32FormId .btn-primary,#editProductCategoryFormId .btn-primary,
 #viewProductCategoryFormId .btn-primary,
 #searchProductCategoryFormId .btn-primary {
     background: linear-gradient(to right, #262127, #54b7aa);
@@ -183,19 +186,15 @@ i.fa.fa-bars {
     box-shadow: none;
 }
 
-#addProductCategoryFormId label,
-#editProductCategoryFormId label,
-#viewProductCategoryFormId label,
-#searchProductCategoryFormId label,
+#fileAttachmentNX32FormId label,#editProductCategoryFormId label,
+#viewProductCategoryFormId label,#searchProductCategoryFormId label,
 #searchPettyCashFormId label {
     font-weight: 500;
     color: #051b5a !important;
 }
 
-#addProductCategoryFormId .modal-content button.close,
-#editProductCategoryFormId .modal-content button.close,
-#viewProductCategoryFormId .modal-content button.close,
-#searchProductCategoryFormId .modal-content button.close {
+
+ .modal-content button.close {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -208,14 +207,14 @@ i.fa.fa-bars {
     transition: all 0.5s ease;
 }
 
-#addProductCategoryFormId .modal-body .form-control:hover,
+#fileAttachmentNX32FormId .modal-body .form-control:hover,
 #editProductCategoryFormId .modal-body .form-control:hover,
 #viewProductCategoryFormId .modal-body .form-control:hover,
 #searchProductCategoryFormId .modal-body .form-control:hover {
     background-color: #f1e80724;
 }
 
-#addProductCategoryFormId .form-control:focus,
+#fileAttachmentNX32FormId .form-control:focus,
 #editProductCategoryFormId .form-control:focus,
 #viewProductCategoryFormId .form-control:focus,
 #searchProductCategoryFormId .form-control:focus {
@@ -318,46 +317,59 @@ select {
 }
 
 
-#tv4 tr:nth-child(even):hover {
-    background: linear-gradient(to right, #c9f1a2, #df97b4);
-}
+#addSerialNoFormID tr:nth-child(even):hover {
+    background: linear-gradient(to right, #f9faf9, #f4f1f2);
+  }
 
-#tv4 tr:nth-child(odd):hover {
-    background: linear-gradient(to right, #f5fb97, #fcb35f);
-}
+  #addSerialNoFormID tr:nth-child(odd):hover {
+    background: linear-gradient(to right, #fdfdfa, #faf8f5);
+  }
 
-#tv4 tr:hover td {
+  #addSerialNoFormID  tr:hover td {
     color: #0000;
     background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
     -webkit-background-clip: text;
     background-clip: text;
     transition: background 2s, color 2s;
-}
+  }
 
-.userDatatable table tbody tr td {
+tr:nth-child(even):hover {
+    background: linear-gradient(to right, #c9f1a2, #df97b4);
+  }
+
+  tr:nth-child(odd):hover {
+    background: linear-gradient(to right, #f5fb97, #fcb35f);
+  }
+
+  tr:hover td {
+    color: #0000;
+    background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: background 2s, color 2s;
+  }
+  .userDatatable table tbody tr td {
     border: 1px solid #C5D9E0;
 }
-
 .userDatatable table thead tr th {
     border: 1px solid #ebf2f4;
 }
+
 
 .red-row {
     background-color: rgb(252, 255, 164);
     color: rgb(6, 6, 6); /* Optional: Adjust text color for better contrast */
 }
-
-
-.modal-content button.close {
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    color: #f9021b;
-    transition: all 0.5s ease;
-}
-
+.tab.active {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .tab-pane {
+    display: none; /* Hide all tab panes by default */
+  }
+  
+  .tab-pane.active {
+    display: block; /* Show the active tab pane */
+  }
+  

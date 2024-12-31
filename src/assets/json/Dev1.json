@@ -30,13 +30,37 @@
             "isVisible": true,
             "value": "/pettyCash"
         },{
-            "name": "Purchase Entry -Voip Trend",
+            "name": "Purchase Entry-Yearly",
+            "icon": "columns",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEYearly"
+        },{
+            "name": "Purchase Entry-Voip Trend",
             "icon": "film",
             "IDs": [5001, 5002, 5003, 5004, 5005],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
             "value": "/PEVoipTrend"
+        },{
+            "name": "Purchase Entry-MrVoip Trend",
+            "icon": "move",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEMrVoipTrend"
+        },{
+            "name": "Purchase Entry-Call4Tell Trend",
+            "icon": "phone-call",
+            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/PEMrCall4telTrend"
         }
        
 
@@ -180,7 +204,28 @@
     ],
     "isVisible": true,
     "value": "/stock1"
-}, 
+}, {
+    "name": "Call4Tel",
+    "icon":"cloud",
+    "isActive": false,
+    "menuId":5,
+    "IDs": [6071, 6072, 6073, 6074, 6075],
+    "Type": "Main Menu",
+    "children": [{
+            "name": "NX32 Serial Number",
+            "icon": "cloud",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/nx32"
+        }
+       
+
+    ],
+    "isVisible": true,
+    "value": "/cal4tel--"
+},
 
     {
     "name": "Billing",
