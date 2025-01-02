@@ -2301,7 +2301,8 @@
   aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
-      <div class="modal-header">
+      <div [ngClass]="{ 'backdrop': isLoading }"></div>
+      <div class="modal-header" >
 
         <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
@@ -2312,13 +2313,21 @@
         </button>
       </div>
       <div class="modal-body">
+        <div *ngIf="isLoading" class="loaderRecurring-content">
+          <h3 >Recurring</h3>
+          <h3 >Please Wait</h3>
+          <div class="loaderRecurring">
+  
+          </div>
+        </div>
+        
         <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
         <div class="userDatatable global-shadow border-0 bg-white w-100">
           <div class="table-responsive">
-
-            <div style="display:flex;justify-content: space-evenly;">
+            
+            <div style="display:flex;justify-content: space-evenly;" *ngIf="!isLoading">
               <div style="display: flex;">
-                <div>
+                <div >
                   <label class="col-form-label" style="margin-top: 12px;font-weight: 500;color:#6f0000">Check
                     All</label>
                 </div>
@@ -2337,12 +2346,13 @@
                   <button type="button" class="btn btn-primary" (click)="loadRecurring()">
                     Load Recurring
                   </button>
+                  
                 </div>
 
               </div>
 
             </div>
-            <table class="table mb-0 table-borderless mt-2">
+            <table class="table mb-0 table-borderless mt-2" *ngIf="!isLoading">
 
               <thead>
                 <tr class="userDatatable-header">
@@ -2397,7 +2407,7 @@
         </div>
 
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" *ngIf="!isLoading">
         <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="getRecurringDemoApproval('Invoice')">
           Invoice Approval
         </button>

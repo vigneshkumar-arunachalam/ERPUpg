@@ -685,5 +685,44 @@ border-radius: 50%;
   padding: 0px 1.75rem;
 }
 
+.loaderRecurring {
+  border: 8px solid #f3f3f3; /* Light grey */
+  border-top: 8px solid #c80606; /* Blue */
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 5s linear infinite;
+  margin: 0 auto;
+}
+.loaderRecurring-content{
+  margin: 0 auto;    
+  text-align: center;
+  width: 200px;
+  padding: 10px;
+  box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+  border-radius: 5px;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensures it's above other elements */
+}
+
+
 
 

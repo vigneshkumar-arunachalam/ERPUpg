@@ -256,6 +256,8 @@ export class NavbarComponent implements OnInit {
   recurringDemoList: any;
   //reseller Demo
   arrayRecurringDemo: any[] = [];
+  //recurring loader
+  isLoading = false;
  
 
   constructor(private router: Router, private serverService: ServerService,
@@ -3776,7 +3778,8 @@ export class NavbarComponent implements OnInit {
   }
   loadRecurring() {
 
-    this.spinner.show();
+   // this.spinner.show();
+    this.isLoading = true;
     let api_req: any = new Object();
     let api_page_req: any = new Object();
     api_req.moduleType = "recurring";
@@ -3791,6 +3794,7 @@ export class NavbarComponent implements OnInit {
 
     
       if (response.status== true) {
+        this.isLoading = false;
         this.spinner.hide();
       //  location.reload();
         
