@@ -151,7 +151,8 @@ import { Nx3233Component } from './nx3233/nx3233.component';
 import { PurchaseEntryYearlyComponent } from './ledger/purchase-entry-yearly/purchase-entry-yearly.component';
 import { PurchaseEntryMrVoipTrendComponent } from './ledger/purchase-entry-mr-voip-trend/purchase-entry-mr-voip-trend.component';
 import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-call4tel-trend/purchase-entry-call4tel-trend.component';
-
+import { PublictaskComponent } from './publictask/publictask.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 
@@ -287,6 +288,7 @@ import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-cal
      PurchaseEntryYearlyComponent,
      PurchaseEntryMrVoipTrendComponent,
      PurchaseEntryCall4telTrendComponent,
+     PublictaskComponent,
  
   ],
   imports: [
@@ -296,7 +298,7 @@ import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-cal
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,
     HttpClientModule,MatIconModule, NgMultiSelectDropDownModule.forRoot(),
     BrowserAnimationsModule,MatFormFieldModule,MatAutocompleteModule,MatInputModule,MatSliderModule,
-    AutocompleteLibModule,PdfViewerModule
+    AutocompleteLibModule,PdfViewerModule,FullCalendarModule
   ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [    [DatePipe],  [BnNgIdleService], { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
 ],

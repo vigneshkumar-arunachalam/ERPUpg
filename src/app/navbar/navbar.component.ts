@@ -222,6 +222,7 @@ export class NavbarComponent implements OnInit {
   billerIDDisplay: any;
   overdue_Customerlist: any;
   overdue_CustomerIDSearch: any;
+  monthlyRecurInvCount:any;
 
   //global search---new
 
@@ -476,7 +477,8 @@ export class NavbarComponent implements OnInit {
         this.overduePaymentsBillerList = data.dataList;
       }
       console.log("this.overduePaymentsBillerList", this.overduePaymentsBillerList)
-    })
+    });
+    this.getRecurringCountList();
 
   }
   toggleMenu(event: Event): void {
@@ -3753,7 +3755,48 @@ export class NavbarComponent implements OnInit {
     
       if (response.status== true) {
         this.spinner.hide();
-        location.reload();
+       // location.reload();
+        
+       
+
+      } else {
+        Swal.close();
+        iziToast.warning({
+          message: "Response Failed",
+          position: 'topRight'
+        });
+
+      }
+
+    }),
+      (error: any) => {
+
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        // console.log("final error", error);
+      };
+  }
+  getRecurringCountList() {
+
+    this.spinner.show();
+    let api_req: any = new Object();
+    let api_page_req: any = new Object();
+    api_req.moduleType = "recurring";
+    api_req.api_url = "recurring/getRecurringCountList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_page_req.action = "recurring/getRecurringCountList";
+    api_page_req.user_id = this.user_ids;
+    api_req.element_data = api_page_req;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+    
+      if (response.status== true) {
+        this.spinner.hide();
+     this.monthlyRecurInvCount=response.monthlyRecurringInvoiceCount;
         
        
 
@@ -3795,6 +3838,23 @@ export class NavbarComponent implements OnInit {
     
       if (response.status== true) {
         this.isLoading = false;
+        iziToast.success({
+          
+          message: 'Recurring Success!',
+          position: 'center', // Centers the toast
+          timeout: false,
+          progressBar: true,
+          close: true,
+         
+          theme: 'light', // Optional: dark theme
+         
+          titleSize: '50px', // Increase title size
+          messageSize: '100px', // Increase message size
+          onOpened: function (instance: any, toast: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; lineHeight: string; }; }; }) {
+            // Apply custom line height
+            toast.querySelector('.iziToast-message').style.lineHeight = '250px';
+        }
+        });
         this.spinner.hide();
       //  location.reload();
         

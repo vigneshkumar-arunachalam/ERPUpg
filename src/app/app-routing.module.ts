@@ -122,12 +122,14 @@ import { Nx3233Component } from './nx3233/nx3233.component';
 import { PurchaseEntryYearlyComponent } from './ledger/purchase-entry-yearly/purchase-entry-yearly.component';
 import { PurchaseEntryMrVoipTrendComponent } from './ledger/purchase-entry-mr-voip-trend/purchase-entry-mr-voip-trend.component';
 import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-call4tel-trend/purchase-entry-call4tel-trend.component';
-
+import { PublictaskComponent } from './publictask/publictask.component';
 
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'publictask', component: PublictaskComponent
   },{
     path: 'PEMrCall4telTrend', component: PurchaseEntryCall4telTrendComponent
   },{
