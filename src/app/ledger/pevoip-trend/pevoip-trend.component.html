@@ -28,7 +28,7 @@
                   </div>
                 </div>
   
-                <div class="col-lg-2 ">
+                <!-- <div class="col-lg-2 ">
                   <div class="form-group">
                     <label for="monthType" class="col-lg-12 "><strong>Select Month</strong></label>
                     <div class="col-lg-12">
@@ -41,7 +41,7 @@
                       </select>
                     </div>
                   </div>
-                </div>
+                </div> -->
   
                 <div class="col-lg-2 ">
                   <div class="form-group">
@@ -207,6 +207,7 @@
               </div>
             </div>
           </div>
+          
           <div class="card-body">
             <div *ngIf="vendorList?.length > 0; else loading">
               <div class="accordion" id="accordionPEVOIP">
@@ -215,164 +216,296 @@
                   <div class="card-header" [id]="'headingpevoip' + i">
                     <h2 class="mb-0">
                       <button class="btn btn-link" type="button"
-                              [attr.data-toggle]="'collapse'"
-                              [attr.data-target]="'#collapse' + i"
-                              aria-expanded="false"
-                              [attr.aria-controls]="'collapse' + i">
+                        [attr.data-toggle]="'collapse'"
+                        [attr.data-target]="'#collapse' + i"
+                        aria-expanded="false"
+                        [attr.aria-controls]="'collapse' + i" 
+                        (click)="fetchVendorDetails(vendor.vendor_id)">
                         {{ vendor.vendorName }}
                       </button>
                     </h2>
                   </div>
-                
+                  
                   <!-- Accordion Content -->
                   <div [id]="'collapse' + i" class="collapse"
-                       [attr.aria-labelledby]="'headingpevoip' + i"
-                       data-parent="#accordionPEVOIP">
+                    [attr.aria-labelledby]="'headingpevoip' + i"
+                    data-parent="#accordionPEVOIP">
                     <div class="card-body">
-                      <p>Vendor Data</p>
+                     
                       <form [formGroup]="addPI_section2">
                         <div class="col-12" formArrayName="addresses">
-                          <ng-container *ngFor="let address of addressControls.controls; let i = index;" [formGroupName]="i">
+                          
                             <div class="table-responsive">
                               <table class="add-contact-table-section">
-                                  <!-- Table Header -->
-                                  <thead>
-                                      <tr class="userDatatable-header">
-                                          <th><span class="userDatatable-title">Invoice No</span></th>
-                                          <th><span class="userDatatable-title">Invoice Amount</span></th>
-                                          <th><span class="userDatatable-title">Curr Conv Rate</span></th>
-                                          <th><span class="userDatatable-title">Fixed Amount</span></th>
-                                          <th><span class="userDatatable-title">Usage Amount</span></th>
-      
-                                          <th><span class="userDatatable-title">Other Amount</span></th>
-                                          <th><span class="userDatatable-title">IDD Amount</span></th>
-                                          <th><span class="userDatatable-title">Local Amount</span></th>
-                                          <th><span class="userDatatable-title">Action</span></th>
-                                      </tr>
-                                  </thead>
-                                  <tbody *ngFor="let monthIndex of months; let n = index">
-                                   
+                                <!-- Table Header -->
+                                <thead>
+                                  <tr class="userDatatable-header">
+                                    <th><span class="userDatatable-title">Invoice No</span></th>
+                                    <th><span class="userDatatable-title">Invoice Amount</span></th>
+                                    <th><span class="userDatatable-title">Curr Conv Rate</span></th>
+                                    <th><span class="userDatatable-title">Fixed Amount</span></th>
+                                    <th><span class="userDatatable-title">Usage Amount</span></th>
+                                    <th><span class="userDatatable-title">Other Amount</span></th>
+                                    <th><span class="userDatatable-title">IDD Amount</span></th>
+                                    <th><span class="userDatatable-title">Local Amount</span></th>
+                                    <th><span class="userDatatable-title">Action</span></th>
+                                  </tr>
+                                </thead>
+                                <tbody >
+                                  <ng-container *ngFor="let address of addressControls.controls; let j = index;" [formGroupName]="j">
                                     <tr>
-                                      <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;">{{monthIndex}}</td>
+                                      <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;">{{months[j]}}</td>
                                     </tr>
-      
-                                      <!-- Individual Row -->
-                                      <tr [formGroupName]="i" >
-                                          <td>
-                                            <div class="userDatatable-content">
-    
-                                              <input type="text" class="form-control"
-                                              formControlName="invoiceNo"
-                                              id="pd_invoiceNo{{i}}" />
-                                            </div>
-                                        </td>
-                                        <!-- Other Input Fields -->
-                                        <!-- Date -->
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                
-                                                <input type="number" class="form-control"
-                                                    formControlName="invoiceAmount1"
-                                                    id="pd_invoiceAmount1{{i}}" />
-                                            </div>
-                                            <div class="userDatatable-content">
-                                             
-                                              <input type="number" class="form-control"
-                                                  formControlName="invoiceAmount2"
-                                                  id="pd_invoiceAmount2{{i}}" />
-                                          </div>
-                                        </td>
-                                        <!-- Invoice Amount -->
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                <input type="text" class="form-control"
-                                                    formControlName="currConvRate"
-                                                    id="pd_currConvRate{{i}}" />
-                                            </div>
-                                        </td>
-                                        <!-- Balance Amount -->
-                                        <td>
-                                            <div class="userDatatable-content">
-                                                <input type="number" class="form-control"
-                                                    formControlName="fixedAmount1"
-                                                    id="pd_fixedAmount1{{i}}" />
-                                            </div>
-                                            <div class="userDatatable-content">
-                                              <input type="number" class="form-control"
-                                                  formControlName="fixedAmount2"
-                                                  id="pd_fixedAmount2{{i}}" />
-                                          </div>
-                                        </td>
-                                        <!-- Paid Amount -->
-                                        <td>
-                                            <div class="userDatatable-content" >
-                                                <input type="number" class="form-control"
-                                                    formControlName="usageAmount1"
-                                                    id="pd_usageAmount1{{i}}" />
-    
-                                            </div>
-                                            <div class="userDatatable-content" >
-                                              <input type="number" class="form-control"
-                                                  formControlName="usageAmount2"
-                                                  id="pd_usageAmount2{{i}}" />
-                                          </div>
-                                        </td>
-    
-                                        <!-- Payment Type Conv Color-1 -->
-                                        <td>
-                                            <div class="userDatatable-content" >
-                                                <input type="text" class="form-control"
-                                                    formControlName="otherAmount1"
-                                                    id="pd_otherAmount{{i}}" />
-    
-                                            </div>
-                                            <div class="userDatatable-content" >
-                                              <input type="text" class="form-control"
-                                                  formControlName="otherAmount2"
-                                                  id="pd_otherAmount{{i}}" />
+                                  
+                                  <tr >
+                                   
+                                    <td>
+                                      <input type="hidden" class="form-control" formControlName="purchase_trend_id" id="pd_purchase_trend_id{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="purchaseEntryTempId" id="pd_purchaseEntryTempId{{j}}" />
+                                      <input type="text" class="form-control" formControlName="invoiceNo" id="pd_invoiceNo{{j}}" />
+
+                                      <input type="hidden" class="form-control" formControlName="vendorId" id="pd_vendorId{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="billerid" id="pd_billerid{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="year_val" id="pd_year_val{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="ven_id" id="pd_ven_id{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="mon_val" id="pd_mon_val{{j}}" />
+                                      <input type="hidden" class="form-control" formControlName="entry_row" id="pd_entry_row{{j}}" />
+                                    </td>
+                                    <!-- Other Input Fields -->
+                                    <td>
+                                      <input type="number" class="form-control" formControlName="invoiceAmount1" id="pd_invoiceAmount1{{j}}" />
+                                      <input type="number" class="form-control" formControlName="invoiceAmount2" id="pd_invoiceAmount2{{j}}" />
+                                    </td>
+                                    <td>
+                                      <input type="text" class="form-control" formControlName="currConvRate" id="pd_currConvRate{{j}}" />
+                                    </td>
+                                    <!-- <td>
+                                      <input type="number" class="form-control" formControlName="fixedAmount1" id="pd_fixedAmount1{{j}}" />
+                                      <input type="number" class="form-control" formControlName="fixedAmount2" id="pd_fixedAmount2{{j}}" />
+                                    </td> -->
+                                    <td>
+                                      <div class="input-group">
+                                        <button 
+                                          type="button" style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          class="btn btn-outline-secondary btn-sm" 
+                                          (click)="decreaseValue(j, 'fixedAmount1')"
+                                        >
+                                          -
+                                        </button>
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="fixedAmount1" 
+                                          id="pd_fixedAmount1{{j}}" 
+                                        />
+                                        <button 
+                                          type="button" style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          class="btn btn-outline-primary btn-sm" 
+                                          (click)="increaseValue(j, 'fixedAmount1')"
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                      <div class="input-group mt-2">
+                                        
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="fixedAmount2" 
+                                          id="pd_fixedAmount2{{j}}" 
+                                        />
+                                       
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div class="input-group">
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-secondary btn-sm" 
+                                          (click)="decreaseValue(j, 'usageAmount1')"
+                                        >
+                                          -
+                                        </button>
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="usageAmount1" 
+                                          id="pd_usageAmount1{{j}}" 
+                                        />
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-primary btn-sm" 
+                                          (click)="increaseValue(j, 'usageAmount1')"
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                      <div class="input-group mt-2">
+                                       
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="usageAmount2" 
+                                          id="pd_usageAmount2{{j}}" 
+                                        />
+                                       
+                                      </div>
+                                    </td>
+                                    
+                                    <!-- <td>
+                                      <input type="number" class="form-control" formControlName="usageAmount1" id="pd_usageAmount1{{j}}" />
+                                      <input type="number" class="form-control" formControlName="usageAmount2" id="pd_usageAmount2{{j}}" />
+                                    </td> -->
+                                    <td>
+                                      <div class="input-group">
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-secondary btn-sm" 
+                                          (click)="decreaseValue(j, 'otherAmount1')"
+                                        >
+                                          -
+                                        </button>
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="otherAmount1" 
+                                          id="pd_otherAmount1{{j}}" 
+                                        />
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-primary btn-sm" 
+                                          (click)="increaseValue(j, 'otherAmount1')"
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                      <div class="input-group mt-2">
+                                       
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="otherAmount2" 
+                                          id="pd_otherAmount2{{j}}" 
+                                        />
+                                       
+                                      </div>
+                                    </td>
+                                    <!-- <td>
+                                      <input type="text" class="form-control" formControlName="otherAmount1" id="pd_otherAmount1{{j}}" />
+                                      <input type="text" class="form-control" formControlName="otherAmount2" id="pd_otherAmount2{{j}}" />
+                                    </td> -->
+                                    <td>
+                                      <div class="input-group">
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-secondary btn-sm" 
+                                          (click)="decreaseValue(j, 'IDDAmount1')"
+                                        >
+                                          -
+                                        </button>
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="IDDAmount1" 
+                                          id="pd_IDDAmount1{{j}}" 
+                                        />
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-primary btn-sm" 
+                                          (click)="increaseValue(j, 'IDDAmount1')"
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                      <div class="input-group mt-2">
+                                       
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="IDDAmount2" 
+                                          id="pd_IDDAmount2{{j}}" 
+                                        />
+                                       
+                                      </div>
+                                    </td>
+                                    <!-- <td>
+                                      <input type="text" class="form-control" formControlName="IDDAmount1" id="pd_IDDAmount1{{j}}" />
+                                      <input type="text" class="form-control" formControlName="IDDAmount2" id="pd_IDDAmount2{{j}}" />
+                                    </td> -->
+                                    <td>
+                                      <div class="input-group">
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-secondary btn-sm" 
+                                          (click)="decreaseValue(j, 'localAmount1')"
+                                        >
+                                          -
+                                        </button>
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="localAmount1" 
+                                          id="pd_localAmount1{{j}}" 
+                                        />
+                                        <button style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
+                                          type="button" 
+                                          class="btn btn-outline-primary btn-sm" 
+                                          (click)="increaseValue(j, 'localAmount1')"
+                                        >
+                                          +
+                                        </button>
+                                      </div>
+                                      <div class="input-group mt-2">
+                                       
+                                        <input 
+                                          type="number" 
+                                          class="form-control" 
+                                          formControlName="localAmount2" 
+                                          id="pd_localAmount2{{j}}" 
+                                        />
+                                       
+                                      </div>
+                                    </td>
+                                    <!-- <td>
+                                      <input type="text" class="form-control" formControlName="localAmount1" id="pd_localAmount1{{j}}" />
+                                      <input type="text" class="form-control" formControlName="localAmount2" id="pd_localAmount2{{j}}" />
+                                    </td> -->
+                                    <td>
+                                      <div class="page">
   
-                                          </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content" >
-                                                <input type="text" class="form-control"
-                                                    formControlName="IDDAmount1"
-                                                    id="pd_IDDAmount1{{i}}" />
-                                            </div>
-                                            <div class="userDatatable-content" >
-                                              <input type="text" class="form-control"
-                                                  formControlName="IDDAmount2"
-                                                  id="pd_IDDAmount2{{i}}" />
-                                          </div>
-
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content" >
-                                                <input type="text" class="form-control"
-                                                    formControlName="localAmount1"
-                                                    id="pd_localAmount1{{i}}" />
-    
-                                            </div>
-                                            <div class="userDatatable-content" >
-                                              <input type="text" class="form-control"
-                                                  formControlName="localAmount2"
-                                                  id="pd_localAmount2{{i}}" />
-                                          </div>
-                                        </td>
-                                        <td>
-                                            <div class="userDatatable-content" >
-                                              
-
-                                            </div>
-                                        </td>
-                                      </tr>
-                                  </tbody>
+                                        <div class="dropdown">
+                                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                                          <ul class="dropdown__list">
+                                       
+                                          
+                                           
+                                            <li class="dropdown__item">
+                                              <a class="hover2" title="Save" (click)="saveRow(j)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-save"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                
+                                              </a>
+                                            </li>
+                                           
+                                            <li class="dropdown__item" >
+                                              <a class="hover1" title="File" (click)="showAttachment(j)">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                
+                                              </a>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                      
+                                    </td>
+                                    
+                                  </tr>
+                                </ng-container>
+                                </tbody>
                               </table>
-                          </div>
-                          </ng-container>
-                          </div>
+                            </div>
+                          
+                        </div>
                       </form>
-                      <!-- Add additional vendor-specific content here -->
                     </div>
                   </div>
                 </div>
@@ -384,6 +517,7 @@
           </div>
           
           
+          
       
         </div>
       </div>
@@ -391,3 +525,45 @@
     </div>
 
   </div>
+
+
+
+  <!----------Modal Pop Up (BEGIN)  for PDF Show ------------------>
+  <div class="modal fade" id="showPDFFormId" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+      <div class="modal-content searchQuotationCSS">
+        <div class="modal-header">
+  
+          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+           background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+           background: linear-gradient(to right, #262127, #54b7aa);">
+            File Attachment </h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div *ngFor="let attachment of attachments" style="margin-left: 160px;">
+            <!-- Display the file name as a link -->
+             <label style="font-weight: 600;color:#880808">FileName:</label>
+            <a 
+              href="{{ attachment.file_url }}" title=" {{ attachment.filename }}"
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              {{ attachment.filename }}
+            </a>
+          </div>
+  
+        </div>
+        <div class="modal-footer">
+  
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!----------Modal Pop Up (END)  for advanced search Quotation ------------------>

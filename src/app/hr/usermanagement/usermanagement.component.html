@@ -1,0 +1,223 @@
+<div class="contents-section">
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section">
+                        <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                        <span class="breadcrumb-item active">User Management
+                        </span>
+                    </h3>
+                    <div class="actions">
+                        <button class="btn btn-primary" (click)="openAddModal()">+ Add Designation Types</button>
+                        <button class="btn btn-warning" (click)="groupEdit()">Group Designation Types Edit</button>
+                        <button class="btn btn-danger" (click)="groupDelete()">Group Designation Types Delete</button>
+                      </div>
+                </div>
+            </div>
+            <div class="card-body">
+              <div class="search-container">
+                <label for="searchText">Search User:</label>
+                <input type="text" id="searchText" [(ngModel)]="searchText" (ngModelChange)="onSearchChange()"
+                    placeholder="Search by user" class="search-input form-control" />
+            </div>
+                
+                  <table class="table table-striped table-bordered mt-3">
+                    <thead>
+                      <tr>
+                        <th>
+                          <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()">
+                        </th>
+                        <th>Display Name</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Department</th>
+                        <th>Email Id</th>
+                        <th>Phoone No</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let user of userList">
+                            <td>
+                              <input type="checkbox" [(ngModel)]="user.selected">
+                            </td>
+                            <td>{{ user.firstName_salary }}</td>
+                            <td>{{ user.firstName }}</td>
+                            <td>{{ user.lastName }}</td>
+                            <td>{{ user.designation }}</td>
+                            <td>{{ user.emailId }}</td>
+                            <td>{{ user.phonenumber }}</td>
+                            <td>
+                              <button class="btn btn-danger btn-sm" (click)="deleteDesignation(user.userId)" >
+                                ✖
+                              </button>
+                            </td>
+                          </tr>
+                    </tbody>
+                  </table>
+                  <p *ngIf="userList.length === 0">No User found.</p>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" [ngClass]="{'show': showAddModal}">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Designation Types Group Add</h3>
+            <span class="close" (click)="closeAddModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div formArrayName="users">
+                  <div *ngFor="let user of users.controls; let i = index" [formGroupName]="i" class="form-row">
+                    <div class="form-group col-lg-4">
+                      <label for="display-name">Display Name</label>
+                      <input type="text" class="form-control" id="display-name" formControlName="displayName">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="first-name">First Name</label>
+                      <input type="text" class="form-control" id="first-name" formControlName="firstName">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="last-name">Last Name</label>
+                      <input type="text" class="form-control" id="last-name" formControlName="lastName">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="username">Username</label>
+                      <input type="text" class="form-control" id="username" formControlName="username">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="department">Department</label>
+                      <input type="text" class="form-control" id="department" formControlName="department">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="fin-number">FIN Number</label>
+                      <input type="text" class="form-control" id="fin-number" formControlName="finNumber">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="bank-account">Bank Account No</label>
+                      <textarea id="bank-account" formControlName="bankAccount"></textarea>
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="address">Address</label>
+                      <textarea id="address" formControlName="address"></textarea>
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="email-id">Email-Id</label>
+                      <input type="email" class="form-control" id="email-id" formControlName="emailId">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="phone-no">Phone No</label>
+                      <input type="text" class="form-control" id="phone-no" formControlName="phoneNo">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="dob">DOB</label>
+                      <input type="date" class="form-control" id="dob" formControlName="dob">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="age">Age</label>
+                      <input type="number" class="form-control" id="age" formControlName="age">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <input type="checkbox" id="epf-status" formControlName="epfStatus">
+                      <label for="epf-status">EPF/CPF Add Status</label>
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <input type="checkbox" id="contribution-1" formControlName="contribution1">
+                      <label for="contribution-1">Contribution 1 / SINDA</label>
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <input type="checkbox" id="contribution-2" formControlName="contribution2">
+                      <label for="contribution-2">Contribution 2 / SOCSO</label>
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="extno">Ext No</label>
+                      <input type="text" class="form-control" id="extno" formControlName="extNo">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="sip_username">SIP Username</label>
+                      <input type="text" class="form-control" id="sip_username" formControlName="sipUsername">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="sip_password">SIP Password</label>
+                      <input type="text" class="form-control" id="sip_password" formControlName="sipPassword">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="short_name">Short Name</label>
+                      <input type="text" class="form-control" id="short_name" formControlName="shortName">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="friendly_name">Friendly Name</label>
+                      <input type="text" class="form-control" id="friendly_name" formControlName="friendlyName">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="designation">Designation</label>
+                      <select id="designation" class="form-control" formControlName="designation">
+                        <option>Select Designation</option>
+                        <option>Manager</option>
+                        <option>Staff</option>
+                      </select>
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="from-date">From Date</label>
+                      <input type="date" class="form-control" id="from-date" formControlName="fromDate">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="to-date">To Date</label>
+                      <input type="date" class="form-control" id="to-date" formControlName="toDate">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="salary-amt">Salary Amt</label>
+                      <input type="text" class="form-control" id="salary-amt" formControlName="salaryAmt">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="per-day-amt">Per/Day Amt</label>
+                      <input type="text" class="form-control" id="per-day-amt" formControlName="perDayAmt">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="employer-cpf">Employer CPF</label>
+                      <input type="text" class="form-control" id="employer-cpf" formControlName="employerCpf">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="employee-cpf">Employee CPF</label>
+                      <input type="text" class="form-control" id="employee-cpf" formControlName="employeeCpf">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="subcontribution1">Contribution 1</label>
+                      <select id="subcontribution1" class="form-control" formControlName="designation">
+                        <option>Select Designation</option>
+                        <option>Manager</option>
+                        <option>Staff</option>
+                      </select>
+                      <input type="text" class="form-control" id="subcontribution11" formControlName="subcontribution1">
+                    </div>
+                    <div class="form-group col-lg-4">
+                      <label for="subcontribution2">Contribution 2</label>
+                      <select id="subcontribution2" class="form-control" formControlName="designation">
+                        <option>Select Designation</option>
+                        <option>Manager</option>
+                        <option>Staff</option>
+                      </select>
+                      <input type="text" class="form-control" id="subcontribution22" formControlName="subcontribution2">
+                    </div>
+                    <div class="form-group col-lg-4 remove-btn">
+                        <button type="button" class="btn btn-danger" *ngIf="i !== 0" (click)="removeUser(i)">Remove</button>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                    <button type="button" class="btn btn-primary" (click)="addUser()">Add More</button>
+                   
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-success" [disabled]="form.invalid">Submit</button>
+                <button type="button" class="btn btn-cancel" (click)="closeAddModal()">Cancel</button>
+                
+              </form>
+            
+        </div>
+    </div>
+  </div>
+  

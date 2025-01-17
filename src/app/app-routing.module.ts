@@ -123,11 +123,51 @@ import { PurchaseEntryYearlyComponent } from './ledger/purchase-entry-yearly/pur
 import { PurchaseEntryMrVoipTrendComponent } from './ledger/purchase-entry-mr-voip-trend/purchase-entry-mr-voip-trend.component';
 import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-call4tel-trend/purchase-entry-call4tel-trend.component';
 import { PublictaskComponent } from './publictask/publictask.component';
-
+import { CreditnoteComponent } from './billing/creditnote/creditnote.component';
+import { AddcreditnoteComponent } from './billing/creditnote/addcreditnote/addcreditnote.component';
+import { EditcreditnoteComponent } from './billing/creditnote/editcreditnote/editcreditnote.component';
+import { HRComponent } from './hr/hr.component';
+import { DesgTypeMgmtComponent } from './hr/desg-type-mgmt/desg-type-mgmt.component';
+import { UsergroupComponent } from './hr/usergroup/usergroup.component';
+import { UsermanagementComponent } from './hr/usermanagement/usermanagement.component';
+import { DebitnoteComponent } from './billing/debitnote/debitnote.component';
+import { AdddebitnoteComponent } from './billing/debitnote/adddebitnote/adddebitnote.component';
+import { EditdebitnoteComponent } from './billing/debitnote/editdebitnote/editdebitnote.component';
+import { PrepaidnoteComponent } from './billing/prepaidnote/prepaidnote.component';
+import { AddprepaidnoteComponent } from './billing/prepaidnote/addprepaidnote/addprepaidnote.component';
+import { EditprepaidnoteComponent } from './billing/prepaidnote/editprepaidnote/editprepaidnote.component';
+import { CalendarTemplateComponent } from './calendar-template/calendar-template.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
+  },{
+    path: 'calendarTemplate', component: CalendarTemplateComponent
+  },{
+    path: 'prepaidnote', component: PrepaidnoteComponent
+  },{
+    path: 'addprepaidnote', component: AddprepaidnoteComponent
+  },{
+    path: 'editprepaidnote', component: EditprepaidnoteComponent
+  },{
+    path: 'debitnote', component: DebitnoteComponent
+  },{
+    path: 'adddebitnote', component: AdddebitnoteComponent
+  },{
+    path: 'editdebitnote', component: EditdebitnoteComponent
+  },
+  {
+    path: 'HRuserGroup', component: UsergroupComponent
+  },{
+    path: 'HRUserMgmt', component: UsermanagementComponent
+  },{
+    path: 'HRDesgTyMgmt', component: DesgTypeMgmtComponent
+  },{
+    path: 'editcreditnote', component: EditcreditnoteComponent
+  },{
+    path: 'addcreditnote', component: AddcreditnoteComponent
+  },{
+    path: 'creditnote', component: CreditnoteComponent
   },{
     path: 'publictask', component: PublictaskComponent
   },{

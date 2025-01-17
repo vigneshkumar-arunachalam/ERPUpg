@@ -1,0 +1,698 @@
+.userDatatable table td {
+    padding: 4px 0px 0px !important;
+   
+  }
+  
+  .userDatatable table tr td span {
+    display: block;
+    white-space: nowrap;
+    width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  /* .userDatatable  table tr th:first-child, .userDatatable  table tr td:first-child{width: 50px;} */
+  .userDatatable__imgWrapper.d-flex.align-items-center {
+    justify-content: center;
+  }
+  
+  .userDatatable .d-flex {
+    justify-content: center;
+    margin-right: 0;
+  }
+  
+  .userDatatable tbody .custom-checkbox input[type="checkbox"]+label {
+    margin-right: 0px !important;
+  }
+  
+  /* .add-contact-table-section  table tr th span{color: black;} */
+  
+  
+  
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown__list {
+    z-index: 2;
+    position: absolute;
+    display: none;
+    padding: 10px;
+    min-width: 100%;
+    background: #fff;
+    border: 1px solid;
+    text-align: center;
+  }
+  
+  .dropdown__item {
+    list-style-type: none;
+  }
+  
+  .dropdown__link {
+    display: block;
+    padding: 0.3em 1em;
+    background: white;
+    color: var(--dropdown__link_clr);
+    text-decoration: none;
+  }
+  
+  .dropdown__link:hover {
+    opacity: 0.9;
+  }
+  
+  .dropdown:hover .button {
+    opacity: 0.9;
+  }
+  
+  .dropdown:hover .dropdown__list {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 31px;
+  
+  }
+  
+  .view:hover {
+    background: rgba(224, 71, 166, 0.1);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+  
+  .remove:hover {
+  
+    background: rgba(10, 41, 2, 0.1);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+  }
+  
+  .dropdown a {
+    font-size: 14px;
+    /* margin: 5px 8px!important; */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 37px;
+    width: 37px;
+  }
+  
+  
+  
+  .button {
+    padding: 0.6em 1.5em;
+  
+  }
+  
+  .btn1 {
+    background-color: #20c997;
+    border: none;
+    color: white;
+    padding: 0;
+    font-size: 16px;
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .btn1:hover {
+    background-color: rgb(221, 109, 152);
+  }
+  
+  i.fa.fa-bars {
+    color: #fff !important;
+  }
+  
+  /* tr:nth-child(even) {
+   
+    background-color: #fff;
+  } */
+  table.add-contact-table-section{background-color: #fff;}
+  /* tr:nth-child(odd) {
+    background: #FFF
+  } */
+  
+  /* .changeBackground{
+    background: #5e2929;
+  
+  } */
+  #AddQuotationPopUpFormId {
+    padding-right: 0px !important;
+  }
+  
+  #AddQuotationPopUpFormId .modal-dialog {
+    max-width: 95%;
+  }
+  
+   label {
+    font-weight: 500;
+    /* color: black; */
+    color: #182679!important;
+  
+  }
+  #AddQuotationPopUpFormId tr th{
+    width: 200px;
+    margin: 0px 10px;
+  }
+  .alignFormArray{
+    display:flex;
+    /* margin-left: 2px !important; */
+  }
+  
+  .yettocode {
+    padding-top: 10px;
+    align-items: center;
+    display: inline-flex;
+  
+  }
+  
+  .left_section {
+    /* border: 1px solid white; */
+    width: 30%;
+  
+  }
+  
+  .right_section {
+    /* border: 1px solid #5a5f7d; */
+    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+    background: none;
+    width: 70%;
+    border-radius: 10px;
+  }
+  
+  
+  .overall {
+    display: flex;
+    width: 100%;
+  }
+  /* .ng-autocomplete 
+    ::ng-deep .autocomplete-container {
+      margin-left: 15px;
+      padding-left: 5px;
+      width: 428px;
+      color: blue;
+      border-radius: 2px solid grey;
+      border-color: grey;
+      border-bottom: 0px !important;
+      box-shadow: none;
+     
+    }
+  
+  
+    .ng-autocomplete 
+    ::ng-deep .autocomplete-container .input-container input {
+      font-size: 14px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      box-shadow: none;
+    
+      background-color: #fff;
+      color: #000000de;
+      width: 100%;
+      padding: 0 15px;
+      line-height: 40px;
+      height: 40px;
+  }
+  
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input:focus {
+    border: 1px solid #ccc;
+    box-shadow: 1px 1px 10px #ededed
+  }
+  
+  
+    .ng-autocomplete 
+    ::ng-deep .autocomplete-container  .input-container input{
+        color: rgb(17, 17, 17);
+    }
+    .ng-autocomplete 
+    ::ng-deep .autocomplete-container  .input-container {
+      border-width: 0px;
+    }
+    */
+  
+    table.add-contact-table-section {
+      width: 100%;
+  }
+  
+  #AddQuotationPopUpFormId tr th{border-right: 1px solid #ddd;}
+  .userDatatable-content .form-control{ width: 100%;}
+  .userDatatable-content, .userDatatable-inline-title h6{padding: 5px 10px;}
+  .userDatatable-title{text-align: right;display: block;padding-right: 10px;}
+  .add-contact-table-section tr{height: 50px; border: 1px solid #ddd;}
+  
+  label.col-form-label {
+    padding-right: 10px;
+  }
+  .col-form-label{width: 120px;}
+  section.right_section{ padding: 20px;}
+  
+  .add-contact-table-section tr th{padding:0px 15px;}
+  table.add-contact-table-section {
+    margin-bottom: 25px;
+  }
+  input.form-control {
+    padding: 4px 8px;
+  }
+  #AddQuotationPopUpFormId .modal-content.addcontractmastercss{overflow-y: scroll;
+    height: 500px;}
+    .contents label{
+      font-weight: 500;
+      
+    }
+    .form-control{border:1px solid #e1e1e1;}
+    /* .userDatatable-content{position: relative;top:-25px;} */
+  
+    .userDatatable-content button.btn.btn-danger.btn-sm{
+      height: 35px;
+      width: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    /* .add-contact-table-section tr td {
+      vertical-align: top;
+    } */
+    .add-contact-table-section tr td:nth-child(2){
+      width: 100px;
+    }
+   
+    /* .sortTableCSS responsive-table {
+      overflow: auto;
+    }
+    
+    .sortTableCSS table {
+      width: 100%;
+      border-spacing: 0;
+      border-collapse: collapse;
+      white-space:nowrap;
+    }
+    
+    .sortTableCSS table th {
+      background: #BDBDBD;
+    }
+    
+    .sortTableCSS table tr:nth-child(odd) {
+      background-color: #F2F2F2;
+    }
+    .sortTableCSS table tr:nth-child(even) {
+      background-color: #E6E6E6;
+    }
+    
+    .sortTableCSS th, tr, td {
+      text-align: center;
+      border: 1px solid #E0E0E0;
+      padding: 5px;
+    }
+    
+    .sortTableCSS img {
+      font-style: italic;
+      font-size: 11px;
+    }
+    
+    .sortTableCSS fa-bars{
+      cursor: move;
+    } */
+  /*  i have deleted .ng-autocomplete 
+  ::ng-deep .autocomplete-container */
+  
+  
+  /* .ng-autocomplete ::ng-deep{
+    padding: 0px;
+  } */
+  
+    .ng-autocomplete 
+    ::ng-deep .autocomplete-container .input-container input {
+   
+      text-align: left;
+      display: block;
+      width: 100%;
+      height: 2.625rem;
+      padding: 0.375rem 1.2rem;
+      /* padding-left: 4px!important; */
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.5;
+      background-color: #fff;
+      background-clip: padding-box;
+      /* border: 1px solid #f1f2f6; */
+      border: 1px solid #beeaca;
+      border-radius: 5px;
+      box-shadow: 0 0;
+      color: #495057;
+      transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+      
+  }
+  
+  
+  
+  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input:focus {
+     border: 1px solid  #3d0096;
+    /* border: 1px solid #009688; */
+    box-shadow: 1px 1px 10px #ededed
+  }
+  
+  
+    .ng-autocomplete 
+    ::ng-deep .autocomplete-container  .input-container input{
+      color: #495057;
+        
+    }
+    .ng-autocomplete 
+    ::ng-deep .autocomplete-container  .input-container {
+      border-width: 0px;
+    }
+   
+  
+    .abc
+  ::ng-deep .autocomplete-container .input-container input {
+  
+    text-align: left;
+    display: block;
+    width: 100%;
+    height: 2.625rem;
+    padding: 0.375rem 1.2rem;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+  color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #f1f2f6;
+  
+    border-radius: 5px;
+    /* box-shadow: 0 0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; */
+    
+  }
+  .abc
+    ::ng-deep .autocomplete-container  .input-container {
+      border-width: 0px;
+    }
+   
+    .abc ng-autocomplete ::ng-deep{
+      padding: 4px 8px;
+  }
+  .add-contact-table-section .ng-autocomplete{
+    padding: 0px 0px;
+  }
+  .ng-autocomplete 
+  ::ng-deep .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+    padding: 0px 5px;
+    border: 1px solid #f1f2f6;
+    width: 100%;
+    display: block;
+  }
+  .buttoncssDiscount{
+    width: -webkit-fill-available;
+  }
+  .userDatatable-title{
+    text-align: left !important;
+    color: #e4ebf5 !important;
+    font-weight: bold;
+  }
+  /* .contents{
+    background-color: #d4f1eb!important;
+  } */
+  
+  /* .form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color:   #3d0096!important;
+    outline: 0;
+    box-shadow: 0 0, 0 5px 20px #5f63f21a;
+    padding-left: 4px !important;
+  } */
+  
+  select{
+    /* padding: 0 !important; */
+    padding-left: 4px !important;
+  }
+  
+  .add-contact-table-section .ng-autocomplete .ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+   padding: 0;
+   border: none;
+  }
+  
+  .add-contact-table-section  .autocomplete-container .input-container input:focus{
+    border-color:   #3d0096!important;
+   }
+   .cdk-drop-list{
+    cursor:move !important;
+   }
+   .discountCSS1{
+    color: #ff5722!important;
+   }
+   .discountCSS2{
+    color: #b8123b!important;
+   }
+  
+  
+   .ng-autocomplete 
+   ::ng-deep .autocomplete-container .input-container input{
+     background: transparent;
+   }
+   .ng-autocomplete 
+   ::ng-deep .autocomplete-container .input-container input:focus {
+     outline: none;
+     border: 2px solid transparent!important;
+     background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+     background-origin: border-box;
+     background-clip: padding-box, border-box;
+     animation: bg-hue 2s linear infinite;
+   }
+  
+   
+  
+   .form-control{
+    border: 1px solid #e1e1e1;
+    background: transparent;
+  }
+   .form-control:focus {
+    outline: none;
+    border: 2px solid transparent;
+    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+  }
+  
+  /* @keyframes for the gradient animation */
+  @keyframes bg-hue {
+    100% {
+      filter: hue-rotate(360deg);
+    }
+  }
+  .contents-section{
+    background-color: hsl(215.29deg 45.95% 92.75%)
+  }
+  
+  
+  .alertdangerCustomCSS1 {
+  
+    color: white!important;
+    background-color: #ffe5e5;
+    border-color: #ffe5e5;
+  
+    outline: none;
+    border: 2px solid transparent;
+    background-image: linear-gradient(rgb(226, 19, 19), rgb(223, 11, 11)), linear-gradient(315deg, rgb(235, 10, 10), rgb(228, 15, 26), rgb(211, 27, 27));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+  }
+  
+   /* form array css for space */
+  
+   hr{
+    margin-top: 0;
+    margin-bottom: 0;
+    border: 0;
+    border-top: 1px solid #102268;
+    width:465%;
+  }
+  
+  .marginSpace{
+    margin-top:2rem !important;
+  }
+  
+  
+  
+  .userDatatable-content{
+  line-height: 3.42857 !important;
+  }
+  
+  /* form array css for space #fcf6fc */
+  
+  .add-contact-table-section tbody:nth-child(even) {background: #fafffd}
+  
+  .add-contact-table-section tbody:nth-child(odd) {background: #fcf9f9}
+  
+  .scrollcontrol{
+    overflow:scroll;
+  }
+  
+  .form-control:disabled,
+  .form-control[readonly] {
+      background-color: #f3d2f0 !important;
+      opacity: 0.6;
+      color: black!important;
+  }
+  
+  
+  /* --------------------KS--CSS------------------------------------------ */
+  
+  .addquotation-section label{
+    color: #5f63f2;
+  }
+  
+  
+  .addquotation-section .form-control,  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input {
+    border: none;
+    padding-left: 1.4rem;
+    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+    background: none;
+    font-family: inherit;
+    color: #252525;
+  } 
+  .addquotation-section .form-control:focus,  .ng-autocomplete 
+  ::ng-deep .autocomplete-container .input-container input:focus{
+    outline: none;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+    border: 2px solid transparent!important;
+      background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+      background-origin: border-box;
+      background-clip: padding-box, border-box;
+      animation: bg-hue 2s linear infinite;
+  }
+  .addquotation-section button.btn.btn-primary{
+    grid-column: 1/2;
+    grid-row: 4/5;
+    background: #6d5dfc;
+    box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    color: #e4ebf5;
+  }
+  .add-contact-table-section th {
+    background: #6d5dfc;
+  }
+  
+  /* --------------------KS--CSS------------------------------------------ */
+  
+  
+  .radio-css,
+  .checkbox-css {
+    position: relative;
+    /* change the border colour to a non-white colour to see how the magic works */
+  }
+  .radio-css input,
+  .checkbox-css input {
+    opacity: 0;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+  }
+   
+  .radio-css label:before,
+  .checkbox-css label:before,
+  .radio-css label:after,
+  .checkbox-css label:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: border-width 0.3s 0s ease;
+    border-radius: 50%;
+  }
+  .radio-css label:before,
+  .checkbox-css label:before {
+    border: 2px solid #01285f;
+    background: transparent;
+    width: 30px;
+    height: 30px;
+  }
+  .radio-css label:after,
+  .checkbox-css label:after {
+    width: 22px;
+    height: 22px;
+    margin: 4px;
+    border: 8px solid #FFF;
+    background: transparent;
+  }
+  .radio-css input:checked + label:after,
+  .checkbox-css input:checked + label:after {
+    border-width: 5px;
+  }
+  .radio-css input:checked + label:before,
+  .checkbox-css input:checked + label:before {
+    background-color: #6d5dfc;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='104' height='104' viewBox='0 0 104 104' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%2384b53a' d='M0 0h104v104H0z' /%3E%3Cpath fill='%234a8c31' d='M104 21C70 24 29 37 0 52v49h104V21z' /%3E%3Cpath fill='%237bb5de' d='M0 73c34-13 70-18 104-18v49H0V73z' /%3E%3Cpath fill='%23297bb5' d='M0 91c39-8 73-8 104-3v16H0V91z' /%3E%3C/svg%3E");
+    background-size: cover;
+    background-origin: border-box;
+  }
+  .checkbox-css label:before {
+    border-radius: 0 20%;
+    border-width: 2px;
+  }
+  .checkbox-css label:after {
+    border-radius: 0 18%;
+    border-width: 2px 20px 2px 2px;
+    /* to enable faux tick draw animation effect */
+    margin: 4px;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath fill='%23fff' d='M0 0v32h32V0H0zm24 9l2 2-12 12-6-6 2-2 4 4z'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-origin: border-box;
+  }
+  .checkbox-css input:checked + label:after {
+    border-width: 2px;
+  }
+  @media (min-width: 768px) {
+    .radio-css input,
+    .checkbox-css input {
+      width: 40px;
+      height: 40px;
+    }
+    .radio-css label,
+    .checkbox-css label {
+      padding: 0 0 0 50px;
+    }
+    .radio-css label:before,
+    .checkbox-css label:before {
+      width: 20px;
+      height: 20px;
+      border-width: 3px;
+    }
+    .radio-css label:after,
+    .checkbox-css label:after {
+      width: 16px;
+      height: 16px;
+      margin: 2px;
+    }
+    .radio-css input:checked + label:after,
+    .checkbox-css input:checked + label:after {
+      border-width: 4px;
+    }
+    .checkbox-css label:after {
+      width: 15px;
+      height: 15px;
+      margin: 2px;
+      border-width: 2px 12px 2px 2px;
+    }
+    .checkbox-css input:checked + label:after {
+      border-width: 2px;
+    }
+  }
+  
+  ng-autocomplete.ng-autocomplete.ng-pristine.ng-valid.ng-touched{
+    padding: 0px 0px!important;
+  }
+  
+  .ng-autocomplete{
+    padding: 0px 0px!important; 
+  }

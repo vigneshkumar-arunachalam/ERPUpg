@@ -1090,6 +1090,122 @@ console.log("this.tempVariable",this.tempVariable);
     }
 
 
+    AssignLicensetoSerial(license_id: any) {
+      const arrayValue = [license_id];
+        Swal.fire({
+          title: 'Are you sure you want to Assign License to this Serial number?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, Assign it!'
+        }).then((result: any) => {
+          if (result.value) {
+            this.spinner.show();
+            let api_req: any = new Object();
+            let api_singleDelete: any = new Object();
+            api_req.moduleType = "nx32";
+            api_req.api_url = "nx32/assignLicense";
+            api_req.api_type = "web";
+            api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+            api_singleDelete.action = "assignLicense";
+            api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
+  
+            api_singleDelete.license_id = license_id;
+            api_req.element_data = api_singleDelete;
+  
+            this.serverService.sendServer(api_req).subscribe((response: any) => {
+              if (response.status == true) {
+              
+                // console.log("array content after delete", this.edit_array)
+                this.spinner.hide();
+                iziToast.success({
+                  message: "License Assigned Successfully",
+                  position: 'topRight'
+                });
+                this.productCategoryList({});
+              } else {
+                this.spinner.hide();
+                iziToast.error({
+                  message: "License Assign Failed",
+                  position: 'topRight'
+                });
+               
+                this.productCategoryList({});
+              }
+            }),
+              (error: any) => {
+                this.spinner.hide();
+                iziToast.error({
+                  message: "Sorry, some server issue occur. Please contact admin",
+                  position: 'topRight'
+                });
+                console.log("final error", error);
+              };
+          }
+        })
+  
+      }
+      UnAssignCustomerSingle(license_id: any) {
+        const arrayValue = [license_id];
+          Swal.fire({
+            title: 'Are you sure you want to Unassign Customer?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Un-Assign it!'
+          }).then((result: any) => {
+            if (result.value) {
+              this.spinner.show();
+              let api_req: any = new Object();
+              let api_singleDelete: any = new Object();
+              api_req.moduleType = "nx32";
+              api_req.api_url = "nx32/unassignCustomer";
+              api_req.api_type = "web";
+              api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+              api_singleDelete.action = "unassignCustomer";
+              api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
+    
+              api_singleDelete.license_id = license_id;
+              api_req.element_data = api_singleDelete;
+    
+              this.serverService.sendServer(api_req).subscribe((response: any) => {
+                if (response.status == true) {
+                
+                  // console.log("array content after delete", this.edit_array)
+                  this.spinner.hide();
+                  iziToast.success({
+                    message: "Un- Assigned Successfully",
+                    position: 'topRight'
+                  });
+                  this.productCategoryList({});
+                } else {
+                  this.spinner.hide();
+                  iziToast.error({
+                    message: "Customer Un-Assigned Failed",
+                    position: 'topRight'
+                  });
+                 
+                  this.productCategoryList({});
+                }
+              }),
+                (error: any) => {
+                  this.spinner.hide();
+                  iziToast.error({
+                    message: "Sorry, some server issue occur. Please contact admin",
+                    position: 'topRight'
+                  });
+                  console.log("final error", error);
+                };
+            }
+          })
+    
+        }
+
+
   
 
 

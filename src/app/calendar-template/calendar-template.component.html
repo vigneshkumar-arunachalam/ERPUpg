@@ -1,0 +1,587 @@
+<div class="contents-section">
+    <div class="row no-gutters">
+        <div class="col-lg-12 mb-30">
+            <div class="card">
+                <div class="card-header color-dark fw-500">
+                    <h3 class="card-header-section">
+                        <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                        <span class="breadcrumb-item active">Calendar Template Management</span>
+                    </h3>
+                    <div class="quotation-btn-section">
+                        <button type="button" title="Add New" class="btn btn-primary btn-default btn-squared"
+                            style="margin-right: 10px;" data-toggle="modal" data-target="#addmore"> <i
+                                class="fas fa-plus" style="margin-right:10;"></i>Add
+                        </button>
+                        <!-- <button type="button" class="btn btn-primary" data-toggle="modal" title="Search">
+                            <i class="fas fa-search" style="margin-right:10;"></i>Search
+                        </button> -->
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="calender-table-content">
+                    <input type="text" class="calender-search" (keyup.enter)="calenderlist({'search_text':list_search.value})" #list_search
+                        placeholder="Search..." />
+
+                    <!-- Table -->
+                    <table>
+                        <thead>
+                            <tr>
+                                <th >S.No</th>
+                                <th >Biller Name</th>
+                                <th >Cal Temp Type</th>
+                                <th >Cal Temp Name</th>
+                                <th >Cal Temp Date</th>
+                                <th >Cal Short Name</th>
+                                <th >Task Entry Type</th>
+                                <th >Duration/Ontime(Date)</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- <tr *ngFor="let row of getPaginatedData()">
+                            <td>{{ row.id }}</td>
+                            <td>{{ row.name }}</td>
+                            <td>{{ row.age }}</td>
+                            <td>{{ row.city }}</td>
+                        </tr> -->
+                            <tr  *ngFor="let list of calender_list ; let i = index" class="even" valign="top" id="tr" role="row">
+                                <td>{{off_set+i+1}}</td>
+                                <td>
+                                    <div [ngStyle]="{ 'background-color': list.billerCodeStr.colorCodes }"
+                                        style="color: #fff;width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                                        {{list.billerCodeStr.billerCode}}</div>
+                                </td>
+                                <td>{{list.calendar_type}}</td>
+                                <td>{{list.calendar_template_name}}</td>
+                                <td>{{list.calendar_template_entry_date_show}}</td>
+                                <td>{{list.calendar_short_name}}</td>
+                                <td>{{list.calendar_entry_type}}</td>
+                                <td>{{list.calendar_date}}</td>
+                                <td>
+                                    <a > <i class="fa fa-fw fa-edit tooltips" (click)="edit_calender(list.calendar_template_id)" data-trigger="hover"
+                                            data-original-title="Edit" title=""
+                                            style="font-size:19px; color:#455a64;cursor: pointer;"></i></a>
+                                    <a ><i class="fa fa-fw fa-times tooltips" (click)="delete_calendertemp(list.calendar_template_id)" data-trigger="hover"
+                                            data-original-title="Delete" title=""
+                                            style="font-size:19px; color:#f65959;cursor: pointer;"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>                   
+
+                </div>
+            </div>
+            <nav class="atbd-page" >
+            
+                <ul class="pagination mb-20" *ngIf="paginationData.info == 'show'">
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? calenderlist({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="calenderlist({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? calenderlist({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)" (click)="calenderlist({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? calenderlist({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                  <li class="dropdown__item">
+                    <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+  
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+        </div>
+    </div>
+</div>
+
+<!----------Modal Pop Up (BEGIN)  for advanced search  ------------------>
+<div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content searchQuotationCSS">
+            <div class="modal-header">
+                <h2 class="col-12 col-12 modal-title text-center text-center ">Advanced
+                    Search
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary">
+                    Back
+                </button>
+                <button type="button" class="btn btn-dark" data-dismiss="modal">
+                    GO
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search  ------------------>
+
+<div class="modal fade" id="addmore" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content searchQuotationCSS">
+            <div class="modal-header">
+                <h2 class="col-12 col-12 modal-title text-center text-center ">Add Calendar Template
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-container">
+                    <form id="calendarForm" [formGroup]="calendarForm">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="calendarName">Calendar Name *</label>
+                                    <input type="text" id="calendarName" class="form-control" formControlName="calendarName" name="calendarName" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="billerName">Biller Name *</label>
+                                    <select name="billerId" id="billerId" class="form-control" formControlName="billerId">
+                                        <option value="" >Select Biller Name
+                                        </option>
+                                        <option *ngFor="let value of cale_biller_list" [value]="value.billerId">
+                                            {{ value.billerName }}
+                                          </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="reportToEmail">Report to Email *</label>
+                                    <input type="email" id="reportToEmail" class="form-control" name="reportToEmail" formControlName="reportToEmail" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="billerName">Starting From </label>
+                                    <select name="billerId" id="billerId" class="form-control" formControlName="starting_from">
+                                        <option value="">Select Starting From</option>
+                                        <option *ngFor="let value of starting_from" [value]="value">
+                                            {{ value }}
+                                          </option>
+                                    </select>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label>Supervisor Name:</label>
+                                    <select multiple class="form-control" style="height: 130px;" formControlName="supervisor_name">
+                                        <option *ngFor="let value of cale_userlist" [value]="value.userId">
+                                            {{ value.firstName }}
+                                          </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="short">Calendar Short Name</label>
+                                    <input type="text" id="short" class="form-control" name="short" formControlName="short_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportToEmail">Calendar Entry Date *</label>
+                                    <input type="date" id="date" class="form-control" name="date" formControlName="entry_date">
+                                </div>
+                                <div class="form-group radio-group">
+                                    <label>Calendar Template Type:</label>
+                                    <div>
+                                        <input type="radio" id="Public" name="templateType" value="1" 
+                                            required /> <label for="Public">Public</label>
+                                        <input type="radio" id="Personal" name="templateType" value="2" /> <label
+                                            for="Personal">Personal *</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="billerName">Calendar Label Color </label>
+                                    <select name="billerId" id="billerId" class="form-control" formControlName="color_code">
+                                        <option value="">Select colorcode</option>
+                                        <option *ngFor="let item of get_color_code" [value]="item.color_code_id">{{item.color_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportToEmail">Alert</label>
+                                    <div>
+                                        <input type="checkbox" id="alart_stat" name="supervisor" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group radio-group">
+                                    <label>Task Entry Type:</label>
+                                    <div>
+                                        <input type="radio" checked id="recurring" name="taskEntryType" value="1" (click)="taskentrytype('Recurring')"
+                                            required /> <label for="recurring" >Recurring</label>
+                                        <input type="radio" id="oneTime" name="taskEntryType" value="2" (click)="taskentrytype('oneTime')"/> <label
+                                            for="oneTime">One Time</label>
+                                        <input type="radio" id="hoursWise" name="taskEntryType" value="3" (click)="taskentrytype('hoursWise')"/>
+                                        <label for="hoursWise">Hours Wise</label>
+                                        <div *ngIf="this.taskRecurring == true">
+                                            <select  name="billerId" id="billerId" class="form-control" formControlName="recurring_value">
+                                                <option value="1" selected="selected">1</option>
+                                                <option *ngFor="let item of duration" [value]="item">{{item}}</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <input *ngIf="this.oneTime == true" placeholder="dd-MM-yyyy HH:mm" formControlName="onetime_value" type="datetime-local" class="form-control" name="taskdate"/>
+                                        <div class="hours_wise" *ngIf="hoursWise">
+                                            <div formArrayName="calendar_hours_tasks">
+                                                <div class="taskentry_control" *ngFor="let task of taskEntries.controls; let k = index" [formGroupName]="k">
+                                                  <input style="flex: 0 0 100px;" type="datetime-local" formControlName="task_date_time" class="form-control" placeholder="dd-MM-yyyy HH:mm">
+                                                  <i class="fas fa-minus" *ngIf="k !== 0" (click)="removetaskenty(k)"></i>
+                                                </div>
+                                              </div>
+                                            <!-- <div class="taskentry_control" formArrayName="calendar_hours_tasks" *ngFor="let task of taskEntries.controls; let k = index" [formGroupName]="k">
+                                              <input type="datetime-local" formControlName="task_date_time" class="form-control" placeholder="dd-MM-yyyy HH:mm" />
+                                              <i class="fas fa-minus" *ngIf="k !== 0" (click)="removetaskenty(k)"></i>
+                                            </div> -->
+                                          
+                                            <i class="fas fa-plus" (click)="addTaskentry()"> Add</i>
+                                        </div>   
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="billerName">Duration </label>
+                                    <select name="billerId" id="billerId" class="form-control">
+                                        <option value="1" selected="selected">1</option>
+                                        <option *ngFor="let item of duration" [value]="item">{{item}}</option>
+                                    </select>
+                                </div> -->
+                            </div>
+                        </div>
+                    
+                         <div class="table-container">
+                            <form [formGroup]="taskForm">
+                            <table id="taskTable" class="table">
+                                <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Customer Name</th>
+                                    <th>Task Name</th>
+                                    <th>Additional Email</th>
+                                    <th>Cus Notify</th>
+                                    <th>Att Status</th>
+                                    <th>Att Vali Status</th>
+                                    <th>Rea Vali Status</th>
+                                    <th>Assign User</th>
+                                    <th>Task Template</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody formArrayName="tasks">
+                                <tr *ngFor="let task of tasks.controls; let i = index" [formGroupName]="i">
+                                    <td>{{ i + 1 }}</td>
+                                    <td>
+                                        <!-- <select  class="form-control">
+                                            <option value="">Select Customer</option>
+                                            <option *ngFor="let cust of customer_data; let i = index" value="{{cust.customerId}}">{{cust.customerName}}</option>
+                                        </select> -->
+                                        <ng-autocomplete
+                                            [data]="customer_data"
+                                            [searchKeyword]="keywordCompanyName"
+                                            formControlName="customer_id"
+                                            (selected)="selectEventCustomer($event)"
+                                            (inputChanged)="customerlist($event)"
+                                            (inputFocused)="onFocusedCustomer($event)"
+                                            [itemTemplate]="itemTemplateCustomer"
+                                            [notFoundTemplate]="notFoundTemplate">
+                                            </ng-autocomplete>
+
+                                            <ng-template #itemTemplateCustomer let-item>
+                                            <a [innerHTML]="item.customerName"></a>
+                                            </ng-template>
+
+                                            <ng-template #notFoundTemplate let-notFound>
+                                            <div [innerHTML]="notFound"></div>
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        <input style="margin-bottom: 15px;" type="text" class="form-control" formControlName="work_name" placeholder="Task Name">
+                                        <div formArrayName="tasks">
+                                          <div class="taskname_control" *ngFor="let taskname of getTasknameControls(task).controls; let j = index" [formGroupName]="j">
+                                            <input type="text" class="form-control" formControlName="work_task_name" placeholder="Task Name">
+                                            <i class="fas fa-minus" (click)="removeTaskname(i, j)"></i>
+                                          </div>
+                                        </div>
+                                        <i class="fas fa-plus" (click)="addTaskname(i)"> Add Task</i>
+                                      </td>
+                                    <td><input type="email" class="form-control" formControlName="additional_email" placeholder="Additional Email"></td>
+                                    <td><input type="checkbox" formControlName="notify_state"></td>
+                                    <td><input type="checkbox" formControlName="attachment_state"></td>
+                                    <td><input type="checkbox" formControlName="attach_validate_state"></td>
+                                    <td><input type="checkbox" formControlName="reason_validate_state"></td>
+                                    <td>
+                                    <select multiple class="form-control" formControlName="assign_user_id" style="height: 130px;">
+                                        <option *ngFor="let value of cale_userlist" [value]="value.userId">
+                                            {{ value.firstName }}
+                                          </option>
+                                    </select>
+                                    </td>
+                                    <td>
+                                    <select formControlName="assign_template_id" class="form-control">
+                                        <option value="">Select Template</option>
+                                        <option *ngFor="let temp of cale_templates" [value]="temp.crm_template_id">
+                                            {{ temp.crm_template_name }}
+                                          </option>
+                                    </select>
+                                    </td>
+                                    <td><button class="btn btn-danger"  *ngIf="i !== 0" (click)="removeTask(i)">Remove</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button class="btn btn-primary" (click)="addTask()">Add More</button>
+                            </form>
+                        </div>
+
+                        <div class="actions">
+                            <button type="submit" class="btn btn-save" (click)="onSubmit()">Save</button>
+                            <button type="button"  data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="edit_template" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+        <div class="modal-content searchQuotationCSS">
+            <div class="modal-header">
+                <h2 class="col-12 col-12 modal-title text-center text-center ">Edit Calendar Template
+                </h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-container">
+                    <form id="calendarForm" [formGroup]="calendarForm_edit">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="edit_calendarName">Calendar Name *</label>
+                                    <input type="text" id="edit_calendarName" class="form-control" formControlName="edit_calendarName" name="calendarName" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="billerName">Biller Name *</label>
+                                    <select name="edit_billerId" id="edit_billerId" class="form-control" formControlName="edit_billerId">
+                                        <option value="" >Select Biller Name
+                                        </option>
+                                        <option *ngFor="let value of cale_biller_list" [value]="value.billerId">
+                                            {{ value.billerName }}
+                                          </option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="edit_reportToEmail">Report to Email *</label>
+                                    <input type="email" id="reportToEmail" class="form-control" name="edit_reportToEmail" formControlName="edit_reportToEmail" required />
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="edit_billerName">Starting From </label>
+                                    <select name="billerId" id="billerId" class="form-control" formControlName="edit_starting_from">
+                                        <option value="">Select Starting From</option>
+                                        <option *ngFor="let value of starting_from" [value]="value">
+                                            {{ value }}
+                                          </option>
+                                    </select>
+                                </div>
+                                <div class="form-group checkbox-group">
+                                    <label>Supervisor Name:</label>
+                                    <select multiple class="form-control" style="height: 130px;" formControlName="edit_supervisor_name">
+                                        <option *ngFor="let value of cale_userlist" [value]="value.userId">
+                                            {{ value.firstName }}
+                                          </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 col-lg-6">
+                                <div class="form-group">
+                                    <label for="short">Calendar Short Name</label>
+                                    <input type="text" id="short" class="form-control" name="short" formControlName="edit_short_name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportToEmail">Calendar Entry Date *</label>
+                                    <input type="date" id="date" class="form-control" name="date" formControlName="edit_entry_date">
+                                </div>
+                                <div class="form-group radio-group">
+                                    <label>Calendar Template Type:</label>
+                                    <div>
+                                        <input type="radio" id="edPublic" name="edtemplateType" value="1" 
+                                            required /> <label for="Public">Public</label>
+                                        <input type="radio" id="edPersonal" name="edtemplateType" value="2" /> <label
+                                            for="Personal">Personal *</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="billerName">Calendar Label Color </label>
+                                    <select name="billerId" id="billerId" class="form-control" formControlName="edit_color_code">
+                                        <option value="">Select colorcode</option>
+                                        <option *ngFor="let item of get_color_code" [value]="item.color_code">{{item.color_name}}</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportToEmail">Alert</label>
+                                    <div>
+                                        <input type="checkbox" id="edit_alart_stat" name="supervisor" value="" />
+                                    </div>
+                                </div>
+                                <div class="form-group radio-group">
+                                    <label>Task Entry Type:</label>
+                                    <div>
+                                        <input type="radio" checked id="edrecurring" name="edtaskEntryType" value="1" (click)="edit_taskentrytype('Recurring')"
+                                            required /> <label for="recurring" >Recurring</label>
+                                        <input type="radio" id="edoneTime" name="edtaskEntryType" value="2" (click)="edit_taskentrytype('oneTime')"/> <label
+                                            for="oneTime">One Time</label>
+                                        <input type="radio" id="edhoursWise" name="edtaskEntryType" value="3" (click)="edit_taskentrytype('hoursWise')"/>
+                                        <label for="hoursWise">Hours Wise</label>
+                                        <div *ngIf="this.edit_taskRecurring == true">
+                                            <select  name="billerId" id="billerId" class="form-control" formControlName="edit_recurring_value">
+                                                <option value="0" selected="selected">0</option>
+                                                <option *ngFor="let item of duration" [value]="item">{{item}}</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <input *ngIf="this.edit_oneTime == true" placeholder="dd-MM-yyyy HH:mm" formControlName="edit_onetime_value" type="datetime-local" class="form-control" name="taskdate"/>
+                                        <div class="hours_wise" *ngIf="edit_hoursWise">
+                                            <div formArrayName="edit_calendar_hours_tasks">
+                                                <div class="taskentry_control" *ngFor="let task of taskEntries.controls; let k = index" [formGroupName]="k">
+                                                  <input style="flex: 0 0 100px;" type="datetime-local" formControlName="edit_task_date_time" class="form-control" placeholder="dd-MM-yyyy HH:mm">
+                                                  <i class="fas fa-minus" *ngIf="k !== 0" (click)="edit_removetaskenty(k)"></i>
+                                                </div>
+                                              </div>
+                                            <!-- <div class="taskentry_control" formArrayName="calendar_hours_tasks" *ngFor="let task of taskEntries.controls; let k = index" [formGroupName]="k">
+                                              <input type="datetime-local" formControlName="task_date_time" class="form-control" placeholder="dd-MM-yyyy HH:mm" />
+                                              <i class="fas fa-minus" *ngIf="k !== 0" (click)="removetaskenty(k)"></i>
+                                            </div> -->
+                                          
+                                            <i class="fas fa-plus" (click)="edit_Taskentry()"> Add</i>
+                                        </div>   
+                                    </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                    <label for="billerName">Duration </label>
+                                    <select name="billerId" id="billerId" class="form-control">
+                                        <option value="1" selected="selected">1</option>
+                                        <option *ngFor="let item of duration" [value]="item">{{item}}</option>
+                                    </select>
+                                </div> -->
+                            </div>
+                        </div>
+                    
+                         <div class="table-container">
+                            <form [formGroup]="edit_taskForm">
+                              <table id="taskTable" class="table">
+                                <thead>
+                                  <tr>
+                                    <th>S.No</th>
+                                    <th>Customer Name</th>
+                                    <th>Task Name</th>
+                                    <th>Additional Email</th>
+                                    <th>Cus Notify</th>
+                                    <th>Att Status</th>
+                                    <th>Att Vali Status</th>
+                                    <th>Rea Vali Status</th>
+                                    <th>Assign User</th>
+                                    <th>Task Template</th>
+                                    <th>Actions</th>
+                                  </tr>
+                                </thead>
+                                <tbody formArrayName="edit_tasks">
+                                    <tr *ngFor="let task of edit_tasks.controls; let i = index" [formGroupName]="i">
+                                        <td>{{ i + 1 }}</td>
+                                        <input type="hidden" class="form-control" formControlName="edit_temp_id">
+                                    <td>
+                                      <ng-autocomplete
+                                        [data]="customer_data"
+                                        [searchKeyword]="keywordCompanyName"
+                                        formControlName="edit_customer_id"
+                                        (selected)="selectEventCustomer($event)"
+                                        (inputChanged)="customerlist($event)"
+                                        (inputFocused)="onFocusedCustomer($event)"
+                                        [itemTemplate]="itemTemplateCustomer"
+                                        [notFoundTemplate]="notFoundTemplate">
+                                      </ng-autocomplete>
+                          
+                                      <ng-template #itemTemplateCustomer let-item>
+                                        <a [innerHTML]="item.customerName"></a>
+                                      </ng-template>
+                          
+                                      <ng-template #notFoundTemplate let-notFound>
+                                        <div [innerHTML]="notFound"></div>
+                                      </ng-template>
+                                    </td>
+                                    <td>
+                                        <input style="margin-bottom: 15px;" type="text" class="form-control" formControlName="edit_work_name" placeholder="Task Name">
+                                        
+                                        <div formArrayName="edit_tasks">
+                                          <div class="taskname_control" *ngFor="let tasknames1 of geteditTasknameControls(task).controls; let j = index" [formGroupName]="j">
+                                            <input type="text" class="form-control" formControlName="work_task_name" placeholder="Task Name">
+                                            <input type="hidden" class="form-control" formControlName="calendar_template_child_baby_id" placeholder="Task Name">
+                                            <i class="fas fa-minus" (click)="removeEditTaskname(i, j)"></i>
+                                          </div>
+                                        </div>
+                                        <i class="fas fa-plus" (click)="editTaskname(i)"> Add Task</i>
+                                      </td>
+                                      <td><input type="email" class="form-control" formControlName="edit_additional_email" placeholder="Additional Email"></td>
+                                      <td><input type="checkbox" formControlName="edit_notify_state"></td>
+                                      <td><input type="checkbox" formControlName="edit_attachment_state"></td>
+                                      <td><input type="checkbox" formControlName="edit_attach_validate_state"></td>
+                                      <td><input type="checkbox" formControlName="edit_reason_validate_state"></td>
+                                      <td>
+                                        <select multiple class="form-control" formControlName="edit_assign_user_id" style="height: 130px;">
+                                          <option *ngFor="let value of cale_userlist" [value]="value.userId">{{ value.firstName }}</option>
+                                        </select>
+                                      </td>
+                                      <td>
+                                        <select formControlName="edit_assign_template_id" class="form-control">
+                                          <option value="">Select Template</option>
+                                          <option *ngFor="let temp of cale_templates" [value]="temp.crm_template_id">{{ temp.crm_template_name }}</option>
+                                        </select>
+                                      </td>
+                                      <td><button class="btn btn-danger" *ngIf="i !== 0" (click)="removeEditTask(i)">Remove</button></td>
+                                    </tr>
+                                  </tbody>
+                              </table>
+                              <button class="btn btn-primary" (click)="editTask()">Add More</button>
+                            </form>
+                          </div>
+                          
+
+                        <div class="actions">
+                            <button type="submit" class="btn btn-save" (click)="onupdate()">Save</button>
+                            <button type="button"  data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

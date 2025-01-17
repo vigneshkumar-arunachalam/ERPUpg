@@ -259,6 +259,9 @@ export class NavbarComponent implements OnInit {
   arrayRecurringDemo: any[] = [];
   //recurring loader
   isLoading = false;
+  RecurredInvoiceCount: any;
+  ResellerInvoiceCount: any;
+  recuringApInvCount: any;
  
 
   constructor(private router: Router, private serverService: ServerService,
@@ -3796,7 +3799,10 @@ export class NavbarComponent implements OnInit {
     
       if (response.status== true) {
         this.spinner.hide();
+     this.RecurredInvoiceCount=response.RecurredInvoiceCount;
+     this.ResellerInvoiceCount=response.ResellerInvoiceCount;
      this.monthlyRecurInvCount=response.monthlyRecurringInvoiceCount;
+     this.recuringApInvCount=response.recuringApprovalInvoiceCount;
         
        
 

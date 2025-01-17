@@ -172,7 +172,7 @@ i.fa.fa-bars {
 }
 
 #pettycashEditFormId .modal-content button.close,
-#searchPettyCashFormId .modal-content button.close {
+ .modal-content button.close {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
@@ -491,3 +491,4 @@ select {
 .table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
 .table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
   
+

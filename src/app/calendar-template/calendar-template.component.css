@@ -1,0 +1,188 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+
+  table th, td {
+    padding: 8px;
+    text-align: left;
+    border:1px solid #C5D9E0;
+  }
+  
+  table th {
+    background: #6d5dfc;
+    border: 1px solid #ebf2f4;
+    color: #fff;
+    padding: 0.75rem;
+  }
+  table input {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .pagination {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .pagination button.active {
+    font-weight: bold;
+    background-color: #ddd;
+  }
+  
+  .pagination button:disabled {
+    cursor: not-allowed;
+    background-color: #f1f1f1;
+    color: #ccc;
+  }
+  .calender-search{
+    float: right;
+    margin-bottom: 10px;
+    padding: 10px!important;
+    border-radius: 25px;
+  }
+
+
+  
+  .form-container {
+    margin: 20px auto;
+    background: #e0f7fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+ .modal .form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+ .modal .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+ .modal .form-group label {
+    flex: 1 0 200px;
+    padding: 5px;
+    font-weight: bold;
+  }
+
+ .modal .form-group input,
+ .modal .form-group select {
+    flex: 2 0 400px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+ .modal .checkbox-group,
+ .modal .radio-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .table-container {
+    margin-top: 20px;
+  }
+
+ .modal  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+ .modal table th,
+ .modal table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+
+ .modal .actions {
+    text-align: center;
+  }
+
+ .modal .btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 24px;
+  }
+
+ .modal .btn-save {
+    background-color: #4caf50;
+    color: white;
+  }
+
+ .modal .btn-cancel {
+    background-color: #f44336;
+    color: white;
+  }
+
+ .modal .btn-add {
+    background-color: #03a9f4;
+    color: white;
+  }
+  .modal-header h2{margin: 0;}
+  .modal-header{    display: flex;align-items: center;}
+  .modal-dialog{max-width: 85%;}
+
+  /*RS code */
+
+.taskname_control{
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+.taskentry_control{
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    align-items: center;
+}
+.taskname_control .form-control{
+  width: 80%; /* Example: Apply a light background */
+}
+.taskentry_control:not(:first-child) .form-control{
+  width: 80%; /* Example: Apply a light background */
+}
+.modal .fa-plus{
+  background: #6d5dfc;
+  color: #fff;
+  font-size: 12px;
+  padding: 6px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal .fa-minus{
+  background: #de1f12;
+  color: #fffdfd;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.hours_wise{
+  max-height: 150px;
+    background-color: #ffffff;
+    overflow-y: scroll;
+    padding: 6px;
+}

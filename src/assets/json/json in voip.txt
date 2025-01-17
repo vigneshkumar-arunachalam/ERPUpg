@@ -1,0 +1,26 @@
+vendorList:[
+   0: {
+    data:[
+        0:{attachment_link:"" conversionRate:"" entryRow:1 fixed_amount:"" fixed_amount_converted: "" idd_amount:"" idd_amount_converted:""
+invoice_amount:"" invoice_amount_converted:"" invoice_amount_without_tax:"" invoice_no:"" is_invoice_filled:"" is_invoice_filled_color:""
+local_amount:"" local_amount_converted:"" month_val:1 other_amount:"" other_amount_converted:"" purchase_trend_id:"" status:3
+usage_amount:"" usage_amount_converted:"" vendorName:"" vendor_id:980 year_val:2025},
+        1:{attachment_link:"" conversionRate:"" entryRow:1 fixed_amount:"" fixed_amount_converted: "" idd_amount:"" idd_amount_converted:""
+invoice_amount:"" invoice_amount_converted:"" invoice_amount_without_tax:"" invoice_no:"" is_invoice_filled:"" is_invoice_filled_color:""
+local_amount:"" local_amount_converted:"" month_val:2 other_amount:"" other_amount_converted:"" purchase_trend_id:"" status:3
+usage_amount:"" usage_amount_converted:"" vendorName:"" vendor_id:980 year_val:2025},..month_val:3,4,5...11.....
+    ]vendorName:"Honda Yamaha - USD"
+   },
+    1: {
+    data:[
+        0:{attachment_link:"" conversionRate:"" entryRow:1 fixed_amount:"" fixed_amount_converted: "" idd_amount:"" idd_amount_converted:""
+invoice_amount:"" invoice_amount_converted:"" invoice_amount_without_tax:"" invoice_no:"" is_invoice_filled:"" is_invoice_filled_color:""
+local_amount:"" local_amount_converted:"" month_val:1 other_amount:"" other_amount_converted:"" purchase_trend_id:"" status:3
+usage_amount:"" usage_amount_converted:"" vendorName:"" vendor_id:980 year_val:2025},
+        1:{attachment_link:"" conversionRate:"" entryRow:1 fixed_amount:"" fixed_amount_converted: "" idd_amount:"" idd_amount_converted:""
+invoice_amount:"" invoice_amount_converted:"" invoice_amount_without_tax:"" invoice_no:"" is_invoice_filled:"" is_invoice_filled_color:""
+local_amount:"" local_amount_converted:"" month_val:2 other_amount:"" other_amount_converted:"" purchase_trend_id:"" status:3
+usage_amount:"" usage_amount_converted:"" vendorName:"" vendor_id:980 year_val:2025},..month_val:3,4,5...11.....
+    ]vendorName:"Honda Yamaha - USD"
+   },
+    

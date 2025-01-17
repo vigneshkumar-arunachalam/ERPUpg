@@ -153,6 +153,21 @@ import { PurchaseEntryMrVoipTrendComponent } from './ledger/purchase-entry-mr-vo
 import { PurchaseEntryCall4telTrendComponent } from './ledger/purchase-entry-call4tel-trend/purchase-entry-call4tel-trend.component';
 import { PublictaskComponent } from './publictask/publictask.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { CreditnoteComponent } from './billing/creditnote/creditnote.component';
+import { AddcreditnoteComponent } from './billing/creditnote/addcreditnote/addcreditnote.component';
+import { EditcreditnoteComponent } from './billing/creditnote/editcreditnote/editcreditnote.component';
+import { HRComponent } from './hr/hr.component';
+import { DesgTypeMgmtComponent } from './hr/desg-type-mgmt/desg-type-mgmt.component';
+
+import { UsergroupComponent } from './hr/usergroup/usergroup.component';
+import { UsermanagementComponent } from './hr/usermanagement/usermanagement.component';
+import { DebitnoteComponent } from './billing/debitnote/debitnote.component';
+import { AdddebitnoteComponent } from './billing/debitnote/adddebitnote/adddebitnote.component';
+import { EditdebitnoteComponent } from './billing/debitnote/editdebitnote/editdebitnote.component';
+import { PrepaidnoteComponent } from './billing/prepaidnote/prepaidnote.component';
+import { AddprepaidnoteComponent } from './billing/prepaidnote/addprepaidnote/addprepaidnote.component';
+import { EditprepaidnoteComponent } from './billing/prepaidnote/editprepaidnote/editprepaidnote.component';
+import { CalendarTemplateComponent } from './calendar-template/calendar-template.component';
 
 
 
@@ -289,6 +304,20 @@ import { FullCalendarModule } from '@fullcalendar/angular';
      PurchaseEntryMrVoipTrendComponent,
      PurchaseEntryCall4telTrendComponent,
      PublictaskComponent,
+     CreditnoteComponent,
+     AddcreditnoteComponent,
+     EditcreditnoteComponent,
+     HRComponent,
+     DesgTypeMgmtComponent,
+     UsergroupComponent,
+     UsermanagementComponent,
+     DebitnoteComponent,
+     AdddebitnoteComponent,
+     EditdebitnoteComponent,
+     PrepaidnoteComponent,
+     AddprepaidnoteComponent,
+     EditprepaidnoteComponent,
+     CalendarTemplateComponent
  
   ],
   imports: [

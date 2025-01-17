@@ -45,6 +45,16 @@ export class ServerService {
     return this.http.post(`${this.baseUrl}${api_req.api_url}`, api_req, { headers });
     
   }
+sendServergetdata(getData: any) {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json'
+    })
+
+  };
+  let url = "https://laravelapi.erp1.cal4care.com/api/" + getData.api_url;
+  return this.http.get(url, httpOptions);
+  }
 
   sendServerpath(postData: any[]) {
     const httpOptions = {

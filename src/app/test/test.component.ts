@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+declare var $: any;
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.css']
 })
-export class TestComponent implements OnInit {
+export class TestComponent implements OnInit, AfterViewInit {
   public addresses: FormArray;
   public addressForm: FormGroup;
   items:any;
@@ -26,6 +28,16 @@ export class TestComponent implements OnInit {
     ];
  
   }
+  ngAfterViewInit(): void {
+    // Initialize DataTable
+    ($('#example') as any).DataTable({
+      paging: true,
+      searching: true,
+      ordering: true,
+      autoWidth: true
+    });
+  }
+
 
   get addressControls() {
  
