@@ -1,0 +1,832 @@
+<div class="contents-section">
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section">
+            <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">DID Inventory Entry Management</span>
+          </h3>
+          <div class="quotation-btn-section">
+            <button type="button" title="Add New" class="btn btn-primary" style="margin-right: 10px;"
+              (click)="openAddModal()"> <i class="fas fa-plus" style="margin-right:10;"></i>Add DID Inventory
+            </button>
+            <!-- <button type="button" (click)="opensearchModal()" class="btn btn-primary" data-toggle="modal"
+              title="Search">
+              <i class="fas fa-search" style="margin-right:10;"></i>Search DID Inventory
+            </button> -->
+            <button type="button" (click)="toggleSearchForm()" class="btn btn-primary" title="Search">
+              <i class="fas fa-search" style="margin-right: 10px;"></i> Search DID Inventory
+            </button>
+          </div>
+
+        </div>
+      </div>
+      <div class="card-body search_data_class" *ngIf="isSearchFormVisible" >
+        <div class="search-form" 
+          style="border: 1px solid #ccc; padding: 15px; margin-top: 10px; border-radius: 5px;">
+          <div class="row">
+            <div class="col-sm-12 col-lg-6">
+              <div class="form-group">
+                <label for="did_search" style="color: #fff;font-size: 20px;">Global Search</label>
+                <input type="text" id="did_search" class="form-control" name="did_search"  #global_search/>
+              </div>
+            </div>
+            <div class="col-sm-12 col-lg-6">
+              <div class="form-group">
+                <label for="biller_name" style="color: #fff;font-size: 20px;">Select Biller</label>
+                <select class="form-control" id="biller_name" #global_billid>
+                  <option value="" selected>Select Biller Name</option>
+                  <option *ngFor="let item of biller_data" [value]="item.billerId">
+                    {{ item.billerCode }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="seach_action">
+            <button type="submit" class="btn btn-save" (click)="search_data({'search_text':global_search.value,'biller_id':global_billid.value})">Search</button>
+            <button type="button" class="btn btn-cancel" style="margin-left: 10px;" (click)="toggleSearchForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <ul class="nav nav-pills" role="tablist" style="    margin-top: 20px;">
+          <li class="nav-item">
+            <a class="nav-link active" (click)="did_inventory_List({})" data-toggle="tab" href="#available" role="tab"
+              aria-controls="available" aria-selected="true"> Available DID(A)</a>
+          </li>
+          <li class="nav-item">
+            <a (click)="did_approval_List({})" class="nav-link" data-toggle="tab" href="#approval" role="tab"
+              aria-controls="approval" aria-selected="false">Approval(P)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="did_issued_List({})" data-toggle="tab" href="#issued" role="tab"
+              aria-controls="issued" aria-selected="false">Issued DID(I)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="did_demo_issued_List({})" data-toggle="tab" href="#demo" role="tab"
+              aria-controls="demo" aria-selected="false">Demo Issued DID(D)</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="did_number_entry_List({})" data-toggle="tab" href="#history" role="tab"
+              aria-controls="history" aria-selected="false">DID Number Entry History</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="did_issues_history_List({})" data-toggle="tab" href="#ishistory" role="tab"
+              aria-controls="ishistory" aria-selected="false">Issues History</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div id="available" class="tab-pane fade show active" role="tabpanel" aria-labelledby="available-tab">
+            <div class="search-container">
+              <input type="text" class="calender-search"
+                (keyup.enter)="did_inventory_List({'search_text':list_search.value})" #list_search
+                placeholder="Search..." />
+            </div>
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th><input type="checkbox"></th>
+                  <th>S.No</th>
+                  <th>Biller</th>
+                  <th>DID Number</th>
+                  <th>Provider</th>
+                  <th>Trunk Name</th>
+                  <th>Purchase Date</th>
+                  <th>Purchaser</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of did_inventory_data;let i=index;">
+                  <td><input name="approval_id" type="checkbox" class="approval_class" value="10"></td>
+                  <td>{{this.off_set +i+1}}</td>
+                  <td>
+                    <div [ngStyle]="{ 'background-color': item.colorCodes }"
+                      style="width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                      {{item.billerCode}}</div>
+                  </td>
+                  <td>{{item.did_numbers}}</td>
+                  <td>{{item.provider_name}}</td>
+                  <td>{{item.did_trunk_name}}</td>
+                  <td>{{item.purchase_date}}</td>
+                  <td>{{item.purchaser_name}}</td>
+                  <td>
+                    <a (click)="edit_available(item.did_entry_id,item.billerId)"> <i class="fa fa-fw fa-edit tooltips"
+                        data-trigger="hover" data-original-title="Edit" title=""
+                        style="font-size:19px; color:#455a64;cursor: pointer;"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="atbd-page">
+
+              <ul class="pagination mb-20" *ngIf="paginationData.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.backtab=='show' ? did_inventory_List({'offset':paginationData.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_inventory_List({'offset':paginationData.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? did_inventory_List({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_inventory_List({'offset':paginationData.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.nexttab =='show' ? did_inventory_List({'offset':paginationData.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div id="approval" class="tab-pane fade" role="tabpanel" aria-labelledby="approval-tab">
+            <div class="search-container">
+              <input type="text" class="calender-search"
+                (keyup.enter)="did_approval_List({'search_text':list_search1.value})" #list_search1
+                placeholder="Search..." />
+            </div>
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Biller</th>
+                  <th>Customer</th>
+                  <th>Transaction Type</th>
+                  <th>Trunk Name</th>
+                  <th>DID Number</th>
+                  <th>Remarks</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of did_approval_data;let i=index;">
+                  <td>{{this.off_set +i+1}}</td>
+                  <td>
+                    <div [ngStyle]="{ 'background-color': item.colorCodes }"
+                      style="width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                      {{item.billerCode}}</div>
+                  </td>
+                  <td>{{item.customerName}}</td>
+                  <td>{{item.trans_type_name}}</td>
+                  <td>{{item.did_trunk_name}}</td>
+                  <td>{{item.did_numbers}}</td>
+                  <td>{{item.remarks_new}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="atbd-page">
+
+              <ul class="pagination mb-20" *ngIf="paginationData2.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData2.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData2.backtab=='show' ? did_approval_List({'offset':paginationData2.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData2.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_approval_List({'offset':paginationData2.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData2.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? did_approval_List({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData2.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_approval_List({'offset':paginationData2.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData2.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData2.nexttab =='show' ? did_approval_List({'offset':paginationData2.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div id="issued" class="tab-pane fade" role="tabpanel" aria-labelledby="issued-tab">
+            <div class="search-container">
+              <input type="text" class="calender-search"
+                (keyup.enter)="did_issued_List({'search_text':list_search2.value})" #list_search2
+                placeholder="Search..." />
+            </div>
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th><input type="checkbox"></th>
+                  <th>S.No</th>
+                  <th>Issue Code</th>
+                  <th>Biller</th>
+                  <th>Customer</th>
+                  <th>Entry Date</th>
+                  <th>Issue Date</th>
+                  <th>Trunk Name</th>
+                  <th>DID Number</th>
+                  <th>NRS</th>
+                  <th>Remarks</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of did_issued_data;let i=index;">
+                  <td><input type="checkbox"></td>
+                  <td>{{this.off_set +i+1}}</td>
+                  <td>{{item.issue_code}}</td>
+                  <td>
+                    <div [ngStyle]="{ 'background-color': item.colorCodes }"
+                      style="width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                      {{item.billerCode}}</div>
+                  </td>
+                  <td>{{item.customerName}}</td>
+                  <td>{{item.did_entry_dt}}</td>
+                  <td>{{item.issue_dt}}</td>
+                  <td>{{item.did_trunk_name}}</td>
+                  <td>{{item.did_numbers}}</td>
+                  <td>{{item.did_numbers_nrs}}</td>
+                  <td>{{item.remarks_new}}</td>
+                  <td *ngIf="item.did_numbers_nrs!=''">
+                    <a (click)="issued_nrs_did(item.did_entry_id)"> <i class="fa fa-fw fa-edit tooltips"
+                        data-trigger="hover" data-original-title="Edit" title=""
+                        style="font-size:19px; color:#455a64; cursor: pointer;"></i>
+                    </a>
+                  </td>
+                  <td *ngIf="item.did_numbers_nrs==''">
+                    <a (click)="issued_did(item.did_entry_id)"> <i class="fa fa-fw fa-edit tooltips"
+                        data-trigger="hover" data-original-title="Edit" title=""
+                        style="font-size:19px; color:#455a64; cursor: pointer;"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="atbd-page">
+
+              <ul class="pagination mb-20" *ngIf="paginationData3.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData3.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData3.backtab=='show' ? did_issued_List({'offset':paginationData3.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData3.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_issued_List({'offset':paginationData3.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData3.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? did_issued_List({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData3.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_issued_List({'offset':paginationData3.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData3.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData3.nexttab =='show' ? did_issued_List({'offset':paginationData3.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div id="demo" class="tab-pane fade" role="tabpanel" aria-labelledby="demo-tab">
+            <div class="search-container">
+              <input type="text" class="calender-search"
+                (keyup.enter)="did_demo_issued_List({'search_text':list_search3.value})" #list_search3
+                placeholder="Search..." />
+            </div>
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>S.No</th>
+                  <th>Issue Code</th>
+                  <th>Biller</th>
+                  <th>Customer</th>
+                  <th>Entry Date</th>
+                  <th>Issue Date</th>
+                  <th>Trunk Name</th>
+                  <th>DID Number</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of did_demo_issued_data;let i=index;">
+                  <td>{{item.customerName}}</td>
+                  <td>{{this.off_set +i+1}}</td>
+                  <td>{{item.issue_code}}</td>
+                  <td>
+                    <div [ngStyle]="{ 'background-color': item.colorCodes }"
+                      style="width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                      {{item.billerCode}}</div>
+                  </td>
+                  <td>{{item.customerName}}</td>
+                  <td>{{item.did_entry_dt}}</td>
+                  <td>{{item.issue_dt}}</td>
+                  <td>{{item.did_trunk_name}}</td>
+                  <td>{{item.did_numbers}}</td>
+                  <td>
+                    <a (click)="issued_did_demo(item.did_entry_id)"> <i class="fa fa-fw fa-edit tooltips"
+                        data-trigger="hover" data-original-title="Edit" title=""
+                        style="font-size:19px; color:#455a64; cursor: pointer;"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="atbd-page">
+
+              <ul class="pagination mb-20" *ngIf="paginationData4.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData4.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData4.backtab=='show' ? did_demo_issued_List({'offset':paginationData4.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData4.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_demo_issued_List({'offset':paginationData4.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData4.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? did_demo_issued_List({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData4.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_demo_issued_List({'offset':paginationData4.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData4.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData4.nexttab =='show' ? did_demo_issued_List({'offset':paginationData4.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div id="history" class="tab-pane fade" role="tabpanel" aria-labelledby="history-tab">
+            <div class="search-container">
+              <input type="text" class="calender-search"
+                (keyup.enter)="did_number_entry_List({'search_text':list_search4.value})" #list_search4
+                placeholder="Search..." />
+            </div>
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Biller</th>
+                  <th>Provider</th>
+                  <th>Entry Date</th>
+                  <th>Trunk Name</th>
+                  <th>DID Number</th>
+                  <th>Purchase Date</th>
+                  <th>Purchaser</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of did_number_entry_data;let i=index;">
+                  <td>{{this.off_set +i+1}}</td>
+                  <td>
+                    <div [ngStyle]="{ 'background-color': item.colorCodes }"
+                      style="width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                      {{item.billerCode}}</div>
+                  </td>
+                  <td>{{item.provider_name}}</td>
+                  <td>{{item.did_entry_dt}}</td>
+                  <td>{{item.did_trunk_name}}</td>
+                  <td>{{item.did_numbers}}</td>
+                  <td>{{item.purchase_date}}</td>
+                  <td>{{item.purchaser_name}}</td>
+                  <td>
+                    <a> <i class="fa fa-fw fa-edit tooltips" data-trigger="hover" data-original-title="Edit" title=""
+                        style="font-size:19px; color:#455a64; cursor: pointer;"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="atbd-page">
+
+              <ul class="pagination mb-20" *ngIf="paginationData5.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData5.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData5.backtab=='show' ? did_number_entry_List({'offset':paginationData5.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData5.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_number_entry_List({'offset':paginationData5.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData5.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? did_number_entry_List({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData5.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_number_entry_List({'offset':paginationData5.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData5.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData5.nexttab =='show' ? did_number_entry_List({'offset':paginationData5.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <div id="ishistory" class="tab-pane fade" role="tabpanel" aria-labelledby="ishistory-tab">
+            <div class="search-container">
+              <input type="text" class="calender-search"
+                (keyup.enter)="did_issues_history_List({'search_text':list_search5.value})" #list_search5
+                placeholder="Search..." />
+            </div>
+            <table class="table table-striped table-bordered mt-3">
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Biller</th>
+                  <th>DID Entry Date</th>
+                  <th>DID Issue Date</th>
+                  <th>Customer Name</th>
+                  <th>Trunk Number</th>
+                  <th>DID Number</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of did_issues_history_data;let i=index;">
+                  <td>{{this.off_set +i+1}}</td>
+                  <td>
+                    <div [ngStyle]="{ 'background-color': item.colorCodes }"
+                      style="width:90px;border-radius:5px;padding:3px 3px 3px 3px;float:left; margin-right:3px">
+                      {{item.billerCode}}</div>
+                  </td>
+                  <td>{{item.did_entry_dt}}</td>
+                  <td>{{item.issue_dt}}</td>
+                  <td>{{item.customerName}}</td>
+                  <td>{{item.did_trunk_name}}</td>
+                  <td>{{item.did_numbers}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <nav class="atbd-page">
+
+              <ul class="pagination mb-20" *ngIf="paginationData6.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData6.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData6.backtab=='show' ? did_issues_history_List({'offset':paginationData6.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData6.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_issues_history_List({'offset':paginationData6.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData6.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? did_issues_history_List({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData6.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="did_issues_history_List({'offset':paginationData6.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData6.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData6.nexttab =='show' ? did_issues_history_List({'offset':paginationData6.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="available_did" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-12 col-12 modal-title text-center text-center ">DID Inventory Issue
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-container">
+          <form id="aval_action" [formGroup]="edit_aval_action">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12">
+
+                <div class="form-group">
+                  <label for="Issue_Date	">Issue Date</label>
+                  <input type="date" id="Issue_Date" class="form-control" formControlName="Issue_Date"
+                    name="Issue_Date" />
+                </div>
+
+                <div class="form-group">
+                  <label for="Issue_Customer">Issue Customer </label>
+                  <ng-autocomplete [data]="customer_data" [searchKeyword]="keywordCompanyName"
+                    formControlName="customer_id" (selected)="selectEventCustomer($event)"
+                    (inputChanged)="customerlist($event)" (inputFocused)="onFocusedCustomer($event)"
+                    [itemTemplate]="itemTemplateCustomer" [notFoundTemplate]="notFoundTemplate">
+                  </ng-autocomplete>
+
+                  <ng-template #itemTemplateCustomer let-item>
+                    <a [innerHTML]="item.customerName"></a>
+                  </ng-template>
+
+                  <ng-template #notFoundTemplate let-notFound>
+                    <div [innerHTML]="notFound"></div>
+                  </ng-template>
+                </div>
+                <div class="form-group">
+                  <label for="Demo">Demo</label>
+                  <div>
+                    <input type="checkbox" id="Demo" name="Demo" value="" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="Remarks">Remarks</label>
+                  <textarea type="checkbox" id="Remarks" class="form-control" formControlName="Remarks"
+                    name="Remarks"></textarea>
+                </div>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn btn-save" (click)="edit_did_avali_save()">Save</button>
+              <button type="button" data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="issue_did" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header" style="background-color: #00b8ff;">
+        <h2 class="col-12 col-12 modal-title text-center text-center text-white">Issued DID
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <span class="modal_span_class">Issued DID Number to Available</span>
+          </div>
+          <div class="actions" style="margin-top: 50px;">
+            <button type="submit" class="btn btn-save" (click)="issued_did_save()">Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="issue_did_nrs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header" style="background-color: #00b8ff;">
+        <h2 class="col-12 col-12 modal-title text-center text-center text-white">Issued DID
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <span class="modal_span_class">DID NRS Number Reverse to Available</span>
+          </div>
+          <div class="actions" style="margin-top: 50px;">
+            <button type="submit" class="btn btn-save" (click)="issued_nrs_did_save()">Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="issue_did_demo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header" style="background-color: #00b8ff;">
+        <h2 class="col-12 col-12 modal-title text-center text-center text-white">Issued DID
+        </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <span class="modal_span_class">Demo DID Number reverse to approval</span>
+          </div>
+          <div class="actions" style="margin-top: 50px;">
+            <button type="submit" class="btn btn-save" (click)="issued_demo_did_save()">Save</button>
+            <button type="button" data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="add_new_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable"
+    style="max-width: 90%;justify-content: flex-start;padding-top: 50px;" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background-color: #00b8ff;">
+        <h2 class="col-12 modal-title text-center text-white">Add New Records</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-container p-3">
+          <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
+            <table class="table table-bordered">
+              <thead class="table-light">
+                <tr>
+                  <th>S.No</th>
+                  <th>Biller Name</th>
+                  <th>Trunk Name</th>
+                  <th>Did Number</th>
+                  <th>NRS</th>
+                  <th>Pur Date (dd/mm/yyyy)</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody formArrayName="rows">
+                <tr *ngFor="let row of rows.controls; let i = index" [formGroupName]="i">
+                  <td>{{ i + 1 }}</td>
+                  <td>
+                    <select class="form-control" formControlName="billerName">
+                      <option *ngFor="let item of biller_data" [value]="item.billerId">
+                        {{item.billerCode}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <select class="form-control" formControlName="trunkName">
+                      <option [value]="''">Select Trunk Name</option>
+                      <option *ngFor="let item of trunk_name_data" [value]="item.did_trunk_name_id">
+                        {{item.did_trunk_name}}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" formControlName="didNumber"
+                      placeholder="Enter DID Number" />
+                  </td>
+                  <td>
+                    <input type="checkbox" formControlName="nrs" />
+                  </td>
+                  <td>
+                    <input type="date" class="form-control" formControlName="purDate" />
+                  </td>
+                  <td>
+                    <button *ngIf="i > 0" type="button" class="btn btn-danger" (click)="removeRow(i)">Remove</button>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+            <button type="button" class="btn btn-success mb-2" (click)="addRow()">Add Product</button>
+            <div class="d-flex">
+              <button type="submit" class="btn btn-primary me-2">Save</button>
+              <button type="button" class="btn btn-warning" (click)="closeAddModal()">Cancel</button>
+            </div>
+          </form>
+          <!-- <h3>Form Debug</h3>
+  <pre>{{ recordForm.value | json }}</pre> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="open_search_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-12 col-12 modal-title text-center text-center ">Search DID Inventory</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-container">
+          <form id="aval_action">
+            <div class="row">
+              <div class="col-sm-12 col-lg-12">
+                <div class="form-group">
+                  <label for="did_search	">Globle Search</label>
+                  <input type="text" id="did_search" class="form-control" name="did_search" />
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="biller_name">
+                    <option *ngFor="let item of biller_data" value={{item.billerId}}>
+                      {{item.billerCode}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn btn-save"
+                (click)="search_data({'search_text':list_search2.value})">Seach</button>
+              <button type="button" data-dismiss="modal" class="btn btn-cancel">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

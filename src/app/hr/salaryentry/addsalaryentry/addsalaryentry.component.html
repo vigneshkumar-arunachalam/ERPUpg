@@ -1,0 +1,367 @@
+<div class="contents-section addquotation-section" style="cursor:pointer;" id="abc">
+
+    <div class="card">
+        <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active"> Add Salary Group</span>
+            </h3>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+        <form [formGroup]="addPI_section2">
+            <div class="row">
+                <div class="col-12" formArrayName="addresses">
+                    <ng-container *ngFor="let address of addressControls.controls; let i = index;">
+                        <!-- Customer Invoices Row -->
+                        <section>
+                            <!-- Table for Customer Invoices -->
+                            <div>
+                                <div class="table-responsive">
+                                    <table class="add-contact-table-section">
+                                        <!-- Table Header -->
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">Bill Name</span></th>
+                                                <th><span class="userDatatable-title">Staff Name</span></th>
+                                                <th><span class="userDatatable-title">Salary Month</span></th>
+                                               
+                                                
+                                                <th><span class="userDatatable-title">Contribution-1</span></th>
+                                                <th><span class="userDatatable-title">Contribution-2</span></th>
+                                                <th><span class="userDatatable-title">Neutral Con-1</span></th>
+                                                <th><span class="userDatatable-title">Neutral Con-2</span></th>
+                                                <th><span class="userDatatable-title">Addtion Con-1</span></th>
+                                                <th><span class="userDatatable-title">Addtion Con-2</span></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+
+                                            <!-- Individual Row -->
+                                            <tr [formGroupName]="i">
+                                                <!-- Customer Name -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+
+                                                        <select class="form-control" formControlName="billname"
+                                                            id="pd_billname{{i}}" name="billname">
+                                                            <option value="" disabled selected>Select BillName
+                                                            </option>
+                                                            <option *ngFor="let classif of billerList"
+                                                                value="{{classif.billerId}}">
+                                                                {{classif.itemname}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Other Input Fields -->
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+
+                                                        <select class="form-control" formControlName="staffname"
+                                                            id="pd_staffname{{i}}" name="staffname">
+                                                            <option value="" disabled selected>Select Name
+                                                            </option>
+                                                            <option *ngFor="let classif of userList"
+                                                                value="{{classif.userId}}">
+                                                                {{classif.userName}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+
+                                                        <select class="form-control" formControlName="salarymonth"
+                                                            id="pd_salarymonth{{i}}" name="salarymonth">
+                                                            <option value="" disabled selected>Select Month
+                                                            </option>
+                                                            <option *ngFor="let classif of monthList"
+                                                                value="{{classif.id}}">
+                                                                {{classif.value}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="userDatatable-content">
+
+                                                        <select class="form-control" formControlName="salaryyear"
+                                                            id="pd_salaryyear{{i}}" name="salaryyear">
+                                                            <option value="" disabled selected>Select Year
+                                                            </option>
+                                                            <option *ngFor="let classif of yearList"
+                                                                value="{{classif.id}}">
+                                                                {{classif.value}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                
+                                                <!-- Payment Type -->
+
+
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="subcontribution1"
+                                                            id="pd_subcontribution1{{i}}" name="subcontribution1">
+                                                            <option value="" disabled selected>Select SubContribution
+                                                                Name
+                                                            </option>
+                                                            <option *ngFor="let classif of staffContributionList"
+                                                                value="{{classif.staff_contribution_id}}">
+                                                                {{classif.staff_contribution_name}}
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                            formControlName="subcontribution1Amt"
+                                                            id="pd_subcontribution1Amt{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Other Input Fields -->
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <!-- <input type="hidden" class="form-control" formControlName="customer_id"
+                                                         value=" " /> -->
+                                                         <select class="form-control" formControlName="subcontribution2"
+                                                         id="pd_subcontribution2{{i}}" name="subcontribution2">
+                                                         <option value="" disabled selected>Select SubContribution
+                                                             Name
+                                                         </option>
+                                                         <option *ngFor="let classif of staffContributionList"
+                                                                value="{{classif.staff_contribution_id}}">
+                                                                {{classif.staff_contribution_name}}
+                                                            </option>
+                                                     </select>
+                                                    </div>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                            formControlName="subcontribution2Amt"
+                                                            id="pd_subcontribution2Amt{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="neutralcontribution1"
+                                                        id="pd_neutralcontribution1{{i}}" name="neutralcontribution1">
+                                                        <option value="" disabled selected>Select Neutral-Contribution
+                                                            Name
+                                                        </option>
+                                                        <option *ngFor="let classif of staffContributionList"
+                                                        value="{{classif.staff_contribution_id}}">
+                                                        {{classif.staff_contribution_name}}
+                                                    </option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                            formControlName="neutralcontribution1Amt"
+                                                            id="pd_neutralcontribution1Amt{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="neutralcontribution2"
+                                                        id="pd_neutralcontribution2{{i}}" name="neutralcontribution2">
+                                                        <option value="" disabled selected>Select Neutral-Contribution
+                                                            Name
+                                                        </option>
+                                                        <option *ngFor="let classif of staffContributionList"
+                                                                value="{{classif.staff_contribution_id}}">
+                                                                {{classif.staff_contribution_name}}
+                                                            </option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                        formControlName="neutralcontribution2Amt"
+                                                        id="pd_neutralcontribution2Amt{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="additionalcontribution1"
+                                                        id="pd_additionalcontribution1{{i}}" name="additionalcontribution1">
+                                                        <option value="" disabled selected>Select Add-Contribution
+                                                            Name
+                                                        </option>
+                                                        <option *ngFor="let classif of staffContributionList"
+                                                        value="{{classif.staff_contribution_id}}">
+                                                        {{classif.staff_contribution_name}}
+                                                    </option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                        formControlName="additionalcontribution1Amt"
+                                                        id="pd_additionalcontribution1Amt{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="additionalcontribution2"
+                                                        id="pd_additionalcontribution2{{i}}" name="additionalcontribution2">
+                                                        <option value="" disabled selected>Select Add-Contribution
+                                                            Name
+                                                        </option>
+                                                        <option *ngFor="let classif of staffContributionList"
+                                                                value="{{classif.staff_contribution_id}}">
+                                                                {{classif.staff_contribution_name}}
+                                                            </option>
+                                                    </select>
+                                                    </div>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                        formControlName="additionalcontribution2Amt"
+                                                        id="pd_additionalcontribution2Amt{{i}}" />
+
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">EPF/ CPF Add Status</span></th>
+                                                <th><span class="userDatatable-title">Contribution 1/ SINDA</span></th>
+                                                <th><span class="userDatatable-title">Contribution 2/ SOCSO</span></th>
+                                                <th><span class="userDatatable-title">No of working Days</span></th>
+                                                <th><span class="userDatatable-title">Basic Wages</span></th>
+                                                <th><span class="userDatatable-title">Employee Con</span></th>
+                                                <th><span class="userDatatable-title">Employer Con</span></th>
+                                                <th><span class="userDatatable-title">CPF Wages</span></th>
+                                                <th><span class="userDatatable-title">Net Pay</span></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody>
+                                            <tr [formGroupName]="i">
+                                                <!-- Customer Name -->
+                                                 <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="checkbox" 
+                                                            formControlName="epfstatus"
+                                                            id="pd_epfstatus{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="checkbox" 
+                                                            formControlName="Contribution1SINDA"
+                                                            id="pd_Contribution1SINDA{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="checkbox" 
+                                                            formControlName="Contribution2SOCSO"
+                                                            id="pd_Contribution2SOCSO{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control" (change)="getCpfDetails(i)"
+                                                            formControlName="workingdays"
+                                                            id="pd_workingdays{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Other Input Fields -->
+                                                <!-- Date -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <!-- <input type="hidden" class="form-control" formControlName="customer_id"
+                                                         value=" " /> -->
+                                                        <input type="number" class="form-control"
+                                                            formControlName="basicwages"
+                                                            id="pd_basicwages{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Invoice Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control"
+                                                            formControlName="employeeContr"
+                                                            id="pd_employeeContr{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Balance Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <input type="number" class="form-control"
+                                                            formControlName="employerContr"
+                                                            id="pd_employerContr{{i}}" />
+                                                    </div>
+                                                </td>
+                                                <!-- Paid Amount -->
+                                                <td>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                            formControlName="cpfwages"
+                                                            id="pd_cpfwages{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                            formControlName="netpay" 
+                                                            id="pd_netpay{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                    
+                                                <!-- Payment Type -->
+
+                                            </tr>
+                                        </tbody>
+                    
+                                        <div *ngIf="i > 0" class="userDatatable-content d-inline-block">
+                                            <button type="button" class="btn btn-danger btn-sm"
+                                            (click)="removeAddress(i)">X</button>
+                                        </div>
+                                        
+                                      
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- End of Customer Invoices Row -->
+
+
+
+                        <hr>
+                        <div class="text-right" style="margin: 20px;">
+                            <button type="button" class="btn btn-primary btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
+                                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
+            
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary mr-4 " (click)="save(i)">Submit</button>
+                            <button type="button" class="btn btn-dark" (click)="goBack()">Cancel</button>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+      
+    </form>
+    </div>
+
+</div>

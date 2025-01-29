@@ -1,0 +1,134 @@
+.form-container {
+    margin: 20px auto;
+    background: #e0f7fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+ .modal .form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+ .modal .form-group {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+  }
+
+ .modal .form-group label {
+    flex: 0 0 200px;
+    padding: 5px;
+    font-weight: bold;
+  }
+
+ .modal .form-group input,
+ .modal .form-group select,textarea {
+    flex: 0 0 300px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+    .modal ng-autocomplete.ng-autocomplete{
+    flex: 0 0 300px;
+    padding: 0px;
+    border-radius: 5px;
+  }
+
+ .modal .checkbox-group,
+ .modal .radio-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .table-container {
+    margin-top: 20px;
+  }
+
+ .modal  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+
+ .modal table th,
+ .modal table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+
+ .modal .actions {
+    text-align: center;
+  }
+
+ .modal .btn {
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    line-height: 24px;
+  }
+
+ .modal .btn-save {
+    background-color: #4caf50;
+    color: white;
+  }
+
+ .modal .btn-cancel {
+    background-color: #f44336;
+    color: white;
+  }
+
+ .modal .btn-add {
+    background-color: #03a9f4;
+    color: white;
+  }
+  .modal-header h2{margin: 0;}
+  .modal-header{    display: flex;align-items: center;}
+  /* .modal-dialog{max-width: 85%;} */
+
+.modal_span_class{
+  font-size: 20px;
+  background: #fff;
+  padding: 20px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.search-container {
+  float: right;
+  margin: 10px;
+  padding: 10px;
+}
+input.calender-search {
+  padding: 10px !important;
+  /* width: 100% !important; */
+  border-radius: 50px !important;
+  width: 250px;
+}
+.seach_action .btn-cancel {
+  background-color: #f44336;
+  color: white;
+}
+
+.seach_action .btn-save {
+  background-color: #03a9f4;
+  color: white;
+}
+.seach_action {
+  display: flex;
+      justify-content: center;
+      /* margin: 7px auto; */
+      margin-top: 20px;
+}
+.search_data_class{
+  background: linear-gradient(to right, #09003c 0%, #2a6d9b 40%);
+    width: 50%;
+    margin: 0 auto;
+}

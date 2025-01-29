@@ -492,3 +492,7 @@ select {
 .table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
   
 
+.readonly-field {
+  background-color: #f4f2f3 !important;
+  cursor: not-allowed;
+}

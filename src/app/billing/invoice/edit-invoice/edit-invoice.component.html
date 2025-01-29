@@ -447,6 +447,20 @@
 
                         </div>
                     </div>
+
+                    <div class="col-lg-12" *ngIf="this.billerID_Edit==10">
+                        <div class="form-group row">
+                            <div class="form-check form-check-inline">
+                                <input class="ml-3 form-check-input" type="checkbox" checked name="sst_Cbk" 
+                                id="inlineCjjedit"     formControlName="sst_Cbk" (change)="handleChange_SSTax($event)">
+                                <label class="form-check-label" for="sst_Cbk"> SST Tax</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                   
                     <!-- <div class="col-lg-12">
                 <div class="form-group row">
                     <div class="col-lg-4 mt-2">

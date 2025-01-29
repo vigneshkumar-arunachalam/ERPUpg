@@ -66,6 +66,14 @@ export class ProductCategoryComponent implements OnInit {
     this.searchProductCategory = new FormGroup({
       'search_ProductCategoryName': new FormControl(null),
     });
+    this.productMasterApprovalForm = new FormGroup({
+      'cm_chk': new FormControl(null),
+      'cd_chk': new FormControl(null),
+      'radio_approvalPermission': new FormControl(null),
+      'approval_comments': new FormControl(null),
+      'comments_approvedBy': new FormControl(null),
+    
+    });
 
   }
   addProdCatGo() {
@@ -575,7 +583,7 @@ export class ProductCategoryComponent implements OnInit {
 
     }
     prodMasterApprovalEdit(id: any) {
- 
+ this.spinner.show();
       this.prodMasterApprovalEditID=id;
       //this.quotationApproval_ID = id;
       let api_req: any = new Object();
@@ -591,11 +599,13 @@ export class ProductCategoryComponent implements OnInit {
       api_req.element_data = quot_approval_req;
   
       this.serverService.sendServer(api_req).subscribe((response: any) => {
+        this.spinner.hide();
       //  console.log("response status", response.status);
         if (response.status == true) {
-          $("#prodMasterApprovalId").modal("show");
+          this.spinner.hide();
+        
           this.prodMasterApprovalResult = response.data;
-  
+          $("#prodMasterApprovalId").modal("show");
           // console.log("invoice checkbox array-invoice attachment",this.invoiceCheckboxID_array)
   
         }
@@ -619,9 +629,11 @@ export class ProductCategoryComponent implements OnInit {
     }
 
     prodMgmtApprovalUpdate() {
+      alert(1)
 
       if (this.quotationApprovedBy == undefined || this.quotationApprovedBy == 'undefined' || this.quotationApprovedBy == '') {
         this.quotationApprovedBy = '';
+        alert(2)
       }
       this.spinner.show();
       let api_req: any = new Object();
@@ -654,6 +666,7 @@ export class ProductCategoryComponent implements OnInit {
   
       $("#prodMasterApprovalId").attr("disabled", true);
       this.serverService.sendServer(api_req).subscribe((response: any) => {
+        alert(3)
         this.spinner.hide();
         $("#prodMasterApprovalId").removeAttr("disabled");
       //  console.log("response status", response.status);

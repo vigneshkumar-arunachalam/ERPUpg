@@ -1,0 +1,446 @@
+<div class="contents-section">
+ 
+    <div class="row no-gutters">
+      <div class="col-lg-12 mb-30">
+        <div class="card">
+
+          <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+              <span class="breadcrumb-item active"> Salary Incentive Management</span></h3>
+           
+         
+
+            <div class="quotation-btn-section">
+              <button type="button" title="Add Multiple Salary" class="btn btn-primary btn-default btn-squared"
+              
+             
+               (click)="goAddSalary()" style="margin-right: 30px;"><i class="fas fa-plus"
+                 style="margin-right:10;"></i>Add Multiple 
+              </button>
+              <button type="button" title="Edit Multiple Salary" class="btn btn-primary btn-default btn-squared"
+              (click)="editSalaryEntryMultiple()" style="margin-right: 30px;"><i class="fas fa-edit"
+                style="margin-right:10;"></i>Edit Multiple 
+             </button>
+             <button type="button" title="Group Delete Salary" class="btn btn-primary btn-default btn-squared"
+              (click)="groupDeleteSalary()" style="margin-right: 30px;"><i class="fas fa-trash"
+               style="margin-right:10;"></i>Group Delete 
+            </button>
+              <button type="button" class="btn btn-primary" data-toggle="modal" title="Search"
+               data-target="#searchSalaryFormId">
+                <i class="fas fa-search" style="margin-right:10;"></i>Search
+              </button>
+
+            </div>
+
+
+          
+          </div>
+
+          <div class="card-body">
+            <div class="userDatatable global-shadow border-0 bg-white w-100">
+              <div class="table-responsive">
+                <table class="table mb-0 table-borderless">
+                  <thead>
+                    <tr class="userDatatable-header">
+                        <th style="width:2%;text-align: center; vertical-align: middle;">
+                            <input type="checkbox" id="select-allSalary" [(ngModel)]="selectAllCheckbox"
+                              (change)="selectAll_assignLicense()" />
+                          </th>
+                      <th>
+                        <span class="userDatatable-title">Salary Date</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Biller Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Staff Name</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Salary Month</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Gross Income</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Employee Contribution</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Employer Contribution</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Staff Net Pay</span>
+                      </th>
+                      <th>
+                        <span class="userDatatable-title">Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody *ngFor="let list of Purchase_Order;let i = index">
+                    <tr>
+
+                        <td>
+                            <input type="checkbox" [(ngModel)]="list.selected"
+                              (change)="updateSelected_assignLicense(list)" />
+                          </td>
+                    <td>
+                       {{ list.SalaryDate }} 
+                    </td>
+                    <!-- <td>
+                                              <span> {{ list.delivery_date }} </span>
+                                              <span><button type="button" class="buttonClass"
+                                                [ngStyle]="{backgroundColor: list.colorCodes}">{{
+                                                list.billerCode}}
+                                              </button>
+                                            </span>
+                                          </td> -->
+                    <td>
+
+
+                      {{ list.CompanyName}}
+                    </td>
+                    <td>
+                      <span> {{ list.UserName }} </span>
+                    </td>
+                    <td>
+                      <span> {{ list.SalaryMonth }} </span>
+                    </td>
+                    <td>
+                     {{ list.GrossAmount }} 
+                    </td>
+                    <td>
+                      {{ list.EmployeeContribution }} 
+                    </td>
+                    <td>
+                        {{ list.EmployerContribution }} 
+                      </td>
+                      <td>
+                        {{ list.StaffNetAmount }} 
+                      </td>
+
+                    <td>
+                      <div class="page" style="padding-left: 10px;">
+
+                        <div class="dropdown">
+                          <button class="btn1"><i class="fa fa-bars"></i></button>
+                          <ul class="dropdown__list">
+                            <li class="dropdown__item" >
+                              <a class="view" title="View Salary Details" (click)="viewSalaryEntry(list.salaryId)" >
+                                <img class="show" src="assets/img/icon/eye-bl.png">
+                                <img class="hide" src="assets/img/icon/eye-b.png">
+                              </a>
+                            </li>
+
+                            <li class="dropdown__item" >
+                              <a class="view" title="Edit Salary Details" (click)="editSalaryEntry(list.salaryId)" >
+                                <img class="show" src="assets/img/icon2/edit-blue.png">
+                                <img class="hide" src="assets/img/icon2/edit-black.png">
+                              </a>
+                            </li>
+
+                           
+
+                            <li class="dropdown__item" >
+                              <a class="remove" title="Salary Slip-PDF"  (click)="pdfSalaryEntry(list.salaryId)">
+                                <img class="show" src="assets/img/icon2/pdf-blue.png">
+                                  <img class="hide" src="assets/img/icon2/pdf-black.png">
+                              </a>
+                            </li>
+
+                            <li class="dropdown__item" >
+                              <a class="view" title="Email Salary Details">
+                                <img class="show" src="assets/img/icon2/gmail-blue.png">
+                                <img class="hide" src="assets/img/icon2/gmail-black.png">
+                              </a>
+                            </li>
+
+                            <li class="dropdown__item" >
+                              <a class="remove" title="Delete Salary Details" (click)="rowDelete(list.salaryId)" >
+                                <img class="show" src="assets/img/icon2/delete-blue.png">
+                                <img class="hide" src="assets/img/icon2/delete-black.png">
+                              </a>
+                            </li>
+
+                            
+
+                          </ul>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+            <nav class="atbd-page">
+              <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                <li class="page-item">
+                  <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.backtab=='show' ? PurchaseOrderList({'offset':paginationData.start}) : false"><i
+                      class="fas fa-angle-left"></i></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="PurchaseOrderList({'offset':paginationData.back})"><i
+                      class="fas fa-angle-double-left"></i></a>
+                </li>
+                <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                  *ngFor="let pagination of paginationData.data;let i=index">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)=" pagination.load ==true ? PurchaseOrderList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                    <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                </li>
+                <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                  <a class="page-link" href="javascript:void(0)"
+                    (click)="PurchaseOrderList({'offset':paginationData.next})"><i
+                      class="fas fa-angle-double-right"></i></a>
+                </li>
+                <li class="page-item">
+                  <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                    href="javascript:void(0)"
+                    (click)="paginationData.nexttab =='show' ? PurchaseOrderList({'offset':paginationData.end}) : false"><i
+                      class="fas fa-angle-right"></i></a>
+                </li>
+                <li class="dropdown__item">
+                  <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                  </a>
+                </li>
+              </ul>
+            </nav>
+           
+          </div>
+
+        </div>
+      </div>
+    </div>
+ 
+</div>
+
+
+<!----------Modal Pop Up (BEGIN)  for advanced search Quotation ------------------>
+<div class="modal fade" id="searchSalaryFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+        Advanced Search </h2>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="searchSalaryForm">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Biller Name</label>
+                <div class="col-lg-12">
+                      <select class="form-control" formControlName="billname"
+                        name="billname">
+                      <option value="" disabled selected>Select BillName
+                      </option>
+                      <option *ngFor="let classif of billerList"
+                      value="{{classif.billerId}}">
+                      {{classif.itemname}}
+                      </option>
+                      </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Staff Name</label>
+                <div class="col-lg-12">
+                  <select class="form-control" formControlName="staffname"
+                  name="staffname">
+                 <option value="" disabled selected>Select Name
+                 </option>
+                 <option *ngFor="let classif of userList"
+                     value="{{classif.userId}}">
+                     {{classif.userName}}
+                 </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Select Month</label>
+                <div class="col-lg-12">
+                  <select class="form-control" formControlName="salarymonth"
+                  name="salarymonth">
+                 <option value="" disabled selected>Select Month
+                 </option>
+                 <option *ngFor="let classif of monthList"
+                     value="{{classif.id}}">
+                     {{classif.value}}
+                 </option>
+                </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Select Year</label>
+                <div class="col-lg-12">
+                  <select class="form-control" formControlName="salaryyear"
+                    name="salaryyear">
+                    <option value="" disabled selected>Select Year
+                    </option>
+                    <option *ngFor="let classif of yearList"
+                        value="{{classif.id}}">
+                        {{classif.value}}
+                    </option>
+                </select>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-primary" (click)="PurchaseOrderList({})">
+          Search
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for advanced search Quotation ------------------>
+
+
+<!-- -----------------------Modal-View Customer begins-------------------------------- -->
+<div class="modal fade" id="viewsalaryFormId" tabindex="-1" role="dialog"
+  aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+          background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+          background: linear-gradient(to right, #262127, #54b7aa);">
+          View-Salary Details-Credit Note </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <h2 style="text-align:center;color:rgb(97, 72, 9)">View Purchase Entry Details</h2> -->
+        <form [formGroup]="viewSalaryForm">
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_ML_Country" class="col-lg-12 col-form-label">Biller Name</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_billerName" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_SalaryEntryDate" class="col-lg-12  col-form-label">Salary Entry Date</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_SalaryEntryDate" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_StaffName" class="col-lg-12 col-form-label">Staff Name</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_StaffName" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_SalaryMonth" class="col-lg-12 col-form-label">Salary Month</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_SalaryMonth" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_BasicWages" class="col-lg-12 col-form-label">Basic Wages</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_BasicWages" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_CPFWages" class="col-lg-12 col-form-label">CPF Wages</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_CPFWages" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_EmployeeContribution" class="col-lg-12 col-form-label">Employee Contribution</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_EmployeeContribution" />
+
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_EmployerContribution" class="col-lg-12 col-form-label">Employer Contribution</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control" formControlName="view_EmployerContribution" />
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group row">
+                <label for="view_OtherContribution" class="col-lg-12 col-form-label">Other Contribution</label>
+                <div class="col-lg-12">
+                  <input type="text" [readonly]="isReadOnly" class="form-control"
+                    formControlName="view_OtherContribution" />
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Cancel
+        </button>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+<!-------------------------- ------Modal-View Customer ends-------------------------------------- -->
+
+
+

@@ -1,0 +1,81 @@
+th{
+    background: #6d5dfc;
+    color: #fff;
+}
+.form-label{font-weight: 800;}
+.btn{margin: 2px;}
+
+td .checkmark {
+    color: green;
+    font-size: 16px;
+  }
+  
+  td .hourglass {
+    color: rgb(245, 2, 2);
+    font-size: 16px;
+  }
+
+  .check-icon {
+    color: green;
+    margin-right: 5px;
+  }
+  
+  .break-icon {
+    color: orange;
+    margin-right: 5px;
+  }
+  
+  .hourglass-icon {
+    color: red;
+    margin-right: 5px;
+  }
+  
+  .time-field, .checkout-time,  .break-icon {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 5px;
+  }
+
+  .userDatatable-header th{
+    background: #6d5dfc;
+    padding: 10px;
+  }
+  .userDatatable-header th span{
+    color: #e4ebf5;
+  }
+
+
+  .userDatatable table tbody tr td {
+    border: 1px solid #C5D9E0;
+}
+.userDatatable table thead tr th {
+    border: 1px solid #ebf2f4;
+}
+
+
+.attendance-table .table-container {
+  max-height: 900px; /* Set desired height for vertical scrolling */
+  max-width: 100%; /* Set desired width for horizontal scrolling */
+  overflow-x: auto;
+  overflow-y: auto;
+  border: 1px solid #ccc; /* Optional: Add a border to the container */
+}
+
+.table {
+  width: 100%; /* Ensure the table spans its container for horizontal scrolling */
+  border-collapse: collapse;
+}
+.table td, .table th {
+  padding: 0.2rem;
+  /* vertical-align: top; */
+  border-top: 1px solid #3e54ae;
+}
+
+
+.table tr td {
+  border: 1px dotted #3e54ae !important;
+}
+.table thead tr th {
+  border: 1px dotted #f9f9fc !important;
+}

@@ -306,6 +306,23 @@
 
                         </div>
                     </div>
+                    
+                    <div class="col-lg-12" *ngIf="this.billerIdCurrencyConv==10">
+                        <div class="form-group">
+                            <label for="Payment" class="form-label">SST Tax</label>
+
+                           
+                          
+                            <div class="form-check form-check-inline ml-4">
+                                <input class="form-check-input" type="checkbox" id="inlineCjj" 
+                                    (change)="handleChange_SSTax($event)">
+                                <!-- <label class="form-check-label" for="inlineCheckbox3"><span
+                                        style="color:black  !important;">M S Display</span> </label> -->
+                            </div>
+
+
+                        </div>
+                    </div>
 
                 </div>
                 <div class="col-lg-6">

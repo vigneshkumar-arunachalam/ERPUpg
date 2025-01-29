@@ -6,6 +6,7 @@ import { BnNgIdleService } from 'bn-ng-idle';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { DatePipe } from '@angular/common';
 
+
 declare var $: any;
 declare var iziToast: any;
 declare var tinymce: any;
@@ -26,6 +27,7 @@ import { NgZone } from '@angular/core';
 export class PEVoipTrendComponent implements OnInit {
  
   isReadOnly: boolean = true;
+  
   yearsList: any;
   monthList: any;
   billerList: any;
@@ -37,7 +39,7 @@ export class PEVoipTrendComponent implements OnInit {
   initialLoadForm: FormGroup;
   public addPI_section2: FormGroup;
   public addresses: FormArray;
-
+  vendorListNull: boolean=false;
   
   vendorList: any[] = [];
   VendorData: any;
@@ -58,6 +60,8 @@ export class PEVoipTrendComponent implements OnInit {
     'December',
   ];
   vendorID_selected: any;
+  
+ 
 
   constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
@@ -98,7 +102,7 @@ export class PEVoipTrendComponent implements OnInit {
     });
     
   }
-
+ 
 
   
   
@@ -233,8 +237,15 @@ export class PEVoipTrendComponent implements OnInit {
       if (response) {
 
         this.spinner.hide();
-        this.vendorList = response.vendorList;
-        this.VendorData = response.vendorData;
+     
+        if(response.vendorList!=null){
+          this.vendorList = response.vendorList;
+          this.VendorData = response.vendorData;
+          this.vendorListNull=false;
+        }else{
+          this.vendorListNull=true;
+        }
+       
  
         // this.extractVendorData();
         Array.isArray(this.vendorList);
@@ -350,23 +361,80 @@ export class PEVoipTrendComponent implements OnInit {
   getEntriesForMonthAndVendor(data: any[], month: number): any[] {
     return data.filter(entry => entry.month === month);
   }
-  increaseValue(index: number, controlName: string): void {
-    const control = this.addressControls.at(index).get(controlName);
-    if (control) {
-      const currentValue = control.value || 0;
-      control.setValue(currentValue + 1);
-    }
+  onCurrConvRateChangeFixed(index: number): void {
+    const row = this.addressControls.at(index);
+    const fixedAmount1 = row.get('fixedAmount1')?.value || 0;
+    const currConvRate = row.get('currConvRate')?.value || 1;
+    const fixedAmount2 = fixedAmount1 * currConvRate;
+
+    row.get('fixedAmount2')?.setValue(fixedAmount2);
+    const fixedAmount2_final = this.addressControls.at(index).get('fixedAmount2');
+    console.log("fixedAmount2_final",fixedAmount2_final);
   }
+  onCurrConvRateChangeUsage(index: number): void {
+    const row = this.addressControls.at(index);
+    const usageAmount1 = row.get('usageAmount1')?.value || 0;
+    const currConvRate = row.get('currConvRate')?.value || 1;
+    const usageAmount2 = usageAmount1 * currConvRate;
+
+    row.get('usageAmount2')?.setValue(usageAmount2);
+    // const fixedAmount2_final = this.addressControls.at(index).get('fixedAmount2');
+    // console.log("fixedAmount2_final",fixedAmount2_final);
+  }
+  onCurrConvRateChangeOther(index: number): void {
+    const row = this.addressControls.at(index);
+    const otherAmount1 = row.get('otherAmount1')?.value || 0;
+    const currConvRate = row.get('currConvRate')?.value || 1;
+    const otherAmount2 = otherAmount1 * currConvRate;
+
+    row.get('otherAmount2')?.setValue(otherAmount2);
+  }
+  onCurrConvRateChangeIDD(index: number): void {
+    const row = this.addressControls.at(index);
+    const IDDAmount1 = row.get('IDDAmount1')?.value || 0;
+    const currConvRate = row.get('currConvRate')?.value || 1;
+    const IDDAmount2 = IDDAmount1 * currConvRate;
+
+    row.get('IDDAmount2')?.setValue(IDDAmount2);
+  }
+  onCurrConvRateChangeLocal(index: number): void {
+    const row = this.addressControls.at(index);
+    const localAmount1 = row.get('localAmount1')?.value || 0;
+    const currConvRate = row.get('currConvRate')?.value || 1;
+    const localAmount2 = localAmount1 * currConvRate;
+
+    row.get('localAmount2')?.setValue(localAmount2);
+  }
+ 
+  // increaseValue(index: number, controlName: string,currConvRate:string): void {
+  //   const control = this.addressControls.at(index).get(controlName);
+  //   const currencyvalue = this.addressControls.at(index).get(currConvRate);
+  //   if (control) {
+  //     const currentValue = control.value || 0;
+  //     control.setValue(currentValue * currencyvalue);
+  //   }
+  // }
+  // increaseValue(index: number, controlName: string, currConvRate: string): void {
+  //   const control = this.addressControls.at(index).get(controlName);
+  //   const currencyControl = this.addressControls.at(index).get(currConvRate);
   
-  decreaseValue(index: number, controlName: string): void {
-    const control = this.addressControls.at(index).get(controlName);
-    if (control) {
-      const currentValue = control.value || 0;
-      if (currentValue > 0) {
-        control.setValue(currentValue - 1);
-      }
-    }
-  }
+  //   if (control && currencyControl) {
+  //     const currentValue = control.value || 0; // Default to 0 if null/undefined
+  //     const currencyValue = +currencyControl.value || 1; // Convert to a number, default to 1 if null/undefined
+  //     control.setValue(currentValue * currencyValue);
+  //   }
+  // }
+  
+  
+  // decreaseValue(index: number, controlName: string): void {
+  //   const control = this.addressControls.at(index).get(controlName);
+  //   if (control) {
+  //     const currentValue = control.value || 0;
+  //     if (currentValue > 0) {
+  //       control.setValue(currentValue - 1);
+  //     }
+  //   }
+  // }
   saveRow(index: number): void {
     this.spinner.show();
     const rowForm = this.addressControls.at(index);

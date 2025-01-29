@@ -157,6 +157,7 @@ export class AddInvoiceComponent implements OnInit {
   shipAddress2_Final: any;
   shipAddress3_Final: any;
   ship_to_str_Final: any;
+  sstCheckbox: boolean=false;
   constructor(private serverService: ServerService, private fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe,
     private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
@@ -322,6 +323,11 @@ export class AddInvoiceComponent implements OnInit {
   }
   get addressControls() {
     return this.addPI_section2.get('addresses') as FormArray
+  }
+  handleChange_SSTax(event:any){
+    this.sstCheckbox=event.target.checked;
+    console.log("this.sstCheckbox",this.sstCheckbox);
+
   }
 
 
@@ -1031,7 +1037,7 @@ export class AddInvoiceComponent implements OnInit {
     api_saveInvoice_req.export_state = this.radioSelectFooter;
     api_saveInvoice_req.add_exchange_rate_state = this.cbk_conversionAmtShow_value;
     api_saveInvoice_req.dw_tax_state = this.cbk_deductWithholdingTax;
-
+    api_saveInvoice_req.sst_tax = this.sstCheckbox;
 
     //section-2
     //  api_saveInvoice_req.values = this.addPI_section2.value.addresses;
@@ -1266,6 +1272,7 @@ export class AddInvoiceComponent implements OnInit {
   getEvent(event: any) {
 
     this.billerIdCurrencyConv = event.target.value;
+    console.log("this.billerIdCurrencyConv",this.billerIdCurrencyConv);
   }
   getCurrencyValues(event: any) {
     // console.log("event.target;", event.target);

@@ -137,52 +137,77 @@ import { PrepaidnoteComponent } from './billing/prepaidnote/prepaidnote.componen
 import { AddprepaidnoteComponent } from './billing/prepaidnote/addprepaidnote/addprepaidnote.component';
 import { EditprepaidnoteComponent } from './billing/prepaidnote/editprepaidnote/editprepaidnote.component';
 import { CalendarTemplateComponent } from './calendar-template/calendar-template.component';
+import { SalaryentryComponent } from './hr/salaryentry/salaryentry.component';
+import { AddsalaryentryComponent } from './hr/salaryentry/addsalaryentry/addsalaryentry.component';
+import { EditsalaryentryComponent } from './hr/salaryentry/editsalaryentry/editsalaryentry.component';
+import { ContributionmasterComponent } from './hr/contributionmaster/contributionmaster.component';
+import { AddcontributionmasterComponent } from './hr/contributionmaster/addcontributionmaster/addcontributionmaster.component';
+import { EditcontributionmasterComponent } from './hr/contributionmaster/editcontributionmaster/editcontributionmaster.component';
+import { DidStockComponent } from './hr/did-stock/did-stock.component';
+import { AttendanceReportComponent } from './hr/attendance-report/attendance-report.component';
 
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },{
-    path: 'calendarTemplate', component: CalendarTemplateComponent
+    path: 'attendance_report', component: AttendanceReportComponent
+  },
+  {
+    path: 'didStock', component: DidStockComponent
   },{
+    path: 'addcontributionmaster', component: AddcontributionmasterComponent
+  },{
+    path: 'editcontributionmaster', component: EditcontributionmasterComponent
+  }, {
+    path: 'contributionmaster', component: ContributionmasterComponent
+  }, {
+    path: 'editSalaryEntry', component: EditsalaryentryComponent
+  }, {
+    path: 'addSalaryEntry', component: AddsalaryentryComponent
+  },{
+    path: 'salaryEntry', component: SalaryentryComponent
+  }, {
+    path: 'calendarTemplate', component: CalendarTemplateComponent
+  }, {
     path: 'prepaidnote', component: PrepaidnoteComponent
-  },{
+  }, {
     path: 'addprepaidnote', component: AddprepaidnoteComponent
-  },{
+  }, {
     path: 'editprepaidnote', component: EditprepaidnoteComponent
-  },{
+  }, {
     path: 'debitnote', component: DebitnoteComponent
-  },{
+  }, {
     path: 'adddebitnote', component: AdddebitnoteComponent
-  },{
+  }, {
     path: 'editdebitnote', component: EditdebitnoteComponent
   },
   {
     path: 'HRuserGroup', component: UsergroupComponent
-  },{
+  }, {
     path: 'HRUserMgmt', component: UsermanagementComponent
-  },{
+  }, {
     path: 'HRDesgTyMgmt', component: DesgTypeMgmtComponent
-  },{
+  }, {
     path: 'editcreditnote', component: EditcreditnoteComponent
-  },{
+  }, {
     path: 'addcreditnote', component: AddcreditnoteComponent
-  },{
+  }, {
     path: 'creditnote', component: CreditnoteComponent
-  },{
+  }, {
     path: 'publictask', component: PublictaskComponent
-  },{
+  }, {
     path: 'PEMrCall4telTrend', component: PurchaseEntryCall4telTrendComponent
-  },{
+  }, {
     path: 'PEMrVoipTrend', component: PurchaseEntryMrVoipTrendComponent
-  },{
+  }, {
     path: 'PEYearly', component: PurchaseEntryYearlyComponent
-  },{
+  }, {
     path: 'nx32', component: Nx3233Component
-  },{
+  }, {
     path: 'editDIDNumberCatalog', component: EditDIDNumCatStockComponent
-  },{
+  }, {
     path: 'addDIDNumberCatalog', component: AddDIDNumCatStockComponent
-  },{
+  }, {
     path: 'DIDNumberCatalog', component: DIDNumberCatalogComponent
   },
   {
@@ -190,25 +215,25 @@ const routes: Routes = [
   },
   {
     path: 'DIDTrunkName', component: DIDTrunkNameComponent
-  },{
+  }, {
     path: 'AddRateCatalog', component: AddRateCatalogComponent
-  },{
+  }, {
     path: 'EditRateCatalog', component: EditRateCatalogComponent
-  },{
+  }, {
     path: 'rateCatalog', component: RateCatelogMasterComponent
-  },{
+  }, {
     path: 'editCurrentStock', component: EditGenStockComponent
-  },{
+  }, {
     path: 'addCurrentStock', component: AddGenStockComponent
   }, {
     path: 'PEVoipTrend', component: PEVoipTrendComponent
-  },  {
+  }, {
     path: 'ProductCategory', component: ProductCategoryComponent
-  },  {
+  }, {
     path: 'CurrentStockMaster', component: CurrentStockMasterComponent
-  },   {
+  }, {
     path: 'ProductMaster1', component: ProductMaster1Component
-  },  {
+  }, {
     path: 'stock', component: StockComponent
   }, {
     path: 'stockproductmaster', component: ProductMasterComponent
@@ -224,15 +249,15 @@ const routes: Routes = [
     path: 'RateCatalog', component: RateCatalogComponent
   }, {
     path: 'RMAIssue', component: RMAIssueComponent
-  },  {
+  }, {
     path: 'StockDIDNumberCatalog', component: StockDIDNumberCatalogComponent
   },
-  
+
   {
     path: 'editMulInvPay', component: EditMulInvPayComponent
   }, {
     path: 'addMulInvPay', component: AddMulInvPayComponent
-  },{
+  }, {
     path: 'demotest', component: DemotestComponent
   }, {
     path: 'vsprovision', component: VsprovisionComponent

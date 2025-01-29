@@ -187,6 +187,10 @@ export class EditInvoiceComponent implements OnInit {
   ShipAdr11: any;
   ShipAdr21: any;
   ShipAdr31: any;
+
+  billerIdCurrencyConv: any;
+  sstCheckbox: boolean=false;
+
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     this.addPI_section2 = this.fb.group({
@@ -342,6 +346,7 @@ export class EditInvoiceComponent implements OnInit {
       'CASJomPAYLogo_Cbk_Cbk': new FormControl(),
       'CAS_Cbk': new FormControl(),
       'DWT_Cbk': new FormControl(),
+      'sst_Cbk': new FormControl(),
 
     });
 
@@ -780,6 +785,11 @@ export class EditInvoiceComponent implements OnInit {
    // console.log("radio button value", this.radio_Value_mileSate_InvoiceType);
 
   }
+  handleChange_SSTax(event:any){
+    this.sstCheckbox=event.target.checked;
+    console.log("this.sstCheckbox",this.sstCheckbox);
+
+  }
 
 
   handleChange_MSDisplay(event: any) {
@@ -1104,6 +1114,7 @@ export class EditInvoiceComponent implements OnInit {
   getCustomerInvoiceDetails(event: any) {
     this.spinner.show();
     this.billerID = event.target.value;
+    this.billerID_Edit=event.target.value;
   //  console.log("billerID check", this.billerID);
 
     let api_req: any = new Object();
@@ -1186,6 +1197,7 @@ export class EditInvoiceComponent implements OnInit {
         this.radio_Value_mileSate_InvoiceType = response.billing_pararent_details[0].mile_discount_state;
        // console.log(response.billing_pararent_details[0].currency)
         $('#curren').val(response.billing_pararent_details[0].currency);
+     //   $('#inlineCjjedit').val(response.billing_pararent_details[0].sst_tax);
         this.invoiceAddSignatureEdit(response.billing_pararent_details[0].signatureId);
 
 
@@ -1243,6 +1255,7 @@ export class EditInvoiceComponent implements OnInit {
           'ExtraLogo': response.billing_pararent_details[0].bills_logo_id,
           'CAS_Cbk': response.billing_pararent_details[0].add_exchange_rate_state,
           'DWT_Cbk': response.billing_pararent_details[0].dw_tax_state,
+          'sst_Cbk': response.billing_pararent_details[0].sst_tax,
 
         });
 
@@ -1640,6 +1653,9 @@ export class EditInvoiceComponent implements OnInit {
 
     api_updatePI_req.add_exchange_rate_state = this.addPI_section1.value.CAS_Cbk;
     api_updatePI_req.dw_tax_state = this.addPI_section1.value.DWT_Cbk;
+    api_updatePI_req.sst_tax = $('#inlineCjjedit').val();
+
+   
 
 
     //section-2

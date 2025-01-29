@@ -168,9 +168,14 @@ import { PrepaidnoteComponent } from './billing/prepaidnote/prepaidnote.componen
 import { AddprepaidnoteComponent } from './billing/prepaidnote/addprepaidnote/addprepaidnote.component';
 import { EditprepaidnoteComponent } from './billing/prepaidnote/editprepaidnote/editprepaidnote.component';
 import { CalendarTemplateComponent } from './calendar-template/calendar-template.component';
-
-
-
+import { SalaryentryComponent } from './hr/salaryentry/salaryentry.component';
+import { AddsalaryentryComponent } from './hr/salaryentry/addsalaryentry/addsalaryentry.component';
+import { EditsalaryentryComponent } from './hr/salaryentry/editsalaryentry/editsalaryentry.component';
+import { ContributionmasterComponent } from './hr/contributionmaster/contributionmaster.component';
+import { AddcontributionmasterComponent } from './hr/contributionmaster/addcontributionmaster/addcontributionmaster.component';
+import { EditcontributionmasterComponent } from './hr/contributionmaster/editcontributionmaster/editcontributionmaster.component';
+import { DidStockComponent } from './hr/did-stock/did-stock.component';
+import { AttendanceReportComponent } from './hr/attendance-report/attendance-report.component';
 // import { BsDropdownModule} from 'ngx-bootstrap/dropdown'; 
 
 @NgModule({
@@ -317,11 +322,19 @@ import { CalendarTemplateComponent } from './calendar-template/calendar-template
      PrepaidnoteComponent,
      AddprepaidnoteComponent,
      EditprepaidnoteComponent,
-     CalendarTemplateComponent
+     CalendarTemplateComponent,
+     SalaryentryComponent,
+     AddsalaryentryComponent,
+     EditsalaryentryComponent,
+     ContributionmasterComponent,
+     AddcontributionmasterComponent,
+     EditcontributionmasterComponent,
+     DidStockComponent,
+     AttendanceReportComponent
  
   ],
   imports: [
-    BrowserModule,CanvasJSAngularChartsModule, 
+    BrowserModule,CanvasJSAngularChartsModule,
     FormsModule,MatTabsModule,NgxSpinnerModule,
     ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,

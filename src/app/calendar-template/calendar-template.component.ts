@@ -157,22 +157,22 @@ export class CalendarTemplateComponent implements OnInit {
       assign_template_id: ['']
     });
   }
-// Method to add a new task to the FormArray
-addEditTask() {
-  return this.fb.group({
-    edit_customer_id: ['', Validators.required],
-    edit_temp_id: [''],
-    edit_work_name: ['', Validators.required],
-    edit_tasks: this.fb.array([]),  // Subtasks, initialized as an empty FormArray
-    edit_additional_email: ['', Validators.email],
-    edit_notify_state: [false],
-    edit_attachment_state: [false],
-    edit_attach_validate_state: [false],
-    edit_reason_validate_state: [false],
-    edit_assign_user_id: [[]],
-    edit_assign_template_id: ['']
-  });
-}
+  // Method to add a new task to the FormArray
+  addEditTask() {
+    return this.fb.group({
+      edit_customer_id: ['', Validators.required],
+      edit_temp_id: [''],
+      edit_work_name: ['', Validators.required],
+      edit_tasks: this.fb.array([]),  // Subtasks, initialized as an empty FormArray
+      edit_additional_email: ['', Validators.email],
+      edit_notify_state: [false],
+      edit_attachment_state: [false],
+      edit_attach_validate_state: [false],
+      edit_reason_validate_state: [false],
+      edit_assign_user_id: [[]],
+      edit_assign_template_id: ['']
+    });
+  }
   // Retrieve the FormArray of task names
   getTasknameControls(task: AbstractControl): FormArray {
     return task.get('tasks') as FormArray;
@@ -237,7 +237,7 @@ addEditTask() {
   editTaskname(taskIndex: number) {
     const task = this.edit_tasks.at(taskIndex) as FormGroup;
     const tasknames1 = task.get('edit_tasks') as FormArray;
-    tasknames1.push(this.fb.group({ work_task_name: '',calendar_template_child_baby_id:'' }));
+    tasknames1.push(this.fb.group({ work_task_name: '', calendar_template_child_baby_id: '' }));
   }
 
   // Add a new task entry
@@ -253,9 +253,56 @@ addEditTask() {
     this.tasks.removeAt(index);
   }
   removeEditTask(i: number) {
-    this.edit_tasks.removeAt(i); // Remove task at index 'i'
+    const edit_temp_id = this.edit_tasks.at(i).get('edit_temp_id').value;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        let api_req: any = new Object();
+        let get_req: any = new Object();
+        api_req.moduleType = "calendar_template";
+        api_req.api_url = "calendar_template/deleteCalendarTemplateChild"
+        api_req.api_type = "web";
+
+
+        api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+        get_req.action = "deleteCalendarTemplateChild";
+        get_req.user_id = localStorage.getItem('erp_c4c_user_id');
+        get_req.calendar_entries_child_id = edit_temp_id;
+        api_req.element_data = get_req;
+        this.serverService.sendServer(api_req).subscribe((response: any) => {
+          if (response.status == true) {
+            this.spinner.hide();
+            this.edit_tasks.removeAt(i); // Remove task at index 'i'
+            // $("#fileAttachmentCustomerContractId").modal("hide");
+            iziToast.success({
+              message: " Calendar Template Clild Deleted successfully",
+              position: 'topRight'
+            });
+            // this.calenderlist({});
+
+          } else {
+
+          }
+        }),
+          (error: any) => {
+            iziToast.error({
+              message: "Sorry, some server issue occur. Please contact admin",
+              position: 'topRight'
+            });
+            console.log(error);
+          };
+      }
+    })
   }
-  
+
 
 
 
@@ -267,14 +314,62 @@ addEditTask() {
       tasknames.removeAt(tasknameIndex);
     }
   }
-    // Remove task name from the form array
-    removeEditTaskname(taskIndex: number, tasknameIndex: number): void {
-      const task = this.edit_tasks.at(taskIndex) as FormGroup;
-      const tasknames = task.get('edit_tasks') as FormArray;
-      if (tasknames.length >= 1) {
-        tasknames.removeAt(tasknameIndex);
-      }
+  // Remove task name from the form array
+  removeEditTaskname(taskIndex: number, tasknameIndex: number): void {
+    const task = this.edit_tasks.at(taskIndex) as FormGroup;
+    const tasknames = task.get('edit_tasks') as FormArray;
+    if (tasknames.length >= 1) {
+      const edit_tempname_id = tasknames.at(tasknameIndex).get('calendar_template_child_baby_id').value;
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          let api_req: any = new Object();
+          let get_req: any = new Object();
+          api_req.moduleType = "calendar_template";
+          api_req.api_url = "calendar_template/deleteCalendarTemplateBaby"
+          api_req.api_type = "web";
+
+
+          api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+          get_req.action = "deleteCalendarTemplateBaby";
+          get_req.user_id = localStorage.getItem('erp_c4c_user_id');
+          get_req.calendar_template_child_baby_id = edit_tempname_id;
+          api_req.element_data = get_req;
+          this.serverService.sendServer(api_req).subscribe((response: any) => {
+            if (response.status == true) {
+              this.spinner.hide();
+              tasknames.removeAt(tasknameIndex);
+              // $("#fileAttachmentCustomerContractId").modal("hide");
+              iziToast.success({
+                message: " Calendar Template Clild Deleted successfully",
+                position: 'topRight'
+              });
+              // this.calenderlist({});
+
+            } else {
+
+            }
+          }),
+            (error: any) => {
+              iziToast.error({
+                message: "Sorry, some server issue occur. Please contact admin",
+                position: 'topRight'
+              });
+              console.log(error);
+            };
+        }
+      })
+
     }
+  }
   // Remove a task entry
   removetaskenty(index: number): void {
     if (this.taskEntries.length > 1) {
@@ -373,95 +468,95 @@ addEditTask() {
       if (response.status == true) {
         const calendarData = response.data[0];
         console.log(calendarData.child_data);
-              // Setting values to the form
-      this.calendarForm_edit.patchValue({
-        edit_calendarName: calendarData.calendar_template_name,
-        edit_billerId: calendarData.billerId,
-        edit_reportToEmail: calendarData.report_to_email,
-        edit_starting_from: calendarData.starting_from_days,
-        edit_supervisor_name: calendarData.assign_users_super , // Convert array to comma-separated string
-        edit_short_name: calendarData.calendar_short_name,
-        edit_entry_date: calendarData.calendar_entry_date,
-        edit_color_code: calendarData.label_color_code,
-        edit_recurring_value: calendarData.calendar_duration,
-        edit_onetime_value: calendarData.onetime_date,
-      });
-      if (calendarData.calendar_type == 1) {
-        $('#edPublic').prop('checked', true);
-      } else if (calendarData.calendar_type == 2) {
-        $('#edPersonal').prop('checked', true);
-      }
-
-      if (calendarData.alert_state == 1) {
-        $('#edit_alart_stat').prop('checked', true);
-      } else{
-        $('#edit_alart_stat').prop('checked', false);
-      }
-
-      if (calendarData.calendar_entry_type == 1) {
-        $('#edrecurring').prop('checked', true);
-        this.edit_taskRecurring = true;
-      } else if (calendarData.calendar_entry_type == 2) {
-        $('#edoneTime').prop('checked', true);
-        this.edit_oneTime = true;
-      } else if (calendarData.calendar_entry_type == 3) {
-        $('#hoursWise').prop('checked', true);
-        this.edit_hoursWise = true;
-      }
-            // Setting child_data to FormArray
-      const calendarHrTaskArray = this.calendarForm_edit.get('edit_calendar_hours_tasks') as FormArray;
-      calendarHrTaskArray.clear(); // Clear existing tasks
-      if (Array.isArray(calendarData.calendarHrTask)) {
-        calendarData.calendarHrTask.forEach((child: { task_date_time: any }) => {
-          const taskGroup = this.fb.group({
-            edit_task_date_time: [child.task_date_time],
-          });
-          calendarHrTaskArray.push(taskGroup);
+        // Setting values to the form
+        this.calendarForm_edit.patchValue({
+          edit_calendarName: calendarData.calendar_template_name,
+          edit_billerId: calendarData.billerId,
+          edit_reportToEmail: calendarData.report_to_email,
+          edit_starting_from: calendarData.starting_from_days,
+          edit_supervisor_name: calendarData.assign_users_super, // Convert array to comma-separated string
+          edit_short_name: calendarData.calendar_short_name,
+          edit_entry_date: calendarData.calendar_entry_date,
+          edit_color_code: calendarData.label_color_code,
+          edit_recurring_value: calendarData.calendar_duration,
+          edit_onetime_value: calendarData.onetime_date,
         });
-      } else {
-        console.warn('calendarHrTask is not an array or is undefined:', calendarData.calendarHrTask);
-      }
-
-      const editTasksArray = this.edit_taskForm.get('edit_tasks') as FormArray;
-    editTasksArray.clear(); // Clear any existing data to avoid duplication
-
-  if (calendarData && calendarData.child_data) {
-      calendarData.child_data.forEach((child: any) => {
-        
-        // Create a new FormGroup for each task data
-        const taskGroup = this.fb.group({
-          edit_temp_id: [child.calendar_template_child_id], // Assuming customer_id is not part of the response
-          edit_customer_id: [child.customer_id], // Assuming customer_id is not part of the response
-          edit_work_name: [child.work_name || ''], // Mapping work_task_name from the response
-          edit_tasks: this.fb.array([]), // Additional tasks (this can be expanded as needed)
-          edit_additional_email: [child.additional_email || ''],
-          edit_notify_state: [child.notify_state || false],
-          edit_attachment_state: [child.attachment_state || false],
-          edit_attach_validate_state: [child.attach_validate_state || false],
-          edit_reason_validate_state: [child.reason_validate_state || false],
-          edit_assign_user_id: [child.assign_users || []],
-          edit_assign_template_id: [child.task_template_id] // Assuming template_id is not part of the response
-        });
-
-        // Add tasks (e.g., if there are sub-tasks)
-        // Add tasks (e.g., if there are sub-tasks)
-        if (child.edit_tasks && child.edit_tasks.length > 0) {
-          const tasksArray = taskGroup.get('edit_tasks') as FormArray;
-          
-          // Loop through the tasks and add only the work_task_name
-          child.edit_tasks.forEach((subtask: any) => {
-            const subtaskGroup = this.fb.group({
-              work_task_name: [subtask.work_task_name || ''], // Set the work_task_name field
-              calendar_template_child_baby_id: [subtask.calendar_template_child_baby_id || ''] // Set the calendar_template_child_baby_id field
-            });
-            tasksArray.push(subtaskGroup);
-          });
+        if (calendarData.calendar_type == 1) {
+          $('#edPublic').prop('checked', true);
+        } else if (calendarData.calendar_type == 2) {
+          $('#edPersonal').prop('checked', true);
         }
 
-        // Add the task group to the main edit_tasks FormArray
-        editTasksArray.push(taskGroup);
-      });
-    }
+        if (calendarData.alert_state == 1) {
+          $('#edit_alart_stat').prop('checked', true);
+        } else {
+          $('#edit_alart_stat').prop('checked', false);
+        }
+
+        if (calendarData.calendar_entry_type == 1) {
+          $('#edrecurring').prop('checked', true);
+          this.edit_taskRecurring = true;
+        } else if (calendarData.calendar_entry_type == 2) {
+          $('#edoneTime').prop('checked', true);
+          this.edit_oneTime = true;
+        } else if (calendarData.calendar_entry_type == 3) {
+          $('#hoursWise').prop('checked', true);
+          this.edit_hoursWise = true;
+        }
+        // Setting child_data to FormArray
+        const calendarHrTaskArray = this.calendarForm_edit.get('edit_calendar_hours_tasks') as FormArray;
+        calendarHrTaskArray.clear(); // Clear existing tasks
+        if (Array.isArray(calendarData.calendarHrTask)) {
+          calendarData.calendarHrTask.forEach((child: { task_date_time: any }) => {
+            const taskGroup = this.fb.group({
+              edit_task_date_time: [child.task_date_time],
+            });
+            calendarHrTaskArray.push(taskGroup);
+          });
+        } else {
+          console.warn('calendarHrTask is not an array or is undefined:', calendarData.calendarHrTask);
+        }
+
+        const editTasksArray = this.edit_taskForm.get('edit_tasks') as FormArray;
+        editTasksArray.clear(); // Clear any existing data to avoid duplication
+
+        if (calendarData && calendarData.child_data) {
+          calendarData.child_data.forEach((child: any) => {
+
+            // Create a new FormGroup for each task data
+            const taskGroup = this.fb.group({
+              edit_temp_id: [child.calendar_template_child_id], // Assuming customer_id is not part of the response
+              edit_customer_id: [child.customer_id], // Assuming customer_id is not part of the response
+              edit_work_name: [child.work_name || ''], // Mapping work_task_name from the response
+              edit_tasks: this.fb.array([]), // Additional tasks (this can be expanded as needed)
+              edit_additional_email: [child.additional_email || ''],
+              edit_notify_state: [child.notify_state || false],
+              edit_attachment_state: [child.attachment_state || false],
+              edit_attach_validate_state: [child.attach_validate_state || false],
+              edit_reason_validate_state: [child.reason_validate_state || false],
+              edit_assign_user_id: [child.assign_users || []],
+              edit_assign_template_id: [child.task_template_id] // Assuming template_id is not part of the response
+            });
+
+            // Add tasks (e.g., if there are sub-tasks)
+            // Add tasks (e.g., if there are sub-tasks)
+            if (child.edit_tasks && child.edit_tasks.length > 0) {
+              const tasksArray = taskGroup.get('edit_tasks') as FormArray;
+
+              // Loop through the tasks and add only the work_task_name
+              child.edit_tasks.forEach((subtask: any) => {
+                const subtaskGroup = this.fb.group({
+                  work_task_name: [subtask.work_task_name || ''], // Set the work_task_name field
+                  calendar_template_child_baby_id: [subtask.calendar_template_child_baby_id || ''] // Set the calendar_template_child_baby_id field
+                });
+                tasksArray.push(subtaskGroup);
+              });
+            }
+
+            // Add the task group to the main edit_tasks FormArray
+            editTasksArray.push(taskGroup);
+          });
+        }
 
       } else {
 
@@ -475,7 +570,7 @@ addEditTask() {
         console.log(error);
       };
 
-    
+
   }
 
   listDataInfo(list_data: any) {

@@ -32,7 +32,7 @@
         },{
             "name": "Purchase Entry-Yearly",
             "icon": "columns",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "IDs": [2065],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -40,7 +40,7 @@
         },{
             "name": "Purchase Entry-Voip Trend",
             "icon": "film",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "IDs": [2076],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -48,7 +48,7 @@
         },{
             "name": "Purchase Entry-MrVoip Trend",
             "icon": "move",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "IDs": [2095],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -56,7 +56,7 @@
         },{
             "name": "Purchase Entry-Call4Tell Trend",
             "icon": "phone-call",
-            "IDs": [5001, 5002, 5003, 5004, 5005],
+            "IDs": [2103],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
@@ -413,7 +413,41 @@
             "subchild": [],
             "isVisible": true,
             "value": "/HRUserMgmt"
+        },{
+            "name": "Salary Entry",
+            "icon": "dollar-sign",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/salaryEntry"
+        },{
+            "name": "Contribution Master",
+            "icon": "anchor",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/contributionmaster"
+        },{
+            "name": "DID Stock",
+            "icon": "grid",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/didStock"
+        },{
+            "name": "Attendance Report",
+            "icon": "figma",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/attendance_report"
         }
+       
+
        
 
     ],
@@ -465,6 +499,15 @@
            "subchild": [],
            "isVisible": true,
            "value": "/ResellerManagement"
+       },
+       {
+           "name": "Calendar Template",
+           "icon": "box",
+           "IDs": [5001, 5002, 5003, 5004, 5005],
+           "Type": "Sub Menu",
+           "subchild": [],
+           "isVisible": true,
+           "value": "/calendarTemplate"
        }
       
 
@@ -586,6 +629,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/vsprovision"
+        },{
+            "name": "Public Task",
+            "icon": "users",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/publictask"
         }
        
        

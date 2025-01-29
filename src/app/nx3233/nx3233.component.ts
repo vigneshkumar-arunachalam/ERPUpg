@@ -64,6 +64,7 @@ export class Nx3233Component implements OnInit {
   notesLicenseID: any;
   checkedValuesLicense: any;
   tempVariablePagination: any;
+  saveStatus: boolean=true;
   constructor(private serverService: ServerService, private http: HttpClient,
     private excelExportService: ExcelExportService, private fileDownloadService: FileDownloadService,
     private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) 
@@ -159,6 +160,10 @@ export class Nx3233Component implements OnInit {
     this.checkedValuesLicense=licenceID;
     $('#addAssignCustomerFormID').modal('show');
   }
+  clearSelection(event: any) {
+      this.searchResult = '';
+    this.customerID='';
+  }
   assignCustomerSave_single(){
 
     this.spinner.show();
@@ -172,7 +177,17 @@ export class Nx3233Component implements OnInit {
     api_postUPd.action = "assignCustomer";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    api_postUPd.customerId = this.customerID;
+
+    if(this.customerID=='' || this.customerID=='undefined' || this.customerID==undefined){
+      iziToast.error({
+        message: "Select Customer",
+        position: 'topRight'
+      });
+      return false;
+    }else{
+      api_postUPd.customerId = this.customerID;
+    }
+    
     api_postUPd.checkedValues = this.checkedValuesLicense;
    
     api_req.element_data = api_postUPd;
@@ -180,6 +195,7 @@ export class Nx3233Component implements OnInit {
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
       if (response.status == true) {
+        this.customerID='';
         this.assignedCust=response.assigned_customer;
         $('#addAssignCustomerFormID').modal('hide');
         this.spinner.hide();
@@ -321,11 +337,20 @@ export class Nx3233Component implements OnInit {
               Swal.close();
               $("#fileAttachmentNX32FormId").modal("hide");
               this.edit_array = [];
-  
-              iziToast.success({
-                message: this.insertedRecords + "-"+ "Records inserted successfully",
-                position: 'topRight'
-              });
+                  if( this.insertedRecords==0){
+                    iziToast.warning({
+                      message: "Records already uploaded",
+                      position: 'topRight'
+                    });
+
+                  }else{
+                    iziToast.success({
+                      message: this.insertedRecords + "-"+ "Records inserted successfully",
+                      position: 'topRight'
+                    });
+
+  }
+             
             }
             else {
               Swal.close();
@@ -509,6 +534,7 @@ console.log("this.tempVariable",this.tempVariable);
       };
 
   }
+ 
   listDataInfo(list_data: any) {
     // console.log(list_data)
     // list_data.search_text = list_data.search_text == undefined ? "" : list_data.search_text;
@@ -541,9 +567,10 @@ console.log("this.tempVariable",this.tempVariable);
       if (response.status == true) {
      
         this.spinner.hide();
+        $('#addNotesFormID').modal('hide');
         iziToast.success({
           message: "Successfully Saved",
-          position: 'center'
+          position: 'topRight'
         });
         this.productCategoryList({});
       
@@ -591,8 +618,8 @@ console.log("this.tempVariable",this.tempVariable);
   
       api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
       api_postUPd.customerId = this.customerID;
-      api_postUPd.checkedValues = this.selectedResellerCommIds_unpaid;
-     
+     // api_postUPd.checkedValues = this.selectedResellerCommIds_unpaid;this.checkedValuesLicense
+     api_postUPd.checkedValues = this.checkedValuesLicense;
       api_req.element_data = api_postUPd;
   
       this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -605,7 +632,9 @@ console.log("this.tempVariable",this.tempVariable);
             message: "Successfully Assigned to" +"-"+ this.assignedCust,
             position: 'center'
           });
+          this.AssignCustomerFormGroup.reset();
           this.productCategoryList({});
+          
         
   
         } else {
@@ -913,6 +942,7 @@ console.log("this.tempVariable",this.tempVariable);
   }
   groupDelete() {
 
+    if(this.selectedResellerCommIds_unpaid.length>0){
       Swal.fire({
         title: 'Are you sure to Delete?',
         text: "You won't be able to revert this!",
@@ -932,10 +962,10 @@ console.log("this.tempVariable",this.tempVariable);
           api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
           api_singleDelete.action = "deleteSerialNumber";
           api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
-
+    
           api_singleDelete.license_id = this.selectedResellerCommIds_unpaid;
           api_req.element_data = api_singleDelete;
-
+    
           this.serverService.sendServer(api_req).subscribe((response: any) => {
             if (response.status == "true") {
             
@@ -965,6 +995,13 @@ console.log("this.tempVariable",this.tempVariable);
             };
         }
       })
+          
+        }else{
+          iziToast.error({
+            message: "Choose Atleast 1",
+            position: 'topRight'
+          });
+        }
 
     }
   delete(license_id: any) {
@@ -1025,6 +1062,7 @@ console.log("this.tempVariable",this.tempVariable);
     }
 
     save() {
+    //  alert("into save")
       this.spinner.show();
       let api_req: any = new Object();
       let api_mulInvpay: any = new Object();
@@ -1038,24 +1076,68 @@ console.log("this.tempVariable",this.tempVariable);
   
   
       for (let i = 0; i < addr.length; i++) {
-  
-        // console.log(addr[i].pd_quantity_txtbox1)
+      var serialnumber=  $('#pd_SerialNumber' + i).val();
+      var ordernumber=  $('#pd_Order' + i).val();
+      var modelnumber=  $('#pd_ModelNumber' + i).val();
+
+      if(serialnumber!='' && serialnumber!=null){
         addr[i].serial_number = $('#pd_SerialNumber' + i).val();
+      }else{
+        this.saveStatus=false;
+        this.spinner.hide();
+        iziToast.error({
+          message: "Serial Number Missing",
+          position: 'topRight'
+        });
+      }
+        // console.log(addr[i].pd_quantity_txtbox1)
+     
         addr[i].mac_no1 = $('#pd_WANAddress' + i).val();
         addr[i].mac_no2 = $('#pd_LANAddress1' + i).val();
         addr[i].mac_no3 = $('#pd_LANAddress2' + i).val();
-        addr[i].order_no = $('#pd_Order' + i).val();
-        addr[i].model_no = $('#pd_ModelNumber' + i).val();
+        if(ordernumber!='' && ordernumber!=null){
+          addr[i].order_no = $('#pd_Order' + i).val();
+        }else{
+          this.saveStatus=false;
+          this.spinner.hide();
+          iziToast.error({
+            message: "Order Number Missing",
+            position: 'topRight'
+          });
+        }
+        if(modelnumber!='' && modelnumber!=null){
+          addr[i].model_no = $('#pd_ModelNumber' + i).val();
+        }else{
+          this.saveStatus=false;
+          this.spinner.hide();
+          // return false;
+          iziToast.error({
+            message: "Model Number Missing",
+            position: 'topRight'
+          });
+        }
+        
+        
        
       }
+  if( this.saveStatus==true){
+    api_mulInvpay.nx_data = addr;
+  }else
+  {
+    this.spinner.hide();
+    return false;
+  
+  }
+   
   
   
-      api_mulInvpay.nx_data = addr;
   
       api_req.element_data = api_mulInvpay;
   
       this.serverService.sendServer(api_req).subscribe((response: any) => {
+       // alert("into save-service")
         if (response.status == true) {
+        //  alert("into save-service-true condition")
           this.spinner.hide();
           $('#addSerialNoFormID').modal('hide');
           
