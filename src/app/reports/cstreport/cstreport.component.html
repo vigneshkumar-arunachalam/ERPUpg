@@ -44,10 +44,10 @@
                     [ngStyle]="{'background-color': row.color === 'Yes' ? 'rgb(9 10 10)' : '','font-weight':row.color === 'Yes' ? '500' : '','color': row.color === 'Yes' ? '#efeded' : ''}">
                     <td>{{ row.month }}</td>
                     <td *ngIf="row.color === 'No'">{{ row.received_taxAmount6 }}</td>
-                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport(row)" style="cursor: pointer;"
+                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport6(row)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ row.received_taxAmount6 }}</td>
                     <td *ngIf="row.color === 'No'">{{ row.received_taxAmount8 }}</td>
-                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport(row)" style="cursor: pointer;"
+                    <td *ngIf="row.color === 'Yes'" (click)="redirectToInvReport8(row)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ row.received_taxAmount8 }}</td>
                   </tr>
                 <tfoot>
@@ -83,28 +83,28 @@
                     [ngStyle]="{'background-color': list.color === 'Yes' ? 'rgb(9 10 10)' : '','font-weight':list.color === 'Yes' ? '500' : '','color': list.color === 'Yes' ? '#efeded' : ''}">
                     <td style="text-align: center;">{{list.month}}</td>
                     <td *ngIf="list.color === 'No'">{{list.netPayment6}}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport6(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.netPayment6 }}</td>
                     <td *ngIf="list.color === 'No'">{{list.netPayment8}}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport8(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.netPayment8 }}</td>
                     <td *ngIf="list.color === 'No'">{{ list.taxAmount6 }}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport6(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.taxAmount6 }}</td>
                     <td *ngIf="list.color === 'No'">{{ list.taxAmount8 }}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport8(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.taxAmount8 }}</td>
                     <td *ngIf="list.color === 'No'">{{list.received_taxAmount6}}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport6(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.received_taxAmount6 }}</td>
                     <td *ngIf="list.color === 'No'">{{list.received_taxAmount8}}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport8(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.received_taxAmount8 }}</td>
                     <td *ngIf="list.color === 'No'">{{ list.actual_netPayment6 }}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport6(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.actual_netPayment6 }}</td>
                     <td *ngIf="list.color === 'No'">{{ list.actual_netPayment8 }}</td>
-                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport(list)" style="cursor: pointer;"
+                    <td *ngIf="list.color === 'Yes'" (click)="redirectToInvReport8(list)" style="cursor: pointer;"
                       title="Redirect to Invoice Report">{{ list.actual_netPayment8 }}</td>
                   </tr>
                   <tr class="subtotal">

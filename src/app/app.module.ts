@@ -176,6 +176,12 @@ import { AddcontributionmasterComponent } from './hr/contributionmaster/addcontr
 import { EditcontributionmasterComponent } from './hr/contributionmaster/editcontributionmaster/editcontributionmaster.component';
 import { DidStockComponent } from './hr/did-stock/did-stock.component';
 import { AttendanceReportComponent } from './hr/attendance-report/attendance-report.component';
+import { StaffpermissionreportComponent } from './hr/staffpermissionreport/staffpermissionreport.component';
+import { MonthlycontributionComponent } from './hr/monthlycontribution/monthlycontribution.component';
+import { AddcontmasterComponent } from './hr/monthlycontribution/addcontmaster/addcontmaster.component';
+import { EditcontmasterComponent } from './hr/monthlycontribution/editcontmaster/editcontmaster.component';
+import { LeaverequestComponent } from './hr/leaverequest/leaverequest.component';
+import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.component';
 // import { BsDropdownModule} from 'ngx-bootstrap/dropdown'; 
 
 @NgModule({
@@ -330,7 +336,13 @@ import { AttendanceReportComponent } from './hr/attendance-report/attendance-rep
      AddcontributionmasterComponent,
      EditcontributionmasterComponent,
      DidStockComponent,
-     AttendanceReportComponent
+     AttendanceReportComponent,
+     StaffpermissionreportComponent,
+     MonthlycontributionComponent,
+     AddcontmasterComponent,
+     EditcontmasterComponent,
+     LeaverequestComponent,
+     LeavereqFinalComponent
  
   ],
   imports: [

@@ -105,7 +105,8 @@ export class CstreportComponent implements OnInit {
 
    // this.router.navigate(['/invoiceReportsOld'])
   }
-  redirectToInvReport(monthData: any) {
+  redirectToInvReport6(monthData: any) {
+    console.log("monthData",monthData);
     if (monthData.color === 'Yes') {
       // Check if it's a subtotal row
       const searchData = monthData.searchData;
@@ -126,7 +127,48 @@ export class CstreportComponent implements OnInit {
        // console.log("performaType",performaType);
         const redirect_status = firstSearchData.redirect_status;
       //  console.log("redirect_status",redirect_status);
-        const tax = firstSearchData.tax;
+        const tax = firstSearchData.tax_id;
+      //  console.log("tax",tax);
+
+        this.router.navigate(['/invoiceReportsOld'], {
+          queryParams: {
+            params_all: JSON.stringify(firstSearchData),
+            Fromdt:Fromdt,
+            Todt:Todt,
+            billerId:billerId,
+            invoiceType:invoiceType,
+            performaType:performaType,
+            redirect_status:redirect_status,
+            tax:tax
+
+          }
+        });
+      }
+    }
+  }
+  redirectToInvReport8(monthData: any) {
+    console.log("monthData",monthData);
+    if (monthData.color === 'Yes') {
+      // Check if it's a subtotal row
+      const searchData = monthData.searchData8;
+      if (searchData.length > 0) {
+        // Redirect based on searchData
+        const firstSearchData = searchData[0]; // Assuming only one search data for simplicity
+        // Redirect logic here
+        console.log('Redirecting with searchData:', firstSearchData);
+        const Fromdt = firstSearchData.Fromdt;
+       // console.log("Fromdt",Fromdt);
+        const Todt = firstSearchData.Todt;
+      //  console.log("Todt",Todt);
+        const billerId = firstSearchData.billerId;
+      //  console.log("billerId",billerId);
+        const invoiceType = firstSearchData.invoiceType;
+       // console.log("invoiceType",invoiceType);
+        const performaType = firstSearchData.performaType;
+       // console.log("performaType",performaType);
+        const redirect_status = firstSearchData.redirect_status;
+      //  console.log("redirect_status",redirect_status);
+        const tax = firstSearchData.tax_id;
       //  console.log("tax",tax);
 
         this.router.navigate(['/invoiceReportsOld'], {

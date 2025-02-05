@@ -1,0 +1,114 @@
+<div class="contents-section addquotation-section" style="cursor:pointer;" id="abc">
+
+    <div class="card">
+        <div class="card-header color-dark fw-500">
+            <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+                <span class="breadcrumb-item active"> Update Monthly Contribution </span>
+            </h3>
+
+        </div>
+    </div>
+    <div class="container-fluid">
+       
+       
+        <form [formGroup]="addPI_section2">
+            <div class="row">
+
+                <div class="col-12" formArrayName="addresses">
+                   
+                    <ng-container >
+                        <!-- Customer Invoices Row -->
+                        <section>
+                            <!-- Table for Customer Invoices -->
+                            <div>
+                                <div class="table-responsive">
+                                    <table class="add-contact-table-section">
+                                        <!-- Table Header -->
+                                        
+                                        <thead>
+                                            <tr class="userDatatable-header">
+                                                <th><span class="userDatatable-title">Monthly Total Wages</span></th>
+                                                <th><span class="userDatatable-title">Monthly Contribution</span></th>
+                                              
+                                                <th><span class="userDatatable-title">Action</span></th>
+                                            </tr>
+
+                                        </thead>
+                                        <tbody *ngFor="let address of addressControls.controls; let i = index;">
+                                            <tr [formGroupName]="i">
+                                         
+                                                <td>
+                                                    <div class="userDatatable-content">
+                                                        <select class="form-control" formControlName="tot_wage"
+                                                        id="tot_wage{{i}}" name="tot_wage">
+                                                        <option value="" disabled selected>Select Monthly Total Wages
+                                                        </option>
+                                                        <option *ngFor="let classif of employeeAgeList"
+                                                        value="{{classif.id}}">
+                                                        {{classif.value}}
+                                                    </option>
+                                                    </select>
+                                                       
+                                                    </div>
+                                                </td>
+                                  
+                                                <td>
+                                                    <div class="userDatatable-content" >
+                                                        <input type="number" class="form-control"
+                                                        formControlName="contribution"
+                                                        id="contribution{{i}}" />
+                                                        <input type="hidden" class="form-control"
+                                                        formControlName="id"
+                                                        id="contribution_id{{i}}" />
+
+                                                    </div>
+                                                </td>
+                                              
+                                               
+                                                <td>
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <button type="button" class="btn btn-primary btn-default btn-squared" 
+                                                        (click)="addAddress()">+</button>
+                                        
+                                                    </div>
+                                                    <div *ngIf="i > 0" class="userDatatable-content d-inline-block">
+
+                                                        <button type="button" class="btn btn-danger btn-sm"
+                                                        (click)="removeAddress(i)">X</button>
+                                                    </div>
+                                                    
+                                                </td>
+                                              
+
+                                            </tr>
+                                        </tbody>
+                    
+                                       
+                                      
+                                    </table>
+                                </div>
+                            </div>
+                        </section>
+                        <!-- End of Customer Invoices Row -->
+
+
+
+                  
+                    
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-primary mr-4 " (click)="update()">Update</button>
+                            <button type="button" class="btn btn-dark" (click)="goBack()">Cancel</button>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+      
+    </form>
+    </div>
+
+</div>
+
+
+

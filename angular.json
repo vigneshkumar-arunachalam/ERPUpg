@@ -38,9 +38,7 @@
               "src/assets/css/iziToast.min.css",
               "node_modules/sweetalert2/src/sweetalert2.scss",
               "node_modules/ngx-spinner/animations/square-jelly-box.css"
-             
-              
-             
+
             ],
             "scripts": [
              "src/assets/js/plugins.min.js",

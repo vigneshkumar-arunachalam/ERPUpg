@@ -329,6 +329,17 @@
                                       </a>
 
                                     </li>
+                                    <li class="dropdown__item" *ngIf="list.billerId==10">
+                                      <a class="hover4" title="SST Tax" data-toggle="modal"
+                                      data-target="#sstTaxFormId_invdid" (click)="getsstTaxDetails(list.billId,i)">
+                                      <img class="show" src="assets/img/icon2/sst-tax-blue.png">
+                                      <img class="hide" src="assets/img/icon2/sst-tax-black.png">
+
+                                      <span><b style="padding: 0px 20px;">-</b><strong>SST Tax</strong></span>
+                                    </a>
+                                    
+
+                                    </li>
 
 
 
@@ -685,8 +696,12 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title">Invoice Type Details
-        </h2>
+       
+         
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Invoice Type Details</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -737,8 +752,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="modal-title" id="invoiceAttachModalLongTitle">Select Shared Person</h2>
-
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Select Shared Person</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -791,8 +809,11 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content searchQuotationCSS">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center " id="invoiceAttachModalLongTitle">Advanced Search
-        </h2>
+       
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Advanced Search</h2>
 
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -913,7 +934,11 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center">Email </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Email</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -1102,8 +1127,11 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Process Payment
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Process Payment</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1210,8 +1238,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Delivery Order Conversion
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Delivery Order Conversion</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1257,8 +1288,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Invoice Sending Method
-        </h2>
+       
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Invoice Sending Method</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1314,8 +1348,11 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 col-12 modal-title text-center text-center" id="invoiceAttachModalLongTitle">Share Permission
-        </h2>
+       
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Share Permission</h2>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
@@ -1389,8 +1426,11 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Select New Recurring Options
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Select New Recurring Options</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1513,8 +1553,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">File Attachment
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         File Attachment</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1585,8 +1628,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Terms & Condition Details
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Terms & Condition Details</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1632,8 +1678,11 @@
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Reseller Commission Details
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Reseller Commission Details</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1741,8 +1790,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center">Invoice Type Details
-        </h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Invoice Type Details </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1786,7 +1838,11 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content addcontractmastercss">
       <div class="modal-header">
-        <h2 class="col-12 modal-title text-center" id="addModalLongTitle">Enquiry From Details</h2>
+        
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #262127, #54b7aa);">
+         Enquiry From Details </h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -1876,3 +1932,51 @@
   </div>
 </div>
 <!-------------- vignesh Add New Quotation Pop up ends------------------------------------------>
+
+
+ <!----------Modal Pop Up (BEGIN)  for SST Tax begin ------------------>
+ <div class="modal fade" id="sstTaxFormId_invdid" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+ aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+   <div class="modal-content searchQuotationCSS">
+     <div class="modal-header">
+
+       <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+       background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+       background: linear-gradient(to right, #262127, #54b7aa);">
+        SST Tax Update </h2>
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+       </button>
+     </div>
+     <div class="modal-body">
+       <form [formGroup]="sstTaxForm">
+         <div class="row">
+           <div class="col-lg-3">
+             <div class="form-group">
+               <label for="temp5" class="col-lg-12 ">SST Tax</label>
+            
+                 <input class="form-check-input" type="checkbox"  formControlName="sstTax"
+                 (change)="handleChange_SSTax($event)">
+         
+             </div>
+           </div>
+         
+       
+         </div>
+       </form>
+
+     </div>
+     <div class="modal-footer">
+
+       <button type="button" class="btn btn-primary" (click)="updateSST()">
+         Update
+       </button>
+       <button type="button" class="btn btn-dark" data-dismiss="modal">
+         Close
+       </button>
+     </div>
+   </div>
+ </div>
+</div>
+<!----------Modal Pop Up (END)  for SST Tax end------------------>

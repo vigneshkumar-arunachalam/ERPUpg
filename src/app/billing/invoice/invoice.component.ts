@@ -353,6 +353,10 @@ export class InvoiceComponent implements OnInit {
   recuringStatus1: any;
   recurring_State_value1: any;
   recunxt: any;
+  sstTaxForm: FormGroup;
+  sstCheckbox: boolean=false;
+  getsstTaxEditID:any;
+
   constructor(private serverService: ServerService, private http: HttpClient, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService, private fb: FormBuilder) {
     this.addressForm = this.fb.group({
       addresses: this.fb.array([this.createAddress()])
@@ -612,6 +616,9 @@ export class InvoiceComponent implements OnInit {
       'quotationValidity_addPopUP': new FormControl(null, [Validators.required]),
       'version_enqForm_addPopUP': new FormControl(null, [Validators.required]),
       'templateName_addPopUP': new FormControl(null),
+    });
+    this.sstTaxForm=new  FormGroup({
+      'sstTax': new FormControl(null),
     });
     var date = new Date();
     this.transformDate = this.datePipe.transform(date, 'MM/dd/yyyy');
@@ -2434,6 +2441,87 @@ export class InvoiceComponent implements OnInit {
         });
         console.log("final error", error);
       };
+  }
+  getsstTaxDetails(id: any, i: any) {
+    $("#ActionId" + i).modal("hide");
+    this.getsstTaxEditID = id;
+    let api_req: any = new Object();
+    let sendMet_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/get_sst_tax";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    sendMet_req.action = "get_sst_tax";
+
+    sendMet_req.user_id = this.user_ids;
+    sendMet_req.billId = this.getsstTaxEditID;
+    api_req.element_data = sendMet_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.sstTaxForm.patchValue({
+          'sstTax': response.sst_tax
+        });
+      }
+      else {
+        $("#sstTaxFormId_inv").modal("hide");
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+ 
+  }
+  updateSST() {
+    this.spinner.show();
+  
+    let api_req: any = new Object();
+    let sendMet_req: any = new Object();
+    api_req.moduleType = "invoice";
+    api_req.api_url = "invoice/update_sst_tax";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    sendMet_req.action = "update_sst_tax";
+
+    sendMet_req.user_id = this.user_ids;
+    sendMet_req.billId = this.getsstTaxEditID;
+    sendMet_req.sst_tax = this.sstCheckbox;
+    api_req.element_data = sendMet_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.spinner.hide();
+        $("#sstTaxFormId_inv").modal("hide");
+        iziToast.success({
+          message: "Updated Successfully",
+          position: 'topRight'
+        });
+      }
+      else {
+        this.spinner.hide();
+        $("#sstTaxFormId_inv").modal("hide");
+        iziToast.error({
+          message: "Updated",
+          position: 'topRight'
+        });
+
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+ 
   }
   PIEmailClear() {
     this.emailForm.reset();
@@ -5035,6 +5123,11 @@ export class InvoiceComponent implements OnInit {
 
         console.log("final error", error);
       };
+
+  }
+  handleChange_SSTax(event:any){
+    this.sstCheckbox=event.target.checked;
+    console.log("this.sstCheckbox",this.sstCheckbox);
 
   }
 

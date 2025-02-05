@@ -215,7 +215,6 @@ export class PurchaseEntryYearlyComponent implements OnInit {
       };
 
   }
-
   trendDetails() {
     this.spinner.show();
 
@@ -231,6 +230,79 @@ export class PurchaseEntryYearlyComponent implements OnInit {
     api_postUPd.biller_id = this.OverallBillerValue;
     api_postUPd.year = this.currentYearDefault;
     // api_postUPd.month = this.currentMonthDefault;
+    api_req.element_data = api_postUPd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+     
+      if (response) {
+
+        this.spinner.hide();
+     
+
+        if(response.vendorList!=null){
+          this.vendorList = response.vendorList;
+          this.VendorData = response.vendorData;
+          this.vendorListNull=false;
+        }else{
+          this.vendorListNull=true;
+        }
+       
+ 
+        // this.extractVendorData();
+        Array.isArray(this.vendorList);
+        Array.isArray(this.VendorData);
+       
+        this.VendorData = response.vendorData;  
+        
+
+      } else {
+        this.spinner.hide();
+        iziToast.warning({
+          message: "Warning",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+        this.spinner.hide();
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+
+      };
+
+  }
+
+  sendToApproval() {
+    this.spinner.show();
+
+    let api_req: any = new Object();
+    let api_postUPd: any = new Object();
+    api_req.moduleType = "purchaseEntryYearly";
+    api_req.api_url = "purchaseEntryYearly/sendToApproval";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postUPd.action = "sendToApproval";
+
+    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_postUPd.purTempId = this.OverallBillerValue;
+    api_postUPd.invoiceNo = this.currentYearDefault;
+    api_postUPd.invoiceDate = this.OverallBillerValue;
+    api_postUPd.pur_type = this.currentYearDefault;
+    api_req.poNo = this.currentYearDefault;
+    api_postUPd.content_purchase = this.OverallBillerValue;
+    api_postUPd.currency = this.currentYearDefault;
+    api_postUPd.conversionRate = this.OverallBillerValue;
+    api_postUPd.taxAmount = this.currentYearDefault;
+
+    api_postUPd.tax_provider = this.OverallBillerValue;
+    api_postUPd.freight_amt = this.currentYearDefault;
+    api_postUPd.freight_provider = this.OverallBillerValue;
+    api_postUPd.invoiceAmount = this.currentYearDefault;
+    api_postUPd.billerId = this.currentYearDefault;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -305,6 +377,7 @@ export class PurchaseEntryYearlyComponent implements OnInit {
         this.currencyList=response.currencyList;
         this.vendorlistall=response.vendors;
         const vendorData = response.vendorTrendDetails;
+        
         const formArray = new FormArray([]);
   
 

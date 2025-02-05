@@ -11,56 +11,79 @@
         </div>
       </div>
       <div class="card-body">
-        <!-- FullCalendar will only be shown if events are loaded -->
         <full-calendar [options]="calendarOptions"></full-calendar>
       </div>
     </div>
   </div>
 </div>
 
-
 <div *ngIf="showModal" class="modal-overlay">
   <div class="modal-content">
     <div class="popup-header">
-      <h3> IO SG Data Center Daily Checkup</h3>
+      <h3>{{ selectedEvent?.title }}</h3>
       <span style="float: right; cursor: pointer;" (click)="closeModal()">✖</span>
     </div>
     <div class="popup-body">
-      <table>
-        <thead>
-          <tr>
-            <th>Company Name</th>
-            <th>Task Name</th>
-            <th>Task Status<br> Ok | Not Ok</th>
-            <th>Cus Notify</th>
-            <th>Attachment</th>
-            <th>Reason</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Cal4Care Pte Ltd</td>
-            <td>Internet Status</td>
-            <td>
-              <!-- Yes option -->
-              <span class="radio-btn">
-                <input type="radio" name="work_status_364" id="work_status_yes_364" value="1" />
-              </span>
-
-              <!-- No option -->
-              <span class="radio-btn">
-                <input type="radio" name="work_status_364" id="work_status_no_364" value="0" />
-              </span>
-            </td>
-
-            <td><label><input type="checkbox"> 365</label></td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="popup-actions">
+      <form [formGroup]="eventDetailsForm">
+        <table>
+          <thead>
+            <tr>
+              <th>Company Name</th>
+              <th>Task Name</th>
+              <th>Task Status<br> Ok | Not Ok</th>
+              <th>Cus Notify</th>
+              <th>Attachment</th>
+              <th>Reason</th>
+            </tr>
+          </thead>
+          <tbody formArrayName="calendar_entries">
+            <tr *ngFor="let entry of calendarEntries.controls; let i = index" [formGroupName]="i">
+              <td>{{ eventDetails?.calendar_entries[i].company_name  }}</td>
+              <td>{{ eventDetails?.calendar_entries[i].work_name || 'N/A' }}</td>
+              <td>
+                <span class="radio-btn">
+                  <input type="radio" formControlName="work_status_yes" [value]="1" (change)="onWorkStatusChange(entry, 1)" />
+                </span>
+                <span class="radio-btn">
+                  <input type="radio" formControlName="work_status_no" [value]="1" (change)="onWorkStatusChange(entry, 0)" />
+                </span>
+              </td>
+              <td>
+                <label style="margin-right: 10px;">
+                  <input type="checkbox" formControlName="notify_state"> 
+                  {{ entry.get('notify_state').value === 1 ? 'Yes' : 'No' }}
+                </label>
+                <span>{{ entry.get('calendar_template_child_id').value || 'N/A' }}</span>
+              </td>
+              <td>
+                <label>
+                  <input type="checkbox" formControlName="attachment_state"> 
+                  {{ entry.get('attachment_state').value === 1 ? 'Yes' : 'No' }}
+                </label>
+              </td>
+              <td>   
+                <div *ngIf="entry.get('work_status_no').value === 1">
+                  <textarea formControlName="reason" placeholder="Enter reason for 'Not Ok'"></textarea>
+                </div>
+                <div *ngIf="entry.get('work_status_yes').value === 1">
+                  {{ entry.get('reason').value || 'N/A' }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+      <div class="popup-actions" *ngIf="!showgeneratereport">
         <button (click)="saveModal()">Save All</button>
+        <button (click)="closeModal()">Cancel</button>
+      </div>
+      <div class="popup-actions" *ngIf="showgeneratereport">
+        <button (click)="generateEmailApprovalReport(selectedEvent?.extendedProps?.calendar_template_id, dateVal, monthVal, yearVal)">Generate Report</button>
         <button (click)="closeModal()">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+
+
+

@@ -99,7 +99,8 @@ export class InvoicereportsoldComponent implements OnInit {
     this.invoiceReportDetails();
     this.route.queryParams
       .subscribe(params => {
-console.log("params",params)
+console.log("params",params);
+
         this.Fromdt = params['Fromdt'];
         this.Todt = params['Todt'];
         this.billerId = params['billerId'];
@@ -108,6 +109,7 @@ console.log("params",params)
         this.performaType = params['performaType'];
         this.redirect_status = params['redirect_status'];
         this.tax=params['tax'];
+        console.log("this.tax-ramesh/vignesh",this.tax);
          this.sdnTaxValue=params['tax'];
         // console.log("this.Fromdt inside onInit", this.Fromdt);
         // console.log("this.Todt inside onInit", this.Todt);

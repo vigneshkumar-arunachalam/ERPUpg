@@ -1,0 +1,114 @@
+/* 
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+           
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .section {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            margin-bottom: 10px;
+            background-color: #2C3E50;
+            color: #f8f9fa;
+        }
+        .warning {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .submit-btn {
+            display: block;
+            width: 100%;
+        }
+        .logo {
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        table {
+            width: 100%;
+            margin-top: 10px;
+        }
+        td {
+            padding: 5px;
+        }
+  */
+
+  .section {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+  .rascal {
+    background: #5d96c5;
+    font-family: Arial, sans-serif;
+}
+.container {
+    width: 80%;
+    margin: auto;
+    background: #d9e9f7;
+    padding: 20px;
+    border-radius: 8px;
+}
+.header {
+    background: #4477a3;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.details, .leave-table, .leave-status {
+    background: white;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+}
+.details p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+th {
+    background: #4477a3;
+    color: white;
+}
+select {
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+}

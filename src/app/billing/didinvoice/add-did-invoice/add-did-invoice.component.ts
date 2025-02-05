@@ -162,6 +162,8 @@ export class AddDidInvoiceComponent implements OnInit {
   otherCharge_Flag: boolean = true;
   //validation
   submitted = true;
+  sstTaxValue:boolean=false;
+  billerIdCurrencyConv: any;
   constructor(private serverService: ServerService, private fb: FormBuilder,
     @Inject(LOCALE_ID) private locale: string, private datePipe: DatePipe, private router: Router, private spinner: NgxSpinnerService) {
 
@@ -232,6 +234,7 @@ export class AddDidInvoiceComponent implements OnInit {
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
       'Jompay_logo': new FormControl(),
+      'add_sstTax': new FormControl(),
 
     });
     this.subTotalForm = new FormGroup({
@@ -523,6 +526,16 @@ export class AddDidInvoiceComponent implements OnInit {
     this.Jompay_Value = false;
     this.Jompay_Value = event.target.checked;
     console.log(this.Jompay_Value);
+  }
+  handleChange_sstTax(event: any) {
+   
+    this.sstTaxValue = event.target.checked;
+    console.log("this.sstTaxValue",this.sstTaxValue);
+  }
+  getEvent(event: any) {
+
+    this.billerIdCurrencyConv = event.target.value;
+    console.log("this.billerIdCurrencyConv",this.billerIdCurrencyConv);
   }
 
   radioSelectCommissionType(event: any) {
@@ -1065,6 +1078,7 @@ export class AddDidInvoiceComponent implements OnInit {
     api_saveDid_req.billDate = $('#datee').val();
     // api_saveDid_req.billDate = this.addDid_section1.value.Date;
     api_saveDid_req.b_attn = this.addDid_section1.value.Attn_1;
+    api_saveDid_req.sst_tax = this.sstTaxValue;
 
     // if (this.did_bill_code === null) {
 

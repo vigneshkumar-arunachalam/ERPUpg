@@ -122,18 +122,12 @@
   .radio-btn:last-child{
     background-color:#FA3448;
   }
-  .fc-daygrid-day-events {
-    height: 140px;
-    overflow-y: scroll;
+
+  .popup-body {
+    padding: 20px;
 }
-.fc-daygrid-day-events::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+th, td {
+  border: 1px solid #ddd;
+  padding: 5px 10px;
 }
-.fc-daygrid-day-events::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 0px transparent;
-}
-.fc-daygrid-day-events::-webkit-scrollbar-track {
-  background: #ffffff;
-}
+  

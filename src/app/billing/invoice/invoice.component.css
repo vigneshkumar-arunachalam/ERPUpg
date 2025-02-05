@@ -657,7 +657,7 @@ tr:hover {background-color: rgb(241, 245, 160)!important;}
   border: 1mm ridge rgba(211, 220, 50, .2);
   box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
 }
-#searchInvoiceFormId .modal-content button.close{
+.modal-content button.close{
   width: 2rem;
     height: 2rem;
     border-radius: 50%;

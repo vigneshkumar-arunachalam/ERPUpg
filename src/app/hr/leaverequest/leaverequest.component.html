@@ -1,0 +1,153 @@
+<!-- 
+    <div class="container mt-4">
+        <div class="header">Leave Request</div>
+        
+        <div class="section">
+            <div class="section-title">PTO STATUS</div>
+            <table>
+                <tr>
+                    <td>Number of PTO hours allotted for this year:</td>
+                    <td class="text-danger">80</td>
+                </tr>
+                <tr>
+                    <td>Number of PTO hours remaining for this year:</td>
+                    <td class="text-primary">72</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="section">
+            <div class="section-title">REQUEST INFORMATION</div>
+            <table>
+                <tr>
+                    <td>Employee:</td>
+                    <td><input type="text" class="form-control"></td>
+                    <td>Manager:</td>
+                    <td><input type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Start Date:</td>
+                    <td><input type="date" class="form-control"></td>
+                    <td>Return Date:</td>
+                    <td><input type="date" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>PTO Hours:</td>
+                    <td>120</td>
+                    <td>Status:</td>
+                    <td>Unsubmitted</td>
+                </tr>
+            </table>
+            <p class="warning">Warning: request exceeds remaining PTO balance.</p>
+            <button class="btn btn-primary submit-btn">Submit Request</button>
+        </div>
+        
+
+    </div> -->
+
+
+
+<div class="rascal">
+    <div class="container">
+        <div class="header">LEAVE REQUEST ENTRY</div>
+        <div class="section">
+            <!-- <p><strong>Employee ID:</strong> 106</p>
+            <p><strong>Employee Name:</strong> Mr. VIGNESHKUMAR A</p>
+            <p><strong>Country</strong> India</p>
+            <p><strong>Designation:</strong> Angular Developer</p>
+            <p><strong>Date of Join:</strong> 21-06-2013</p>
+            <p><strong>Experience:</strong> 2 Years 10 Months</p> -->
+            <table>
+                <tr>
+                    <td>Employee ID:</td>
+                    <td><input type="text" class="form-control"></td>
+                    <td>Employee Name:</td>
+                    <td><input type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Date of Join:</td>
+                    <td><input type="date" class="form-control"></td>
+                    <td>Designation:</td>
+                    <td><input type="text" class="form-control"></td>
+                  
+                </tr>
+                <tr>
+                    <td>Leave Type</td>
+                    <td> <select id="leaveType" class="form-control">
+                        <option>--Select--</option>
+                        <option>Personal/Annual</option>
+                        <option>Medical</option>
+                        <option>Unpaid</option>
+                        <option>Compensation</option>
+                        <option>Permission</option>
+                    </select></td>
+                   
+                    <td>Duration Type</td>
+                    <td>   <select id="durationType" class="form-control">
+                        <option>--Select--</option>
+                        <option>Hourly</option>
+                        <option>Daywise</option>
+                        <option>First Half Leave</option>
+                        <option>Second Half Leave</option>
+                  
+                    </select></td>
+                    
+                  
+                </tr>
+               
+                <tr>
+                    <td>Start Date</td>
+                    <td><input type="date" class="form-control"></td>
+                    <td>End Date</td>
+                    <td><input type="date" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>Experience:</td>
+                    <td><input type="text" class="form-control"></td>
+                 
+                    <td>Reason</td>
+                    <td><textarea rows="3"></textarea></td>
+                   
+                </tr>
+            </table>
+        </div>
+        <div class="leave-table">
+            <table>
+                <tr>
+                    <th>Leave Type</th>
+                    <th>Leave Authorised</th>
+                    <th>Leave Availed</th>
+                    <th>Balance</th>
+                    <th>More</th>
+                </tr>
+                <tr><td>Personal/Annual </td><td>5</td><td>4</td><td>1</td><td>Details</td></tr>
+                <tr><td>Medical</td><td>0</td><td>0</td><td>0</td><td>Details</td></tr>
+                <tr><td>Unpaid</td><td>0</td><td>7</td><td>-7</td><td>Details</td></tr>
+                <tr><td>Compensation</td><td>0</td><td>21</td><td>-21</td><td>Details</td></tr>
+                <tr><td>Permission</td><td>2</td><td>0</td><td>2</td><td>Details</td></tr>
+            </table>
+            <label for="leaveType">Leave Type:</label>
+            <select id="leaveType">
+                <option>--Select--</option>
+                <option>Personal/Annual</option>
+                <option>Medical</option>
+                <option>Unpaid</option>
+                <option>Compensation</option>
+                <option>Permission</option>
+            </select>
+        </div>
+        <div class="leave-status">
+            <table>
+                <tr>
+                    <th>S.NO</th>
+                    <th>LEAVE DATE</th>
+                    <th>LEAVE TYPE</th>
+                    <th>FACULTY ACCEPTANCE</th>
+                    <th>HOD APPROVAL</th>
+                    <th>PRINCIPAL APPROVAL</th>
+                </tr>
+                <!-- Leave Status Rows Can Be Added Here -->
+            </table>
+        </div>
+    </div>
+</div>

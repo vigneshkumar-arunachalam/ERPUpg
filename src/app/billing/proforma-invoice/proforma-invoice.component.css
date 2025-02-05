@@ -412,3 +412,19 @@ label.col-lg-2.col-form-label{text-align: right;}
 
  tr:hover {background-color: rgb(246, 236, 233)!important;}
 
+
+ .modal-content button.close{
+  width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+
+

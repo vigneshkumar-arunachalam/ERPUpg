@@ -1,0 +1,399 @@
+.userDatatable-content .form-control {
+    width: 100%;
+}
+
+.userDatatable-content,
+.userDatatable-inline-title h6 {
+    padding: 5px 10px;
+}
+
+.userDatatable-title {
+    text-align: right;
+    display: block;
+    padding-right: 10px;
+}
+
+.userDatatable-header th {
+    background: #6d5dfc;
+}
+
+.userDatatable-header th span {
+    color: #e4ebf5;
+    text-align: left;
+}
+
+.userDatatable .page .dropdown button {
+    border-radius: 0px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* common userdatable ends, customization begins */
+.userDatatable-header th:nth-child(4) {
+    /* width: 50px; */
+}
+
+.userDatatable tbody tr td:nth-child(4) {
+    /* width: 50px;
+    width: 15%; */
+    text-wrap: wrap;
+}
+
+.button {
+    padding: 0.6em 1.5em;
+
+}
+
+.btn1 {
+    background-color: #007cbc;
+    border: none;
+    color: white;
+    padding: 0;
+    font-size: 16px;
+    width: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.btn1:hover {
+    background-color: rgb(221, 109, 152);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown a {
+    font-size: 14px;
+    /* margin: 5px 8px!important; */
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 37px;
+    width: 37px;
+}
+
+.dropdown__list {
+    z-index: 2;
+    position: absolute;
+    display: none;
+    padding: 10px;
+    min-width: 100%;
+    background: #fff;
+    cursor: pointer;
+    border: 1px solid;
+    text-align: center;
+}
+
+.dropdown__item {
+    list-style-type: none;
+}
+
+.dropdown__link {
+    display: block;
+    padding: 0.3em 1em;
+    background: white;
+    color: var(--dropdown__link_clr);
+    text-decoration: none;
+}
+
+.dropdown__link:hover {
+    opacity: 0.9;
+}
+
+.dropdown:hover .button {
+    opacity: 0.9;
+}
+
+.dropdown:hover .dropdown__list {
+    display: flex;
+    position: absolute;
+    top: 0;
+    right: 31px;
+}
+
+.dropdown__item .hide {
+    display: none;
+}
+
+.dropdown__item:hover .hide {
+    display: block;
+}
+
+.dropdown__item:hover .show {
+    display: none;
+}
+
+i.fa.fa-bars {
+    color: #fff;
+}
+
+.hover1:hover {
+
+    background: rgba(255, 77, 79, 0.5);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.hover2:hover {
+
+    background: rgba(118, 177, 103, 0.5);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.userDatatable .buttonClass {
+    border: 1px solid #ddd;
+    border-radius: 5px !important;
+}
+
+.userDatatable table tbody tr td:nth-child(2) {
+    width: 100px;
+
+}
+
+.userDatatable table td {
+    white-space: normal;
+}
+
+.userDatatable table td:nth-child(1) {
+    white-space: nowrap;
+
+}
+
+#searchPettyCashFormId .modal-dialog {
+    max-width: 65%;
+}
+
+#pettycashEditFormId .modal-dialog {
+    min-width: 50%;
+}
+
+#addProductCategoryFormId .btn-primary,#editProductCategoryFormId .btn-primary,
+#viewProductCategoryFormId .btn-primary,
+#searchProductCategoryFormId .btn-primary {
+    background: linear-gradient(to right, #262127, #54b7aa);
+    color: rgb(240 241 219);
+    box-shadow: none;
+}
+
+#addProductCategoryFormId label,#editProductCategoryFormId label,
+#viewProductCategoryFormId label,#searchProductCategoryFormId label,
+#searchPettyCashFormId label {
+    font-weight: 500;
+    color: #051b5a !important;
+}
+
+#addProductCategoryFormId .modal-content button.close,
+#editProductCategoryFormId .modal-content button.close,
+#viewProductCategoryFormId .modal-content button.close,
+#searchProductCategoryFormId .modal-content button.close {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+#addProductCategoryFormId .modal-body .form-control:hover,
+#editProductCategoryFormId .modal-body .form-control:hover,
+#viewProductCategoryFormId .modal-body .form-control:hover,
+#searchProductCategoryFormId .modal-body .form-control:hover {
+    background-color: #f1e80724;
+}
+
+#addProductCategoryFormId .form-control:focus,
+#editProductCategoryFormId .form-control:focus,
+#viewProductCategoryFormId .form-control:focus,
+#searchProductCategoryFormId .form-control:focus {
+    outline: none;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+    border: 2px solid transparent !important;
+    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+}
+
+.close:hover {
+
+    background: rgba(195, 101, 233, 0.1);
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.form-control {
+    border: 1px solid #e1e1e1;
+    background: transparent;
+}
+
+select {
+    padding-left: 4px !important;
+}
+
+
+
+
+#searchPettyCashFormId .modal-content {
+    background: #e4ebf5;
+}
+
+.CheckboxScroll {
+    height: 140px;
+    overflow-y: scroll;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#searchPettyCashFormId .modal-content .form-control,
+.CheckboxScroll {
+    border: none;
+    padding-left: 1.4rem;
+    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+    background: none;
+    font-family: inherit;
+    color: #252525;
+}
+
+.CheckboxScroll:hover {
+    background-color: #fcf3f0;
+}
+
+#searchPettyCashFormId .modal-content .btn-primary {
+    grid-column: 1/2;
+    grid-row: 4/5;
+    background: #6d5dfc;
+    box-shadow: inset 0.2rem 0.2rem 1rem #8abdff, inset -0.2rem -0.2rem 1rem #5b0eeb, 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    color: #e4ebf5;
+
+}
+
+#searchPettyCashFormId .modal-content button.close {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    /* color: #9baacf; */
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+#searchPettyCashFormId .addcustomernewallcss .form-control,
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input {
+    border: none;
+    padding-left: 1.4rem;
+    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
+    background: none;
+    font-family: inherit;
+    color: #252525;
+}
+
+#searchPettyCashFormId .addcustomernewallcss .form-control:focus,
+.ng-autocomplete::ng-deep .autocomplete-container .input-container input:focus {
+    outline: none;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
+    border: 2px solid transparent !important;
+    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    animation: bg-hue 2s linear infinite;
+}
+
+
+#tv3 tr:nth-child(even):hover {
+    background: linear-gradient(to right, #c9f1a2, #df97b4);
+  }
+
+  #tv3 tr:nth-child(odd):hover {
+    background: linear-gradient(to right, #f5fb97, #fcb35f);
+  }
+
+  #tv3 tr:hover td {
+    color: #0000;
+    background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    transition: background 2s, color 2s;
+  }
+  .userDatatable table tbody tr td {
+    border: 1px solid #C5D9E0;
+}
+.userDatatable table thead tr th {
+    border: 1px solid #ebf2f4;
+}
+
+
+.red-row {
+    background-color: rgb(252, 255, 164);
+    color: rgb(6, 6, 6); /* Optional: Adjust text color for better contrast */
+}
+
+.modal-content button.close {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #f9021b;
+    transition: all 0.5s ease;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    /* max-width: 1000px; */
+    width: 100%;
+    padding: 20px;
+}
+
+.grid-item {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.grid-item .number {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.grid-item .description {
+    background: #6c757d;
+    color: white;
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 15px;
+    border-radius: 8px;
+    font-weight: 500;
+    display: inline-block;
+}

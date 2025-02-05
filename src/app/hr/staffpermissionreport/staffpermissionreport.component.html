@@ -1,0 +1,239 @@
+<div class="contents-section">
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section">
+            <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">Staff Permission Summary Reports</span>
+          </h3>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <form [formGroup]="attendanceForm">
+          <div class="row col-lg-12">
+            <div class="col-lg-4">
+
+              <div>
+                <label for="fromDate" class="form-label">From Date</label>
+                <input type="date" class="form-control" id="fromDate" formControlName="fromDate">
+              </div>
+
+              <!-- To Date -->
+              <div class="mt-3">
+                <label for="country" class="form-label">Country</label>
+
+                <select class="form-control" formControlName="country" name="country">
+                  <!-- <option value="" disabled selected>Select Country
+                                  </option> -->
+                  <option value="" selected>All</option>
+                  <option *ngFor="let classif of user_hr_groupsList" value="{{classif.hr_group_id}}">
+                    {{classif.hr_group_name}}
+                  </option>
+                </select>
+              </div>
+
+            </div>
+            <div class="col-lg-4">
+
+              <!-- Country -->
+              <div>
+                <label for="toDate" class="form-label">To Date</label>
+                <input type="date" class="form-control" id="toDate" formControlName="toDate">
+              </div>
+
+              <!-- Leave Type -->
+              <div class="mt-3">
+                <label for="leaveType" class="form-label">Leave Type</label>
+
+                <select class="form-control" formControlName="leaveType" name="leaveType">
+                  <!-- <option value="" disabled selected>Select Leave Type
+                                    </option> -->
+                  <option value="" selected>All</option>
+                  <option *ngFor="let classif of leavetypeList" value="{{classif.LeaveTypeId}}">
+                    {{classif.LeaveTypeName}}
+                  </option>
+                </select>
+              </div>
+
+            </div>
+            <div class="col-lg-4">
+
+              <div>
+                <label for="employee" class="form-label">Employee</label>
+
+                <select class="form-control" formControlName="employee" name="employee" multiple size="7">
+
+                  <option *ngFor="let classif of userList" value="{{classif.userId}}">
+                    {{classif.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="d-flex justify-content-center mt-4 mb-4">
+            <button type="button" class="btn btn-success me-2" (click)="attendanceReportList({})">Search</button>
+            <button type="button" class="btn btn-primary me-2" (click)="leaveReportCall()">Excel</button>
+            <button type="button" class="btn btn-danger">Cancel</button>
+          </div>
+        </form>
+        <!-- <table class="table table-striped table-bordered mt-3">
+                    <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th *ngFor="let day of dateArray">{{ day | number:'2.0-0' }}</th>
+               
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let list of attendanceList;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{list.name}}</td>
+                            <td>{{list.time_field}}</td>
+                            
+                    
+                        </tr>
+                      
+                    </tbody>
+                </table> -->
+        <!-- <div class="attendance-table">
+                    <div class="table-container">
+                    <table class="table  mb-0">
+                      <thead>
+                        <tr class="userDatatable-header">
+                          <th class="userDatatable-title">S No</th>
+                          <th class="userDatatable-title">Name</th>
+                          <th *ngFor="let date of uniqueDates" class="userDatatable-title">{{ date }}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let name of objectKeys(groupedData); let i = index">
+                          <td>{{ i + 1 }}</td>
+                          <td>{{ name }}</td>
+                          <td *ngFor="let date of uniqueDates">
+                            <div *ngIf="groupedData[name][date]">
+                                <span class="time-field"  *ngIf="groupedData[name][date].place_type=='In Office'">
+                                  <i class="fas fa-check-circle check-icon"></i> 
+                                  {{ groupedData[name][date].check_out_time }}
+                                </span>
+                                <br>
+                                <span class="break-time" *ngIf="groupedData[name][date].place_type=='Break'">
+                                  <i class="fas fa-coffee break-icon"></i> 
+                                  {{ groupedData[name][date].check_out_time }}
+                                </span>
+                                <br>
+                                <span class="checkout-time" *ngIf="groupedData[name][date].place_type=='Exit'">
+                                  <i class="fas fa-hourglass-start hourglass-icon"></i> 
+                                  {{ groupedData[name][date].check_out_time }}
+                                </span>
+                              </div>
+                              
+                            <div *ngIf="!groupedData[name][date]">0</div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                </div> -->
+
+        <div class="attendance-table">
+          <div class="table-container">
+            <table class="table mb-0">
+              <thead>
+                <tr class="userDatatable-header">
+                  <th>S.No</th>
+                  <th>Date</th>
+                  <th>Subject</th>
+                  <th>Leave Description</th>
+                  <th>Leave Time</th>
+                  <th>Leave Duration</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let user of attendanceList">
+                <h3 style="color: rgb(168, 5, 116);font-weight: 600;">{{ user.userName | uppercase  }}</h3>
+                <tr *ngFor="let name of user.leaves; let i = index">
+                  
+                  <td *ngIf="name.subject!='total'">{{ i + 1 }}</td>
+                  
+                  <td *ngIf="name.subject!='total'">{{ name.date }}</td>
+                  <td *ngIf="name.subject!='total'">{{ name.subject }}</td>
+                  <td *ngIf="name.subject=='total'" colspan="5">Total</td>
+                  <td *ngIf="name.subject!='total'">{{ name.description }}</td>
+                  <td *ngIf="name.subject!='total'">{{ name.leave_time }}</td>
+                  <td >{{ name.duration }}</td>
+
+                </tr>
+               
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!----------Modal Pop Up (BEGIN) Attendance Login Details ------------------>
+<div class="modal fade" id="attendanceFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content addcustomernewallcss">
+
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+   background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+   background: linear-gradient(to right, #262127, #54b7aa);">
+          {{this.location_AR}} Details </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <strong>{{this.userName_AR}}</strong>
+        <p>{{this.location_AR}} Location</p>
+        <p>{{this.address_AR}}</p>
+
+        <!-- <form [formGroup]="GoogleAuthenticationForm">
+         <div class="row">
+           <div class="col-lg-12">
+             <div class="form-group row">
+               <div class="col-lg-6">
+                 <label>
+                   Google Authentication Code
+                 </label>
+               </div>
+               <div class="col-lg-6">
+                 <input type="text" class="form-control" 
+                 (keyup.enter)="GoogleAuthenticationValidation()"
+                 formControlName="google_AuthenticationCode" />
+               </div>
+
+             </div>
+
+           </div>
+         </div>
+       </form> -->
+
+      </div>
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  Attendance Login Details ------------------>

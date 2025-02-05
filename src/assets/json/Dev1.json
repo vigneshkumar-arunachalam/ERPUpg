@@ -390,6 +390,14 @@
     "IDs": [6071, 6072, 6073, 6074, 6075],
     "Type": "Main Menu",
     "children": [{
+            "name": "Leave Request",
+            "icon": "folder-plus",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/leaveRequestFinal"
+        },{
             "name": "Designation Type Mgmt",
             "icon": "user-check",
             "IDs": [6071, 6072, 6073, 6074, 6075],
@@ -445,6 +453,22 @@
             "subchild": [],
             "isVisible": true,
             "value": "/attendance_report"
+        },{
+            "name": "Staff Permission Report",
+            "icon": "cast",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/staff_permiss_report"
+        },{
+            "name": "Monthly Contribution",
+            "icon": "columns",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/monthlycontribution"
         }
        
 

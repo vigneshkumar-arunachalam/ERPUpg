@@ -145,11 +145,28 @@ import { AddcontributionmasterComponent } from './hr/contributionmaster/addcontr
 import { EditcontributionmasterComponent } from './hr/contributionmaster/editcontributionmaster/editcontributionmaster.component';
 import { DidStockComponent } from './hr/did-stock/did-stock.component';
 import { AttendanceReportComponent } from './hr/attendance-report/attendance-report.component';
-
+import { StaffpermissionreportComponent } from './hr/staffpermissionreport/staffpermissionreport.component';
+import { MonthlycontributionComponent } from './hr/monthlycontribution/monthlycontribution.component';
+import { AddcontmasterComponent } from './hr/monthlycontribution/addcontmaster/addcontmaster.component';
+import { EditcontmasterComponent } from './hr/monthlycontribution/editcontmaster/editcontmaster.component';
+import { LeaverequestComponent } from './hr/leaverequest/leaverequest.component';
+import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.component';
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },{
+    path: 'leaveRequestFinal', component: LeavereqFinalComponent
+  },{
+    path: 'leaveRequest', component: LeaverequestComponent
+  },{
+    path: 'editmonthlycontribution', component: EditcontmasterComponent
+  },{
+    path: 'addmonthlycontribution', component: AddcontmasterComponent
+  },{
+    path: 'monthlycontribution', component: MonthlycontributionComponent
+  },{
+  path: 'staff_permiss_report', component: StaffpermissionreportComponent
+  },{
     path: 'attendance_report', component: AttendanceReportComponent
   },
   {

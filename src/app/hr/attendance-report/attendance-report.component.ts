@@ -15,6 +15,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { NgZone } from '@angular/core';
 
+
+import { ExcelExportService } from 'src/app/reports/invoicereportsold/excel-export.service';
+import { FileDownloadService } from 'src/app/reports/invoicereportsold/file-download.service';
+
 @Component({
   selector: 'app-attendance-report',
   templateUrl: './attendance-report.component.html',
@@ -38,7 +42,18 @@ export class AttendanceReportComponent implements OnInit {
   attendanceList: any ;
   groupedData: any = {};
   uniqueDates: string[] = [];
-  constructor(public serverService: ServerService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
+  ExcelReportList: any;
+  ExcelReportLeaveList: any;
+  address_AR: any;
+  country_AR: any;
+  createdDate_AR: any;
+  location_AR: any;
+  placeType_AR: any;
+  timeField_AR: any;
+  userID_AR: any;
+  userName_AR: any;
+  constructor(public serverService: ServerService,private fileDownloadService: FileDownloadService,
+    private excelExportService: ExcelExportService, public sanitizer: DomSanitizer, private datePipe: DatePipe,
     private route: ActivatedRoute, private router: Router, private fb: FormBuilder, private zone: NgZone,
     private bnIdle: BnNgIdleService, private spinner: NgxSpinnerService, private cdr: ChangeDetectorRef) {
 
@@ -133,6 +148,144 @@ export class AttendanceReportComponent implements OnInit {
       };
 
   }
+  attendanceTime(id:any) {
+    this.spinner.show();
+    console.log("id",id);
+
+    let api_req: any = new Object();
+    let api_postUPd: any = new Object();
+    api_req.moduleType = "hr";
+    api_req.api_url = "hr/attendanceDetailsList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postUPd.action = "hr/attendanceDetailsList";
+    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_postUPd.id = id;
+    api_req.element_data = api_postUPd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.spinner.hide();
+        $('#attendanceFormId').modal('show');
+        this.address_AR=response.data[0].address;
+        this.country_AR=response.data[0].country;
+        this.createdDate_AR=response.data[0].created_dt;
+        this.location_AR=response.data[0].location;
+        this.placeType_AR=response.data[0].place_type;
+        this.timeField_AR=response.data[0].time_field;
+        this.userID_AR=response.data[0].userId;
+        this.userName_AR=response.data[0].username;
+   
+
+      } else {
+        iziToast.warning({
+          message: " Loading Failed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  attendanceReportCall() {
+
+    let api_req: any = new Object();
+    let api_postUPd: any = new Object();
+    api_req.moduleType = "hr";
+    api_req.api_url = "hr/attendanceReporExceltList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postUPd.action = "hr/attendanceReporExceltList";
+    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_postUPd.country = this.attendanceForm.value.country;
+    api_postUPd.em = this.attendanceForm.value.employee;
+    api_postUPd.from_dt = this.attendanceForm.value.fromDate;
+    api_postUPd.to_dt = this.attendanceForm.value.toDate;
+    api_req.element_data = api_postUPd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.spinner.hide();
+   
+        this.ExcelReportList = response.data;
+        this.excelExportService.exportAsExcelFile(this.ExcelReportList, 'AttendanceReport');
+
+      } else {
+        iziToast.warning({
+          message: " Loading Failed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  leaveReportCall() {
+
+    let api_req: any = new Object();
+    let api_postUPd: any = new Object();
+    api_req.moduleType = "hr";
+    api_req.api_url = "hr/leaveReporExceltList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    api_postUPd.action = "hr/leaveReporExceltList";
+    api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
+    api_postUPd.id = this.attendanceForm.value.employee;
+
+    api_postUPd.from_dt = this.attendanceForm.value.fromDate;
+    api_postUPd.to_dt = this.attendanceForm.value.toDate;
+    api_postUPd.country = this.attendanceForm.value.country;
+    api_postUPd.leavetype = this.attendanceForm.value.leaveType;
+    api_postUPd.em = this.attendanceForm.value.employee;
+    api_req.element_data = api_postUPd;
+
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+      this.spinner.hide();
+      if (response.status == true) {
+
+        this.spinner.hide();
+   
+        this.ExcelReportLeaveList = response.data;
+        this.excelExportService.exportAsExcelFile(this.ExcelReportLeaveList, 'LeaveReport');
+
+      } else {
+        iziToast.warning({
+          message: " Loading Failed. Please try again",
+          position: 'topRight'
+        });
+
+      }
+    }),
+      (error: any) => {
+        iziToast.error({
+          message: "Sorry, some server issue occur. Please contact admin",
+          position: 'topRight'
+        });
+        console.log("final error", error);
+      };
+
+  }
+  exportToExcel(): void {
+    this.excelExportService.exportAsExcelFile(this.ExcelReportList, 'Sample');
+  }
   attendanceReportList(data: any) {
     this.spinner.show();
     var list_data = this.listDataInfo(data);
@@ -215,7 +368,8 @@ export class AttendanceReportComponent implements OnInit {
         // Push the entry instead of overwriting
         acc[item.name][item.created_dt].push({
           check_out_time: item.check_out_time || 'N/A',
-          place_type: item.place_type || 'Unknown'
+          place_type: item.place_type || 'Unknown',
+          id: item.id ,
         });
       }
       return acc;

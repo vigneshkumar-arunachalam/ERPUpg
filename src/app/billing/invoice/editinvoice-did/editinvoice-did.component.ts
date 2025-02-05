@@ -231,6 +231,7 @@ export class EditinvoiceDIDComponent implements OnInit {
   ShipAdr21: any;
   ShipAdr31: any;
   ShipAdr41: any;
+  sstCheckbox: boolean=false;
   constructor(private serverService: ServerService, private fb: FormBuilder, private router: Router, private route: ActivatedRoute, private spinner: NgxSpinnerService) {
 
     // this.route.queryParams
@@ -380,6 +381,8 @@ export class EditinvoiceDIDComponent implements OnInit {
       'ReferenceResellerName': new FormControl(),
       'ExtraLogo': new FormControl(),
       'Jompay_logo': new FormControl(),
+      'sst_Cbk': new FormControl(),
+
 
 
     });
@@ -1847,6 +1850,7 @@ export class EditinvoiceDIDComponent implements OnInit {
          // 'PaymentVia': response.billing_pararent_details[0].paymentVIA,
           'ReferenceResellerName': response.billing_pararent_details[0].reference_reseller_name,
           'Jompay_logo': response.billing_pararent_details[0].jom_pay_logo,
+          'sst_Cbk': response.billing_pararent_details[0].sst_tax,
 
         });
         this.userID_Edit = response.billing_pararent_details[0].billGeneratedBy;
@@ -2261,6 +2265,7 @@ export class EditinvoiceDIDComponent implements OnInit {
     api_updateDid_req.bills_logo_id = this.ExtralogoValue;
     api_updateDid_req.export_state = this.export_state;
     api_updateDid_req.jom_pay_logo = this.Jompay_Value;
+    api_updateDid_req.sst_tax = this.sstCheckbox;
 
     if (this.addDid_section1.value.BillTo === null) {
 
@@ -3207,6 +3212,11 @@ usageCharge_TotalAmount +=parseFloat($('#amt3_' + a).val());
 
     });
 
+
+  }
+  handleChange_SSTax(event:any){
+    this.sstCheckbox=event.target.checked;
+    console.log("this.sstCheckbox",this.sstCheckbox);
 
   }
 
