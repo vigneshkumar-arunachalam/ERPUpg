@@ -109,7 +109,7 @@ export class AddGenStockComponent implements OnInit {
 
   }
 
-  save(i: any) {
+  save() {
 
 
     this.spinner.show();
@@ -151,26 +151,224 @@ export class AddGenStockComponent implements OnInit {
     for (let i = 0; i < addr.length; i++) {
 
       // console.log(addr[i].pd_quantity_txtbox1)
-      addr[i].category_id_1 = $('#pd_category1' + i).val();
-      addr[i].category_color_1 = $('#pd_productColor1' + i).val();
-      addr[i].category_fontsize_1 = $('#pd_productFontSize1' + i).val();
-      addr[i].qty_color_1 = $('#pd_productQtyColor1' + i).val();
-      addr[i].qty_fontsize_1 = $('#pd_productQtyFontSize1' + i).val();
+      var category_id_1=$('#pd_category1' + i).val();
+      if(category_id_1==null || category_id_1==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Category ID 1 Missing",
+          position: 'topRight'
+        });
+        return false;
 
-      addr[i].category_id_2 = $('#pd_category2' + i).val();
-      addr[i].category_color_2 = $('#pd_productColor2' + i).val();
-      addr[i].category_fontsize_2 = $('#pd_productFontSize2' + i).val();
-      addr[i].qty_color_2 = $('#pd_productQtyColor2' + i).val();
-      addr[i].qty_fontsize_2 = $('#pd_productQtyFontSize2' + i).val();
+      }else{
+        addr[i].category_id_1 = $('#pd_category1' + i).val();
+      }
 
-      addr[i].category_id_3 = $('#pd_category3' + i).val();
-      addr[i].category_color_3 = $('#pd_productColor3' + i).val();
-      addr[i].category_fontsize_3 = $('#pd_productFontSize3' + i).val();
-      addr[i].qty_color_3 = $('#pd_productQtyColor3' + i).val();
-      addr[i].qty_fontsize_3 = $('#pd_productQtyFontSize3' + i).val();
+      var category_color_1=$('#pd_productColor1' + i).val();
+        if(category_color_1==null || category_color_1==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Category Color 1 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].category_color_1 = $('#pd_productColor1' + i).val();
+        }
+
+        var category_fontsize_1=$('#pd_productFontSize1' + i).val();
+        if(category_fontsize_1==null || category_fontsize_1==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Product Font Size Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].category_fontsize_1 = $('#pd_productFontSize1' + i).val();
+        }
+
+        var qty_color_1=$('#pd_productQtyColor1' + i).val();
+        if(qty_color_1==null || qty_color_1==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Product Quantity Color 1 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].qty_color_1 = $('#pd_productQtyColor1' + i).val();
+        }
+
+        var qty_fontsize_1=$('#pd_productQtyFontSize1' + i).val();
+        if(qty_fontsize_1==null || qty_fontsize_1==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Product Quantity Font Size 1 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].qty_fontsize_1 = $('#pd_productQtyFontSize1' + i).val();
+        }
+     
+     
+        var category_id_2=$('#pd_category2' + i).val();
+        if(category_id_2==null || category_id_2==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Category ID 2 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].category_id_2 = $('#pd_category2' + i).val();
+        }
+  
+        var category_color_2=$('#pd_productColor2' + i).val();
+          if(category_color_2==null || category_color_2==''){
+            this.spinner.hide();
+            iziToast.error({
+              message: "Category Color 2 Missing",
+              position: 'topRight'
+            });
+            return false;
+    
+          }else{
+            addr[i].category_color_2 = $('#pd_productColor2' + i).val();
+          }
+  
+          var category_fontsize_2=$('#pd_productFontSize2' + i).val();
+          if(category_fontsize_2==null || category_fontsize_2==''){
+            this.spinner.hide();
+            iziToast.error({
+              message: "Product Font Size 2 Missing",
+              position: 'topRight'
+            });
+            return false;
+    
+          }else{
+            addr[i].category_fontsize_2 = $('#pd_productFontSize2' + i).val();
+          }
+  
+          var qty_color_2=$('#pd_productQtyColor2' + i).val();
+          if(qty_color_2==null || qty_color_2==''){
+            this.spinner.hide();
+            iziToast.error({
+              message: "Product Quantity Color 2 Missing",
+              position: 'topRight'
+            });
+            return false;
+    
+          }else{
+            addr[i].qty_color_2 = $('#pd_productQtyColor2' + i).val();
+          }
+  
+          var qty_fontsize_2=$('#pd_productQtyFontSize2' + i).val();
+          if(qty_fontsize_2==null || qty_fontsize_2==''){
+            this.spinner.hide();
+            iziToast.error({
+              message: "Product Quantity Font Size 2 Missing",
+              position: 'topRight'
+            });
+            return false;
+    
+          }else{
+            addr[i].qty_fontsize_2 = $('#pd_productQtyFontSize2' + i).val();
+          }
+       
+       
+      
+       
+     
+
+      // addr[i].category_id_2 = $('#pd_category2' + i).val();
+      // addr[i].category_color_2 = $('#pd_productColor2' + i).val();
+      // addr[i].category_fontsize_2 = $('#pd_productFontSize2' + i).val();
+      // addr[i].qty_color_2 = $('#pd_productQtyColor2' + i).val();
+      // addr[i].qty_fontsize_2 = $('#pd_productQtyFontSize2' + i).val();
+
+
+
+
+      var category_id_3=$('#pd_category3' + i).val();
+      if(category_id_3==null || category_id_3==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Category ID 3 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].category_id_3 = $('#pd_category3' + i).val();
+      }
+
+      var category_color_3=$('#pd_productColor3' + i).val();
+        if(category_color_3==null || category_color_3==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Category Color 3 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].category_color_3 = $('#pd_productColor3' + i).val();
+        }
+
+        var category_fontsize_3=$('#pd_productFontSize3' + i).val();
+        if(category_fontsize_3==null || category_fontsize_3==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Product Font Size 3 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].category_fontsize_3 = $('#pd_productFontSize3' + i).val();
+        }
+
+        var qty_color_3=$('#pd_productQtyColor3' + i).val();
+        if(qty_color_3==null || qty_color_3==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Product Quantity Color 3 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].qty_color_3 = $('#pd_productQtyColor3' + i).val();
+        }
+
+        var qty_fontsize_3=$('#pd_productQtyFontSize3' + i).val();
+        if(qty_fontsize_3==null || qty_fontsize_3==''){
+          this.spinner.hide();
+          iziToast.error({
+            message: "Product Quantity Font Size 3 Missing",
+            position: 'topRight'
+          });
+          return false;
+  
+        }else{
+          addr[i].qty_fontsize_3 = $('#pd_productQtyFontSize3' + i).val();
+        }
+
+      // addr[i].category_id_3 = $('#pd_category3' + i).val();
+      // addr[i].category_color_3 = $('#pd_productColor3' + i).val();
+      // addr[i].category_fontsize_3 = $('#pd_productFontSize3' + i).val();
+      // addr[i].qty_color_3 = $('#pd_productQtyColor3' + i).val();
+      // addr[i].qty_fontsize_3 = $('#pd_productQtyFontSize3' + i).val();
 
     }
-
+    
 
     api_mulInvpay.products = addr;
 

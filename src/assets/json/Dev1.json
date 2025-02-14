@@ -162,13 +162,13 @@
 		}
         ,{
             "name": "DID Master",
-            "icon": "user-check",
-            "IDs": [9961,9962,9963,9964,9965],
+            "icon": "grid",
+            "IDs": [6071, 6072, 6073, 6074, 6075],
             "Type": "Sub Menu",
             "subchild": [],
             "isVisible": true,
-            "value": "/stockDIDMaster"
-        } ,{
+            "value": "/didStock"
+        },{
             "name": "Current Stock",
             "icon": "check-square",
             "IDs": [9961,9962,9963,9964,9965],
@@ -438,14 +438,6 @@
             "isVisible": true,
             "value": "/contributionmaster"
         },{
-            "name": "DID Stock",
-            "icon": "grid",
-            "IDs": [6071, 6072, 6073, 6074, 6075],
-            "Type": "Sub Menu",
-            "subchild": [],
-            "isVisible": true,
-            "value": "/didStock"
-        },{
             "name": "Attendance Report",
             "icon": "figma",
             "IDs": [6071, 6072, 6073, 6074, 6075],
@@ -661,6 +653,14 @@
             "subchild": [],
             "isVisible": true,
             "value": "/publictask"
+        },{
+            "name": "ERP APP Permission",
+            "icon": "users",
+            "IDs": [9961,9962,9963,9964,9965],
+            "Type": "Sub Menu",
+            "subchild": [],
+            "isVisible": true,
+            "value": "/erp-app-permission"
         }
        
        

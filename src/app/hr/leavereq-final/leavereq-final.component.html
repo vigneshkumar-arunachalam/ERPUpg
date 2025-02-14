@@ -1,23 +1,187 @@
 <div class="contents-section">
-    <div class="row no-gutters">
-      <div class="col-lg-12 mb-30">
-        <div class="card">
-          <div class="card-header color-dark fw-500">
-            <h3 class="card-header-section">
-              <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
-              <span class="breadcrumb-item active">Leave Request</span>
-            </h3>
-     
-          </div>
+  <div class="row no-gutters">
+    <div class="col-lg-12 mb-30">
+      <div class="card">
+        <div class="card-header color-dark fw-500">
+          <h3 class="card-header-section">
+            <a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+            <span class="breadcrumb-item active">Leave Request</span>
+          </h3>
+
         </div>
-        <div class="card-body">
-            <div style="margin-bottom: 10px;">
-                <button (click)="calendarOptions.initialView = 'dayGridMonth'">Month View</button>
-                <button (click)="calendarOptions.initialView = 'listMonth'">List View</button>
-              </div>
-              
-              <full-calendar [options]="calendarOptions"></full-calendar>
+      </div>
+      <div class="card-body">
+        <div style="margin-bottom: 10px;">
+          <button (click)="calendarOptions.initialView = 'dayGridMonth'">Month View</button>
+          <button (click)="calendarOptions.initialView = 'listMonth'">List View</button>
         </div>
+
+        <full-calendar [options]="calendarOptions"></full-calendar>
       </div>
     </div>
   </div>
+</div>
+
+
+<!----------Modal Pop Up (BEGIN)  for edit Petty cash ------------------>
+<div class="modal fade" id="holidayFormId" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+    <div class="modal-content searchQuotationCSS">
+      <div class="modal-header">
+        <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #262127, #54b7aa);">
+          Holiday List </h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="holidayForm">
+
+          <table cellpadding="10" class="table table-striped">
+            <thead class="thead-dark">
+
+              <tr>
+               
+                <th class="title_data">Leave Type
+                </th>
+                <th class="title_data"> Total Leave
+                </th>
+                <th class="title_data"> Consumed Leave
+                </th>
+
+                <th class="title_data">Balance Leave</th>
+                <th class="title_data">Upcoming Carry Forward - 2026</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr>
+             
+                <td class="title_data" *ngIf="this.billerId!=29">Annual Leave<br> (AL + Carry Forward) <small><b>{{this.annualLeave}}+{{this.carryForward}}</b></small></td>
+                <td class="title_data" *ngIf="this.billerId==29">Annual Leave<br> (AL + Carry Forward + SIL) <small><b>{{this.annualLeave}}+{{this.carryForward}}+{{this.silLeave}}</b></small></td>
+                <td>{{this.annualLeave}} Days</td>
+                <td>{{this.consumedAnnualLeave}} Days</td>
+                <td>{{this.balanceAnnualLeave}} Days</td>
+                <td>{{ this.upcomingCarryForwadLeave}} Days</td>
+              
+              </tr>
+              <tr>
+               
+                <td class="title_data">Medical Leave</td>
+                <td>{{ this.MedicalLeave}} Days</td>
+                <td>{{this.consumedMedicalLeave}}Days</td>
+                <td>{{this.balanceMedicalLeave}} Days</td>
+                <td>0 Days</td>
+              </tr>
+
+            </tbody>
+          </table>
+
+          <div class="leave_request_tab_data">
+        
+            <ul class="nav nav-pills" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#PreviousYear" role="tab" aria-controls="PreviousYear"
+                  aria-selected="true" > {{this.currentYearValue-1}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#CurrentYear" role="tab" aria-controls="CurrentYear"
+                  aria-selected="false" >{{this.currentYearValue}}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#NextYear" role="tab" aria-controls="NextYear"
+                  aria-selected="false" >{{this.currentYearValue+1}}</a>
+              </li>
+              
+  
+            </ul>
+            <div class="tab-content" id="myTabContent">
+              <div id="PreviousYear" class="tab-pane fade " role="tabpanel" aria-labelledby="PreviousYear-tab"><br>
+                <!-- All sub menu starts -->
+  
+               
+                  <table  cellpadding="10" style="border-collapse:collapse;width:40%;align-items: center;" class="table table-striped">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th class="title_data"> Date </th>
+                        <th class="title_data"> Description </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of lastyearHolidaysArray">
+                        <td>{{item.date}}</td>
+                        <td>{{item.description}}<br></td>
+                      </tr>
+        
+                    </tbody>
+                  </table>
+             
+        
+              
+                <div [innerHTML]="policyDescription"></div>
+
+             
+  
+              </div>
+              <div id="CurrentYear" class="tab-pane fade show active" role="tabpanel" aria-labelledby="CurrentYear-tab"><br>
+               
+                <table  cellpadding="10" style="border-collapse:collapse;width:40%;align-items: center;" class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th class="title_data"> Date </th>
+                      <th class="title_data"> Description </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of holidaysArray">
+                      <td>{{item.date}}</td>
+                      <td>{{item.description}}<br></td>
+                    </tr>
+                    
+                  </tbody>
+                </table>
+                <div [innerHTML]="policyDescription"></div>
+  
+              </div>
+  
+              <div id="NextYear" class="tab-pane fade" role="tabpanel" aria-labelledby="NextYear-tab"><br>
+                <table  cellpadding="10" style="border-collapse:collapse;width:40%;align-items: center;" class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th class="title_data"> Date </th>
+                      <th class="title_data"> Description </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="12" align="center">
+                        <p>No Holiday Availble</p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div  [innerHTML]="policyDescription"></div>
+              </div>
+              
+            </div>
+          
+          </div>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+
+        <button type="button" class="btn btn-dark" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------Modal Pop Up (END)  for edit Petty cash ------------------>

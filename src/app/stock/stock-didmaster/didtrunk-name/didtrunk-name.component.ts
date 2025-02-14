@@ -113,6 +113,7 @@ export class DIDTrunkNameComponent implements OnInit {
         this.response_total_cnt=response.count
         this.productCategoryList1 = response.data;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
+           $('#searchProductCategoryFormId').modal('hide');
       } else {
         iziToast.warning({
           message: "Failed. Please try again",

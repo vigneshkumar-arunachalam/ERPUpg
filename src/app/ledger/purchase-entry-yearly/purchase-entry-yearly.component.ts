@@ -20,7 +20,8 @@ import { NgZone } from '@angular/core';
 @Component({
   selector: 'app-purchase-entry-yearly',
   templateUrl: './purchase-entry-yearly.component.html',
-  styleUrls: ['./purchase-entry-yearly.component.css']
+  styleUrls: ['./purchase-entry-yearly.component.css'],
+  
 })
 export class PurchaseEntryYearlyComponent implements OnInit {
 
@@ -63,6 +64,8 @@ export class PurchaseEntryYearlyComponent implements OnInit {
   taxProviderNames: any;
   vendorlistall: any;
   currencyList: any;
+  monthNameVal: string;
+  fetchStatus: boolean=false;;
   
  
 
@@ -105,7 +108,13 @@ export class PurchaseEntryYearlyComponent implements OnInit {
     });
     
   }
- 
+  onMouseMove(event: MouseEvent): void {
+    this.zone.runOutsideAngular(() => {
+      requestAnimationFrame(() => {
+        console.log('Mouse moved:', event.clientX, event.clientY);
+      });
+    });
+  }
 
   
   
@@ -122,6 +131,7 @@ export class PurchaseEntryYearlyComponent implements OnInit {
  
   createAddress(): FormGroup {
     return this.fb.group({
+      color_val:[''],
       purchaseEntryType: [''],
       invoiceNumber: [''],
       invoiceDate: [''],
@@ -142,6 +152,9 @@ export class PurchaseEntryYearlyComponent implements OnInit {
       ven_id: [''],
       mon_val: [''],
       entry_row: [''],
+      mon_val_title: [''],
+
+  
       
     });
   }
@@ -348,7 +361,30 @@ export class PurchaseEntryYearlyComponent implements OnInit {
       };
 
   }
+  getBackgroundColor(status: any): any {
+    console.log("status",status);
+    console.log("typeof-status",typeof(status));
+    switch (status) {
+      case 1: return '#008000';  // Green
+      case 2: return '#FF0000';  // Yellow   
+      case 3: return '#ff007f';  // Red
+      default: return '#FF0000'; // 
+    }
+  }
+  
+  getMonthName(monthVal: number): string {
+    console.log("monthVal",monthVal);
+    const months = [
+      '', 'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return months[monthVal] || '';
+  }
+
   fetchVendorDetails(vendorID:any) {
+    this.spinner.show();
+    this.fetchStatus=true;
+    // return false;
     this.vendorID_selected=vendorID;
     this.spinner.show();
 
@@ -369,7 +405,7 @@ export class PurchaseEntryYearlyComponent implements OnInit {
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
      
-      if (response) {
+      if (response.status==true) {
 
         this.spinner.hide();
         this.purchaseTypeNames=response.purchaseTypeNames;
@@ -377,46 +413,52 @@ export class PurchaseEntryYearlyComponent implements OnInit {
         this.currencyList=response.currencyList;
         this.vendorlistall=response.vendors;
         const vendorData = response.vendorTrendDetails;
-        
-        const formArray = new FormArray([]);
   
+        const formArray = new FormArray([]);
 
-        for (let index = 0; index < response.vendorTrendDetails.length; index++) {
+        // Loop through each month
+        Object.keys(response.vendorTrendDetails.months).forEach((month) => {
+          response.vendorTrendDetails.months[month].forEach((record: any) => {
+            formArray.push(
+              this.fb.group({
+
+                purchaseEntryType: record.purchase_type_id || '',
+                invoiceNumber: record.invoiceNo || '',
+                invoiceDate: record.invoiceDate_show || '',
+                purchaseContent: record.content_purchase || '',
+                PONumber: record.poNo || '',
+                currency: record.currency_id || '',
+                curConvRate: record.conversionRate || '',
+                taxAmount: record.taxAmount || '',
+                taxProvider: record.tax_provider || '',
+                frieghtAmount: record.freight_amt || '',
+                frieghtProvider: record.freight_provider || '',
+                invoiceAmount: record.invoiceAmount || '',
+          
+                purchaseEntryTempId: record.purchaseEntryTempId || '',
+                vendorId: record.vendor_id || '',
+                year_val: record.year || '',
+                ven_id: record.vendor_id || '',
+
+                entry_row: record.entryRow || '',
+                billerid: this.OverallBillerValue,
+                mon_val: record.month || '',
+                color_val:record.approval_status
      
+                // mon_val_title: monthName,
 
-          formArray.push(this.fb.group({
-            "purchaseEntryType": response.vendorTrendDetails[index].purchase_type_id,
-            "invoiceNumber": response.vendorTrendDetails[index].invoiceNo,
-            "invoiceDate": response.vendorTrendDetails[index].invoiceDate_show,
-
-            "purchaseContent": response.vendorTrendDetails[index].content_purchase,
-            "PONumber": response.vendorTrendDetails[index].poNo,
-
-            "currency": response.vendorTrendDetails[index].currency_id,
-            "curConvRate": response.vendorTrendDetails[index].conversionRate,
-            "taxAmount": response.vendorTrendDetails[index].taxAmount,
-            "taxProvider": response.vendorTrendDetails[index].tax_provider,
-            "frieghtAmount": response.vendorTrendDetails[index].freight_amt,
-            "frieghtProvider": response.vendorTrendDetails[index].freight_provider,
-            "invoiceAmount": response.vendorTrendDetails[index].invoiceAmount,
-
-            "purchaseEntryTempId": response.vendorTrendDetails[index].purchaseEntryTempId,
-            "vendorId": response.vendorTrendDetails[index].vendor_id,
-           
-            "year_val": response.vendorTrendDetails[index].year,
-            "ven_id": response.vendorTrendDetails[index].vendor_id,
-            "mon_val": response.vendorTrendDetails[index].month,
-            "entry_row": response.vendorTrendDetails[index].entryRow,
-            "billerid": this.OverallBillerValue,
-
-          })
-          );
-        }
+             
+          
+        
+              })
+            );
+          });
+        });
         
         this.addPI_section2.setControl('addresses', formArray);
-        // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
-       
-       
+        console.log('FormArray Data:', this.addressControls.value);
+    
+
 
       } else {
         this.spinner.hide();
@@ -459,64 +501,158 @@ export class PurchaseEntryYearlyComponent implements OnInit {
     }
   }
   saveRow(index: number): void {
-    this.spinner.show();
-    const rowForm = this.addressControls.at(index);
-    if (rowForm.valid) {
-      const formData = rowForm.value;
-      console.log('Saving row:', index, formData);
-      const purchaseEntryTempId_index = this.addressControls.at(index).get('purchaseEntryTempId').value;
-    console.log('get-purchase trend id values at each index', purchaseEntryTempId_index);
-      // Perform your save logic here, e.g., make an API call
-      let api_req: any = new Object();
-          let api_Search_req: any = new Object();
-          api_req.moduleType = "purchaseEntryYearly";
-          api_req.api_url = "purchaseEntryYearly/updatePurchaseTrendDetails_yearly";
-          api_req.api_type = "web";
-          api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-          api_Search_req.action = "updatePurchaseTrendDetails_yearly";
-          api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
-          api_Search_req.purchaseEntryTempId = this.addressControls.at(index).get('purchaseEntryTempId').value;
 
-          api_Search_req.purTempId =this.addressControls.at(index).get('purchaseEntryTempId').value; 
-          api_Search_req.invoiceNo = this.addressControls.at(index).get('invoiceNumber').value;
-          api_Search_req.invoiceDate = this.addressControls.at(index).get('invoiceDate').value;
-          api_Search_req.pur_type = this.addressControls.at(index).get('purchaseEntryType').value;
-          api_Search_req.content_purchase = this.addressControls.at(index).get('purchaseContent').value;
-          api_Search_req.poNo = this.addressControls.at(index).get('PONumber').value;
-          api_Search_req.currency = this.addressControls.at(index).get('currency').value;
-          api_Search_req.conversionRate = this.addressControls.at(index).get('curConvRate').value;
-          api_Search_req.taxAmount = this.addressControls.at(index).get('taxAmount').value;
-          api_Search_req.tax_provider = this.addressControls.at(index).get('taxProvider').value;
-          api_Search_req.freight_amt = this.addressControls.at(index).get('frieghtAmount').value;
-          api_Search_req.freight_provider = this.addressControls.at(index).get('frieghtProvider').value;
-          
-          api_Search_req.invoiceAmount = this.addressControls.at(index).get('invoiceAmount').value;
-          api_Search_req.billerid = this.OverallBillerValue;
-          api_Search_req.year_val = this.currentYearDefault;
-          api_Search_req.mon_val = this.currentMonthDefault;
-          api_Search_req.vendorId= this.addressControls.at(index).get('vendorId').value;
-
-          api_Search_req.row_val = this.addressControls.at(index).get('entry_row').value;
-          api_Search_req.sel_years = this.OverallBillerValue;
+    Swal.fire({
+      title: 'Are you sure to Save?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Save it!'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        const rowForm = this.addressControls.at(index);
+        if (rowForm.valid) {
+          const formData = rowForm.value;
         
-
-          api_req.element_data = api_Search_req;
-          this.serverService.sendServer(api_req).subscribe((response: any) => {
+          const purchaseEntryTempId_index = this.addressControls.at(index).get('purchaseEntryTempId').value;
        
-            if (response) {
-              this.spinner.hide();
-              iziToast.success({
-                message: "Updated Successfully",
-                position: 'topRight'
-              });
-             
+          // Perform your save logic here, e.g., make an API call
+          let api_req: any = new Object();
+              let api_Search_req: any = new Object();
+              api_req.moduleType = "purchaseEntryYearly";
+              api_req.api_url = "purchaseEntryYearly/updatePurchaseTrendDetails_yearly";
+              api_req.api_type = "web";
+              api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+              api_Search_req.action = "updatePurchaseTrendDetails_yearly";
+              api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+              api_Search_req.purchaseEntryTempId = this.addressControls.at(index).get('purchaseEntryTempId').value;
+    
+              api_Search_req.purTempId =this.addressControls.at(index).get('purchaseEntryTempId').value; 
+              api_Search_req.invoiceNo = this.addressControls.at(index).get('invoiceNumber').value;
+              api_Search_req.invoiceDate = this.addressControls.at(index).get('invoiceDate').value;
+              api_Search_req.pur_type = this.addressControls.at(index).get('purchaseEntryType').value;
+              api_Search_req.content_purchase = this.addressControls.at(index).get('purchaseContent').value;
+              api_Search_req.poNo = this.addressControls.at(index).get('PONumber').value;
+              api_Search_req.currency = this.addressControls.at(index).get('currency').value;
+              api_Search_req.conversionRate = this.addressControls.at(index).get('curConvRate').value;
+              api_Search_req.taxAmount = this.addressControls.at(index).get('taxAmount').value;
+              api_Search_req.tax_provider = this.addressControls.at(index).get('taxProvider').value;
+              api_Search_req.freight_amt = this.addressControls.at(index).get('frieghtAmount').value;
+              api_Search_req.freight_provider = this.addressControls.at(index).get('frieghtProvider').value;
+              
+              api_Search_req.invoiceAmount = this.addressControls.at(index).get('invoiceAmount').value;
 
-            }
-          });
-    } else {
-      console.log('Form is invalid for row:', index);
-    }
+
+              api_Search_req.year_val = this.addressControls.at(index).get('year_val').value;
+              api_Search_req.mon_val = this.addressControls.at(index).get('mon_val').value;
+              api_Search_req.vendorId= this.addressControls.at(index).get('ven_id').value;
+              api_Search_req.row_val = this.addressControls.at(index).get('entry_row').value;
+              
+              api_Search_req.billerid = this.OverallBillerValue;
+              api_Search_req.sel_years = this.OverallYearValue;
+            
+    
+              api_req.element_data = api_Search_req;
+              this.serverService.sendServer(api_req).subscribe((response: any) => {
+           
+                if (response) {
+                  this.spinner.hide();
+                  iziToast.success({
+                    message: "Updated Successfully",
+                    position: 'topRight'
+                  });
+                 
+    
+                }
+              });
+        } else {
+          console.log('Form is invalid for row:', index);
+        }
+      }
+    })
+
+
   }
+  sendtoApproval(index: number): void {
+
+    Swal.fire({
+      title: 'Are you sure to Send to Approval?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Approve it!'
+    }).then((result: any) => {
+      if (result.value) {
+        this.spinner.show();
+        const rowForm = this.addressControls.at(index);
+        if (rowForm.valid) {
+          const formData = rowForm.value;
+        
+          const purchaseEntryTempId_index = this.addressControls.at(index).get('purchaseEntryTempId').value;
+       
+          // Perform your save logic here, e.g., make an API call
+          let api_req: any = new Object();
+              let api_Search_req: any = new Object();
+              api_req.moduleType = "purchaseEntryYearly";
+              api_req.api_url = "purchaseEntryYearly/sendToApproval";
+              api_req.api_type = "web";
+              api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+              api_Search_req.action = "sendToApproval";
+              api_Search_req.user_id = localStorage.getItem('erp_c4c_user_id');
+
+    
+              api_Search_req.purTempId =this.addressControls.at(index).get('purchaseEntryTempId').value; 
+              api_Search_req.invoiceNo = this.addressControls.at(index).get('invoiceNumber').value;
+              api_Search_req.invoiceDate = this.addressControls.at(index).get('invoiceDate').value;
+              api_Search_req.pur_type = this.addressControls.at(index).get('purchaseEntryType').value;
+              api_Search_req.content_purchase = this.addressControls.at(index).get('purchaseContent').value;
+              api_Search_req.poNo = this.addressControls.at(index).get('PONumber').value;
+              api_Search_req.currency = this.addressControls.at(index).get('currency').value;
+              api_Search_req.conversionRate = this.addressControls.at(index).get('curConvRate').value;
+              api_Search_req.taxAmount = this.addressControls.at(index).get('taxAmount').value;
+              api_Search_req.tax_provider = this.addressControls.at(index).get('taxProvider').value;
+              api_Search_req.freight_amt = this.addressControls.at(index).get('frieghtAmount').value;
+              api_Search_req.freight_provider = this.addressControls.at(index).get('frieghtProvider').value;
+              
+              api_Search_req.invoiceAmount = this.addressControls.at(index).get('invoiceAmount').value;
+
+
+              // api_Search_req.year_val = this.addressControls.at(index).get('year_val').value;
+              // api_Search_req.mon_val = this.addressControls.at(index).get('mon_val').value;
+              // api_Search_req.vendorId= this.addressControls.at(index).get('ven_id').value;
+              // api_Search_req.row_val = this.addressControls.at(index).get('entry_row').value;
+              
+              api_Search_req.billerid = this.OverallBillerValue;
+              // api_Search_req.sel_years = this.OverallYearValue;
+            
+    
+              api_req.element_data = api_Search_req;
+              this.serverService.sendServer(api_req).subscribe((response: any) => {
+           
+                if (response) {
+                  this.spinner.hide();
+                  iziToast.success({
+                    message: "Send to Approval Successfully",
+                    position: 'topRight'
+                  });
+                 
+    
+                }
+              });
+        } else {
+          console.log('Form is invalid for row:', index);
+        }
+      }
+    })
+
+
+  }
+
   showAttachment(index: number): void {
     const rowForm = this.addressControls.at(index);
     console.log('Showing attachment for row:', index);

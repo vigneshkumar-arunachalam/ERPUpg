@@ -30,6 +30,8 @@ export class ProductCategoryComponent implements OnInit {
   response_total_cnt: any;
   editApprovalStatus: any;
   editproduct_category_id: any;
+  editproduct_approval_status:any
+
 
   productMasterApprovalForm: FormGroup;
   checked = true;
@@ -47,7 +49,7 @@ export class ProductCategoryComponent implements OnInit {
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.productCategoryList({});
+    
     this.viewProductCategory = new FormGroup({
       'view_ProductCategoryCode': new FormControl(null),
       'view_ProductCategoryName': new FormControl(null),
@@ -74,6 +76,7 @@ export class ProductCategoryComponent implements OnInit {
       'comments_approvedBy': new FormControl(null),
     
     });
+    this.productCategoryList({});
 
   }
   addProdCatGo() {
@@ -204,6 +207,7 @@ export class ProductCategoryComponent implements OnInit {
     api_postUPd.limit_val = list_data.limit;
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.current_page = '';
+    api_postUPd.categoryName=this.searchProductCategory.value.search_ProductCategoryName;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -214,6 +218,7 @@ export class ProductCategoryComponent implements OnInit {
         this.response_total_cnt=response.count
         this.productCategoryList1 = response.data;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
+        $('#searchProductCategoryFormId').modal('hide');
       } else {
         iziToast.warning({
           message: "Petty Cash List Loading Failed. Please try again",
@@ -325,10 +330,11 @@ export class ProductCategoryComponent implements OnInit {
       };
 
   }
-  edit(product_category_id: any) {
+  edit(product_category_id: any,approval_status:any) {
     this.spinner.show();
     $('#editProductCategoryFormId').modal('show');
     this.editproduct_category_id=product_category_id;
+    this.editproduct_approval_status=approval_status;
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
     api_req.moduleType = "product_category";
@@ -407,7 +413,7 @@ export class ProductCategoryComponent implements OnInit {
 
     if (this.addProductCategory.value.add_PurchasePrice == null || this.addProductCategory.value.add_PurchasePrice == '') {
       iziToast.error({
-        message: "Purchase Price Missing",
+        message: "Purchase Price Missing, Give Numbers Only",
         position: 'topRight'
       });
       this.spinner.hide();
@@ -499,7 +505,7 @@ export class ProductCategoryComponent implements OnInit {
     api_postUPd.product_category_name = this.editProductCategory.value.edit_ProductCategoryName;
     api_postUPd.purchase_rate_per = this.editProductCategory.value.edit_PurchasePrice;
     api_postUPd.product_category_id = this.editproduct_category_id;
-    api_postUPd.status =   this.editApprovalStatus;
+    api_postUPd.status =  this.editproduct_approval_status;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -526,7 +532,7 @@ export class ProductCategoryComponent implements OnInit {
       };
 
   }
-  delete(product_category_id: any) {
+  delete(product_category_id: any,approval_status:any) {
 
       Swal.fire({
         title: 'Are you sure to Delete?',
@@ -547,8 +553,9 @@ export class ProductCategoryComponent implements OnInit {
           api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
           api_singleDelete.action = "deleteProductDetails";
           api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
-
           api_singleDelete.product_category_id = product_category_id;
+          api_singleDelete.status = approval_status;
+  
           api_req.element_data = api_singleDelete;
 
           this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -582,8 +589,8 @@ export class ProductCategoryComponent implements OnInit {
       })
 
     }
-    prodMasterApprovalEdit(id: any) {
- this.spinner.show();
+    prodMasterApprovalEdit(id: any,approval_status:any) {
+      this.spinner.show();
       this.prodMasterApprovalEditID=id;
       //this.quotationApproval_ID = id;
       let api_req: any = new Object();
@@ -595,7 +602,7 @@ export class ProductCategoryComponent implements OnInit {
       quot_approval_req.action = "product_category/getUserS";
       
       quot_approval_req.user_id = localStorage.getItem('erp_c4c_user_id');
-  
+      quot_approval_req.status = approval_status;
       api_req.element_data = quot_approval_req;
   
       this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -629,11 +636,11 @@ export class ProductCategoryComponent implements OnInit {
     }
 
     prodMgmtApprovalUpdate() {
-      alert(1)
+    
 
       if (this.quotationApprovedBy == undefined || this.quotationApprovedBy == 'undefined' || this.quotationApprovedBy == '') {
         this.quotationApprovedBy = '';
-        alert(2)
+        
       }
       this.spinner.show();
       let api_req: any = new Object();
@@ -647,8 +654,9 @@ export class ProductCategoryComponent implements OnInit {
       quot_approvalUpdate_req.product_category_hd_id = this.prodMasterApprovalEditID;
      
       quot_approvalUpdate_req.approval_type = this.Approval_Type_radiobox_Value;
-      quot_approvalUpdate_req.quotation_comments = this.productMasterApprovalForm.value.comments_approvedBy;
+      quot_approvalUpdate_req.quotation_comments = this.productMasterApprovalForm.value.approval_comments;
       quot_approvalUpdate_req.approval_by_name = this.quotationApprovedBy;
+      quot_approvalUpdate_req.product_category_hd_id =this.prodMasterApprovalEditID
       quot_approvalUpdate_req.email_to = "rm@corp.cal4care.com";
      // console.log("this.quotationApprovedBy", this.quotationApprovedBy);
       if (this.Approval_Type_radiobox_Value == "double" && this.quotationApprovedBy == '') {
@@ -660,20 +668,20 @@ export class ProductCategoryComponent implements OnInit {
         return false;
   
       }
-      quot_approvalUpdate_req.assigned_comments = this.productMasterApprovalForm.value.approval_comments;
+      quot_approvalUpdate_req.assigned_comments = this.productMasterApprovalForm.value.comments_approvedBy;
   
       api_req.element_data = quot_approvalUpdate_req;
   
       $("#prodMasterApprovalId").attr("disabled", true);
       this.serverService.sendServer(api_req).subscribe((response: any) => {
-        alert(3)
+     
         this.spinner.hide();
         $("#prodMasterApprovalId").removeAttr("disabled");
       //  console.log("response status", response.status);
         if (response.status == true) {
   
           iziToast.success({
-            message: "Quotation Sent for Approval",
+            message: "Product Category Sent for Approval",
             position: 'topRight'
           });
           $("#prodMasterApprovalId").modal("hide");
@@ -698,9 +706,6 @@ export class ProductCategoryComponent implements OnInit {
   
   
     }
-
-
-  
 
 
 }

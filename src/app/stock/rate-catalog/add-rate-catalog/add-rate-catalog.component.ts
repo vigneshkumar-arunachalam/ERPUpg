@@ -127,7 +127,7 @@ export class AddRateCatalogComponent implements OnInit {
 
   }
 
-  save(i: any) {
+  save() {
 
 
     this.spinner.show();
@@ -169,7 +169,19 @@ export class AddRateCatalogComponent implements OnInit {
     for (let i = 0; i < addr.length; i++) {
 
       // console.log(addr[i].pd_quantity_txtbox1)
-      addr[i].category_id_1 = $('#pd_category1' + i).val();
+      var category_id_1=$('#pd_category1' + i).val();
+      if(category_id_1==null || category_id_1==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Category ID 1 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].category_id_1 = $('#pd_category1' + i).val();
+      }
+    
       addr[i].category_color_1 = $('#pd_productColor1' + i).val();
       addr[i].category_fontsize_1 = $('#pd_productFontSize1' + i).val();
       addr[i].pur_color_1 = $('#pd_productQtyColor1' + i).val();
@@ -180,7 +192,19 @@ export class AddRateCatalogComponent implements OnInit {
       addr[i].price_color_1_30 = $('#pd_product30Color1' + i).val();
       addr[i].price_color_1_40 = $('#pd_product40Color1' + i).val();
       addr[i].price_color_1_50 = $('#pd_product50Color1' + i).val();
-      addr[i].category_id_2 = $('#pd_category2' + i).val();
+      var category_id_2=$('#pd_category2' + i).val();
+      if(category_id_2==null || category_id_2==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Category ID 2 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].category_id_2 = $('#pd_category2' + i).val();
+      }
+     
       addr[i].category_color_2 = $('#pd_productColor2' + i).val();
       addr[i].category_fontsize_2 = $('#pd_productFontSize2' + i).val();
       addr[i].pur_color_2 = $('#pd_productQtyColor2' + i).val();
@@ -191,7 +215,19 @@ export class AddRateCatalogComponent implements OnInit {
       addr[i].price_color_2_30 = $('#pd_product30Color2' + i).val();
       addr[i].price_color_2_40 = $('#pd_product40Color2' + i).val();
       addr[i].price_color_2_50 = $('#pd_product50Color2' + i).val();
-      addr[i].category_id_3 = $('#pd_category3' + i).val();
+      var category_id_3=$('#pd_category3' + i).val();
+      if(category_id_3==null || category_id_3==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Category ID 3 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].category_id_3 = $('#pd_category3' + i).val();
+      }
+    
       addr[i].category_color_3 = $('#pd_productColor3' + i).val();
       addr[i].category_fontsize_3 = $('#pd_productFontSize3' + i).val();
       addr[i].pur_color_3 = $('#pd_productQtyColor3' + i).val();

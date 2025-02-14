@@ -57,14 +57,39 @@ sendServergetdata(getData: any) {
   return this.http.get(url, httpOptions);
   }
 
-  sendServerpath(postData: any[]) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+  // sendServerpath(postData: any[]) {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json'
+  //     })
 
-    };
-  }
+  //   };
+  // }
+  sendServerpath(postData: any) {
+    try {
+        // Convert JSON string to object if needed
+        if (typeof postData === "string") {
+            postData = JSON.parse(postData);
+        }
+
+        if (!postData.api_url) {
+            console.error("Error: api_url is missing in postData!");
+            return;
+        }
+
+        let url = "https://laravelapi.erp1.cal4care.com/api/" + postData.api_url;
+        
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        };
+
+        return this.http.post(url, postData, httpOptions); // Ensure postData is sent as body
+    } catch (error) {
+        console.error("Error processing postData:", error);
+    }
+}
 
   postFile(postData: any) {
     const httpOptions = {

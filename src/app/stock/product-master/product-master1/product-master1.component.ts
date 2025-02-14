@@ -32,7 +32,7 @@ export class ProductMaster1Component implements OnInit {
   editApprovalStatus: any;
   productCategoryNameList: any;
   productCatID: any;
-  productSerialNoVal: any;
+  productSerialNoVal: boolean=false;
 
   // file attachment
   myFiles: string[] = [];
@@ -52,13 +52,13 @@ export class ProductMaster1Component implements OnInit {
    quotationApprovedBy: any;
   prodMasterApprovalResult: any;
   prodMasterApprovalEditID: any;
+  editproductId: any;
 
   constructor(private serverService: ServerService, 
     private http: HttpClient,private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.productCategoryList({});
-    this.ProductCategoryNameList();
+  
     this.viewProductCategory = new FormGroup({
       'view_ProductCategoryCode': new FormControl(null),
       'view_ProductCategoryName': new FormControl(null),
@@ -92,6 +92,8 @@ export class ProductMaster1Component implements OnInit {
       'comments_approvedBy': new FormControl(null),
     
     });
+    this.productCategoryList({});
+    this.ProductCategoryNameList();
     this.http.get<any>('https://laravelapi.erp1.cal4care.com/api/product_master/getProductCode').subscribe((data: any) => {
     
         this.getProductCode = data.pcode;
@@ -112,7 +114,7 @@ export class ProductMaster1Component implements OnInit {
     $('#addProductCategoryFormId').modal('show');
   }
   searchProdCatGo() {
-   // $('#searchProductCategoryFormId').modal('show');
+    $('#searchProductCategoryFormId').modal('show');
   }
   ChangeProductCatName(event:any){
     this.productCatID=event.target.value;
@@ -248,6 +250,7 @@ export class ProductMaster1Component implements OnInit {
     api_postUPd.limit_val = list_data.limit;
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.current_page = '';
+    api_postUPd.search_text=this.searchProductCategory.value.search_ProductCategoryName;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -258,6 +261,7 @@ export class ProductMaster1Component implements OnInit {
         this.response_total_cnt=response.count
         this.productCategoryList1 = response.data;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
+      $('#searchProductCategoryFormId').modal('hide');
       } else {
         iziToast.warning({
           message: "Petty Cash List Loading Failed. Please try again",
@@ -284,7 +288,7 @@ export class ProductMaster1Component implements OnInit {
     list_data.offset = list_data.offset == undefined ? 0 : list_data.offset;
     return list_data;
   }
-  prodMasterApprovalEdit(id: any) {
+  prodMasterApprovalEdit(id: any,approval_status:any) {
  
     this.prodMasterApprovalEditID=id;
     //this.quotationApproval_ID = id;
@@ -297,7 +301,7 @@ export class ProductMaster1Component implements OnInit {
     quot_approval_req.action = "product_category/getUserS";
     
     quot_approval_req.user_id = localStorage.getItem('erp_c4c_user_id');
-
+    quot_approval_req.approval_status=approval_status;
     api_req.element_data = quot_approval_req;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -369,8 +373,10 @@ export class ProductMaster1Component implements OnInit {
       };
 
   }
-  edit(productId: any,value:any) {
+  edit(productId: any,value:any,approval_status:any,productCategoryId:any) {
+    this.editproductId=productId;
     this.viewEditStatus=value;
+    this.productCatID=productCategoryId;
     this.spinner.show();
     $('#editProductCategoryFormId').modal('show');
     let api_req: any = new Object();
@@ -384,6 +390,7 @@ export class ProductMaster1Component implements OnInit {
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.product_id = productId;
     api_postUPd.temp = productId;
+    api_postUPd.approval_status=approval_status;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -392,20 +399,23 @@ export class ProductMaster1Component implements OnInit {
         this.imageShow=response.product_img;
         this.approval_status=response.approval_status;
 
-
+        this.myFiles=[];
+     
         this.spinner.hide();
        console.log('serial_no_state:', response.serial_no_state, typeof response.serial_no_state);
-
+        
         
         this.editProductCategory.patchValue({
           'edit_ProductMasterCode': response.productCode,
           'edit_ProductMasterCatName': response.product_category_id,
           'edit_ProductMasterName': response.productName,
-
+          'edit_ProductMasterSerialNo': response.serial_no_states,
           'edit_ProductMasterDesc': response.productDesc,
-          'edit_ProductMasterAttachment': response.product_img,
-          'edit_ProductMasterSerialNo': response.serial_no_state,
+          // 'edit_ProductMasterAttachment': response.product_img,
+         
         });
+       
+     
 
       } else {
         iziToast.warning({
@@ -424,6 +434,94 @@ export class ProductMaster1Component implements OnInit {
       };
 
   }
+  update() {
+    
+        const data = new FormData();
+        data.append("product_img[]", this.myFiles[0]);
+        data.append('edit_ProductMasterCode', this.editProductCategory.value.edit_ProductMasterCode);
+
+        data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
+        data.append('productCode',  this.getProductCode);
+        data.append('productId',  this.editproductId);
+        data.append('product_category_id', this.productCatID);
+       
+        if (this.editProductCategory.value.edit_ProductMasterDesc == null || this.editProductCategory.value.edit_ProductMasterDesc == '') {
+          iziToast.error({
+            message: "Product Description Missing",
+            position: 'topRight'
+          });
+          this.spinner.hide();
+          return false;
+        } else {
+          data.append('productDesc', this.editProductCategory.value.edit_ProductMasterDesc);
+        }
+        data.append('quantity', '0');
+        data.append('unit', '0');
+        data.append('rate', '0');
+        data.append('approval_status', this.approval_status);
+         data.append('serial_no_state', String(this.productSerialNoVal));
+
+         if (this.editProductCategory.value.edit_ProductMasterName == null || this.editProductCategory.value.edit_ProductMasterName == '') {
+          iziToast.error({
+            message: "Product Name Missing",
+            position: 'topRight'
+          });
+          this.spinner.hide();
+          return false;
+        } else {
+          data.append('productName', this.editProductCategory.value.edit_ProductMasterName);
+        }
+       
+        data.append('action', "updateProductDetails");
+  
+  
+        var self = this;
+        $.ajax({
+          type: 'POST',
+          url: 'https://laravelapi.erp1.cal4care.com/api/product_master/updateProductDetails',
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: data,
+          success: function (result: any) {
+            if (result.status == true) {
+              self.productCategoryList({});
+            //  console.log(result);
+              Swal.close();
+              $("#editProductCategoryFormId").modal("hide");
+              this.edit_array = [];
+  
+              iziToast.success({
+                message: "Updated successfully",
+                position: 'topRight'
+              });
+            }
+            else {
+              Swal.close();
+              $("#editProductCategoryFormId").modal("hide");
+  
+              iziToast.warning({
+                message: "File Attachment Update Failed",
+                position: 'topRight'
+              });
+            }
+          },
+          error: function (err: any) {
+  
+            console.log("err", err)
+            iziToast.error({
+              message: "Server Side Error",
+              position: 'topRight'
+            });
+            Swal.close();
+            $("#addProductCategoryFormId").modal("hide");
+          }
+  
+        })
+  
+  
+      
+    }
   Add1() {
     this.spinner.show();
     $('#addProductCategoryFormId').modal('show');
@@ -488,7 +586,7 @@ export class ProductMaster1Component implements OnInit {
     api_postUPd.action = "viewProductDetails";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    // api_postUPd.product_category_id = product_category_id;
+     api_postUPd.search_text = this.searchProductCategory.value.search_ProductCategoryName;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -559,7 +657,7 @@ export class ProductMaster1Component implements OnInit {
       };
 
   }
-  delete(productId: any) {
+  delete(productId: any,approval_status:any) {
 
       Swal.fire({
         title: 'Are you sure to Delete?',
@@ -580,8 +678,8 @@ export class ProductMaster1Component implements OnInit {
           api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
           api_singleDelete.action = "deleteProductDetails";
           api_singleDelete.user_id = localStorage.getItem('erp_c4c_user_id');
-
           api_singleDelete.productId = productId;
+          api_singleDelete.approval_status = approval_status;
           api_req.element_data = api_singleDelete;
 
           this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -657,8 +755,8 @@ export class ProductMaster1Component implements OnInit {
     
       //  this.addProductMaster.reset();
         //  var data = new FormData();
-        Swal.fire('File Updating');
-        Swal.showLoading();
+        // Swal.fire('File Updating');
+        // Swal.showLoading();
     
         if (this.myFiles.length == 0) {
           Swal.close();
@@ -680,15 +778,57 @@ export class ProductMaster1Component implements OnInit {
           // }
     
           data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
-          data.append('productCode',  this.getProductCode);
-          data.append('product_category_id', this.productCatID);
-          data.append('productDesc', this.addProductMaster.value.add_ProductMasterDesc);
+          if (this.getProductCode == null || this.getProductCode == '') {
+            iziToast.error({
+              message: "Product Code Missing",
+              position: 'topRight'
+            });
+            this.spinner.hide();
+            return false;
+          } else {
+            data.append('productCode',  this.getProductCode);
+          }
+
+          if (this.productCatID == null || this.productCatID == '') {
+            iziToast.error({
+              message: "Product Category Missing",
+              position: 'topRight'
+            });
+            this.spinner.hide();
+            return false;
+          } else {
+            data.append('product_category_id', this.productCatID);
+          }
+
+          if (this.addProductMaster.value.add_ProductMasterDesc == null || this.addProductMaster.value.add_ProductMasterDesc == '') {
+            iziToast.error({
+              message: "Product Description Missing",
+              position: 'topRight'
+            });
+            this.spinner.hide();
+            return false;
+          } else {
+            data.append('productDesc', this.addProductMaster.value.add_ProductMasterDesc);
+          }
+
+         
+         
           data.append('quantity', "");
           data.append('unit', "");
           data.append('rate', "");
-           data.append('serial_no_state', this.productSerialNoVal);
+           data.append('serial_no_state', String(this.productSerialNoVal));
            data.append('rate', "");
-           data.append('productName', this.addProductMaster.value.add_ProductMasterName);
+           if (this.addProductMaster.value.add_ProductMasterName == null || this.addProductMaster.value.add_ProductMasterName == '') {
+            iziToast.error({
+              message: "Product Name Missing",
+              position: 'topRight'
+            });
+            this.spinner.hide();
+            return false;
+          } else {
+            data.append('productName', this.addProductMaster.value.add_ProductMasterName);
+          }
+          
           data.append('action', "insertProductDetails");
     
     
@@ -740,93 +880,7 @@ export class ProductMaster1Component implements OnInit {
         }
       }
 
-      update() {
-    
-        //  this.addProductMaster.reset();
-          //  var data = new FormData();
-          Swal.fire('File Updating');
-          Swal.showLoading();
-      
-          if (this.myFiles.length == 0) {
-            Swal.close();
-            iziToast.warning({
-              message: "Attachment File Missing",
-              position: 'topRight'
-            });
-          }
-      
-          if (this.myFiles.length > 0) {
-      
-            const data = new FormData();
-      
-            for (var i = 0; i < this.myFiles.length; i++) {
-              data.append("product_img[]", this.myFiles[i]);
-            }
-            // for (var j = 0; j < this.edit_array.length; j++) {
-            //   data.append("quotation_pdf_add[]", this.edit_array[j]);
-            // }
-      
-            data.append('user_id', localStorage.getItem('erp_c4c_user_id'));
-            data.append('productCode',  this.getProductCode);
-            data.append('product_category_id', this.productCatID);
-            data.append('productDesc', this.editProductCategory.value.edit_ProductMasterDesc);
-            data.append('quantity', "");
-            data.append('unit', "");
-            data.append('rate', "");
-            data.append('approval_status', this.approval_status);
-             data.append('serial_no_state', this.productSerialNoVal);
-             data.append('rate', "");
-             data.append('productName', this.editProductCategory.value.edit_ProductMasterName);
-            data.append('action', "updateProductDetails");
-      
-      
-            var self = this;
-            $.ajax({
-              type: 'POST',
-              url: 'https://laravelapi.erp1.cal4care.com/api/product_master/updateProductDetails',
-              cache: false,
-              contentType: false,
-              processData: false,
-              data: data,
-              success: function (result: any) {
-                if (result.status == true) {
-                  self.productCategoryList({});
-                //  console.log(result);
-                  Swal.close();
-                  $("#addProductCategoryFormId").modal("hide");
-                  this.edit_array = [];
-      
-                  iziToast.success({
-                    message: "File Attachment Saved successfully",
-                    position: 'topRight'
-                  });
-                }
-                else {
-                  Swal.close();
-                  $("#addProductCategoryFormId").modal("hide");
-      
-                  iziToast.warning({
-                    message: "File Attachment Update Failed",
-                    position: 'topRight'
-                  });
-                }
-              },
-              error: function (err: any) {
-      
-                console.log("err", err)
-                iziToast.error({
-                  message: "Server Side Error",
-                  position: 'topRight'
-                });
-                Swal.close();
-                $("#addProductCategoryFormId").modal("hide");
-              }
-      
-            })
-      
-      
-          }
-        }
+     
 
         prodMgmtApprovalUpdate() {
 

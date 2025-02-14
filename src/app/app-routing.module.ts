@@ -151,10 +151,14 @@ import { AddcontmasterComponent } from './hr/monthlycontribution/addcontmaster/a
 import { EditcontmasterComponent } from './hr/monthlycontribution/editcontmaster/editcontmaster.component';
 import { LeaverequestComponent } from './hr/leaverequest/leaverequest.component';
 import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.component';
+import { ErpAppPermissionComponent } from './erp-app-permission/erp-app-permission.component';
+
 const routes: Routes = [
   {
     path: '', component: QuotationnewComponent
   },{
+    path: 'erp-app-permission', component: ErpAppPermissionComponent
+  },{
     path: 'leaveRequestFinal', component: LeavereqFinalComponent
   },{
     path: 'leaveRequest', component: LeaverequestComponent

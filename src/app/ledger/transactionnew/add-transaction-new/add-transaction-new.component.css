@@ -218,6 +218,7 @@ padding-left: 0px !important;
 }
 .add-contact-table-section th {
   background: #6d5dfc;
+  color: black !important;
 }
 
 /* --------------------KS--CSS------------------------------------------ */
@@ -293,3 +294,82 @@ padding-left: 0px !important;
 
 
  /* search ends */
+
+ .issueStock th {
+
+  padding: 5px 13px !important;
+ }
+
+
+
+ .dropdown-list {
+  position: absolute;
+  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  max-height: 200px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 1000;
+}
+
+.dropdown-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background: #f0f0f0;
+}
+
+.othersCalss textarea{
+
+  height: 100px;
+  width: 40%;
+}
+.othersCalss input{
+
+  height: 47px;
+  width: 40%;
+}
+
+
+
+/* ///////////////////////////////////////////////////////////////////////////////////////////////////   */
+
+
+.transTap {
+  color: white !important;
+  background-color: #1bcf22 !important;
+}
+.btnn {
+  background-color: #c32c17e6;
+  color: white;
+  border: none;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 11px;
+  border-radius: 30px;
+  transition: all 1.3s;
+}
+
+/* .btnn:hover {
+  background-color: #15cece;
+} */
+
+.btnn.pulse:hover {
+  animation: pulse 1s infinite;
+}
+
+
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}

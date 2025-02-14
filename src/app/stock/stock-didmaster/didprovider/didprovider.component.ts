@@ -36,7 +36,7 @@ export class DIDProviderComponent implements OnInit {
   constructor(private serverService: ServerService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder, private spinner: NgxSpinnerService) { }
 
   ngOnInit(): void {
-    this.didNumberCatalogList({});
+  
     this.viewProductCategory = new FormGroup({
       'view_ProductCategoryCode': new FormControl(null),
       'view_ProductCategoryName': new FormControl(null),
@@ -54,6 +54,7 @@ export class DIDProviderComponent implements OnInit {
     this.searchProductCategory = new FormGroup({
       'search_ProductCategoryName': new FormControl(null),
     });
+    this.didNumberCatalogList({});
 
   }
   addProdCatGo() {
@@ -77,7 +78,7 @@ export class DIDProviderComponent implements OnInit {
     });
   }
   searchProdCatGo() {
-   // $('#searchProductCategoryFormId').modal('show');
+    $('#searchProductCategoryFormId').modal('show');
   }
 
 
@@ -97,6 +98,7 @@ export class DIDProviderComponent implements OnInit {
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.current_page = '';
     api_postUPd.categoryName = '';
+    api_postUPd.search_text = this.searchProductCategory.value.search_ProductCategoryName;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -107,6 +109,7 @@ export class DIDProviderComponent implements OnInit {
         this.response_total_cnt=response.count
         this.DIDNumberCategoryList1 = response.data;
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
+        $('#searchProductCategoryFormId').modal('hide');
       } else {
         iziToast.warning({
           message: "Petty Cash List Loading Failed. Please try again",

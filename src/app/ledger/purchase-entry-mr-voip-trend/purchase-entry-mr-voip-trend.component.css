@@ -289,20 +289,23 @@ select {
 }
 
 
-#cg tr:nth-child(even):hover {
+/* #cg tr:nth-child(even):hover {
   background: linear-gradient(to right, #c9f1a2, #df97b4);
+  color:#000;
 }
 
 #cg tr:nth-child(odd):hover {
   background: linear-gradient(to right, #f3f4e6, #f4c5d9);
-}
+  color:#000;
+} */
 
 tr:hover td {
-  color: #0000;
+  color: #b1ba1500;
+
   background: linear-gradient(90deg, #1095c1 50%, #000 0) var(--_p, 100%) / 200% no-repeat;
   -webkit-background-clip: text;
   background-clip: text;
-  transition: background 2s, color 2s;
+  transition: background 1s, color 1s;
 }
 .userDatatable table tbody tr td {
   border: 1px solid #C5D9E0;
@@ -473,8 +476,10 @@ th, td {
 
 .gradient-cell {
   /* Gradient background */
-  background: linear-gradient(135deg, #fa0b0bc7, #82f77e);
-  color: #000000; /* Text color for readability */
+  /* background: linear-gradient(135deg, #f8e8c8, #c8e8f8); */
+
+  background-image: linear-gradient(15deg, #13547a 0%, #80d0c7 100%);
+  color: #FFFFFF; /* Text color for readability */
   padding: 10px;
   text-align: center; /* Center-align text */
   border-radius: 8px; /* Rounded corners */
@@ -485,15 +490,24 @@ th, td {
 /* Hover effect */
 .gradient-cell:hover {
   background: linear-gradient(135deg, #ff6a00, #ff9966);
+  color: #0f0000; /* Text color for readability */
   transform: scale(1.05); /* Slightly enlarge on hover */
   cursor: pointer; /* Change cursor to pointer */
 }
 .table-container tr td, .table-container tr th{width: 8%;white-space: normal;}
 .table-container tr td:first-child,.table-container tr tr:first-child{width: 20%;}
 
+
 .readonly-field {
-  background-color: #f4f2f3 !important;
-  cursor: not-allowed;
+background-color: #f4f2f3 !important;
+cursor: not-allowed;
+}
+
+.spinner-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
 }
 
 

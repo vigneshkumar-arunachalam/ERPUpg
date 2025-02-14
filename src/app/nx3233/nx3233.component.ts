@@ -289,8 +289,7 @@ export class Nx3233Component implements OnInit {
     }
   }
    fileAttachmentUpdate() {
-  
-     this.FileAttachmentForm.reset();
+     
       //  var data = new FormData();
       Swal.fire('File Updating');
       Swal.showLoading();
@@ -310,7 +309,7 @@ export class Nx3233Component implements OnInit {
         for (var i = 0; i < this.myFiles.length; i++) {
           data.append("csv_file", this.myFiles[i]);
         }
-        data.append("csv_file", this.FileAttachmentForm.value.file);
+        // data.append("csv_file", this.FileAttachmentForm.value.file);
         // for (var j = 0; j < this.edit_array.length; j++) {
         //   data.append("quotation_pdf_add[]", this.edit_array[j]);
         // }
@@ -337,22 +336,32 @@ export class Nx3233Component implements OnInit {
               Swal.close();
               $("#fileAttachmentNX32FormId").modal("hide");
               this.edit_array = [];
+           
+              this.myFiles=[];
+              this.FileAttachmentForm.reset();
+              console.log("myfiles length",this.myFiles.length);
                   if( this.insertedRecords==0){
+                    this.myFiles=[];
                     iziToast.warning({
-                      message: "Records already uploaded",
+                      message: "Records already uploaded or Empty Record inserted",
                       position: 'topRight'
                     });
+                  
 
                   }else{
+                    this.myFiles=[];
+                    this.FileAttachmentForm.reset();
                     iziToast.success({
                       message: this.insertedRecords + "-"+ "Records inserted successfully",
                       position: 'topRight'
                     });
-
+                  
   }
              
             }
             else {
+              this.myFiles=[];
+              this.FileAttachmentForm.reset();
               Swal.close();
               $("#fileAttachmentNX32FormId").modal("hide");
   
@@ -363,7 +372,8 @@ export class Nx3233Component implements OnInit {
             }
           },
           error: function (err: any) {
-  
+            this.myFiles=[];
+            this.FileAttachmentForm.reset();
             console.log("err", err)
             iziToast.error({
               message: "Server Side Error",

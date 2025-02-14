@@ -67,7 +67,7 @@
                          
                             
                               <li class="dropdown__item">
-                                <a class="hover1" title="View" (click)="edit(item.productId,0)">
+                                <a class="hover1" title="View" (click)="edit(item.productId,0,item.approval_status,item.product_category_id)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-info">
@@ -79,13 +79,13 @@
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover2" title="edit" (click)="edit(item.productId,1)">
+                                <a class="hover2" title="edit" (click)="edit(item.productId,1,item.approval_status,item.product_category_id)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
   
                                 </a>
                               </li>
                               <li class="dropdown__item">
-                                <a class="hover1" title="Delete" (click)="delete(item.productId)">
+            <a class="hover1" title="Delete" (click)="delete(item.productId,item.approval_status)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                     fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round"
                                     stroke-linejoin="round" class="feather feather-delete">
@@ -96,7 +96,7 @@
                                 </a>
                               </li>
                               <li class="dropdown__item" *ngIf="item.approval_status==2">
-                                <a class="hover1" title="Approval" (click)="prodMasterApprovalEdit(item.productId)">
+                                <a class="hover1" title="Approval" (click)="prodMasterApprovalEdit(item.productId,item.approval_status)">
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6D5DFC" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
   
                                 </a>
@@ -299,6 +299,17 @@ aria-hidden="true">
                </div>
              </div>
              <div class="col-lg-12 ">
+              <div class="form-group row">
+                  <div class="col-lg-6">
+                      <label for="edit_ProductMasterSerialNo" class="col-lg-12 col-form-label">Serial Number Available</label>
+                    </div>
+                
+                <div class="col-lg-6 mt-2">
+                  <input type="checkbox"  formControlName="edit_ProductMasterSerialNo" (change)="productSerialNo($event)">
+                </div>
+              </div>
+            </div>
+             <div class="col-lg-12 ">
                <div class="form-group row">
                    <div class="col-lg-6">
                        <label for="edit_ProductMasterAttachment" class="col-lg-12 col-form-label">Select Attachment</label>
@@ -307,7 +318,7 @@ aria-hidden="true">
                  <div class="col-lg-6 mt-2">
                    <!-- <input required type="file"  class="form-control"
                    formControlName="add_ProductMasterAttachment" (change)="fileAttachmentEvent($event)"> -->
-                   <input class="col-lg-6" formControlName="edit_ProductMasterAttachment" id="file1" type="file" multiple
+                   <input class="col-lg-6" formControlName="edit_ProductMasterAttachment" id="file19" type="file" multiple
                    class="form-control" (change)="onFileChange($event)">
                    <img src="{{this.imageShow}}" height="150" width="250">
                  </div>
@@ -317,17 +328,7 @@ aria-hidden="true">
                </div>
              </div>
   
-             <div class="col-lg-12 ">
-               <div class="form-group row">
-                   <div class="col-lg-6">
-                       <label for="edit_ProductMasterSerialNo" class="col-lg-12 col-form-label">Serial Number Available</label>
-                     </div>
-                 
-                 <div class="col-lg-6 mt-2">
-                   <input type="checkbox"  formControlName="edit_ProductMasterSerialNo" (change)="productSerialNo($event)">
-                 </div>
-               </div>
-             </div>
+             
           
           </div>
 
@@ -386,7 +387,7 @@ aria-hidden="true">
                  <div class="col-lg-6">
                     <select name="add_ProductMasterCatName" class="form-control" aria-label="Default select example"
                     formControlName="add_ProductMasterCatName" (change)="ChangeProductCatName($event)">
-                    <option value="0">Select Product Category Name</option>
+                    <option value="null">Select Product Category Name</option>
 
                     <option *ngFor="let classif of productCategoryNameList" value="{{classif.product_category_id}}">
                       {{classif.product_category_name}}
@@ -470,9 +471,9 @@ aria-hidden="true">
      <div class="modal-content searchQuotationCSS">
        <div class="modal-header">
          <h2 class="col-11  modal-title text-center text-center" id="exampleModalLongTitle" style="font-family: cursive;color:rgb(240 241 219);background: #200122; /* fallback for old browsers */
-         background: -webkit-linear-gradient(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
+         background: -webkit-linear-gradisearchProductCategoryent(to right, #200122, #6f0000); /* Chrome 10-25, Safari 5.1-6 */
          background: linear-gradient(to right, #262127, #54b7aa);">
-        Search Product Category Management </h2>
+        Search  </h2>
        <button type="button" class="close" data-dismiss="modal" aria-label="Close" title="close">
          <span aria-hidden="true">&times;</span>
        </button>
@@ -485,7 +486,7 @@ aria-hidden="true">
              <div class="col-lg-12 ">
                <div class="form-group row">
                 <div class="col-lg-6">
-                  <label for="search_ProductCategoryName" class="col-lg-12 col-form-label">Product Category Name</label>
+                  <label for="search_ProductCategoryName" class="col-lg-12 col-form-label">Search Text</label>
                 </div>
                 
                  <div class="col-lg-6">
@@ -499,7 +500,7 @@ aria-hidden="true">
    
        </div>
        <div class="modal-footer">
-         <button type="button " class="btn btn-primary" (click)="search()">Search</button>
+         <button type="button " class="btn btn-primary" (click)=" productCategoryList({})">Search</button>
     
          <button type="button" class="btn btn-dark" data-dismiss="modal">
            Close

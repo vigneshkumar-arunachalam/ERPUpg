@@ -182,11 +182,14 @@ import { AddcontmasterComponent } from './hr/monthlycontribution/addcontmaster/a
 import { EditcontmasterComponent } from './hr/monthlycontribution/editcontmaster/editcontmaster.component';
 import { LeaverequestComponent } from './hr/leaverequest/leaverequest.component';
 import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ErpAppPermissionComponent } from './erp-app-permission/erp-app-permission.component';
+
 // import { BsDropdownModule} from 'ngx-bootstrap/dropdown'; 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,ErpAppPermissionComponent,
  
     MastersComponent,
     HeaderComponent,
@@ -342,11 +345,12 @@ import { LeavereqFinalComponent } from './hr/leavereq-final/leavereq-final.compo
      AddcontmasterComponent,
      EditcontmasterComponent,
      LeaverequestComponent,
-     LeavereqFinalComponent
+     LeavereqFinalComponent,
+     
  
   ],
   imports: [
-    BrowserModule,CanvasJSAngularChartsModule,
+    BrowserModule,CanvasJSAngularChartsModule,MatProgressSpinnerModule,  
     FormsModule,MatTabsModule,NgxSpinnerModule,
     ReactiveFormsModule,QRCodeModule,
     AppRoutingModule,MatChipsModule,EditorModule, DragDropModule,

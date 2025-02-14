@@ -744,6 +744,7 @@ export class MultipleInvPaymentComponent implements OnInit {
           this.edit_array.splice(index, 1);
         }
       }
+      console.log("selected id-array",this.edit_array)
     });
 
     // Update the state of all checkboxes in the DOM

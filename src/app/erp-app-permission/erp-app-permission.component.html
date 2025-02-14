@@ -1,0 +1,250 @@
+<div class="row no-gutters">
+  <div class="col-lg-12 mb-30">
+    <div class="card quotation">
+
+      <div class="card-header color-dark fw-500">
+        <h3 class="card-header-section"><a href="#" class="breadcrumb-item"><i class="fas fa-home"></i> Home</a>
+          <span class="breadcrumb-item active">ERP App User Permission Management</span>
+        </h3>
+        <div class="quotation-btn-section">
+          <button type="button" title="Add New  Invoice" class="btn btn-primary btn-default btn-squared"
+            (click)="EditAll()" style="margin-right: 10px;">
+            <i class="fas fa-edit" style="margin-right:4px;"></i>
+            User Edit
+          </button>
+
+        </div>
+      </div>
+
+
+      <div class="card-body">
+        <div class="userDatatable global-shadow border-0 bg-white w-100">
+          <div class="table-responsive" style="border: rgb(0, 0, 0);">
+
+            <div class="card">
+              <div class="card-header pb-0">
+
+                <ul class="nav nav-tabs d-flex flex-row" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" role="tab" aria-selected="true"
+                      (click)="erp_app_users()">ERP App Users</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" role="tab" aria-selected="false"
+                      (click)="normal_app_users()">Normal Users</a>
+                  </li>
+                </ul>
+              </div>
+              <table class="table mb-0 table-borderless">
+                <thead>
+                  <tr class="userDatatable-header">
+
+                    <th><input type="checkbox" (click)="slectAll()" id="selectAllQ">
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Display Name</span>
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">First Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Last Name</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Department</span>
+                    </th>
+
+                    <th>
+                      <span class="userDatatable-title">Email-Id</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Phone</span>
+                    </th>
+                    <th>
+                      <span class="userDatatable-title">Action</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngIf="this.erpAppUser === true">
+                    <tr *ngFor="let list of erp_app_permission_list;let i=index">
+                      <td><input type="checkbox" (click)="slectunique()" class="invalidContacts" value="{{list.userId}}"
+                          [(ngModel)]="list.selected" name="invalidContacts"></td>
+                      <td>{{list.display_name}}</td>
+                      <td>{{list.firstName}}</td>
+                      <td>{{list.lastName}}</td>
+                      <td>{{list.department}}</td>
+                      <td>{{list.emailId}}</td>
+                      <td>{{list.phoneNumber}}</td>
+                      <td>
+                        <i class="fas fa-edit" style="cursor:pointer; margin-right:4px;"
+                          (click)="editUnique(list.userId)"></i>
+                      </td>
+                    </tr>
+                    <tr *ngIf="recordNotFound == true">
+                      <td colspan="12">Data not found</td>
+                    </tr>
+                  </ng-container>
+
+
+
+                  <ng-container *ngIf="this.erpAppUser === false">
+                    <tr *ngFor="let list of normal_users_list;let i=index">
+                      <td><input type="checkbox" (click)="slectunique()" class="invalidContacts" value="{{list.id}}"
+                          [(ngModel)]="list.selected" name="invalidContacts"></td>
+                      <td>{{list.display_name}}</td>
+                      <td>{{list.firstName}}</td>
+                      <td>{{list.lastName}}</td>
+                      <td>{{list.department}}</td>
+                      <td>{{list.emailId}}</td>
+                      <td>{{list.phoneNumber}}</td>
+                      <td>
+                        <i class="fas fa-edit" style="cursor:pointer; margin-right:4px;"
+                          (click)="editUnique(list.userId)"></i>
+                      </td>
+                    </tr>
+                    <tr *ngIf="recordNotFound_new == true">
+                      <td colspan="12">Data not found</td>
+                    </tr>
+                  </ng-container>
+
+
+
+                </tbody>
+
+              </table>
+
+              <div>
+                <br>
+                <br>
+              </div>
+
+              <nav class="atbd-page" *ngIf="this.erpAppUser === true && recordNotFound === false">
+                <ul class="pagination mb-0" *ngIf="paginationData.info == 'show'">
+                  <li class="page-item">
+                    <a [class]="paginationData.backtab=='show' ? 'page-link' :'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.backtab=='show' ? getErpAppPermissionList({'offset':paginationData.start}) : false"><i
+                        class="fas fa-angle-left"></i></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.backtab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="getErpAppPermissionList({'offset':paginationData.back})"><i
+                        class="fas fa-angle-double-left"></i></a>
+                  </li>
+                  <li [class]="pagination.load ==false ? 'page-item active' :'page-item'"
+                    *ngFor="let pagination of paginationData.data;let i=index">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)=" pagination.load ==true ? getErpAppPermissionList({'offset':pagination.offset_count}) : false">{{pagination.btn_length}}
+                      <span class="sr-only" *ngIf="pagination.load ==false">(current)</span></a>
+                  </li>
+                  <li class="page-item" *ngIf="paginationData.nexttab =='show'">
+                    <a class="page-link" href="javascript:void(0)"
+                      (click)="getErpAppPermissionList({'offset':paginationData.next})"><i
+                        class="fas fa-angle-double-right"></i></a>
+                  </li>
+                  <li class="page-item">
+                    <a [class]="paginationData.nexttab =='show' ? 'page-link' : 'page-link disabled'"
+                      href="javascript:void(0)"
+                      (click)="paginationData.nexttab =='show' ? getErpAppPermissionList({'offset':paginationData.end}) : false"><i
+                        class="fas fa-angle-right"></i></a>
+                  </li>
+                  <li class="dropdown__item">
+                    <a class="hover3" title="Testing Payment Link" data-toggle="modal" data-target="#">
+
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+              <br>
+              <br>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+<!------------------------------    EDIT POPUP  ---------------------------------------->
+
+<div class="modal fade bd-example-modal-lg" id="edit_erp_app_perm" tabindex="-1" role="dialog"
+  aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+
+        <h2>User Permission Group Edit </h2>
+      </div>
+
+      <div class="modal-body">
+        <div class="userDatatable global-shadow border-0 bg-white w-100">
+          <div class="table-responsive">
+            <div class="table-responsive ml-3">
+              <form [formGroup]="editData">
+                <table class="table mb-0 table-borderless">
+                  <tr class="edituserheader">
+                    <th>User Name / Permission Name</th>
+                    <th *ngFor="let list of editpopupList_header">{{ list.description }}</th>
+                  </tr>
+                  <tbody>
+                    <tr *ngFor="let listCount of editpopUpListCount; let i = index">
+                      <td>{{ listCount.username }}</td>
+                      <td *ngFor="let permission of editpopupList_header; let j = index">
+                        <input type="checkbox" [checked]="isPermissionChecked(listCount, permission.permission_code)"
+                          (change)="onCheckboxChangeAsString($event, i, permission.permission_code)" />
+                      </td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="updateErpAppPermission()">
+            Save
+          </button>
+          <button type="button" class="btn btn-dark" data-dismiss="modal">
+            Close
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- <tr *ngFor="let listCount of editpopUpListCount;let i= index">
+                      <td >{{listCount.username}}</td>
+                     <td> <input type="checkbox" formControlName="erp_app_access" id="erp_app_access"  [checked]="listCount.permissions[i].app_acc" > </td>
+                      <td> <input type="checkbox" formControlName="erp_customer_master" id="erp_customer_master"  [checked]="listCount.permissions[i].cus_mas" > </td>
+                      <td> <input type="checkbox" formControlName="erp_quotation" id="erp_quotation"  [checked]="listCount.permissions[i].quot" > </td>
+                      <td> <input type="checkbox" formControlName="erp_quotation_comment" id="erp_quotation_comment"  [checked]="listCount.permissions[i].quot_comm"> </td>
+                      <td> <input type="checkbox" formControlName="erp_did_number" id="erp_did_number"  [checked]="listCount.permissions[i].did_num" > </td>
+                      <td> <input type="checkbox" formControlName="erp_crm" id="erp_crm"  [checked]="listCount.permissions[i].crm" > </td>
+                      <td> <input type="checkbox" formControlName="erp_crm_my_leads" id="erp_crm_my_leads"  [checked]="listCount.permissions[i].crm_my_lead" > </td>
+                      <td> <input type="checkbox" formControlName="erp_customer_approval" id="erp_customer_approval"  [checked]="listCount.permissions[i].cus_approval" > </td>
+                      <td> <input type="checkbox" formControlName="erp_3cx_api_credit" id="erp_3cx_api_credit"  [checked]="listCount.permissions[i].api_credit" > </td>
+                      <td> <input type="checkbox" formControlName="erp_trun_over" id="erp_trun_over"  [checked]="listCount.permissions[i].turn_over" > </td>
+                      <td> <input type="checkbox" formControlName="erp_invoice" id="erp_invoice"  [checked]="listCount.permissions[i].sale_inv" > </td>
+                      <td> <input type="checkbox" formControlName="erp_customer_profile" id="erp_customer_profile"  [checked]="listCount.permissions[i].cust_pro" > </td>
+                      <td> <input type="checkbox" formControlName="erp_not_assigned_ticket" id="erp_not_assigned_ticket"  [checked]="listCount.permissions[i].not_ass_ticket" > </td>
+                      <td> <input type="checkbox" formControlName="erp_force_logout" id="erp_force_logout"  [checked]="listCount.permissions[i].force_logout" > </td>
+                      <td> <input type="checkbox" formControlName="erp_white_list_ip" id="erp_white_list_ip"  [checked]="listCount.permissions[i].white_ip" > </td>
+                      <td> <input type="checkbox" formControlName="erp_credit_manager" id="erp_credit_manager"  [checked]="listCount.permissions[i].credit_manager" > </td>
+                      <td> <input type="checkbox" formControlName="erp_stock_list" id="erp_stock_list"  [checked]="listCount.permissions[i].stock_list" > </td>
+                      <td> <input type="checkbox" formControlName="erp_manual_whitelist" id="erp_manual_whitelist"  [checked]="listCount.permissions[i].manual_whitelist" > </td>
+                      <td> <input type="checkbox" formControlName="erp_dc_ip" id="erp_dc_ip"  [checked]="listCount.permissions[i].dc_ip" > </td>
+                    </tr> -->

@@ -271,6 +271,13 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
       };
 
   }
+  getMonthName(monthVal: number): string {
+    const months = [
+      '', 'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return months[monthVal] || '';
+  }
   fetchVendorDetails(vendorID:any) {
     this.vendorID_selected=vendorID;
     this.spinner.show();
@@ -296,43 +303,53 @@ export class PurchaseEntryCall4telTrendComponent implements OnInit {
 
         this.spinner.hide();
         const vendorData = response.vendorTrendDetails;
+
         const formArray = new FormArray([]);
-  
 
-        for (let index = 0; index < response.vendorTrendDetails.length; index++) {
-      
+        // Loop through each month
+        Object.keys(response.vendorTrendDetails.months).forEach((month) => {
+          response.vendorTrendDetails.months[month].forEach((record: any) => {
+            formArray.push(
+              this.fb.group({
 
-          formArray.push(this.fb.group({
-            "invoiceNo": response.vendorTrendDetails[index].invoice_no,
-            "invoiceAmount1": response.vendorTrendDetails[index].invoice_amount,
-            "invoiceAmount2": response.vendorTrendDetails[index].invoice_amount_converted,
-            "currConvRate": response.vendorTrendDetails[index].conversionRate,
-            "fixedAmount1": response.vendorTrendDetails[index].fixed_amount,
-            "fixedAmount2": response.vendorTrendDetails[index].fixed_amount_converted,
-            "usageAmount1": response.vendorTrendDetails[index].usage_amount,
-            "usageAmount2": response.vendorTrendDetails[index].usage_amount_converted,
-            "otherAmount1": response.vendorTrendDetails[index].other_amount,
-            "otherAmount2": response.vendorTrendDetails[index].other_amount_converted,
-            "IDDAmount1": response.vendorTrendDetails[index].idd_amount,
-            "IDDAmount2": response.vendorTrendDetails[index].idd_amount_converted,
-            "localAmount1": response.vendorTrendDetails[index].local_amount,
-            "localAmount2": response.vendorTrendDetails[index].local_amount_converted,
-            "purchase_trend_id": response.vendorTrendDetails[index].purchase_trend_id,
-            "purchaseEntryTempId": response.vendorTrendDetails[index].purchaseEntryTempId,
+                invoiceNo: record.invoice_no || '',
+                invoiceAmount1: record.invoice_amount_without_tax || 0,
+                invoiceAmount2: record.invoice_amount_converted || '',
+                currConvRate: record.conversionRate || '',
 
-            "vendorId": response.vendorTrendDetails[index].vendorId,
-            "billerid": response.vendorTrendDetails[index].billerid,
-            "year_val": response.vendorTrendDetails[index].year_val,
-            "ven_id": response.vendorTrendDetails[index].ven_id,
-            "mon_val": response.vendorTrendDetails[index].mon_val,
-            "entry_row": response.vendorTrendDetails[index].entryRow,
-          })
-          );
-        }
+                fixedAmount1: record.fixed_amount || 0,
+                fixedAmount2: record.fixed_amount_converted || '',
+                usageAmount1: record.usage_amount || 0,
+                usageAmount2: record.usage_amount_converted || '',
+
+                otherAmount1: record.other_amount || 0,
+                otherAmount2: record.other_amount_converted || '',
+                IDDAmount1: record.idd_amount || 0,
+                IDDAmount2: record.idd_amount_converted || '',
+
+                localAmount1: record.local_amount || 0,
+                localAmount2: record.local_amount_converted || '',
+                purchase_trend_id: record.purchase_trend_id || '',
+                purchaseEntryTempId: record.purchaseEntryTempId || '',
+
+                vendorId: record.vendorId || '',
+                billerid: record.billerid || '',
+                year_val: record.year_val || '',
+                ven_id: record.ven_id || '',
+          
+              
+                entry_row: record.entryRow || '',
+                mon_val: record.month_val || '',
+                mon_val_title:  record.month_val || '',
+        
+              })
+            );
+          });
+        });
         
         this.addPI_section2.setControl('addresses', formArray);
-        // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
-       
+        console.log("this.addPI_section2",this.addPI_section2);
+		
        
 
       } else {

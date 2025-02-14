@@ -99,6 +99,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -112,6 +115,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -128,6 +134,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -142,6 +151,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -156,6 +168,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -170,6 +185,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -184,6 +202,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -253,9 +274,11 @@
                                 </thead>
                                 <tbody >
                                   <ng-container *ngFor="let address of addressControls.controls; let j = index;" [formGroupName]="j">
-                                    <tr>
-                                      <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;    font-weight: 500;
-    color: #801505;">{{months[j]}}</td>
+                                   
+                                    <tr *ngIf="j === 0 || address.value.mon_val !== addressControls.controls[j - 1].value.mon_val">
+                                      <td colspan="13" style="border: 1px dotted blue; background-color: antiquewhite; font-weight: 500; color: #801505;">
+                                        {{ getMonthName(address.value.mon_val) }}
+                                      </td>
                                     </tr>
                                   
                                   <tr >
@@ -281,32 +304,18 @@
                                     <td>
                                       <input type="number" [readonly]="isReadOnly" [ngClass]="{'readonly-field': isReadOnly}"  class="form-control" formControlName="currConvRate" id="pd_currConvRate{{j}}" />
                                     </td>
-                                    <!-- <td>
-                                      <input type="number" class="form-control" formControlName="fixedAmount1" id="pd_fixedAmount1{{j}}" />
-                                      <input type="number" class="form-control" formControlName="fixedAmount2" id="pd_fixedAmount2{{j}}" />
-                                    </td> -->
+                                  
+                                 
                                     <td>
                                       <div class="input-group">
-                                        <!-- <button 
-                                          type="button" style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
-                                          class="btn btn-outline-secondary btn-sm" 
-                                          (click)="decreaseValue(j, 'fixedAmount1')"
-                                        >
-                                          -
-                                        </button> -->
+                                    
                                         <input 
                                           type="number" 
                                           class="form-control" 
                                           formControlName="fixedAmount1"  (input)="onCurrConvRateChangeFixed(j)"
                                           id="pd_fixedAmount1{{j}}" 
                                         />
-                                        <!-- <button 
-                                          type="button" style="border-radius: 36px;padding: 2px 4px;line-height: 2px;"
-                                          class="btn btn-outline-primary btn-sm" 
-                                          (click)="increaseValue(j, 'fixedAmount1','currConvRate')"
-                                        >
-                                          +
-                                        </button> -->
+                                       
                                       </div>
                                       <div class="input-group mt-2">
                                         
@@ -341,11 +350,7 @@
                                        
                                       </div>
                                     </td>
-                                    
-                                    <!-- <td>
-                                      <input type="number" class="form-control" formControlName="usageAmount1" id="pd_usageAmount1{{j}}" />
-                                      <input type="number" class="form-control" formControlName="usageAmount2" id="pd_usageAmount2{{j}}" />
-                                    </td> -->
+                               
                                     <td>
                                       <div class="input-group">
                                        
@@ -368,10 +373,7 @@
                                        
                                       </div>
                                     </td>
-                                    <!-- <td>
-                                      <input type="text" class="form-control" formControlName="otherAmount1" id="pd_otherAmount1{{j}}" />
-                                      <input type="text" class="form-control" formControlName="otherAmount2" id="pd_otherAmount2{{j}}" />
-                                    </td> -->
+                                
                                     <td>
                                       <div class="input-group">
                                        
@@ -394,10 +396,7 @@
                                        
                                       </div>
                                     </td>
-                                    <!-- <td>
-                                      <input type="text" class="form-control" formControlName="IDDAmount1" id="pd_IDDAmount1{{j}}" />
-                                      <input type="text" class="form-control" formControlName="IDDAmount2" id="pd_IDDAmount2{{j}}" />
-                                    </td> -->
+                                
                                     <td>
                                       <div class="input-group">
                                        
@@ -420,10 +419,7 @@
                                        
                                       </div>
                                     </td>
-                                    <!-- <td>
-                                      <input type="text" class="form-control" formControlName="localAmount1" id="pd_localAmount1{{j}}" />
-                                      <input type="text" class="form-control" formControlName="localAmount2" id="pd_localAmount2{{j}}" />
-                                    </td> -->
+                                  
                                     <td>
                                       <div class="page">
   
@@ -466,8 +462,11 @@
               </div>
             </div>
             <ng-template #loading>
-              <p>Loading data...</p>
-            </ng-template>
+              <div class="spinner-container">
+                <mat-spinner color="accent"></mat-spinner>
+                <p>Loading data...</p>
+              </div>
+            </ng-template>	
           </div>
           
           <div style="text-align: center;" *ngIf="this.vendorListNull==true">

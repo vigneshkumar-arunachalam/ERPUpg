@@ -10,6 +10,7 @@ declare var $: any
 declare var iziToast: any;
 import Swal from 'sweetalert2';
 declare var tinymce: any;
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-leavereq-final',
   templateUrl: './leavereq-final.component.html',
@@ -17,6 +18,7 @@ declare var tinymce: any;
 })
 export class LeavereqFinalComponent implements OnInit {
   user_ids: any;
+  holidayForm:FormGroup;
   calendarOptions: CalendarOptions = {
     plugins: [dayGridPlugin, interactionPlugin, listPlugin],
     hiddenDays: [0], 
@@ -50,8 +52,24 @@ export class LeavereqFinalComponent implements OnInit {
   currentDate: string = new Date().toISOString().split('T')[0];
   nextDate: string = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
   leaveCount: any;
+  currentYearValue: number;
+  policyDescription: any;
+  annualLeave: any;
+  balanceAnnualLeave: any;
+  balanceMedicalLeave: any;
+  carryForward: any;
+  consumedAnnualLeave: any;
+  consumedMedicalLeave: any;
+  MedicalLeave: any;
+  holidaysArray: any;
+  silLeave: any;
+  totalLeave: any;
+  leaveBillerID: any;
+  upcomingCarryForwadLeave: any;
+  lastyearHolidaysArray: any;
+  billerId: any;
 
-  constructor(private http: HttpClient,private serverService: ServerService) {
+  constructor(private http: HttpClient,private serverService: ServerService,private datePipe: DatePipe) {
     this.taskForm = new FormGroup({
       taskStatus: new FormControl(''),
       notifyState: new FormControl(false),
@@ -62,7 +80,11 @@ export class LeavereqFinalComponent implements OnInit {
 
   ngOnInit(): void {
     this.user_ids = localStorage.getItem('erp_c4c_user_id');
+    this.currentYearValue = new Date().getFullYear();
+    console.log("this.currentYearValue",this.currentYearValue)
     this.getLeaveRequestDetails();
+    this.getHolidayList();
+
   }
   
   onDatesSet(dateInfo: any) {
@@ -182,6 +204,59 @@ getLeaveRequestDetails() {
 
 
 
+      }
+      else {
+
+        iziToast.error({
+          message: "Data Not Found",
+          position: 'topRight'
+        });
+
+      }
+    }), (error: any) => {
+      iziToast.error({
+        message: "Sorry, some server issue occur. Please contact admin",
+        position: 'topRight'
+      });
+      console.log("final error", error);
+    }
+
+  }
+  getHolidayList() {
+    $("#holidayFormId").modal("show");
+
+ 
+    let api_req: any = new Object();
+    let sendMet_req: any = new Object();
+    api_req.moduleType = "hr";
+    api_req.api_url = "hr/holidayList";
+    api_req.api_type = "web";
+    api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
+    sendMet_req.action = "hr/holidayList";
+    sendMet_req.user_id = 190;
+    api_req.element_data = sendMet_req;
+    this.serverService.sendServer(api_req).subscribe((response: any) => {
+
+      if (response.status == true) {
+        this.billerId=response.billerId;
+        this.policyDescription=response.policy_description;
+        this.annualLeave=response.annual_leave;
+        this.balanceAnnualLeave=response.balance_annual_leave;
+        this.balanceMedicalLeave=response.balance_medical_leave;
+
+        this.carryForward=response.carry_forward;
+        this.consumedAnnualLeave=response.consumed_annual_leave;
+        this.consumedMedicalLeave=response.consumed_medical_leave;
+        this.MedicalLeave=response.medical_leave;
+
+       
+        this.silLeave=response.sil_leave;
+        this.totalLeave=response.total_leave;
+        this.leaveBillerID=response.billerId;
+        this.upcomingCarryForwadLeave=response.upcomingCarryForwadLeave;
+
+        this.holidaysArray=response.holidays;
+        this.lastyearHolidaysArray=response.last_year_holidays;
       }
       else {
 

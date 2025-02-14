@@ -384,12 +384,12 @@ select {
 .grid-item .number {
     font-size: 28px;
     font-weight: 700;
-    color: #2c3e50;
+    color: #2c6403;
 }
 
 .grid-item .description {
-    background: #6c757d;
-    color: white;
+    background: #c42b0e;
+    color: #f3f009;
     margin-top: 10px;
     padding: 8px 12px;
     font-size: 15px;

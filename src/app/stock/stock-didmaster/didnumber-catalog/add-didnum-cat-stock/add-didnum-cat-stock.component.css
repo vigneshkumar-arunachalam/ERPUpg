@@ -233,17 +233,7 @@
   .addcontractmastercss {
     font-weight: 500;
   }
-  /* .addcontractmastercss .form-control {
-    border: 1px solid   #beeaca!important;
-  }
-  .addcontractmastercss .form-control:focus {
-    color: #495057;
-    background-color: #fff;
-      border-color:   #3d0096!important;
-    outline: 0;
-    box-shadow: 0 0, 0 5px 20px #5f63f21a;
-    padding-left: 4px !important;
-  } */
+
   .addcontractmastercss select{
     /* padding: 0 !important; */
     padding-left: 4px !important;
@@ -312,16 +302,7 @@
   /* .userDatatable table td{
 
   } */
-  .userDatatable table tr td:nth-child(2){
-    width: 6%;
-  }
-  .userDatatable table tr th:nth-child(5) {
-    width: 25%;
-  }
-  .userDatatable table tr td:nth-child(5) span{
-    width: auto;
-    white-space: normal;
-  }
+
   
   label.col-form-label {
     padding-right: 10px;
@@ -363,14 +344,7 @@
   }
   
   
-  
-  #TextEditorId .modal-dialog {
-    max-width: 65%;
-  }
-  
-  #TextEditorId label {
-    font-weight: 500;
-  }
+ 
   .card.quotation .card-header {
     display: flex;
   }
@@ -379,122 +353,10 @@
     border-radius: 5px;
   }
   
-  .checkbox {
-    margin-right: 10px;
-  }
-  .email-cc-template{
-    height: 150px;
-    overflow-y: scroll;
-  }
-  
-  .email-cc-template::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  /* Track */
-  .email-cc-template::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  /* Handle */
-  .email-cc-template::-webkit-scrollbar-thumb {
-    background: #888; 
-  }
-  
-  /* Handle on hover */
-  .email-cc-template::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
-  
-  /* #TextEditorId span{width: 138px;    display: inline-block;} */
-  label.col-lg-2.col-form-label{text-align: right;}
+ 
   
   
-  
-  
-   /* .textareaformcontrol{
-    border: 1px solid   #0c7027!important;
-   } */
-  
-  
-  
-  
-   /* .ng-autocomplete 
-   ::ng-deep .autocomplete-container .input-container input{
-    border: 1px solid #274f99!important;
-     background: transparent;
-   }
-   .ng-autocomplete 
-   ::ng-deep .autocomplete-container .input-container input:focus {
-     outline: none;
-     border: 2px solid transparent!important;
-     background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-     background-origin: border-box;
-     background-clip: padding-box, border-box;
-     animation: bg-hue 2s linear infinite;
-   } */
-   .ng-autocomplete{
-    padding: 0!important;
-   }
-   .contents-section .form-control,  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input {
-    border: none;
-    padding-left: 1.4rem;
-    box-shadow: inset 0.2rem 0.2rem 0.5rem #c8d0e7, inset -0.2rem -0.2rem 0.5rem #ffffff;
-    background: none;
-    font-family: inherit;
-    color: #252525;
-  } 
-  .contents-section .form-control:focus,  .ng-autocomplete 
-  ::ng-deep .autocomplete-container .input-container input:focus{
-    outline: none;
-    box-shadow: 0.3rem 0.3rem 0.6rem #c8d0e7, -0.2rem -0.2rem 0.5rem #ffffff !important;
-    border: 2px solid transparent!important;
-      background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-      background-origin: border-box;
-      background-clip: padding-box, border-box;
-      animation: bg-hue 2s linear infinite;
-  }
-  
-   .form-control{
-    border: 1px solid #e1e1e1;
-    background: transparent;}
-   .form-control:focus {
-    outline: none;
-    border: 2px solid transparent;
-    background-image: linear-gradient(white, white), linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-    animation: bg-hue 2s linear infinite;
-  }
-  
-  /* @keyframes for the gradient animation */
-  @keyframes bg-hue {
-    100% {
-      filter: hue-rotate(360deg);
-    }
-  }
-  
-  
-  label {
-      font-weight: 600;
-      /* color: #009688!important; */
-  }
-  .head-depart-per-section{display:flex;}
-  .head-depart-per{
-    background: linear-gradient(315deg, rgb(236, 160, 255), rgb(170, 178, 255), rgb(132, 255, 201));
-    width: 100px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 30px;
-    margin-right:20px;
-  }
-  #setActualCostId .form-control{
-    height: auto;
-  }
-  
+
   
   .form-control:disabled,
   .form-control[readonly] {

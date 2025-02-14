@@ -38,8 +38,7 @@ export class CurrentStockMasterComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.productCategoryList({});
-    this.ProductCategoryNameList();
+  
     this.viewProductCategory = new FormGroup({
       'view_ProductCategoryCode': new FormControl(null),
       'view_ProductCategoryName': new FormControl(null),
@@ -61,6 +60,8 @@ export class CurrentStockMasterComponent implements OnInit {
       'search_ProductCategoryName': new FormControl(null),
 
     });
+    this.productCategoryList({});
+    this.ProductCategoryNameList();
 
   }
   get addressControls() {
@@ -115,7 +116,7 @@ export class CurrentStockMasterComponent implements OnInit {
 
   }
   searchProdCatGo() {
-   // $('#searchProductCategoryFormId').modal('show');
+    $('#searchProductCategoryFormId').modal('show');
   }
   ChangeProductCatName(event:any){
 
@@ -140,7 +141,7 @@ export class CurrentStockMasterComponent implements OnInit {
     api_postUPd.limit_val = list_data.limit;
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_postUPd.current_page = '';
-    api_postUPd.search_text='';
+    api_postUPd.search_text=this.searchProductCategory.value.search_ProductCategoryName;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
@@ -150,6 +151,7 @@ export class CurrentStockMasterComponent implements OnInit {
         this.spinner.hide();
         this.response_total_cnt=response.count
         this.productCategoryList1 = response.data;
+        $('#searchProductCategoryFormId').modal('hide');
         this.paginationData = this.serverService.pagination({ 'offset': response.off_set, 'total': response.count, 'page_limit': this.pageLimit });
       } else {
         iziToast.warning({
@@ -232,7 +234,7 @@ export class CurrentStockMasterComponent implements OnInit {
     api_postUPd.action = "viewProductDetails";
 
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
-    // api_postUPd.product_category_id = product_category_id;
+     api_postUPd.search_text = this.searchProductCategory.value.search_ProductCategoryName;
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {

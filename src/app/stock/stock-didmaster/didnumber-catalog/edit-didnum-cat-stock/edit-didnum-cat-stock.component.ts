@@ -96,20 +96,20 @@ export class EditDIDNumCatStockComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "product_category";
-    api_req.api_url = "product_master/getProductCategory";
+    api_req.moduleType = "didcatelog_stock";
+    api_req.api_url = "didcatelog_stock/didTrunckDropDown";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "getProductCategory";
+    api_postUPd.action = "didcatelog_stock/didTrunckDropDown";
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status == true) {
+      if (response.status == 'success') {
 
         this.spinner.hide();
-        this.productCategoryNameList = response.product_category;
+        this.productCategoryNameList = response.data;
 
       } else {
         iziToast.warning({

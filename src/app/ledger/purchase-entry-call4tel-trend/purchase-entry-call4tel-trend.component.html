@@ -99,6 +99,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -112,6 +115,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -128,6 +134,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -142,6 +151,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -156,6 +168,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -170,6 +185,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -184,6 +202,9 @@
                                   <i *ngIf="entry.purchase_trend_id && entry.status === 1" 
                                      class="fa fa-check-circle" 
                                      style="color: green; margin: 2px;"></i>
+                                  <i *ngIf="entry.purchaseEntryTempId && entry.status === 2" 
+                                     class="fa fa-times-circle" 
+                                     style="color: #ffcc00; margin: 2px;"></i>
                                   <i *ngIf="!entry.purchase_trend_id && entry.status === 2" 
                                      class="fa fa-times-circle" 
                                      style="color: #ffcc00; margin: 2px;"></i>
@@ -253,9 +274,10 @@
                                 </thead>
                                 <tbody >
                                   <ng-container *ngFor="let address of addressControls.controls; let j = index;" [formGroupName]="j">
-                                    <tr>
-                                      <td colspan="13" style="border: 1px dotted blue;background-color: antiquewhite;    font-weight: 500;
-    color: #801505;">{{months[j]}}</td>
+                                    <tr *ngIf="j === 0 || address.value.mon_val !== addressControls.controls[j - 1].value.mon_val">
+                                      <td colspan="13" style="border: 1px dotted blue; background-color: antiquewhite; font-weight: 500; color: #801505;">
+                                        {{ getMonthName(address.value.mon_val) }}
+                                      </td>
                                     </tr>
                                   
                                   <tr >
@@ -466,8 +488,11 @@
               </div>
             </div>
             <ng-template #loading>
-              <p>Loading data...</p>
-            </ng-template>
+              <div class="spinner-container">
+                <mat-spinner color="accent"></mat-spinner>
+                <p>Loading data...</p>
+              </div>
+            </ng-template>	
           </div>
 
           <div style="text-align: center;" *ngIf="this.vendorListNull==true">

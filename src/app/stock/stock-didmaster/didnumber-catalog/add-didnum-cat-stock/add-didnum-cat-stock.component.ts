@@ -76,17 +76,17 @@ export class AddDIDNumCatStockComponent implements OnInit {
 
     let api_req: any = new Object();
     let api_postUPd: any = new Object();
-    api_req.moduleType = "product_current_stock";
-    api_req.api_url = "inventory_catelog_stock/getCategory";
+    api_req.moduleType = "didcatelog_stock";
+    api_req.api_url = "didcatelog_stock/didTrunckDropDown";
     api_req.api_type = "web";
     api_req.access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJhdWQiOiJ1cGRhdGVzLm1jb25uZWN0YXBwcy5jb20iLCJpYXQiOjE2NTQ2NjQ0MzksIm5iZiI6MTY1NDY2NDQzOSwiZXhwIjoxNjU0NjgyNDM5LCJhY2Nlc3NfZGF0YSI6eyJ0b2tlbl9hY2Nlc3NJZCI6IjIiLCJ0b2tlbl9hY2Nlc3NOYW1lIjoidGVzdGluZzA0MDYyMDIyIiwidG9rZW5fYWNjZXNzVHlwZSI6IjIifX0.NaymQDSiON2R3tKICGNpj6hsQfg9DGwEcZzrJcvsqbI";
-    api_postUPd.action = "inventory_catelog_stock/getCategory";
+    api_postUPd.action = "didcatelog_stock/didTrunckDropDown";
     api_postUPd.user_id = localStorage.getItem('erp_c4c_user_id');
     api_req.element_data = api_postUPd;
 
     this.serverService.sendServer(api_req).subscribe((response: any) => {
       this.spinner.hide();
-      if (response.status == true) {
+      if (response.status == 'success') {
 
         this.spinner.hide();
         this.productCategoryNameList = response.data;
@@ -109,7 +109,7 @@ export class AddDIDNumCatStockComponent implements OnInit {
 
   }
 
-  save(i: any) {
+  save() {
 
 
     this.spinner.show();
@@ -151,19 +151,57 @@ export class AddDIDNumCatStockComponent implements OnInit {
     for (let i = 0; i < addr.length; i++) {
 
       // console.log(addr[i].pd_quantity_txtbox1)
-      addr[i].did_trunk_name_id_1 = $('#pd_category1' + i).val();
+      var did_trunk_name_id_1=$('#pd_category1' + i).val();
+      if(did_trunk_name_id_1==null || did_trunk_name_id_1==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Trunk Name 1 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].did_trunk_name_id_1 = $('#pd_category1' + i).val();
+      }
+     
+
       addr[i].did_trunk_name_color_1 = $('#pd_DIDNumColor1' + i).val();
       addr[i].did_trunk_name_fontsize_1 = $('#pd_DIDNumFontSize1' + i).val();
       addr[i].cus_color_1 = $('#pd_DIDNumCusColor1' + i).val();
       addr[i].cus_fontsize_1 = $('#pd_DIDNumCusFontsize1' + i).val();
 
-      addr[i].did_trunk_name_id_2 = $('#pd_category2' + i).val();
+
+      var did_trunk_name_id_2=$('#pd_category2' + i).val();
+      if(did_trunk_name_id_2==null || did_trunk_name_id_2==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Trunk Name 2 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].did_trunk_name_id_2 = $('#pd_category2' + i).val();
+      }
+     
       addr[i].did_trunk_name_color_2 = $('#pd_DIDNumColor2' + i).val();
       addr[i].did_trunk_name_fontsize_2 = $('#pd_DIDNumFontSize2' + i).val();
       addr[i].cus_color_2 = $('#pd_DIDNumCusColor2' + i).val();
       addr[i].cus_fontsize_2 = $('#pd_DIDNumCusFontsize2' + i).val();
 
-      addr[i].did_trunk_name_id_3 = $('#pd_category3' + i).val();
+      var did_trunk_name_id_3=$('#pd_category3' + i).val();
+      if(did_trunk_name_id_3==null || did_trunk_name_id_3==''){
+        this.spinner.hide();
+        iziToast.error({
+          message: "Trunk Name 3 Missing",
+          position: 'topRight'
+        });
+        return false;
+
+      }else{
+        addr[i].did_trunk_name_id_3 = $('#pd_category3' + i).val();
+      }
+     
       addr[i].did_trunk_name_color_3 = $('#pd_DIDNumColor3' + i).val();
       addr[i].did_trunk_name_fontsize_3 = $('#pd_DIDNumFontSize3' + i).val();
       addr[i].cus_color_3 = $('#pd_DIDNumCusColor3' + i).val();
@@ -208,7 +246,7 @@ export class AddDIDNumCatStockComponent implements OnInit {
       };
   }
   goBack() {
-    this.router.navigate(['/CurrentStockMaster']);
+    this.router.navigate(['/DIDNumberCatalog']);
   }
 
 }

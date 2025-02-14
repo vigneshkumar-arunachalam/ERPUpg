@@ -270,6 +270,13 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
       };
 
   }
+  getMonthName(monthVal: number): string {
+    const months = [
+      '', 'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return months[monthVal] || '';
+  }
   fetchVendorDetails(vendorID:any) {
     this.vendorID_selected=vendorID;
     this.spinner.show();
@@ -295,44 +302,48 @@ export class PurchaseEntryMrVoipTrendComponent implements OnInit {
 
         this.spinner.hide();
         const vendorData = response.vendorTrendDetails;
-        const formArray = new FormArray([]);
+
   
+        const formArray = new FormArray([]);
 
-        for (let index = 0; index < response.vendorTrendDetails.length; index++) {
-      
+        // Loop through each month
+        Object.keys(response.vendorTrendDetails.months).forEach((month) => {
+          response.vendorTrendDetails.months[month].forEach((record: any) => {
+            formArray.push(
+              this.fb.group({
 
-          formArray.push(this.fb.group({
-            "invoiceNo": response.vendorTrendDetails[index].invoice_no,
-            "invoiceAmount1": response.vendorTrendDetails[index].invoice_amount,
-            "invoiceAmount2": response.vendorTrendDetails[index].invoice_amount_converted,
-            "currConvRate": response.vendorTrendDetails[index].conversionRate,
-            "fixedAmount1": response.vendorTrendDetails[index].fixed_amount,
-            "fixedAmount2": response.vendorTrendDetails[index].fixed_amount_converted,
-            "usageAmount1": response.vendorTrendDetails[index].usage_amount,
-            "usageAmount2": response.vendorTrendDetails[index].usage_amount_converted,
-            "otherAmount1": response.vendorTrendDetails[index].other_amount,
-            "otherAmount2": response.vendorTrendDetails[index].other_amount_converted,
-            "IDDAmount1": response.vendorTrendDetails[index].idd_amount,
-            "IDDAmount2": response.vendorTrendDetails[index].idd_amount_converted,
-            "localAmount1": response.vendorTrendDetails[index].local_amount,
-            "localAmount2": response.vendorTrendDetails[index].local_amount_converted,
-            "purchase_trend_id": response.vendorTrendDetails[index].purchase_trend_id,
-            "purchaseEntryTempId": response.vendorTrendDetails[index].purchaseEntryTempId,
+                purchaseEntryType: record.purchase_type_id || '',
+                invoiceNumber: record.invoiceNo || '',
+                invoiceDate: record.invoiceDate_show || '',
+                purchaseContent: record.content_purchase || '',
+                PONumber: record.poNo || '',
+                currency: record.currency_id || '',
+                curConvRate: record.conversionRate || '',
+                taxAmount: record.taxAmount || '',
+                taxProvider: record.tax_provider || '',
+                frieghtAmount: record.freight_amt || '',
+                frieghtProvider: record.freight_provider || '',
+                invoiceAmount: record.invoiceAmount || '',
+          
+                purchaseEntryTempId: record.purchaseEntryTempId || '',
+                vendorId: record.vendor_id || '',
+                year_val: record.year || '',
+                ven_id: record.vendor_id || '',
 
-            "vendorId": response.vendorTrendDetails[index].vendorId,
-            "billerid": response.vendorTrendDetails[index].billerid,
-            "year_val": response.vendorTrendDetails[index].year_val,
-            "ven_id": response.vendorTrendDetails[index].ven_id,
-            "mon_val": response.vendorTrendDetails[index].mon_val,
-            "entry_row": response.vendorTrendDetails[index].entryRow,
-          })
-          );
-        }
+                entry_row: record.entryRow || '',
+                billerid: this.OverallBillerValue,
+                mon_val: record.month || '',
+                // mon_val_title: monthName,
+          
+        
+              })
+            );
+          });
+        });
         
         this.addPI_section2.setControl('addresses', formArray);
-        // console.log("this.editMulInvGroupForm", this.editMulInvGroupForm);
-       
-       
+    
+		   
 
       } else {
         this.spinner.hide();

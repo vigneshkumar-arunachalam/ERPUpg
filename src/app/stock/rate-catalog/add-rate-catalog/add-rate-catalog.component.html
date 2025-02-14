@@ -410,17 +410,16 @@
 
 
                         <hr>
-                        <div class="text-right" style="margin: 20px;">
-                            <button type="button" class="btn btn-primary btn-default btn-squared mt-2 mb-2" (click)="addAddress()"
-                                style="margin-right: 10px;"><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
-            
-                        </div>
-                        <div class="modal-footer">
-
-                            <button type="button" class="btn btn-primary mr-4 " (click)="save(i)">Save</button>
-                            <button type="button" class="btn btn-dark" (click)="goBack()">Cancel</button>
-                        </div>
+                        
+                  
                     </ng-container>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-default btn-squared" (click)="addAddress()"
+                        ><i class="fas fa-plus" style="margin-right:0;"> Add </i></button>
+    
+                        <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+                        <button type="button" class="btn btn-dark" (click)="goBack()">Cancel</button>
+                    </div>
 
                 </div>
             </div>
